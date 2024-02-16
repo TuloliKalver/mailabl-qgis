@@ -379,6 +379,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.cbDel_ChooseAll_Cities.stateChanged.connect(lambda city, view_name=lwDelete_Cities_Names: list_functions.toggleListSelection(view_name, city))
         self.cbDel_ChooseAll_Data_properties.stateChanged.connect(lambda state, view_state=tbl_Delete_properties: list_functions.toggleListSelection(view_state, state))
         self.cbDel_ChooseAll_Data_transport.stateChanged.connect(lambda state, view_state=tbl_Delete_streets: list_functions.toggleListSelection(view_state, state))
+        self.cbDel_ChooseAll_Data_include_Allroads.stateChanged.connect(lambda state, view_state=tbl_Delete_streets: list_functions.toggleListSelection(view_state, state))
         
         tbl_Delete_properties.setSelectionBehavior(QAbstractItemView.SelectRows)
         tbl_Delete_streets.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -1103,119 +1104,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbConfirm_action.show()
 
-#Can be written off
-    def prepare_properties_list_and_Add_to_table(self):
-        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        self.tabWidget_Propertie_list.show()
-        
-        object_county = self.listWidget_county
-        object_state = self.listWidget_State
-        object_city = self.listWidget_City
-        
-        item_county = object_county.currentItem()
-        restriction_county = item_county.text()
-        #print(f"Restriction 1 {restriction_county}")
-        
-        #object_state.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-        selected_states = object_state.selectedItems()
-        restriction_state = [item.text() for item in selected_states]
-        #print(f"Restriction 2 {restriction_state}")
-        
-        #object_city.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-        selected_cities = object_city.selectedItems()
-        restriction_city = [item.text() for item in selected_cities]
-        #print(f"Restriction 3 {restriction_city}")
-        
-        #expression = " {} IN ('{}') AND {} IN ('{}') AND {} IN ('{}')" .format(county_nimi_field, restriction_county, state_nimi_field, "', '".join(restriction_state),city_nimi_field,"', '".join(restriction_city))
-        expression = " {} IN ('{}') AND {} IN ('{}') AND {} IN ('{}') AND SIHT1 NOT IN ('Transpordimaa')" .format(county_nimi_field, restriction_county, state_nimi_field, "', '".join(restriction_state),city_nimi_field,"', '".join(restriction_city))
-        
-        layer.setSubsetString(expression)
-        layer.triggerRepaint()
-        
-        self.prepare_properties_list()
-        self.prepare_streets_list()
-        
-
-        
-    def prepare_properties_list(self):
-        table_view = self.tblvResults_Confirm
-
-        object_county = self.listWidget_county
-        object_state = self.listWidget_State
-        object_city = self.listWidget_City
-        
-        item_county = object_county.currentItem()
-        restriction_county = item_county.text()
-        #print(f"Restriction 1 {restriction_county}")
-        
-        object_state.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-        selected_states = object_state.selectedItems()
-        restriction_state = [item.text() for item in selected_states]
-        #print(f"Restriction 2 {restriction_state}")
-        
-        object_city.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-        selected_cities = object_city.selectedItems()
-        restriction_city = [item.text() for item in selected_cities]
-        #print(f"Restriction 3 {restriction_city}")
-        
-        expression = " {} IN ('{}') AND {} IN ('{}') AND {} IN ('{}')" .format(county_nimi_field, restriction_county, state_nimi_field, "', '".join(restriction_state),city_nimi_field,"', '".join(restriction_city))
-        #print(f"Expression: {expression}")
-        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        layer.setSubsetString(expression)
-
-        
-        #layer.triggerRepaint()
-        #layer.updateExtents()
-        #graph_tools.zoom_to_layer_extent(layer)
-        item_count = graph_tools.count_items_in_layer(input_layer_name)
-        self.lblCount.setText(f"{item_count}")
-        table_functions.generate_table_view_headers(table_view,input_layer_name, item_count)
-        
-        layer.triggerRepaint()
-        layer.updateExtents()
-        graph_tools.activateLayer_zoomTo(layer)
-        self.lblCount.setText(f"{item_count}")
-        
-        self.pbSendItemstoMailabl.show()        
-        self.cbChooseAllAdd_properties.show()
-        
-    
-        
-    def prepare_streets_list(self):
-        object_county = self.listWidget_county
-        object_state = self.listWidget_State
-        object_city = self.listWidget_City
-        table_view = self.tblvResults_streets_Confirm
-        
-        item_county = object_county.currentItem()
-        restriction_county = item_county.text()
-        #print(f"Restriction 1 {restriction_county}")
-        
-        object_state.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-        selected_states = object_state.selectedItems()
-        restriction_state = [item.text() for item in selected_states]
-        #print(f"Restriction 2 {restriction_state}")
-        
-        object_city.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-        selected_cities = object_city.selectedItems()
-        restriction_city = [item.text() for item in selected_cities]
-        #print(f"Restriction 3 {restriction_city}")
-        expression = " {} IN ('{}') AND {} IN ('{}') AND {} IN ('{}') AND SIHT1 IN ('Transpordimaa')" .format(county_nimi_field, restriction_county, state_nimi_field, "', '".join(restriction_state),city_nimi_field,"', '".join(restriction_city))
-        #print(f"Expression: {expression}")
-        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        layer.setSubsetString(expression)
-        #layer.triggerRepaint()
-        #layer.updateExtents()
-        #graph_tools.zoom_to_layer_extent(layer)
-        item_count = graph_tools.count_items_in_layer(input_layer_name)
-        table_functions.generate_table_view_headers(table_view,input_layer_name, item_count)
-
-
-    def prepare_streets_list_from_selected_items(self):
-
-        table_view = self.tblvResults_streets_Confirm
-
-        table_functions.generate_table_from_selected_map_items(table_view,input_layer_name)
 
 
 #Remove statements

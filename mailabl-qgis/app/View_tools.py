@@ -108,69 +108,6 @@ class tableView_functions():
 
         progress_widget.close() 
 
-    def generate_table_from_selected_map_items(self, view_item, total):
-            ui_file_path = widgets_path
-            input_layer_name = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
-
-            #print(f"path:  {ui_file_path}") 
-            #print(f"Layer {layer_name}")
-            input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]    
-            features = input_layer.selectedFeatures()
-            total = len(features)
-
-            progress_widget = loadUi(ui_file_path)
-            progress_bar = progress_widget.testBar
-            progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
-            # Set the window title for the progress_widget
-            progress_widget.setWindowTitle("Koostan kinnistute nimekirja!")
-            
-            progress_widget.show()
-            
-            quarter_point = total // 4  # Calculate the quarter point
-            halfway_point = total // 2  # Calculate the halfway point
-            three_quarter_point = total * 3 // 4  # Calculate the three-quarter point
-
-            fields = shp_tools.get_field_names(self, layer_name)
-            model = QStandardItemModel()
-            model.setHorizontalHeaderLabels(fields)
-            view_item.setModel(model)    
-
-            row = 0
-                    
-            for feature in features:
-                siht1_value = feature.attribute('SIHT1')  # Get the value of 'SIHT1' field
-                #print(f"siht1_value {siht1_value}")
-                if 'Tarnspordimaa' not in siht1_value:
-            
-                    row_items = []  # List to hold items for each row
-                    for field in fields:
-                        value = feature.attribute(field)
-
-                        # Check if the value is a QDate object
-                        if isinstance(value, QDate):
-                            value = value.toString("yyyy-MM-dd")  # Format the date as desired
-
-                        item = QStandardItem(str(value))  # Create QStandardItem for the value
-                        row_items.append(item)  # Add item to the row_items list
-
-                    model.appendRow(row_items)  # Add row_items list to the model
-                    row += 1
-                    progress_bar.setValue(row)
-                    
-                    # Update the label content at different progress points
-                    if row == quarter_point:
-                        progress_widget.label_2.setText("Kas teadsid, et:")
-                        progress_widget.label_3.setText("98% meie kodumaa jõgedest on joogikõlbuliku veega")
-                        
-                    elif row == halfway_point:
-                        progress_widget.label_3.setText("Eestis on 56-s linnatüüpi asulat")
-                    elif row == three_quarter_point:
-                        progress_widget.label_3.setText("Inimese keha sisaldab 65% vett.")
-
-                    QCoreApplication.processEvents()  # Process events to allow GUI updates
-                    #print(f"row item: {row_items}")
-
-            progress_widget.close() 
 
 
     def generate_table_from_selected_map_items_with_roads(self, layer_name):
@@ -232,130 +169,13 @@ class tableView_functions():
 
         return model_without_transport, model_with_transport, total
 
-    #TODO if not needed delete
-    def generate_table_from_selected_map_items_with_roads_old(self, layer_name):
-            ui_file_path = widgets_path
-            #print(f"path:  {ui_file_path}") 
-            print(f"Layer {layer_name}")
-            input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]    
-            features = input_layer.selectedFeatures()
-            total = len(features)
-            progress_widget = loadUi(ui_file_path)
-            progress_bar = progress_widget.testBar
-            progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
-            # Set the window title for the progress_widget
-            progress_widget.setWindowTitle("Koostan kinnistute nimekirja!")
-            
-            progress_widget.show()
-            
-            quarter_point = total // 4  # Calculate the quarter point
-            halfway_point = total // 2  # Calculate the halfway point
-            three_quarter_point = total * 3 // 4  # Calculate the three-quarter point
-
-
-            fields = shp_tools.get_field_names(self, layer_name)
-                # Model for items without 'Tarnspordimaa' in SIHT1 field
-            model_without_transport = QStandardItemModel()
-            model_without_transport.setHorizontalHeaderLabels(fields)
-
-            # Model for items with 'Tarnspordimaa' in SIHT1 field
-            model_with_transport = QStandardItemModel()
-            model_with_transport.setHorizontalHeaderLabels(fields)
-            #view_item.setModel(model)    
-
-            row = 0
-            count_without_transport = 0
-            count_with_transport = 0
-                    
-            for feature in features:
-                siht1_value = feature.attribute('SIHT1')  # Get the value of 'SIHT1' field          
-                row_items = []  # List to hold items for each row
-                for field in fields:
-                    value = feature.attribute(field)
-
-                    # Check if the value is a QDate object
-                    if isinstance(value, QDate):
-                        value = value.toString("yyyy-MM-dd")  # Format the date as desired
-
-                    item = QStandardItem(str(value))  # Create QStandardItem for the value
-                    row_items.append(item)  # Add item to the row_items list
-        # Check if 'Tarnspordimaa' is in SIHT1 field
-                if 'Transpordimaa' not in siht1_value:
-                    model_without_transport.appendRow(row_items)  # Add row_items to the model without 'Tarnspordimaa'
-                    count_without_transport += 1
-                else: 
-                    model_with_transport.appendRow(row_items)  # Add row_items to the model with 'Tarnspordimaa'
-                    count_with_transport += 1
-                    
-                row += 1
-                progress_bar.setValue(row)
-                
-                # Update the label content at different progress points
-                if row == quarter_point:
-                    progress_widget.label_2.setText("Kas teadsid, et:")
-                    progress_widget.label_3.setText("98% meie kodumaa jõgedest on joogikõlbuliku veega")
-                    
-                elif row == halfway_point:
-                    progress_widget.label_3.setText("Eestis on 56-s linnatüüpi asulat")
-                elif row == three_quarter_point:
-                    progress_widget.label_3.setText("Inimese keha sisaldab 65% vett.")
-
-                QCoreApplication.processEvents()  # Process events to allow GUI updates
-                #print(f"row item: {row_items}")
-
-            progress_widget.close() 
-            
-            print(f"Items without 'Transpordimaa': {count_without_transport}")
-            print(f"Items with 'Transpordimaa': {count_with_transport}")
-
-            # Return both models
-            return model_without_transport, model_with_transport
-
-
-
-    
-
-    def toggleSelection(self, table_view):
-        if table_view.selectionModel().hasSelection():
-            # If there is a selection, clear it
-            table_view.selectionModel().clearSelection()
-        else:
-            # If there is no selection, select all items
-            table_view.setSelectionBehavior(QAbstractItemView.SelectRows)
-            table_view.selectAll()
-            
-    def model_when_items_loading (self, table_view):
-        # Create a standard item model if it doesn't exist
-        table_view.setModel(None)
-        
-        if not table_view.model():
-            model = QStandardItemModel()
-            table_view.setModel(model)
-        else:
-            model = table_view.model()
-
-        # Create a new item with the desired text
-        item = QStandardItem("Laen andmeid...")
-
-        # Set the item at the 5th row and 5th column
-        model.setItem(4, 4, item) 
-        result = "success"
-        return result
-        
-    def unload_TableViewContend_and_hde_connectedItems(self, object_view, button, object_checkbox):
-        empty_view = model
-        object_view.setModel(empty_view)
-        object_view.update()
-        button.hide()
-        object_checkbox.hide()
-        object_checkbox.setChecked(False)
 
 class listView_functions():
     def __init__(self):
         pass
 
 
-    def toggleListSelection(self,list_view, state):
+    def toggleListSelection(self, list_view, state):
         print("started toggle selection in view_tools.py line 385")
         # state = 2 when checked, 0 when unchecked
         if state == 2:
