@@ -46,7 +46,8 @@ class DeleteActions:
             TabHandler.tabViewByState(tab_widget, state=False)        
             
             # Now that the new model is populated, you can set it to your table view
-            table_target.setModel(model)        
+            table_target.setModel(model)
+            TableViewadjuster.QTableView_look(table_target)
             # Insert data into the new model
             CombineModels.TableModelCombiner(model_properties,model_streets,model,header_names)
 

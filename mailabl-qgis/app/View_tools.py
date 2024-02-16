@@ -643,12 +643,11 @@ class shp_tools:
 
 
 class TableViewadjuster:
-    
+    @staticmethod
     def QTableView_look(table_view):
-        custom_row_height = 10  # Adjust this value as needed
+        custom_row_height = 12  # Adjust this value as needed
         for row in range(model.rowCount()):
             table_view.setRowHeight(row, custom_row_height) 
-        
         table_view.setSortingEnabled(True)
         # Hide the vertical header (row numbers)
         table_view.verticalHeader().setVisible(False)

@@ -1628,7 +1628,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
             self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
             
-    @staticmethod
+    #@staticmethod
     def delete_process_after_city(self):
         lwDel_County_Names = self.lwDelete_County_Names
         lwDel_State_names = self.lwDel_State_Names
