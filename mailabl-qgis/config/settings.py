@@ -1,4 +1,5 @@
 import os
+import json
 from PyQt5.uic import loadUi
 from qgis.core import QgsSettings
 from qgis.core import (QgsFeature, QgsGeometry, QgsLayerTreeGroup, QgsMapLayer,
@@ -16,6 +17,9 @@ setup_label_cadastral_toBeAdded = '/Mailabl/Setting/labels/cadastralToBeAdded'
 setup_label_cadastrals_for_importing ='/Mailabl/Settings/lables/SHP_Layer'
 Mailabl_Projects_layer_address = 'Mailabl/labels/Mailabl_Projects_layer'
 
+with open(f'{PLUGIN_DIR}/config.json', "r") as json_content:
+    config = json.load(json_content)
+
 class flags:
     active_properties_layer_flag = False
     Flag_settings_button = True
@@ -25,17 +29,16 @@ class flags:
 
 
 class OpenLink:
-    main = '' 
+    main = config['weblink']
     
     def weblink_single_projects():
-        link = f'https://{OpenLink.main}/projects/'
+        link = f'{OpenLink.main}/projects/'
         return link
 
 
 class GraphQLSettings:
     def graphql_endpoint():
-        GRAPHQL_ENDPOINT = ""
-        return GRAPHQL_ENDPOINT
+        return config['graphql_endpoint']
 
 class IconsByName:
     def __init__(self):
