@@ -13,54 +13,39 @@
  ***************************************************************************/
 
 """
-import time
 import os
+
+
+from qgis.core import QgsProject
+from qgis.PyQt import QtWidgets, uic
+from qgis.utils import iface
 
 from .app.web import loadWebpage
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
-from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox
-
-#from .config.ui_directories import Path_loader_simple,PathLoader, plugin_dir_path, UI_multiline_Statusbar
-from .config.settings import DataSettings, SettingsDataSaveAndLoad
+from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView
+from .config.settings import SettingsDataSaveAndLoad
 from .config.layer_setup import Setup_CadastralsLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
-
-from qgis.core import QgsProject
-from qgis.PyQt.QtWidgets import QMessageBox, QTableView, QAbstractItemView, QHeaderView
-from qgis.PyQt import QtWidgets, uic
-from qgis.utils import iface
-from PyQt5.QtCore import QTimer
 from .app.checkable_comboboxes import ComboBox_functions, shp_tools
-from .app.functions import QGIS_items
 from .app.remove_processes import ReomveProcess
-from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers, LayerChecker
+from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
 from .Functions.SearchEngines import General
-from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process, Delete_finalProcess
+from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
 from .Functions.Tools import tableFunctions
-from .Functions.add_items import Add_Properties_final
 from .Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
-from .Functions.layer_generator import LayerCopier
-#from .messages import *
+from .Functions.AddProperties.AddNonduplicateItems import AddProperties
+from .Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 from .processes.ImportProcesses.Import_shp_file import SHPLayerLoader
 from .processes.OnFirstLoad.FirstLoad import Startup
+from .processes.SyncProperties.syncMailablProperties import PropertiesBaseMap
 from .queries.python.access_credentials import (clear_UC_data,
                                                 get_access_token, print_result,
                                                 save_user_name)
 from .queries.python.projects import Projects
 from .queries.python.update_relations.update_project_properties import ProjectsProperties,map_selectors
-from .queries.python.property_data import Properties, deleteProperty, add_properties, MyLablChecker
-from .app.checkable_comboboxes import ComboBox_functions
-from .widgets.ui_loader_advanced import loader
-from PyQt5.QtWidgets import QMessageBox
-from .processes.SyncProperties.syncMailablProperties import PropertiesBaseMap
-from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QListWidgetItem
-from .Functions.AddProperties.AddNonduplicateItems import AddProperties
-from .Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
-
-
+from .queries.python.property_data import Properties, MyLablChecker
 
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -98,19 +83,9 @@ f_delete = DeletingProcesses()
 #set parameters
 
 input_layer_name = load.load_SHP_inputLayer_name()
-
 county_nimi_field = 'MK_NIMI'
 state_nimi_field = 'OV_NIMI'
 city_nimi_field = "AY_NIMI"
-
-
-#set statical overall parameters
-# Change name if difrent widgets are used in animation definitions 
-#dimensions
-qwFrameMinHeight1 = 0 #sets min height of widget
-qwFrameTopMargin1 = 10 #sets TopMargin of a widget
-qwFrameBottomMargin1 = 10 #sets BottomMargi of a widget
-button_padding = 6  # sets padding button spacing
 
 ################################################################################################################
 
@@ -124,20 +99,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         # Rest of your __init__ method...
         # Call the function to create the necessary layer structure
-        on_load = Startup()
-        on_load.FirstLoad()
-        # Set up the user interface from Designer through FORM_CLASS.
-        # After self.setupUi() you can access any designer object by doing
-        # self.<objectname>, and you can use autoconnect slots - see
-        # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
-        # #widgets-and-dialogs-with-auto-connect
+        
+        Startup.FirstLoad(self)
 
-    #connect graphQL endpoint
    
     #Creat instances
-#TODO does this greate problems issue created at 080124
-        self.data_settings = DataSettings()
-
 
         self.setupUi(self)
 
@@ -188,7 +154,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         settingPageElements(lblcurrent_main_layer_label, lblnewCadastrals_input_layer_label, lblSHPNewItems, lblLable_14, lblLayerProjects_Properties)
         
     
-    # Call the repair_tommorrow function when the widget is loaded
         self.set_layer_settings_labels()
     
     #setup login dialog and hide frames to block functionality!
@@ -240,25 +205,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbUC_Cancel.clicked.connect(self.remove_UC_data)
         #self.pbConnectNew.clicked.connect(self.token)
 
-
-    # Kinnitusnupud
-        # Edasi liikumised
-        #self.pbKinnitaMaakond.clicked.connect(self.Maakond_Valitud)
-        #self.pbKinnitaOmavalitsus.clicked.connect(self.Omavalitsus_Valitud)
-        #self.pbKinnitaKylad.clicked.connect(self.kyladValitud)
-    
-
-
-    # Menüü lülitid
-        #eelseaded
-
-        # Peamenüü
-    
-        #self.QWidget_Sub_Menu.setVisible(False)
-
 # Opens and handles the sub menu
         
-        self.pbCadasters.clicked.connect(self.pb_Cadasters_change_help)
+#        self.pbCadasters.clicked.connect(self.pb_Cadasters_change_help)
         self.pbCadasters.clicked.connect(lambda: secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self))
         self.pbUpdateData.clicked.connect(lambda: secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self))
         #self.pbActivateLabelSettings.clicked.connect(self.SaveToLabel)
@@ -269,22 +218,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
         self.pbAddDrawings.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self))
         
-        #Uuendamise nupud need vajavad uuendamist ja tuleb välja töötada uus loogika
-    
-    
-    #TODO Arendusnupp ära koristada
-    
-    
     
         self.pbSyncMailabl.clicked.connect(lambda: WorkSpaceHandler.Open_generate_mapLayer_synced_with_Mailabl_first_page(self))
-    #TODO rewriting generate base layer process!
+    
         self.pbSync_start_sync.clicked.connect(self.generate_virtual_mapLayer_synced_with_Mailabl)
         
-        
         self.pbRefresh.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Refresh(self))
-    
         self.pbExpand.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Expand(self))
-    
         self.pbRemove.clicked.connect(lambda: WorkSpaceHandler.swDeleteworkspace(self))
 
 
@@ -306,8 +246,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbShowOnMap.clicked.connect(self.show_projects_on_map_with_cadastral_connection)
         self.pbProjects_Connect_properties.clicked.connect(self.connect_properties_with_projects)
 
-        
-        
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_Mailabl_homepage())
         
