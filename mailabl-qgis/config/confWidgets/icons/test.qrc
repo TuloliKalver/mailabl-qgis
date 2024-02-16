@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="newPrefix">
-    <file>arrow-down_hele.svg</file>
-    <file>arrow-down_tume.svg</file>
-  </qresource>
-</RCC>

@@ -24,7 +24,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(783, 352)
+        Dialog.resize(543, 352)
         Dialog.setStyleSheet(u"*{\n"
 "	border: transparent;\n"
 "	background-color: transparent;\n"
@@ -110,7 +110,12 @@ class Ui_Dialog(object):
         self.label = QLabel(Dialog)
         self.label.setObjectName(u"label")
 
-        self.verticalLayout.addWidget(self.label)
+        self.verticalLayout.addWidget(self.label, 0, Qt.AlignHCenter)
+
+        self.label_2 = QLabel(Dialog)
+        self.label_2.setObjectName(u"label_2")
+
+        self.verticalLayout.addWidget(self.label_2, 0, Qt.AlignHCenter)
 
         self.frame = QFrame(Dialog)
         self.frame.setObjectName(u"frame")
@@ -118,24 +123,6 @@ class Ui_Dialog(object):
         self.frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout = QHBoxLayout(self.frame)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.frame_2 = QFrame(self.frame)
-        self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setFrameShape(QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_3 = QVBoxLayout(self.frame_2)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.pbClear_list = QPushButton(self.frame_2)
-        self.pbClear_list.setObjectName(u"pbClear_list")
-
-        self.verticalLayout_3.addWidget(self.pbClear_list)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_3.addItem(self.verticalSpacer)
-
-
-        self.horizontalLayout.addWidget(self.frame_2)
-
         self.tvProperties_AddTo_Projects = QTableView(self.frame)
         self.tvProperties_AddTo_Projects.setObjectName(u"tvProperties_AddTo_Projects")
 
@@ -143,6 +130,21 @@ class Ui_Dialog(object):
 
 
         self.verticalLayout.addWidget(self.frame)
+
+        self.frame_2 = QFrame(Dialog)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_3 = QVBoxLayout(self.frame_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 6, 6)
+        self.pbClear_list = QPushButton(self.frame_2)
+        self.pbClear_list.setObjectName(u"pbClear_list")
+
+        self.verticalLayout_3.addWidget(self.pbClear_list, 0, Qt.AlignRight)
+
+
+        self.verticalLayout.addWidget(self.frame_2)
 
         self.buttonBox = QDialogButtonBox(Dialog)
         self.buttonBox.setObjectName(u"buttonBox")
@@ -164,7 +166,8 @@ class Ui_Dialog(object):
         self.lblDescription.setText(QCoreApplication.translate("Dialog", u"Kinnistud lisatakse projektile:", None))
         self.lblProjectNumber.setText("")
         self.lblProjectName.setText("")
-        self.label.setText(QCoreApplication.translate("Dialog", u"N\u00fc\u00fcd on k\u00f5ik vajalik juba aktiveeritud ja saad alustada kohe kinnistute valikuga. NB! kui varasemalt on kinnituid juba valitud siis need kuvatakse juba tabelis. ", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"N\u00fc\u00fcd on k\u00f5ik vajalik juba aktiveeritud ja saad alustada kohe kinnistute valikuga.", None))
+        self.label_2.setText(QCoreApplication.translate("Dialog", u" NB! kui varasemalt on kinnituid juba valitud siis need kuvatakse juba tabelis. ", None))
         self.pbClear_list.setText(QCoreApplication.translate("Dialog", u"T\u00fchista valik", None))
     # retranslateUi
 

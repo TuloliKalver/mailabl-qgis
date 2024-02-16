@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'WStatusBar.ui'
+## Form generated from reading UI file 'WStatusBar_County.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.5.2
 ##
@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QProgressBar,
-    QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QLabel, QProgressBar, QSizePolicy,
+    QVBoxLayout, QWidget)
 
 class Ui_Edenemine(object):
     def setupUi(self, Edenemine):
@@ -76,12 +76,6 @@ class Ui_Edenemine(object):
 
         self.verticalLayout.addWidget(self.label_2, 0, Qt.AlignHCenter|Qt.AlignVCenter)
 
-        self.label_3 = QLabel(self.widget)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setFrameShadow(QFrame.Plain)
-
-        self.verticalLayout.addWidget(self.label_3, 0, Qt.AlignHCenter)
-
 
         self.verticalLayout_3.addWidget(self.widget)
 
@@ -95,9 +89,8 @@ class Ui_Edenemine(object):
     # setupUi
 
     def retranslateUi(self, Edenemine):
-        Edenemine.setWindowTitle(QCoreApplication.translate("Edenemine", u"Laen kinnistuid", None))
-        self.label.setText(QCoreApplication.translate("Edenemine", u"Laadimine v\u00f5tab m\u00f5ned minutid! ", None))
-        self.label_2.setText("")
-        self.label_3.setText("")
+        Edenemine.setWindowTitle(QCoreApplication.translate("Edenemine", u"Otsin maakondasid", None))
+        self.label.setText(QCoreApplication.translate("Edenemine", u"\u00dcks hetk. Nuputan, mida sulle j\u00e4rgmisena n\u00e4idata.", None))
+        self.label_2.setText(QCoreApplication.translate("Edenemine", u"Kas sa oled t\u00e4na juba arvutiekraanist silmi puhanud?", None))
     # retranslateUi
 
