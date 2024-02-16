@@ -1176,7 +1176,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>5</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -1441,7 +1441,7 @@ QPushButton:hover{
 </string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="swAdd_cadastrals">
                 <property name="styleSheet">
@@ -2480,23 +2480,6 @@ background-color: rgb(52, 59, 71)
                            </spacer>
                           </item>
                           <item>
-                           <widget class="QPushButton" name="pbSendItemstoMailabl">
-                            <property name="text">
-                             <string>Lae kinnistud Mailabli</string>
-                            </property>
-                            <property name="icon">
-                             <iconset>
-                              <normaloff>icons/Icons_hele/upload-cloud.svg</normaloff>icons/Icons_hele/upload-cloud.svg</iconset>
-                            </property>
-                            <property name="iconSize">
-                             <size>
-                              <width>18</width>
-                              <height>18</height>
-                             </size>
-                            </property>
-                           </widget>
-                          </item>
-                          <item>
                            <widget class="QPushButton" name="pbConfirm_action">
                             <property name="text">
                              <string>Kinnita</string>
@@ -3196,7 +3179,7 @@ background-color: rgb(52, 59, 71)
                        <item>
                         <widget class="QTabWidget" name="tabW_Delete_list">
                          <property name="currentIndex">
-                          <number>2</number>
+                          <number>0</number>
                          </property>
                          <widget class="QWidget" name="tabDel_data_properties">
                           <property name="styleSheet">

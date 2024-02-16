@@ -40,7 +40,7 @@ from .Functions.SearchEngines import General
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process, Delete_finalProcess
 from .Functions.Tools import tableFunctions
 from .Functions.add_items import Add_Properties_final
-from .Functions.propertie_layer.properties_layer_data import PropertieLayerFunctions
+from .Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from .Functions.layer_generator import LayerCopier
 #from .messages import *
 from .processes.ImportProcesses.Import_shp_file import SHPLayerLoader
@@ -334,12 +334,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbDone_State.clicked.connect(self.get_city_list)
         self.pbDoneCity.clicked.connect(self.prepare_properties_list_and_Add_to_table_updated_with_selecting_items)
 
-        
-        
-        #self.listWidget_county_2.itemClicked.connect(self.get_state_list_2)
-        #self.pbDone_State_2.clicked.connect(self.get_city_list_2)
-        #self.pbDoneCity_2.clicked.connect(self.prepare_properties_list_2)
-        
+
         self.pbDel_County.clicked.connect(self.delete_process_after_county)
         pbDel_State.clicked.connect(self.delete_process_after_state)
         pbDel_city.clicked.connect(self.delete_process_after_city)
@@ -355,7 +350,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     
     #Adding and removing
         
-        self.pbSendItemstoMailabl.clicked.connect(self.add_selected_items_2)
         
         self.pbSearch_Add.clicked.connect(lambda: General.search_cadastral_items_by_values(self))
 
@@ -400,28 +394,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 ############sort/cler/delete##############################
         
-        
-        #self.cbChooseAll_States.clicked.connect(self.togle_items_selection_State)
-        #self.cbChooseAll_States.stateChanged.connect(list_functions.toggleListSelection(list_view_state))
-        
+  
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
         
 
 ########################################################################
 
-#    def handleSelectionChanged_dev(selected, deselected):
-#        # Perform actions based on the newly selected items
-#        for index in selected.indexes():
-#            print("Selected:", index.data())
-
-        # Perform actions based on the deselected items
-#        for index in deselected.indexes():
-#            print("Deselected:", index.data())
-
-
-#    def update_layer_based_on_table(self):
-#        print("started: 'update_layer_based_on_table'")
 
 
     def handleSidebar_help(self):
@@ -738,62 +717,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.cbChooseAllAdd_properties.setChecked(True)
         self.cbChooseAllAdd__street_properties.setChecked(True)
         
-        
-    
-#TODO if all tests confirm no problems
-    #def show_something_on_map_with_cadastral_connection(self):
-    #    table = self.tblvResults_Confirm
-    #    cadasters = projects.importProperties_return_cadasters(table) 
-    #    #print(f"Returned values {cadasters}")       
-    #    layer_name = "SHP_KATASTRIYKSUS"  # Replace with the actual layer name
-    #    values_to_select = cadasters
-    #    selector_class.selector_tool(layer_name, values_to_select)
-    #    print(layer_name,values_to_select)
-    #    cadasters.clear()
-    
-    
-    
 
-        
-    #Adding properties
-
-
-    #TODO remove from code in the end
-    def test_aditional_details_to_properties(self):
-        insertion_class = add_properties
-        insertion_class.add_additional_property_data(self)
-    
-    #TODO remove from code in the end
-    def add_selected_items_2(self):  #Remove 2 if not needed 
-        insertion_class = add_properties
-        init = tableFunctions()
-        table = self.tblvResults_Confirm
-        selected_indexes = table.selectionModel().selectedRows()
-        
-        # Set to store data
-        data = set()
-        count = 0
-        for index in selected_indexes:
-            each_data = init.extract_property_data(index, table)
-            if each_data:
-                data.add(f'{each_data}')
-
-            insertion_class.add_single_property_item(self,each_data)
-            count =+ 1
-            
-        print("Kinnistud lisatud")
-
-        #print(f"each data {each_data}")
-        # Convert the set data to a comma-separated string
-        #print(f"data before join {data}")
-        #data = ', '.join(data)
-        #ids = [id_string]
-        #ids = list(data)       
-        #print(f"dat a after join {data}")
-        #return data
-        
-
-        
 
     def get_state_list(self):
         self.sw_HM.setCurrentIndex(3)
@@ -1106,109 +1030,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
 
-#Remove statements
-        
-    def get_state_list_2(self):
-        object_county = self.listWidget_county_2
-        object_state = self.listWidget_State_2
-        item = object_county.currentItem()
-        restriction = item.text()
-        #print(f"Restriction: {restriction}")
-        item_count_before = graph_tools.count_items_in_layer(input_layer_name)
-        state_list = graph_tools.create_item_list_with_where(item_count_before, restriction, input_layer_name, county_nimi_field, state_nimi_field)
-        list_functions.insert_values_to_listView_object(object_state, state_list)
-        object_state.update()
-        
-        expression = "{} IN ('{}')".format(county_nimi_field, restriction)
-        #print(f"Expression: {expression}")
-        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        layer.setSubsetString(expression)
-        layer.triggerRepaint()
-        layer.updateExtents()
-        graph_tools.activateLayer_zoomTo(layer)
-        item_count = graph_tools.count_items_in_layer(input_layer_name)
-        self.lblCount_2.setText(f"{item_count}")
-        
-        
-    def get_city_list_2(self):
-        object_county = self.listWidget_county_2
-        item_county = object_county.currentItem()
-        restriction_county = item_county.text()
-        
-        object_state = self.listWidget_State_2
-        object_city = self.listWidget_City_2
-        object_city.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-
-        selected_items = object_state.selectedItems()
-        # Check if any items are selected
-        if selected_items:
-            # Retrieve and print the text of selected items
-            items_name_city = [item.text() for item in selected_items]
-            print(f"Selected items: {items_name_city}")
-        else:
-            print("No items selected")
-    
-        city_list = graph_tools.create_item_list_with_MultyWhere(items_name_city, input_layer_name, state_nimi_field, city_nimi_field)
-        list_functions.insert_values_to_listView_object(object_city, city_list)
-        object_city.update()
-
-        expression = " {} IN ('{}') AND {} IN ('{}')".format(county_nimi_field, restriction_county, state_nimi_field, "', '".join(items_name_city))
-        print(f"Expression: {expression}")
-        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        layer.setSubsetString(expression)
-        layer.triggerRepaint()
-        layer.updateExtents()
-        graph_tools.activateLayer_zoomTo(layer)
-        item_count = graph_tools.count_items_in_layer(input_layer_name)
-        self.lblCount_2.setText(f"{item_count}")
-        
-    def prepare_properties_list_2(self):
-        object_county = self.listWidget_county_2
-        object_state = self.listWidget_State_2
-        object_city = self.listWidget_City_2
-        
-        item_county = object_county.currentItem()
-        restriction_county = item_county.text()
-        #print(f"Restriction 1 {restriction_county}")
-        
-        object_state.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-        selected_states = object_state.selectedItems()
-        restriction_state = [item.text() for item in selected_states]
-        #print(f"Restriction 2 {restriction_state}")
-        
-        object_city.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
-        selected_cities = object_city.selectedItems()
-        restriction_city = [item.text() for item in selected_cities]
-        #print(f"Restriction 3 {restriction_city}")
-        
-        expression = " {} IN ('{}') AND {} IN ('{}') AND {} IN ('{}')" .format(county_nimi_field, restriction_county, state_nimi_field, "', '".join(restriction_state),city_nimi_field,"', '".join(restriction_city))
-
-        #print(f"Expression: {expression}")
-        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        layer.setSubsetString(expression)
-        layer.triggerRepaint()
-        layer.updateExtents()
-        graph_tools.activateLayer_zoomTo(layer)
-        item_count = graph_tools.count_items_in_layer(input_layer_name)
-        self.lblCount_2.setText(f"{item_count}")
-        table_functions.generate_table_view_headers(self.tblvResults_Confirm_2,input_layer_name)
-
-    #def lwCounty_setuphelp (self):
-    #    self.sw_HM.setCurrentIndex(3)
-    #    self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-    #    self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(1)
-    
-    def pb_Cadasters_change_help(self):
-        self.swWorkSpace.setCurrentIndex(1)
-        self.sw_HM.setCurrentIndex(3)
-        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(2)
-        self.swCadastral_sub_processes.setCurrentIndex(4)
-        LayerChecker.SHP_Layer_Checker(self, input_layer_name)
-        #self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(0)
-        
+#Remove statements    
 
     def on_load(self):    
-
         self.swWorkSpace.setCurrentIndex(5)  
         frames = {
             "frame1": self.leftMenuContainer,
@@ -1293,10 +1117,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def print_UC_data(self):
         print_result(self)    
 
-
-
-
-
     def layer_setup(self):
         #print("started 'layer_setup'")
         lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
@@ -1304,27 +1124,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblSHPNewItems = self.lblSHPNewItems
         Setup_CadastralsLayers.load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems)
         
-    '''
-    def load_project_settings_widget(self):
-        #global properties_settings_widget 
-        filepaths = Filepaths()
-        qgis_items_instance = QGIS_items()
-        widget_name = filepaths.Setup_ConfigUI
-        widget = loadUi(filepaths.Config_ProjectSettings_Widget(widget_name))
-        
-        
-        cmb_layers  = widget.findChild(QtWidgets.QComboBox, "cmbUserLayers")
-        #cmb_layers  = widget.cmbUserLayers
-        #print("ComboBox:", cmb_layers)
-
-        
-        if cmb_layers:
-            qgis_items_instance.clear_and_populate_combo_box(cmb_layers)    
-        
-        else:
-            print("Input Layer combobox not found within the loaded widget.")
-        widget.exec_()
-    '''     
 
     def set_layer_settings_labels(self):
         #load = SettingsDataSaveAndLoad()
@@ -1388,7 +1187,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             
         
             
-            PropertieLayerFunctions.generate_table_from_selected_map_items_simple(self,table_view, layer_name)
+            PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
             map_selectors.activate_layer_and_use_selectTool_on_first_load(self, widget)
             clear_table.clicked.connect(lambda: shp_tools.clear_table_and_layer(table_view, layer_name))
 

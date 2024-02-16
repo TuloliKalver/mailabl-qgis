@@ -6,7 +6,7 @@ from ..DataLoading_classes import GraphQLQueryLoader
 from PyQt5.QtWidgets import  QMessageBox, QWidget
 from ....config.settings import  connect_settings_to_layer, flags
 from ..property_data import PropertiesGeneralQueries
-from ....Functions.propertie_layer.properties_layer_data import PropertieLayerFunctions
+from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from ..query_tools import requestBuilder
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
@@ -42,8 +42,8 @@ class map_selectors:
             # Show the widget when there are selected features
             table_view = widget.tvProperties_AddTo_Projects
 
-            help = PropertieLayerFunctions()
-            help.generate_table_from_selected_map_items_simple(table_view, active_layer_name)
+            help = PropertiesLayerFunctions()
+            help.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
             widget.showNormal()
 
@@ -77,8 +77,8 @@ class map_selectors:
             # Show the widget when there are selected features
             table_view = widget.tvProperties_AddTo_Projects
 
-            help = PropertieLayerFunctions()
-            help.generate_table_from_selected_map_items_simple(table_view, active_layer_name)
+            help = PropertiesLayerFunctions()
+            help.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
             widget.showNormal()
 
@@ -107,8 +107,8 @@ class map_selectors:
                 # Show the widget when there are selected features
                 table_view = widget.tvProperties_AddTo_Projects
 
-                help = PropertieLayerFunctions()
-                help.generate_table_from_selected_map_items_simple(table_view, active_layer_name)
+                help = PropertiesLayerFunctions()
+                help.generate_table_from_selected_map_items(table_view, active_layer_name)
                 table_view.update()
                 widget.showNormal()
 

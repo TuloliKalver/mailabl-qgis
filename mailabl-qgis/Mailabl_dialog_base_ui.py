@@ -358,11 +358,6 @@ class Ui_MailablDialogBase(object):
 
         self.verticalLayout_7.addWidget(self.pbAddDrawings)
 
-        self.Tester = QPushButton(self.leftMenuSubMain)
-        self.Tester.setObjectName(u"Tester")
-
-        self.verticalLayout_7.addWidget(self.Tester)
-
         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_3)
@@ -1264,20 +1259,11 @@ class Ui_MailablDialogBase(object):
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_10)
 
-        self.pbSendItemstoMailabl = QPushButton(self.frame_3)
-        self.pbSendItemstoMailabl.setObjectName(u"pbSendItemstoMailabl")
-        icon20 = QIcon()
-        icon20.addFile(u"icons/Icons_hele/upload-cloud.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pbSendItemstoMailabl.setIcon(icon20)
-        self.pbSendItemstoMailabl.setIconSize(QSize(18, 18))
-
-        self.horizontalLayout_5.addWidget(self.pbSendItemstoMailabl)
-
         self.pbConfirm_action = QPushButton(self.frame_3)
         self.pbConfirm_action.setObjectName(u"pbConfirm_action")
-        icon21 = QIcon()
-        icon21.addFile(u"icons/Icons_hele/check.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pbConfirm_action.setIcon(icon21)
+        icon20 = QIcon()
+        icon20.addFile(u"icons/Icons_hele/check.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.pbConfirm_action.setIcon(icon20)
         self.pbConfirm_action.setIconSize(QSize(18, 18))
 
         self.horizontalLayout_5.addWidget(self.pbConfirm_action)
@@ -1644,7 +1630,7 @@ class Ui_MailablDialogBase(object):
 
         self.pbDel_PreConfirm = QPushButton(self.frDel_data_properties_heading)
         self.pbDel_PreConfirm.setObjectName(u"pbDel_PreConfirm")
-        self.pbDel_PreConfirm.setIcon(icon21)
+        self.pbDel_PreConfirm.setIcon(icon20)
 
         self.horizontalLayout_43.addWidget(self.pbDel_PreConfirm)
 
@@ -3447,9 +3433,9 @@ class Ui_MailablDialogBase(object):
         self.pbMailabl.setObjectName(u"pbMailabl")
         sizePolicy3.setHeightForWidth(self.pbMailabl.sizePolicy().hasHeightForWidth())
         self.pbMailabl.setSizePolicy(sizePolicy3)
-        icon22 = QIcon()
-        icon22.addFile(u"icon - square.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.pbMailabl.setIcon(icon22)
+        icon21 = QIcon()
+        icon21.addFile(u"icon - square.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pbMailabl.setIcon(icon21)
         self.pbMailabl.setIconSize(QSize(18, 18))
 
         self.verticalLayout_55.addWidget(self.pbMailabl, 0, Qt.AlignRight)
@@ -3467,9 +3453,9 @@ class Ui_MailablDialogBase(object):
 "QPushButton::menu-indicator {\n"
 "    image: none;\n"
 "}")
-        icon23 = QIcon()
-        icon23.addFile(u"icons/Icons_hele/toggle-right.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.helpMenuToggle.setIcon(icon23)
+        icon22 = QIcon()
+        icon22.addFile(u"icons/Icons_hele/toggle-right.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.helpMenuToggle.setIcon(icon22)
         self.helpMenuToggle.setIconSize(QSize(20, 20))
 
         self.verticalLayout_55.addWidget(self.helpMenuToggle)
@@ -4346,10 +4332,10 @@ class Ui_MailablDialogBase(object):
 
         self.retranslateUi(MailablDialogBase)
 
-        self.swWorkSpace.setCurrentIndex(5)
-        self.swCadastral_sub_processes.setCurrentIndex(1)
+        self.swWorkSpace.setCurrentIndex(1)
+        self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
-        self.tabW_Delete_list.setCurrentIndex(2)
+        self.tabW_Delete_list.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(2)
         self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(3)
@@ -4371,7 +4357,6 @@ class Ui_MailablDialogBase(object):
         self.pbSubstitutes.setText(QCoreApplication.translate("MailablDialogBase", u"Servituudid", None))
         self.pbMapThemes.setText(QCoreApplication.translate("MailablDialogBase", u"Teemakaardid", None))
         self.pbAddDrawings.setText(QCoreApplication.translate("MailablDialogBase", u"Teostusjoonised", None))
-        self.Tester.setText(QCoreApplication.translate("MailablDialogBase", u"PushButton", None))
 #if QT_CONFIG(tooltip)
         self.pbSettings.setToolTip(QCoreApplication.translate("MailablDialogBase", u"S\u00e4tted", None))
 #endif // QT_CONFIG(tooltip)
@@ -4419,7 +4404,6 @@ class Ui_MailablDialogBase(object):
         self.pbCancel_streets_reset.setText(QCoreApplication.translate("MailablDialogBase", u"T\u00fchista valik", None))
         self.tabWidget_Propertie_list.setTabText(self.tabWidget_Propertie_list.indexOf(self.tabTranspordimaad), QCoreApplication.translate("MailablDialogBase", u"Teed/t\u00e4navad", None))
         self.tabWidget_Propertie_list.setTabText(self.tabWidget_Propertie_list.indexOf(self.tab), QCoreApplication.translate("MailablDialogBase", u"Lisatavad kinnistud", None))
-        self.pbSendItemstoMailabl.setText(QCoreApplication.translate("MailablDialogBase", u"Lae kinnistud Mailabli", None))
         self.pbConfirm_action.setText(QCoreApplication.translate("MailablDialogBase", u"Kinnita", None))
         self.lblDel_Main_txt.setText(QCoreApplication.translate("MailablDialogBase", u"Eemaldamiseks on valmis", None))
         self.lblDel_Amount.setText("")

@@ -22,12 +22,11 @@ paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
 tunnus_AND_address = ['TUNNUS', 'MK_NIMI', 'OV_NIMI', 'AY_NIMI', 'L_AADRESS']
 
 
-class PropertieLayerFunctions:
-    def generate_table_from_selected_map_items_simple(self, view_item, layer_name):
+class PropertiesLayerFunctions:
+    def generate_table_from_selected_map_items(self, view_item, layer_name):
         input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]    
         features = input_layer.selectedFeatures()
         
-
         total = len(features)
         
         widget = paths.UI_multiline_Statusbar
