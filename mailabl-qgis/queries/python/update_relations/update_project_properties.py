@@ -159,7 +159,7 @@ class ProjectsProperties:
 
         total_ids_Table = len(properties)
         #print(f"properties {properties}")
-        returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, propertie_list=properties)
+        returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, properties_list=properties)
         
         total_returned_ids = len(returned_ids)
         #print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")

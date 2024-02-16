@@ -854,78 +854,62 @@ class MyLablChecker:
         return missing_items
 
 class PropertiesGeneralQueries:
-    def get_properties_MyLabl_ids(self, propertie_list):
-        total_in_list = len(propertie_list)
+    def get_properties_MyLabl_ids(self, properties_list):
+        total_in_list = len(properties_list)
         
         query_loader = Graphql_properties()
         query = GraphQLQueryLoader.load_query_properties(self, query_loader.W_properties_number)
         
         sleep_duration = 1
         chunk_size = 50
-        #for i in range(0, total_in_list, chunk_size):
-        #    chunk = propertie_list[i:i+chunk_size]
         
-        total_chunk = 0
         total_fetched = 0
-        
+        total_chunk = 0  # Initialize total_chunk
         end_cursor = None  # Initialize end_cursor before the loop
         widgets_path = PathLoaderSimple.widget_statusBar_path(self)
         progress_widget = loadUi(widgets_path)
         progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(len(propertie_list))
+        progress_bar.setMaximum(len(properties_list))
         progress_widget.setWindowTitle("Valmistan andmeid ette")
         progress_widget.show()
         
         cadasters = []
         fetched_items = []
-        while total_chunk < total_in_list:
-            chunk = propertie_list[total_fetched:total_fetched + chunk_size]  # Slice next chunk of data
-            #print("desired_total_items is None or total_fetched <= desired_total_items")
-            #print(f"{desired_total_items} is None or {total_fetched} <= {desired_total_items}")
-            print(f"chunk in 'get propertie id' loop {chunk}")
+        
+        while total_fetched < total_in_list:
+            chunk = properties_list[total_fetched:total_fetched + chunk_size]  # Slice next chunk of data
+            
             variables = {
-                        #"first": size,  # Fetch 50 items per query
-                        #"after": None,
-                        "after": end_cursor if end_cursor else None,  # Use the endCursor as the after value   
-                        "where":
-                                    {
-                                "column": "CADASTRAL_UNIT_NUMBER",
-                                "operator": "IN", # oli EQ = equals ehk võrdne 
-                                "value": chunk #array anna siin items
-                                }
-                        }
+                "after": end_cursor if end_cursor else None,  # Use the endCursor as the after value   
+                "where": {
+                    "column": "CADASTRAL_UNIT_NUMBER",
+                    "operator": "IN",
+                    "value": chunk
+                }
+            }
 
             response = requestBuilder.construct_and_send_request(self, query, variables)
-            print("response")
-            print(response)
 
             if response.status_code == 200:
                 returned_id = handleResponse.response_properties_data_ids(response)
                 cadaster = handleResponse.response_properties_cadastral_numbers(response)
-                print(f"Returned_id: {returned_id}")
+                
                 data = response.json()
-                #print(data)
                 pageInfo = data.get("data", {}).get("properties", {}).get("pageInfo", {})
                 end_cursor = pageInfo.get("endCursor")
-                #print(f"desired_total_items from query {desired_total_items}")
+                
                 fetched_items.extend(returned_id)
                 cadasters.extend(cadaster)
-                print(f"fetched_items: {fetched_items}")
-                # Increment total_fetched inside the loop
-                total_fetched += len(returned_id)
-                # Check whether the last page has been reached
-                total_chunk += len(chunk)
                 
-                progress_bar.setValue(total_chunk)
+                total_fetched += len(returned_id)  # Adjust total_fetched based on the returned items
+                total_chunk += 1  # Increment total_chunk
+                
+                progress_bar.setValue(total_fetched)
                 QCoreApplication.processEvents()
-                #if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items) or not pageInfo.get("hasNextPage"):
-                #    break
             
-            
-            if  total_in_list % chunk_size == 0:
+            if len(chunk) < chunk_size or total_fetched % chunk_size == 0:
                 time.sleep(sleep_duration)
 
         return fetched_items, cadasters
-
 
 
