@@ -70,7 +70,7 @@ class Mailabl:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&Mailabl-dev')
+        self.menu = self.tr(u'&Mailabl')
 
         # Check if plugin was started the first time in current QGIS session
         # Must be set in initGui() to survive plugin reloads
@@ -89,7 +89,7 @@ class Mailabl:
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('Mailabl-dev', message)
+        return QCoreApplication.translate('Mailabl', message)
 
 
     def add_action(
@@ -174,7 +174,7 @@ class Mailabl:
         icon_path = self.plugin_dir + '/Ikoon.svg'
         self.add_action(
             icon_path,
-            text=self.tr(u'Mailabl-dev plugin'),
+            text=self.tr(u'Mailabl plugin'),
             callback=self.run,
             parent=self.iface.mainWindow())
 
@@ -187,7 +187,7 @@ class Mailabl:
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&Mailabl-dev'),
+                self.tr(u'&Mailabl'),
                 action)
             self.iface.removeToolBarIcon(action)
 
@@ -218,7 +218,7 @@ class Mailabl:
             #layer_loader.create_mailabl_setup_group_layer()
         # Update the window status to 'closed' in settings
             settings = QgsSettings()
-            settings.setValue('/Mailabl-dev/Setting/windowStatus', 'opened')
+            settings.setValue('/Mailabl/Setting/windowStatus', 'opened')
             # Connect the function to the close event of the dialog
             self.dlg.finished.connect(self.handle_dialog_closed)
 
@@ -239,4 +239,4 @@ class Mailabl:
         print("Dialog closed")
         # Update the window status to 'closed' in settings
         settings = QgsSettings()
-        settings.setValue('/Mailabl-dev/Setting/windowStatus', 'closed')
+        settings.setValue('/Mailabl/Setting/windowStatus', 'closed')
