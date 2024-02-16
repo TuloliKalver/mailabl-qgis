@@ -1,0 +1,37 @@
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install qgis-plugin-ci
+        run: pip3 install qgis-plugin-ci
+
+      - name: Create config file
+        uses: jsdaniell/create-json@v1.2.3
+        with:
+          dir: 'mailabl-qgis/config/'
+          name: 'config.json'
+          json: ${{ vars.CONFIG }}
+
+      - name: Commit config file
+        run: git config --global user.email "tulolikt@gmail.com" && git config --global user.name "TuloliKalver" && git add . && git add --force mailabl-qgis/config/config.json && git status && git commit -a -m "Deploy config JSON created!"
+
+      - name: Deploy plugin
+        run: >-
+          qgis-plugin-ci
+          release ${GITHUB_REF/refs\/tags\//}
+          --github-token ${{ secrets.GITHUB_TOKEN }}
+          --create-plugin-repo
