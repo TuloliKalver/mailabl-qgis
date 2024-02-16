@@ -311,8 +311,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_Mailabl_homepage())
         
-
-
     # Katastri andmete kontrollimine 
         self.pbUpdateData.clicked.connect(lambda: WorkSpaceHandler.show_help_update(self))
         #self.pbRefresh.clicked.connect(self.check_for_updates)
@@ -346,17 +344,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         #self.pbDelete_items_getCounty.clicked.connect(self.get_Mailabl_existing_counties)
         
-        
-    
-    #Adding and removing
-        
-        
+    #Adding and removing        
         self.pbSearch_Add.clicked.connect(lambda: General.search_cadastral_items_by_values(self))
 
-
-
-
-        
     #update selections in adding proccess
         self.cbChooseAll_States.stateChanged.connect(lambda state, view_state=object_listView_Add_State: list_functions.toggleListSelection(view_state, state))
         self.cbChooseAll_Cities.stateChanged.connect(lambda state, view_state=object_listView_Add_City: list_functions.toggleListSelection(view_state, state))
@@ -379,7 +369,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         tbl_Delete_streets.setSelectionBehavior(QAbstractItemView.SelectRows)
 
         
-        self.pbCooseFromMap_Add.clicked.connect(self.manualy_choose_properties_to_Add)
+        #self.pbCooseFromMap_Add.clicked.connect(self.manualy_choose_properties_to_Add)
         
         self.listWidget_county.clicked.connect(self.update_map_with_restricted_county)
         self.listWidget_State.clicked.connect(self.update_step_2)
@@ -394,14 +384,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 ############sort/cler/delete##############################
         
-  
-        
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
         
 
 ########################################################################
-
-
 
     def handleSidebar_help(self):
         button1 = self.pbMailabl        
@@ -418,7 +404,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #Chose a random button to measure text lenght
         length = len(button1.text())
         alter_containers.toggle_right_menu(self, length, buttons, original_texts, new_texts, help_menu, container, container_width)
-
 
     def handleSidebar_leftButtons(self):
         button1 = self.pbSettings
@@ -510,37 +495,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def StartImportProcess(self):
         AddProperties.check_for_duplicates_and_add_only_matches(self)
 
-
-    #TODO add streets!!!
-    def add_selected_items(self):
-        init = tableFunctions()
-        table = self.tblvResults_Confirm
-        table_2 = self.tabWidget_Propertie_list
-        selected_indexes = table.selectionModel().selectedIndexes()
-        # Set to store data
-        data = set()
-        
-        for index in selected_indexes:
-            each_data = init.extract_property_data(index, table)
-            if each_data:
-                data.add(f'{each_data}')
-        
-        data_2 =set()
-        
-        for index in selected_indexes:
-            each_data = init.extract_property_data(index, table_2)
-            if each_data:
-                data_2.add(f'{each_data}')
-        
-        # Convert the set data to a comma-separated string
-        #print(f"data before join {data}")
-        data = ', '.join(data)
-        #ids = [id_string]
-        ids = list(data)       
-        #print(f"data after join {data}")
-        return data, data_2
-
-
     def update_step_2 (self):
         layer_name = load.load_SHP_inputLayer_name()
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
@@ -574,9 +528,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                             hide_buttons,
                                             checkboxes)
 
-    
-
-        
     def update_step_3 (self):
         layer_name = load.load_SHP_inputLayer_name()
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
@@ -606,8 +557,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                             object_tables,
                                             hide_buttons,
                                             checkboxes)
-
-    
     
     def update_map_with_restricted_county (self):
         input_layer_name = load.load_SHP_inputLayer_name()
@@ -664,7 +613,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         layer = map_layers[0]
         layer.selectionChanged.connect(lambda: self.activate_item_selection_from_layer(input_layer_name))
     
-    
     def activate_item_selection_from_layer(self,layer_name):
         print("activated item selector")
         #print("started")
@@ -698,7 +646,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.tabWidget_Propertie_list.show()
         self.tabWidget_Propertie_list.setCurrentIndex(0) 
         #PropertieLayerFunctions.generate_table_from_selected_map_items_simple(self,table_view, layer_name)
-            
+    #TODO solve proble
         select_from_aLayer.activate_layer_and_use_selectTool(input_layer_name)
         #table = self.tblvResults_Confirm
         model_without_transport, model_with_transport = table_functions.generate_table_from_selected_map_items_with_roads(input_layer_name)
@@ -1028,10 +976,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbConfirm_action.show()
 
-
-
-#Remove statements    
-
     def on_load(self):    
         self.swWorkSpace.setCurrentIndex(5)  
         frames = {
@@ -1113,7 +1057,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             # ... your code to handle the error
             print(access_token_results)
 
-        
     def print_UC_data(self):
         print_result(self)    
 
@@ -1124,7 +1067,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblSHPNewItems = self.lblSHPNewItems
         Setup_CadastralsLayers.load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems)
         
-
     def set_layer_settings_labels(self):
         #load = SettingsDataSaveAndLoad()
         lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
@@ -1143,14 +1085,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #shp_input = load.load_SHP_inputLayer_name()        
         color_handler.changeButtonColor(self, self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)                                
 
-
     def show_projects_on_map_with_cadastral_connection(self):
         #def show_connected_cadasters(values, layer_type):
         layer_type = "active"
         cadasters = CadasterSelector.projects_return_cadasters(self,table = self.tblProjects) 
         properties_selectors.show_connected_cadasters(self, layer_type=layer_type, values=cadasters)
         cadasters.clear()
-
 
     def connect_properties_with_projects(self):
         global projects_widget
@@ -1184,7 +1124,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             flag = flags.active_properties_layer_flag 
             flag = True        
             flags.active_properties_layer_flag = flag
-            
         
             
             PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
@@ -1198,7 +1137,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             
         else:
             QMessageBox.information(self, "Jama", "Pead valima ühe projekti")
-
         
     def generate_virtual_mapLayer_synced_with_Mailabl(self):
         # Create an instance of YourClas
@@ -1233,9 +1171,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Connect the button click signal to the prepare_items_for_base_map method
         self.your_instance.prepare_items_for_base_map()
 
-
-
-
 #TODO -  move to projeckts list!        
     def update_tblMailabl_projects(self):
         button = self.pbRefresh_tblMailabl_projects
@@ -1243,7 +1178,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         table = self.tblMailabl_projects
         Projects.load_Mailabl_projects_list(self, table)
         button.blockSingnals = False
-        
         
     def Delete_reset_stage(self):
         Delete_Main_Process.Delete_process_view_on_countyListView_click(self)
@@ -1315,7 +1249,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
             self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
             
-    #@staticmethod
     def delete_process_after_city(self):
         lwDel_County_Names = self.lwDelete_County_Names
         lwDel_State_names = self.lwDel_State_Names
@@ -1386,7 +1319,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #Delete_finalProcess.delete_selected_items_from_mylabl(self, tbl_Delete_properties, tbl_Delete_streets)
         DeleteActions.delete_selected_items_from_mylabl(self)
         
-    #@staticmethod
     def toggle_settings_main_view(self):
             input_layer_name = load.load_SHP_inputLayer_name()
             color.changeButtonColor(self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)

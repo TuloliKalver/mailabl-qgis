@@ -90,9 +90,9 @@ class map_selectors:
             active_layer.selectionChanged.connect(on_selection_changed_lambda)
             
         else:
-           print("Flag is false")
-           pass
-       
+            print("Flag is false")
+            pass
+        
     @staticmethod
     def on_selection_changed(widget):
         active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
