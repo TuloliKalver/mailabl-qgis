@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>497</width>
+    <height>320</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/*konteinerite peamised omadused*/
+
+QWidget{
+    background-color: #272c35;
+}
+
+/*üleüldine taust ja toonid*/
+/*--gray-0: #fff;
+    --gray-50: #f7f7f8;
+    --gray-100: #ececf1;
+    --gray-200: #d9d9e3;
+    --gray-300: #c5c5d2;
+    --gray-400: #acacbe;
+    --gray-500: #8e8ea0;
+    --gray-600: #565869;
+    --gray-700: #40414f;
+    --gray-800: #343541;
+    --gray-900: #202123;
+    --gray-950: #050509;
+*/
+
+
+/*style the combobox itself*/
+QComboBox{
+	background-color:#40414f;
+	color:#ececf1;
+	border: 1px solid #565869;
+	border-radius: 4px;
+	padding-left: 5px;
+}
+
+/*Style the dropdown area*/
+QComboBox::drop-down{
+	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));
+	border: 1px solid #565869;
+	border-radius: 8px;
+	height:16px;
+	width: 16px;
+	subcontrol-origin: padding 2px;
+    subcontrol-position: left;
+}
+
+QComboBox::on{
+	border: 2px solid #565869;
+}
+
+QAbstractItemView {
+	background-color:#40414f;
+	color:#ececf1;
+	border: 1px solid #565869;
+	border-radius: 4px;
+	padding-left: 5px;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>58</x>
+      <y>30</y>
+      <width>251</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>null</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>üks</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>kaks</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>kolm</string>
+     </property>
+    </item>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>497</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="icons/test.qrc"/>
+ </resources>
+ <connections/>
+</ui>

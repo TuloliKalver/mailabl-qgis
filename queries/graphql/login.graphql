@@ -1,0 +1,8 @@
+query login(
+  input: LoginInput
+): AuthPayload!
+
+input LoginInput {
+  username: String!
+  password: String!
+}

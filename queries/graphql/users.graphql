@@ -1,0 +1,40 @@
+
+query users($first: Int, $after: String) {
+  users(
+    first: $first, 
+    after: $after,
+    trashed: WITH
+  ) {
+    pageInfo {
+      count
+      currentPage
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      lastPage
+      total
+    }
+    edges {
+      node {
+        id
+        firstName
+        lastName
+        displayName
+        email
+        phones {
+          edges {
+            node {
+              value
+              country
+              code
+            }
+          }
+        }
+        createdAt
+        updatedAt
+        deletedAt
+      }
+    }
+  }
+}

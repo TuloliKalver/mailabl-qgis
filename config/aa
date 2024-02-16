@@ -1,0 +1,62 @@
+/*konteinerite peamised omadused*/
+
+QWidget{
+    background-color: #272c35;
+	color:#c5c5d2
+}
+
+
+/*esialgu jaotamata omadused*/
+QComboBox{
+
+	background-color:#40414f;
+	color:#ececf1;
+	border: 1px solid #565869;
+	border-radius: 3px;
+	padding-left: 5px
+}
+
+/*Style the dropdown area*/
+QComboBox::drop-down{
+	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));
+	border: 1px solid #565869;
+	border-radius: 8px;
+	height:16px;
+	width: 16px;
+	subcontrol-origin: padding;
+    subcontrol-position: left
+}
+
+QComboBox::on{
+
+  	border: 0.5px solid #acacbe;
+}
+
+QAbstractItemView {
+	background-color:#40414f;
+	color:#ececf1;
+	border: 1px solid #565869;
+	border-radius: 4px;
+	padding-left: 5px
+}
+
+
+QPushButton{
+	padding: 2px 8px;
+	text-align: center;
+	border-radius: 6px;
+	background-color:#40414f;
+	border: 1px solid #565869;
+}
+
+
+QPushButton:hover{
+    background-color: #8e8ea0;
+	border: 0.5px solid #acacbe;
+	color: #343541;
+	text-align: center;	
+	padding: 2px 8px;
+    border-radius: 6px;
+	
+}
+
