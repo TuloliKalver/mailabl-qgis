@@ -58,7 +58,7 @@ from .processes.SyncProperties.syncMailablProperties import PropertiesBaseMap
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QListWidgetItem
 from .Functions.AddProperties.AddNonduplicateItems import AddProperties
-from .Functions.RemoveProperties.RemoveSelectedProperties import DeletActions
+from .Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 
 
 
@@ -1628,13 +1628,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
             self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
             
-
+    @staticmethod
     def delete_process_after_city(self):
         lwDel_County_Names = self.lwDelete_County_Names
         lwDel_State_names = self.lwDel_State_Names
         lwDel_City_Names = self.lwDelete_Cities_Names
         lbl = self.lblDel_Amount        
         button = self.pbDel_City
+        tab_widget = self.tabW_Delete_list
+        TabHandler.tabViewByState(tab_widget,state=True)
         button.blockSignals(True)
         
         check_items = lwDel_State_names.selectedItems()
@@ -1695,7 +1697,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def DeleteProcess_check_validity_in_Mylabl (self):
         activ_cadastral_layer = load.load_target_cadastral_name()
         #Delete_finalProcess.delete_selected_items_from_mylabl(self, tbl_Delete_properties, tbl_Delete_streets)
-        DeletActions.delete_selected_items_from_mylabl(self)
+        DeleteActions.delete_selected_items_from_mylabl(self)
         
     #@staticmethod
     def toggle_settings_main_view(self):

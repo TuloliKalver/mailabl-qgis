@@ -1,32 +1,29 @@
 from qgis.core import QgsProject
-
-from PyQt5.QtWidgets import  QMessageBox
-from PyQt5.QtCore import QCoreApplication
-from ...app.View_tools import MapSelector
-from ..Tools import tableFunctions
-from ...config.settings import SettingsDataSaveAndLoad
-from ...queries.python.property_data import MyLablChecker, PropertiesGeneralQueries, deleteProperty
 from PyQt5.QtGui import QStandardItemModel
+from PyQt5.QtWidgets import  QMessageBox, QAbstractItemView
+from PyQt5.QtCore import QCoreApplication
+from ...app.View_tools import MapSelector, TableViewadjuster
+from ...app.workspace_handler import TabHandler
+from ..Tools import tableFunctions
 from ..QstandardModelTools.QStandardModelHandler import ModelHeadersGenerator, CombineModels, DataExtractors
-from PyQt5.QtWidgets import QAbstractItemView
 from ..delete_items import Delete_finalProcess, Delete_Main_Process
+from ...queries.python.property_data import PropertiesGeneralQueries, deleteProperty
+from ...config.settings import SettingsDataSaveAndLoad
 
-table_data = tableFunctions
-checker = MyLablChecker()
-load = SettingsDataSaveAndLoad()
-
-class DeletActions:
+class DeleteActions:
+    @staticmethod
     def delete_selected_items_from_mylabl(self):
+        load = SettingsDataSaveAndLoad()
         active_cadastral_layer_name = load.load_target_cadastral_name()
         active_layer = QgsProject.instance().mapLayersByName(active_cadastral_layer_name)[0]
         
         button = self.pbDel_PreConfirm
         table_properties = self.tbl_Delete_properties
         table_streets = self.tbl_Delete_streets
-        table_target = self.tblvAllDeletable
-        
+        table_target = self.tblvAllDeletable        
         tab_widget = self.tabW_Delete_list
-
+        field = "TUNNUS"
+        
         data = tableFunctions.RemoveNonSelectedRowsFromTable(self, table_properties)
         data2 = tableFunctions.RemoveNonSelectedRowsFromTable(self, table_streets)
         
@@ -45,7 +42,9 @@ class DeletActions:
 
             model = QStandardItemModel()
             model.setHorizontalHeaderLabels(header_names)
-        
+            
+            TabHandler.tabViewByState(tab_widget, state=False)        
+            
             # Now that the new model is populated, you can set it to your table view
             table_target.setModel(model)        
             # Insert data into the new model
@@ -56,16 +55,13 @@ class DeletActions:
 
             properties = DataExtractors.ExtractCadastralNrDataFromModel(model,header_names)
             
-            #TabHandler.tabViewByState(tab_widget, state=False)
-            
-            #ToBe_deleted_properties = checker.process_data_in_batches_with_progress(properties)
             ToBe_deleted_properties, cadasters = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, properties)
-            print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
-            print(f"To be deleted properties: {len(cadasters)}")
+            #print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
+            #print(f"To be deleted properties: {len(cadasters)}")
             
             if len(cadasters) == 0:
-                QMessageBox.warning(self,"Oops","Valikus olnud kinnistuid Mailablis ei ole!")
-                #TabHandler.tabViewByState(tab_widget,True)
+                QMessageBox.warning(self,"Oops","Valitud kinnistuid Mailablis ei ole!")
+                TabHandler.tabViewByState(tab_widget,True)
                 tab_widget.hide()
                 model_properties.clear()
                 model_streets.clear()
@@ -80,12 +76,11 @@ class DeletActions:
                         table_target.setSelectionMode(QAbstractItemView.MultiSelection)
                         table_target.selectRow(row)
             
-                table_data.RemoveNonSelectedRowsFromTable(self, table_target)
+                tableFunctions.RemoveNonSelectedRowsFromTable(self, table_target)
                 model_final = table_target.model()
             
                 properties_final = DataExtractors.ExtractCadastralNrDataFromModel(model_final, header_names) 
                 #print(f"Final values: {properties_final}")
-                field = "TUNNUS"
                 MapSelector.set_MapItemsByItemList_WithZoom(active_layer, properties_final, field)
                 QCoreApplication.processEvents()
                 
