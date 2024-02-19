@@ -46,7 +46,9 @@ class Graphql_contracts:
     def __init__(self):
         self.Q_All_contracts = 'contracts.graphql'
         self.Q_contract_minimal = 'contracts_minimal.graphql'
+        self.Q_where_Contracts_related_properties = 'W_contract_id.graphql'
         
+
 class GraphQLQueryLoader:
     def __init__(self):
         # Get the current file's directory

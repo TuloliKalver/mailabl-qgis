@@ -8,7 +8,7 @@ from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_co
 from ...queries.python.query_tools import requestBuilder
 from ..tableViewAdjust import colors, ColumnResizer
 from ...config.settings import Filepaths
-from ..ButtonDelegates import ContractButtonDelegate, FileDelegate
+from ..ButtonDelegates import ContractButtonDelegate, FileDelegate, SelectContractsOnMapElementsDelegate
 from ...config.iconHandler import iconHandler
 
 header_id = 'ID'
@@ -28,8 +28,6 @@ header_statuses = 'Staatus'
 class ContractsMain:    
     @staticmethod
     def main_contracts(self, table):
-
-        
         con_model, header_labels = queryHandling.contracts_basic_data(self)
         contracts_model = QStandardItemModel()
         contracts_model.setHorizontalHeaderLabels(header_labels)
@@ -43,7 +41,7 @@ class ContractsMain:
         dokAddress_column_index = header_labels.index(header_Documents)
         dokButton_column_index = header_labels.index(header_file_path)
         cadastralUnit_Column_index = header_labels.index(header_property_number)
-
+        cadastralUnit_Button_index = header_labels.index(header_properties_icon)
         
         for row_index in range(con_model.rowCount()):
             number_item = con_model.item(row_index, number_column_index)            
@@ -113,7 +111,19 @@ class ContractsMain:
             contracts_model.setItem(row_index,ID_column_index, id_item_text)
             contracts_model.setItem(row_index, status_column_index, status_item_text)
             
-                # Set the customColumn(Link_Column_index, delegate)
+            if cadastralUnit_item:
+                cadastral_number = cadastralUnit_item.text()
+                if cadastral_number:
+                    pb_ShowCadasters = QStandardItem()
+                    text_color1 = QColor("#FFFFFF")  # White
+                    pb_ShowCadasters.setForeground(QBrush(text_color1))
+                    pb_ShowCadasters.setSelectable(True)
+                    pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
+                #TODO solve icon centering!
+                    icon_path = ":/images/themes/default/mActionAdd3DMap.svg"
+                    icon = QIcon(icon_path)
+                    pb_ShowCadasters.setIcon(icon)
+                    contracts_model.setItem(row_index, cadastralUnit_Button_index, pb_ShowCadasters)
             
                     # Set the custom delegate for the button column (column link_column_index)
         button_delegate = ContractButtonDelegate(ID_column_index, table)
@@ -125,8 +135,8 @@ class ContractsMain:
         table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
 
 
-#        show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
-#        table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
+        show_onMap_delegate = SelectContractsOnMapElementsDelegate(ID_column_index, table)
+        table.setItemDelegateForColumn(cadastralUnit_Button_index, show_onMap_delegate)
 
             
         table.verticalHeader().setVisible(False)

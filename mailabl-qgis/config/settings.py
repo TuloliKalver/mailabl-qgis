@@ -35,6 +35,11 @@ class OpenLink:
         link = f'{OpenLink.main}/projects/'
         return link
 
+    def weblink_single_contract():
+        link = f'{OpenLink.main}/contracts/'
+        return link
+
+
 
 class GraphQLSettings:
     def graphql_endpoint():

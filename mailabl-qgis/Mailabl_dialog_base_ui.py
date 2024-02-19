@@ -2398,17 +2398,49 @@ class Ui_MailablDialogBase(object):
 
         self.ContractMainFrame = QFrame(self.Lepingud)
         self.ContractMainFrame.setObjectName(u"ContractMainFrame")
-        self.ContractMainFrame.setStyleSheet(u"background-color: rgb(0, 170, 0);")
+        self.ContractMainFrame.setStyleSheet(u"")
         self.ContractMainFrame.setFrameShape(QFrame.StyledPanel)
         self.ContractMainFrame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_8 = QVBoxLayout(self.ContractMainFrame)
+        self.verticalLayout_8.setSpacing(0)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.Buttons = QFrame(self.ContractMainFrame)
+        self.Buttons.setObjectName(u"Buttons")
+        self.Buttons.setStyleSheet(u"")
+        self.Buttons.setFrameShape(QFrame.StyledPanel)
+        self.Buttons.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_10 = QHBoxLayout(self.Buttons)
+        self.horizontalLayout_10.setSpacing(12)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(6, 6, 6, -1)
+        self.pbContracts_Connect_properties = QPushButton(self.Buttons)
+        self.pbContracts_Connect_properties.setObjectName(u"pbContracts_Connect_properties")
+
+        self.horizontalLayout_10.addWidget(self.pbContracts_Connect_properties)
+
+        self.pbRefresh_tblMailabl_contracts = QPushButton(self.Buttons)
+        self.pbRefresh_tblMailabl_contracts.setObjectName(u"pbRefresh_tblMailabl_contracts")
+        self.pbRefresh_tblMailabl_contracts.setIcon(icon15)
+
+        self.horizontalLayout_10.addWidget(self.pbRefresh_tblMailabl_contracts)
+
+        self.label_5 = QLabel(self.Buttons)
+        self.label_5.setObjectName(u"label_5")
+
+        self.horizontalLayout_10.addWidget(self.label_5)
+
+
+        self.verticalLayout_8.addWidget(self.Buttons)
+
         self.ContractInfoFrame = QFrame(self.ContractMainFrame)
         self.ContractInfoFrame.setObjectName(u"ContractInfoFrame")
         self.ContractInfoFrame.setFrameShape(QFrame.StyledPanel)
         self.ContractInfoFrame.setFrameShadow(QFrame.Raised)
         self.verticalLayout = QVBoxLayout(self.ContractInfoFrame)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.ContractView = QTableView(self.ContractInfoFrame)
         self.ContractView.setObjectName(u"ContractView")
         self.ContractView.setStyleSheet(u"background-color: rgb(52, 59, 71);")
@@ -2417,30 +2449,6 @@ class Ui_MailablDialogBase(object):
 
 
         self.verticalLayout_8.addWidget(self.ContractInfoFrame)
-
-        self.Buttons = QFrame(self.ContractMainFrame)
-        self.Buttons.setObjectName(u"Buttons")
-        self.Buttons.setStyleSheet(u"background-color: rgb(170, 85, 255);")
-        self.Buttons.setFrameShape(QFrame.StyledPanel)
-        self.Buttons.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_10 = QHBoxLayout(self.Buttons)
-        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
-        self.horizontalSpacer = QSpacerItem(380, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_10.addItem(self.horizontalSpacer)
-
-        self.pushButton_2 = QPushButton(self.Buttons)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-
-        self.horizontalLayout_10.addWidget(self.pushButton_2)
-
-        self.pushButton = QPushButton(self.Buttons)
-        self.pushButton.setObjectName(u"pushButton")
-
-        self.horizontalLayout_10.addWidget(self.pushButton)
-
-
-        self.verticalLayout_8.addWidget(self.Buttons)
 
 
         self.verticalLayout_39.addWidget(self.ContractMainFrame)
@@ -4332,7 +4340,7 @@ class Ui_MailablDialogBase(object):
 
         self.retranslateUi(MailablDialogBase)
 
-        self.swWorkSpace.setCurrentIndex(1)
+        self.swWorkSpace.setCurrentIndex(2)
         self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -4479,8 +4487,9 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">	a. Mailablist</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">	b.Qgisist</span></p></body></html>", None))
         self.label_18.setText(QCoreApplication.translate("MailablDialogBase", u"Toimingud Lepingutega ", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MailablDialogBase", u"N\u00e4ita kaardil", None))
-        self.pushButton.setText(QCoreApplication.translate("MailablDialogBase", u"M\u00e4ita Mailablis", None))
+        self.pbContracts_Connect_properties.setText(QCoreApplication.translate("MailablDialogBase", u"N\u00e4ita kaardil", None))
+        self.pbRefresh_tblMailabl_contracts.setText("")
+        self.label_5.setText(QCoreApplication.translate("MailablDialogBase", u"TextLabel", None))
         self.label_19.setText(QCoreApplication.translate("MailablDialogBase", u"Lepinguid kokku: xxx", None))
         self.label_3.setText(QCoreApplication.translate("MailablDialogBase", u"Kehtivad: xxx", None))
         self.label_20.setText(QCoreApplication.translate("MailablDialogBase", u"Help", None))
