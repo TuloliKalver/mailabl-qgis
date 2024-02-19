@@ -2,7 +2,7 @@ import time
 from qgis.core import  QgsProject, QgsMapLayer
 from qgis.utils import iface
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import GraphQLQueryLoader
+from ..DataLoading_classes import GraphQLQueryLoader, Graphql_contracts
 from PyQt5.QtWidgets import  QMessageBox, QWidget
 from ....config.settings import  connect_settings_to_layer, flags
 from ..property_data import PropertiesGeneralQueries
@@ -96,7 +96,7 @@ class ContractProperties:
         flags.active_properties_layer_flag = flag
 
     @staticmethod    
-    def update_contract_properties(self, project_id, widget, project_name):
+    def update_contract_properties(self, contract_id, widget, project_name):
         active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
         properties_table = widget.tvProperties_AddTo_Contracts
         model_properties = properties_table.model()
@@ -120,11 +120,11 @@ class ContractProperties:
 
         total_ids_Table = len(properties)
         #print(f"properties {properties}")
-        returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, properties_list=properties)
+        returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids_repaired(self, properties_list=properties)
         
         total_returned_ids = len(returned_ids)
-        #print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")
-        #print(returned_ids)
+        print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")
+        print(returned_ids)
         
         chunk_size = 25
         count = 0
@@ -140,12 +140,13 @@ class ContractProperties:
         for i in range(0, total_returned_ids, chunk_size):
             chunk = returned_ids[i:i+chunk_size]
             
-            query_loader = GraphQLQueryLoader() 
-            query = query_loader.load_query_for_projects(query_loader.UPDATE_project_properties)
+            query_loader = Graphql_contracts() 
+            function_loader = GraphQLQueryLoader()
+            query = function_loader.load_query_for_contracts(query_loader.UPDATE_contract_properties)
             
             variables = {
                         "input": {
-                            "id": project_id,
+                            "id": contract_id,
                             "properties":
                                 {
                                 "associate": chunk
@@ -164,8 +165,8 @@ class ContractProperties:
             if count % paus_interval == 0:
                 timer_instance.pause()
 
-                    
-        QMessageBox.information(self, "Info", f"Projektile {project_name} lisatud {total_returned_ids}/{total_ids_Table}")
+                           
+        QMessageBox.information(self, "Info", f"Lepingule {project_name} lisatud {total_returned_ids}/{total_ids_Table}")
         #print("Project updated successfully:")
         #print(updated_project)
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]

@@ -1118,7 +1118,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
             widget.show()
             
-#            widget.accepted.connect(lambda: ProjectsProperties.update_projects_properties(self, Mailabl_ID_text, widget, contract_name_text))
+            widget.accepted.connect(lambda: ContractProperties.update_contract_properties(self, Mailabl_ID_text, widget, contract_name_text))
 #            widget.rejected.connect(lambda: ProjectsProperties.on_cancel_button_clicked(widget))
             
         else:
