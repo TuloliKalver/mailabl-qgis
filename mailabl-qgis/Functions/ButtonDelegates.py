@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QStyledItemDelegate
 from ..config.settings import  OpenLink
 #from ..queries.python.contractsBySingleItem import getContractsWhere
-from ..queries.python.contracts.a import getContractsWhere
+from ..queries.python.a import getContractsWhere
 from .item_selector_tools import properties_selectors
 
 class ContractButtonDelegate(QStyledItemDelegate):
@@ -80,7 +80,7 @@ class SelectContractsOnMapElementsDelegate(QStyledItemDelegate):
             if event.button() == Qt.LeftButton:
                 # Retrieve the ID_column_index value from the model
                 id_value = str(model.data(model.index(index.row(), self.ID_column_index), Qt.DisplayRole))
-                values = getContractsWhere.QueryProjects_relatedProperties(self, id_value)
+                values = getContractsWhere.QueryContracts_relatedProperties(self, id_value)
                 total = len(values)
                 layer_type = "active"
                 properties_selectors.show_connected_cadasters(values, layer_type)

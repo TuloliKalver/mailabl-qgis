@@ -1,15 +1,15 @@
 
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import Graphql_contracts, GraphQLQueryLoader
-from ..query_tools import requestBuilder
+from .DataLoading_classes import Graphql_contracts, GraphQLQueryLoader
+from .query_tools import requestBuilder
 
 class getContractsWhere:
     @staticmethod
-    def QueryProjects_relatedProperties(self, id_value):
+    def QueryContracts_relatedProperties(self, id_value):
         #print(f"id value in query {id_value}")
         #Load the project query using the loader instance
         query_loader = Graphql_contracts()
-        query = GraphQLQueryLoader.load_query_for_projects(self,query_loader.Q_where_Contracts_related_properties)
+        query = GraphQLQueryLoader.load_query_for_contracts(self,query_loader.Q_where_Contracts_related_properties)
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value
