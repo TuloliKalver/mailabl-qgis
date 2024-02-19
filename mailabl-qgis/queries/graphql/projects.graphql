@@ -24,8 +24,6 @@ query projects($first: Int, $after: String) {
                 isPublic
                 isSubproject
                 filesPath
-                description
-                notes
                 isMember
                 createdAt
                 updatedAt

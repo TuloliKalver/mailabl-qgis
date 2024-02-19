@@ -5,7 +5,7 @@ from ...queries.python.access_credentials import clear_UC_data
 class Unload:
 
     def handle_dialog_closed():
-        #clear_UC_data
+        #clear_UC_data()
         
         # This method will be called when the dialog is about to be closed
         # Perform any necessary cleanup and resource management here
