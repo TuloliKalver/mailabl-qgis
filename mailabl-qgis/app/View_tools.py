@@ -29,7 +29,7 @@ widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatu
 #ui_file_path = f"C:\Users\Admin\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\kataster\app\widgets\WStatusBar.ui"
 
 projects_toolsWidget_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "Properties_connector.ui"))
-
+contracts_toolsWidget_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "ContractsPropertiesConnector.ui"))
 
 model = QStandardItemModel()
 
@@ -40,6 +40,12 @@ class ToolsProject:
         projects_ToolsWidget.lblProjectNumber.setText(Project_number)
         return projects_ToolsWidget    
 
+class ToolsContract:
+    def contract_toolWidget(self, Contract_name, Contract_number):
+        contract_ToolsWidget = loadUi(contracts_toolsWidget_path)
+        contract_ToolsWidget.lblContractName.setText(Contract_name)
+        contract_ToolsWidget.lblContractNumber.setText(Contract_number)
+        return contract_ToolsWidget    
 
 class progress:
         def progress_bar_load(total):

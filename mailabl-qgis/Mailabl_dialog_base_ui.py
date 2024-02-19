@@ -2419,11 +2419,19 @@ class Ui_MailablDialogBase(object):
 
         self.horizontalLayout_10.addWidget(self.pbContracts_Connect_properties)
 
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_10.addItem(self.horizontalSpacer)
+
         self.pbRefresh_tblMailabl_contracts = QPushButton(self.Buttons)
         self.pbRefresh_tblMailabl_contracts.setObjectName(u"pbRefresh_tblMailabl_contracts")
         self.pbRefresh_tblMailabl_contracts.setIcon(icon15)
 
         self.horizontalLayout_10.addWidget(self.pbRefresh_tblMailabl_contracts)
+
+        self.horizontalSpacer_22 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_10.addItem(self.horizontalSpacer_22)
 
         self.label_5 = QLabel(self.Buttons)
         self.label_5.setObjectName(u"label_5")
@@ -4487,7 +4495,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">	a. Mailablist</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">	b.Qgisist</span></p></body></html>", None))
         self.label_18.setText(QCoreApplication.translate("MailablDialogBase", u"Toimingud Lepingutega ", None))
-        self.pbContracts_Connect_properties.setText(QCoreApplication.translate("MailablDialogBase", u"N\u00e4ita kaardil", None))
+        self.pbContracts_Connect_properties.setText(QCoreApplication.translate("MailablDialogBase", u"Seosta leping kinnistuga", None))
         self.pbRefresh_tblMailabl_contracts.setText("")
         self.label_5.setText(QCoreApplication.translate("MailablDialogBase", u"TextLabel", None))
         self.label_19.setText(QCoreApplication.translate("MailablDialogBase", u"Lepinguid kokku: xxx", None))

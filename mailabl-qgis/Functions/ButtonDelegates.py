@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QStyledItemDelegate
 from ..config.settings import  OpenLink
 #from ..queries.python.contractsBySingleItem import getContractsWhere
-from ..queries.python.a import getContractsWhere
+from ..queries.python.ContractWhere import getContractsWhere
 from .item_selector_tools import properties_selectors
 
 class ContractButtonDelegate(QStyledItemDelegate):

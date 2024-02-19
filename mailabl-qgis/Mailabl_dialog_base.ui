@@ -5023,9 +5023,22 @@ p, li { white-space: pre-wrap; }
                    <item>
                     <widget class="QPushButton" name="pbContracts_Connect_properties">
                      <property name="text">
-                      <string>Näita kaardil</string>
+                      <string>Seosta leping kinnistuga</string>
                      </property>
                     </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                    <item>
                     <widget class="QPushButton" name="pbRefresh_tblMailabl_contracts">
@@ -5037,6 +5050,19 @@ p, li { white-space: pre-wrap; }
                        <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
                      </property>
                     </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_22">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                    <item>
                     <widget class="QLabel" name="label_5">

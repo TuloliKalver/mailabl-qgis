@@ -29,7 +29,7 @@ from .config.settings import connect_settings_to_layer, flags, settingPageElemen
 from .app.checkable_comboboxes import ComboBox_functions, shp_tools
 from .app.remove_processes import ReomveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
-from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject
+from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
 from .Functions.SearchEngines import General
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
@@ -45,6 +45,8 @@ from .queries.python.access_credentials import (clear_UC_data,
                                                 save_user_name)
 from .queries.python.projects import Projects
 from .queries.python.update_relations.update_project_properties import ProjectsProperties,map_selectors
+from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
+
 from .queries.python.property_data import Properties, MyLablChecker
 
 
@@ -245,6 +247,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbShowOnMap.clicked.connect(self.show_projects_on_map_with_cadastral_connection)
         self.pbProjects_Connect_properties.clicked.connect(self.connect_properties_with_projects)
+        self.pbContracts_Connect_properties.clicked.connect(self.connect_properties_with_contracts)
 
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_Mailabl_homepage())
@@ -1075,6 +1078,52 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             
         else:
             QMessageBox.information(self, "Jama", "Pead valima ühe projekti")
+
+    def connect_properties_with_contracts(self):
+        global projects_widget
+        table = self.ContractView
+        model = table.model()
+        selection_model = table.selectionModel()
+
+        if selection_model.hasSelection():
+            selected_index = selection_model.currentIndex()
+            contract_name = model.item(selected_index.row(), 2)
+            if contract_name is not None:
+                contract_name_text = contract_name.text()
+            
+            contract_number = model.item(selected_index.row(), 1)
+            contract_number_text = contract_number.text()
+            
+            Mailabl_ID = model.item(selected_index.row(), 0)
+            Mailabl_ID_text = Mailabl_ID.text()
+            #print(f"Mailabl ID: {Mailabl_ID_text}")
+            
+            layer_name = load.load_target_cadastral_name()
+            layer = QgsProject.instance().mapLayersByName(layer_name)[0]
+            iface.setActiveLayer(layer)
+            #layer.removeSelection()
+            
+            widget = ToolsContract.contract_toolWidget(self, contract_name_text, contract_number_text)
+            clear_table = widget.pbClear_list
+            table_view = widget.tvProperties_AddTo_Contracts
+            
+            flag = flags.active_properties_layer_flag 
+            flag = True        
+            flags.active_properties_layer_flag = flag
+        
+            
+            PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
+            ContractMapSelectors.activate_layer_and_use_selectTool_on_first_load(self,widget, table_view)
+            clear_table.clicked.connect(lambda: shp_tools.clear_table_and_layer(table_view, layer_name))
+
+            widget.show()
+            
+#            widget.accepted.connect(lambda: ProjectsProperties.update_projects_properties(self, Mailabl_ID_text, widget, contract_name_text))
+#            widget.rejected.connect(lambda: ProjectsProperties.on_cancel_button_clicked(widget))
+            
+        else:
+            QMessageBox.information(self, "Jama", "Pead valima ühe projekti")
+
         
     def generate_virtual_mapLayer_synced_with_Mailabl(self):
         # Create an instance of YourClas

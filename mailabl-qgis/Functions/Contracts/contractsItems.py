@@ -59,6 +59,7 @@ class ContractsMain:
             Address_item_text = QStandardItem(dokAddress_item.text())
             cadastralUnit_text = QStandardItem(cadastralUnit_item.text())
             
+            
             if color_item:
                 color_code = color_item.text()
                 if color_code:
@@ -189,7 +190,7 @@ class queryHandling:
     @staticmethod
     def contracts_basic_data(self):
             # Set header labels
-        header_labels = [header_number, header_name,  header_color,header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_id, header_statuses]
+        header_labels = [header_id, header_number, header_name, header_color, header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_statuses]
 #                            [header_id, header_number, 
 #                            header_name, header_deadline,
 #                            header_color, header_responsible,
