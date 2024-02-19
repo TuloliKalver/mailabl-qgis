@@ -4,6 +4,9 @@ from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
 from PyQt5.QtWidgets import QMessageBox
 from ..Functions.delete_items import Delete_Main_Process
+from ..Functions.Contracts.contractsItems import ContractsMain
+
+
 from qgis.core import QgsProject
 from qgis.utils import iface
 
@@ -34,6 +37,8 @@ class WorkSpaceHandler:
         WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
         self.sw_HM.setCurrentIndex(1)
         self.swWorkSpace.setCurrentIndex(2)
+        table = self.ContractView
+        ContractsMain.main_contracts(self, table)
         push_button.blockSignals(False)
     
     @staticmethod

@@ -1,6 +1,5 @@
 import pandas as pd
 from PyQt5.uic import loadUi
-
 import requests
 import webbrowser
 import subprocess
@@ -30,15 +29,12 @@ header_file_path = "file_path_button"
 header_statuses = 'Staatus'
 
 
-
-
 class getProjectsWhere:
     def QueryProjects_relatedProperties(self, id_value):
         #print(f"id value in query {id_value}")
         #Load the project query using the loader instance
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query_for_projects(self,query_loader.Q_where_Projects_related_properties)
-
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value
@@ -83,17 +79,13 @@ class getProjectsWhere:
                 #print(count)
                 total_fetched += count
                 #print(total_fetched)
-
                 # Check whether the last page of projects has been reached
                 if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items) or not hasNextPage:
                     break
-
+                QCoreApplication.processEvents()
             else:
                 print(f"Error: {response.status_code}")
                 return None
-
-            QCoreApplication.processEvents()
-
         # Return only the desired number of items
         return properties_items
 

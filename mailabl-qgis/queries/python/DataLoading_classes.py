@@ -41,6 +41,11 @@ class Graphql_properties:
         graphql_path = os.path.join(path.plugin_dir, path.properties_WHERE_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()
+
+class Graphql_contracts:
+    def __init__(self):
+        self.Q_All_contracts = 'contracts.graphql'
+        self.Q_contract_minimal = 'contracts_minimal.graphql'
         
 class GraphQLQueryLoader:
     def __init__(self):
@@ -52,8 +57,9 @@ class GraphQLQueryLoader:
         self.graphql_folder = 'queries/graphql'
         self.properties_folder = 'queries/graphql/properties'
         self.properties_WHERE_folder = 'queries/graphql/properties/WHERE'
-        
         self.projects_folder = 'queries/graphql/projects'
+        self.contracts_folder ='queries/graphql/contracts'
+        
         
         # Define query files
             #Properties related queries
@@ -85,8 +91,6 @@ class GraphQLQueryLoader:
         self.UPDATE_project_properties = 'update_project_properties.graphql'
         self.Projects_tags = 'projects_tags.graphql'
         
-            #Contacts related queries
-        self.Q_All_contracts = 'contracts.graphql'
         
     def load_query(self, query_file_name):
         path = GraphQLQueryLoader()
@@ -104,5 +108,11 @@ class GraphQLQueryLoader:
     def load_query_properties(self, query_file_name):
         path = GraphQLQueryLoader()
         graphql_path = os.path.join(path.plugin_dir, path.properties_folder, query_file_name)
+        with open(graphql_path, 'r') as file:
+            return file.read()
+
+    def load_query_for_contracts(self,query_file_name):
+        path = GraphQLQueryLoader()
+        graphql_path = os.path.join(path.plugin_dir, path.contracts_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()
