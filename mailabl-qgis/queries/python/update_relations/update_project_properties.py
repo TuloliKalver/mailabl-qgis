@@ -144,7 +144,7 @@ class ProjectsProperties:
         count = model_properties.rowCount()
         if count == 0:
             parent_widget = QWidget()
-            titleText = "Oioioi"
+            titleText = "Oioioioi"
             infoText = "Vali kaardikihilt mõni kinnistu"  
             QMessageBox.information(parent_widget, titleText, infoText)
             pass
