@@ -144,7 +144,7 @@ class ProjectsProperties:
         count = model_properties.rowCount()
         if count == 0:
             parent_widget = QWidget()
-            titleText = "EiEi"
+            titleText = "OiOiOi"
             infoText = "Vali kaardikihilt mõni kinnistu"  
             QMessageBox.information(parent_widget, titleText, infoText)
             pass
@@ -174,9 +174,9 @@ class ProjectsProperties:
         progress_widget = loadUi(widgets_path)
         progress_bar = progress_widget.testBar
         progress_bar.setMaximum(total_returned_ids)
-        progress_widget.setWindowTitle("Seostan projekte kinnistutega")
+        progress_widget.setWindowTitle("Kinnistutega sidumine")
         progress_widget.show()
-        
+
         for i in range(0, total_returned_ids, chunk_size):
             chunk = returned_ids[i:i+chunk_size]
             
