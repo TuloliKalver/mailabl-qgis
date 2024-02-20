@@ -2,7 +2,7 @@ import time
 from qgis.core import  QgsProject, QgsMapLayer
 from qgis.utils import iface
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import GraphQLQueryLoader, Graphql_contracts
+from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
 from PyQt5.QtWidgets import  QMessageBox, QWidget
 from ....config.settings import  connect_settings_to_layer, flags
 from ..property_data import PropertiesGeneralQueries
@@ -10,7 +10,7 @@ from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerF
 from ..query_tools import requestBuilder
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
-
+from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from PyQt5.uic import loadUi
 
 
@@ -21,7 +21,9 @@ sleep_duration = 2
 timer_instance = Timer(delay_interval=delay_interval, sleep_duration=sleep_duration)
 
 
-class ContractMapSelectors:    
+
+class ContractMapSelectors:
+    @staticmethod
     def activate_layer_and_use_selectTool_on_first_load(self, widget, table_view):
         global on_selection_changed_lambda
         print("started with activated layer")
@@ -40,8 +42,8 @@ class ContractMapSelectors:
         if active_layer and active_layer.selectedFeatureCount() > 0:
             # Show the widget when there are selected features
 
-            help = PropertiesLayerFunctions()
-            help.generate_table_from_selected_map_items(table_view, active_layer_name)
+            generator = PropertiesLayerFunctions()
+            generator.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
             widget.showNormal()
 
@@ -53,8 +55,8 @@ class ContractMapSelectors:
             active_layer.selectionChanged.connect(on_selection_changed_lambda)
             
         else:
-           print("Flag is false")
-           pass
+            print("Flag is false")
+            pass
         
     @staticmethod
     def on_selection_changed(widget, table_view):
@@ -68,9 +70,8 @@ class ContractMapSelectors:
 
             if active_layer and active_layer.selectedFeatureCount() > 0:
                 # Show the widget when there are selected features
-                
-                help = PropertiesLayerFunctions()
-                help.generate_table_from_selected_map_items(table_view, active_layer_name)
+                generator = PropertiesLayerFunctions()
+                generator.generate_table_from_selected_map_items(table_view, active_layer_name)
                 table_view.update()
                 widget.showNormal()
 
@@ -140,9 +141,8 @@ class ContractProperties:
         for i in range(0, total_returned_ids, chunk_size):
             chunk = returned_ids[i:i+chunk_size]
             
-            query_loader = Graphql_contracts() 
-            function_loader = GraphQLQueryLoader()
-            query = function_loader.load_query_for_contracts(query_loader.UPDATE_contract_properties)
+            query_loader = GraphqlQueriesContracts() 
+            query = query_loader.load_query_for_contracts(query_loader.UPDATE_contract_properties)
             
             variables = {
                         "input": {
@@ -165,7 +165,7 @@ class ContractProperties:
             if count % paus_interval == 0:
                 timer_instance.pause()
 
-                           
+    
         QMessageBox.information(self, "Info", f"Lepingule {project_name} lisatud {total_returned_ids}/{total_ids_Table}")
         #print("Project updated successfully:")
         #print(updated_project)

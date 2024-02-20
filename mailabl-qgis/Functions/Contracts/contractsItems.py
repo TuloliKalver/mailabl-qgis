@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel, QColor, QBrush, QIcon
 from PyQt5.QtWidgets import QStyledItemDelegate
 from ...queries.python.statusManager import Statuses
-from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_contracts
+from ...queries.python.DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
 from ..tableViewAdjust import colors, ColumnResizer
 from ...config.settings import Filepaths
@@ -260,8 +260,8 @@ class ContractsQueries_list:
     def query_contracts_by_status(self, statuses):
         #print(statuses)
         # Load the project query using the loader instance
-        query_loader = Graphql_contracts()
-        query = GraphQLQueryLoader.load_query_for_contracts(self,query_loader.Q_All_contracts)        
+        query_loader = GraphqlQueriesContracts()
+        query = GraphqlQueriesContracts.load_query_for_contracts(self,query_loader.Q_All_contracts)        
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value

@@ -123,7 +123,7 @@ class TableGenerator:
         return desired_fields
 
     @staticmethod
-    def generate_table_model(features, fields):
+    def generate_propertiesListModelForTable(features, fields):
         model = QStandardItemModel()
 
         # Set the horizontal header labels
@@ -145,7 +145,5 @@ class TableGenerator:
             # Add the concatenated 'Address' value to the model
             address_item = QStandardItem(address_value)
             model.setItem(0, len(fields), address_item)
-
-
         return model
 

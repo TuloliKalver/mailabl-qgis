@@ -919,11 +919,11 @@ class PropertiesGeneralQueries:
         query = GraphQLQueryLoader.load_query_properties(self, query_loader.W_properties_number)
         
         sleep_duration = 1
-        chunk_size = 50
-        
+        chunk_size = 50        
         total_fetched = 0
         total_chunk = 0  # Initialize total_chunk
         end_cursor = None  # Initialize end_cursor before the loop
+
         widgets_path = PathLoaderSimple.widget_statusBar_path(self)
         progress_widget = loadUi(widgets_path)
         progress_bar = progress_widget.testBar
@@ -931,7 +931,6 @@ class PropertiesGeneralQueries:
         progress_widget.setWindowTitle("Valmistan andmeid ette")
         progress_widget.show()
         
-        #cadasters = []
         fetched_items = []
         
         while total_fetched < total_in_list:
