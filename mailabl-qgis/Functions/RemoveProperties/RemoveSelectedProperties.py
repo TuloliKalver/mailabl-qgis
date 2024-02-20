@@ -56,7 +56,7 @@ class DeleteActions:
 
             properties = DataExtractors.ExtractCadastralNrDataFromModel(model,header_names)
             
-            ToBe_deleted_properties, cadasters = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, properties)
+            ToBe_deleted_properties, cadasters = PropertiesGeneralQueries.get_properties_MyLabl_idsAndCadastrals(self, properties)
             #print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
             #print(f"To be deleted properties: {len(cadasters)}")
             

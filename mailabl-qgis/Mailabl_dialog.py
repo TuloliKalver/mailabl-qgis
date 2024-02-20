@@ -447,7 +447,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         hide_buttons = [ 
                 self.pbDoneCity,
                 self.pbConfirm_action,
-                self.pbSendItemstoMailabl,
                 self.pbCancel_streets_reset,
                 self.pbConfirm_streets_action]
         
@@ -479,7 +478,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         hide_buttons = [ 
                 self.pbConfirm_action,
-                self.pbSendItemstoMailabl,
                 self.pbCancel_streets_reset,
                 self.pbConfirm_streets_action]
         
@@ -510,7 +508,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         hide_buttons = [self.pbDone_State, 
                 self.pbDoneCity,
                 self.pbConfirm_action,
-                self.pbSendItemstoMailabl,
                 self.pbCancel_streets_reset,
                 self.pbConfirm_streets_action]
         
@@ -622,7 +619,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         hide_buttons = [self.pbDone_State, 
                         self.pbDoneCity,
                         self.pbConfirm_action,
-                        self.pbSendItemstoMailabl,
+
                         self.pbCancel_streets_reset,
                         self.pbConfirm_streets_action]
         
@@ -700,7 +697,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         hide_buttons = [ 
                         self.pbDoneCity,
                         self.pbConfirm_action,
-                        self.pbSendItemstoMailabl,
                         self.pbCancel_streets_reset,
                         self.pbConfirm_streets_action]
         

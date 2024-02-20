@@ -82,7 +82,7 @@ class WorkSpaceHandler:
         self.cbChooseAllAdd_properties.hide()
         self.pbDoneCity.hide()
         self.pbConfirm_action.hide()
-        self.pbSendItemstoMailabl.hide()
+
         self.listWidget_State.clear()
         self.listWidget_City.clear()
         self.listWidget_county.clear()

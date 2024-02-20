@@ -732,7 +732,7 @@ class MyLablChecker:
             print(f"batch = {batch}")
             #data_returned, ids  =  DeleteFunctions.DeleteProcess_get_properties_where_for_duplicates(self, batch)
             
-            returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, batch)
+            returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_idsAndCadastrals(self, batch)
             print(f"returned_ids: {returned_ids}")
             if returned_ids is None:
                 returned_ids = ""        
@@ -854,7 +854,7 @@ class MyLablChecker:
         return missing_items
 
 class PropertiesGeneralQueries:
-    def get_properties_MyLabl_ids(self, properties_list):
+    def get_properties_MyLabl_idsAndCadastrals(self, properties_list): 
         total_in_list = len(properties_list)
         
         query_loader = Graphql_properties()
@@ -912,7 +912,7 @@ class PropertiesGeneralQueries:
 
         return fetched_items, cadasters
 
-    def get_properties_MyLabl_ids_repaired(self, properties_list):
+    def get_properties_MyLabl_ids(self, properties_list):
         total_in_list = len(properties_list)
         
         query_loader = Graphql_properties()
