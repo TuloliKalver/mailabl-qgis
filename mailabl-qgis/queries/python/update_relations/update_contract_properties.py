@@ -135,7 +135,7 @@ class ContractProperties:
         progress_widget = loadUi(widgets_path)
         progress_bar = progress_widget.testBar
         progress_bar.setMaximum(total_returned_ids)
-        progress_widget.setWindowTitle("Seostan projekte kinnistutega")
+        progress_widget.setWindowTitle("Kinnistutega sidumine")
         progress_widget.show()
         
         for i in range(0, total_returned_ids, chunk_size):
