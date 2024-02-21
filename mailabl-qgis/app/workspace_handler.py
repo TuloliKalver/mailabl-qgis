@@ -5,11 +5,12 @@ from ..config.settings import SettingsDataSaveAndLoad
 from PyQt5.QtWidgets import QMessageBox
 from ..Functions.delete_items import Delete_Main_Process
 from ..Functions.Contracts.contractsItems import ContractsMain
-
+from ..widgets.helper import place
 
 from qgis.core import QgsProject
 from qgis.utils import iface
 
+    
 class WorkSpaceHandler:
     @staticmethod
     def swWorkSpace_Home(self):

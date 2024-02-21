@@ -14,6 +14,7 @@ from ....Functions.timer import Timer
 from PyQt5.uic import loadUi
 
 
+
 on_selection_changed_lambda = None
 # Adjust the delay interval and sleep duration according to your requirements
 delay_interval = 10
@@ -22,10 +23,10 @@ timer_instance = Timer(delay_interval=delay_interval, sleep_duration=sleep_durat
 
 
 
-class map_selectors:    
+class map_selectors:        
     def activate_layer_and_use_selectTool_on_first_load(self, widget):
         global on_selection_changed_lambda
-        print("started with activated layer")
+        #print("started with activated layer")
         active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
         if not isinstance(active_layer, QgsMapLayer):
@@ -36,7 +37,7 @@ class map_selectors:
         #print("start selecting stuff")
         #Hide the main window
         flag = flags.active_properties_layer_flag
-        print(f"Flag status befor if statement {flag}")
+        print(f"Flag status before if statement {flag}")
         
         if active_layer and active_layer.selectedFeatureCount() > 0:
             # Show the widget when there are selected features
@@ -55,8 +56,8 @@ class map_selectors:
             active_layer.selectionChanged.connect(on_selection_changed_lambda)
             
         else:
-           print("Flag is false")
-           pass
+            print("Flag is false")
+            pass
 
     def activate_layer_and_use_selectTool(self, widget):
         global on_selection_changed_lambda
@@ -64,7 +65,6 @@ class map_selectors:
         active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
         if not isinstance(active_layer, QgsMapLayer):
-            #print(f"Ei leidnud kinnistute kihti '{layer}'")
             return
         iface.setActiveLayer(active_layer)
         iface.actionSelect().trigger()
@@ -214,5 +214,3 @@ class ProjectsProperties:
         flag = flags.active_properties_layer_flag 
         flag = False        
         flags.active_properties_layer_flag = flag
-
-
