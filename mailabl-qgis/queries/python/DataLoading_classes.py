@@ -8,6 +8,7 @@ class Graphql_project:
         self.UPDATE_project_properties = 'update_project_properties.graphql'
         self.Projects_tags = 'projects_tags.graphql'
         self.Projects_Open = 'Statuses_where_condition.graphql'  #query statuses for different modules, returns ID
+        self.Q_Properties_related_projects = 'propertiesrelated_projects.graphql'
 
 class Graphql_properties:
     def __init__(self):
@@ -17,8 +18,9 @@ class Graphql_properties:
         #General
         self.Q_Property_CSC = 'property_CSC.graphql'
         self.Q_All_Properties = 'propertyQuery.graphql'
-        self.Q_where_Projects_related_properties = 'W_projects_id.graphql'
+
         #Where type
+
         self.W_properties_number = 'id_number.graphql'
         self.W_properties_Address_County = 'ADDRESS_County.graphql'
         self.W_properties_Address_State = 'ADDRESS_State.graphql'

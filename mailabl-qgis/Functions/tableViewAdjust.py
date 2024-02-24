@@ -55,7 +55,7 @@ class ColumnResizer:
         table.setItemDelegate(delegate)
         
     def setColumnWidths(self, table, column_indexes, widths):
-        #widths = [20,20, 20]
+        
         header = table.horizontalHeader()
         for index, width in zip(column_indexes, widths):
             header.resizeSection(index, width)

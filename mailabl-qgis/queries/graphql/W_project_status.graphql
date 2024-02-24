@@ -73,6 +73,15 @@ $trashed: Trashed) {
                                         }
                                     }
                 }
+                tags{
+                    edges{
+                        node
+                            {
+                            id
+                            name
+                            }
+                        }
+                }
             }
         }
     }

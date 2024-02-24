@@ -43,10 +43,10 @@ from .processes.SyncProperties.syncMailablProperties import PropertiesBaseMap
 from .queries.python.access_credentials import (clear_UC_data,
                                                 get_access_token, print_result,
                                                 save_user_name)
-from .queries.python.projects import Projects
+from .queries.python.projects import Projects, projectsTableDecorator
 from .queries.python.update_relations.update_project_properties import ProjectsProperties,map_selectors
 from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
-
+from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
 
 
@@ -321,14 +321,26 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pbMainMenu.clicked.connect(self.handleSidebar_leftButtons)
         
+        self.pushButton.clicked.connect(self.limitedLoad)
         
+        
+        
+        
+
 
 ############sort/cler/delete##############################
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
         
+    
+        
 
 ########################################################################
+    
+    def limitedLoad(self):
+        table = self.tblMailabl_projects
+        projectsTableDecorator.load_Mailabl_projects_list_with_zoomed_map_elements(self, table)
+        
 
     def handleSidebar_help(self):
         button1 = self.pbMailabl        
@@ -572,7 +584,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     
     
     def manualy_choose_properties_to_Add(self):
-        #load = SettingsDataSaveAndLoad()
+       
         input_layer_name = load.load_SHP_inputLayer_name()
         #print(f"shp_input_layer_name {layer_name}")
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]

@@ -3266,6 +3266,11 @@ class Ui_MailablDialogBase(object):
 
         self.horizontalLayout_26.addWidget(self.pbRefresh_tblMailabl_projects)
 
+        self.pushButton = QPushButton(self.frProjects_Tools)
+        self.pushButton.setObjectName(u"pushButton")
+
+        self.horizontalLayout_26.addWidget(self.pushButton)
+
         self.Project_Seachframe = QFrame(self.frProjects_Tools)
         self.Project_Seachframe.setObjectName(u"Project_Seachframe")
         self.Project_Seachframe.setStyleSheet(u"#le_searchProjects{\n"
@@ -4348,7 +4353,7 @@ class Ui_MailablDialogBase(object):
 
         self.retranslateUi(MailablDialogBase)
 
-        self.swWorkSpace.setCurrentIndex(2)
+        self.swWorkSpace.setCurrentIndex(7)
         self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -4601,6 +4606,7 @@ class Ui_MailablDialogBase(object):
         self.cmbProjectState.setItemText(5, "")
 
         self.pbRefresh_tblMailabl_projects.setText("")
+        self.pushButton.setText(QCoreApplication.translate("MailablDialogBase", u"PushButton", None))
         self.le_searchProjects.setPlaceholderText(QCoreApplication.translate("MailablDialogBase", u"Otsing", None))
         self.label_32.setText(QCoreApplication.translate("MailablDialogBase", u"Uus nimetus", None))
         self.label_26.setText(QCoreApplication.translate("MailablDialogBase", u"Projekti ID", None))

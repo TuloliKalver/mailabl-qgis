@@ -17,8 +17,8 @@ class requestBuilder:
             "query": query,
             "variables": variables
         }
-        print("'variables'")
-        print(f"'{variables}'")
+        #print("'variables'")
+        #print(f"'{variables}'")
         # Print the query before sending
         #print("GraphQL Query:")
         #print(query)

@@ -1176,7 +1176,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -6889,6 +6889,13 @@ QPushButton:hover{
                        <width>16</width>
                        <height>16</height>
                       </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton">
+                     <property name="text">
+                      <string>PushButton</string>
                      </property>
                     </widget>
                    </item>
