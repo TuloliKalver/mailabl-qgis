@@ -353,8 +353,8 @@ class ProjectsWithPandas_3:
         self.header_file_path = header_file_path
         self.header_statuses = header_statuses
         self.Project_state = cmbProjectState
-
-    def Create_Project_tableView_for_zoom(self):
+    @staticmethod
+    def Create_Project_tableView_for_zoom(self, selected_features):
         # Set header labels
         header_labels = [header_id, header_number, 
                             header_name, header_deadline,
@@ -380,9 +380,10 @@ class ProjectsWithPandas_3:
 
         #print("statuses")
         #print(statuses)
-        load = SettingsDataSaveAndLoad()
-        layer_name = load.load_target_cadastral_name()
-        selected_features = visibleSelector.get_visible_features(layer_name)
+        #load = SettingsDataSaveAndLoad()
+        #layer_name = load.load_target_cadastral_name()
+        #selected_features = visibleSelector.get_visible_features(layer_name)
+        
         #features = [["91501:002:0085", "91501:002:0128"],["91501:002:0085", "91501:002:0128"]]
         print(f"selected features: '{selected_features}' total:'{len(selected_features)}'")
         
@@ -411,49 +412,55 @@ class ProjectsWithPandas_3:
                 time.sleep(sleep_duration)
                 print("sleepy sleepy")
             QCoreApplication.processEvents()
-        
-        # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
-        data = {project['id']: project for project in all_projects}.values()
-        print(f"data: {data}")
+        total_projects = len(all_projects)
+        if  total_projects == 0:
+            QMessageBox.information(self, "Eureka", "antud piirkonnas puuduvad teadaolevad projektid")
+            return None
 
-        #data = ProjectsWithPandas.QueryProjects_Parent_Active_Open(self, statuses)
-        data_count = len(data)
-        #print(f"total data  {data_count}")
-        progress_value = 0
-        # Build a pandas DataFrame
-        df_data = []
-        for node in data:
-            #node = project_data.get("node", {})
-            #properties = node.get("properties", {}).get("edges", [])
-            #propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
-            responsibles = node.get("responsible",{}).get("edges",[])
-            resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
-            row_data = {
-                header_id: node.get("id", "") or "",
-                header_number: node.get("number", "") or "",
-                header_name: node.get("name", "") or "",
-                header_deadline: node.get("dueAt", "") or "",
-                header_statuses: node.get("status", {}).get("name", "") if node.get("status") else "",
-                header_color: node.get("status", {}).get("color", "") if node.get("status") else "",
-                #header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
-                #header_id: node.get("id", ""),
-                header_parent_id: node.get("parentID", ""),
-                header_webLinkButton: "",
-                header_Documents: node.get("filesPath","")or "",
-                header_file_path: "",
-                header_responsible: ",".join(resposnisble_name) if resposnisble_name else "",
-                header_properties_icon: ""
-                }
-            df_data.append(row_data)
-        
-            QCoreApplication.processEvents()
-            df = pd.DataFrame(df_data)
-        # Create a QStandardItemModel and set header labels
+        else:
+            # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
+            data = {project['id']: project for project in all_projects}.values()
+            print(f"total len of all projects: '{len(all_projects)}'")
+            print(f"data: {data}")
 
-        # Populate QStandardItemModel with data from the pandas DataFrame
-        for row_index, row_data in df.iterrows():
-            data_items = [QStandardItem(str(row_data[label])) for label in header_labels]
-            model.appendRow(data_items)
-        
-        return model, header_labels
+            #data = ProjectsWithPandas.QueryProjects_Parent_Active_Open(self, statuses)
+            data_count = len(data)
+            #print(f"total data  {data_count}")
+            progress_value = 0
+            # Build a pandas DataFrame
+            df_data = []
+            for node in data:
+                #node = project_data.get("node", {})
+                #properties = node.get("properties", {}).get("edges", [])
+                #propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
+                responsibles = node.get("responsible",{}).get("edges",[])
+                resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
+                row_data = {
+                    header_id: node.get("id", "") or "",
+                    header_number: node.get("number", "") or "",
+                    header_name: node.get("name", "") or "",
+                    header_deadline: node.get("dueAt", "") or "",
+                    header_statuses: node.get("status", {}).get("name", "") if node.get("status") else "",
+                    header_color: node.get("status", {}).get("color", "") if node.get("status") else "",
+                    #header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
+                    #header_id: node.get("id", ""),
+                    header_parent_id: node.get("parentID", ""),
+                    header_webLinkButton: "",
+                    header_Documents: node.get("filesPath","")or "",
+                    header_file_path: "",
+                    header_responsible: ",".join(resposnisble_name) if resposnisble_name else "",
+                    header_properties_icon: ""
+                    }
+                df_data.append(row_data)
+            
+                QCoreApplication.processEvents()
+                df = pd.DataFrame(df_data)
+            # Create a QStandardItemModel and set header labels
+
+            # Populate QStandardItemModel with data from the pandas DataFrame
+            for row_index, row_data in df.iterrows():
+                data_items = [QStandardItem(str(row_data[label])) for label in header_labels]
+                model.appendRow(data_items)
+            
+            return model, header_labels
         
