@@ -382,16 +382,23 @@ class ProjectsWithPandas_3:
         #print(statuses)
         load = SettingsDataSaveAndLoad()
         layer_name = load.load_target_cadastral_name()
-        features = visibleSelector.get_visible_features(layer_name)
-        #print(f"selected features: '{len(features)}'")
-        unique_projects = set()
+        selected_features = visibleSelector.get_visible_features(layer_name)
+        #features = [["91501:002:0085", "91501:002:0128"],["91501:002:0085", "91501:002:0128"]]
+        print(f"selected features: '{selected_features}' total:'{len(selected_features)}'")
+        
+        # Splitting the list into sublists with a maximum of 4 items each
+        package_size = 50
+        sublists = [selected_features[i:i+package_size] for i in range(0, len(selected_features), package_size)]
+        
+        #unique_projects = set()
         all_projects = []
+
         count = 0
         sleepPackage = 10
         sleep_duration = 2
         import time
-        print(f"features: '{features}', {len(features)}")
-        for feature in features:
+        
+        for feature in sublists:
             #print(f"feature: '{feature}'")
             projects_data = visibleSelector.get_projects_list_connected_with_view_properties(self, feature)
             #print(f"project_data: {projects_data}")
@@ -449,3 +456,4 @@ class ProjectsWithPandas_3:
             model.appendRow(data_items)
         
         return model, header_labels
+        

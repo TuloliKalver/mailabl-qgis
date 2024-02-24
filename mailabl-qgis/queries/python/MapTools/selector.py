@@ -45,8 +45,8 @@ class visibleSelector:
         return visible_features
     
     
-    def get_projects_list_connected_with_view_properties(self, id_value):
-        print(f"id_value: '{id_value}'")
+    def get_projects_list_connected_with_view_properties(self, id_values):
+        print(f"id_value: '{id_values}'")
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query_for_projects(self, query_loader.Q_Properties_related_projects)
         #print(f"query: {query}")
@@ -63,7 +63,7 @@ class visibleSelector:
                             {
                                 "column": "CADASTRAL_UNIT_NUMBER",
                                 "operator": "IN",
-                                "value": [id_value]
+                                "value": id_values
                             }
                         ]
                     }
