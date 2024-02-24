@@ -46,6 +46,7 @@ class visibleSelector:
     
     
     def get_projects_list_connected_with_view_properties(self, id_value):
+        print(f"id_value: '{id_value}'")
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query_for_projects(self, query_loader.Q_Properties_related_projects)
         #print(f"query: {query}")

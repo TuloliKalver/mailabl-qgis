@@ -23,6 +23,10 @@ query properties($first: Int, $after: String, $where: QueryPropertiesWhereWhereC
                           parentId
                           name
                           number
+                          status{
+                              name
+                              color
+                                }
                           startAt
                           dueAt
                           isPublic
@@ -32,6 +36,15 @@ query properties($first: Int, $after: String, $where: QueryPropertiesWhereWhereC
                           createdAt
                           updatedAt
                           deletedAt
+                          responsible {
+                                edges {
+                                    node {
+                                        id
+                                        displayName
+                                          }
+                                      }
+                            }
+
                     }
                   }
         }

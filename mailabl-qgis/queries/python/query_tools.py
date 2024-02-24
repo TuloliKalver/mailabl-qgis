@@ -57,7 +57,6 @@ class requestBuilder:
         return response
 
 class RequestErrorHandler:
-    @staticmethod
     def handle_error(self, errors):
         if errors:
             error_messages = [error.get('message', 'Unknown error') for error in errors]

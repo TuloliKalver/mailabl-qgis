@@ -395,6 +395,7 @@ class ProjectsWithPandas_3:
             #print(f"feature: '{feature}'")
             projects_data = visibleSelector.get_projects_list_connected_with_view_properties(self, feature)
             #print(f"project_data: {projects_data}")
+        
             all_projects.extend(projects_data)  # Append all project dictionaries to the list
             count += 1
             print(f"count: {count}")
