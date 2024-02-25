@@ -17,8 +17,18 @@ setup_label_cadastral_toBeAdded = '/Mailabl/Setting/labels/cadastralToBeAdded'
 setup_label_cadastrals_for_importing ='/Mailabl/Settings/lables/SHP_Layer'
 Mailabl_Projects_layer_address = 'Mailabl/labels/Mailabl_Projects_layer'
 
+
+
 with open(f'{PLUGIN_DIR}/config.json', "r") as json_content:
     config = json.load(json_content)
+
+class version:
+    @staticmethod
+    def get_plugin_version(metadata_file):
+        with open(metadata_file, 'r') as f:
+            for line in f:
+                if line.strip().startswith("version="):
+                    return line.strip().split('=')[1]
 
 class flags:
     active_properties_layer_flag = False

@@ -353,15 +353,15 @@ class ProjectsWithPandas_3:
         self.header_file_path = header_file_path
         self.header_statuses = header_statuses
         self.Project_state = cmbProjectState
-    @staticmethod
+    #@staticmethod
     def Create_Project_tableView_for_zoom(self, selected_features):
         # Set header labels
         header_labels = [header_id, header_number, 
                             header_name, header_deadline,
                             header_color, header_responsible,
-                            header_properties_icon,
-                            header_parent_id, header_webLinkButton, 
-                            header_Documents, header_file_path, 
+                            header_properties_icon, #6
+                            header_parent_id, header_webLinkButton,  #8
+                            header_Documents, header_file_path, #10
                             header_statuses]
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(header_labels)
@@ -388,14 +388,14 @@ class ProjectsWithPandas_3:
         print(f"selected features: '{selected_features}' total:'{len(selected_features)}'")
         
         # Splitting the list into sublists with a maximum of 4 items each
-        package_size = 50
+        package_size = 25
         sublists = [selected_features[i:i+package_size] for i in range(0, len(selected_features), package_size)]
         
         #unique_projects = set()
         all_projects = []
 
         count = 0
-        sleepPackage = 10
+        sleepPackage = 25
         sleep_duration = 2
         import time
         
@@ -405,7 +405,7 @@ class ProjectsWithPandas_3:
             #print(f"project_data: {projects_data}")
         
             all_projects.extend(projects_data)  # Append all project dictionaries to the list
-            count += 1
+            count += 25
             print(f"count: {count}")
             # Sleep to avoid hitting server too frequently
             if count %sleepPackage == 0:

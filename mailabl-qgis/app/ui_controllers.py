@@ -308,9 +308,19 @@ class FrameHandler:
         if frame_name in self.frames:
             self.frames[frame_name].setVisible(True)
 
+    def show_multiple_frames(self, frames):
+        for frame_name in frames:
+            frame_name.setVisible(True)
+    
+
     def hide_frame(self, frame_name):
         if frame_name in self.frames:
             self.frames[frame_name].setVisible(False)
+            
+    def hide_multiple_frames(self, frames):
+        for frame_name in frames:
+            frame_name.setVisible(False)
+    
     
     def on_load(self, frames):
         self.hide_frame("frame1") 

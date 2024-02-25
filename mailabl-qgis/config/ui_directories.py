@@ -8,15 +8,22 @@ widgets_folder_name = "widgets"
 UI_multiline_Statusbar = "WStatusBar.ui"
 UI_projects_connector = "Properties_connector.ui"
 
+metadata = 'metadata.txt'
+
 #widgets_path = os.path.join(plugin_dir,widgets_folder, "WStatusBar.ui")
 widget_multiText_Statusbar_path = os.path.normpath(os.path.join(plugin_dir_path, widgets_folder_name, UI_multiline_Statusbar))
-#ui_file_path = f"C:\Users\Admin\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\kataster\app\widgets\WStatusBar.ui"
 
 widget_projects_toolsWidget_path = os.path.normpath(os.path.join(plugin_dir_path, widgets_folder_name, UI_projects_connector))
+
+metadata_path = os.path.normpath(os.path.join(plugin_dir_path, metadata))
+
 
 class PathLoaderSimple:
     def widget_statusBar_path(self):
         return widget_multiText_Statusbar_path
+    
+    def metadata():
+        return metadata_path
 
 
 class PathLoader:

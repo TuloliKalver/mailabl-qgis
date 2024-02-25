@@ -168,9 +168,6 @@ class Mailabl:
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
-        #eemalda see roheline rida, enne live minekut
-        #icon_path = ':/plugins/Kataster/icon_default.png'
-        #icon_path = ':/images/flags/et.svg'
         icon_path = self.plugin_dir + '/Ikoon.svg'
         self.add_action(
             icon_path,
@@ -199,7 +196,7 @@ class Mailabl:
         project = QgsProject.instance()
         if project.fileName() == '':
             text = (
-                "Hetkel ei ole ühtegi aktiivset projekti. "
+                "Hetkel ei ole ühtegi aktiivset projekti."
                 "Jätkamiseks ava projekt."
             )
             msg_box = QMessageBox()

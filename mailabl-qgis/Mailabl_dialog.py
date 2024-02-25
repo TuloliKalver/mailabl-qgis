@@ -23,9 +23,10 @@ from qgis.utils import iface
 from .app.web import loadWebpage
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView
-from .config.settings import SettingsDataSaveAndLoad
+from .config.settings import SettingsDataSaveAndLoad, version
 from .config.layer_setup import Setup_CadastralsLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
+from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBox_functions, shp_tools
 from .app.remove_processes import ReomveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
@@ -116,10 +117,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Hide typing password
         self.lePassword.setEchoMode(QLineEdit.Password)
         self.widget_19.setVisible(False)
-        self.pbUC_print.setVisible(False)
+        
+
+
                 
         #self.widget_animator = WidgetAnimator(self)
-
+        
         
         # declaring Delete process elements    
         pbDel_State = self.pbDel_State
@@ -157,9 +160,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
     
         self.set_layer_settings_labels()
-    
+        
+        
+        startup_frames = [self.leftMenuContainer, self.rightMenuContainer,  self.sw_HM,
+            self.Intro_Help, self.HomePageName, self.Genrealprogresbar, self.frProjects_Tools,
+            self.SettingsPageMainFrame, self.frSync_Cadastrals_Main, self.frSync_Overview_Main,
+            self.frSync_Tools]
+        
     #setup login dialog and hide frames to block functionality!
-        self.on_load()
+        self.on_load(startup_frames)
         #self.startLayerListener()
         
         object_listView_Add_State = self.listWidget_State
@@ -200,10 +209,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
 
     #Confirm password entering
-        self.pbUC_Save.clicked.connect(self.save_user_data)
-        self.lePassword.returnPressed.connect(self.save_user_data)
+        self.pbUC_Save.clicked.connect(lambda: self.save_user_data(startup_frames))
+        self.lePassword.returnPressed.connect(lambda: self.save_user_data(startup_frames))
         
-        self.pbUC_print.clicked.connect(self.print_UC_data)
         self.pbUC_Cancel.clicked.connect(self.remove_UC_data)
         #self.pbConnectNew.clicked.connect(self.token)
 
@@ -925,82 +933,47 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbConfirm_action.show()
 
-    def on_load(self):    
-        self.swWorkSpace.setCurrentIndex(5)  
-        frames = {
-            "frame1": self.leftMenuContainer,
-            "frame2": self.rightMenuContainer,
-            "frame3": self.UC_Main_Frame,
-            "frame4": self.sw_HM,
-            "frame5": self.Intro_Help,
-            "frame6": self.HomePageName,
-            "frame7": self.Genrealprogresbar,
-            "frame8": self.frProjects_Tools,
-            "frame9": self.SettingsPageMainFrame,
-            "frame10": self.frSync_Cadastrals_Main,
-            "frame11": self.frSync_Overview_Main,
-            "frame12": self.frSync_Tools
+    def on_load(self, frames):    
+        self.swWorkSpace.setCurrentIndex(5)
+        FrameHandler.hide_multiple_frames(self, frames )
+        path = PathLoaderSimple.metadata()
+        version_nr = version.get_plugin_version(path)
+        lblVersion = self.lblLoadVersion
+        if version_nr == 'dev':
+            lblVersion.setStyleSheet("color: red;")
+        else:
+            lblVersion.setStyleSheet("")  # Reset to default style
 
-            }
+        lblVersion.setText(f"v.{version_nr}")
+        #print(f"version_nr: '{version_nr}'")
 
-        frame_handler = FrameHandler(frames)
-
-        # To hide frame1 and frame2 in a single line
-        frame_handler.hide_frame("frame1")
-        frame_handler.hide_frame("frame2")
-        frame_handler.hide_frame("frame4")
-        frame_handler.hide_frame("frame5")
-        frame_handler.hide_frame("frame6")
-        frame_handler.hide_frame("frame7")
-        frame_handler.hide_frame("frame8")
-        frame_handler.hide_frame("frame9")
-        frame_handler.hide_frame("frame10")
-        frame_handler.hide_frame("frame11")
-        frame_handler.hide_frame("frame12")
+    
         
     #creditentials handling
     def remove_UC_data(self):
         clear_UC_data()
 
-    def save_user_data(self):
+    def save_user_data(self, frames):
         save_results = save_user_name(self)
         access_token_results = get_access_token(self)
         #print(access_token_results)
-
-        frames = {
-            "frame1": self.leftMenuContainer,
-            "frame2": self.rightMenuContainer,
-            "frame3": self.UC_Main_Frame,
-            "frame4": self.sw_HM,
-            "frame5": self.Intro_Help,
-            "frame6": self.HomePageName,
-            "frame7": self.frProjects_Tools,
-            "frame8": self.SettingsPageMainFrame,
-            "frame9": self.frSync_Cadastrals_Main,
-            "frame10": self.frSync_Overview_Main,
-            "frame11": self.frSync_Tools
-            }
-
-        frame_handler = FrameHandler(frames)
-
         if access_token_results == "success":
             
-            # To hide frame1 and frame2 in a single line
-            frame_handler.show_frame("frame1")
-            frame_handler.show_frame("frame2")
-            frame_handler.hide_frame("frame3")
-            frame_handler.show_frame("frame4")
-            frame_handler.show_frame("frame5")
-            frame_handler.show_frame("frame7")
-            frame_handler.show_frame("frame8")
-            frame_handler.show_frame("frame9")
-            frame_handler.show_frame("frame10")
-            frame_handler.show_frame("frame11")
-            #frame_handler.show_frame("frame6")
-            # Access token is available, proceed with saving user data
-            # ... your code to save user data ...
-            #print(access_token_results)
+            self.UC_Main_Frame.setVisible(False)
+
+            FrameHandler.show_multiple_frames(self, frames)
+
             self.resize(1150, 700)
+            path = PathLoaderSimple.metadata()
+            version_nr = version.get_plugin_version(path)
+            lblVersion = self.lbVersionNumber
+            if version_nr == 'dev':
+                lblVersion.setStyleSheet("color: red;")
+            else:
+                lblVersion.setStyleSheet("")  # Reset to default style
+
+            lblVersion.setText(f"v.{version_nr}")
+            
         elif access_token_results == "error on access token":
             # Handle the error condition
             # ... your code to handle the error

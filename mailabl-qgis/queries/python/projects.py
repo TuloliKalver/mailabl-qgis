@@ -194,10 +194,9 @@ class projectsTableDecorator:
         if len(selected_features) < 500:
                 
             pandas = ProjectsWithPandas_3(self.cmbProjectState)
-            result = pandas.Create_Project_tableView_for_zoom(self, selected_features)
+            result = pandas.Create_Project_tableView_for_zoom(selected_features)
             if result is not None:
                 p_model, header_labels = result
-                # Proceed with further processing            
                 
                 number_column_index = header_labels.index(pandas.header_number)
                 name_column_index = header_labels.index(pandas.header_name)
@@ -206,26 +205,26 @@ class projectsTableDecorator:
                 status_column_index = header_labels.index(pandas.header_statuses)
                 ID_column_index = header_labels.index(pandas.header_id)
                 LP_ID_column_index = header_labels.index(pandas.header_parent_id)
-                #cadastral_column_index = header_labels.index(pandas.header_property_number)
                 responsible_column_index = header_labels.index(pandas.header_responsible)
                 dokAddress_column_index = header_labels.index(pandas.header_Documents)
                 dokButton_column_index = header_labels.index(pandas.header_file_path)
+                print(f"dok button index: {dokButton_column_index}")
                 webButton_Column_index = header_labels.index(pandas.header_webLinkButton)
+                print(f"webButton: {webButton_Column_index}")
                 cadastralButton_Column_index = header_labels.index(pandas.header_properties_icon)
+                print(f"cadastralbutton: {cadastralButton_Column_index}")
                 
 
                 for row_index in range(p_model.rowCount()):
                     p_model.item(row_index, ID_column_index)
                     color_item = p_model.item(row_index, color_column_index)
                     status_item = p_model.item(row_index, status_column_index)
-                    #Cadastral_item = p_model.item(row_index, cadastral_column_index)
                     number_item =  p_model.item(row_index, number_column_index)
                     date_item  = p_model.item(row_index, date_column_index)
                     responsible_item = p_model.item(row_index,responsible_column_index)   
                     
                     number_item.setTextAlignment(Qt.AlignCenter)  
                     responsible_item.setTextAlignment(Qt.AlignCenter)
-                    
                     
                     # input date string in the format 'YYYY-MM-DD'
                     date_str = date_item.text()
@@ -255,25 +254,22 @@ class projectsTableDecorator:
                             status_item.setForeground(color_black)
                             status_item.setTextAlignment(Qt.AlignCenter)
                             
-                    #if Cadastral_item:
-                    #    cadastral_number = Cadastral_item.text()
-                    #    if cadastral_number:
-                    #        pb_ShowCadasters = QStandardItem()
-                    #        text_color1 = QColor("#FFFFFF")  # White
-                    #        pb_ShowCadasters.setForeground(QBrush(text_color1))
-                    #        pb_ShowCadasters.setSelectable(True)
-                    #        pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                    #        icon_path = ":/images/themes/default/mActionAdd3DMap.svg"
-                    #        icon = QIcon(icon_path)
-                    #        pb_ShowCadasters.setIcon(icon)
-                    #        p_model.setItem(row_index, cadastralButton_Column_index, pb_ShowCadasters)
+                    pb_ShowCadasters = QStandardItem()
+                    text_color1 = QColor("#FFFFFF")  # White
+                    pb_ShowCadasters.setForeground(QBrush(text_color1))
+                    pb_ShowCadasters.setSelectable(True)
+                    pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
+                    icon_path = ":/images/themes/default/mActionAdd3DMap.svg"
+                    icon = QIcon(icon_path)
+                    pb_ShowCadasters.setIcon(icon)
+                    p_model.setItem(row_index, cadastralButton_Column_index, pb_ShowCadasters)
 
                     dokAddress_index = p_model.index(row_index, dokAddress_column_index)
                     dokAddress_item = p_model.itemFromIndex(dokAddress_index)
                     
                     if dokAddress_item and dokAddress_item.data(Qt.DisplayRole):
                         dokLink = dokAddress_item.data(Qt.DisplayRole)
-                        #print(f"dok Link {dokLink}")
+                        print(f"dok Link {dokLink}")
                         if dokLink:
                             pb_dokLink = QStandardItem()
                             pb_dokLink.setData("Ava", Qt.DisplayRole)
@@ -312,6 +308,7 @@ class projectsTableDecorator:
 
                 # Set the custom delegate for the web link column
                 web_link_delegate = WebLinkDelegate(ID_column_index, table)
+                print(f"webButton_Column_index: {webButton_Column_index}")
                 table.setItemDelegateForColumn(webButton_Column_index, web_link_delegate)
 
                 # Set the custom delegate for the file column
@@ -327,7 +324,7 @@ class projectsTableDecorator:
                 table.verticalHeader().setDefaultSectionSize(20)
                     
                 # Define the columns to hide
-                columns_to_hide = [color_column_index, LP_ID_column_index, dokAddress_column_index]
+                columns_to_hide = [color_column_index] #, dokAddress_column_index, LP_ID_column_index
                 # Hide the specified columns
                 for column_index in columns_to_hide:
                     table.hideColumn(column_index)
@@ -340,7 +337,7 @@ class projectsTableDecorator:
                 columns_width_icons = [ID_column_index, #cadastral_column_index,
                                     webButton_Column_index, dokButton_column_index, 
                                     cadastralButton_Column_index]
-                column_widths = [0,0,10,10]
+                column_widths = [0,0,20,10]
                 resizes.setColumnWidths(table, columns_width_icons , column_widths) #columns_width_icons,
                 # Hide certain column labels
                 newLabel_for_cadastral = ""  # Replace with your actual column labels
