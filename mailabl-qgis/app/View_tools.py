@@ -412,7 +412,7 @@ class shp_tools:
             layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            heading = "Oi Oi Oi"
+            heading = "Hoiatus"
             text = (f"Oi, laetavate kinnistute kiht {input_layer_name} on puudu.\nJätkamiseks lae algandmed")
             QMessageBox.warning(self, heading,text)
             #print("No items selected")

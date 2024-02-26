@@ -28,7 +28,9 @@ class DeleteActions:
         data2 = tableFunctions.RemoveNonSelectedRowsFromTable(self, table_streets)
         
         if len(data) == 0 and len(data2) == 0:
-            QMessageBox.warning(self,"Oops","Vali importimiseks vähemalt üks kinnistu!")
+            text = ("Vali importimiseks vähemalt üks kinnistu")
+            heading = "Hoiatus"
+            QMessageBox.warning(self,heading,text)
             return
         else:
             button.blockSignals(True)
@@ -61,7 +63,9 @@ class DeleteActions:
             #print(f"To be deleted properties: {len(cadasters)}")
             
             if len(cadasters) == 0:
-                QMessageBox.warning(self,"Oops","Valitud kinnistuid Mailablis ei ole!")
+                text = ("Valitud kinnistuid Mailablis ei ole")
+                heading = "Hoiatus"
+                QMessageBox.warning(self,heading,text)
                 TabHandler.tabViewByState(tab_widget,True)
                 tab_widget.hide()
                 model_properties.clear()

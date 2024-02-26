@@ -17,9 +17,10 @@ class TableSelections:
     @staticmethod
     def selected_rows(table):
         if table is None:
-            print("Andmeid ei ole valitud.")
-            warning_message = "Andmeid ei ole valitud"
-            QMessageBox.warning(None, "Oi oi oi", warning_message)
+            #print("Andmeid ei ole valitud.")            
+            text = ("Andmeid ei ole valitud")
+            heading = "Hoiatus"
+            QMessageBox.warning(None, heading, text)
             return None
         
         selection_model = table.selectionModel()

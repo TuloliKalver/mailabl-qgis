@@ -370,7 +370,7 @@ class DeletingProcesses:
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
             text = (f"Oih - midagi jäi puudu! \n Laetavate kinnistute kiht {layer} on puud. \n jätkamiseks lae algandmed")
-            heading = "Oi Oi Oi"
+            heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
             return
@@ -430,7 +430,7 @@ class DeletingProcesses:
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
             text = (f"Oih - midagi jäi puudu! \n Laetavate kinnistute kiht {layer} on puud. \n jätkamiseks lae algandmed")
-            heading = "Oi Oi Oi"
+            heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
             return

@@ -636,7 +636,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
             text = (f"Oih - midagi jäi puudu! \n Laetavate kinnistute kiht {input_layer_name} on puudu. \n jätkamiseks lae algandmed")
-            heading = "Oi Oi Oi"
+            heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
             return
@@ -784,8 +784,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 items_name_state = [item.text() for item in item_state]
                 #print(f"Selected items: {items_name_state}")
             else:
-                text = ("Jätkamiseks vali mõni linn/või küla!")
-                heading = "Oih - midagi jäi puudu!"
+                text = ("Jätkamiseks vali ja kinnita linn või küla")
+                heading = "Hoiatus"
                 QMessageBox.warning(self, heading, text)
                 #print("No items selected")
                 pass
@@ -1170,8 +1170,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if not check_items:
             Delete_Main_Process.Delete_process_view_after_unsuccessful_county(self)
             # No item selected, perform your desired action here
-            text = ("Pead valima vähemalt ühe maakonna")
-            heading = "Jama"
+            text = ("Jätkamiseks vali ja kinnita maakond")
+            heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
             
         else:
@@ -1205,8 +1205,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if not check_items:
             Delete_Main_Process.Delete_process_view_after_unsuccessful_state(self)
             # No item selected, perform your desired action here
-            text = ("Pead valima vähemalt ühe omavalitsuse valima")
-            heading = "Jama"
+            text = ("Jätkamiseks vali ja kinnita omavalitsus")
+            heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
         else:
             Delete_Main_Process.Delete_process_view_after_state(self)
@@ -1243,8 +1243,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if not check_items:
             Delete_Main_Process.Delete_process_view_after_unsuccessful_city(self)
             # No item selected, perform your desired action here
-            text = ("Pead valima vähemalt ühe omavalitsuse valima")
-            heading = "Jama"
+            text = ("Jätkamiseks vali ja kinnita omavalitsus")
+            heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
         else:
             Delete_Main_Process.Delete_process_view_after_city(self)

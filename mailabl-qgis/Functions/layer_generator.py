@@ -221,7 +221,9 @@ class LayerCopier():
         
         
         if selected_features == 0:
-            QMessageBox.warning(self, "errorr", "Ühtegi kinnistut ei leitud")
+            text = ("Ühtegi kinnistut ei leitud")
+            heading = "Hoiatus"
+            QMessageBox.warning(self, heading, text)
 
         count = 1
         progress_widget = loadUi(widgets_path)
