@@ -195,16 +195,9 @@ class Mailabl:
         # Check if there is an active project loaded
         project = QgsProject.instance()
         if project.fileName() == '':
-            text = (
-                "Hetkel ei ole ühtegi aktiivset projekti."
-                "Jätkamiseks ava projekt."
-            )
-            msg_box = QMessageBox()
-            msg_box.setIcon(QMessageBox.Warning)
-            msg_box.setText(text)
-            msg_box.setWindowTitle("Hoiatus")
-            # Show the QMessageBox and handle the result
-            msg_box.exec_()
+            text = ("Hetkel ei ole ühtegi aktiivset projekti. \n Jätkamiseks ava projekt.")
+            heading = "Hoiatus"
+            QMessageBox.warning(None, heading, text)
             return
 
         # Create the dialog with elements (after translation) and keep reference

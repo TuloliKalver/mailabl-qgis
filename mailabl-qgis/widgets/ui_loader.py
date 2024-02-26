@@ -26,7 +26,7 @@ class Directories:
     WConfirmation = "Confirmation_list.ui"
     #widgets_path = os.path.join(plugin_dir,widgets_folder, "WStatusBar.ui")
     WstatusBar_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, WStatusBar))
-    #ui_file_path = f"C:\Users\Admin\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\kataster\app\widgets\WStatusBar.ui"
+
     WResults_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, WConfirmation))
     
     @staticmethod

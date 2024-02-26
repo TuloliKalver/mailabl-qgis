@@ -26,7 +26,6 @@ plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 widgets_folder = "widgets"  
 #widgets_path = os.path.join(plugin_dir,widgets_folder, "WStatusBar.ui")
 widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui"))
-#ui_file_path = f"C:\Users\Admin\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\kataster\app\widgets\WStatusBar.ui"
 
 projects_toolsWidget_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "Properties_connector.ui"))
 contracts_toolsWidget_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "ContractsPropertiesConnector.ui"))

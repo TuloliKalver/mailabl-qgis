@@ -23,7 +23,6 @@ plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 widgets_folder = "widgets"  
 #widgets_path = os.path.join(plugin_dir,widgets_folder, "WStatusBar.ui")
 widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui"))
-#ui_file_path = f"C:\Users\Admin\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\kataster\app\widgets\WStatusBar.ui"
 
 class progressBar_loader:
     
@@ -34,10 +33,6 @@ class progressBar_loader:
         progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
         progress_widget.show()
 
-
-class messages:
-    __init__(self)
-        pass
 
 
     def update_progress_widget(count, progress_points, progress_widget, progress_bar):
