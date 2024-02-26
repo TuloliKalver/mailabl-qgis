@@ -30,11 +30,12 @@ class WorkSpaceHandler:
         statusModule = Statuses()
         module = statusModule.module_projects
         comboBox = self.cmbProjectStatuses
-        returned = statusModule.all_by_module(module)
-        print(returned)
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
         insertStatusToComboBox.add_statuses_to_listview(self, comboBox, module )
-        Projects.load_Mailabl_projects_list(self, table)
+        statusValue = insertStatusToComboBox.get_selected_status_id(comboBox)
+        print(statusValue)
+        
+        Projects.load_Mailabl_projects_list(self, table, statusValue)
         button.blockSignals(False)
     
     @staticmethod

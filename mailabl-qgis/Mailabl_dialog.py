@@ -49,6 +49,8 @@ from .queries.python.update_relations.update_project_properties import ProjectsP
 from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
 from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
+from .queries.python.statusManager import Statuses,insertStatusToComboBox
+
 
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -1148,7 +1150,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button = self.pbRefresh_tblMailabl_projects
         button.blockSingnals = True
         table = self.tblMailabl_projects
-        Projects.load_Mailabl_projects_list(self, table)
+        comboBox = self.cmbProjectStatuses
+        statusValue = insertStatusToComboBox.get_selected_status_id(comboBox)
+        Projects.load_Mailabl_projects_list(self, table, statusValue)
         button.blockSingnals = False
         
     def Delete_reset_stage(self):

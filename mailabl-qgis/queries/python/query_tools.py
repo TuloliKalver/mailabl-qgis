@@ -61,6 +61,6 @@ class RequestErrorHandler:
         if errors:
             error_messages = [error.get('message', 'Unknown error') for error in errors]
             error_message = '\n'.join(error_messages)
-            QMessageBox.warning(self, "Error", f"GraphQL request failed:\n{error_message}")
+            QMessageBox.warning(None, "Error", f"GraphQL request failed:\n{error_message}")
             return True  # Indicate that an error occurred
         return False  # No error occurred

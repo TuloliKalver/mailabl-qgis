@@ -12,10 +12,10 @@ from PyQt5.QtWidgets import QMessageBox
 
 class Projects:
     @staticmethod
-    def load_Mailabl_projects_list(self, table):
-        
+    def load_Mailabl_projects_list(self, table, statusValue):
+        print(f"in 'load_Mailabl_projects_list(self, table, statusValue)': {statusValue}")
         pandas = ProjectsWithPandas_2(self.cmbProjectState)
-        p_model,header_labels = pandas.Create_Project_tableView_Paren_Active_Open()
+        p_model,header_labels = pandas.Create_Project_tableView_Paren_Active_Open(statusValue)
         
         number_column_index = header_labels.index(pandas.header_number)
         name_column_index = header_labels.index(pandas.header_name)

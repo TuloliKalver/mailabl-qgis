@@ -266,7 +266,7 @@ class ProjectsWithPandas_2:
         self.header_statuses = header_statuses
         self.Project_state = cmbProjectState
 
-    def Create_Project_tableView_Paren_Active_Open(self):
+    def Create_Project_tableView_Paren_Active_Open(self, statusValue):
         # Set header labels
         header_labels = [header_id, header_number, 
                             header_name, header_deadline,
@@ -281,21 +281,21 @@ class ProjectsWithPandas_2:
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(header_labels)
 
-        projects_state = self.Project_state
-        value = projects_state.currentIndex()
+        #projects_state = self.Project_state
+        #value = projects_state.currentIndex()
         #print(f"value of label '{value}'")
-        statusObject = Statuses()
+        #statusObject = Statuses()
 
-        if value == 0:
-            statuses = statusObject.by_module_and_state(statusObject.module_projects, statusObject.state_open)  
-        if value == 1:
-            statuses = statusObject.all_by_module(statusObject.module_projects)
-        if value ==2:        
-            statuses = statusObject.by_module_and_state(statusObject.module_projects, statusObject.state_closed)  
+        #if value == 0:
+        #    statuses = statusObject.by_module_and_state(statusObject.module_projects, statusObject.state_open)  
+        #if value == 1:
+        #    statuses = statusObject.all_by_module(statusObject.module_projects)
+        #if value ==2:        
+        #    statuses = statusObject.by_module_and_state(statusObject.module_projects, statusObject.state_closed)  
 
         #print("statuses")
         #print(statuses)
-        data = ProjectsWithPandas.QueryProjects_Parent_Active_Open(self, statuses)
+        data = ProjectsWithPandas.QueryProjects_Parent_Active_Open(self, statusValue)
         data_count = len(data)
         #print(f"total data  {data_count}")
         progress_value = 0
