@@ -32,7 +32,7 @@ from .app.remove_processes import ReomveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
-from .Functions.SearchEngines import General
+from .Functions.SearchEngines import searchGeneral, searchProjects
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
 from .Functions.Tools import tableFunctions
 from .Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
@@ -212,7 +212,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     #Confirm password entering
         self.pbUC_Save.clicked.connect(lambda: self.save_user_data(startup_frames))
-        self.lePassword.returnPressed.connect(lambda: self.save_user_data(startup_frames))
+        
+        #if self.lePassword.hasFocus():
+        #    self.lePassword.returnPressed.connect(lambda: self.save_user_data(startup_frames))
+        #else:
+        #    pass
         
         self.pbUC_Cancel.clicked.connect(self.remove_UC_data)
         #self.pbConnectNew.clicked.connect(self.token)
@@ -295,8 +299,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         #self.pbDelete_items_getCounty.clicked.connect(self.get_Mailabl_existing_counties)
         
+        self.pbSearchProjects.clicked.connect(self.searchProjects)
+        
+        
+        
+        
     #Adding and removing        
-        self.pbSearch_Add.clicked.connect(lambda: General.search_cadastral_items_by_values(self))
+        self.pbSearch_Add.clicked.connect(lambda: searchGeneral.search_cadastral_items_by_values(self))
+        
+        
 
     #update selections in adding proccess
         self.cbChooseAll_States.stateChanged.connect(lambda state, view_state=object_listView_Add_State: list_functions.toggleListSelection(view_state, state))
@@ -346,7 +357,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
 
 ########################################################################
-    
+    def searchProjects(self):
+        lineEdit = self.le_searchProjects
+        table = self.tblMailabl_projects
+        search_items = lineEdit.displayText()
+        searchProjects.search_projects_by_number(self, search_items, table)
+            
+        
     def limitedLoad(self):
         table = self.tblMailabl_projects
         projectsTableDecorator.load_Mailabl_projects_list_with_zoomed_map_elements(self, table)

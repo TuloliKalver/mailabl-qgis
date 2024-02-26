@@ -95,7 +95,6 @@ class getProjectsWhere:
         # Return only the desired number of items
         return properties_items
 
-
 class ProjectsWithPandas:    
     def QueryProjects_Parent_Active_Open(self, statuses):
         widgets_path = PathLoaderSimple.widget_statusBar_path(self)
@@ -145,6 +144,88 @@ class ProjectsWithPandas:
                 }
             }
 
+            response = requestBuilder.construct_and_send_request(self, query, variables)
+
+            if response.status_code == 200:
+                data = response.json()
+                #print("data")
+                #print(data)
+                fetched_data = data.get("data", {}).get("projects", {}).get("edges", [])
+                projects_pageInfo = data.get("data", {}).get("projects", {}).get("pageInfo", {})
+                #print(projects_pageInfo)
+                
+                projects_end_cursor = projects_pageInfo.get("endCursor")
+                projects_hasNextPage = projects_pageInfo.get("hasNextPage")
+                last_page = projects_pageInfo.get("lastPage")
+                current_page = projects_pageInfo.get("currentPage")
+                total = projects_pageInfo.get("total")
+                fetched_items.extend(fetched_data)
+                total_fetched += len(fetched_data)
+                text = "Projekte kokku"
+                #label_2.setText(text)
+                if current_page == 1:
+                    label_2.setText(f"{text}: {total}")
+                    progress_bar.setMaximum(last_page)
+                    
+                label_2.setText(f"{text}: {total}")
+                progress_bar.setValue(current_page)
+                QCoreApplication.processEvents()
+
+        
+
+                # Check whether the last page of projects has been reached
+                if not projects_end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items) or not projects_hasNextPage:
+                    break
+
+            else:
+                print(f"Error: {response.status_code}")
+                return None
+
+            QCoreApplication.processEvents()
+
+        # Return only the desired number of items
+        return fetched_items[:desired_total_items]
+
+    def QueryProjects_by_number(self, project_number):
+        widgets_path = PathLoaderSimple.widget_statusBar_path(self)
+        progress_widget = loadUi(widgets_path)
+        progress_bar = progress_widget.testBar
+        label_2 = progress_widget.label_2
+        progress_bar.setMaximum(100)
+        progress_widget.setWindowTitle("Laen projekte")
+        progress_widget.show()
+        
+        # Load the project query using the loader instance
+        query_loader = Graphql_project()
+        query = GraphQLQueryLoader.load_query(self,query_loader.Q_Where_By_status_Projects)
+        limit = 50
+        # Set the desired total number of items to fetch
+        desired_total_items = None  # Adjust this to your desired value
+        items_for_page = 50  # Adjust this to your desired value
+        projects_end_cursor = None  # Initialize end_cursor before the loop
+        #properties_end_cursor = None
+        total_fetched = 0        # Initialize an empty list to store fetched items
+        fetched_items = []
+                
+        while (desired_total_items is None or total_fetched < desired_total_items): #(total_fetched < limit):
+            # Construct variables for the GraphQL query
+            variables = {
+                "first": items_for_page,
+                "after": projects_end_cursor if projects_end_cursor else None,
+                #"propertiesFirst": items_for_properties_page,
+                #"propertiesAfter": properties_end_cursor if properties_end_cursor else None,
+                "where": {
+                    "AND": [
+                        {
+                            "column": "NUMBER",
+                            "operator": "IN",
+                            "value": [project_number]
+                        },
+                        
+                    ]
+                }
+            }
+            print(f"variables: {variables}")
             response = requestBuilder.construct_and_send_request(self, query, variables)
 
             if response.status_code == 200:
@@ -247,8 +328,7 @@ class SelectMapElementsDelegate(QStyledItemDelegate):
                 properties_selectors.show_connected_cadasters(values, layer_type)
                 return True
         return super().editorEvent(event, model, option, index)
-    
-    
+        
 class ProjectsWithPandas_2:
     def __init__(self, cmbProjectState):
         self.header_id = header_id
@@ -336,6 +416,80 @@ class ProjectsWithPandas_2:
             model.appendRow(data_items)
         
         return model, header_labels
+
+
+    def Create_Project_tableView_for_search(self, project_number):
+        # Set header labels
+        header_labels = [header_id, header_number, 
+                            header_name, header_deadline,
+                            header_color, header_responsible,
+                            header_property_number, header_properties_icon,
+                            header_parent_id, header_webLinkButton, 
+                            header_Documents, header_file_path, 
+                            header_statuses]
+        model = QStandardItemModel()
+        model.setHorizontalHeaderLabels(header_labels)
+
+        
+        #unique_projects = set()
+        all_projects = []
+
+        
+        all_projects = ProjectsWithPandas.QueryProjects_by_number(self, project_number)
+  # Append all project dictionaries to the list
+        QCoreApplication.processEvents()
+        total_projects = len(all_projects)
+        if  total_projects == 0:
+            QMessageBox.information(None, "Oi Oi Oi", "Ei leidnud antud numbriga projekti")
+            return None
+
+        else:
+            # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
+            print(f"total len of all projects: '{len(all_projects)}'")
+            #data = {project['id']: project for project in all_projects}.values()
+            #print(f"data: {data}")
+
+            #data = ProjectsWithPandas.QueryProjects_Parent_Active_Open(self, statuses)
+            #data_count = len(data)
+            #print(f"total data  {data_count}")
+            progress_value = 0
+            # Build a pandas DataFrame
+            df_data = []
+            for item in all_projects:
+                node = item.get("node", {})
+                properties = node.get("properties", {}).get("edges", [])
+                propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
+                responsibles = node.get("responsible",{}).get("edges",[])
+                resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
+                row_data = {
+                    header_id: node.get("id", "") or "",
+                    header_number: node.get("number", "") or "",
+                    header_name: node.get("name", "") or "",
+                    header_deadline: node.get("dueAt", "") or "",
+                    header_statuses: node.get("status", {}).get("name", "") if node.get("status") else "",
+                    header_color: node.get("status", {}).get("color", "") if node.get("status") else "",
+                    header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
+                    header_id: node.get("id", ""),
+                    header_parent_id: node.get("parentID", ""),
+                    header_webLinkButton: "",
+                    header_Documents: node.get("filesPath","")or "",
+                    header_file_path: "",
+                    header_responsible: ",".join(resposnisble_name) if resposnisble_name else "",
+                    header_properties_icon: ""
+                    }
+                df_data.append(row_data)
+            
+                QCoreApplication.processEvents()
+                df = pd.DataFrame(df_data)
+            # Create a QStandardItemModel and set header labels
+
+            # Populate QStandardItemModel with data from the pandas DataFrame
+            for row_index, row_data in df.iterrows():
+                data_items = [QStandardItem(str(row_data[label])) for label in header_labels]
+                model.appendRow(data_items)
+            
+            return model, header_labels
+
 
 class ProjectsWithPandas_3:
     def __init__(self, cmbProjectState):
@@ -464,3 +618,60 @@ class ProjectsWithPandas_3:
             
             return model, header_labels
         
+
+    def Return_projects_by_number(self):
+        # Set header labels
+        header_labels = [header_id, header_number, 
+                            header_name, header_deadline,
+                            header_color, header_responsible,
+                            header_property_number, header_properties_icon,
+                            header_parent_id, header_webLinkButton, 
+                            header_Documents, header_file_path, 
+                            header_statuses]
+        #print(f" header_webLinkButton: {header_webLinkButton}")
+        #print(f"header_labels: {header_labels}")
+        # Get projects status types that are active
+        model = QStandardItemModel()
+        model.setHorizontalHeaderLabels(header_labels)
+        data = ProjectsWithPandas.QueryProjects_Parent_Active_Open(self)
+        data_count = len(data)
+        #print(f"total data  {data_count}")
+        progress_value = 0
+        # Build a pandas DataFrame
+        df_data = []
+        for project_data in data:
+            node = project_data.get("node", {})
+            properties = node.get("properties", {}).get("edges", [])
+            properties_page_info = node.get("properties",{}).get('pageInfo',{})          
+            propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
+            responsibles = node.get("responsible",{}).get("edges",[])
+            resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
+            row_data = {
+                header_id: node.get("id", "") or "",
+                header_number: node.get("number", "") or "",
+                header_name: node.get("name", "") or "",
+                header_deadline: node.get("dueAt", "") or "",
+                header_statuses: node.get("status", {}).get("name", "") if node.get("status") else "",
+                header_color: node.get("status", {}).get("color", "") if node.get("status") else "",
+                header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
+                header_id: node.get("id", ""),
+                header_parent_id: node.get("parentID", ""),
+                header_webLinkButton: "",
+                header_Documents: node.get("filesPath","")or "",
+                header_file_path: "",
+                header_responsible: ",".join(resposnisble_name) if resposnisble_name else "",
+                header_properties_icon: ""
+                }
+            df_data.append(row_data)
+        
+        QCoreApplication.processEvents()
+        df = pd.DataFrame(df_data)
+        # Create a QStandardItemModel and set header labels
+
+        # Populate QStandardItemModel with data from the pandas DataFrame
+        for row_index, row_data in df.iterrows():
+            data_items = [QStandardItem(str(row_data[label])) for label in header_labels]
+            model.appendRow(data_items)
+        
+        return model, header_labels
+

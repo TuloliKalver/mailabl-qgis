@@ -579,6 +579,13 @@ QComboBox::on{
              </widget>
             </item>
             <item>
+             <widget class="Line" name="line">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -1176,7 +1183,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -6914,45 +6921,6 @@ QPushButton:hover{
                     </widget>
                    </item>
                    <item>
-                    <widget class="QComboBox" name="cmbProjectStatuses">
-                     <property name="minimumSize">
-                      <size>
-                       <width>120</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <pointsize>10</pointsize>
-                      </font>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="pbRefresh_tblMailabl_projects">
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>16</width>
-                       <height>16</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="pushButton">
-                     <property name="text">
-                      <string>Nähtava ala projektid</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
                     <widget class="QFrame" name="Project_Seachframe">
                      <property name="styleSheet">
                       <string notr="true">#le_searchProjects{
@@ -6981,15 +6949,35 @@ QPushButton:hover{
                        <number>0</number>
                       </property>
                       <property name="rightMargin">
-                       <number>10</number>
+                       <number>0</number>
                       </property>
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
                       <item>
                        <widget class="QLineEdit" name="le_searchProjects">
+                        <property name="text">
+                         <string>Otsing - projekti numbri järgi</string>
+                        </property>
                         <property name="placeholderText">
                          <string>Otsing</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="pbSearchProjects">
+                        <property name="text">
+                         <string>Otsi</string>
+                        </property>
+                        <property name="icon">
+                         <iconset>
+                          <normaloff>icons/Icons_hele/search.svg</normaloff>icons/Icons_hele/search.svg</iconset>
+                        </property>
+                        <property name="iconSize">
+                         <size>
+                          <width>18</width>
+                          <height>18</height>
+                         </size>
                         </property>
                        </widget>
                       </item>
@@ -7024,6 +7012,33 @@ QPushButton:hover{
                     <number>0</number>
                    </property>
                    <item>
+                    <widget class="QPushButton" name="pushButton">
+                     <property name="font">
+                      <font>
+                       <pointsize>10</pointsize>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Zoomitud ala projektid</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="cmbProjectStatuses">
+                     <property name="minimumSize">
+                      <size>
+                       <width>130</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <pointsize>10</pointsize>
+                      </font>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
                     <spacer name="horizontalSpacer_26">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -7035,6 +7050,23 @@ QPushButton:hover{
                       </size>
                      </property>
                     </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pbRefresh_tblMailabl_projects">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset>
+                       <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>16</width>
+                       <height>16</height>
+                      </size>
+                     </property>
+                    </widget>
                    </item>
                   </layout>
                  </widget>
