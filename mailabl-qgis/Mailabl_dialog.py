@@ -633,7 +633,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            text = (f"Oih - midagi jäi puudu! \n Laetavate kinnistute kiht {input_layer_name} on puud. \n jätkamiseks lae algandmed")
+            text = (f"Oih - midagi jäi puudu! \n Laetavate kinnistute kiht {input_layer_name} on puudu. \n jätkamiseks lae algandmed")
             heading = "Oi Oi Oi"
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
