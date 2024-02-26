@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1136</width>
+    <width>1137</width>
     <height>853</height>
    </rect>
   </property>
@@ -1176,7 +1176,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>5</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -5345,6 +5345,20 @@ p, li { white-space: pre-wrap; }
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_139">
                 <item>
+                 <widget class="QLabel" name="label_23">
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>NB! Tärniga tähistatud elemendid ei ole veel püsivalt seadistatavad</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QWidget" name="qwSU_Mailabl_Users" native="true">
                   <property name="styleSheet">
                    <string notr="true"/>
@@ -5472,7 +5486,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string>Eelistused:</string>
+                         <string>Eelistused:*</string>
                         </property>
                        </widget>
                       </item>
@@ -5540,7 +5554,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string>Kasutaja:</string>
+                         <string>Kasutaja:*</string>
                         </property>
                        </widget>
                       </item>
@@ -5622,7 +5636,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string>Mailabli rollid:</string>
+                         <string>Mailabli rollid:*</string>
                         </property>
                        </widget>
                       </item>
@@ -5690,7 +5704,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string>Minu eelistatud avaleht:</string>
+                         <string>Minu eelistatud avaleht:*</string>
                         </property>
                        </widget>
                       </item>
@@ -6028,21 +6042,6 @@ p, li { white-space: pre-wrap; }
                    <string notr="true"/>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_46">
-                   <property name="spacing">
-                    <number>8</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>5</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>5</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>5</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>5</number>
-                   </property>
                    <item>
                     <widget class="QFrame" name="frame_27">
                      <property name="frameShape">
@@ -6244,6 +6243,92 @@ p, li { white-space: pre-wrap; }
                          </size>
                         </property>
                        </spacer>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QFrame" name="frame_20">
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_56">
+                      <property name="spacing">
+                       <number>10</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>15</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="label_13">
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Laetavate projektide sttaatuse tüüp*</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="cmbProjectState">
+                        <property name="minimumSize">
+                         <size>
+                          <width>100</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>Avatud</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Kõik</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Suletud</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </item>
+                       </widget>
                       </item>
                      </layout>
                     </widget>
@@ -6829,10 +6914,10 @@ QPushButton:hover{
                     </widget>
                    </item>
                    <item>
-                    <widget class="QComboBox" name="cmbProjectState">
+                    <widget class="QComboBox" name="cmbProjectStatuses">
                      <property name="minimumSize">
                       <size>
-                       <width>100</width>
+                       <width>120</width>
                        <height>0</height>
                       </size>
                      </property>
@@ -6841,36 +6926,6 @@ QPushButton:hover{
                        <pointsize>10</pointsize>
                       </font>
                      </property>
-                     <item>
-                      <property name="text">
-                       <string>Avatud</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Kõik</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Suletud</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </item>
                     </widget>
                    </item>
                    <item>
@@ -6893,7 +6948,7 @@ QPushButton:hover{
                    <item>
                     <widget class="QPushButton" name="pushButton">
                      <property name="text">
-                      <string>Nähtava ala projektide laadimine</string>
+                      <string>Nähtava ala projektid</string>
                      </property>
                     </widget>
                    </item>

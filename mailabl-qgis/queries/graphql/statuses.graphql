@@ -1,29 +1,10 @@
-query statuses($first: Int, $after: String){
-  statuses(
-    first: Int! = 50
-    after: String
-    ) {
-      pageInfo {
-        count
-        currentPage
-        startCursor
-        endCursor
-        hasNextPage
-        hasPreviousPage
-        lastPage
-        total
-        }
-      edges{
-        node{
-          id
-          module {
-            PROJECTS
-                  }
-                  name
-                  color
-                  description
-                  }
-        }
+query statuses($first: Int, $after: String, $where: QueryStatusesWhereWhereConditions) {
+  statuses(first: $first, after: $after, where: $where) {
+    edges {
+      node {
+        id
+        name
+      }
     }
+  }
 }
-

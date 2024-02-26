@@ -37,6 +37,7 @@ class Statuses:
                 ]
             }
         }
+        
         response = requestBuilder.construct_and_send_request(self, query, variables)
         if response.status_code == 200:
             data = response.json()
@@ -84,3 +85,46 @@ class Statuses:
                 # Append the node_info to the list
                 status_ids.append(status_id)
             return status_ids
+
+    def all_by_module_names(self, module_name):
+        query_loader = GraphQLQueryLoader()
+        query = query_loader.load_query(query_loader.Projects_statuses)
+        print(f"query: {query}")
+        # Construct the request payload
+        variables = {
+            "where": {
+                "AND":[
+                {
+                "column": "MODULE",
+                "value": module_name,
+                }
+                ]
+            }
+        }
+        response = requestBuilder.construct_and_send_request(self, query, variables)
+        if response.status_code == 200:
+            data = response.json()
+            # Access the relevant part of the data structure
+            statuses_data = data.get('data', {}).get('statuses', {}).get('edges', [])
+            print(statuses_data)
+            # Create a list to store node_info values
+            statuses = []
+            # Iterate through the statuses_data
+            for status_info in statuses_data:
+                # Access the node information
+                node_info = status_info.get('node', {})
+                status = node_info.get('name',"")
+                # Append the node_info to the list
+                statuses.append(status)
+            return statuses
+
+
+class insertStatusToComboBox:
+    def add_statuses_to_listview (self, comboBox, module_name):
+        print(f"module name: {module_name}")
+        statuses = Statuses.all_by_module_names(self, module_name)
+        # Clear existing items in the combo box
+        comboBox.clear()
+        comboBox.addItems(statuses)
+
+

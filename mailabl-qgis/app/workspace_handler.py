@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QMessageBox
 from ..Functions.delete_items import Delete_Main_Process
 from ..Functions.Contracts.contractsItems import ContractsMain
 from ..widgets.helper import place
+from ..queries.python.statusManager import Statuses,insertStatusToComboBox
 
 from qgis.core import QgsProject
 from qgis.utils import iface
@@ -26,7 +27,13 @@ class WorkSpaceHandler:
         button = self.pbProjects
         button.blockSignals(True)
         table = self.tblMailabl_projects
+        statusModule = Statuses()
+        module = statusModule.module_projects
+        comboBox = self.cmbProjectStatuses
+        returned = statusModule.all_by_module(module)
+        print(returned)
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
+        insertStatusToComboBox.add_statuses_to_listview(self, comboBox, module )
         Projects.load_Mailabl_projects_list(self, table)
         button.blockSignals(False)
     

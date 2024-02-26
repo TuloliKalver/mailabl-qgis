@@ -3255,6 +3255,11 @@ class Ui_MailablDialogBase(object):
 
         self.horizontalLayout_26.addWidget(self.cmbProjectState)
 
+        self.cmbProjectStatuses = QComboBox(self.frProjects_Tools)
+        self.cmbProjectStatuses.setObjectName(u"cmbProjectStatuses")
+
+        self.horizontalLayout_26.addWidget(self.cmbProjectStatuses)
+
         self.pbRefresh_tblMailabl_projects = QPushButton(self.frProjects_Tools)
         self.pbRefresh_tblMailabl_projects.setObjectName(u"pbRefresh_tblMailabl_projects")
         self.pbRefresh_tblMailabl_projects.setIcon(icon15)
@@ -4350,7 +4355,7 @@ class Ui_MailablDialogBase(object):
 
         self.retranslateUi(MailablDialogBase)
 
-        self.swWorkSpace.setCurrentIndex(5)
+        self.swWorkSpace.setCurrentIndex(7)
         self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
