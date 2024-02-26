@@ -21,7 +21,6 @@ class WorkSpaceHandler:
     
     @staticmethod    
     def swWorkspace_Projects(self):
-        self.frProjects_Checkbox_holder.hide()
         self.swWorkSpace.setCurrentIndex(7)
         self.sw_HM.setCurrentIndex(8) 
         button = self.pbProjects
@@ -33,8 +32,6 @@ class WorkSpaceHandler:
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
         insertStatusToComboBox.add_statuses_to_listview(self, comboBox, module )
         statusValue = insertStatusToComboBox.get_selected_status_id(comboBox)
-        print(statusValue)
-        
         Projects.load_Mailabl_projects_list(self, table, statusValue)
         button.blockSignals(False)
     
