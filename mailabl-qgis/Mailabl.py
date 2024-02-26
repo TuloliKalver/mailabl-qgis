@@ -195,7 +195,7 @@ class Mailabl:
         # Check if there is an active project loaded
         project = QgsProject.instance()
         if project.fileName() == '':
-            text = ("Hetkel ei ole ühtegi aktiivset projekti. \n Jätkamiseks ava projekt.")
+            text = ("Jätkamiseks ava projekt.")
             heading = "Hoiatus"
             QMessageBox.warning(None, heading, text)
             return
