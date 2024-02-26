@@ -1176,7 +1176,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>7</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -6281,7 +6281,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string>Laetavate projektide sttaatuse tüüp*</string>
+                         <string>Staatuse valiku piiramine*</string>
                         </property>
                        </widget>
                       </item>

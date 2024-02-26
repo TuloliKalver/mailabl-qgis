@@ -124,17 +124,18 @@ class Statuses:
 
 class insertStatusToComboBox:
     def add_statuses_to_listview (self, comboBox, module_name):
-        #print(f"module name: {module_name}")
-        statuses = Statuses.all_by_module_names(self, module_name)
-        print(statuses)
         # Clear existing items in the combo box
-        # Populate the combo box with items and associate each item's text with its ID
+        comboBox.clear()
 
+        # Populate the combo box with items and associate each item's text with its ID
+        statuses = Statuses.all_by_module_names(self, module_name)
         for item_text, item_id in statuses:
             comboBox.addItem(item_text)
             comboBox.setItemData(comboBox.count() - 1, item_id)
-            # Ensure no item is selected initially
-        comboBox.setCurrentIndex(0)
+        
+        # Ensure the first item is selected
+        if comboBox.count() > 0:
+            comboBox.setCurrentIndex(0)
             
             
         # Retrieving the selected item's ID
