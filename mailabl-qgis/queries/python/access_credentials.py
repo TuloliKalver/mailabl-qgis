@@ -93,10 +93,14 @@ def get_access_token(self):
             # Now you have the access token, you can use it for GraphQL requests
             return "success"
         else:
-            QMessageBox.warning(self, "Error", "Autentimine ebaõnnestus.\n Kontrolli kasutajanime ja parooli!")
+            text = ("Autentimine ebaõnnestus\nKontrolli kasutajanime ja parooli")
+            heading = "Hoiatus"
+            QMessageBox.warning(self, heading, text)
             return "error"
     else:
-        QMessageBox.warning(self, "Error", "Autentimise pöördumine ebaõnnestus.\n Proovi hetkepärast uuesti." )
+        text = ("Autentimise pöördumine ebaõnnestus\nProovi hetke pärast uuesti")
+        heading = "Hoiatus"
+        QMessageBox.warning(self, heading, text )
         return "error"
 
 # Save the obtained access token to QgsSettings

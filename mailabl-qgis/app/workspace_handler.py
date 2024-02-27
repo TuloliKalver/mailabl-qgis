@@ -109,8 +109,8 @@ class WorkSpaceHandler:
             layer = QgsProject.instance().mapLayersByName(active_cadastral_layer)[0]
             iface.setActiveLayer(layer)
         else:
-            text =("Seadistustes on mingi jama")
-            heading = "Oi oi oi - mingi jama"
+            text =("Midagi läks valesti")
+            heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)       
 
         label = self.CadastralMovesMainLabel

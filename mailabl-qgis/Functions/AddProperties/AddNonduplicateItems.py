@@ -38,7 +38,9 @@ class AddProperties:
         data = table_data.RemoveNonSelectedRowsFromTable(self, table_properties)
         data2 = table_data.RemoveNonSelectedRowsFromTable(self, table_streets)
         if len(data) == 0 and len(data2) == 0:
-            QMessageBox.warning(self,"Oops","Vali importimiseks vähemalt üks kinnistu!")
+            text = ("Vali importimiseks vähemalt üks kinnistu")
+            heading = "Hoiatus"
+            QMessageBox.warning(self,heading,text)
             return
         else:
             button.blockSignals(True)
@@ -72,7 +74,9 @@ class AddProperties:
             #print(f"To be imported properties: {len(ToBe_imported_properties)}")
             
             if len(ToBe_imported_properties) == 0:
-                QMessageBox.warning(self,"Oops","Kõik valikus olnud kinnistud on Mailablis olemas!")
+                text = ("Kõik valitud kinnistud on juba Mailablis")
+                heading = "Hoiatus"
+                QMessageBox.warning(self,heading,text)
                 TabHandler.tabViewByState(tab_widget,True)
                 tab_widget.hide()
                 model_properties.clear()

@@ -23,7 +23,9 @@ def user_verification(self):
     #print("started")
     access_token = load_token()
     if not access_token:
-        QMessageBox.warning(self, "Error", "Oih, midagi läks valesti. Pöördu adminni poole.")
+        text = ("Midagi läks valesti\nPöördu admini poole")
+        heading = "Hoiatus"
+        QMessageBox.warning(self, heading, text)
         return
     #print("token loaded")
     graphql_query = load_user_query()
@@ -72,7 +74,9 @@ def user_verification(self):
     if matching_users:
             QMessageBox.information(None, "Success", f"Kasutaja {len(matching_users)} tuvastatud.")
     else:
-        QMessageBox.warning(None, "Error", "Puudub kasutaja.")
+        text = ("Puudub kasutaja")
+        heading = "Hoiatus"
+        QMessageBox.warning(None, heading, text)
 
     
 def user_verification_with_login(self):
@@ -80,7 +84,9 @@ def user_verification_with_login(self):
     #print("started")
     access_token = load_token()
     if not access_token:
-        QMessageBox.warning(self, "Error", "Oih, midagi läks valesti. Pöördu adminni poole.")
+        text = ("Midagi läks valesti\nPöördu admnni poole")
+        heading = "Hoiatus"
+        QMessageBox.warning(self, heading, text)
         return
     #print("token loaded")
     graphql_query = load_user_query()
@@ -124,4 +130,6 @@ def user_verification_with_login(self):
     if matching_users:
             QMessageBox.information(None, "Success", f"Kasutaja tuvastatud {len(matching_users)}.")
     else:
-        QMessageBox.warning(None, "Error", "Puudub kasutaja.")
+        text = ("Puudub kasutaja")
+        heading = "Hoiatus"
+        QMessageBox.warning(None, heading, text)

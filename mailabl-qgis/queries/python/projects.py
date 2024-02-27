@@ -365,7 +365,9 @@ class projectsTableDecorator:
                 print("No projects found.")
 
         else:
-            QMessageBox.warning(self, "OiOiOi", "Ala on projektide laadimiseks liialt suur. Zoomi lähemale")
+            text = ("Ala on projektide laadimiseks liiga suur\nZoomi lähemale")
+            heading = "Hoiatus"
+            QMessageBox.warning(self, heading, text)
             return
 
 class searchProjectsValue:

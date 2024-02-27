@@ -9,7 +9,9 @@ class requestBuilder:
         graphql_url = GraphQLSettings.graphql_endpoint()
         access_token = load_token()
         if not access_token:
-            QMessageBox.warning(self, "Error", "Access token not found. Please connect first.")
+            text = ("Access token not found. Please connect first.")
+            heading = "Hoiatus"
+            QMessageBox.warning(self, heading, text)
             return None
 
         # Construct the request payload
@@ -61,6 +63,8 @@ class RequestErrorHandler:
         if errors:
             error_messages = [error.get('message', 'Unknown error') for error in errors]
             error_message = '\n'.join(error_messages)
-            QMessageBox.warning(None, "Error", f"GraphQL request failed:\n{error_message}")
+            text = (f"GraphQL request failed:\n{error_message}")
+            heading = "Hoiatus"
+            QMessageBox.warning(None, heading, text)
             return True  # Indicate that an error occurred
         return False  # No error occurred
