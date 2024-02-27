@@ -22,4 +22,3 @@ class searchProjects:
         print(f"object to search: {search_items}")
         searchProjectsValue.load_Mailabl_projects_by_number(self, search_items, table)
         
-        

@@ -371,7 +371,6 @@ class projectsTableDecorator:
 class searchProjectsValue:
     @staticmethod
     def load_Mailabl_projects_by_number(self, project_number, table):
-        print(f"in 'load_Mailabl_projects_by_number(self, table, project_number)': {project_number}")
         pandas = ProjectsWithPandas_2(self.cmbProjectState)
         p_model,header_labels = pandas.Create_Project_tableView_for_search(project_number)
         

@@ -436,7 +436,7 @@ class ProjectsWithPandas_2:
 
         
         all_projects = ProjectsWithPandas.QueryProjects_by_number(self, project_number)
-  # Append all project dictionaries to the list
+        # Append all project dictionaries to the list
         QCoreApplication.processEvents()
         total_projects = len(all_projects)
         if  total_projects == 0:

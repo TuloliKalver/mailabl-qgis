@@ -22,7 +22,7 @@ from qgis.utils import iface
 
 from .app.web import loadWebpage
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
-from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView
+from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
 from .config.settings import SettingsDataSaveAndLoad, version
 from .config.layer_setup import Setup_CadastralsLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
@@ -50,7 +50,7 @@ from .queries.python.update_relations.update_contract_properties import Contract
 from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.statusManager import Statuses,insertStatusToComboBox
-
+from .processes.infomessages.messages import Headings
 
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -362,7 +362,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         table = self.tblMailabl_projects
         search_items = lineEdit.displayText()
         searchProjects.search_projects_by_number(self, search_items, table)
-            
+
         
     def limitedLoad(self):
         table = self.tblMailabl_projects
@@ -381,7 +381,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         }
         new_texts = {button1: ""
                         }
-        #Chose a random button to measure text lenght
+        #measure text lenght
         length = len(button1.text())
         alter_containers.toggle_right_menu(self, length, buttons, original_texts, new_texts, help_menu, container, container_width)
 

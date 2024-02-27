@@ -1,7 +1,6 @@
 from PyQt5.QtCore import QEasingCurve, QPropertyAnimation
-from PyQt5.QtWidgets import QPushButton, QFrame
+from PyQt5.QtWidgets import QPushButton, QFrame, QMessageBox
 from qgis.core import (QgsProject, QgsVectorLayer)
-from ..processes.infomessages.messages import SHP_layer_not_present
 from ..config.settings import flags
 from PyQt5.QtCore import QTimer
 
@@ -336,6 +335,13 @@ class FrameHandler:
 
 class LayerChecker:
     def SHP_Layer_Checker(self, input_layer_name):
+        #setup messagebox
+        text = (
+                "Lae õige fail! SHP_KATASTRIÜKSUS.SHP\n"
+                "Uued andmed saad Maa-ametist, kasutades Sätete nenüüst valikut 'Maa-ametisse'"
+            )
+        heading = "Hoiatus"
+        
         # Check if a virtual layer is present and has features
         input_layers = QgsProject.instance().mapLayersByName(input_layer_name)
         if input_layers:
@@ -347,11 +353,11 @@ class LayerChecker:
                 if feature_count > 0:
                     pass
                 else:
-                    SHP_layer_not_present()
+                    QMessageBox.warning(None, heading, text)
             else:
-                SHP_layer_not_present()
+                QMessageBox.warning(None, heading, text)
         else:
-            SHP_layer_not_present()
+            QMessageBox.warning(None, heading, text)
 
 class color_handler:
 
