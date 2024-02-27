@@ -62,6 +62,7 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
 plugin_dir = os.path.dirname(__file__)
 
 
+
 ################################################################################################################
 #initialize
 comboboxes = ComboBox_functions()
@@ -107,7 +108,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         Startup.FirstLoad(self)
 
-   
+
     #Creat instances
 
         self.setupUi(self)
@@ -121,10 +122,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.widget_19.setVisible(False)
         
 
-
-                
-        #self.widget_animator = WidgetAnimator(self)
-        
         
         # declaring Delete process elements    
         pbDel_State = self.pbDel_State

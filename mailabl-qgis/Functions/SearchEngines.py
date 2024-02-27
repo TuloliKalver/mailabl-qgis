@@ -17,8 +17,6 @@ class searchGeneral:
 class searchProjects:
     @staticmethod
     def search_projects_by_number(self, search_items, table):
-        #items_list = [item.strip() for item in search_items.split(',')]
-        #project_number = ', '.join('"{}"'.format(item) for item in items_list)
-        print(f"object to search: {search_items}")
+        item = search_items.strip()
+        print(f"object to search: {item}")
         searchProjectsValue.load_Mailabl_projects_by_number(self, search_items, table)
-        
