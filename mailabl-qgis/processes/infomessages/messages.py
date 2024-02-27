@@ -6,7 +6,11 @@ class Headings:
         self.warningCritical = "Oi oi oi oi"
         self.informationSimple = "Tasub teada"
 
-        
+
+    #Siin on näha kuida on võimalik kasutada erinevaid teksti viise.
+    @classmethod
+    def example_usage(self):
+        QMessageBox.warning(None, Headings.warningSimple, Headings.informationSimple)
         
 class Messages:
     def __init__(self):

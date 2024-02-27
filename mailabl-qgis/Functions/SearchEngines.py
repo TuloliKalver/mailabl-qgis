@@ -19,4 +19,4 @@ class searchProjects:
     def search_projects_by_number(self, search_items, table):
         item = search_items.strip()
         print(f"object to search: {item}")
-        searchProjectsValue.load_Mailabl_projects_by_number(self, search_items, table)
+        searchProjectsValue.load_Mailabl_projects_by_number(self, item, table)
