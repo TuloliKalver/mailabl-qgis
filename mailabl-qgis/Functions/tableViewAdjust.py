@@ -61,11 +61,11 @@ class ColumnResizer:
             header.resizeSection(index, width)
 
 
-class colors:
+class Colors:
     @staticmethod
     def hex_to_rgb(hex_code):
-        hex_code = hex_code.lstrip('#')
-        return tuple(int(hex_code[i:i+2], 16) for i in (0, 2, 4))
+        clean_hex_code = hex_code.strip('#')
+        return tuple(int(clean_hex_code[i:i+2], 16) for i in (0, 2, 4))
     
             
 class CustomDelegate(QStyledItemDelegate):

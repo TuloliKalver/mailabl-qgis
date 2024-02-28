@@ -1,10 +1,10 @@
-from .checkable_comboboxes import ComboBox_functions, shp_tools
+from .checkable_comboboxes import ComboBox_functions, ComboBoxMapTools
 from .ui_controllers import WidgetAnimator, FrameHandler
 
 
 
 comboboxes =ComboBox_functions
-tools_shp = shp_tools
+tools_shp = ComboBoxMapTools
 
 
 # muutujate määramine koodi ühtlustamieseks

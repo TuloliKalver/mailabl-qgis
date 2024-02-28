@@ -27,7 +27,7 @@ from .config.settings import SettingsDataSaveAndLoad, version
 from .config.layer_setup import Setup_CadastralsLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
 from .config.ui_directories import PathLoaderSimple
-from .app.checkable_comboboxes import ComboBox_functions, shp_tools
+from .app.checkable_comboboxes import ComboBox_functions, ComboBoxMapTools
 from .app.remove_processes import ReomveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
@@ -70,7 +70,7 @@ process = ReomveProcess()
 color = color_handler()
 list_functions = listView_functions()
 table_functions = tableView_functions()
-graph_tools = shp_tools()
+graph_tools = ComboBoxMapTools()
 properties_functions = Properties()
 
 setting_layer = connect_settings_to_layer
@@ -564,7 +564,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                             hide_buttons,
                                             checkboxes)
 
-        shp_class = shp_tools
+        shp_class = ComboBoxMapTools
         viewItem_county = self.listWidget_county
         viewItem_state = self.listWidget_State
         viewItem_city = self.listWidget_City
@@ -1071,7 +1071,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             
             PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
             map_selectors.activate_layer_and_use_selectTool_on_first_load(self, widget)
-            clear_table.clicked.connect(lambda: shp_tools.clear_table_and_layer(table_view, layer_name))
+            clear_table.clicked.connect(lambda: ComboBoxMapTools.clear_table_and_layer(table_view, layer_name))
 
             widget.show()
             
@@ -1118,7 +1118,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             
             PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
             ContractMapSelectors.activate_layer_and_use_selectTool_on_first_load(self,widget, table_view)
-            clear_table.clicked.connect(lambda: shp_tools.clear_table_and_layer(table_view, layer_name))
+            clear_table.clicked.connect(lambda: ComboBoxMapTools.clear_table_and_layer(table_view, layer_name))
 
             widget.show()
             
