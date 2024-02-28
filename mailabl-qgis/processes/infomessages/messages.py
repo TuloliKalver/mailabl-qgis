@@ -20,7 +20,7 @@ class HoiatusTexts:
                 "Uued andmed saad Maa-ametist kasutades Sätete nenüüst valikut 'Maa-ametisse'"
             )
         self.error = "Midagi läks valesti"
-        text = "Ühtegi kinnistut ei leitud"
+        self.kinnistuid_ei_leidnud = "Ühtegi kinnistut ei leitud"
         self.andmed_valimata = "Andmeid ei ole valitud"
         self.kinnistu_valimata = "Vali importimiseks vähemalt üks kinnistu"
         self.kinnistud_MLBs_olemas = "Kõik valitud kinnistud on juba Mailablis"
@@ -44,7 +44,7 @@ class InfoTexts:
 
 class KriitilisedTexts:
     def __init__(self):
-        text = ""
+
 
 class EdukuseTexts:
     def __init__(self):
