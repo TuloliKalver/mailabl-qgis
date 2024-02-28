@@ -41,7 +41,7 @@ class flags:
 class OpenLink:
     main = config['weblink']
     
-    def weblink_single_projects():
+    def web_link_single_projects():
         link = f'{OpenLink.main}/projects/'
         return link
 

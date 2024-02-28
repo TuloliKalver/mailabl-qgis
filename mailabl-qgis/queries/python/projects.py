@@ -15,7 +15,7 @@ class Projects:
     def load_Mailabl_projects_list(self, table, statusValue):
         print(f"in 'load_Mailabl_projects_list(self, table, statusValue)': {statusValue}")
         pandas = ProjectsWithPandas_2(self.cmbProjectState)
-        p_model,header_labels = pandas.Create_Project_tableView_Paren_Active_Open(statusValue)
+        p_model,header_labels = pandas.table_view_from_active_projects_statuses(statusValue)
         
         number_column_index = header_labels.index(pandas.header_number)
         name_column_index = header_labels.index(pandas.header_name)
@@ -52,7 +52,7 @@ class Projects:
                 if original_date < datetime.today().date():
                     #Set the text color to red
                     date_color = "#d24848"
-                    rgb_color_date = ProjectsWithPandas.hex_to_rgb(date_color)
+                    rgb_color_date = ProjectsWithPandas.hex_to_rgb(self,date_color)
                     date_item.setForeground(QColor(*rgb_color_date))
 
                 formatted_date = original_date.strftime('%d.%m.%Y')
@@ -64,9 +64,9 @@ class Projects:
                 color_code = color_item.text()
                 #styler.set_background_color(color_item, color_code)
                 if color_code:
-                    rgb_color = ProjectsWithPandas.hex_to_rgb(color_code)
+                    rgb_color = ProjectsWithPandas.hex_to_rgb(self, color_code)
                     rgb_black = '#181a1c'
-                    rgb_color_black = ProjectsWithPandas.hex_to_rgb(rgb_black)
+                    rgb_color_black = ProjectsWithPandas.hex_to_rgb(self, rgb_black)
                     color = QColor(*rgb_color)
                     color_black = QColor(*rgb_color_black)
                     status_item.setBackground(color)
@@ -233,7 +233,7 @@ class projectsTableDecorator:
                         if original_date < datetime.today().date():
                             #Set the text color to red
                             date_color = "#d24848"
-                            rgb_color_date = ProjectsWithPandas.hex_to_rgb(date_color)
+                            rgb_color_date = ProjectsWithPandas.hex_to_rgb(self, date_color)
                             date_item.setForeground(QColor(*rgb_color_date))
 
                         formatted_date = original_date.strftime('%d.%m.%Y')
@@ -245,9 +245,9 @@ class projectsTableDecorator:
                         color_code = color_item.text()
                         #styler.set_background_color(color_item, color_code)
                         if color_code:
-                            rgb_color = ProjectsWithPandas.hex_to_rgb(color_code)
+                            rgb_color = ProjectsWithPandas.hex_to_rgb(self, color_code)
                             rgb_black = '#181a1c'
-                            rgb_color_black = ProjectsWithPandas.hex_to_rgb(rgb_black)
+                            rgb_color_black = ProjectsWithPandas.hex_to_rgb(self, rgb_black)
                             color = QColor(*rgb_color)
                             color_black = QColor(*rgb_color_black)
                             status_item.setBackground(color)
@@ -411,7 +411,7 @@ class searchProjectsValue:
                 if original_date < datetime.today().date():
                     #Set the text color to red
                     date_color = "#d24848"
-                    rgb_color_date = ProjectsWithPandas.hex_to_rgb(date_color)
+                    rgb_color_date = ProjectsWithPandas.hex_to_rgb(self, date_color)
                     date_item.setForeground(QColor(*rgb_color_date))
 
                 formatted_date = original_date.strftime('%d.%m.%Y')
@@ -423,9 +423,9 @@ class searchProjectsValue:
                 color_code = color_item.text()
                 #styler.set_background_color(color_item, color_code)
                 if color_code:
-                    rgb_color = ProjectsWithPandas.hex_to_rgb(color_code)
+                    rgb_color = ProjectsWithPandas.hex_to_rgb(self, color_code)
                     rgb_black = '#181a1c'
-                    rgb_color_black = ProjectsWithPandas.hex_to_rgb(rgb_black)
+                    rgb_color_black = ProjectsWithPandas.hex_to_rgb(self, rgb_black)
                     color = QColor(*rgb_color)
                     color_black = QColor(*rgb_color_black)
                     status_item.setBackground(color)

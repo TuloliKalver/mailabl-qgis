@@ -45,7 +45,7 @@ class ProjectButtonDelegate(QStyledItemDelegate):
         return super().editorEvent(event, model, option, index)
 
     def open_project_in_mailabl(self, project_id):
-        web_link = OpenLink.weblink_single_projects()
+        web_link = OpenLink.web_link_single_projects()
         project_link = f"{web_link}{project_id}"
         response = requests.get(project_link, verify=False)
         webbrowser.open(response.url)    
