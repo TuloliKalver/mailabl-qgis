@@ -26,7 +26,7 @@ class Ui_MailablDialogBase(object):
     def setupUi(self, MailablDialogBase):
         if not MailablDialogBase.objectName():
             MailablDialogBase.setObjectName(u"MailablDialogBase")
-        MailablDialogBase.resize(1136, 853)
+        MailablDialogBase.resize(1137, 853)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -357,6 +357,13 @@ class Ui_MailablDialogBase(object):
         self.pbAddDrawings.setIconSize(QSize(20, 20))
 
         self.verticalLayout_7.addWidget(self.pbAddDrawings)
+
+        self.line = QFrame(self.leftMenuSubMain)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
+        self.verticalLayout_7.addWidget(self.line)
 
         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -2594,6 +2601,12 @@ class Ui_MailablDialogBase(object):
 "")
         self.verticalLayout_139 = QVBoxLayout(self.SettingsPageMainFrame)
         self.verticalLayout_139.setObjectName(u"verticalLayout_139")
+        self.label_23 = QLabel(self.SettingsPageMainFrame)
+        self.label_23.setObjectName(u"label_23")
+        self.label_23.setFont(font2)
+
+        self.verticalLayout_139.addWidget(self.label_23)
+
         self.qwSU_Mailabl_Users = QWidget(self.SettingsPageMainFrame)
         self.qwSU_Mailabl_Users.setObjectName(u"qwSU_Mailabl_Users")
         self.qwSU_Mailabl_Users.setStyleSheet(u"")
@@ -2877,9 +2890,7 @@ class Ui_MailablDialogBase(object):
         self.qwSU_Mailabl_Projects.setObjectName(u"qwSU_Mailabl_Projects")
         self.qwSU_Mailabl_Projects.setStyleSheet(u"")
         self.verticalLayout_46 = QVBoxLayout(self.qwSU_Mailabl_Projects)
-        self.verticalLayout_46.setSpacing(8)
         self.verticalLayout_46.setObjectName(u"verticalLayout_46")
-        self.verticalLayout_46.setContentsMargins(5, 5, 5, 5)
         self.frame_27 = QFrame(self.qwSU_Mailabl_Projects)
         self.frame_27.setObjectName(u"frame_27")
         self.frame_27.setFrameShape(QFrame.StyledPanel)
@@ -2961,6 +2972,36 @@ class Ui_MailablDialogBase(object):
 
 
         self.verticalLayout_46.addWidget(self.frame_21)
+
+        self.frame_20 = QFrame(self.qwSU_Mailabl_Projects)
+        self.frame_20.setObjectName(u"frame_20")
+        self.frame_20.setFrameShape(QFrame.StyledPanel)
+        self.frame_20.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_56 = QHBoxLayout(self.frame_20)
+        self.horizontalLayout_56.setSpacing(10)
+        self.horizontalLayout_56.setObjectName(u"horizontalLayout_56")
+        self.horizontalLayout_56.setContentsMargins(15, 0, 0, 0)
+        self.label_13 = QLabel(self.frame_20)
+        self.label_13.setObjectName(u"label_13")
+        self.label_13.setFont(font2)
+
+        self.horizontalLayout_56.addWidget(self.label_13)
+
+        self.cmbProjectState = QComboBox(self.frame_20)
+        self.cmbProjectState.addItem("")
+        self.cmbProjectState.addItem("")
+        self.cmbProjectState.addItem("")
+        self.cmbProjectState.addItem("")
+        self.cmbProjectState.addItem("")
+        self.cmbProjectState.addItem("")
+        self.cmbProjectState.setObjectName(u"cmbProjectState")
+        self.cmbProjectState.setMinimumSize(QSize(100, 0))
+        self.cmbProjectState.setFont(font1)
+
+        self.horizontalLayout_56.addWidget(self.cmbProjectState)
+
+
+        self.verticalLayout_46.addWidget(self.frame_20)
 
         self.frame_22 = QFrame(self.qwSU_Mailabl_Projects)
         self.frame_22.setObjectName(u"frame_22")
@@ -3242,36 +3283,6 @@ class Ui_MailablDialogBase(object):
 
         self.horizontalLayout_26.addWidget(self.Toggleframe)
 
-        self.cmbProjectState = QComboBox(self.frProjects_Tools)
-        self.cmbProjectState.addItem("")
-        self.cmbProjectState.addItem("")
-        self.cmbProjectState.addItem("")
-        self.cmbProjectState.addItem("")
-        self.cmbProjectState.addItem("")
-        self.cmbProjectState.addItem("")
-        self.cmbProjectState.setObjectName(u"cmbProjectState")
-        self.cmbProjectState.setMinimumSize(QSize(100, 0))
-        self.cmbProjectState.setFont(font1)
-
-        self.horizontalLayout_26.addWidget(self.cmbProjectState)
-
-        self.cmbProjectStatuses = QComboBox(self.frProjects_Tools)
-        self.cmbProjectStatuses.setObjectName(u"cmbProjectStatuses")
-
-        self.horizontalLayout_26.addWidget(self.cmbProjectStatuses)
-
-        self.pbRefresh_tblMailabl_projects = QPushButton(self.frProjects_Tools)
-        self.pbRefresh_tblMailabl_projects.setObjectName(u"pbRefresh_tblMailabl_projects")
-        self.pbRefresh_tblMailabl_projects.setIcon(icon15)
-        self.pbRefresh_tblMailabl_projects.setIconSize(QSize(16, 16))
-
-        self.horizontalLayout_26.addWidget(self.pbRefresh_tblMailabl_projects)
-
-        self.pushButton = QPushButton(self.frProjects_Tools)
-        self.pushButton.setObjectName(u"pushButton")
-
-        self.horizontalLayout_26.addWidget(self.pushButton)
-
         self.Project_Seachframe = QFrame(self.frProjects_Tools)
         self.Project_Seachframe.setObjectName(u"Project_Seachframe")
         self.Project_Seachframe.setStyleSheet(u"#le_searchProjects{\n"
@@ -3287,11 +3298,19 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_27 = QHBoxLayout(self.Project_Seachframe)
         self.horizontalLayout_27.setSpacing(10)
         self.horizontalLayout_27.setObjectName(u"horizontalLayout_27")
-        self.horizontalLayout_27.setContentsMargins(0, 0, 10, 0)
+        self.horizontalLayout_27.setContentsMargins(0, 0, 0, 0)
         self.le_searchProjects = QLineEdit(self.Project_Seachframe)
         self.le_searchProjects.setObjectName(u"le_searchProjects")
+        self.le_searchProjects.setFont(font1)
 
         self.horizontalLayout_27.addWidget(self.le_searchProjects)
+
+        self.pbSearchProjects = QPushButton(self.Project_Seachframe)
+        self.pbSearchProjects.setObjectName(u"pbSearchProjects")
+        self.pbSearchProjects.setIcon(icon18)
+        self.pbSearchProjects.setIconSize(QSize(18, 18))
+
+        self.horizontalLayout_27.addWidget(self.pbSearchProjects)
 
 
         self.horizontalLayout_26.addWidget(self.Project_Seachframe)
@@ -3307,9 +3326,29 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_21.setSpacing(10)
         self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
         self.horizontalLayout_21.setContentsMargins(10, 0, 10, 0)
+        self.pushButton = QPushButton(self.frProjects_Checkbox_holder)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setFont(font1)
+
+        self.horizontalLayout_21.addWidget(self.pushButton)
+
+        self.cmbProjectStatuses = QComboBox(self.frProjects_Checkbox_holder)
+        self.cmbProjectStatuses.setObjectName(u"cmbProjectStatuses")
+        self.cmbProjectStatuses.setMinimumSize(QSize(130, 0))
+        self.cmbProjectStatuses.setFont(font1)
+
+        self.horizontalLayout_21.addWidget(self.cmbProjectStatuses)
+
         self.horizontalSpacer_26 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_21.addItem(self.horizontalSpacer_26)
+
+        self.pbRefresh_tblMailabl_projects = QPushButton(self.frProjects_Checkbox_holder)
+        self.pbRefresh_tblMailabl_projects.setObjectName(u"pbRefresh_tblMailabl_projects")
+        self.pbRefresh_tblMailabl_projects.setIcon(icon15)
+        self.pbRefresh_tblMailabl_projects.setIconSize(QSize(16, 16))
+
+        self.horizontalLayout_21.addWidget(self.pbRefresh_tblMailabl_projects)
 
 
         self.verticalLayout_84.addWidget(self.frProjects_Checkbox_holder)
@@ -4526,16 +4565,17 @@ class Ui_MailablDialogBase(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p></body></html>", None))
         self.label_21.setText(QCoreApplication.translate("MailablDialogBase", u"FOOTER", None))
         self.label_15.setText(QCoreApplication.translate("MailablDialogBase", u"S\u00e4tted", None))
+        self.label_23.setText(QCoreApplication.translate("MailablDialogBase", u"NB! T\u00e4rniga t\u00e4histatud elemendid ei ole veel p\u00fcsivalt seadistatavad", None))
         self.lblHEadingUserData.setText(QCoreApplication.translate("MailablDialogBase", u"Kasutaja s\u00e4tted", None))
         self.pbUserSettings.setText("")
-        self.lbNUserPreferences.setText(QCoreApplication.translate("MailablDialogBase", u"Eelistused:", None))
+        self.lbNUserPreferences.setText(QCoreApplication.translate("MailablDialogBase", u"Eelistused:*", None))
         self.lblPreferences.setText(QCoreApplication.translate("MailablDialogBase", u"Siia loome eelistuste seadistuse. Tausta v\u00e4rv jms", None))
-        self.lblUserFirstName.setText(QCoreApplication.translate("MailablDialogBase", u"Kasutaja:", None))
+        self.lblUserFirstName.setText(QCoreApplication.translate("MailablDialogBase", u"Kasutaja:*", None))
         self.lblNUserSurename.setText(QCoreApplication.translate("MailablDialogBase", u"Perekonnanimi", None))
         self.lbNuserName.setText(QCoreApplication.translate("MailablDialogBase", u"Eesnimi", None))
-        self.lbNUserRoles.setText(QCoreApplication.translate("MailablDialogBase", u"Mailabli rollid:", None))
+        self.lbNUserRoles.setText(QCoreApplication.translate("MailablDialogBase", u"Mailabli rollid:*", None))
         self.lblUserRoles.setText(QCoreApplication.translate("MailablDialogBase", u"rollid", None))
-        self.label_27.setText(QCoreApplication.translate("MailablDialogBase", u"Minu eelistatud avaleht:", None))
+        self.label_27.setText(QCoreApplication.translate("MailablDialogBase", u"Minu eelistatud avaleht:*", None))
         self.label_28.setText(QCoreApplication.translate("MailablDialogBase", u"Tulekul", None))
         self.label_30.setText(QCoreApplication.translate("MailablDialogBase", u"Kinnistu andmete seadistus", None))
         self.pbLayerSettings.setText("")
@@ -4551,6 +4591,14 @@ class Ui_MailablDialogBase(object):
         self.lblLayerProjects_Properties.setText("")
         self.label_14.setText(QCoreApplication.translate("MailablDialogBase", u"Projektide vektor kaardikiht", None))
         self.lblLayerProjects_Vector.setText("")
+        self.label_13.setText(QCoreApplication.translate("MailablDialogBase", u"Staatuse valiku piiramine*", None))
+        self.cmbProjectState.setItemText(0, QCoreApplication.translate("MailablDialogBase", u"Avatud", None))
+        self.cmbProjectState.setItemText(1, QCoreApplication.translate("MailablDialogBase", u"K\u00f5ik", None))
+        self.cmbProjectState.setItemText(2, QCoreApplication.translate("MailablDialogBase", u"Suletud", None))
+        self.cmbProjectState.setItemText(3, "")
+        self.cmbProjectState.setItemText(4, "")
+        self.cmbProjectState.setItemText(5, "")
+
         self.label_10.setText(QCoreApplication.translate("MailablDialogBase", u"Avaleht logoga", None))
         self.teWelcomeContent.setHtml(QCoreApplication.translate("MailablDialogBase", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -4599,16 +4647,11 @@ class Ui_MailablDialogBase(object):
         self.pbProjects_Connect_properties.setWhatsThis("")
 #endif // QT_CONFIG(whatsthis)
         self.pbProjects_Connect_properties.setText(QCoreApplication.translate("MailablDialogBase", u"Kinnistutega sidumine", None))
-        self.cmbProjectState.setItemText(0, QCoreApplication.translate("MailablDialogBase", u"Avatud", None))
-        self.cmbProjectState.setItemText(1, QCoreApplication.translate("MailablDialogBase", u"K\u00f5ik", None))
-        self.cmbProjectState.setItemText(2, QCoreApplication.translate("MailablDialogBase", u"Suletud", None))
-        self.cmbProjectState.setItemText(3, "")
-        self.cmbProjectState.setItemText(4, "")
-        self.cmbProjectState.setItemText(5, "")
-
+        self.le_searchProjects.setText("")
+        self.le_searchProjects.setPlaceholderText(QCoreApplication.translate("MailablDialogBase", u" Otsing - projekti numbri j\u00e4rgi", None))
+        self.pbSearchProjects.setText(QCoreApplication.translate("MailablDialogBase", u"Otsi", None))
+        self.pushButton.setText(QCoreApplication.translate("MailablDialogBase", u"Zoomitud ala projektid", None))
         self.pbRefresh_tblMailabl_projects.setText("")
-        self.pushButton.setText(QCoreApplication.translate("MailablDialogBase", u"N\u00e4htava ala projektide laadimine", None))
-        self.le_searchProjects.setPlaceholderText(QCoreApplication.translate("MailablDialogBase", u"Otsing", None))
         self.label_32.setText(QCoreApplication.translate("MailablDialogBase", u"Uus nimetus", None))
         self.label_26.setText(QCoreApplication.translate("MailablDialogBase", u"Projekti ID", None))
         self.pbShowOnMap.setText(QCoreApplication.translate("MailablDialogBase", u"N\u00e4ita kaardil", None))

@@ -6956,11 +6956,16 @@ QPushButton:hover{
                       </property>
                       <item>
                        <widget class="QLineEdit" name="le_searchProjects">
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
                         <property name="text">
-                         <string>Otsing - projekti numbri järgi</string>
+                         <string/>
                         </property>
                         <property name="placeholderText">
-                         <string>Otsing</string>
+                         <string> Otsing - projekti numbri järgi</string>
                         </property>
                        </widget>
                       </item>
