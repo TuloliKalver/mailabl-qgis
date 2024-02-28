@@ -652,7 +652,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            text = (f"Oih - midagi jäi puudu! \n Laetavate kinnistute kiht {input_layer_name} on puudu. \n jätkamiseks lae algandmed")
+            text = (f"Laetavate kinnistute kiht {input_layer_name} on puudu.\nJätkamiseks lae algandmed")
             heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
@@ -777,8 +777,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         if item_county is None:
             #print("print")
-            message = ("Vähemalt üks omavalitsus peab olema valitud.")
-            QMessageBox.information(self, "Oi oi oi - mingi jama", message)
+            text = ("Jätkamiseks vali ja kinnita omavalitsus")
+            heading = "Hoiatus"         
+            QMessageBox.information(self, heading, text)
         else:
             
             expression_before = graph_tools.universal_map_simplifier(
@@ -1081,7 +1082,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             widget.rejected.connect(lambda: ProjectsProperties.on_cancel_button_clicked(widget))
             
         else:
-            QMessageBox.information(self, "Jama", "Pead valima ühe projekti")
+            text = ("Vali projekt")
+            heading = "Hoiatus"
+            QMessageBox.information(self, heading, text)
 
     def connect_properties_with_contracts(self):
         global projects_widget
@@ -1126,7 +1129,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 #            widget.rejected.connect(lambda: ProjectsProperties.on_cancel_button_clicked(widget))
             
         else:
-            QMessageBox.information(self, "Jama", "Pead valima ühe projekti")
+            text = ("Vali projekt")
+            heading = "Hoiatus"
+            QMessageBox.information(self, heading, text)         
 
         
     def generate_virtual_mapLayer_synced_with_Mailabl(self):

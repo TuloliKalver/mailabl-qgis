@@ -49,7 +49,9 @@ class Setup_CadastralsLayers:
         SettingsDataSaveAndLoad.on_save_button_clicked_cadastrals(self, cmbCurrent_Layer, cmbTarget_layer)
         lblLayerProjects_Properties = self.lblLayerProjects_Properties
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)
-        QMessageBox.information(widget, "Supper", "Kõik sai salvestatud")
+        text = "Kõik sai salvestatud"
+        heading = "Supper"
+        QMessageBox.information(widget, heading, text)
         # Additional logic if needed
 
         widget.accept()  # Close the dialog

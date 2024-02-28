@@ -93,12 +93,12 @@ def get_access_token(self):
             # Now you have the access token, you can use it for GraphQL requests
             return "success"
         else:
-            text = ("Autentimine ebaõnnestus\nKontrolli kasutajanime ja parooli")
+            text = ("Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli")
             heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
             return "error"
     else:
-        text = ("Autentimise pöördumine ebaõnnestus\nProovi hetke pärast uuesti")
+        text = ("Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti")
         heading = "Hoiatus"
         QMessageBox.warning(self, heading, text )
         return "error"

@@ -36,7 +36,9 @@ class LayerCopier():
         #print(f"File will be saved into: {selected_folder}")
         if selected_folder is None:
             # User canceled the folder selection, handle accordingly
-            QMessageBox.information(None, "Tähelepanu!", "User canceled the folder selection. Process canceled.")
+            text = ("User canceled the folder selection. Process canceled.")
+            heading = "Hoiatus"
+            QMessageBox.information(None, heading, text)
             return  # or raise an exception or perform other actions as needed
         input_layer = QgsProject.instance().mapLayersByName(memory_layer_name)[0]
         #iface.activeLayer(input_layer)
@@ -52,7 +54,9 @@ class LayerCopier():
             # File already exists, delete it
             try:
                 os.remove(output_file_path)
-                QMessageBox.information(None, "Tähelepanu!", f"Varasem samanimeline fail kustutati: '{output_file_path}'")
+                text = (f"Varasem samanimeline fail kustutati: '{output_file_path}'")
+                heading = "Hoiatus"
+                QMessageBox.information(None, heading, text)
             except OSError as e:
                 QMessageBox.critical(None, "Viga!!!", f"Ei saa faili '{output_file_path}' kustutada: {e}")
                 # Handle the error as needed

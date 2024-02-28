@@ -23,7 +23,7 @@ def user_verification(self):
     #print("started")
     access_token = load_token()
     if not access_token:
-        text = ("Midagi läks valesti\nPöördu admini poole")
+        text = ("Midagi läks valesti.\nPöördu admini poole")
         heading = "Hoiatus"
         QMessageBox.warning(self, heading, text)
         return
@@ -84,7 +84,7 @@ def user_verification_with_login(self):
     #print("started")
     access_token = load_token()
     if not access_token:
-        text = ("Midagi läks valesti\nPöördu admnni poole")
+        text = ("Midagi läks valesti.\nPöördu admini poole")
         heading = "Hoiatus"
         QMessageBox.warning(self, heading, text)
         return

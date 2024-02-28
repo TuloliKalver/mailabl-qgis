@@ -369,7 +369,7 @@ class DeletingProcesses:
             layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            text = (f"Oih - midagi jäi puudu! \n Laetavate kinnistute kiht {layer} on puud. \n jätkamiseks lae algandmed")
+            text = (f"Laetavate kinnistute kiht {layer} on puud.\n Jätkamiseks lae algandmed")
             heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
@@ -429,7 +429,7 @@ class DeletingProcesses:
             layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            text = (f"Oih - midagi jäi puudu! \n Laetavate kinnistute kiht {layer} on puud. \n jätkamiseks lae algandmed")
+            text = (f"Laetavate kinnistute kiht {layer} on puud. \nJätkamiseks lae algandmed")
             heading = "Hoiatus"
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
