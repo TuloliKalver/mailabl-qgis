@@ -487,6 +487,7 @@ class TableViewadjuster:
         # Block editing for all cells
         table_view.setEditTriggers(QTableView.NoEditTriggers)
         
+        
 class finder_deque_method:
     def create_item_list_for_cities(self, total, restrictions, input_layer_name, where_field, field):
         print(f"restrictions: {restrictions}")

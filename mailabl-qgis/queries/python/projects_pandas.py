@@ -221,24 +221,6 @@ class ProjectsWithPandas:
         
         return fetched_items[:desired_total_items]
 
-        
-    def hex_to_rgb(self, hex_code):
-        clean_hex_code = hex_code.strip('#')
-        return tuple(int(clean_hex_code[i:i+2], 16) for i in (0, 2, 4))
-
-class WebLinkDelegate(QStyledItemDelegate):
-    def __init__(self, id_column_index, parent=None):
-        super(WebLinkDelegate, self).__init__(parent)
-        self.id_column_index = id_column_index
-    
-    def editorEvent(self, event, model, option, index):
-        if event.type() == event.MouseButtonRelease:
-            if event.button() == Qt.LeftButton:
-                # Retrieve the ID_column_index value from the model
-                id_value = model.data(model.index(index.row(), self.id_column_index), Qt.DisplayRole)
-                self.open_project_in_mailabl(id_value)
-                return True
-        return super().editorEvent(event, model, option, index)
 
     def open_project_in_mailabl(self, project_id):
         web_link = OpenLink.web_link_single_projects()
@@ -372,13 +354,9 @@ class ProjectsWithPandas_2:
                             header_documents, header_file_path, 
                             header_statuses]
         model = QStandardItemModel()
-        model.setHorizontalHeaderLabels(header_labels)
-
-        
+        model.setHorizontalHeaderLabels(header_labels)        
         #unique_projects = set()
         all_projects = []
-
-        
         all_projects = ProjectsWithPandas.QueryProjects_by_number(self, project_number)
         # Append all project dictionaries to the list
         QCoreApplication.processEvents()
@@ -390,13 +368,7 @@ class ProjectsWithPandas_2:
         else:
             # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
             print(f"total len of all projects: '{len(all_projects)}'")
-            #data = {project['id']: project for project in all_projects}.values()
-            #print(f"data: {data}")
 
-            #data = ProjectsWithPandas.QueryProjects_Parent_Active_Open(self, statuses)
-            #data_count = len(data)
-            #print(f"total data  {data_count}")
-            progress_value = 0
             # Build a pandas DataFrame
             df_data = []
             for item in all_projects:

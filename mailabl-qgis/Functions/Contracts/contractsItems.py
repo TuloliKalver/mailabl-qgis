@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QStyledItemDelegate
 from ...queries.python.statusManager import Statuses
 from ...queries.python.DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
-from ..tableViewAdjust import colors, ColumnResizer
+from ..tableViewAdjust import Colors, ColumnResizer
 from ...config.settings import Filepaths
 from ..ButtonDelegates import ContractButtonDelegate, FileDelegate, SelectContractsOnMapElementsDelegate
 from ...config.iconHandler import iconHandler
@@ -63,9 +63,9 @@ class ContractsMain:
             if color_item:
                 color_code = color_item.text()
                 if color_code:
-                    rgb_color = colors.hex_to_rgb(color_code)
+                    rgb_color = Colors.hex_to_rgb(color_code)
                     rgb_black = '#181a1c'
-                    rgb_color_black = colors.hex_to_rgb(rgb_black)
+                    rgb_color_black = Colors.hex_to_rgb(rgb_black)
                     color = QColor(*rgb_color)
                     color_black = QColor(*rgb_color_black)
                     status_item_text.setBackground(color)

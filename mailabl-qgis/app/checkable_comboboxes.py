@@ -54,7 +54,7 @@ class ComboBox_functions():
             
 
 
-class shp_tools:
+class ComboBoxMapTools:
             
     def create_item_list(input_layer, field):
         print("item list from selectable_combobox.py")
