@@ -40,7 +40,7 @@ class HoiatusTexts:
 
 class InfoTexts:
     def __init__(self):
-        
+        text = ""
 
 class KriitilisedTexts:
     def __init__(self):
