@@ -1,6 +1,6 @@
 from qgis.core import QgsProject
 from ..Functions.item_selector_tools import properties_selectors
-from ..queries.python.projects import searchProjectsValue
+from ..queries.python.projects.ProjectTableGenerators.projects import searchProjectsValue
 
 class searchGeneral:
     @staticmethod

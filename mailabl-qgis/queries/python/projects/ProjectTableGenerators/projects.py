@@ -1,22 +1,25 @@
-from datetime import datetime
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QBrush, QIcon, QStandardItem
 from PyQt5.QtWidgets import QTableView
-from ...app.Delegates.WebLink import WebLinkDelegate
-from ...app.Delegates.OpenFile import FileDelegate
-from ...app.Delegates.SelectMapElements import SelectMapElementsDelegate
-from ...config.iconHandler import iconHandler
-from ...config.settings import Filepaths
-from ...queries.python.projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, TableHeaders
-from ...Functions.tableViewAdjust import ColumnResizer, Colors
-from ...config.settings import SettingsDataSaveAndLoad
-from .MapTools.selector import visibleSelector
 from PyQt5.QtWidgets import QMessageBox
+from .....app.Delegates.WebLink import WebLinkDelegate
+from .....app.Delegates.OpenFile import FileDelegate
+from .....app.Delegates.SelectMapElements import SelectMapElementsDelegate
+from ...projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, TableHeaders
+from .....Functions.tableViewAdjust import ColumnResizer
+from .....config.settings import SettingsDataSaveAndLoad
+from ...MapTools.selector import visibleSelector
+from .....utils.table_utilys import ModelHandler
+
 
 
 class Projects:
     @staticmethod
-    def load_Mailabl_projects_list(table, statusValue):
+    def load_mailabl_projects_list(table, statusValue):
         #print(f"in 'load_Mailabl_projects_list(self, table, statusValue)': {statusValue}")
         pandas = ProjectsWithPandas_2()
         table_headers = TableHeaders()
@@ -39,101 +42,25 @@ class Projects:
 
         for row_index in range(p_model.rowCount()):
             p_model.item(row_index, ID_column_index)
-            color_item = p_model.item(row_index, color_column_index)
-            status_item = p_model.item(row_index, status_column_index)
-            Cadastral_item = p_model.item(row_index, cadastral_column_index)
+
             number_item =  p_model.item(row_index, number_column_index)
             date_item  = p_model.item(row_index, date_column_index)
             responsible_item = p_model.item(row_index,responsible_column_index)   
             
             number_item.setTextAlignment(Qt.AlignCenter)  
             responsible_item.setTextAlignment(Qt.AlignCenter)
-            
-            
-            # input date string in the format 'YYYY-MM-DD'
-            date_str = date_item.text()
-            if date_str:
-                original_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-                if original_date < datetime.today().date():
-                    #Set the text color to red
-                    date_color = "#d24848"
-                    rgb_color_date = Colors.hex_to_rgb(date_color)
-                    date_item.setForeground(QColor(*rgb_color_date))
 
-                formatted_date = original_date.strftime('%d.%m.%Y')
-                date_item.setText(formatted_date)
-                # Set alignment for date_item
-                date_item.setTextAlignment(Qt.AlignCenter)
-        # Iterate through the items in the 'Color' column and set background color                        
-            if color_item:
-                color_code = color_item.text()
-                #styler.set_background_color(color_item, color_code)
-                if color_code:
-                    rgb_color = Colors.hex_to_rgb(color_code)
-                    rgb_black = '#181a1c'
-                    rgb_color_black = Colors.hex_to_rgb(rgb_black)
-                    color = QColor(*rgb_color)
-                    color_black = QColor(*rgb_color_black)
-                    status_item.setBackground(color)
-                    status_item.setForeground(color_black)
-                    status_item.setTextAlignment(Qt.AlignCenter)
-                    
-            if Cadastral_item:
-                cadastral_number = Cadastral_item.text()
-                if cadastral_number:
-                    pb_ShowCadasters = QStandardItem()
-                    text_color1 = QColor("#FFFFFF")  # White
-                    pb_ShowCadasters.setForeground(QBrush(text_color1))
-                    pb_ShowCadasters.setSelectable(True)
-                    pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                #TODO solve icon centering!
-                    icon_path = ":/images/themes/default/mActionAdd3DMap.svg"
-                    icon = QIcon(icon_path)
-                    pb_ShowCadasters.setIcon(icon)
-                    p_model.setItem(row_index, cadastralButton_Column_index, pb_ShowCadasters)
+            date_item = p_model.item(row_index, date_column_index)
+            ModelHandler.format_date_item(date_item)
+            status_item = p_model.item(row_index, status_column_index)
+            ModelHandler.set_status_item_colors_from_model(status_item, p_model, row_index, color_column_index)
+            # Call format_cadastral_item method
+            ModelHandler.format_cadastral_item(p_model, row_index, cadastral_column_index, cadastralButton_Column_index)
+            # Call format_dok_item method
+            ModelHandler.format_dok_item(p_model, row_index, dokAddress_column_index, dokButton_column_index)
+            # Call build_mailabl_link_button method
+            ModelHandler.build_mailabl_link_button(p_model, row_index, webButton_Column_index)
 
-            dokAddress_index = p_model.index(row_index, dokAddress_column_index)
-            dokAddress_item = p_model.itemFromIndex(dokAddress_index)
-            
-            if dokAddress_item and dokAddress_item.data(Qt.DisplayRole):
-                dokLink = dokAddress_item.data(Qt.DisplayRole)
-                #print(f"dok Link {dokLink}")
-                if dokLink:
-                    pb_dokLink = QStandardItem()
-                    pb_dokLink.setData("Ava", Qt.DisplayRole)
-                    pb_dokLink.setTextAlignment(Qt.AlignCenter)
-                    #TODO solve icon centering!
-                    folder_icon_path = iconHandler.setIcon(dokLink)
-                    icon = QIcon(folder_icon_path)
-                    pb_dokLink.setIcon(icon)
-                    background_color2 = QColor("#40414f")  
-                    pb_dokLink.setBackground(QBrush(background_color2))
-                    # Set the foreground color (text color) to a contrasting color
-                    text_color2 = QColor("#FFFFFF")  # White
-                    pb_dokLink.setForeground(QBrush(text_color2))
-                    # Make the cell selectable and give it a raised effect
-                    pb_dokLink.setSelectable(True)
-                    pb_dokLink.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                    # Add a button to each row in the 'Button' column (column link_column_index)
-                    p_model.setItem(row_index, dokButton_column_index, pb_dokLink)
-            
-            
-        #Build mailabl link button and set icon.
-            pb_openInMailabl = QStandardItem()
-            pb_openInMailabl.setData("Ava", Qt.DisplayRole)
-            pb_openInMailabl.setTextAlignment(Qt.AlignCenter)
-            folder_icon_path = Filepaths.Mailabl_icon()
-            icon = QIcon(folder_icon_path)
-            pb_openInMailabl.setIcon(icon)
-            background_color = QColor("#40414f")  
-            pb_openInMailabl.setBackground(QBrush(background_color))
-        # Set the foreground color (text color) to a contrasting color
-            text_color = QColor("#FFFFFF")  # White
-            pb_openInMailabl.setForeground(QBrush(text_color))
-        # Make the cell selectable and give it a raised effect
-            pb_openInMailabl.setSelectable(True)
-            pb_openInMailabl.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-            p_model.setItem(row_index, webButton_Column_index, pb_openInMailabl)
 
         # Set the custom delegate for the web link column
         web_link_delegate = WebLinkDelegate(ID_column_index, table)
@@ -223,43 +150,18 @@ class projectsTableDecorator:
 
                 for row_index in range(p_model.rowCount()):
                     p_model.item(row_index, ID_column_index)
-                    color_item = p_model.item(row_index, color_column_index)
-                    status_item = p_model.item(row_index, status_column_index)
                     number_item =  p_model.item(row_index, number_column_index)
-                    date_item  = p_model.item(row_index, date_column_index)
                     responsible_item = p_model.item(row_index,responsible_column_index)   
                     
                     number_item.setTextAlignment(Qt.AlignCenter)  
                     responsible_item.setTextAlignment(Qt.AlignCenter)
                     
-                    # input date string in the format 'YYYY-MM-DD'
-                    date_str = date_item.text()
-                    if date_str:
-                        original_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-                        if original_date < datetime.today().date():
-                            #Set the text color to red
-                            date_color = "#d24848"
-                            rgb_color_date = Colors.hex_to_rgb(date_color)
-                            date_item.setForeground(QColor(*rgb_color_date))
-
-                        formatted_date = original_date.strftime('%d.%m.%Y')
-                        date_item.setText(formatted_date)
-                        # Set alignment for date_item
-                        date_item.setTextAlignment(Qt.AlignCenter)
-                # Iterate through the items in the 'Color' column and set background color                        
-                    if color_item:
-                        color_code = color_item.text()
-                        #styler.set_background_color(color_item, color_code)
-                        if color_code:
-                            rgb_color = Colors.hex_to_rgb(color_code)
-                            rgb_black = '#181a1c'
-                            rgb_color_black = Colors.hex_to_rgb(rgb_black)
-                            color = QColor(*rgb_color)
-                            color_black = QColor(*rgb_color_black)
-                            status_item.setBackground(color)
-                            status_item.setForeground(color_black)
-                            status_item.setTextAlignment(Qt.AlignCenter)
-                            
+                    date_item = p_model.item(row_index, date_column_index)
+                    ModelHandler.format_date_item(date_item)
+                
+                    status_item = p_model.item(row_index, status_column_index)
+                    ModelHandler.set_status_item_colors_from_model(status_item, p_model, row_index, color_column_index)
+            
                     pb_ShowCadasters = QStandardItem()
                     text_color1 = QColor("#FFFFFF")  # White
                     pb_ShowCadasters.setForeground(QBrush(text_color1))
@@ -269,48 +171,11 @@ class projectsTableDecorator:
                     icon = QIcon(icon_path)
                     pb_ShowCadasters.setIcon(icon)
                     p_model.setItem(row_index, cadastralButton_Column_index, pb_ShowCadasters)
-
-                    dokAddress_index = p_model.index(row_index, dokAddress_column_index)
-                    dokAddress_item = p_model.itemFromIndex(dokAddress_index)
-                    
-                    if dokAddress_item and dokAddress_item.data(Qt.DisplayRole):
-                        dokLink = dokAddress_item.data(Qt.DisplayRole)
-                        print(f"dok Link {dokLink}")
-                        if dokLink:
-                            pb_dokLink = QStandardItem()
-                            pb_dokLink.setData("Ava", Qt.DisplayRole)
-                            pb_dokLink.setTextAlignment(Qt.AlignCenter)
-                            folder_icon_path = iconHandler.setIcon(dokLink)
-                            icon = QIcon(folder_icon_path)
-                            pb_dokLink.setIcon(icon)
-                            background_color2 = QColor("#40414f")  
-                            pb_dokLink.setBackground(QBrush(background_color2))
-                            # Set the foreground color (text color) to a contrasting color
-                            text_color2 = QColor("#FFFFFF")  # White
-                            pb_dokLink.setForeground(QBrush(text_color2))
-                            # Make the cell selectable and give it a raised effect
-                            pb_dokLink.setSelectable(True)
-                            pb_dokLink.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                            # Add a button to each row in the 'Button' column (column link_column_index)
-                            p_model.setItem(row_index, dokButton_column_index, pb_dokLink)
-                    
-                    
-                #Build mailabl link button and set icon.
-                    pb_openInMailabl = QStandardItem()
-                    pb_openInMailabl.setData("Ava", Qt.DisplayRole)
-                    pb_openInMailabl.setTextAlignment(Qt.AlignCenter)
-                    folder_icon_path = Filepaths.Mailabl_icon()
-                    icon = QIcon(folder_icon_path)
-                    pb_openInMailabl.setIcon(icon)
-                    background_color = QColor("#40414f")  
-                    pb_openInMailabl.setBackground(QBrush(background_color))
-                # Set the foreground color (text color) to a contrasting color
-                    text_color = QColor("#FFFFFF")  # White
-                    pb_openInMailabl.setForeground(QBrush(text_color))
-                # Make the cell selectable and give it a raised effect
-                    pb_openInMailabl.setSelectable(True)
-                    pb_openInMailabl.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-                    p_model.setItem(row_index, webButton_Column_index, pb_openInMailabl)
+        
+                    # Call format_dok_item method
+                    ModelHandler.format_dok_item(p_model, row_index, dokAddress_column_index, dokButton_column_index)                    
+                    # Call build_mailabl_link_button method
+                    ModelHandler.build_mailabl_link_button(p_model, row_index, webButton_Column_index)
 
                 # Set the custom delegate for the web link column
                 web_link_delegate = WebLinkDelegate(ID_column_index, table)
@@ -400,101 +265,22 @@ class searchProjectsValue:
 
         for row_index in range(p_model.rowCount()):
             p_model.item(row_index, ID_column_index)
-            color_item = p_model.item(row_index, color_column_index)
-            status_item = p_model.item(row_index, status_column_index)
-            Cadastral_item = p_model.item(row_index, cadastral_column_index)
             number_item =  p_model.item(row_index, number_column_index)
-            date_item  = p_model.item(row_index, date_column_index)
             responsible_item = p_model.item(row_index,responsible_column_index)   
             
             number_item.setTextAlignment(Qt.AlignCenter)  
             responsible_item.setTextAlignment(Qt.AlignCenter)
-            
-            
-            # input date string in the format 'YYYY-MM-DD'
-            date_str = date_item.text()
-            if date_str:
-                original_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-                if original_date < datetime.today().date():
-                    #Set the text color to red
-                    date_color = "#d24848"
-                    rgb_color_date = Colors.hex_to_rgb(date_color)
-                    date_item.setForeground(QColor(*rgb_color_date))
-
-                formatted_date = original_date.strftime('%d.%m.%Y')
-                date_item.setText(formatted_date)
-                # Set alignment for date_item
-                date_item.setTextAlignment(Qt.AlignCenter)
-        # Iterate through the items in the 'Color' column and set background color                        
-            if color_item:
-                color_code = color_item.text()
-                #styler.set_background_color(color_item, color_code)
-                if color_code:
-                    rgb_color = Colors.hex_to_rgb(color_code)
-                    rgb_black = '#181a1c'
-                    rgb_color_black = Colors.hex_to_rgb(rgb_black)
-                    color = QColor(*rgb_color)
-                    color_black = QColor(*rgb_color_black)
-                    status_item.setBackground(color)
-                    status_item.setForeground(color_black)
-                    status_item.setTextAlignment(Qt.AlignCenter)
-                    
-            if Cadastral_item:
-                cadastral_number = Cadastral_item.text()
-                if cadastral_number:
-                    pb_ShowCadasters = QStandardItem()
-                    text_color1 = QColor("#FFFFFF")  # White
-                    pb_ShowCadasters.setForeground(QBrush(text_color1))
-                    pb_ShowCadasters.setSelectable(True)
-                    pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                #TODO solve icon centering!
-                    icon_path = ":/images/themes/default/mActionAdd3DMap.svg"
-                    icon = QIcon(icon_path)
-                    pb_ShowCadasters.setIcon(icon)
-                    p_model.setItem(row_index, cadastralButton_Column_index, pb_ShowCadasters)
-
-            dokAddress_index = p_model.index(row_index, dokAddress_column_index)
-            dokAddress_item = p_model.itemFromIndex(dokAddress_index)
-            
-            if dokAddress_item and dokAddress_item.data(Qt.DisplayRole):
-                dokLink = dokAddress_item.data(Qt.DisplayRole)
-                #print(f"dok Link {dokLink}")
-                if dokLink:
-                    pb_dokLink = QStandardItem()
-                    pb_dokLink.setData("Ava", Qt.DisplayRole)
-                    pb_dokLink.setTextAlignment(Qt.AlignCenter)
-                    #TODO solve icon centering!
-                    folder_icon_path = iconHandler.setIcon(dokLink)
-                    icon = QIcon(folder_icon_path)
-                    pb_dokLink.setIcon(icon)
-                    background_color2 = QColor("#40414f")  
-                    pb_dokLink.setBackground(QBrush(background_color2))
-                    # Set the foreground color (text color) to a contrasting color
-                    text_color2 = QColor("#FFFFFF")  # White
-                    pb_dokLink.setForeground(QBrush(text_color2))
-                    # Make the cell selectable and give it a raised effect
-                    pb_dokLink.setSelectable(True)
-                    pb_dokLink.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                    # Add a button to each row in the 'Button' column (column link_column_index)
-                    p_model.setItem(row_index, dokButton_column_index, pb_dokLink)
-            
-            
-        #Build mailabl link button and set icon.
-            pb_openInMailabl = QStandardItem()
-            pb_openInMailabl.setData("Ava", Qt.DisplayRole)
-            pb_openInMailabl.setTextAlignment(Qt.AlignCenter)
-            folder_icon_path = Filepaths.Mailabl_icon()
-            icon = QIcon(folder_icon_path)
-            pb_openInMailabl.setIcon(icon)
-            background_color = QColor("#40414f")  
-            pb_openInMailabl.setBackground(QBrush(background_color))
-        # Set the foreground color (text color) to a contrasting color
-            text_color = QColor("#FFFFFF")  # White
-            pb_openInMailabl.setForeground(QBrush(text_color))
-        # Make the cell selectable and give it a raised effect
-            pb_openInMailabl.setSelectable(True)
-            pb_openInMailabl.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-            p_model.setItem(row_index, webButton_Column_index, pb_openInMailabl)
+        
+            date_item = p_model.item(row_index, date_column_index)
+            ModelHandler.format_date_item(date_item)
+            status_item = p_model.item(row_index, status_column_index)
+            ModelHandler.set_status_item_colors_from_model(status_item, p_model, row_index, color_column_index)
+            # Call format_cadastral_item method
+            ModelHandler.format_cadastral_item(p_model, row_index, cadastral_column_index, cadastralButton_Column_index)
+            # Call format_dok_item method
+            ModelHandler.format_dok_item(p_model, row_index, dokAddress_column_index, dokButton_column_index)
+            # Call build_mailabl_link_button method
+            ModelHandler.build_mailabl_link_button(p_model, row_index, webButton_Column_index)
 
         # Set the custom delegate for the web link column
         web_link_delegate = WebLinkDelegate(ID_column_index, table)

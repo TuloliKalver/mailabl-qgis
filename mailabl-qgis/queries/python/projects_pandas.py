@@ -1,3 +1,9 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
+
+
+
 import pandas as pd
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication

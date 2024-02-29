@@ -1,24 +1,15 @@
-from .DataLoading_classes import GraphQLQueryLoader, Graphql_project
-from .query_tools import requestBuilder
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
 
+from ..DataLoading_classes import GraphQLQueryLoader, Graphql_project
+from ..query_tools import requestBuilder
 
+STATE_OPEN = "OPEN"
+STATE_CLOSED = "CLOSED"
 
 class Statuses:
-    def __init__(self):
-        self.module_contracts = "contracts" # Assuming you have a stacked widget as an instance attribute
-        self.module_projects = "projects"
-        self.module_tasks = "tasks"
-        self.module_coordination = "coordinations"
-        self.module_letter = "letters"
-        self.module_specifications = "specifications"
-        self.module_easments = "easments"
-        self.module_specifications = "specifications"
-        self.module_ordinances = "ordinances"
-        self.submissions = "submissions"
-        
-        self.state_open = "OPEN"
-        self.state_closed = "CLOSED"
-
+    @staticmethod
     def by_module_and_state(self, module_name, state_type):
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query(self, query_loader.Projects_Open)
@@ -52,7 +43,7 @@ class Statuses:
                 node_info = status_info.get('node', {})
                 status_id = node_info.get('id',"")
                 # Append the node_info to the list
-                status_ids.append(status_id)            
+                status_ids.append(status_id) 
             return status_ids
 
     def all_by_module(self, module_name):
@@ -107,22 +98,19 @@ class Statuses:
             # Access the relevant part of the data structure
             statuses_data = data.get('data', {}).get('statuses', {}).get('edges', [])
             #print(statuses_data)
-            # Create a list to store node_info values
-            status = ()
             statuses = []
             # Iterate through the statuses_data
             for status_info in statuses_data:
                 # Access the node information
                 node_info = status_info.get('node', {})
                 status_name = node_info.get('name',"")
-                id = node_info.get('id',"")
+                status_id = node_info.get('id',"")
                 # Append the node_info to the list
-                status = status_name,id
-                statuses.append(status)
+                statuses.append((status_name,status_id))
             return statuses
 
 
-class insertStatusToComboBox:
+class InsertStatusToComboBox:
     def add_statuses_to_listview (self, comboBox, module_name):
         # Clear existing items in the combo box
         comboBox.clear()
@@ -147,5 +135,3 @@ class insertStatusToComboBox:
             id_s.append(selected_id)
             return id_s
         return None
-
-
