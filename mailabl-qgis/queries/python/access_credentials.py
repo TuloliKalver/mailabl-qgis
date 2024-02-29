@@ -89,6 +89,8 @@ def get_access_token(self):
             access_token = response_data["data"]["login"]["accessToken"]
             save_access_token(access_token)  # Save the token
             #print(access_token)
+            text = 
+            heading = 
             #QMessageBox.information(self, "Tehtud", "Andmed vastuvõetud ja 'token' salvestatud!")
             # Now you have the access token, you can use it for GraphQL requests
             return "success"

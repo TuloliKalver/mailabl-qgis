@@ -58,8 +58,9 @@ class Setup_CadastralsLayers:
 
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
-        
-        QMessageBox.information(widget, "Olgu", "Seekord nii ja homme naa")
+        text = "Seekord nii ja homme naa"
+        heading = "Hoiatus"
+        QMessageBox.information(widget, heading, text)
         widget.reject()  # Close the dialog        
 
 
@@ -126,14 +127,17 @@ class Setup_ProjectLayers:
         
         SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers)
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)
-        QMessageBox.information(widget, "Supper", "Kõik sai salvestatud")
+        text = "Kõik sai salvestatud"
+        heading = "Supper!"
+        QMessageBox.information(widget, heading, text)
         # Additional logic if needed
 
         widget.accept()  # Close the dialog
 
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
-        
-        QMessageBox.information(widget, "Olgu", "Seekord nii ja homme naa")
+        text = "Seekord nii ja homme naa"
+        heading = "Olgu"
+        QMessageBox.information(widget, heading, text)
         widget.reject()  # Close the dialog        
 

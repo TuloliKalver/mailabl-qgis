@@ -36,7 +36,7 @@ class LayerCopier():
         #print(f"File will be saved into: {selected_folder}")
         if selected_folder is None:
             # User canceled the folder selection, handle accordingly
-            text = ("User canceled the folder selection. Process canceled.")
+            text = "Kasutaja tühistas kausta valiku. Protsess on peatatud"
             heading = "Hoiatus"
             QMessageBox.information(None, heading, text)
             return  # or raise an exception or perform other actions as needed
@@ -54,7 +54,7 @@ class LayerCopier():
             # File already exists, delete it
             try:
                 os.remove(output_file_path)
-                text = (f"Varasem samanimeline fail kustutati: '{output_file_path}'")
+                text = (f"Samanimeline fail on kustutatud:\n{output_file_path}")
                 heading = "Hoiatus"
                 QMessageBox.information(None, heading, text)
             except OSError as e:
@@ -81,7 +81,10 @@ class LayerCopier():
                 pass #QMessageBox.information(None, "Information","Layer saved successfully!")
 
             else:
-                QMessageBox.information(None, "Tähelepanu!",f"Kihi salvestamine ebaõnnestus: {error_message}")
+                heading = "Hoiatus"
+                text = (f"Kihi salvestamine ebaõnnestus:\n{error_message})
+
+                QMessageBox.information(None,text,heading)
                 
             # Check if the GeoPackage file exists
             if os.path.exists(output_file_path):
@@ -99,7 +102,9 @@ class LayerCopier():
                     group.insertLayer(0, new_layer)
 
                 else:
-                    QMessageBox.information(None, "Tähelepanu!",f"Error loading the new layer from '{output_file_path}'")
+                text = (f"Error loading the new layer from {output_file_path}")
+                heading = "Hoiatus"
+                    QMessageBox.information(None,heading,text)
             
                 #Remove layer if it exists
                 if QgsProject.instance().mapLayersByName(memory_layer_name):
@@ -114,12 +119,17 @@ class LayerCopier():
                 updated_layer = QgsProject.instance().mapLayersByName(new_layer_name)[0]
                 updated_layer.loadNamedStyle(QGIS_Layer_style)
                 updated_layer.triggerRepaint()
-                QMessageBox.information(None, "Tähelepanu!", f"Paremaks toimimiseks toimub kihi '{new_layer.name()}' indekseerimine.")
+                text = (f"Paremaks toimimiseks toimub kihi '{new_layer.name()}' indekseerimine")
+                heading = "Tähelepanu"
+                QMessageBox.information(None, heading, text)
                 updated_layer.dataProvider().createSpatialIndex()
-
-                QMessageBox.information(None, "Tähelepanu!",f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud/{new_layer.name()}'.")                
+                text = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud:/n{new_layer.name}*")
+                heading = "Tähelepanu"
+                QMessageBox.information(None, heading,text)                
                 
             else:
+            text = 
+            heading =
                 QMessageBox.information(None, "Tähelepanu!", f"'GPKG' tüüpi faili asukohas '{output_file_path}' ei leitud.")
 
     @staticmethod
@@ -169,7 +179,9 @@ class LayerCopier():
         if selected_folder:
             return selected_folder
         else:
-            QMessageBox.information(None, "Tähelepanu!","Laadimisprotsess katkestatud.")
+        text = "Laadimine on katkestatud"
+        heading = "Hoiatus"
+            QMessageBox.information(None, heading,text)
             return None
         
     # This function creates spatial indexes for a given layer

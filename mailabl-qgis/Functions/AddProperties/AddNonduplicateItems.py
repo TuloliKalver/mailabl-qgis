@@ -106,6 +106,8 @@ class AddProperties:
                 model_properties.clear()
                 model_streets.clear()
                 model_final.clear()
-                QMessageBox.information(self, "Tehtud", "Andmed laetud ja kaardikihile üle kantud")
+                text = "Andmed on laetud ja kaardikihile kantud"
+                heading = "Supper"
+                QMessageBox.information(self, heading, text)
                 button.blockSignals(False)
         
