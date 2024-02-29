@@ -1171,7 +1171,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         table = self.tblMailabl_projects
         comboBox = self.cmbProjectStatuses
         statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
-        Projects.load_Mailabl_projects_list(table, statusValue)
+        Projects.load_mailabl_projects_list(table, statusValue)
         button.blockSingnals = False
         
     def Delete_reset_stage(self):

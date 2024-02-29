@@ -22,7 +22,7 @@ from ...MapTools.selector import visibleSelector
 
 class Projects:
     @staticmethod
-    def load_Mailabl_projects_list(table, statusValue):
+    def load_mailabl_projects_list(table, statusValue):
         #print(f"in 'load_Mailabl_projects_list(self, table, statusValue)': {statusValue}")
         pandas = ProjectsWithPandas_2()
         table_headers = TableHeaders()
