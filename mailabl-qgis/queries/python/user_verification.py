@@ -72,7 +72,9 @@ def user_verification(self):
 
     # 'matching_users' will now contain the user(s) with matching emails
     if matching_users:
-            QMessageBox.information(None, "Success", f"Kasutaja {len(matching_users)} tuvastatud.")
+            text = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
+            heading = "Info"
+            QMessageBox.information(None, heading, text)
     else:
         text = ("Puudub kasutaja")
         heading = "Hoiatus"
@@ -128,7 +130,9 @@ def user_verification_with_login(self):
 
     # 'matching_users' will now contain the user(s) with matching emails
     if matching_users:
-            QMessageBox.information(None, "Success", f"Kasutaja tuvastatud {len(matching_users)}.")
+            text = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
+            heading = "Info"
+            QMessageBox.information(None, heading, text)
     else:
         text = ("Puudub kasutaja")
         heading = "Hoiatus"
