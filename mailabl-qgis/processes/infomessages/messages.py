@@ -44,7 +44,7 @@ class InfoTexts:
 
 class KriitilisedTexts:
     def __init__(self):
-
+        pass
 
 class EdukuseTexts:
     def __init__(self):

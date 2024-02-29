@@ -192,13 +192,13 @@ class Projects:
 
 class projectsTableDecorator:
     @staticmethod
-    def load_Mailabl_projects_list_with_zoomed_map_elements(self, table):
+    def load_Mailabl_projects_list_with_zoomed_map_elements(table):
         load = SettingsDataSaveAndLoad()
         layer_name = load.load_target_cadastral_name()
         selected_features = visibleSelector.get_visible_features(layer_name)
         if len(selected_features) < 500:
                 
-            pandas = ProjectsWithPandas_3(self)
+            pandas = ProjectsWithPandas_3()
             header = TableHeaders()
             result = pandas.Create_Project_tableView_for_zoom(selected_features)
             if result is not None:
@@ -373,12 +373,12 @@ class projectsTableDecorator:
         else:
             text = ("Ala on projektide laadimiseks liiga suur\nZoomi lähemale")
             heading = "Hoiatus"
-            QMessageBox.warning(self, heading, text)
+            QMessageBox.warning(None, heading, text)
             return
 
 class searchProjectsValue:
     @staticmethod
-    def load_Mailabl_projects_by_number(self, project_number, table):
+    def load_Mailabl_projects_by_number(project_number, table):
         pandas = ProjectsWithPandas_2()
         header = TableHeaders()
         p_model,header_labels = pandas.Create_Project_tableView_for_search(project_number)

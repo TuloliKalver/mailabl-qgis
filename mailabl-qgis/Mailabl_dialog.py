@@ -363,7 +363,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
     def limitedLoad(self):
         table = self.tblMailabl_projects
-        projectsTableDecorator.load_Mailabl_projects_list_with_zoomed_map_elements(self, table)
+        projectsTableDecorator.load_Mailabl_projects_list_with_zoomed_map_elements(table)
         
 
     def handleSidebar_help(self):

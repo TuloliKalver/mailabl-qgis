@@ -9,7 +9,6 @@ from ...config.ui_directories import PathLoaderSimple
 from .MapTools.selector import visibleSelector
 
 
-
 HEADER_ID = 'ID'
 HEADER_NUMBER = 'Number'
 HEADER_NAME = 'Nimetus'
@@ -39,27 +38,34 @@ class TableHeaders:
         self.header_documents = HEADER_DOCUMENTS
         self.header_file_path = HEADER_FILE_PATH
         self.header_statuses = HEADER_STATUS
-
+        
+class Constants:
+    package_size = 25
+    sleep_duration = 2 #time for sleep
+    total_fetched = 0
+    items_for_page_minimum = 1
+    items_for_page_medium = 25
+    items_for_page_large = 50
+    sleepPackage = items_for_page_medium
+    
+    desired_total_items = None
+    
 class GetProjectsWhere:
     def query_projects_related_properties(self, id_value):
-
         #print(f"id value in query {id_value}")
-        #Load the project query using the loader instance
-        
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query_for_projects(self,query_loader.Q_where_Projects_related_properties)
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
-        items_for_page = 50  # Adjust this to your desired value
         #Initialize variables for pagination
         end_cursor = None  # Initialize end_cursor before the loop
-        total_fetched = 0        # Initialize an empty list to store fetched items
-        properties_items = []
+        total_fetched = 0        
+        properties_items = [] # Initialize an empty list to store fetched items
         
         while (desired_total_items is None or total_fetched < desired_total_items):
             # Construct variables for the GraphQL query
             variables = {
-                    "propertiesFirst": items_for_page,
+                    "propertiesFirst": Constants.items_for_page_large,
                     "propertiesAfter": end_cursor if end_cursor else None,
                     "id": id_value
                     }
@@ -69,9 +75,6 @@ class GetProjectsWhere:
                 data = response.json()
                 #print("data")
                 #print(data)
-                #edges = data.get("data", {}).get("project", {}).get("properties", {}).get("edges", {})
-                #print("egdges")
-                #print(edges)
                 project_data = data.get("data", {}).get("project", {})
                 properties_data = project_data.get("properties", {})
                 edges = properties_data.get("edges", [])
@@ -116,14 +119,13 @@ class ProjectsWithPandas:
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query(self,query_loader.Q_Where_By_status_Projects)
         desired_total_items = None  # Adjust this to your desired value
-        items_for_page = 50  # Adjust this to your desired value
         projects_end_cursor = None  # Initialize end_cursor before the loop
         total_fetched = 0
         fetched_items = []
         
         while (desired_total_items is None or total_fetched < desired_total_items):
             variables = {
-                "first": items_for_page,
+                "first": Constants.items_for_page_large,
                 "after": projects_end_cursor if projects_end_cursor else None,
                 "where": {
                     "AND": [
@@ -180,14 +182,13 @@ class ProjectsWithPandas:
         query = GraphQLQueryLoader.load_query(self, query_loader.Q_Where_By_status_Projects)
         
         desired_total_items = None
-        items_for_page = 50
         projects_end_cursor = None
         total_fetched = 0
         fetched_items = []
                     
         while (desired_total_items is None or total_fetched < desired_total_items):
             variables = {
-                "first": items_for_page,
+                "first": Constants.items_for_page_large,
                 "after": projects_end_cursor if projects_end_cursor else None,
                 "where": {
                     "AND": [
@@ -364,16 +365,12 @@ class ProjectsWithPandas_3:
         print(f"selected features: '{selected_features}' total:'{len(selected_features)}'")
         
         # Splitting the list into sublists with a maximum of 4 items each
-        package_size = 25
-        sublists = [selected_features[i:i+package_size] for i in range(0, len(selected_features), package_size)]
+        sublists = [selected_features[i:i+Constants.items_for_page_medium] for i in range(0, len(selected_features), Constants.items_for_page_medium)]
         
         #unique_projects = set()
         all_projects = []
 
         count = 0
-        sleepPackage = 25
-        sleep_duration = 2
-        import time
         
         for feature in sublists:
             #print(f"feature: '{feature}'")
@@ -381,16 +378,17 @@ class ProjectsWithPandas_3:
             #print(f"project_data: {projects_data}")
         
             all_projects.extend(projects_data)  # Append all project dictionaries to the list
-            count += 25
+            count += Constants.items_for_page_medium
             print(f"count: {count}")
             # Sleep to avoid hitting server too frequently
-            if count %sleepPackage == 0:
-                time.sleep(sleep_duration)
+            if count % Constants.sleepPackage == 0:
+                import time
+                time.sleep(Constants.sleep_duration)
                 print("sleepy sleepy")
             QCoreApplication.processEvents()
         total_projects = len(all_projects)
         if  total_projects == 0:
-            QMessageBox.information(self, "Eureka", "antud piirkonnas puuduvad teadaolevad projektid")
+            QMessageBox.information(None, "Eureka", "antud piirkonnas puuduvad teadaolevad projektid")
             return None
 
         else:
