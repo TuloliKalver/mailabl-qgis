@@ -3,9 +3,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QBrush, QIcon, QStandardItem
 from PyQt5.QtWidgets import QTableView
 from ...app.Delegates.WebLink import WebLinkDelegate
+from ...app.Delegates.OpenFile import FileDelegate
+from ...app.Delegates.SelectMapElements import SelectMapElementsDelegate
 from ...config.iconHandler import iconHandler
 from ...config.settings import Filepaths
-from ...queries.python.projects_pandas import ProjectsWithPandas, ProjectsWithPandas_2, ProjectsWithPandas_3,  FileDelegate, SelectMapElementsDelegate 
+from ...queries.python.projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, TableHeaders
 from ...Functions.tableViewAdjust import ColumnResizer, Colors
 from ...config.settings import SettingsDataSaveAndLoad
 from .MapTools.selector import visibleSelector
@@ -14,24 +16,25 @@ from PyQt5.QtWidgets import QMessageBox
 
 class Projects:
     @staticmethod
-    def load_Mailabl_projects_list(self, table, statusValue):
-        print(f"in 'load_Mailabl_projects_list(self, table, statusValue)': {statusValue}")
-        pandas = ProjectsWithPandas_2(self.cmbProjectState)
+    def load_Mailabl_projects_list(table, statusValue):
+        #print(f"in 'load_Mailabl_projects_list(self, table, statusValue)': {statusValue}")
+        pandas = ProjectsWithPandas_2()
+        table_headers = TableHeaders()
         p_model,header_labels = pandas.table_view_from_active_projects_statuses(statusValue)
         
-        number_column_index = header_labels.index(pandas.header_number)
-        name_column_index = header_labels.index(pandas.header_name)
-        date_column_index = header_labels.index(pandas.header_deadline)
-        color_column_index = header_labels.index(pandas.header_color)
-        status_column_index = header_labels.index(pandas.header_statuses)
-        ID_column_index = header_labels.index(pandas.header_id)
-        LP_ID_column_index = header_labels.index(pandas.header_parent_id)
-        cadastral_column_index = header_labels.index(pandas.header_property_number)
-        responsible_column_index = header_labels.index(pandas.header_responsible)
-        dokAddress_column_index = header_labels.index(pandas.header_Documents)
-        dokButton_column_index = header_labels.index(pandas.header_file_path)
-        webButton_Column_index = header_labels.index(pandas.header_webLinkButton)
-        cadastralButton_Column_index = header_labels.index(pandas.header_properties_icon)
+        number_column_index = header_labels.index(table_headers.header_number)
+        name_column_index = header_labels.index(table_headers.header_name)
+        date_column_index = header_labels.index(table_headers.header_deadline)
+        color_column_index = header_labels.index(table_headers.header_color)
+        status_column_index = header_labels.index(table_headers.header_statuses)
+        ID_column_index = header_labels.index(table_headers.header_id)
+        LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
+        cadastral_column_index = header_labels.index(table_headers.header_property_number)
+        responsible_column_index = header_labels.index(table_headers.header_responsible)
+        dokAddress_column_index = header_labels.index(table_headers.header_documents)
+        dokButton_column_index = header_labels.index(table_headers.header_file_path)
+        webButton_Column_index = header_labels.index(table_headers.header_web_link_button)
+        cadastralButton_Column_index = header_labels.index(table_headers.header_properties_icon)
         
 
         for row_index in range(p_model.rowCount()):
@@ -195,25 +198,26 @@ class projectsTableDecorator:
         selected_features = visibleSelector.get_visible_features(layer_name)
         if len(selected_features) < 500:
                 
-            pandas = ProjectsWithPandas_3(self.cmbProjectState)
+            pandas = ProjectsWithPandas_3(self)
+            header = TableHeaders()
             result = pandas.Create_Project_tableView_for_zoom(selected_features)
             if result is not None:
                 p_model, header_labels = result
                 
-                number_column_index = header_labels.index(pandas.header_number)
-                name_column_index = header_labels.index(pandas.header_name)
-                date_column_index = header_labels.index(pandas.header_deadline)
-                color_column_index = header_labels.index(pandas.header_color)
-                status_column_index = header_labels.index(pandas.header_statuses)
-                ID_column_index = header_labels.index(pandas.header_id)
-                LP_ID_column_index = header_labels.index(pandas.header_parent_id)
-                responsible_column_index = header_labels.index(pandas.header_responsible)
-                dokAddress_column_index = header_labels.index(pandas.header_Documents)
-                dokButton_column_index = header_labels.index(pandas.header_file_path)
+                number_column_index = header_labels.index(header.header_number)
+                name_column_index = header_labels.index(header.header_name)
+                date_column_index = header_labels.index(header.header_deadline)
+                color_column_index = header_labels.index(header.header_color)
+                status_column_index = header_labels.index(header.header_statuses)
+                ID_column_index = header_labels.index(header.header_id)
+                LP_ID_column_index = header_labels.index(header.header_parent_id)
+                responsible_column_index = header_labels.index(header.header_responsible)
+                dokAddress_column_index = header_labels.index(header.header_documents)
+                dokButton_column_index = header_labels.index(header.header_file_path)
                 print(f"dok button index: {dokButton_column_index}")
-                webButton_Column_index = header_labels.index(pandas.header_webLinkButton)
+                webButton_Column_index = header_labels.index(header.header_web_link_button)
                 print(f"webButton: {webButton_Column_index}")
-                cadastralButton_Column_index = header_labels.index(pandas.header_properties_icon)
+                cadastralButton_Column_index = header_labels.index(header.header_properties_icon)
                 print(f"cadastralbutton: {cadastralButton_Column_index}")
                 
 
@@ -235,7 +239,7 @@ class projectsTableDecorator:
                         if original_date < datetime.today().date():
                             #Set the text color to red
                             date_color = "#d24848"
-                            rgb_color_date = Colors.hex_to_rgb(self, date_color)
+                            rgb_color_date = Colors.hex_to_rgb(date_color)
                             date_item.setForeground(QColor(*rgb_color_date))
 
                         formatted_date = original_date.strftime('%d.%m.%Y')
@@ -247,7 +251,7 @@ class projectsTableDecorator:
                         color_code = color_item.text()
                         #styler.set_background_color(color_item, color_code)
                         if color_code:
-                            rgb_color = Colors.hex_to_rgb(self, color_code)
+                            rgb_color = Colors.hex_to_rgb(color_code)
                             rgb_black = '#181a1c'
                             rgb_color_black = Colors.hex_to_rgb(rgb_black)
                             color = QColor(*rgb_color)
@@ -375,22 +379,23 @@ class projectsTableDecorator:
 class searchProjectsValue:
     @staticmethod
     def load_Mailabl_projects_by_number(self, project_number, table):
-        pandas = ProjectsWithPandas_2(self.cmbProjectState)
+        pandas = ProjectsWithPandas_2()
+        header = TableHeaders()
         p_model,header_labels = pandas.Create_Project_tableView_for_search(project_number)
         
-        number_column_index = header_labels.index(pandas.header_number)
-        name_column_index = header_labels.index(pandas.header_name)
-        date_column_index = header_labels.index(pandas.header_deadline)
-        color_column_index = header_labels.index(pandas.header_color)
-        status_column_index = header_labels.index(pandas.header_statuses)
-        ID_column_index = header_labels.index(pandas.header_id)
-        LP_ID_column_index = header_labels.index(pandas.header_parent_id)
-        cadastral_column_index = header_labels.index(pandas.header_property_number)
-        responsible_column_index = header_labels.index(pandas.header_responsible)
-        dokAddress_column_index = header_labels.index(pandas.header_Documents)
-        dokButton_column_index = header_labels.index(pandas.header_file_path)
-        webButton_Column_index = header_labels.index(pandas.header_webLinkButton)
-        cadastralButton_Column_index = header_labels.index(pandas.header_properties_icon)
+        number_column_index = header_labels.index(header.header_number)
+        name_column_index = header_labels.index(header.header_name)
+        date_column_index = header_labels.index(header.header_deadline)
+        color_column_index = header_labels.index(header.header_color)
+        status_column_index = header_labels.index(header.header_statuses)
+        ID_column_index = header_labels.index(header.header_id)
+        LP_ID_column_index = header_labels.index(header.header_parent_id)
+        cadastral_column_index = header_labels.index(header.header_property_number)
+        responsible_column_index = header_labels.index(header.header_responsible)
+        dokAddress_column_index = header_labels.index(header.header_documents)
+        dokButton_column_index = header_labels.index(header.header_file_path)
+        webButton_Column_index = header_labels.index(header.header_web_link_button)
+        cadastralButton_Column_index = header_labels.index(header.header_properties_icon)
         
 
         for row_index in range(p_model.rowCount()):
@@ -413,7 +418,7 @@ class searchProjectsValue:
                 if original_date < datetime.today().date():
                     #Set the text color to red
                     date_color = "#d24848"
-                    rgb_color_date = Colors.hex_to_rgb(self, date_color)
+                    rgb_color_date = Colors.hex_to_rgb(date_color)
                     date_item.setForeground(QColor(*rgb_color_date))
 
                 formatted_date = original_date.strftime('%d.%m.%Y')
@@ -425,7 +430,7 @@ class searchProjectsValue:
                 color_code = color_item.text()
                 #styler.set_background_color(color_item, color_code)
                 if color_code:
-                    rgb_color = Colors.hex_to_rgb(self, color_code)
+                    rgb_color = Colors.hex_to_rgb(color_code)
                     rgb_black = '#181a1c'
                     rgb_color_black = Colors.hex_to_rgb(rgb_black)
                     color = QColor(*rgb_color)

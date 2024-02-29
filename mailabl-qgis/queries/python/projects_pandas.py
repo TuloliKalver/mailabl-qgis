@@ -1,44 +1,46 @@
 import pandas as pd
 from PyQt5.uic import loadUi
-import requests
-import webbrowser
-import subprocess
-from PyQt5.QtCore import QCoreApplication, Qt
+from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QStyledItemDelegate, QMessageBox
+from PyQt5.QtWidgets import QMessageBox
 from .DataLoading_classes import Graphql_project, GraphQLQueryLoader
-from .statusManager import Statuses
 from .query_tools import requestBuilder
-from ...Functions.item_selector_tools import properties_selectors
-from ...config.settings import OpenLink
 from ...config.ui_directories import PathLoaderSimple
 from .MapTools.selector import visibleSelector
-from ...config.settings import SettingsDataSaveAndLoad
 
 
 
+HEADER_ID = 'ID'
+HEADER_NUMBER = 'Number'
+HEADER_NAME = 'Nimetus'
+HEADER_DEADLINE = 'Tähtaeg'
+HEADER_COLOR = 'Color'
+HEADER_RESPONSIBLE = 'Vastutaja'
+HEADER_PROPERTY_NUMBER = 'Kataster'
+HEADER_PROPERTIES_ICON ='propertiesIcon'
+HEADER_PROJECTS_PARENT_ID = 'Parent_id'
+HEADER_WEB_LINK_BUTTON = 'web_link_button'
+HEADER_DOCUMENTS = 'Dokumendid'
+HEADER_FILE_PATH = "file_path_button"
+HEADER_STATUS = 'Staatus'
 
-
-header_id = 'ID'
-header_number = 'Number'
-header_name = 'Nimetus'
-header_deadline = 'Tähtaeg'
-header_color = 'Color'
-header_responsible = 'Vastutaja'
-header_property_number = 'Kataster'
-header_properties_icon ='propertiesIcon'
-header_parent_id = 'Parent_id'
-header_webLink_button = 'web_link_button'
-header_documents = 'Dokumendid'
-header_file_path = "file_path_button"
-header_statuses = 'Staatus'
-
+class TableHeaders:
+    def __init__(self):
+        self.header_id = HEADER_ID
+        self.header_number = HEADER_NUMBER
+        self.header_name = HEADER_NAME
+        self.header_deadline =HEADER_DEADLINE
+        self.header_color = HEADER_COLOR
+        self.header_responsible = HEADER_RESPONSIBLE
+        self.header_property_number = HEADER_PROPERTY_NUMBER
+        self.header_properties_icon = HEADER_PROPERTIES_ICON
+        self.header_parent_id = HEADER_PROJECTS_PARENT_ID
+        self.header_web_link_button = HEADER_WEB_LINK_BUTTON
+        self.header_documents = HEADER_DOCUMENTS
+        self.header_file_path = HEADER_FILE_PATH
+        self.header_statuses = HEADER_STATUS
 
 class GetProjectsWhere:
-    """
-    Query the properties related to a project identified by the given ID.
-
-    """
     def query_projects_related_properties(self, id_value):
 
         #print(f"id value in query {id_value}")
@@ -219,82 +221,19 @@ class ProjectsWithPandas:
                 return None
             QCoreApplication.processEvents()
         
-        return fetched_items[:desired_total_items]
+        return fetched_items[:desired_total_items]            
 
-
-    def open_project_in_mailabl(self, project_id):
-        web_link = OpenLink.web_link_single_projects()
-        project_link = f"{web_link}{project_id}"
-        try:
-            response = requests.get(project_link, timeout=10, verify=False)
-            webbrowser.open(response.url)
-        except requests.Timeout:
-            print("Request timed out.")
-        except requests.RequestException as e:
-            print(f"Error: {e}")
-            
-            
-class FileDelegate(QStyledItemDelegate):
-    def __init__(self, file_column_index, parent=None):
-        super(FileDelegate, self).__init__(parent)
-        self.file_column_index = file_column_index
-    
-    def editorEvent(self, event, model, option, index):
-        if event.type() == event.MouseButtonRelease:
-            if event.button() == Qt.LeftButton:
-                # Retrieve the ID_column_index value from the model
-                file_value = model.data(model.index(index.row(), self.file_column_index), Qt.DisplayRole)
-                self.open_folder_in_local_file_browser(file_value)
-                return True
-        return super().editorEvent(event, model, option, index)
-
-    def open_folder_in_local_file_browser(self, file_id):
-        #print(f"file_id: {file_id}")
-        # Use subprocess to open the local file explorer
-        subprocess.Popen(['explorer', file_id.replace('/', '\\')], shell=True)
-
-class SelectMapElementsDelegate(QStyledItemDelegate):
-    def __init__(self, ID_column_index, parent=None):
-        super(SelectMapElementsDelegate, self).__init__(parent)
-        self.ID_column_index = ID_column_index
-
-    def editorEvent(self, event, model, option, index):
-        if event.type() == event.MouseButtonRelease:
-            if event.button() == Qt.LeftButton:
-                # Retrieve the ID_column_index value from the model
-                id_value = str(model.data(model.index(index.row(), self.ID_column_index), Qt.DisplayRole))
-                values = GetProjectsWhere.query_projects_related_properties(self, id_value)
-                layer_type = "active"
-                properties_selectors.show_connected_cadasters(values, layer_type)
-                return True
-        return super().editorEvent(event, model, option, index)
-        
 class ProjectsWithPandas_2:
-    def __init__(self, cmbProjectState):
-        self.header_id = header_id
-        self.header_number = header_number
-        self.header_name = header_name
-        self.header_deadline =header_deadline
-        self.header_color = header_color
-        self.header_responsible = header_responsible
-        self.header_property_number = header_property_number
-        self.header_properties_icon = header_properties_icon
-        self.header_parent_id = header_parent_id
-        self.header_webLinkButton = header_webLink_button
-        self.header_Documents = header_documents
-        self.header_file_path = header_file_path
-        self.header_statuses = header_statuses
-        self.Project_state = cmbProjectState
 
     def table_view_from_active_projects_statuses(self, statusValue):
         # Set header labels
-        header_labels = [header_id, header_number, 
-                            header_name, header_deadline,
-                            header_color, header_responsible,
-                            header_property_number, header_properties_icon,
-                            header_parent_id, header_webLink_button, 
-                            header_documents, header_file_path, 
-                            header_statuses]
+        header_labels = [HEADER_ID, HEADER_NUMBER,
+                            HEADER_NAME, HEADER_DEADLINE,
+                            HEADER_COLOR, HEADER_RESPONSIBLE,
+                            HEADER_PROPERTY_NUMBER, HEADER_PROPERTIES_ICON,
+                            HEADER_PROJECTS_PARENT_ID, HEADER_WEB_LINK_BUTTON,
+                            HEADER_DOCUMENTS, HEADER_FILE_PATH,
+                            HEADER_STATUS]
         #print(f" header_webLinkButton: {header_webLinkButton}")
         #print(f"header_labels: {header_labels}")
         # Get projects status types that are active
@@ -315,20 +254,20 @@ class ProjectsWithPandas_2:
             responsibles = node.get("responsible",{}).get("edges",[])
             resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
             row_data = {
-                header_id: node.get("id", "") or "",
-                header_number: node.get("number", "") or "",
-                header_name: node.get("name", "") or "",
-                header_deadline: node.get("dueAt", "") or "",
-                header_statuses: node.get("status", {}).get("name", "") if node.get("status") else "",
-                header_color: node.get("status", {}).get("color", "") if node.get("status") else "",
-                header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
-                header_id: node.get("id", ""),
-                header_parent_id: node.get("parentID", ""),
-                header_webLink_button: "",
-                header_documents: node.get("filesPath","")or "",
-                header_file_path: "",
-                header_responsible: ",".join(resposnisble_name) if resposnisble_name else "",
-                header_properties_icon: ""
+                HEADER_ID: node.get("id", "") or "",
+                HEADER_NUMBER: node.get("number", "") or "",
+                HEADER_NAME: node.get("name", "") or "",
+                HEADER_DEADLINE: node.get("dueAt", "") or "",
+                HEADER_STATUS: node.get("status", {}).get("name", "") if node.get("status") else "",
+                HEADER_COLOR: node.get("status", {}).get("color", "") if node.get("status") else "",
+                HEADER_PROPERTY_NUMBER: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
+                HEADER_ID: node.get("id", ""),
+                HEADER_PROJECTS_PARENT_ID: node.get("parentID", ""),
+                HEADER_WEB_LINK_BUTTON: "",
+                HEADER_DOCUMENTS: node.get("filesPath","")or "",
+                HEADER_FILE_PATH: "",
+                HEADER_RESPONSIBLE: ",".join(resposnisble_name) if resposnisble_name else "",
+                HEADER_PROPERTIES_ICON: ""
                 }
             df_data.append(row_data)
         
@@ -346,13 +285,13 @@ class ProjectsWithPandas_2:
 
     def Create_Project_tableView_for_search(self, project_number):
         # Set header labels
-        header_labels = [header_id, header_number, 
-                            header_name, header_deadline,
-                            header_color, header_responsible,
-                            header_property_number, header_properties_icon,
-                            header_parent_id, header_webLink_button, 
-                            header_documents, header_file_path, 
-                            header_statuses]
+        header_labels = [HEADER_ID, HEADER_NUMBER, 
+                            HEADER_NAME, HEADER_DEADLINE,
+                            HEADER_COLOR, HEADER_RESPONSIBLE,
+                            HEADER_PROPERTY_NUMBER, HEADER_PROPERTIES_ICON,
+                            HEADER_PROJECTS_PARENT_ID, HEADER_WEB_LINK_BUTTON, 
+                            HEADER_DOCUMENTS, HEADER_FILE_PATH, 
+                            HEADER_STATUS]
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(header_labels)        
         #unique_projects = set()
@@ -378,20 +317,20 @@ class ProjectsWithPandas_2:
                 responsibles = node.get("responsible",{}).get("edges",[])
                 resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
                 row_data = {
-                    header_id: node.get("id", "") or "",
-                    header_number: node.get("number", "") or "",
-                    header_name: node.get("name", "") or "",
-                    header_deadline: node.get("dueAt", "") or "",
-                    header_statuses: node.get("status", {}).get("name", "") if node.get("status") else "",
-                    header_color: node.get("status", {}).get("color", "") if node.get("status") else "",
-                    header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
-                    header_id: node.get("id", ""),
-                    header_parent_id: node.get("parentID", ""),
-                    header_webLink_button: "",
-                    header_documents: node.get("filesPath","")or "",
-                    header_file_path: "",
-                    header_responsible: ",".join(resposnisble_name) if resposnisble_name else "",
-                    header_properties_icon: ""
+                    HEADER_ID: node.get("id", "") or "",
+                    HEADER_NUMBER: node.get("number", "") or "",
+                    HEADER_NAME: node.get("name", "") or "",
+                    HEADER_DEADLINE: node.get("dueAt", "") or "",
+                    HEADER_STATUS: node.get("status", {}).get("name", "") if node.get("status") else "",
+                    HEADER_COLOR: node.get("status", {}).get("color", "") if node.get("status") else "",
+                    HEADER_PROPERTY_NUMBER: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
+                    HEADER_ID: node.get("id", ""),
+                    HEADER_PROJECTS_PARENT_ID: node.get("parentID", ""),
+                    HEADER_WEB_LINK_BUTTON: "",
+                    HEADER_DOCUMENTS: node.get("filesPath","")or "",
+                    HEADER_FILE_PATH: "",
+                    HEADER_RESPONSIBLE: ",".join(resposnisble_name) if resposnisble_name else "",
+                    HEADER_PROPERTIES_ICON: ""
                     }
                 df_data.append(row_data)
             
@@ -408,31 +347,17 @@ class ProjectsWithPandas_2:
 
 
 class ProjectsWithPandas_3:
-    def __init__(self, cmbProjectState):
-        self.header_id = header_id
-        self.header_number = header_number
-        self.header_name = header_name
-        self.header_deadline =header_deadline
-        self.header_color = header_color
-        self.header_responsible = header_responsible
-        self.header_property_number = header_property_number
-        self.header_properties_icon = header_properties_icon
-        self.header_parent_id = header_parent_id
-        self.header_webLinkButton = header_webLink_button
-        self.header_Documents = header_documents
-        self.header_file_path = header_file_path
-        self.header_statuses = header_statuses
-        self.Project_state = cmbProjectState
+
     #@staticmethod
     def Create_Project_tableView_for_zoom(self, selected_features):
         # Set header labels
-        header_labels = [header_id, header_number, 
-                            header_name, header_deadline,
-                            header_color, header_responsible,
-                            header_properties_icon, #6
-                            header_parent_id, header_webLink_button,  #8
-                            header_documents, header_file_path, #10
-                            header_statuses]
+        header_labels = [HEADER_ID, HEADER_NUMBER, 
+                            HEADER_NAME, HEADER_DEADLINE,
+                            HEADER_COLOR, HEADER_RESPONSIBLE,
+                            HEADER_PROPERTIES_ICON, #6
+                            HEADER_PROJECTS_PARENT_ID, HEADER_WEB_LINK_BUTTON,  #8
+                            HEADER_DOCUMENTS, HEADER_FILE_PATH, #10
+                            HEADER_STATUS]
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(header_labels)
 
@@ -483,20 +408,20 @@ class ProjectsWithPandas_3:
                 responsibles = node.get("responsible",{}).get("edges",[])
                 resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
                 row_data = {
-                    header_id: node.get("id", "") or "",
-                    header_number: node.get("number", "") or "",
-                    header_name: node.get("name", "") or "",
-                    header_deadline: node.get("dueAt", "") or "",
-                    header_statuses: node.get("status", {}).get("name", "") if node.get("status") else "",
-                    header_color: node.get("status", {}).get("color", "") if node.get("status") else "",
+                    HEADER_ID: node.get("id", "") or "",
+                    HEADER_NUMBER: node.get("number", "") or "",
+                    HEADER_NAME: node.get("name", "") or "",
+                    HEADER_DEADLINE: node.get("dueAt", "") or "",
+                    HEADER_STATUS: node.get("status", {}).get("name", "") if node.get("status") else "",
+                    HEADER_COLOR: node.get("status", {}).get("color", "") if node.get("status") else "",
                     #header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
                     #header_id: node.get("id", ""),
-                    header_parent_id: node.get("parentID", ""),
-                    header_webLink_button: "",
-                    header_documents: node.get("filesPath","")or "",
-                    header_file_path: "",
-                    header_responsible: ",".join(resposnisble_name) if resposnisble_name else "",
-                    header_properties_icon: ""
+                    HEADER_PROJECTS_PARENT_ID: node.get("parentID", ""),
+                    HEADER_WEB_LINK_BUTTON: "",
+                    HEADER_DOCUMENTS: node.get("filesPath","")or "",
+                    HEADER_FILE_PATH: "",
+                    HEADER_RESPONSIBLE: ",".join(resposnisble_name) if resposnisble_name else "",
+                    HEADER_PROPERTIES_ICON: ""
                     }
                 df_data.append(row_data)
             

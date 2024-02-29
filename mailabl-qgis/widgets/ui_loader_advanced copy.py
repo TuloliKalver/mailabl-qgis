@@ -1,12 +1,9 @@
 import os
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QTableView
 from qgis.core import (QgsProject)
 from ..app.View_tools import shp_tools
-from ..Functions.tableViewAdjust import AdjustTableView
-from ..Functions.add_items import Add_Properties_final, DataPreparation
-from PyQt5.QtCore import QCoreApplication, QTimer
+
 #testing imports remove in real life!
 from ..utils.utilys import random_string
 import random

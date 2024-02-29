@@ -4,7 +4,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QTableView
 from qgis.core import (QgsProject)
 from ..app.View_tools import shp_tools
-from ..Functions.tableViewAdjust import AdjustTableView
+
 from ..Functions.add_items import Add_Properties_final, DataPreparation
 from PyQt5.QtCore import QCoreApplication, QTimer
 
