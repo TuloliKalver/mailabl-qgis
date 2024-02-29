@@ -92,7 +92,8 @@ class DeleteActions:
                 deleteProperty.delete_multiple_items(self, ToBe_deleted_properties)
                 Delete_finalProcess.clear_layer_from_deleted_items(self, active_cadastral_layer_name)
                 text = f"Valitud kinnitsud eemaldati Mailablist ja kihilt {active_cadastral_layer_name} edukalt" 
-                QMessageBox.information(self, "Tehtud", text)
+                heading = "Tehtud"
+                QMessageBox.information(self, heading, text)
                 Delete_Main_Process.Delete_process_view_on_load(self)
 
                 button.blockSignals(False)
