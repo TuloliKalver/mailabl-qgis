@@ -1,19 +1,19 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
 import os
+from collections import deque
+from qgis.utils import iface
+from qgis.core import QgsProject, edit
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox
-from qgis.core import (QgsFeature,
-                       QgsGeometry, QgsLayerTreeGroup,
-                       QgsMapLayer, QgsProject, QgsVectorLayer, edit)
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QAbstractItemView, QTableView
-from PyQt5.QtWidgets import QTableWidgetItem
 from PyQt5.QtCore import QDate
-from qgis.utils import iface
-from collections import deque
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QListWidgetItem
-from ..config.settings import DataSettings, SettingsDataSaveAndLoad
+from ..config.settings import SettingsDataSaveAndLoad
 
 
 #declare catalouges and links

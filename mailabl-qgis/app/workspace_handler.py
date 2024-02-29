@@ -1,15 +1,19 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
+
+from qgis.core import QgsProject
+from qgis.utils import iface
+from PyQt5.QtWidgets import QMessageBox
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .ui_controllers import WidgetAnimator
 from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
-from PyQt5.QtWidgets import QMessageBox
 from ..Functions.delete_items import Delete_Main_Process
 from ..Functions.Contracts.contractsItems import ContractsMain
-from ..widgets.helper import place
-from ..queries.python.Statuses.statusManager import Statuses,insertStatusToComboBox
+from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
+from ..config.mylabl_API.modules import MODULE_PROJECTS
 
-from qgis.core import QgsProject
-from qgis.utils import iface
 
     
 class WorkSpaceHandler:
@@ -26,12 +30,12 @@ class WorkSpaceHandler:
         button = self.pbProjects
         button.blockSignals(True)
         table = self.tblMailabl_projects
-        statusModule = Statuses()
-        module = statusModule.module_projects
+        
+        module = MODULE_PROJECTS
         comboBox = self.cmbProjectStatuses
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
-        insertStatusToComboBox.add_statuses_to_listview(self, comboBox, module )
-        statusValue = insertStatusToComboBox.get_selected_status_id(comboBox)
+        InsertStatusToComboBox.add_statuses_to_listview(self, comboBox, module )
+        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
         Projects.load_Mailabl_projects_list(table, statusValue)
         button.blockSignals(False)
     

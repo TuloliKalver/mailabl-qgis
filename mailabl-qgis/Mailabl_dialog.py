@@ -49,7 +49,7 @@ from .queries.python.update_relations.update_project_properties import ProjectsP
 from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
 from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
-from .queries.python.Statuses.statusManager import Statuses,insertStatusToComboBox
+from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
 from .processes.infomessages.messages import Headings
 
 
@@ -1170,7 +1170,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button.blockSingnals = True
         table = self.tblMailabl_projects
         comboBox = self.cmbProjectStatuses
-        statusValue = insertStatusToComboBox.get_selected_status_id(comboBox)
+        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
         Projects.load_Mailabl_projects_list(table, statusValue)
         button.blockSingnals = False
         

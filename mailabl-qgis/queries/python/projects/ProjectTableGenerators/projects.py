@@ -1,7 +1,13 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
+
+
 from datetime import datetime
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QBrush, QIcon, QStandardItem
 from PyQt5.QtWidgets import QTableView
+from PyQt5.QtWidgets import QMessageBox
 from .....app.Delegates.WebLink import WebLinkDelegate
 from .....app.Delegates.OpenFile import FileDelegate
 from .....app.Delegates.SelectMapElements import SelectMapElementsDelegate
@@ -11,7 +17,7 @@ from ...projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, Table
 from .....Functions.tableViewAdjust import ColumnResizer, Colors
 from .....config.settings import SettingsDataSaveAndLoad
 from ...MapTools.selector import visibleSelector
-from PyQt5.QtWidgets import QMessageBox
+
 
 
 class Projects:

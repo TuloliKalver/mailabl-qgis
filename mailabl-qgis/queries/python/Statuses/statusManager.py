@@ -1,24 +1,15 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
+
 from ..DataLoading_classes import GraphQLQueryLoader, Graphql_project
 from ..query_tools import requestBuilder
 
-
+STATE_OPEN = "OPEN"
+STATE_CLOSED = "CLOSED"
 
 class Statuses:
-    def __init__(self):
-        self.module_contracts = "contracts" # Assuming you have a stacked widget as an instance attribute
-        self.module_projects = "projects"
-        self.module_tasks = "tasks"
-        self.module_coordination = "coordinations"
-        self.module_letter = "letters"
-        self.module_specifications = "specifications"
-        self.module_easments = "easments"
-        self.module_specifications = "specifications"
-        self.module_ordinances = "ordinances"
-        self.submissions = "submissions"
-        
-        self.state_open = "OPEN"
-        self.state_closed = "CLOSED"
-
+    @staticmethod
     def by_module_and_state(self, module_name, state_type):
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query(self, query_loader.Projects_Open)
@@ -119,7 +110,7 @@ class Statuses:
             return statuses
 
 
-class insertStatusToComboBox:
+class InsertStatusToComboBox:
     def add_statuses_to_listview (self, comboBox, module_name):
         # Clear existing items in the combo box
         comboBox.clear()
@@ -144,5 +135,3 @@ class insertStatusToComboBox:
             id_s.append(selected_id)
             return id_s
         return None
-
-

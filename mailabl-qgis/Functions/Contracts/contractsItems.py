@@ -1,15 +1,18 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
 
 import pandas as pd
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel, QColor, QBrush, QIcon
-from PyQt5.QtWidgets import QStyledItemDelegate
-from ...queries.python.Statuses.statusManager import Statuses
-from ...queries.python.DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
+from ...queries.python.Statuses.statusManager import Statuses, STATE_OPEN, STATE_CLOSED
+from ...queries.python.DataLoading_classes import GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
 from ..tableViewAdjust import Colors, ColumnResizer
 from ...config.settings import Filepaths
 from ..ButtonDelegates import ContractButtonDelegate, FileDelegate, SelectContractsOnMapElementsDelegate
 from ...config.iconHandler import iconHandler
+from ...config.mylabl_API.modules import MODULE_CONTRACTS
 
 header_id = 'ID'
 header_number = 'Number'
@@ -25,7 +28,7 @@ header_Documents = 'Dokumendid'
 header_file_path = "file_path_button"
 header_statuses = 'Staatus'
 
-class ContractsMain:    
+class ContractsMain:  
     @staticmethod
     def main_contracts(self, table):
         con_model, header_labels = queryHandling.contracts_basic_data(self)
@@ -191,19 +194,8 @@ class queryHandling:
     def contracts_basic_data(self):
             # Set header labels
         header_labels = [header_id, header_number, header_name, header_color, header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_statuses]
-#                            [header_id, header_number, 
-#                            header_name, header_deadline,
-#                            header_color, header_responsible,
-#                            
-#                            header_parent_id, header_webLinkButton, 
-#                            header_Documents, header_file_path, 
-#                            header_statuses]        # Assuming you have the Color column index in the header_labels list
-        # Get projects 
-        status_class = Statuses()  
-        module_for_statuses = status_class.module_contracts
-        state_for_statuses = status_class.state_open
-        statuses = Statuses.by_module_and_state(self, module_for_statuses, state_for_statuses)
-        
+#       
+        statuses = Statuses.by_module_and_state(self, MODULE_CONTRACTS, STATE_OPEN)
         #print("statuses")
         #print(statuses)
 
@@ -217,7 +209,7 @@ class queryHandling:
         for project_data in data:
             node = project_data.get("node", {})
             properties = node.get("properties", {}).get("edges", [])
-            propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
+            propertie_cadastralNr = [property["node"]["cadastralUnitNumber"] for property in properties] 
 
             row_data = {
                     header_number: node.get("number", "") or "",
