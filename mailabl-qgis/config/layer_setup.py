@@ -137,7 +137,7 @@ class Setup_ProjectLayers:
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
         text = "Seekord nii ja homme naa"
-        heading = "Olgu"
+        heading = "Hoiatus"
         QMessageBox.information(widget, heading, text)
         widget.reject()  # Close the dialog        
 

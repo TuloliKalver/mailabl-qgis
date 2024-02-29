@@ -55,8 +55,8 @@ class SHPLayerLoader:
                                 QgsProject.instance().removeMapLayer(existing_layer.layer())
 
                 ShapefileImporter.import_shpFile_as_virtual_layer(file_path, imporditavad_group)
-                text = (f"Andmed on edukalt imporditud ja lisatud '{import_subgroup_layerName}' grupi kihile")
-                heading = "Import on lõppenud"
+                text = (f"Andmed on edukalt imporditud ja lisatud\n{import_subgroup_layer_name}\ngrupi kihile")
+                heading = "Teadmiseks"
                 QMessageBox.information(None, heading, text)
                 save_setting = SettingsDataSaveAndLoad()
                 save_setting.save_SHP_layer_setting(label, layer_name)
