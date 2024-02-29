@@ -102,8 +102,8 @@ class LayerCopier():
                     group.insertLayer(0, new_layer)
 
                 else:
-                text = (f"Error loading the new layer from {output_file_path}")
-                heading = "Hoiatus"
+                    text = (f"Error loading the new layer from {output_file_path}")
+                    heading = "Hoiatus"
                     QMessageBox.information(None,heading,text)
             
                 #Remove layer if it exists
@@ -128,9 +128,9 @@ class LayerCopier():
                 QMessageBox.information(None, heading,text)                
                 
             else:
-            text = 
-            heading =
-                QMessageBox.information(None, "Tähelepanu!", f"'GPKG' tüüpi faili asukohas '{output_file_path}' ei leitud.")
+                text = (f"'GPKG' tüüpi faili asukohas '{output_file_path}' ei leitud")
+                heading = "Tähelepanu!"
+                QMessageBox.information(None, heading, text)
 
     @staticmethod
     def copy_virtual_layer_for_properties(new_layer_name):
@@ -179,10 +179,10 @@ class LayerCopier():
         if selected_folder:
             return selected_folder
         else:
-        text = "Laadimine on katkestatud"
-        heading = "Hoiatus"
+            text = "Laadimine on katkestatud"
+            heading = "Hoiatus"
             QMessageBox.information(None, heading,text)
-            return None
+        return None
         
     # This function creates spatial indexes for a given layer
     #TODO add spatial index functionality
