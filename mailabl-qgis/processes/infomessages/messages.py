@@ -44,6 +44,7 @@ class HoiatusTexts:
         self.kiht_error = (f"Error loading the new layer from:\n{output_file_path}") #kihi laadimine ebaõnnestus...???
         self.laadimine_error = "Laadimine on katkestatud"
         self.GPKG_fail_ei_leitud = (f"'GPKG' tüüpi faili asukohas:\n{output_file_path} ei leitud")
+        self.projekti_ei_leidnud = "Antud numbriga projekti ei leitud"
 
 
 class InfoTexts:

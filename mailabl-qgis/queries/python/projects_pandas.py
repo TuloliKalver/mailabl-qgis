@@ -302,7 +302,9 @@ class ProjectsWithPandas_2:
         QCoreApplication.processEvents()
         total_projects = len(all_projects)
         if  total_projects == 0:
-            QMessageBox.information(None, "Oi Oi Oi", "Ei leidnud antud numbriga projekti")
+            text = "Antud numbriga projekti ei leitud"
+            heading = "Hoiatus"
+            QMessageBox.information(None, heading, text)
             return None
 
         else:
