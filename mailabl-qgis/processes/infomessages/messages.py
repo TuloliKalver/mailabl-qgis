@@ -46,7 +46,7 @@ class HoiatusTexts:
 
 class InfoTexts:
     def __init__(self):
-        self.indekseerimine = (f"Paremaks toimimiseks toimub kihi:\n{new_layer.name} indekseerimine")
+        self.indekseerimine = (f"Paremaks toimimiseks toimub kihi:\n{new_layer_name} indekseerimine")
         
 class KriitilisedTexts:
     def __init__(self):
@@ -57,7 +57,7 @@ class EdukuseTexts:
         self.tehtud = "Tubli! Kõik on tehtud"
         self.salvestatud = "Kõik on salvestatud"
         self.andmed_laetud = "Andmed on laetud ja kaardikihile kantud"
-        self.andmed_imporditud = (f"Andmed on edukalt imporditud ja lisatud '{import_subgroup_layerName}' grupi kihile")
+        self.andmed_imporditud = (f"Andmed on edukalt imporditud ja lisatud '{import_subgroup_layer_name}' grupi kihile")
         self.kaardikiht_lisatud = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud:/n{new_layer.name}'")
         self.kinnistud_eemaldatud = (f"Valitud kinnitsud eemaldati Mailablist ja kihilt {active_cadastral_layer_name}") 
         

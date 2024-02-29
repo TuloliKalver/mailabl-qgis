@@ -82,7 +82,7 @@ class LayerCopier():
 
             else:
                 heading = "Hoiatus"
-                text = (f"Kihi salvestamine ebaõnnestus:\n{error_message})
+                text = (f"Kihi salvestamine ebaõnnestus:\n{error_message}")
 
                 QMessageBox.information(None,text,heading)
                 
