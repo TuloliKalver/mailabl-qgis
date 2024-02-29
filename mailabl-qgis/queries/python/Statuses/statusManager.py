@@ -1,5 +1,5 @@
-from .DataLoading_classes import GraphQLQueryLoader, Graphql_project
-from .query_tools import requestBuilder
+from ..DataLoading_classes import GraphQLQueryLoader, Graphql_project
+from ..query_tools import requestBuilder
 
 
 
@@ -52,7 +52,7 @@ class Statuses:
                 node_info = status_info.get('node', {})
                 status_id = node_info.get('id',"")
                 # Append the node_info to the list
-                status_ids.append(status_id)            
+                status_ids.append(status_id) 
             return status_ids
 
     def all_by_module(self, module_name):
@@ -107,18 +107,15 @@ class Statuses:
             # Access the relevant part of the data structure
             statuses_data = data.get('data', {}).get('statuses', {}).get('edges', [])
             #print(statuses_data)
-            # Create a list to store node_info values
-            status = ()
             statuses = []
             # Iterate through the statuses_data
             for status_info in statuses_data:
                 # Access the node information
                 node_info = status_info.get('node', {})
                 status_name = node_info.get('name',"")
-                id = node_info.get('id',"")
+                status_id = node_info.get('id',"")
                 # Append the node_info to the list
-                status = status_name,id
-                statuses.append(status)
+                statuses.append((status_name,status_id))
             return statuses
 
 

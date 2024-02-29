@@ -1,4 +1,4 @@
-from ..queries.python.projects import Projects
+from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .ui_controllers import WidgetAnimator
 from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMessageBox
 from ..Functions.delete_items import Delete_Main_Process
 from ..Functions.Contracts.contractsItems import ContractsMain
 from ..widgets.helper import place
-from ..queries.python.statusManager import Statuses,insertStatusToComboBox
+from ..queries.python.Statuses.statusManager import Statuses,insertStatusToComboBox
 
 from qgis.core import QgsProject
 from qgis.utils import iface

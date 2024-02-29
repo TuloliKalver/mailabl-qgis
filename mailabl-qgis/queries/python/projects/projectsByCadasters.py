@@ -18,7 +18,6 @@ class projectsWhereCadasters:
         # Load the project query using the loader instance
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query(self,query_loader.Q_Where_By_status_Projects)
-        limit = 50
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value
@@ -62,7 +61,6 @@ class projectsWhereCadasters:
                 fetched_data = data.get("data", {}).get("projects", {}).get("edges", [])
                 projects_pageInfo = data.get("data", {}).get("projects", {}).get("pageInfo", {})
                 #print(projects_pageInfo)
-                
                 projects_end_cursor = projects_pageInfo.get("endCursor")
                 projects_hasNextPage = projects_pageInfo.get("hasNextPage")
                 last_page = projects_pageInfo.get("lastPage")
@@ -75,13 +73,9 @@ class projectsWhereCadasters:
                 if current_page == 1:
                     label_2.setText(f"{text}: {total}")
                     progress_bar.setMaximum(last_page)
-                    
                 label_2.setText(f"{text}: {total}")
                 progress_bar.setValue(current_page)
                 QCoreApplication.processEvents()
-
-        
-
                 # Check whether the last page of projects has been reached
                 if not projects_end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items) or not projects_hasNextPage:
                     break
@@ -89,9 +83,7 @@ class projectsWhereCadasters:
             else:
                 print(f"Error: {response.status_code}")
                 return None
-
             QCoreApplication.processEvents()
 
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
-

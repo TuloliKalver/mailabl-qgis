@@ -1,7 +1,7 @@
 
 import pandas as pd
 from PyQt5.QtCore import Qt, QCoreApplication
-from ..statusManager import Statuses
+from ..Statuses.statusManager import Statuses
 from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
 from ..query_tools import requestBuilder
 

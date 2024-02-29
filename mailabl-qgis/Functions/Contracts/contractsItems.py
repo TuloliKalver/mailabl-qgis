@@ -3,7 +3,7 @@ import pandas as pd
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel, QColor, QBrush, QIcon
 from PyQt5.QtWidgets import QStyledItemDelegate
-from ...queries.python.statusManager import Statuses
+from ...queries.python.Statuses.statusManager import Statuses
 from ...queries.python.DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
 from ..tableViewAdjust import Colors, ColumnResizer

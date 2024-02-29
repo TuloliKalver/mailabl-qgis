@@ -2,15 +2,15 @@ from datetime import datetime
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QBrush, QIcon, QStandardItem
 from PyQt5.QtWidgets import QTableView
-from ...app.Delegates.WebLink import WebLinkDelegate
-from ...app.Delegates.OpenFile import FileDelegate
-from ...app.Delegates.SelectMapElements import SelectMapElementsDelegate
-from ...config.iconHandler import iconHandler
-from ...config.settings import Filepaths
-from ...queries.python.projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, TableHeaders
-from ...Functions.tableViewAdjust import ColumnResizer, Colors
-from ...config.settings import SettingsDataSaveAndLoad
-from .MapTools.selector import visibleSelector
+from .....app.Delegates.WebLink import WebLinkDelegate
+from .....app.Delegates.OpenFile import FileDelegate
+from .....app.Delegates.SelectMapElements import SelectMapElementsDelegate
+from .....config.iconHandler import iconHandler
+from .....config.settings import Filepaths
+from ...projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, TableHeaders
+from .....Functions.tableViewAdjust import ColumnResizer, Colors
+from .....config.settings import SettingsDataSaveAndLoad
+from ...MapTools.selector import visibleSelector
 from PyQt5.QtWidgets import QMessageBox
 
 

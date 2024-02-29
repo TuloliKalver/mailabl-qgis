@@ -44,12 +44,12 @@ from .processes.SyncProperties.syncMailablProperties import PropertiesBaseMap
 from .queries.python.access_credentials import (clear_UC_data,
                                                 get_access_token, print_result,
                                                 save_user_name)
-from .queries.python.projects import Projects, projectsTableDecorator
+from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator
 from .queries.python.update_relations.update_project_properties import ProjectsProperties,map_selectors
 from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
 from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
-from .queries.python.statusManager import Statuses,insertStatusToComboBox
+from .queries.python.Statuses.statusManager import Statuses,insertStatusToComboBox
 from .processes.infomessages.messages import Headings
 
 
