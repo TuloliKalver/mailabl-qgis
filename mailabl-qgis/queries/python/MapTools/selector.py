@@ -24,23 +24,18 @@ class visibleSelector:
         #print(f"layer name: '{layer_name}'")
         # Get the layer by name
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
-        
         # Get the current extent of the map canvas
         canvas = iface.mapCanvas()
         extent = canvas.extent()
-        
         # Create a spatial index for the layer
         index = QgsSpatialIndex(layer.getFeatures())
-        
         # Get the features that intersect with the current extent
         intersecting_ids = index.intersects(extent)
-        
         # Get the values of the 'Tunnus' column for the visible features
         visible_features = []
         for feature in layer.getFeatures():
             if feature.id() in intersecting_ids:
                 visible_features.append(feature['TUNNUS'])
-        
         #print(f"feature(s): '{visible_features}'")
         return visible_features
     
@@ -90,7 +85,4 @@ class visibleSelector:
                     variables['after'] = end_cursor
                 else:
                     break  # Exit loop if there are no more pages
-
-
-        
         return projects_list
