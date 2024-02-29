@@ -119,16 +119,16 @@ class LayerCopier():
                 updated_layer = QgsProject.instance().mapLayersByName(new_layer_name)[0]
                 updated_layer.loadNamedStyle(QGIS_Layer_style)
                 updated_layer.triggerRepaint()
-                text = (f"Paremaks toimimiseks toimub kihi '{new_layer_name}' indekseerimine")
+                text = (f"Paremaks toimimiseks toimub kihi:\n{new_layer_name}\nindekseerimine")
                 heading = "Tähelepanu"
                 QMessageBox.information(None, heading, text)
                 updated_layer.dataProvider().createSpatialIndex()
-                text = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud:/n{new_layer.name}*")
+                text = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud':/n{new_layer_name}")
                 heading = "Tähelepanu"
                 QMessageBox.information(None, heading,text)                
                 
             else:
-                text = (f"'GPKG' tüüpi faili asukohas '{output_file_path}' ei leitud")
+                text = (f"'GPKG' tüüpi faili asukohas:\n{output_file_path}\nei leitud")
                 heading = "Tähelepanu!"
                 QMessageBox.information(None, heading, text)
 
