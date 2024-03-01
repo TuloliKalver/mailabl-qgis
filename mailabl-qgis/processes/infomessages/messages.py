@@ -10,6 +10,7 @@ class Headings:
         self.heading = "Hoiatus"
         self.success = "Supper"
         self.success = "Tehtud"
+        self.success = "Info"
         
 class HoiatusTexts:
     def __init__(self):        
@@ -44,7 +45,12 @@ class HoiatusTexts:
         self.kiht_error = (f"Error loading the new layer from:\n{output_file_path}") #kihi laadimine ebaõnnestus...???
         self.laadimine_error = "Laadimine on katkestatud"
         self.GPKG_fail_ei_leitud = (f"'GPKG' tüüpi faili asukohas:\n{output_file_path} ei leitud")
-
+        self.projekti_ei_leidnud = "Antud numbriga projekti ei leitud"
+        self.projektid_puuduvad = "Piirkonnas puuduvad teadaolevad projektid"
+        self.kasutaja_tuvastatud = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
+        self.kihil_kinnistu_valik = "Vali kaardikihil vähemalt üks kinnistu"
+        self.#???(f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
+        self.#???(f"Projektile\n{project_name}\nlisatud\n{total_returned_ids}/{total_ids_Table}")
 
 class InfoTexts:
     def __init__(self):

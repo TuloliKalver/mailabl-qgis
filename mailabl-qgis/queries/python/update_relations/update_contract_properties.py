@@ -106,9 +106,9 @@ class ContractProperties:
         count = model_properties.rowCount()
         if count == 0:
             parent_widget = QWidget()
-            titleText = "Oioioi"
-            infoText = "Vali kaardikihilt mõni kinnistu"  
-            QMessageBox.information(parent_widget, titleText, infoText)
+            heading = "Hoiatus"
+            text = "Vali kaardikihil vähemalt üks kinnistu"  
+            QMessageBox.information(parent_widget, heading, text)
             pass
         for row in range(model_properties.rowCount()):
             item_column_0 = model_properties.item(row, 0)
@@ -165,8 +165,9 @@ class ContractProperties:
             if count % paus_interval == 0:
                 timer_instance.pause()
 
-    
-        QMessageBox.information(self, "Info", f"Lepingule {project_name} lisatud {total_returned_ids}/{total_ids_Table}")
+            text = (f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
+            heading = "Info"
+        QMessageBox.information(self, heading, text)
         #print("Project updated successfully:")
         #print(updated_project)
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
