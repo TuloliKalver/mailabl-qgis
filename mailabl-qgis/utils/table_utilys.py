@@ -13,7 +13,7 @@ table_headers = TableHeaders()
 
 class ModelHandler:
     @staticmethod
-    def set_status_item_colors_from_model(status_item, p_model, row_index, headers):
+    def set_status_item_colors_from_model(p_model, row_index, headers):
         """
         Sets the background and foreground colors of a QTableWidgetItem based on a color column in the model.
         
