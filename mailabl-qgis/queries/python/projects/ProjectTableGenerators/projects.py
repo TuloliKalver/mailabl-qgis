@@ -16,50 +16,40 @@ from ...MapTools.selector import visibleSelector
 from .....utils.table_utilys import ModelHandler
 
 
+table_headers = TableHeaders()
+
 
 class Projects:
     @staticmethod
-    def load_mailabl_projects_list(table, statusValue):
+    def load_mailabl_projects_list(table, status_value):
         #print(f"in 'load_Mailabl_projects_list(self, table, statusValue)': {statusValue}")
         pandas = ProjectsWithPandas_2()
-        table_headers = TableHeaders()
-        p_model,header_labels = pandas.table_view_from_active_projects_statuses(statusValue)
+        p_model,header_labels = pandas.table_view_from_active_projects_statuses(status_value)
         
         number_column_index = header_labels.index(table_headers.header_number)
         name_column_index = header_labels.index(table_headers.header_name)
-        date_column_index = header_labels.index(table_headers.header_deadline)
-        color_column_index = header_labels.index(table_headers.header_color)
-        status_column_index = header_labels.index(table_headers.header_statuses)
-        ID_column_index = header_labels.index(table_headers.header_id)
         LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
-        cadastral_column_index = header_labels.index(table_headers.header_property_number)
-        responsible_column_index = header_labels.index(table_headers.header_responsible)
-        dokAddress_column_index = header_labels.index(table_headers.header_documents)
-        dokButton_column_index = header_labels.index(table_headers.header_file_path)
-        webButton_Column_index = header_labels.index(table_headers.header_web_link_button)
-        cadastralButton_Column_index = header_labels.index(table_headers.header_properties_icon)
-        
+        responsible_column_index = header_labels.index(table_headers.header_responsible)        
+        ID_column_index = header_labels.index(table_headers.header_id)
 
         for row_index in range(p_model.rowCount()):
             p_model.item(row_index, ID_column_index)
 
             number_item =  p_model.item(row_index, number_column_index)
-            date_item  = p_model.item(row_index, date_column_index)
             responsible_item = p_model.item(row_index,responsible_column_index)   
             
             number_item.setTextAlignment(Qt.AlignCenter)  
             responsible_item.setTextAlignment(Qt.AlignCenter)
 
-            date_item = p_model.item(row_index, date_column_index)
-            ModelHandler.format_date_item(date_item)
-            status_item = p_model.item(row_index, status_column_index)
-            ModelHandler.set_status_item_colors_from_model(status_item, p_model, row_index, color_column_index)
+            ModelHandler.format_date_item(p_model, row_index, header_labels)
+
+            status_column_index, color_column_index = ModelHandler.set_status_item_colors_from_model(p_model, row_index, header_labels)
             # Call format_cadastral_item method
-            ModelHandler.format_cadastral_item(p_model, row_index, cadastral_column_index, cadastralButton_Column_index)
+            cadastral_column_index, cadastralButton_Column_index = ModelHandler.format_cadastral_item(p_model, row_index, header_labels)
             # Call format_dok_item method
-            ModelHandler.format_dok_item(p_model, row_index, dokAddress_column_index, dokButton_column_index)
+            dokAddress_column_index, dokButton_column_index = ModelHandler.format_dok_item(p_model, row_index, header_labels)
             # Call build_mailabl_link_button method
-            ModelHandler.build_mailabl_link_button(p_model, row_index, webButton_Column_index)
+            webButton_Column_index = ModelHandler.build_mailabl_link_button(p_model, row_index, header_labels)
 
 
         # Set the custom delegate for the web link column
@@ -126,25 +116,25 @@ class projectsTableDecorator:
         if len(selected_features) < 500:
                 
             pandas = ProjectsWithPandas_3()
-            header = TableHeaders()
+            
             result = pandas.Create_Project_tableView_for_zoom(selected_features)
             if result is not None:
                 p_model, header_labels = result
                 
-                number_column_index = header_labels.index(header.header_number)
-                name_column_index = header_labels.index(header.header_name)
-                date_column_index = header_labels.index(header.header_deadline)
-                color_column_index = header_labels.index(header.header_color)
-                status_column_index = header_labels.index(header.header_statuses)
-                ID_column_index = header_labels.index(header.header_id)
-                LP_ID_column_index = header_labels.index(header.header_parent_id)
-                responsible_column_index = header_labels.index(header.header_responsible)
-                dokAddress_column_index = header_labels.index(header.header_documents)
-                dokButton_column_index = header_labels.index(header.header_file_path)
+                number_column_index = header_labels.index(table_headers.header_number)
+                name_column_index = header_labels.index(table_headers.header_name)
+                date_column_index = header_labels.index(table_headers.header_deadline)
+                color_column_index = header_labels.index(table_headers.header_color)
+                status_column_index = header_labels.index(table_headers.header_statuses)
+                ID_column_index = header_labels.index(table_headers.header_id)
+                LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
+                responsible_column_index = header_labels.index(table_headers.header_responsible)
+                dokAddress_column_index = header_labels.index(table_headers.header_documents)
+                dokButton_column_index = header_labels.index(table_headers.header_file_path)
                 print(f"dok button index: {dokButton_column_index}")
-                webButton_Column_index = header_labels.index(header.header_web_link_button)
+                webButton_Column_index = header_labels.index(table_headers.header_web_link_button)
                 print(f"webButton: {webButton_Column_index}")
-                cadastralButton_Column_index = header_labels.index(header.header_properties_icon)
+                cadastralButton_Column_index = header_labels.index(table_headers.header_properties_icon)
                 print(f"cadastralbutton: {cadastralButton_Column_index}")
                 
 
@@ -245,22 +235,22 @@ class searchProjectsValue:
     @staticmethod
     def load_Mailabl_projects_by_number(project_number, table):
         pandas = ProjectsWithPandas_2()
-        header = TableHeaders()
+
         p_model,header_labels = pandas.Create_Project_tableView_for_search(project_number)
         
-        number_column_index = header_labels.index(header.header_number)
-        name_column_index = header_labels.index(header.header_name)
-        date_column_index = header_labels.index(header.header_deadline)
-        color_column_index = header_labels.index(header.header_color)
-        status_column_index = header_labels.index(header.header_statuses)
-        ID_column_index = header_labels.index(header.header_id)
-        LP_ID_column_index = header_labels.index(header.header_parent_id)
-        cadastral_column_index = header_labels.index(header.header_property_number)
-        responsible_column_index = header_labels.index(header.header_responsible)
-        dokAddress_column_index = header_labels.index(header.header_documents)
-        dokButton_column_index = header_labels.index(header.header_file_path)
-        webButton_Column_index = header_labels.index(header.header_web_link_button)
-        cadastralButton_Column_index = header_labels.index(header.header_properties_icon)
+        number_column_index = header_labels.index(table_headers.header_number)
+        name_column_index = header_labels.index(table_headers.header_name)
+        date_column_index = header_labels.index(table_headers.header_deadline)
+        color_column_index = header_labels.index(table_headers.header_color)
+        status_column_index = header_labels.index(table_headers.header_statuses)
+        ID_column_index = header_labels.index(table_headers.header_id)
+        LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
+        cadastral_column_index = header_labels.index(table_headers.header_property_number)
+        responsible_column_index = header_labels.index(table_headers.header_responsible)
+        dokAddress_column_index = header_labels.index(table_headers.header_documents)
+        dokButton_column_index = header_labels.index(table_headers.header_file_path)
+        webButton_Column_index = header_labels.index(table_headers.header_web_link_button)
+        cadastralButton_Column_index = header_labels.index(table_headers.header_properties_icon)
         
 
         for row_index in range(p_model.rowCount()):
