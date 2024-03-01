@@ -50,8 +50,7 @@ from .queries.python.update_relations.update_contract_properties import Contract
 from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
-from .processes.infomessages.messages import Headings
-
+from .processes.infomessages.messages import Headings, HoiatusTexts
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -65,6 +64,10 @@ plugin_dir = os.path.dirname(__file__)
 
 ################################################################################################################
 #initialize
+
+msg_text = HoiatusTexts()
+text_header = Headings()
+
 comboboxes = ComboBox_functions()
 process = ReomveProcess()
 color = color_handler()
@@ -121,7 +124,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.lePassword.setEchoMode(QLineEdit.Password)
         self.widget_19.setVisible(False)
         
-
+        # anneli_demo
+        anneli_text = msg_text.kinnistud_MLBs_olemas
+        print(f"anneli_test_print:{anneli_text}")
+        print(f"anneli_testib-otsevalik:{msg_text.kasutaja_puudub}")
         
         # declaring Delete process elements    
         pbDel_State = self.pbDel_State
