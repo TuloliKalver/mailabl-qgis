@@ -108,7 +108,7 @@ class ContractProperties:
         count = model_properties.rowCount()
         if count == 0:
             parent_widget = QWidget()
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             text = "Vali kaardikihil vähemalt üks kinnistu"  
             QMessageBox.information(parent_widget, heading, text)
             pass
@@ -168,7 +168,7 @@ class ContractProperties:
                 timer_instance.pause()
 
             text = (f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
-            heading = "Info"
+            heading = pealkiri.informationSimple
         QMessageBox.information(self, heading, text)
         #print("Project updated successfully:")
         #print(updated_project)

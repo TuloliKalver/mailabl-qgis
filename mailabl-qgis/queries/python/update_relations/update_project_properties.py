@@ -144,7 +144,7 @@ class ProjectsProperties:
         count = model_properties.rowCount()
         if count == 0:
             parent_widget = QWidget()
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             text = "Vali kaardikihil vähemalt üks kinnistu"  
             QMessageBox.information(parent_widget, heading, text)
             pass
@@ -205,7 +205,7 @@ class ProjectsProperties:
                 timer_instance.pause()
 
             text = (f"Projektile\n{project_name}\nlisatud\n{total_returned_ids}/{total_ids_Table}")
-            heading = "Info"          
+            heading = pealkiri.informationSimple        
         QMessageBox.information(self, heading, text)
         #print("Project updated successfully:")
         #print(updated_project)

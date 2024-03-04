@@ -41,7 +41,7 @@ class AddProperties:
         data2 = table_data.RemoveNonSelectedRowsFromTable(self, table_streets)
         if len(data) == 0 and len(data2) == 0:
             text = ("Vali importimiseks vähemalt üks kinnistu")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(self,heading,text)
             return
         else:
@@ -77,7 +77,7 @@ class AddProperties:
             
             if len(ToBe_imported_properties) == 0:
                 text = ("Kõik valitud kinnistud on juba Mailablis")
-                heading = "Hoiatus"
+                heading = pealkiri.informationSimple
                 QMessageBox.warning(self,heading,text)
                 TabHandler.tabViewByState(tab_widget,True)
                 tab_widget.hide()
@@ -109,7 +109,7 @@ class AddProperties:
                 model_streets.clear()
                 model_final.clear()
                 text = "Andmed on laetud ja kaardikihile kantud"
-                heading = "Supper"
+                heading = pealkiri.tubli
                 QMessageBox.information(self, heading, text)
                 button.blockSignals(False)
         

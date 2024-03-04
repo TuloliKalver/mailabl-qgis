@@ -68,7 +68,7 @@ def load_shp_layer(label):
 
                 import_shpFile_AS_virtualLayer(file_path, imporditavad_group)
             text = (f"Andmed on edukalt imporditud ja lisatud\n{import_subgroup_layer_name}\ngrupi kihile")
-            heading = "Tehtud"    
+            heading = pealkiri.tubli    
             QMessageBox.information(None, heading,text)
         save_setting = SettingsDataSaveAndLoad()
         save_setting.save_SHP_layer_setting(label, layer_name)

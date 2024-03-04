@@ -311,7 +311,7 @@ class ProjectsWithPandas_2:
         total_projects = len(all_projects)
         if  total_projects == 0:
             text = "Antud numbriga projekti ei leitud"
-            heading = "Hoiatus"
+            heading = pealkiri.informationSimple
             QMessageBox.information(None, heading, text)
             return None
 
@@ -399,7 +399,7 @@ class ProjectsWithPandas_3:
         total_projects = len(all_projects)
         if  total_projects == 0:
             text = "Piirkonnas puuduvad teadaolevad projektid"
-            heading = "Hoiatus"
+            heading = pealkiri.informationSimple
             QMessageBox.information(None, heading, text)
             return None
 

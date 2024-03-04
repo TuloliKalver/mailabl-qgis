@@ -101,7 +101,7 @@ class PropertiesBaseMap:
         future_layer_name_text = lblFor_Sync_GreatLayerName.text()
         if not future_layer_name_text or len(future_layer_name_text) < 3:
             text = ("Nimetus on vigane või lisamata")    
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(self.frSync_Cadastrals_Main, heading, text)
             # Set red background color for the label
             border = ("border: 1px solid #D32F2F; border-radius: 5px;")

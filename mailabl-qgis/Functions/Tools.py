@@ -21,7 +21,7 @@ class TableSelections:
         if table is None:
             #print("Andmeid ei ole valitud.")            
             text = ("Andmeid ei ole valitud")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(None, heading, text)
             return None
         

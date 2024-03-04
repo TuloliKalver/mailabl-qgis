@@ -27,7 +27,7 @@ def user_verification(self):
     access_token = load_token()
     if not access_token:
         text = ("Midagi läks valesti.\nPöördu admini poole")
-        heading = "Hoiatus"
+        heading = pealkiri.warningSimple
         QMessageBox.warning(self, heading, text)
         return
     #print("token loaded")
@@ -76,11 +76,11 @@ def user_verification(self):
     # 'matching_users' will now contain the user(s) with matching emails
     if matching_users:
             text = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
-            heading = "Info"
+            heading = pealkiri.informationSimple
             QMessageBox.information(None, heading, text)
     else:
         text = ("Puudub kasutaja")
-        heading = "Hoiatus"
+        heading = pealkiri.warningSimple
         QMessageBox.warning(None, heading, text)
 
     
@@ -90,7 +90,7 @@ def user_verification_with_login(self):
     access_token = load_token()
     if not access_token:
         text = ("Midagi läks valesti.\nPöördu admini poole")
-        heading = "Hoiatus"
+        heading = pealkiri.warningSimple
         QMessageBox.warning(self, heading, text)
         return
     #print("token loaded")
@@ -133,10 +133,10 @@ def user_verification_with_login(self):
 
     # 'matching_users' will now contain the user(s) with matching emails
     if matching_users:
-            text = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
-            heading = "Info"
+            text = (f"Kasutajat\n{len(matching_users)}\nei tuvastatud")
+            heading = pealkiri.informationSimple
             QMessageBox.information(None, heading, text)
     else:
         text = ("Puudub kasutaja")
-        heading = "Hoiatus"
+        heading = pealkiri.informationSimple
         QMessageBox.warning(None, heading, text)

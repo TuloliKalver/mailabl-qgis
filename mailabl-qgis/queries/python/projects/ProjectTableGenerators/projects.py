@@ -185,7 +185,7 @@ class projectsTableDecorator:
 
         else:
             text = ("Ala on projektide laadimiseks liiga suur\nZoomi lähemale")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(None, heading, text)
             return
 

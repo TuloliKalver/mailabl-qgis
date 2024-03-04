@@ -13,7 +13,7 @@ class requestBuilder:
         access_token = load_token()
         if not access_token:
             text = ("Access token not found. Please connect first.")
-            heading = "Hoiatus"
+            heading = pealkiri.informationSimple
             QMessageBox.warning(self, heading, text)
             return None
 
@@ -67,7 +67,7 @@ class RequestErrorHandler:
             error_messages = [error.get('message', 'Unknown error') for error in errors]
             error_message = '\n'.join(error_messages)
             text = (f"GraphQL request failed:\n{error_message}")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(None, heading, text)
             return True  # Indicate that an error occurred
         return False  # No error occurred

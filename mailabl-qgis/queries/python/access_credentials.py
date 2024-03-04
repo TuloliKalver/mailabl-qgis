@@ -94,12 +94,12 @@ def get_access_token(self):
             return "success"
         else:
             text = ("Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(self, heading, text)
             return "error"
     else:
         text = ("Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti")
-        heading = "Hoiatus"
+        heading = pealkiri.warningSimple
         QMessageBox.warning(self, heading, text )
         return "error"
 

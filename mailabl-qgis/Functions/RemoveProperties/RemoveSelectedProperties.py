@@ -31,7 +31,7 @@ class DeleteActions:
         
         if len(data) == 0 and len(data2) == 0:
             text = ("Vali importimiseks vähemalt üks kinnistu")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(self,heading,text)
             return
         else:
@@ -66,7 +66,7 @@ class DeleteActions:
             
             if len(cadasters) == 0:
                 text = ("Valitud kinnistuid Mailablis ei ole")
-                heading = "Hoiatus"
+                heading = pealkiri.warningSimple
                 QMessageBox.warning(self,heading,text)
                 TabHandler.tabViewByState(tab_widget,True)
                 tab_widget.hide()
@@ -94,7 +94,7 @@ class DeleteActions:
                 deleteProperty.delete_multiple_items(self, ToBe_deleted_properties)
                 Delete_finalProcess.clear_layer_from_deleted_items(self, active_cadastral_layer_name)
                 text = (f"Valitud kinnitsud eemaldati edukalt Mailablist ja kihilt:\n{active_cadastral_layer_name}") 
-                heading = "Infoks"
+                heading = pealkiri.informationSimple
                 QMessageBox.information(self, heading, text)
                 Delete_Main_Process.Delete_process_view_on_load(self)
 
