@@ -26,7 +26,7 @@ class Ui_MailablDialogBase(object):
     def setupUi(self, MailablDialogBase):
         if not MailablDialogBase.objectName():
             MailablDialogBase.setObjectName(u"MailablDialogBase")
-        MailablDialogBase.resize(1137, 853)
+        MailablDialogBase.resize(1137, 829)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -591,9 +591,9 @@ class Ui_MailablDialogBase(object):
         self.centerMenuContainer.setObjectName(u"centerMenuContainer")
         self.centerMenuContainer.setStyleSheet(u"")
         self.verticalLayout_10 = QVBoxLayout(self.centerMenuContainer)
-        self.verticalLayout_10.setSpacing(0)
+        self.verticalLayout_10.setSpacing(1)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_10.setContentsMargins(1, 1, 1, 1)
         self.centerMenuSubContainer = QWidget(self.centerMenuContainer)
         self.centerMenuSubContainer.setObjectName(u"centerMenuSubContainer")
         self.centerMenuSubContainer.setStyleSheet(u"")
@@ -3067,136 +3067,6 @@ class Ui_MailablDialogBase(object):
 
         self.verticalLayout_13.addWidget(self.Intro_Help)
 
-        self.UC_Main_Frame = QFrame(self.Homepage)
-        self.UC_Main_Frame.setObjectName(u"UC_Main_Frame")
-        sizePolicy3.setHeightForWidth(self.UC_Main_Frame.sizePolicy().hasHeightForWidth())
-        self.UC_Main_Frame.setSizePolicy(sizePolicy3)
-        self.UC_Main_Frame.setMinimumSize(QSize(250, 400))
-        self.UC_Main_Frame.setMaximumSize(QSize(250, 400))
-        self.UC_Main_Frame.setStyleSheet(u"*{\n"
-" background-color: #272c35;\n"
-"}\n"
-"\n"
-"QPushButton{\n"
-"	padding: 1px 8px;\n"
-"    border-radius: 6px;\n"
-"	background-color:#40414f;\n"
-"	border: 0.5px solid #565869;\n"
-"}\n"
-"\n"
-"\n"
-"QPushButton:hover{\n"
-"    background-color: #8e8ea0;\n"
-"	padding: 1px 8px;\n"
-"    border-radius: 8px;\n"
-"	border: 0.5px solid #acacbe;\n"
-"    color: #343541;\n"
-"	padding: 2px 8px;\n"
-"    border-radius: 6px;\n"
-"}\n"
-"\n"
-"\n"
-"\n"
-"")
-        self.UC_Main_Frame.setFrameShape(QFrame.StyledPanel)
-        self.UC_Main_Frame.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_38 = QVBoxLayout(self.UC_Main_Frame)
-        self.verticalLayout_38.setObjectName(u"verticalLayout_38")
-        self.UC_Headig_frame = QFrame(self.UC_Main_Frame)
-        self.UC_Headig_frame.setObjectName(u"UC_Headig_frame")
-        self.UC_Headig_frame.setFrameShape(QFrame.StyledPanel)
-        self.UC_Headig_frame.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_80 = QVBoxLayout(self.UC_Headig_frame)
-        self.verticalLayout_80.setObjectName(u"verticalLayout_80")
-        self.leUC_Heading = QLabel(self.UC_Headig_frame)
-        self.leUC_Heading.setObjectName(u"leUC_Heading")
-        font11 = QFont()
-        font11.setPointSize(12)
-        self.leUC_Heading.setFont(font11)
-
-        self.verticalLayout_80.addWidget(self.leUC_Heading, 0, Qt.AlignHCenter)
-
-
-        self.verticalLayout_38.addWidget(self.UC_Headig_frame)
-
-        self.UC_Password_Frame = QFrame(self.UC_Main_Frame)
-        self.UC_Password_Frame.setObjectName(u"UC_Password_Frame")
-        self.UC_Password_Frame.setFrameShape(QFrame.StyledPanel)
-        self.UC_Password_Frame.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_81 = QVBoxLayout(self.UC_Password_Frame)
-        self.verticalLayout_81.setObjectName(u"verticalLayout_81")
-        self.leUsername = QLineEdit(self.UC_Password_Frame)
-        self.leUsername.setObjectName(u"leUsername")
-        self.leUsername.setMinimumSize(QSize(200, 40))
-        self.leUsername.setMaximumSize(QSize(200, 40))
-        self.leUsername.setFont(font1)
-        self.leUsername.setStyleSheet(u"background-color: rgba(0,0,0,0);\n"
-"border: none;\n"
-"border-bottom: 2px solid rgba(105,118,132,255);\n"
-"color: rgba(255,255,255,230);\n"
-"padding-bottom: 7px ")
-
-        self.verticalLayout_81.addWidget(self.leUsername)
-
-        self.lePassword = QLineEdit(self.UC_Password_Frame)
-        self.lePassword.setObjectName(u"lePassword")
-        self.lePassword.setMinimumSize(QSize(200, 40))
-        self.lePassword.setMaximumSize(QSize(200, 40))
-        self.lePassword.setFont(font1)
-        self.lePassword.setStyleSheet(u"background-color: rgba(0,0,0,0);\n"
-"border: none;\n"
-"border-bottom: 2px solid rgba(105,118,132,255);\n"
-"color: rgba(255,255,255,230);\n"
-"padding-bottom: 7px ")
-
-        self.verticalLayout_81.addWidget(self.lePassword)
-
-
-        self.verticalLayout_38.addWidget(self.UC_Password_Frame, 0, Qt.AlignHCenter)
-
-        self.UC_Buttton_Frame = QFrame(self.UC_Main_Frame)
-        self.UC_Buttton_Frame.setObjectName(u"UC_Buttton_Frame")
-        self.UC_Buttton_Frame.setFrameShape(QFrame.StyledPanel)
-        self.UC_Buttton_Frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_24 = QHBoxLayout(self.UC_Buttton_Frame)
-        self.horizontalLayout_24.setObjectName(u"horizontalLayout_24")
-        self.pbUC_Save = QPushButton(self.UC_Buttton_Frame)
-        self.pbUC_Save.setObjectName(u"pbUC_Save")
-        self.pbUC_Save.setFont(font1)
-
-        self.horizontalLayout_24.addWidget(self.pbUC_Save)
-
-
-        self.verticalLayout_38.addWidget(self.UC_Buttton_Frame, 0, Qt.AlignHCenter)
-
-        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_38.addItem(self.verticalSpacer_7)
-
-        self.pbUC_Cancel = QPushButton(self.UC_Main_Frame)
-        self.pbUC_Cancel.setObjectName(u"pbUC_Cancel")
-        self.pbUC_Cancel.setFont(font1)
-
-        self.verticalLayout_38.addWidget(self.pbUC_Cancel, 0, Qt.AlignHCenter)
-
-        self.testing = QFrame(self.UC_Main_Frame)
-        self.testing.setObjectName(u"testing")
-        self.testing.setFrameShape(QFrame.StyledPanel)
-        self.testing.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_82 = QVBoxLayout(self.testing)
-        self.verticalLayout_82.setObjectName(u"verticalLayout_82")
-        self.lblLoadVersion = QLabel(self.testing)
-        self.lblLoadVersion.setObjectName(u"lblLoadVersion")
-        self.lblLoadVersion.setFont(font1)
-
-        self.verticalLayout_82.addWidget(self.lblLoadVersion, 0, Qt.AlignRight)
-
-
-        self.verticalLayout_38.addWidget(self.testing)
-
-
-        self.verticalLayout_13.addWidget(self.UC_Main_Frame, 0, Qt.AlignHCenter)
-
         self.swWorkSpace.addWidget(self.Homepage)
         self.page = QWidget()
         self.page.setObjectName(u"page")
@@ -3422,29 +3292,171 @@ class Ui_MailablDialogBase(object):
 
         self.verticalLayout_11.addWidget(self.swWorkSpace)
 
-        self.Genrealprogresbar = QFrame(self.centerMenuSubContainer)
-        self.Genrealprogresbar.setObjectName(u"Genrealprogresbar")
-        self.Genrealprogresbar.setMinimumSize(QSize(0, 5))
-        self.Genrealprogresbar.setMaximumSize(QSize(16777215, 5))
-        self.Genrealprogresbar.setStyleSheet(u"")
-        self.Genrealprogresbar.setFrameShape(QFrame.StyledPanel)
-        self.Genrealprogresbar.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_25 = QVBoxLayout(self.Genrealprogresbar)
-        self.verticalLayout_25.setSpacing(0)
-        self.verticalLayout_25.setObjectName(u"verticalLayout_25")
-        self.verticalLayout_25.setContentsMargins(0, 0, 0, 0)
-        self.ProgresBar_general = QProgressBar(self.Genrealprogresbar)
-        self.ProgresBar_general.setObjectName(u"ProgresBar_general")
-        self.ProgresBar_general.setMaximum(100)
-        self.ProgresBar_general.setValue(0)
-
-        self.verticalLayout_25.addWidget(self.ProgresBar_general)
-
-
-        self.verticalLayout_11.addWidget(self.Genrealprogresbar)
-
 
         self.verticalLayout_10.addWidget(self.centerMenuSubContainer)
+
+        self.UC_Main_Frame = QFrame(self.centerMenuContainer)
+        self.UC_Main_Frame.setObjectName(u"UC_Main_Frame")
+        sizePolicy3.setHeightForWidth(self.UC_Main_Frame.sizePolicy().hasHeightForWidth())
+        self.UC_Main_Frame.setSizePolicy(sizePolicy3)
+        self.UC_Main_Frame.setMinimumSize(QSize(250, 400))
+        self.UC_Main_Frame.setMaximumSize(QSize(250, 400))
+        self.UC_Main_Frame.setStyleSheet(u"*{\n"
+" background-color: #272c35;\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"	padding: 1px 8px;\n"
+"    border-radius: 6px;\n"
+"	background-color:#40414f;\n"
+"	border: 0.5px solid #565869;\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: #8e8ea0;\n"
+"	padding: 1px 8px;\n"
+"    border-radius: 8px;\n"
+"	border: 0.5px solid #acacbe;\n"
+"    color: #343541;\n"
+"	padding: 2px 8px;\n"
+"    border-radius: 6px;\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
+        self.UC_Main_Frame.setFrameShape(QFrame.StyledPanel)
+        self.UC_Main_Frame.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_25 = QVBoxLayout(self.UC_Main_Frame)
+        self.verticalLayout_25.setObjectName(u"verticalLayout_25")
+        self.UC_Headig_frame = QFrame(self.UC_Main_Frame)
+        self.UC_Headig_frame.setObjectName(u"UC_Headig_frame")
+        self.UC_Headig_frame.setFrameShape(QFrame.StyledPanel)
+        self.UC_Headig_frame.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_80 = QVBoxLayout(self.UC_Headig_frame)
+        self.verticalLayout_80.setObjectName(u"verticalLayout_80")
+        self.leUC_Heading = QLabel(self.UC_Headig_frame)
+        self.leUC_Heading.setObjectName(u"leUC_Heading")
+        font11 = QFont()
+        font11.setPointSize(12)
+        self.leUC_Heading.setFont(font11)
+
+        self.verticalLayout_80.addWidget(self.leUC_Heading, 0, Qt.AlignHCenter)
+
+
+        self.verticalLayout_25.addWidget(self.UC_Headig_frame)
+
+        self.UC_Password_Frame = QFrame(self.UC_Main_Frame)
+        self.UC_Password_Frame.setObjectName(u"UC_Password_Frame")
+        self.UC_Password_Frame.setFrameShape(QFrame.StyledPanel)
+        self.UC_Password_Frame.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_81 = QVBoxLayout(self.UC_Password_Frame)
+        self.verticalLayout_81.setObjectName(u"verticalLayout_81")
+        self.leUsername = QLineEdit(self.UC_Password_Frame)
+        self.leUsername.setObjectName(u"leUsername")
+        self.leUsername.setMinimumSize(QSize(200, 40))
+        self.leUsername.setMaximumSize(QSize(200, 40))
+        self.leUsername.setFont(font1)
+        self.leUsername.setStyleSheet(u"background-color: rgba(0,0,0,0);\n"
+"border: none;\n"
+"border-bottom: 2px solid rgba(105,118,132,255);\n"
+"color: rgba(255,255,255,230);\n"
+"padding-bottom: 7px ")
+
+        self.verticalLayout_81.addWidget(self.leUsername)
+
+        self.lePassword = QLineEdit(self.UC_Password_Frame)
+        self.lePassword.setObjectName(u"lePassword")
+        self.lePassword.setMinimumSize(QSize(200, 40))
+        self.lePassword.setMaximumSize(QSize(200, 40))
+        self.lePassword.setFont(font1)
+        self.lePassword.setStyleSheet(u"background-color: rgba(0,0,0,0);\n"
+"border: none;\n"
+"border-bottom: 2px solid rgba(105,118,132,255);\n"
+"color: rgba(255,255,255,230);\n"
+"padding-bottom: 7px ")
+
+        self.verticalLayout_81.addWidget(self.lePassword)
+
+
+        self.verticalLayout_25.addWidget(self.UC_Password_Frame)
+
+        self.UC_Buttton_Frame = QFrame(self.UC_Main_Frame)
+        self.UC_Buttton_Frame.setObjectName(u"UC_Buttton_Frame")
+        self.UC_Buttton_Frame.setFrameShape(QFrame.StyledPanel)
+        self.UC_Buttton_Frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_24 = QHBoxLayout(self.UC_Buttton_Frame)
+        self.horizontalLayout_24.setObjectName(u"horizontalLayout_24")
+        self.pbUC_Save = QPushButton(self.UC_Buttton_Frame)
+        self.pbUC_Save.setObjectName(u"pbUC_Save")
+        self.pbUC_Save.setFont(font1)
+
+        self.horizontalLayout_24.addWidget(self.pbUC_Save, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+
+
+        self.verticalLayout_25.addWidget(self.UC_Buttton_Frame)
+
+        self.verticalSpacer_7 = QSpacerItem(20, 116, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_25.addItem(self.verticalSpacer_7)
+
+        self.pbUC_Cancel = QPushButton(self.UC_Main_Frame)
+        self.pbUC_Cancel.setObjectName(u"pbUC_Cancel")
+        self.pbUC_Cancel.setFont(font1)
+
+        self.verticalLayout_25.addWidget(self.pbUC_Cancel, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+
+        self.testing = QFrame(self.UC_Main_Frame)
+        self.testing.setObjectName(u"testing")
+        self.testing.setFrameShape(QFrame.StyledPanel)
+        self.testing.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_82 = QVBoxLayout(self.testing)
+        self.verticalLayout_82.setObjectName(u"verticalLayout_82")
+        self.lblLoadVersion = QLabel(self.testing)
+        self.lblLoadVersion.setObjectName(u"lblLoadVersion")
+        self.lblLoadVersion.setFont(font1)
+
+        self.verticalLayout_82.addWidget(self.lblLoadVersion, 0, Qt.AlignRight)
+
+
+        self.verticalLayout_25.addWidget(self.testing)
+
+
+        self.verticalLayout_10.addWidget(self.UC_Main_Frame)
+
+        self.Agreements = QFrame(self.centerMenuContainer)
+        self.Agreements.setObjectName(u"Agreements")
+        self.Agreements.setMinimumSize(QSize(0, 0))
+        self.Agreements.setMaximumSize(QSize(16777215, 16777215))
+        self.Agreements.setStyleSheet(u"")
+        self.Agreements.setFrameShape(QFrame.StyledPanel)
+        self.Agreements.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_57 = QHBoxLayout(self.Agreements)
+        self.horizontalLayout_57.setSpacing(10)
+        self.horizontalLayout_57.setObjectName(u"horizontalLayout_57")
+        self.horizontalLayout_57.setContentsMargins(0, 0, 0, 0)
+        self.lblAllRights = QLabel(self.Agreements)
+        self.lblAllRights.setObjectName(u"lblAllRights")
+
+        self.horizontalLayout_57.addWidget(self.lblAllRights)
+
+        self.lblUserPolicy = QLabel(self.Agreements)
+        self.lblUserPolicy.setObjectName(u"lblUserPolicy")
+
+        self.horizontalLayout_57.addWidget(self.lblUserPolicy)
+
+        self.lblPrivacyPolicy = QLabel(self.Agreements)
+        self.lblPrivacyPolicy.setObjectName(u"lblPrivacyPolicy")
+
+        self.horizontalLayout_57.addWidget(self.lblPrivacyPolicy)
+
+        self.horizontalSpacer_32 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_57.addItem(self.horizontalSpacer_32)
+
+
+        self.verticalLayout_10.addWidget(self.Agreements)
 
 
         self.horizontalLayout_6.addWidget(self.centerMenuContainer)
@@ -4394,7 +4406,7 @@ class Ui_MailablDialogBase(object):
 
         self.retranslateUi(MailablDialogBase)
 
-        self.swWorkSpace.setCurrentIndex(7)
+        self.swWorkSpace.setCurrentIndex(5)
         self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -4628,14 +4640,6 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0"
                         "px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\"><br /></span><span style=\" font-size:12pt; text-decoration: underline;\">NB! Tegemist on Mailabli beeta versiooniga, mis ei ole l\u00f5plik toode ja mille arendus s\u00f5ltub olulisel m\u00e4\u00e4ral kasutajate tagasisidest!</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p></body></html>", None))
-        self.leUC_Heading.setText(QCoreApplication.translate("MailablDialogBase", u"Logi sisse Mailabli kontoga", None))
-        self.leUsername.setText("")
-        self.leUsername.setPlaceholderText(QCoreApplication.translate("MailablDialogBase", u"Kasutajanimi", None))
-        self.lePassword.setText("")
-        self.lePassword.setPlaceholderText(QCoreApplication.translate("MailablDialogBase", u"Salas\u00f5na", None))
-        self.pbUC_Save.setText(QCoreApplication.translate("MailablDialogBase", u"Logi sisse", None))
-        self.pbUC_Cancel.setText(QCoreApplication.translate("MailablDialogBase", u"Katkesta", None))
-        self.lblLoadVersion.setText("")
         self.lbl_heading_Projects.setText(QCoreApplication.translate("MailablDialogBase", u"Projektid", None))
 #if QT_CONFIG(tooltip)
         self.pbProjects_Connect_properties.setToolTip("")
@@ -4655,7 +4659,17 @@ class Ui_MailablDialogBase(object):
         self.label_32.setText(QCoreApplication.translate("MailablDialogBase", u"Uus nimetus", None))
         self.label_26.setText(QCoreApplication.translate("MailablDialogBase", u"Projekti ID", None))
         self.pbShowOnMap.setText(QCoreApplication.translate("MailablDialogBase", u"N\u00e4ita kaardil", None))
-        self.ProgresBar_general.setFormat("")
+        self.leUC_Heading.setText(QCoreApplication.translate("MailablDialogBase", u"Logi sisse Mailabli kontoga", None))
+        self.leUsername.setText("")
+        self.leUsername.setPlaceholderText(QCoreApplication.translate("MailablDialogBase", u"Kasutajanimi", None))
+        self.lePassword.setText("")
+        self.lePassword.setPlaceholderText(QCoreApplication.translate("MailablDialogBase", u"Salas\u00f5na", None))
+        self.pbUC_Save.setText(QCoreApplication.translate("MailablDialogBase", u"Logi sisse", None))
+        self.pbUC_Cancel.setText(QCoreApplication.translate("MailablDialogBase", u"Katkesta", None))
+        self.lblLoadVersion.setText("")
+        self.lblAllRights.setText(QCoreApplication.translate("MailablDialogBase", u"\u00a9 2024 Mailabl. K\u00f5ik \u00f5igused kaitstud", None))
+        self.lblUserPolicy.setText(QCoreApplication.translate("MailablDialogBase", u"Kasutustingimused", None))
+        self.lblPrivacyPolicy.setText(QCoreApplication.translate("MailablDialogBase", u"Privaatsuspoliitika", None))
         self.pbMailabl.setText(QCoreApplication.translate("MailablDialogBase", u" Mailabl.com", None))
         self.helpMenuToggle.setText("")
         self.lb_HM_Avaleht_Pealkiri.setText("")

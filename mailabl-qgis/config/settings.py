@@ -40,6 +40,8 @@ class flags:
 
 class OpenLink:
     main = config['weblink']
+    privacy = config['privacy']
+    terms = config['terms']
     
     def web_link_single_projects():
         link = f'{OpenLink.main}/projects/'
@@ -48,6 +50,16 @@ class OpenLink:
     def weblink_single_contract():
         link = f'{OpenLink.main}/contracts/'
         return link
+    
+    def weblink_Privacy():
+        link = f'{OpenLink.privacy}'
+        return link
+    
+    def weblink_terms_of_use ():
+        link = f'{OpenLink.terms}'
+        return link
+    
+    
 
 
 

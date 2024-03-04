@@ -19,10 +19,9 @@ import os
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
 from qgis.utils import iface
-
+from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
 from .app.web import loadWebpage
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
-from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
 from .config.settings import SettingsDataSaveAndLoad, version
 from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
@@ -48,7 +47,7 @@ from .queries.python.projects.ProjectTableGenerators.projects import Projects, p
 from .queries.python.update_relations.update_project_properties import ProjectsProperties,map_selectors
 from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
 from .queries.python.property_data import Properties, MyLablChecker
-from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
+from .queries.python.Statuses.statusManager import  InsertStatusToComboBox #Statuses,
 from .processes.infomessages.messages import Headings, HoiatusTexts
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -167,9 +166,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         
         startup_frames = [self.leftMenuContainer, self.rightMenuContainer,  self.sw_HM,
-            self.Intro_Help, self.HomePageName, self.Genrealprogresbar, self.frProjects_Tools,
-            self.SettingsPageMainFrame, self.frSync_Cadastrals_Main, self.frSync_Overview_Main,
-            self.frSync_Tools]
+            
+            self.lblUserPolicy, self.lblPrivacyPolicy, self.swWorkSpace]
         
     #setup login dialog and hide frames to block functionality!
         self.on_load(startup_frames)
@@ -206,7 +204,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
 #Define buttons
-        self.pbCadasters = self.pbCadasters
+
         self.pbAdd_SHP_To_Project = self.pbSettings_AddShapeFile
         self.pbAvaMaaameti_veebikas = self.pbAvaMaaAmet
         self.Start_update = self.pbUpdateData
