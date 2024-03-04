@@ -13,7 +13,7 @@ from ...app.View_tools import shp_tools
 from...Functions.layer_generator import LayerCopier
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 class MapView(QObject):
     mapLayerUpdated = pyqtSignal()

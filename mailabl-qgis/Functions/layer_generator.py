@@ -10,7 +10,7 @@ from ..config.settings import Filepaths
 from PyQt5.QtCore import QCoreApplication
 from ..processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 

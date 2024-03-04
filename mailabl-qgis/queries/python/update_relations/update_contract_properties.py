@@ -14,7 +14,7 @@ from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerF
 from PyQt5.uic import loadUi
 from ....processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 on_selection_changed_lambda = None
 # Adjust the delay interval and sleep duration according to your requirements

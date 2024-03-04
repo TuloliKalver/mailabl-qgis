@@ -16,7 +16,7 @@ from PyQt5.QtWidgets import QListWidgetItem
 from ..config.settings import SettingsDataSaveAndLoad
 from ..processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 #declare catalouges and links
 #main directory
@@ -414,7 +414,7 @@ class shp_tools:
             layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             text = (f"Laetavate kinnistute kiht {input_layer_name} on puudu.\nJätkamiseks lae algandmed")
             QMessageBox.warning(self, heading,text)
             #print("No items selected")
@@ -441,7 +441,7 @@ class shp_tools:
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
             text = (f"Laetavate kinnistute kiht {input_layer_name} on puudu. \n Jätkamiseks lae algandmed")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
             return

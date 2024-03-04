@@ -9,9 +9,11 @@ from qgis.core import QgsMapLayer, QgsProject
 from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMessageBox
-from ..processes.infomessages.messages import Headings
+from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
  
-heading = Headings()
+pealkiri = Headings()
+sisu = HoiatusTexts()
+edu = EdukuseTexts()
 
 class SetupCadastralLayers:
     def __init__(self):
@@ -52,7 +54,7 @@ class SetupCadastralLayers:
         lblLayerProjects_Properties = self.lblLayerProjects_Properties
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)
         text = "Kõik sai salvestatud"
-        heading = "Supper"
+        heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)
         # Additional logic if needed
 
@@ -61,7 +63,7 @@ class SetupCadastralLayers:
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
         text = "Seekord nii ja homme naa"
-        heading = "Hoiatus"
+        heading = pealkiri.informationSimple
         QMessageBox.information(widget, heading, text)
         widget.reject()  # Close the dialog        
 
@@ -128,9 +130,9 @@ class Setup_ProjectLayers:
         lblSHPNewItems = self.lblSHPNewItems
         
         SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers)
-        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)
-        text = "Kõik sai salvestatud"
-        heading = "Supper!"
+        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)        
+        text = edu.salvestatud
+        heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)
         # Additional logic if needed
 
@@ -138,8 +140,8 @@ class Setup_ProjectLayers:
 
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
-        text = "Seekord nii ja homme naa"
-        heading = "Hoiatus"
+        text = sisu.kasutaja_peatas_protsessi
+        heading = pealkiri.warningSimple
         QMessageBox.information(widget, heading, text)
         widget.reject()  # Close the dialog        
 

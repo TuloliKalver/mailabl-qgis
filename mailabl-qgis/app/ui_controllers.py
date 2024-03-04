@@ -5,7 +5,7 @@ from ..config.settings import flags
 from PyQt5.QtCore import QTimer
 from ..processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 background_green = "background-color: #607D3B"
 background_red = "background-color: #D32F2F"
@@ -342,8 +342,9 @@ class LayerChecker:
         text = (
                 "Lae õige fail! SHP_KATASTRIÜKSUS.SHP\n"
                 "Uued andmed saad Maa-ametist, kasutades Sätete nenüüst valikut 'Maa-ametisse'"
-            )
-        heading = "Hoiatus"
+            )      
+        heading = pealkiri.warningSimple
+    
         
         # Check if a virtual layer is present and has features
         input_layers = QgsProject.instance().mapLayersByName(input_layer_name)

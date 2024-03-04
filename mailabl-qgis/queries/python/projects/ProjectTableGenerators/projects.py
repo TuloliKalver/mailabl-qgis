@@ -14,7 +14,7 @@ from .....config.settings import SettingsDataSaveAndLoad
 from .....utils.table_utilys import ModelHandler
 from .....processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 class Projects:
     @staticmethod

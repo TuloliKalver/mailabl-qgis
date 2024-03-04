@@ -15,7 +15,7 @@ from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..config.mylabl_API.modules import MODULE_PROJECTS
 from ..processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
     
 class WorkSpaceHandler:
@@ -116,7 +116,7 @@ class WorkSpaceHandler:
             iface.setActiveLayer(layer)
         else:
             text =("Midagi läks valesti")
-            heading = "Hoiatus"
+            heading = pealkiri.warningSimple
             QMessageBox.warning(self, heading, text)       
 
         label = self.CadastralMovesMainLabel

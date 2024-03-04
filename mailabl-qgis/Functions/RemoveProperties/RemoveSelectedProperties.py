@@ -11,7 +11,7 @@ from ...queries.python.property_data import PropertiesGeneralQueries, deleteProp
 from ...config.settings import SettingsDataSaveAndLoad
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 class DeleteActions:
     @staticmethod
     def delete_selected_items_from_mylabl(self):

@@ -13,7 +13,7 @@ from qgis.utils import iface
 from PyQt5.uic import loadUi
 from ..processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 model = QStandardItemModel()
 

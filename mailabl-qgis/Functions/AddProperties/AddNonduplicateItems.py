@@ -14,7 +14,7 @@ from ...Functions.add_items import Add_Properties_final
 from ...Functions.layer_generator import LayerCopier
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 table_data = tableFunctions
 checker = MyLablChecker()

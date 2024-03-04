@@ -15,7 +15,7 @@ from ...config.ui_directories import PathLoaderSimple
 from .MapTools.selector import visibleSelector
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 HEADER_ID = 'ID'
 HEADER_NUMBER = 'Number'

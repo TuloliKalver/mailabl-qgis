@@ -11,7 +11,7 @@ from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import QgsFeatureRequest
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 #declare catalouges and links
 #main directory

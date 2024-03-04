@@ -2,10 +2,10 @@ from PyQt5.QtWidgets import QMessageBox, QPushButton
 
 class Headings:
     def __init__(self):
-        self.warningSimple = "Hoiatus" # Assuming you have a stacked widget as an instance attribute
+        self.warningSimple = "Hoiatus!" 
         self.warningCritical = "Oi Oi Oi!"
-        self.Fun = "Tore asi" #mõelda
-        self.informationSimple = "Infoks"
+        self.tubli = "Tubli!" 
+        self.informationSimple = "Info"
         
 class HoiatusTexts:
     def __init__(self):       

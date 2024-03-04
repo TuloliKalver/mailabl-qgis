@@ -16,7 +16,7 @@ from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_S
 from ...Functions.tableViewAdjust import ColumnResizer
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
 

@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import GraphQLSettings
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 class requestBuilder:
     @staticmethod

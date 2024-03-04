@@ -9,7 +9,7 @@ from .DataLoading import load_user_query
 from ...config.settings import GraphQLSettings
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 "
 GRAPHQL_ENDPOINT = GraphQLSettings.graphql_endpoint()

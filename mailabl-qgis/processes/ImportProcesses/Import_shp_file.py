@@ -6,7 +6,7 @@ from PyQt5.uic import loadUi
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad
 from ...processes.infomessages.messages import Headings
  
-heading = Headings()
+pealkiri = Headings()
 
 # Declare catalogs and links
 # Main directory
