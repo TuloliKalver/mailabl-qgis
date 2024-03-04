@@ -29,7 +29,7 @@ class HoiatusTexts:
         self.kinnistu_valimata = "Vali importimiseks vähemalt üks kinnistu"
         self.kinnistud_MLBs_olemas = "Kõik valitud kinnistud on juba Mailablis"
         self.kinnistuid_MLBs_pole = "Valitud kinnistuid Mailablis ei ole"
-        text = "Nimetus on vigane või lisamata" #mille nimetus?
+        self.nimetus_lisamata = "Nimetus on vigane või lisamata" #mille nimetus?
         self.logimise_ebaonnestus = ("Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli")
         self.logimise_ebaonnestus = ("Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti")
         self.projektide_laadimine_error = ("Ala on projektide laadimiseks liiga suur\nZoomi lähemale")
