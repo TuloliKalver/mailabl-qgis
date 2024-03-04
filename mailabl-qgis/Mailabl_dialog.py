@@ -28,7 +28,7 @@ from .config.layer_setup import Setup_CadastralsLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
 from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBox_functions, ComboBoxMapTools
-from .app.remove_processes import ReomveProcess
+from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
@@ -69,7 +69,7 @@ plugin_dir = os.path.dirname(__file__)
 #text_header = Headings()
 
 comboboxes = ComboBox_functions()
-process = ReomveProcess()
+process = RemoveProcess()
 color = color_handler()
 list_functions = listView_functions()
 table_functions = tableView_functions()
