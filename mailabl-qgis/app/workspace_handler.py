@@ -14,7 +14,6 @@ from ..Functions.Contracts.contractsItems import ContractsMain
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..config.mylabl_API.modules import MODULE_PROJECTS
 
-
     
 class WorkSpaceHandler:
     @staticmethod
