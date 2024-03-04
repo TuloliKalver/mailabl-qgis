@@ -65,11 +65,3 @@ class EdukuseTexts:
     def __init__(self):
         self.tehtud = "Tubli! Kõik on tehtud"
         self.salvestatud = "Kõik on salvestatud"
-        
-        
-        
-         
-        
-
-
-        
