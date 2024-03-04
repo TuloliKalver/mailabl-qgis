@@ -1,6 +1,6 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=relative-beyond-top-level
-# pylint: disable=no-name-in-module
+# pylint: disable=no-nam
 
 
 
@@ -232,7 +232,7 @@ class ProjectsWithPandas:
 
 class ProjectsWithPandas_2:
 
-    def table_view_from_active_projects_statuses(self, statusValue):
+    def table_view_from_active_projects_statuses(self, status_value):
         # Set header labels
         header_labels = [HEADER_ID, HEADER_NUMBER,
                             HEADER_NAME, HEADER_DEADLINE,
@@ -249,7 +249,7 @@ class ProjectsWithPandas_2:
 
         #print("statuses")
         #print(statuses)
-        data = ProjectsWithPandas.query_active_main_projects_by_status(self, statusValue)
+        data = ProjectsWithPandas.query_active_main_projects_by_status(self, status_value)
         
         # Build a pandas DataFrame
         df_data = []
@@ -360,12 +360,12 @@ class ProjectsWithPandas_3:
     #@staticmethod
     def Create_Project_tableView_for_zoom(self, selected_features):
         # Set header labels
-        header_labels = [HEADER_ID, HEADER_NUMBER, 
+        header_labels = [HEADER_ID, HEADER_NUMBER,
                             HEADER_NAME, HEADER_DEADLINE,
                             HEADER_COLOR, HEADER_RESPONSIBLE,
-                            HEADER_PROPERTIES_ICON, #6
-                            HEADER_PROJECTS_PARENT_ID, HEADER_WEB_LINK_BUTTON,  #8
-                            HEADER_DOCUMENTS, HEADER_FILE_PATH, #10
+                            HEADER_PROPERTY_NUMBER, HEADER_PROPERTIES_ICON,
+                            HEADER_PROJECTS_PARENT_ID, HEADER_WEB_LINK_BUTTON,
+                            HEADER_DOCUMENTS, HEADER_FILE_PATH,
                             HEADER_STATUS]
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(header_labels)
@@ -404,15 +404,15 @@ class ProjectsWithPandas_3:
         else:
             # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
             data = {project['id']: project for project in all_projects}.values()
-            print(f"total len of all projects: '{len(all_projects)}'")
+            #print(f"total len of all projects: '{len(all_projects)}'")
             print(f"data: {data}")
 
             # Build a pandas DataFrame
             df_data = []
             for node in data:
-                #node = project_data.get("node", {})
-                #properties = node.get("properties", {}).get("edges", [])
-                #propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
+                #node = data.get("node", {})
+                properties = node.get("properties", {}).get("edges", [])
+                propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
                 responsibles = node.get("responsible",{}).get("edges",[])
                 resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
                 row_data = {
@@ -422,15 +422,15 @@ class ProjectsWithPandas_3:
                     HEADER_DEADLINE: node.get("dueAt", "") or "",
                     HEADER_STATUS: node.get("status", {}).get("name", "") if node.get("status") else "",
                     HEADER_COLOR: node.get("status", {}).get("color", "") if node.get("status") else "",
-                    #header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
-                    #header_id: node.get("id", ""),
+                    HEADER_PROPERTY_NUMBER: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
+                    HEADER_ID: node.get("id", ""),
                     HEADER_PROJECTS_PARENT_ID: node.get("parentID", ""),
                     HEADER_WEB_LINK_BUTTON: "",
                     HEADER_DOCUMENTS: node.get("filesPath","")or "",
                     HEADER_FILE_PATH: "",
                     HEADER_RESPONSIBLE: ",".join(resposnisble_name) if resposnisble_name else "",
                     HEADER_PROPERTIES_ICON: ""
-                    }
+                    }    
                 df_data.append(row_data)
             
                 QCoreApplication.processEvents()

@@ -11,7 +11,7 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMessageBox
 
 
-class Setup_CadastralsLayers:
+class SetupCadastralLayers:
     def __init__(self):
         # Assuming you have a stacked widget as an instance attribute
         pass
@@ -35,12 +35,12 @@ class Setup_CadastralsLayers:
 
         
         # Access the variables through the instance
-        save_button.clicked.connect(lambda: Setup_CadastralsLayers.on_save_button_clicked(
+        save_button.clicked.connect(lambda: SetupCadastralLayers.on_save_button_clicked(
                                                                     self, widget, cmbCurrent_Layer, cmbTarget_layer, 
                                                                     self.lblcurrent_main_layer_label, 
                                                                     self.lblnewCadastrals_input_layer_label,
                                                                     self.lblSHPNewItems))
-        cancel_button.clicked.connect(lambda: Setup_CadastralsLayers.on_cancel_button_clicked(widget))
+        cancel_button.clicked.connect(lambda: SetupCadastralLayers.on_cancel_button_clicked(widget))
         
         
 

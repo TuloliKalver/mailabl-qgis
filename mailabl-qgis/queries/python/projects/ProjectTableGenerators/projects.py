@@ -3,16 +3,14 @@
 # pylint: disable=no-name-in-module
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor, QBrush, QIcon, QStandardItem
+from PyQt5.QtGui import QStandardItem
 from PyQt5.QtWidgets import QTableView
 from PyQt5.QtWidgets import QMessageBox
-from .....app.Delegates.WebLink import WebLinkDelegate
-from .....app.Delegates.OpenFile import FileDelegate
-from .....app.Delegates.SelectMapElements import SelectMapElementsDelegate
+from ...MapTools.selector import visibleSelector
 from ...projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, TableHeaders
+from .....utils.delegates.DelegateMainTable import DelegatesForTables
 from .....Functions.tableViewAdjust import ColumnResizer
 from .....config.settings import SettingsDataSaveAndLoad
-from ...MapTools.selector import visibleSelector
 from .....utils.table_utilys import ModelHandler
 
 
@@ -52,17 +50,7 @@ class Projects:
             webButton_Column_index = ModelHandler.build_mailabl_link_button(p_model, row_index, header_labels)
 
 
-        # Set the custom delegate for the web link column
-        web_link_delegate = WebLinkDelegate(ID_column_index, table)
-        table.setItemDelegateForColumn(webButton_Column_index, web_link_delegate)
-
-        # Set the custom delegate for the file column
-        file_delegate = FileDelegate(dokAddress_column_index, table)
-        table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
-
-        show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
-        table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
-
+        DelegatesForTables.setup_delegates_standard_table(table, header_labels)
 
         table.setModel(p_model)
         # Set the row height to 20 pixels
@@ -145,17 +133,9 @@ class projectsTableDecorator:
                     dokAddress_column_index, dokButton_column_index = ModelHandler.format_dok_item(p_model, row_index, header_labels)
                     # Call build_mailabl_link_button method
                     webButton_Column_index = ModelHandler.build_mailabl_link_button(p_model, row_index, header_labels)
-                
-                # Set the custom delegate for the web link column
-                web_link_delegate = WebLinkDelegate(ID_column_index, table)
-                table.setItemDelegateForColumn(webButton_Column_index, web_link_delegate)
 
-                # Set the custom delegate for the file column
-                file_delegate = FileDelegate(dokAddress_column_index, table)
-                table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
 
-                show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
-                table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
+                DelegatesForTables.setup_delegates_standard_table(table, header_labels)
 
 
                 table.setModel(p_model)
@@ -163,7 +143,7 @@ class projectsTableDecorator:
                 table.verticalHeader().setDefaultSectionSize(20)
                     
                 # Define the columns to hide
-                columns_to_hide = [color_column_index] #, dokAddress_column_index, LP_ID_column_index
+                columns_to_hide = [color_column_index, LP_ID_column_index, dokAddress_column_index]
                 # Hide the specified columns
                 for column_index in columns_to_hide:
                     table.hideColumn(column_index)
@@ -173,11 +153,11 @@ class projectsTableDecorator:
                 for column_index in columns_to_resize:
                     resizes.resizeColumnByIndex(table, column_index)
                     
-                columns_width_icons = [ID_column_index, #cadastral_column_index,
+                columns_width_icons = [ID_column_index, cadastral_column_index,
                                     webButton_Column_index, dokButton_column_index, 
                                     cadastralButton_Column_index]
-                column_widths = [0,0,20,10]
-                resizes.setColumnWidths(table, columns_width_icons , column_widths) #columns_width_icons,
+                column_widths = [0,0,10,10,10]
+                resizes.setColumnWidths(table, columns_width_icons, column_widths)
                 # Hide certain column labels
                 newLabel_for_cadastral = ""  # Replace with your actual column labels
                 newLabel_documents = ""
@@ -185,7 +165,7 @@ class projectsTableDecorator:
                 newLabel_ID = ""
                 newLabel_CadastralShow = ""
                 p_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
-                #p_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
+                p_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
                 p_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
                 p_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
                 p_model.setHorizontalHeaderItem(cadastralButton_Column_index, QStandardItem(newLabel_CadastralShow))
@@ -250,17 +230,8 @@ class searchProjectsValue:
             # Call build_mailabl_link_button method
             ModelHandler.build_mailabl_link_button(p_model, row_index, webButton_Column_index)
 
-        # Set the custom delegate for the web link column
-        web_link_delegate = WebLinkDelegate(ID_column_index, table)
-        table.setItemDelegateForColumn(webButton_Column_index, web_link_delegate)
 
-        # Set the custom delegate for the file column
-        file_delegate = FileDelegate(dokAddress_column_index, table)
-        table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
-
-        show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
-        table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
-
+        DelegatesForTables.setup_delegates_standard_table(table, header_labels)
 
         table.setModel(p_model)
         # Set the row height to 20 pixels

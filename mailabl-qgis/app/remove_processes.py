@@ -19,7 +19,7 @@ siht_kataster = "Test_põhi"
 control_virtual_layer_name = "Muudetavad kinnistud"
 
 
-class ReomveProcess:
+class RemoveProcess:
     #def __init__(self):
         #self.combobox_name = comboboxes_name  # Store comboboxes as a dictionary
 

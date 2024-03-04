@@ -1,10 +1,13 @@
-import requests
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-name-in-module
+
 import webbrowser
+import requests
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QStyledItemDelegate
 from ...config.settings import OpenLink
-
-
 
 class WebLinkDelegate(QStyledItemDelegate):
     def __init__(self, id_column_index, parent=None):

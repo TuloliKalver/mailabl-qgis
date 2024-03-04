@@ -69,20 +69,22 @@ class visibleSelector:
             
             if response.status_code == 200:
                 edge = handleResponse.response_properties_data_edges(response)
-                #print("edge")
-                #print(edge)
+                print("edge")
+                print(edge)
                 # Extract project IDs from the response
                 for item in edge:
                     for project in item['node']['projects']['edges']:
                         if project['node']['id']:
                             projects_list.append(project['node'])
                             #print(f"projects_list: '{projects_list}'")
-                # Check pageInfo for pagination
-                page_info = item['node']['projects']['pageInfo']
+                    # Check pageInfo for pagination
+                    page_info = item['node']['projects']['pageInfo']
                 
-                if page_info['hasNextPage']:
-                    end_cursor = page_info['endCursor']
-                    variables['after'] = end_cursor
+                    if page_info['hasNextPage']:
+                        end_cursor = page_info['endCursor']
+                        variables['after'] = end_cursor
+                    
+                        break
                 else:
                     break  # Exit loop if there are no more pages
         return projects_list
