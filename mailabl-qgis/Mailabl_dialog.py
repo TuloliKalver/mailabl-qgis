@@ -24,7 +24,7 @@ from .app.web import loadWebpage
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
 from .config.settings import SettingsDataSaveAndLoad, version
-from .config.layer_setup import Setup_CadastralsLayers, Setup_ProjectLayers
+from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
 from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBox_functions, ComboBoxMapTools
@@ -168,9 +168,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         
         startup_frames = [self.leftMenuContainer, self.rightMenuContainer,  self.sw_HM,
-            self.Intro_Help, self.HomePageName, self.Genrealprogresbar, self.frProjects_Tools,
-            self.SettingsPageMainFrame, self.frSync_Cadastrals_Main, self.frSync_Overview_Main,
-            self.frSync_Tools]
+                        self.lblUserPolicy, self.lblPrivacyPolicy, self.swWorkSpace]
         
     #setup login dialog and hide frames to block functionality!
         self.on_load(startup_frames)
@@ -1014,7 +1012,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
         lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
         lblSHPNewItems = self.lblSHPNewItems
-        Setup_CadastralsLayers.load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems)
+        SetupCadastralLayers.load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems)
         
     def set_layer_settings_labels(self):
         #load = SettingsDataSaveAndLoad()
