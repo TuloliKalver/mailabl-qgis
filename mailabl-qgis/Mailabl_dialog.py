@@ -19,17 +19,18 @@ import os
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
 from qgis.utils import iface
-from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
+
 from .app.web import loadWebpage
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
+from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
 from .config.settings import SettingsDataSaveAndLoad, version
-from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers
+from .config.layer_setup import Setup_CadastralsLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
 from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBox_functions, ComboBoxMapTools
-from .app.remove_processes import RemoveProcess
+from .app.remove_processes import ReomveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
-from .app.View_tools import listView_functions, tableView_functions, progress, ToolsProject, ToolsContract
+from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
 from .Functions.SearchEngines import searchGeneral, searchProjects
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
@@ -46,9 +47,10 @@ from .queries.python.access_credentials import (clear_UC_data,
 from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator
 from .queries.python.update_relations.update_project_properties import ProjectsProperties,map_selectors
 from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
+from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
-from .queries.python.Statuses.statusManager import  InsertStatusToComboBox #Statuses,
-from .processes.infomessages.messages import Headings, HoiatusTexts
+from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
+#from .processes.infomessages.messages import Headings, HoiatusTexts
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -67,7 +69,7 @@ msg_text = HoiatusTexts()
 text_header = Headings()
 
 comboboxes = ComboBox_functions()
-process = RemoveProcess()
+process = ReomveProcess()
 color = color_handler()
 list_functions = listView_functions()
 table_functions = tableView_functions()
@@ -123,9 +125,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.widget_19.setVisible(False)
         
         # anneli_demo
-        anneli_text = msg_text.kinnistud_MLBs_olemas
-        print(f"anneli_test_print:{anneli_text}")
-        print(f"anneli_testib-otsevalik:{msg_text.kasutaja_puudub}")
+        #anneli_text = msg_text.kinnistud_MLBs_olemas
+        #print(f"anneli_test_print:{anneli_text}")
+        #print(f"anneli_testib-otsevalik:{msg_text.kasutaja_puudub}")
         
         # declaring Delete process elements    
         pbDel_State = self.pbDel_State
@@ -166,8 +168,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         
         startup_frames = [self.leftMenuContainer, self.rightMenuContainer,  self.sw_HM,
-            
-            self.lblUserPolicy, self.lblPrivacyPolicy, self.swWorkSpace]
+            self.Intro_Help, self.HomePageName, self.Genrealprogresbar, self.frProjects_Tools,
+            self.SettingsPageMainFrame, self.frSync_Cadastrals_Main, self.frSync_Overview_Main,
+            self.frSync_Tools]
         
     #setup login dialog and hide frames to block functionality!
         self.on_load(startup_frames)
@@ -204,7 +207,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
 #Define buttons
-
+        self.pbCadasters = self.pbCadasters
         self.pbAdd_SHP_To_Project = self.pbSettings_AddShapeFile
         self.pbAvaMaaameti_veebikas = self.pbAvaMaaAmet
         self.Start_update = self.pbUpdateData
@@ -1011,7 +1014,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
         lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
         lblSHPNewItems = self.lblSHPNewItems
-        SetupCadastralLayers.load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems)
+        Setup_CadastralsLayers.load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems)
         
     def set_layer_settings_labels(self):
         #load = SettingsDataSaveAndLoad()
