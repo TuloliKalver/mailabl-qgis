@@ -65,8 +65,8 @@ plugin_dir = os.path.dirname(__file__)
 ################################################################################################################
 #initialize
 
-msg_text = HoiatusTexts()
-text_header = Headings()
+#msg_text = HoiatusTexts()
+#text_header = Headings()
 
 comboboxes = ComboBox_functions()
 process = ReomveProcess()
