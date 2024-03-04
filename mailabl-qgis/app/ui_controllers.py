@@ -3,6 +3,9 @@ from PyQt5.QtWidgets import QPushButton, QFrame, QMessageBox
 from qgis.core import (QgsProject, QgsVectorLayer)
 from ..config.settings import flags
 from PyQt5.QtCore import QTimer
+from ..processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 background_green = "background-color: #607D3B"
 background_red = "background-color: #D32F2F"

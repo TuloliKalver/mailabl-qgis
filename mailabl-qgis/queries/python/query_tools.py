@@ -2,6 +2,9 @@ import requests
 from .access_credentials import load_token
 from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import GraphQLSettings
+from ...processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 class requestBuilder:
     @staticmethod

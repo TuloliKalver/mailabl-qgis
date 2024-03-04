@@ -6,6 +6,9 @@ from PyQt5.QtWidgets import QListView, QMessageBox, QTableView
 from ..queries.python.property_data import deleteProperty, MyLablChecker
 from ..Functions.Tools import tableFunctions
 from ..config.settings import SettingsDataSaveAndLoad
+from ..processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 

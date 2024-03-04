@@ -9,7 +9,9 @@ from ..QstandardModelTools.QStandardModelHandler import ModelHeadersGenerator, C
 from ..delete_items import Delete_finalProcess, Delete_Main_Process
 from ...queries.python.property_data import PropertiesGeneralQueries, deleteProperty
 from ...config.settings import SettingsDataSaveAndLoad
-
+from ...processes.infomessages.messages import Headings
+ 
+heading = Headings()
 class DeleteActions:
     @staticmethod
     def delete_selected_items_from_mylabl(self):

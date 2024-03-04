@@ -2,7 +2,9 @@ import requests
 from PyQt5.QtWidgets import QMessageBox
 from qgis.core import QgsSettings
 from ...config.settings import GraphQLSettings
-
+from ...processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 GRAPHQL_ENDPOINT = GraphQLSettings.graphql_endpoint()
 

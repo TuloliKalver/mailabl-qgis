@@ -12,9 +12,9 @@ from .....utils.delegates.DelegateMainTable import DelegatesForTables
 from .....Functions.tableViewAdjust import ColumnResizer
 from .....config.settings import SettingsDataSaveAndLoad
 from .....utils.table_utilys import ModelHandler
-
-
-
+from .....processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 class Projects:
     @staticmethod

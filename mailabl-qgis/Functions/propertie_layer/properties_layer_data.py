@@ -13,9 +13,10 @@ from qgis.utils import iface
 from collections import deque
 from PyQt5.uic import loadUi
 from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
-
 from ...Functions.tableViewAdjust import ColumnResizer
-
+from ...processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
 

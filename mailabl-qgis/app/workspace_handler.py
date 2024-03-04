@@ -13,7 +13,9 @@ from ..Functions.delete_items import Delete_Main_Process
 from ..Functions.Contracts.contractsItems import ContractsMain
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..config.mylabl_API.modules import MODULE_PROJECTS
-
+from ..processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
     
 class WorkSpaceHandler:

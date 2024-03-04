@@ -13,7 +13,9 @@ from .DataLoading_classes import Graphql_project, GraphQLQueryLoader
 from .query_tools import requestBuilder
 from ...config.ui_directories import PathLoaderSimple
 from .MapTools.selector import visibleSelector
-
+from ...processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 HEADER_ID = 'ID'
 HEADER_NUMBER = 'Number'

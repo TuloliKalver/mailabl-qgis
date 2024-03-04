@@ -8,6 +8,9 @@ from ..config.settings import connect_settings_to_layer
 from PyQt5.uic import loadUi
 from ..config.settings import Filepaths
 from PyQt5.QtCore import QCoreApplication
+from ..processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 

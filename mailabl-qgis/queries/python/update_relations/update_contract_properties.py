@@ -12,7 +12,9 @@ from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
 from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from PyQt5.uic import loadUi
-
+from ....processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 on_selection_changed_lambda = None
 # Adjust the delay interval and sleep duration according to your requirements

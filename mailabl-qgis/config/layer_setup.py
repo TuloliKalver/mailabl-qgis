@@ -9,7 +9,9 @@ from qgis.core import QgsMapLayer, QgsProject
 from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMessageBox
-
+from ..processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 class SetupCadastralLayers:
     def __init__(self):

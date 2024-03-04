@@ -11,7 +11,9 @@ from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import connect_settings_to_layer
 from ...app.View_tools import shp_tools
 from...Functions.layer_generator import LayerCopier
-
+from ...processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 class MapView(QObject):
     mapLayerUpdated = pyqtSignal()

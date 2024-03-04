@@ -12,7 +12,9 @@ from ...app.workspace_handler import TabHandler
 from PyQt5.QtWidgets import QAbstractItemView
 from ...Functions.add_items import Add_Properties_final
 from ...Functions.layer_generator import LayerCopier
-
+from ...processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 table_data = tableFunctions
 checker = MyLablChecker()

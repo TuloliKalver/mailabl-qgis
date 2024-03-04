@@ -4,6 +4,9 @@ from PyQt5.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.uic import loadUi
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad
+from ...processes.infomessages.messages import Headings
+ 
+heading = Headings()
 
 # Declare catalogs and links
 # Main directory
