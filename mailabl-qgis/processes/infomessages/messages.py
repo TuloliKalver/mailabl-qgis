@@ -23,6 +23,7 @@ class HoiatusTexts:
                 "Lae õige fail! SHP_KATASTRIÜKSUS.SHP\n"
                 "Uued andmed saad Maa-ametist kasutades Sätete nenüüst valikut 'Maa-ametisse'"
             )
+        
         self.error = "Midagi läks valesti"
         self.kinnistuid_ei_leidnud = "Ühtegi kinnistut ei leitud"
         self.andmed_valimata = "Andmeid ei ole valitud"
@@ -76,11 +77,3 @@ class EdukuseTexts:
     def __init__(self):
         self.tehtud = "Tubli! Kõik on tehtud"
         self.salvestatud = "Kõik on salvestatud"
-        
-        
-        
-         
-        
-
-
-        
