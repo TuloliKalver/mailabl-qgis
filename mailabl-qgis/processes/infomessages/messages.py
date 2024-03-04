@@ -4,13 +4,8 @@ class Headings:
     def __init__(self):
         self.warningSimple = "Hoiatus" # Assuming you have a stacked widget as an instance attribute
         self.warningCritical = "Oi Oi Oi!"
-        self.informationSimple = "Tähelepanu"
+        self.Fun = "Tore asi" #mõelda
         self.informationSimple = "Infoks"
-        self.informationSimple = "Teadmiseks"
-        self.heading = "Hoiatus"
-        self.success = "Supper"
-        self.success1 = "Vingelt tehtud"
-        self.success2 = "Info"
         
 class HoiatusTexts:
     def __init__(self):       
@@ -23,29 +18,23 @@ class HoiatusTexts:
                 "Lae õige fail! SHP_KATASTRIÜKSUS.SHP\n"
                 "Uued andmed saad Maa-ametist kasutades Sätete nenüüst valikut 'Maa-ametisse'"
             )
-        self.error = "Midagi läks valesti"
+        self.error = "Midagi läks valesti"        
         self.kinnistuid_ei_leidnud = "Ühtegi kinnistut ei leitud"
         self.andmed_valimata = "Andmeid ei ole valitud"
         self.kinnistu_valimata = "Vali importimiseks vähemalt üks kinnistu"
         self.kinnistud_MLBs_olemas = "Kõik valitud kinnistud on juba Mailablis"
         self.kinnistuid_MLBs_pole = "Valitud kinnistuid Mailablis ei ole"
-        self.nimetus_lisamata = "Nimetus on vigane või lisamata" #mille nimetus?
+        self.kihinimetus_lisamata = "Kihinimetus on vigane või lisamata"
         self.logimise_ebaonnestus = ("Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli")
         self.logimise_ebaonnestus = ("Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti")
-        self.projektide_laadimine_error = ("Ala on projektide laadimiseks liiga suur\nZoomi lähemale")
-        
-        self.error = ("Midagi läks valesti.\nPöördu admini poole")
+        self.projektide_laadimine_error = ("Ala on projektide laadimiseks liiga suur\nZoomi lähemale")           
         self.kasutaja_puudub = "Puudub kasutaja"
         self.projekt_valimata = "Vali projekt"
-        self.projekt_valimata = "Jätkamiseks ava projekt"
-        self.protsess_peatatud = "Kasutaja tühistas kausta valiku. Protsess on peatatud"        
-        self.error = "Seekord nii ja homme naa" #selle võiks asendada
-        
-        self.laadimine_error = "Laadimine on katkestatud"
-        
+        self.QGIS_projekt_puudu = "Jätkamiseks ava projekt"
+        self.kasutaja_peatas_protsessi = "Tegevused on tühistatud ja protsess peatatud"               
+        self.laadimine_error = "Laadimine on katkestatud"        
         self.projekti_ei_leidnud = "Antud numbriga projekti ei leitud"
-        self.projektid_puuduvad = "Piirkonnas puuduvad teadaolevad projektid"
-        
+        self.projektid_puuduvad = "Piirkonnas puuduvad teadaolevad projektid"        
         self.kihil_kinnistu_valik = "Vali kaardikihil vähemalt üks kinnistu"
         #self.???(f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
         #self.???(f"Projektile\n{project_name}\nlisatud\n{total_returned_ids}/{total_ids_Table}")
@@ -70,7 +59,7 @@ class InfoTexts:
 
 class KriitilisedTexts:
     def __init__(self):
-        pass
+        self.error = ("Midagi läks valesti.\nPöördu admini poole")
 
 class EdukuseTexts:
     def __init__(self):
