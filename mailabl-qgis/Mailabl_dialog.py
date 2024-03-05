@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-nam
 """
 /***************************************************************************
  MailablDialog
@@ -15,14 +18,12 @@
 """
 import os
 
-
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
 from qgis.utils import iface
-
+from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
 from .app.web import loadWebpage
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
-from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
 from .config.settings import SettingsDataSaveAndLoad, version
 from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, flags, settingPageElements
@@ -50,7 +51,7 @@ from .queries.python.update_relations.update_contract_properties import Contract
 from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
-#from .processes.infomessages.messages import Headings, HoiatusTexts
+from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -65,8 +66,9 @@ plugin_dir = os.path.dirname(__file__)
 ################################################################################################################
 #initialize
 
-#msg_text = HoiatusTexts()
-#text_header = Headings()
+pealkiri = Headings()
+sisu = HoiatusTexts()
+edu = EdukuseTexts()
 
 comboboxes = ComboBox_functions()
 process = RemoveProcess()
@@ -577,7 +579,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         shp_class.county_map_simplifier(self, county_nimi_field, input_layer_name, viewItem_county, viewItem_state, viewItem_city)
 
     #Functions in Development
-#TODO improve listener with is activ and plugin settings conditions 
+
     def startLayerListener(self):
         print("started layer listener")
         input_layer_name = load.load_SHP_inputLayer_name()
@@ -612,7 +614,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     
     
     def manualy_choose_properties_to_Add(self):
-       
+
         input_layer_name = load.load_SHP_inputLayer_name()
         #print(f"shp_input_layer_name {layer_name}")
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
@@ -779,7 +781,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if item_county is None:
             #print("print")
             text = ("Jätkamiseks vali ja kinnita omavalitsus")
-            heading = "Hoiatus"         
+            heading = "Hoiatus"     
             QMessageBox.information(self, heading, text)
         else:
             

@@ -1,24 +1,23 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-nam
 
 
 from PyQt5.uic import loadUi
 #from .config.ui_directories import Path_loader_simple,PathLoader, plugin_dir_path, UI_multiline_Statusbar
-
 
 from qgis.core import QgsMapLayer, QgsProject
 
 from PyQt5.QtWidgets import QMessageBox
 from .settings import Filepaths, SettingsDataSaveAndLoad
 from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
- 
+
 pealkiri = Headings()
 sisu = HoiatusTexts()
 edu = EdukuseTexts()
 
 class SetupCadastralLayers:
-    def __init__(self):
-        # Assuming you have a stacked widget as an instance attribute
-        pass
-                
+
     def load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems):
         # Get the file path for the Layer Settings Widget .ui file
         ui_file_path = Filepaths.Config_LayerSettings_Widget(self)
@@ -40,17 +39,17 @@ class SetupCadastralLayers:
         # Access the variables through the instance
         save_button.clicked.connect(lambda: SetupCadastralLayers.on_save_button_clicked(
                                                                     self, widget, cmbCurrent_Layer, cmbTarget_layer, 
-                                                                    self.lblcurrent_main_layer_label, 
-                                                                    self.lblnewCadastrals_input_layer_label,
-                                                                    self.lblSHPNewItems))
-        cancel_button.clicked.connect(lambda: SetupCadastralLayers.on_cancel_button_clicked(widget))
+                                                                    lblcurrent_main_layer_label,
+                                                                    lblnewCadastrals_input_layer_label,
+                                                                    lblSHPNewItems))
+        cancel_button.clicked.connect(lambda: SetupCadastralLayers.on_cancel_button_clicked(self, widget))
         
         
 
     def on_save_button_clicked(self, widget, cmbCurrent_Layer, cmbTarget_layer,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems):
         # Handle logic when the save button is clicked
         SettingsDataSaveAndLoad.on_save_button_clicked_cadastrals(self, cmbCurrent_Layer, cmbTarget_layer)
-        lblLayerProjects_Properties = self.lblLayerProjects_Properties
+        lblLayerProjects_Properties = self.lblLayerProjects_Properties # pylint: disable=no-member
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
@@ -61,7 +60,7 @@ class SetupCadastralLayers:
 
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
-        text = "Seekord nii ja homme naa"
+        text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.informationSimple
         QMessageBox.information(widget, heading, text)
         widget.reject()  # Close the dialog        
@@ -94,7 +93,7 @@ class QGIS_items:
         
     def set_layer_settings_labels(self):
         #load = SettingsDataSaveAndLoad()
-        current_label = self.lblCurrentLayer
+        current_label = self.lblCurrentLayer # pylint: disable=no-member
         #Mailabl_Project_Label = self.lblSHPNewItems_2
         load = SettingsDataSaveAndLoad()
         load.startup_label_loader(current_label)
@@ -123,10 +122,10 @@ class Setup_ProjectLayers:
 
     def on_save_button_clicked(self, widget, cmb_layers):
         # Handle logic when the save button is clicked
-        lblLayerProjects_Properties = self.lblLayerProjects_Properties
-        lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
-        lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
-        lblSHPNewItems = self.lblSHPNewItems
+        lblLayerProjects_Properties = self.lblLayerProjects_Properties # pylint: disable=no-member
+        lblcurrent_main_layer_label = self.lblcurrent_main_layer_label # pylint: disable=no-member
+        lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label # pylint: disable=no-member
+        lblSHPNewItems = self.lblSHPNewItems # pylint: disable=no-member
         
         SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers)
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)        
