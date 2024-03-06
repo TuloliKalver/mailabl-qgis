@@ -8,7 +8,7 @@ from ..queries.python.projects_pandas import TableHeaders
 from ..Functions.tableViewAdjust import Colors
 from ..config.iconHandler import iconHandler
 from ..config.settings import Filepaths
-
+from ..config.settings_copy import Filepaths, IconsByName
 table_headers = TableHeaders()
 
 class ModelHandler:
@@ -149,13 +149,14 @@ class ModelHandler:
             row_index (int): The index of the row in the model.
         """
         # Extract column index from header labels
-  
         webButton_Column_index = headers.index(table_headers.header_web_link_button)
         pb_openInMailabl = QStandardItem()
         pb_openInMailabl.setData("Ava", Qt.DisplayRole)
         pb_openInMailabl.setTextAlignment(Qt.AlignCenter)
-        folder_icon_path = Filepaths.Mailabl_icon()
-        icon = QIcon(folder_icon_path)
+        # Get the path of the Mailabl icon
+        icon_path = Filepaths.get_icon(IconsByName().Mailabl_icon_name)
+        print(icon_path)
+        icon = QIcon(icon_path)
         pb_openInMailabl.setIcon(icon)
         background_color = QColor("#40414f")
         pb_openInMailabl.setBackground(QBrush(background_color))

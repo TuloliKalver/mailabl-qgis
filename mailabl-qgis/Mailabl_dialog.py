@@ -61,8 +61,6 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
 # Set plugin_dir as a class variable
 plugin_dir = os.path.dirname(__file__)
 
-
-
 ################################################################################################################
 #initialize
 

@@ -1,16 +1,18 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=relative-beyond-top-level
-# pylint: disable=no-nam
+# pylint: disable=no-name-in-module,import-error
 
 
+# Related Third-Party Imports
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
-#from .config.ui_directories import Path_loader_simple,PathLoader, plugin_dir_path, UI_multiline_Statusbar
-
 from qgis.core import QgsMapLayer, QgsProject
 
-from PyQt5.QtWidgets import QMessageBox
+# Local Application or Library Imports
 from .settings import Filepaths, SettingsDataSaveAndLoad
 from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
+
+
 
 pealkiri = Headings()
 sisu = HoiatusTexts()

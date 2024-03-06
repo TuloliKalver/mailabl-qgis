@@ -10,6 +10,7 @@ from ...queries.python.DataLoading_classes import GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
 from ..tableViewAdjust import Colors, ColumnResizer
 from ...config.settings import Filepaths
+from ...config.settings_copy import Filepaths, FilesByNames
 from ..ButtonDelegates import ContractButtonDelegate, FileDelegate, SelectContractsOnMapElementsDelegate
 from ...config.iconHandler import iconHandler
 from ...config.mylabl_API.modules import MODULE_CONTRACTS
