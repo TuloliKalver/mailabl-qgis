@@ -8,16 +8,7 @@ from ...processes.infomessages.messages import Headings
  
 pealkiri = Headings()
 
-# Declare catalogs and links
-# Main directory
-#plugin_dir = os.path.dirname(__file__)
-
-# Status bar widget folder
-#widgets_folder = "widgets"
-#widgets_path = os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui")
-
-# Layer names and other variables
-import_subgroup_layerName = 'Imporditavad kinnistud'
+import_subgroup_layer_name = 'Imporditavad kinnistud'
 
 
 class SpatialIndexCreator:
@@ -41,10 +32,10 @@ class SHPLayerLoader:
             selected_files = file_dialog.selectedFiles()
             if selected_files:
                 root = QgsProject.instance().layerTreeRoot()
-                imporditavad_group = root.findGroup(import_subgroup_layerName)
+                imporditavad_group = root.findGroup(import_subgroup_layer_name)
 
                 if imporditavad_group is None:
-                    imporditavad_group = QgsLayerTreeGroup(import_subgroup_layerName)
+                    imporditavad_group = QgsLayerTreeGroup(import_subgroup_layer_name)
                     root.insertChildNode(-1, imporditavad_group)
                 else:
                     existing_layers = imporditavad_group.findLayers()
@@ -88,11 +79,7 @@ class SHPLayerLoader:
     def create_progress_widget(name, label_1):
         file = FilesByNames()
         file_path = Filepaths.get_widget(file.statusbar_widget)
-        
-        widgets_path = Filepaths.load_ui_file(file_path)
-        
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
+        progress_widget = Filepaths.load_ui_file(file_path)
         progress_widget.label.setText(name)
         progress_widget.label_2.setText(label_1)
         return progress_widget
