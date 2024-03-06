@@ -1,17 +1,17 @@
-from .settings import Filepaths
+from .settings import Filepaths, IconsByName
 
 icon_paths = Filepaths()
 
-open_folder = ":/oauth2method/svg/fileopen.svg"
-digidoc_file = icon_paths.digi_doc_icon()
-universal_file = ":/qt-project.org/styles/commonstyle/images/filelink-128.png"
-pdf_file = ":/images/themes/default/mActionSaveAsPDF.svg"
+open_folder = ":/oauth2method/svg/fileopen.svg"   #ava kaust ikoon - uus vaja
+digidoc_file = Filepaths.get_icon(IconsByName().icon_digi_doc_name)
+universal_file = ":/qt-project.org/styles/commonstyle/images/filelink-128.png"   #Üldine fail millelle sisu hetkel ei anna
+pdf_file = ":/images/themes/default/mActionSaveAsPDF.svg"    #pdf failid 
 
 
 
 class iconHandler:
     @staticmethod
-    def setIcon(dokLink):
+    def set_document_icon_based_on_item(dokLink):
 
         # Check for a file extension (e.g., '.pdf', '.txt', etc.)
         if '.' in dokLink:
@@ -25,9 +25,7 @@ class iconHandler:
             else:
                 # Handle other file extensions or set a default file icon
                 #print("file handler other file types")
-                #folder_icon_path = universal_file
-                test_icon = icon_paths.icon_show_on_map()
-                folder_icon_path = test_icon
+                folder_icon_path = universal_file
         else:
             #print("file handler else type")
             folder_icon_path = open_folder

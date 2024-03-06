@@ -3,31 +3,22 @@ import json
 from PyQt5.uic import loadUi
 from qgis.core import QgsSettings
 
-
 PLUGIN_DIR = os.path.dirname(__file__)
 PLUGIN_DIR_MAIN = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
-#Folders
+# Constants
 CONF_FOLDER = "config"
 CONF_WIDGETS_FOLDER = "confWidgets"
-QGIS_STYLES_FOLDER = "QGIS_styles" 
+QGIS_STYLES_FOLDER = "QGIS_styles"
 ICONS_FOLDER = "icons/"
-WIDGETS_FOLDER = "widgets"  
+WIDGETS_FOLDER = "widgets"
+CONFIG_FILE = "config.json"
 
-
-#Paths
-main_path = '/Mailabl/Setting/'
-setup_label_cadastral_current = '/Mailabl/Setting/labels/cadastralCurrent'
-setup_label_cadastral_toBeAdded = '/Mailabl/Setting/labels/cadastralToBeAdded'
-setup_label_cadastrals_for_importing ='/Mailabl/Settings/lables/SHP_Layer'
-Mailabl_Projects_layer_address = 'Mailabl/labels/Mailabl_Projects_layer'
-
-
-
-with open(f'{PLUGIN_DIR}/config.json', "r") as json_content:
+# Load configuration
+with open(os.path.join(PLUGIN_DIR, CONFIG_FILE), "r") as json_content:
     config = json.load(json_content)
 
-class version:
+class Version:
     @staticmethod
     def get_plugin_version(metadata_file):
         with open(metadata_file, 'r') as f:
@@ -35,7 +26,7 @@ class version:
                 if line.strip().startswith("version="):
                     return line.strip().split('=')[1]
 
-class flags:
+class Flags:
     active_properties_layer_flag = False
     Flag_settings_button = True
     Flag_SliderButton_LoadData = False
@@ -43,38 +34,36 @@ class flags:
     Flag_Running_Process = False
 
 class OpenLink:
-    main = config['weblink']
-    privacy = config['privacy']
-    terms = config['terms']
-    
-    def web_link_single_projects():
-        link = f'{OpenLink.main}/projects/'
-        return link
+    main = config.get('weblink', '')
+    privacy = config.get('privacy', '')
+    terms = config.get('terms', '')
 
+    @staticmethod
+    def web_link_single_projects():
+        return f'{OpenLink.main}/projects/'
+
+    @staticmethod
     def weblink_single_contract():
-        link = f'{OpenLink.main}/contracts/'
-        return link
-    
-    def weblink_Privacy():
-        link = f'{OpenLink.privacy}'
-        return link
-    
-    def weblink_terms_of_use ():
-        link = f'{OpenLink.terms}'
-        return link
-    
+        return f'{OpenLink.main}/contracts/'
+
+    @staticmethod
+    def weblink_privacy():
+        return OpenLink.privacy
+
+    @staticmethod
+    def weblink_terms_of_use():
+        return OpenLink.terms
 
 class GraphQLSettings:
+    @staticmethod
     def graphql_endpoint():
-        return config['graphql_endpoint']
+        return config.get('graphql_endpoint', '')
 
 class IconsByName:
     def __init__(self):
-        self.icon_digi_doc_name = "Digidoc_512.png"
-        self.icon_mailabl_name= "icon.png"
-        self.icon_show_on_map = "iconoir--map-pin-plus.svg"
         self.Mailabl_icon_name = "icon.png"
-    
+        self.icon_digi_doc_name = "Digidoc_512.png"
+        self.icon_show_on_map = "iconoir--map-pin-plus.svg"
 
 class FilesByNames:
     def __init__(self):
@@ -84,80 +73,28 @@ class FilesByNames:
         self.statusbar_widget = "WStatusBar.ui"
         self.layer_setup_ui = "LayerSetup.ui"
         self.projects_setup_ui = "ProjectSetup.ui"
-        
-        
+
 class Filepaths:
-    def __init__(self):
-        pass
-    
     @staticmethod
-    def Mailabl_icon():
-        icon = IconsByName()
-        icon_filename = icon.Mailabl_icon_name
-        icon_path = os.path.join(PLUGIN_DIR_MAIN, icon_filename)
-        return icon_path
-    
+    def get_icon(icon_name):
+        return os.path.join(PLUGIN_DIR_MAIN, ICONS_FOLDER, icon_name)
+
     @staticmethod
-    def digi_doc_icon():
-        icon = IconsByName()
-        icon_filename = icon.icon_digi_doc_name
-        icon_path = os.path.join(PLUGIN_DIR_MAIN, ICONS_FOLDER, icon_filename)
-        return icon_path
-    
+    def get_style(style_name):
+        return os.path.join(PLUGIN_DIR_MAIN, QGIS_STYLES_FOLDER, style_name)
+
     @staticmethod
-    def icon_show_on_map():
-        icon = IconsByName()
-        icon_filename = icon.icon_show_on_map
-        icon_path = os.path.join(PLUGIN_DIR_MAIN, ICONS_FOLDER, icon_filename)
-        return icon_path
-
-    #style setup folder
-    def File_maaAmet_style(self):
-        icon = FilesByNames()
-        icon_filename = icon.MaaAmet_import
-        style_path = os.path.join(PLUGIN_DIR_MAIN, QGIS_STYLES_FOLDER, icon_filename)
-        return style_path
-
-    def File_MaaAmet_temporary_style(self):
-        icon = FilesByNames()
-        icon_filename = icon.MaaAmet_temp
-        style_path = os.path.join(PLUGIN_DIR_MAIN, QGIS_STYLES_FOLDER, icon_filename)
-        return style_path
-
-
-    def Status_bar_loader_properties(self):
-    #Status bar widget folder
-        file = FilesByNames()
-        filename = file.statusbar_widget
-        widgets_path = os.path.join(PLUGIN_DIR, WIDGETS_FOLDER,  filename)
-        return widgets_path
-
-#Open Dialog to settup layers
-    def Config_LayerSettings_Widget(self):
-        file = FilesByNames()
-        filename = file.layer_setup_ui
-        widgets_path = os.path.join(PLUGIN_DIR, WIDGETS_FOLDER,  filename)
-        return widgets_path
+    def get_conf_widget(widget_name):
+        return os.path.join(PLUGIN_DIR, CONF_FOLDER, widget_name)
     
-    
-    def Config_ProjectSettings_Widget(self):
-        file = FilesByNames()
-        filename = file.projects_setup_ui
-        widgets_path = os.path.join(PLUGIN_DIR, WIDGETS_FOLDER,  filename)
-        return widgets_path
+    @classmethod
+    def get_widget(self, widget_name):
+        return os.path.join(PLUGIN_DIR_MAIN, WIDGETS_FOLDER, widget_name)
 
-    
-    
-    
-    # Load the custom progress widget from the .ui file
-    def load_layer_settings_widget(self):
-        #print("started")
-        ui_file_path = self.Config_LayerSettings_Widget()
-        #print(ui_file_path)
-        progress_widget = loadUi(ui_file_path)
-        #print(progress_widget)
-        progress_widget.show()
-        #print("ended")
+    @staticmethod
+    def load_ui_file(ui_file_path):
+        return loadUi(ui_file_path)
+
 
 #Handles storing and displaying data in labels on other places
 class DataSettings:
@@ -192,7 +129,7 @@ class SettingsDataSaveAndLoad:
     
     def SHP_import_layer (self):
         settings_SHP_layer_name = 'labels/SHP_import'
-        SHP_CADASTRAL = f"{main_path}{settings_SHP_layer_name}"
+        SHP_CADASTRAL = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{settings_SHP_layer_name}"
         #print(f"SHP_layer {SHP_CADASTRAL}")
         return SHP_CADASTRAL
 

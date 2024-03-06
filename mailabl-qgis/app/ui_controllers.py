@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QEasingCurve, QPropertyAnimation
 from PyQt5.QtWidgets import QPushButton, QFrame, QMessageBox
 from qgis.core import (QgsProject, QgsVectorLayer)
-from ..config.settings import flags
+from ..config.settings import Flags
 from PyQt5.QtCore import QTimer
 from ..processes.infomessages.messages import Headings
  
@@ -249,7 +249,7 @@ class secondLevelButtonsHandler:
         main_widget = self.pbSettings_SliderFrame
         widgets_height = widget.height()
         aditional_height = WidgetAnimator.buttons_sliderFrame_height(self,push_button, button_padding)
-        if flags.Flag_SliderButton_LoadData:
+        if Flags.Flag_SliderButton_LoadData:
             new_height = 0
             widget.setMaximumHeight(0)
             easing_curve = QEasingCurve.InBounce
@@ -270,7 +270,7 @@ class secondLevelButtonsHandler:
         self.animation_2.setEasingCurve(easing_curve)
         self.animation_2.start()
         QTimer.singleShot(duration_in_milliseconds+250, lambda: WidgetAnimator.animationFinished(animation=self.animation_2))
-        flags.Flag_SliderButton_LoadData = not flags.Flag_SliderButton_LoadData
+        Flags.Flag_SliderButton_LoadData = not Flags.Flag_SliderButton_LoadData
 
     @staticmethod
     def toggle_Frame_height_Cadaster_functions(self):
@@ -280,7 +280,7 @@ class secondLevelButtonsHandler:
         widgets_height = widget.height()
         aditional_height = WidgetAnimator.buttons_sliderFrame_height(self,push_button, button_padding)
 
-        if flags.Flag_SliderButton_LoadData:
+        if Flags.Flag_SliderButton_LoadData:
             new_height = 0
             widget.setMaximumHeight(0)
             easing_curve = QEasingCurve.InBounce
@@ -299,7 +299,7 @@ class secondLevelButtonsHandler:
         self.animation_2.setEasingCurve(easing_curve)
         self.animation_2.start()
         QTimer.singleShot(duration_in_milliseconds+250, lambda: WidgetAnimator.animationFinished(animation=self.animation_2))
-        flags.Flag_SliderButton_LoadData = not flags.Flag_SliderButton_LoadData
+        Flags.Flag_SliderButton_LoadData = not Flags.Flag_SliderButton_LoadData
 
 
 class FrameHandler:

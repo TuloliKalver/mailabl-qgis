@@ -7,8 +7,7 @@ from PyQt5.QtGui import QColor, QBrush, QIcon, QStandardItem
 from ..queries.python.projects_pandas import TableHeaders
 from ..Functions.tableViewAdjust import Colors
 from ..config.iconHandler import iconHandler
-from ..config.settings import Filepaths
-from ..config.settings_copy import Filepaths, IconsByName
+from ..config.settings import Filepaths, IconsByName
 table_headers = TableHeaders()
 
 class ModelHandler:
@@ -66,6 +65,8 @@ class ModelHandler:
                     date_color = "#d24848"
                     rgb_color_date = Colors.hex_to_rgb(date_color)
                     date_item.setForeground(QColor(*rgb_color_date))
+                    
+        return date_column_index
         
                     
                     
@@ -92,10 +93,10 @@ class ModelHandler:
                 pb_ShowCadasters.setForeground(QBrush(text_color1))
                 pb_ShowCadasters.setSelectable(True)
                 pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                # TODO: Solve icon centering!
-                icon_path = ":/images/themes/default/mActionAdd3DMap.svg"
+                icon_path = Filepaths.get_icon(IconsByName().icon_show_on_map)
                 icon = QIcon(icon_path)
                 pb_ShowCadasters.setIcon(icon)
+                pb_ShowCadasters.setToolTip("Näita kaardil")  # Set tooltip text
                 p_model.setItem(row_index, cadastralButton_Column_index, pb_ShowCadasters)
         
         return cadastral_column_index, cadastralButton_Column_index
@@ -121,8 +122,7 @@ class ModelHandler:
                 pb_dokLink = QStandardItem()
                 pb_dokLink.setData("Ava", Qt.DisplayRole)
                 pb_dokLink.setTextAlignment(Qt.AlignCenter)
-                # TODO: Solve icon centering!
-                folder_icon_path = iconHandler.setIcon(dokLink)
+                folder_icon_path = iconHandler.set_document_icon_based_on_item(dokLink)
                 icon = QIcon(folder_icon_path)
                 pb_dokLink.setIcon(icon)
                 background_color2 = QColor("#40414f")
@@ -133,6 +133,7 @@ class ModelHandler:
                 # Make the cell selectable and give it a raised effect
                 pb_dokLink.setSelectable(True)
                 pb_dokLink.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+                pb_dokLink.setToolTip("Ava dokument")  # Set tooltip text
                 # Add a button to each row in the 'Button' column (column dokButton_column_index)
                 p_model.setItem(row_index, dokButton_column_index, pb_dokLink)
                 
@@ -155,7 +156,7 @@ class ModelHandler:
         pb_openInMailabl.setTextAlignment(Qt.AlignCenter)
         # Get the path of the Mailabl icon
         icon_path = Filepaths.get_icon(IconsByName().Mailabl_icon_name)
-        print(icon_path)
+        #print(icon_path)
         icon = QIcon(icon_path)
         pb_openInMailabl.setIcon(icon)
         background_color = QColor("#40414f")
@@ -166,6 +167,7 @@ class ModelHandler:
         # Make the cell selectable and give it a raised effect
         pb_openInMailabl.setSelectable(True)
         pb_openInMailabl.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
+        pb_openInMailabl.setToolTip("Ava Mailablis detailsema info saamiseks")  # Set tooltip text
         # Add the mailabl link button to the model
         p_model.setItem(row_index, webButton_Column_index, pb_openInMailabl)
 

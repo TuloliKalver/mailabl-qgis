@@ -24,9 +24,9 @@ from qgis.utils import iface
 from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
 from .app.web import loadWebpage
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
-from .config.settings import SettingsDataSaveAndLoad, version
+from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers
-from .config.settings import connect_settings_to_layer, flags, settingPageElements
+from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBox_functions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
@@ -962,7 +962,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.swWorkSpace.setCurrentIndex(5)
         FrameHandler.hide_multiple_frames(self, frames )
         path = PathLoaderSimple.metadata()
-        version_nr = version.get_plugin_version(path)
+        version_nr = Version.get_plugin_version(path)
         lblVersion = self.lblLoadVersion
         if version_nr == 'dev':
             lblVersion.setStyleSheet("color: red;")
@@ -990,7 +990,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
             self.resize(1150, 700)
             path = PathLoaderSimple.metadata()
-            version_nr = version.get_plugin_version(path)
+            version_nr = Version.get_plugin_version(path)
             lblVersion = self.lbVersionNumber
             if version_nr == 'dev':
                 lblVersion.setStyleSheet("color: red;")
@@ -1068,9 +1068,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             clear_table = widget.pbClear_list
             table_view = widget.tvProperties_AddTo_Projects
             
-            flag = flags.active_properties_layer_flag 
+            flag = Flags.active_properties_layer_flag 
             flag = True        
-            flags.active_properties_layer_flag = flag
+            Flags.active_properties_layer_flag = flag
         
             
             PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
@@ -1115,9 +1115,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             clear_table = widget.pbClear_list
             table_view = widget.tvProperties_AddTo_Contracts
             
-            flag = flags.active_properties_layer_flag 
+            flag = Flags.active_properties_layer_flag 
             flag = True        
-            flags.active_properties_layer_flag = flag
+            Flags.active_properties_layer_flag = flag
         
             
             PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
@@ -1338,7 +1338,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             lblLayerProjects_Properties = self.lblLayerProjects_Properties
             SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)
 
-            if flags.Flag_settings_button:
+            if Flags.Flag_settings_button:
                 print("toggle if")
                 WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
                 #widget.setMaximumHeight(16777215)
@@ -1348,8 +1348,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self)
                 secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self)
                 #widget.setMaximumHeight(0)
-            flags.Flag_settings_button = not flags.Flag_settings_button
-            print(f"Flags: {flags.Flag_settings_button}")
+            Flags.Flag_settings_button = not Flags.Flag_settings_button
+            print(f"Flags: {Flags.Flag_settings_button}")
 
 
 ################################################################################################################

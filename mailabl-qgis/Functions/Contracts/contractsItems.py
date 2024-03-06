@@ -5,12 +5,12 @@
 import pandas as pd
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel, QColor, QBrush, QIcon
-from ...queries.python.Statuses.statusManager import Statuses, STATE_OPEN, STATE_CLOSED
+from ...queries.python.Statuses.statusManager import Statuses, STATE_OPEN
 from ...queries.python.DataLoading_classes import GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
 from ..tableViewAdjust import Colors, ColumnResizer
-from ...config.settings import Filepaths
-from ...config.settings_copy import Filepaths, FilesByNames
+#from ...config.settings import Filepaths
+from ...config.settings import Filepaths, IconsByName
 from ..ButtonDelegates import ContractButtonDelegate, FileDelegate, SelectContractsOnMapElementsDelegate
 from ...config.iconHandler import iconHandler
 from ...config.mylabl_API.modules import MODULE_CONTRACTS
@@ -87,10 +87,10 @@ class ContractsMain:
 
             if dokAddress_item and dokAddress_item.data(Qt.DisplayRole):
                 dokLink = dokAddress_item.data(Qt.DisplayRole)
-                print(f"dok Link {dokLink}")
+                #print(f"dok Link {dokLink}")
                 if dokLink:
                     pb_dokLink = QStandardItem()
-                    icon_path = iconHandler.setIcon(dokLink)
+                    icon_path = iconHandler.set_document_icon_based_on_item(dokLink)
                     icon = QIcon(icon_path)
                     pb_dokLink.setIcon(icon)
                     background_color2 = QColor("#40414f")  
@@ -105,8 +105,8 @@ class ContractsMain:
                     contracts_model.setItem(row_index, dokButton_column_index, pb_dokLink)
             
             pb_openInMailabl = QStandardItem()
-            Mailabl_icon_path = Filepaths.Mailabl_icon()
-            icon = QIcon(Mailabl_icon_path)
+            icon_path = Filepaths.get_icon(IconsByName().Mailabl_icon_name)
+            icon = QIcon(icon_path)
             pb_openInMailabl.setIcon(icon)
             pb_openInMailabl.setSelectable(True)
             pb_openInMailabl.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
@@ -124,8 +124,7 @@ class ContractsMain:
                     pb_ShowCadasters.setForeground(QBrush(text_color1))
                     pb_ShowCadasters.setSelectable(True)
                     pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                #TODO solve icon centering!
-                    icon_path = ":/images/themes/default/mActionAdd3DMap.svg"
+                    icon_path = Filepaths.get_icon(IconsByName().icon_show_on_map)
                     icon = QIcon(icon_path)
                     pb_ShowCadasters.setIcon(icon)
                     contracts_model.setItem(row_index, cadastralUnit_Button_index, pb_ShowCadasters)
@@ -136,7 +135,7 @@ class ContractsMain:
             
                 # Set the custom delegate for the file column
         file_delegate = FileDelegate(dokAddress_column_index, table)
-        print(f"dokAddress_column_index: {dokAddress_column_index}")
+        #print(f"dokAddress_column_index: {dokAddress_column_index}")
         table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
 
 

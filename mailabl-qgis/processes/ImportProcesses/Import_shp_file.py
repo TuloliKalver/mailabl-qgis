@@ -1,23 +1,20 @@
 import os
-from qgis.core import QgsVectorLayer, QgsFeature, QgsSpatialIndex, QgsLayerTreeGroup, QgsGeometry, QgsProject
+from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
-from PyQt5.uic import loadUi
-from ...config.settings import Filepaths, SettingsDataSaveAndLoad
+from qgis.core import QgsVectorLayer, QgsFeature, QgsSpatialIndex, QgsLayerTreeGroup, QgsGeometry, QgsProject
+from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...processes.infomessages.messages import Headings
  
 pealkiri = Headings()
 
 # Declare catalogs and links
 # Main directory
-plugin_dir = os.path.dirname(__file__)
-
-# Style setup folder
-style_path = Filepaths().File_maaAmet_style()
+#plugin_dir = os.path.dirname(__file__)
 
 # Status bar widget folder
-widgets_folder = "widgets"
-widgets_path = os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui")
+#widgets_folder = "widgets"
+#widgets_path = os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui")
 
 # Layer names and other variables
 import_subgroup_layerName = 'Imporditavad kinnistud'
@@ -89,6 +86,11 @@ class SHPLayerLoader:
 
     @staticmethod
     def create_progress_widget(name, label_1):
+        file = FilesByNames()
+        file_path = Filepaths.get_widget(file.statusbar_widget)
+        
+        widgets_path = Filepaths.load_ui_file(file_path)
+        
         progress_widget = loadUi(widgets_path)
         progress_bar = progress_widget.testBar
         progress_widget.label.setText(name)
@@ -112,6 +114,7 @@ class ShapefileImporter:
         total_rows = shapefile_layer.featureCount()
 
         progress_widget = SHPLayerLoader.create_progress_widget("Kihi importimine", "Kihi impordi edenemine")
+        
         progress_bar = progress_widget.testBar
         progress_bar.setMaximum(total_rows)
         progress_widget.show()
@@ -143,8 +146,7 @@ class ShapefileImporter:
         virtual_layer.updateExtents()
         virtual_layer.dataProvider().createSpatialIndex()
         progress_widget.hide()
-
-        add_style = os.path.join(plugin_dir, style_path)
+        add_style = Filepaths.get_style(FilesByNames().MaaAmet_import)
         virtual_layer.loadNamedStyle(add_style)
         if virtual_layer.isValid():
             QgsProject.instance().addMapLayer(virtual_layer, False)
@@ -158,6 +160,7 @@ class ShapefileImporter:
 class UtilityFunctions:
     @staticmethod
     def create_progress_widget():
+        widgets_path = Filepaths.load_ui_file(FilesByNames().statusbar_widget)
         progress_widget = loadUi(widgets_path)
         progress_bar = progress_widget.testBar
         progress_widget.label.setText("Indekseerin laetud kihti!")

@@ -4,7 +4,7 @@ from qgis.utils import iface
 from PyQt5.QtCore import QCoreApplication
 from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
 from PyQt5.QtWidgets import  QMessageBox, QWidget
-from ....config.settings import  connect_settings_to_layer, flags
+from ....config.settings import  connect_settings_to_layer, Flags
 from ..property_data import PropertiesGeneralQueries
 from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from ..query_tools import requestBuilder
@@ -38,7 +38,7 @@ class ContractMapSelectors:
         iface.actionSelect().trigger()
         #print("start selecting stuff")
         #Hide the main window
-        flag = flags.active_properties_layer_flag
+        flag = Flags.active_properties_layer_flag
         print(f"Flag status befor if statement {flag}")
         
         if active_layer and active_layer.selectedFeatureCount() > 0:
@@ -64,10 +64,10 @@ class ContractMapSelectors:
     def on_selection_changed(widget, table_view):
         active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
 #        print("on_selection_changed")
-        if flags.active_properties_layer_flag:
+        if Flags.active_properties_layer_flag:
             # If the flag is true, execute the function
 #            print("Flag is true in selection change")
-#            print(f"And active_properties_layer flag is {flags.active_properties_layer_flag}")
+#            print(f"And active_properties_layer flag is {Flags.active_properties_layer_flag}")
             active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
 
             if active_layer and active_layer.selectedFeatureCount() > 0:
@@ -94,9 +94,9 @@ class ContractProperties:
         #import lamda here
         active_layer.selectionChanged.disconnect(on_selection_changed_lambda)
 
-        flag = flags.active_properties_layer_flag 
+        flag = Flags.active_properties_layer_flag 
         flag = False            
-        flags.active_properties_layer_flag = flag
+        Flags.active_properties_layer_flag = flag
 
     @staticmethod    
     def update_contract_properties(self, contract_id, widget, project_name):
@@ -175,8 +175,8 @@ class ContractProperties:
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
         active_layer.selectionChanged.disconnect(on_selection_changed_lambda)
             
-        flag = flags.active_properties_layer_flag 
+        flag = Flags.active_properties_layer_flag 
         flag = False        
-        flags.active_properties_layer_flag = flag
+        Flags.active_properties_layer_flag = flag
 
 
