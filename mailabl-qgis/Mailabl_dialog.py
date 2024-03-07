@@ -28,7 +28,7 @@ from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.ui_directories import PathLoaderSimple
-from .app.checkable_comboboxes import ComboBox_functions, ComboBoxMapTools
+from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
@@ -68,7 +68,7 @@ pealkiri = Headings()
 sisu = HoiatusTexts()
 edu = EdukuseTexts()
 
-comboboxes = ComboBox_functions()
+comboboxes = ComboBoxFunctions()
 process = RemoveProcess()
 color = color_handler()
 list_functions = listView_functions()
@@ -253,7 +253,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbHome.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Home(self))
 
         
-    # workspace page ID 7 = Projects
+        # workspace page ID 7 = Projects
         self.pbProjects.clicked.connect(lambda: WorkSpaceHandler.swWorkspace_Projects(self))
         self.pbRefresh_tblMailabl_projects.clicked.connect(self.update_tblMailabl_projects)
         
@@ -266,7 +266,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
         self.btnUserPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_terms_of_use))
         self.btnPrivacyPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_privacy_policy))
-    # Katastri andmete kontrollimine 
+        # Avab maa-ameti repositooriumi kaardiandmete alla laadimiseks
+        self.pbAvaMaaAmet.clicked.connect(lambda: loadWebpage.open_maa_amet_webpage(self))
+
+        # Katastri andmete kontrollimine 
         self.pbUpdateData.clicked.connect(lambda: WorkSpaceHandler.show_help_update(self))
         #self.pbRefresh.clicked.connect(self.check_for_updates)
         
@@ -274,8 +277,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbLayerSettings.clicked.connect(self.layer_setup)
         self.pbSettings_Setup_Projects.clicked.connect(lambda: Setup_ProjectLayers.load_project_settings_widget(self))
         
-    # Avab maa-ameti repositooriumi kaardiandmete alla laadimiseks
-        self.pbAvaMaaAmet.clicked.connect(lambda: loadWebpage.Open_MaaAmet_webpage(self))
+
         
         
         

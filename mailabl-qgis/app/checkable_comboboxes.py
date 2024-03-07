@@ -1,11 +1,10 @@
 from PyQt5.QtCore import Qt
-from qgis.core import (QgsFeature,
-                       QgsGeometry, QgsLayerTreeGroup,
-                       QgsMapLayer, QgsProject, QgsVectorLayer)
 from PyQt5.QtWidgets import QComboBox
+from qgis.core import QgsProject
 
 
-class ComboBox_functions():
+
+class ComboBoxFunctions():
     def __init__(self):
         #Selectable comboboxes on Delete items page
         self.combo_box_county = 'mCB_County'
@@ -13,7 +12,7 @@ class ComboBox_functions():
         self.combo_box_City = 'mCB_City'        
 
     def insert_values_to_combobox(self,combo_box, data):
-        print(f"Combobox to insert value {combo_box}")
+        #print(f"Combobox to insert value {combo_box}")
         combo_box.clear()
         combo_box.addItems(data)
 
@@ -34,7 +33,7 @@ class ComboBox_functions():
 
         unique_county_list = list(set(data))  
         
-        print(f"unique counties {unique_county_list}")
+        #print(f"unique counties {unique_county_list}")
         return list(unique_county_list)  # Convert the set back to a list and return it
 
     
@@ -55,13 +54,11 @@ class ComboBox_functions():
 
 
 class ComboBoxMapTools:
-            
-    def create_item_list(input_layer, field):
+    @staticmethod
+    def create_item_list(input_layer_name, field):
         print("item list from selectable_combobox.py")
-        input_layer = QgsProject.instance().mapLayersByName(input_layer)
+        input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
 
-        # Get the first layer from the list
-        input_layer = input_layer[0]
     # Hangi atribuutide unikaalsed väärtused tulbast "MK_NIMI"
         unique_values = input_layer.uniqueValues(input_layer.fields().lookupField(field))
         sorted_values = sorted(unique_values)
@@ -71,7 +68,6 @@ class ComboBoxMapTools:
     def create_item_list_with_where(self, combobox, input_layer_name, where_field, field):
         # Get the input layer by name from the QgsProject
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        #print(f"input layer name {input_layer}")
         # Get the selected value from the combobox
         #print(combobox)
         restriction = combobox.currentText()

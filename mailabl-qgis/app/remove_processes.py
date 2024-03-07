@@ -1,9 +1,9 @@
-from .checkable_comboboxes import ComboBox_functions, ComboBoxMapTools
+from .checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .ui_controllers import WidgetAnimator, FrameHandler
 
 
 
-comboboxes =ComboBox_functions
+comboboxes =ComboBoxFunctions
 tools_shp = ComboBoxMapTools
 
 
