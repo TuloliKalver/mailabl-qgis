@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1137</width>
-    <height>829</height>
+    <height>1146</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1142,19 +1142,19 @@ QComboBox::on{
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_10">
       <property name="spacing">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>1</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="centerMenuSubContainer" native="true">
@@ -7006,7 +7006,7 @@ color: rgb(31, 35, 42);</string>
         </layout>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="QFrame" name="UC_Main_Frame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -7060,6 +7060,9 @@ QPushButton:hover{
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_25">
+         <property name="spacing">
+          <number>6</number>
+         </property>
          <item>
           <widget class="QFrame" name="UC_Headig_frame">
            <property name="frameShape">
@@ -7237,11 +7240,18 @@ padding-bottom: 7px </string>
            </layout>
           </widget>
          </item>
+         <item>
+          <widget class="QLabel" name="label_33">
+           <property name="text">
+            <string>© 2024 Mailabl. Kõik õigused kaitstud</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="Agreements">
+       <widget class="QFrame" name="frAgreements">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -7255,7 +7265,11 @@ padding-bottom: 7px </string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">#btnPrivacyPolicy, #btnUserPolicy{
+    background-color: transparent;
+    border: none; /* Remove border if needed */
+    padding: 0; /* Remove padding if needed */
+}</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -7287,14 +7301,14 @@ padding-bottom: 7px </string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lblUserPolicy">
+          <widget class="QPushButton" name="btnUserPolicy">
            <property name="text">
             <string>Kasutustingimused</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lblPrivacyPolicy">
+          <widget class="QPushButton" name="btnPrivacyPolicy">
            <property name="text">
             <string>Privaatsuspoliitika</string>
            </property>

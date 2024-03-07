@@ -22,7 +22,7 @@ from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
 from qgis.utils import iface
 from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
-from .app.web import loadWebpage
+from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers
@@ -166,9 +166,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     
         self.set_layer_settings_labels()
         
-        
-        startup_frames = [self.leftMenuContainer, self.rightMenuContainer,  self.sw_HM,
-                        self.lblUserPolicy, self.lblPrivacyPolicy, self.swWorkSpace]
+        startup_frames = [self.leftMenuContainer, self.rightMenuContainer, self.frAgreements,self.swWorkSpace]
         
     #setup login dialog and hide frames to block functionality!
         self.on_load(startup_frames)
@@ -265,8 +263,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbContracts_Connect_properties.clicked.connect(self.connect_properties_with_contracts)
 
         # Logo ja kodukas
-        self.pbMailabl.clicked.connect(lambda: loadWebpage.open_Mailabl_homepage())
-        
+        self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
+        self.btnUserPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_terms_of_use))
+        self.btnPrivacyPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_privacy_policy))
     # Katastri andmete kontrollimine 
         self.pbUpdateData.clicked.connect(lambda: WorkSpaceHandler.show_help_update(self))
         #self.pbRefresh.clicked.connect(self.check_for_updates)
@@ -979,15 +978,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         clear_UC_data()
 
     def save_user_data(self, frames):
-        save_results = save_user_name(self)
+        save_user_name(self)
         access_token_results = get_access_token(self)
         #print(access_token_results)
         if access_token_results == "success":
-            
             self.UC_Main_Frame.setVisible(False)
-
             FrameHandler.show_multiple_frames(self, frames)
-
             self.resize(1150, 700)
             path = PathLoaderSimple.metadata()
             version_nr = Version.get_plugin_version(path)

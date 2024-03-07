@@ -26,7 +26,7 @@ class Ui_MailablDialogBase(object):
     def setupUi(self, MailablDialogBase):
         if not MailablDialogBase.objectName():
             MailablDialogBase.setObjectName(u"MailablDialogBase")
-        MailablDialogBase.resize(1137, 829)
+        MailablDialogBase.resize(1137, 1146)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -591,9 +591,9 @@ class Ui_MailablDialogBase(object):
         self.centerMenuContainer.setObjectName(u"centerMenuContainer")
         self.centerMenuContainer.setStyleSheet(u"")
         self.verticalLayout_10 = QVBoxLayout(self.centerMenuContainer)
-        self.verticalLayout_10.setSpacing(1)
+        self.verticalLayout_10.setSpacing(0)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.verticalLayout_10.setContentsMargins(1, 1, 1, 1)
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.centerMenuSubContainer = QWidget(self.centerMenuContainer)
         self.centerMenuSubContainer.setObjectName(u"centerMenuSubContainer")
         self.centerMenuSubContainer.setStyleSheet(u"")
@@ -3329,6 +3329,7 @@ class Ui_MailablDialogBase(object):
         self.UC_Main_Frame.setFrameShape(QFrame.StyledPanel)
         self.UC_Main_Frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_25 = QVBoxLayout(self.UC_Main_Frame)
+        self.verticalLayout_25.setSpacing(6)
         self.verticalLayout_25.setObjectName(u"verticalLayout_25")
         self.UC_Headig_frame = QFrame(self.UC_Main_Frame)
         self.UC_Headig_frame.setObjectName(u"UC_Headig_frame")
@@ -3422,41 +3423,50 @@ class Ui_MailablDialogBase(object):
 
         self.verticalLayout_25.addWidget(self.testing)
 
+        self.label_33 = QLabel(self.UC_Main_Frame)
+        self.label_33.setObjectName(u"label_33")
 
-        self.verticalLayout_10.addWidget(self.UC_Main_Frame)
+        self.verticalLayout_25.addWidget(self.label_33)
 
-        self.Agreements = QFrame(self.centerMenuContainer)
-        self.Agreements.setObjectName(u"Agreements")
-        self.Agreements.setMinimumSize(QSize(0, 0))
-        self.Agreements.setMaximumSize(QSize(16777215, 16777215))
-        self.Agreements.setStyleSheet(u"")
-        self.Agreements.setFrameShape(QFrame.StyledPanel)
-        self.Agreements.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_57 = QHBoxLayout(self.Agreements)
+
+        self.verticalLayout_10.addWidget(self.UC_Main_Frame, 0, Qt.AlignHCenter)
+
+        self.frAgreements = QFrame(self.centerMenuContainer)
+        self.frAgreements.setObjectName(u"frAgreements")
+        self.frAgreements.setMinimumSize(QSize(0, 0))
+        self.frAgreements.setMaximumSize(QSize(16777215, 16777215))
+        self.frAgreements.setStyleSheet(u"#btnPrivacyPolicy, #btnUserPolicy{\n"
+"    background-color: transparent;\n"
+"    border: none; /* Remove border if needed */\n"
+"    padding: 0; /* Remove padding if needed */\n"
+"}")
+        self.frAgreements.setFrameShape(QFrame.StyledPanel)
+        self.frAgreements.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_57 = QHBoxLayout(self.frAgreements)
         self.horizontalLayout_57.setSpacing(10)
         self.horizontalLayout_57.setObjectName(u"horizontalLayout_57")
         self.horizontalLayout_57.setContentsMargins(0, 0, 0, 0)
-        self.lblAllRights = QLabel(self.Agreements)
+        self.lblAllRights = QLabel(self.frAgreements)
         self.lblAllRights.setObjectName(u"lblAllRights")
 
         self.horizontalLayout_57.addWidget(self.lblAllRights)
 
-        self.lblUserPolicy = QLabel(self.Agreements)
-        self.lblUserPolicy.setObjectName(u"lblUserPolicy")
+        self.btnUserPolicy = QPushButton(self.frAgreements)
+        self.btnUserPolicy.setObjectName(u"btnUserPolicy")
 
-        self.horizontalLayout_57.addWidget(self.lblUserPolicy)
+        self.horizontalLayout_57.addWidget(self.btnUserPolicy)
 
-        self.lblPrivacyPolicy = QLabel(self.Agreements)
-        self.lblPrivacyPolicy.setObjectName(u"lblPrivacyPolicy")
+        self.btnPrivacyPolicy = QPushButton(self.frAgreements)
+        self.btnPrivacyPolicy.setObjectName(u"btnPrivacyPolicy")
 
-        self.horizontalLayout_57.addWidget(self.lblPrivacyPolicy)
+        self.horizontalLayout_57.addWidget(self.btnPrivacyPolicy)
 
         self.horizontalSpacer_32 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_57.addItem(self.horizontalSpacer_32)
 
 
-        self.verticalLayout_10.addWidget(self.Agreements)
+        self.verticalLayout_10.addWidget(self.frAgreements)
 
 
         self.horizontalLayout_6.addWidget(self.centerMenuContainer)
@@ -4667,9 +4677,10 @@ class Ui_MailablDialogBase(object):
         self.pbUC_Save.setText(QCoreApplication.translate("MailablDialogBase", u"Logi sisse", None))
         self.pbUC_Cancel.setText(QCoreApplication.translate("MailablDialogBase", u"Katkesta", None))
         self.lblLoadVersion.setText("")
+        self.label_33.setText(QCoreApplication.translate("MailablDialogBase", u"\u00a9 2024 Mailabl. K\u00f5ik \u00f5igused kaitstud", None))
         self.lblAllRights.setText(QCoreApplication.translate("MailablDialogBase", u"\u00a9 2024 Mailabl. K\u00f5ik \u00f5igused kaitstud", None))
-        self.lblUserPolicy.setText(QCoreApplication.translate("MailablDialogBase", u"Kasutustingimused", None))
-        self.lblPrivacyPolicy.setText(QCoreApplication.translate("MailablDialogBase", u"Privaatsuspoliitika", None))
+        self.btnUserPolicy.setText(QCoreApplication.translate("MailablDialogBase", u"Kasutustingimused", None))
+        self.btnPrivacyPolicy.setText(QCoreApplication.translate("MailablDialogBase", u"Privaatsuspoliitika", None))
         self.pbMailabl.setText(QCoreApplication.translate("MailablDialogBase", u" Mailabl.com", None))
         self.helpMenuToggle.setText("")
         self.lb_HM_Avaleht_Pealkiri.setText("")
