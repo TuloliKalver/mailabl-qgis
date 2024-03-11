@@ -104,7 +104,7 @@ class QGIS_items:
 class Setup_ProjectLayers:
     def load_project_settings_widget(self):
         
-        ui_file_path = Filepaths.Config_ProjectSettings_Widget(self)
+        ui_file_path = Filepaths.get_conf_widget(FilesByNames().projects_setup_ui)
         #print(f"path: {ui_file_path}")
         # Load the UI from the specified .ui file
         widget = loadUi(ui_file_path)
