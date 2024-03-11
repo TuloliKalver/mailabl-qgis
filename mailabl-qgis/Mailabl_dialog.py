@@ -30,7 +30,7 @@ from .config.settings import connect_settings_to_layer, Flags, settingPageElemen
 from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
-from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, color_handler, stackedWidgetsSpaces, alter_containers
+from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
 from .Functions.SearchEngines import searchGeneral, searchProjects
@@ -70,7 +70,7 @@ edu = EdukuseTexts()
 
 comboboxes = ComboBoxFunctions()
 process = RemoveProcess()
-color = color_handler()
+color = ColorHandler()
 list_functions = listView_functions()
 table_functions = tableView_functions()
 graph_tools = ComboBoxMapTools()
@@ -180,26 +180,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         object_tableView_Add_Properties_list = self.tblvResults_Confirm
         object_tableView_Add_Street_list = self.tblvResults_streets_Confirm
-
-
-        #Listen to input map selection change and fill table!
-        #input_layer_name = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
-        #self.input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        #self.input_layer.selectionChanged.connect(table_functions.generate_table_from_selected_map_items(view_item=self.tblvResults_Confirm,total=graph_tools.count_selected_items_in_layer()))
-        #self.input_layer.selectionChanged.connect(self.runningactions)
-    
-        # Set the initial icon for the button
-        #self.icon_visible = QIcon(u":/icons/Icons_hele/chevron-up.svg")  # Replace "icon_hide.png" with the desired icon
-        #self.icon_hidden = QIcon(u":/icons/Icons_hele/chevron-down.svg")  # Replace "icon_show.png" with the desired icon
-
-        #self.tblvResults_Confirm.selectionChanged.connect(lambda: self.update_layer_based_on_table(self.tblvResults_Confirm))
-        #if self.tblvResults_Confirm is not None:
-        #    selection_model = self.tblvResults_Confirm.selectionModel()
-        #    if selection_model is not None:
-        #        selection_model.selectionChanged.connect(lambda: self.update_layer_based_on_table(self.tblvResults_Confirm))
-                
-        #Assuming 'tableView' is your QTableView object
-        #self.tblvResults_Confirm.selectionModel().selectionChanged.connect(self.handleSelectionChanged)
 
 
 #Define buttons
@@ -386,6 +366,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #measure text lenght
         length = len(button1.text())
         alter_containers.toggle_right_menu(self, length, buttons, original_texts, new_texts, help_menu, container, container_width)
+ 
+
 
     def handleSidebar_leftButtons(self):
         button1 = self.pbSettings
@@ -473,6 +455,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #Chose a random button to measure text lenght
         length = len(button18.text())
         alter_containers.toggle_left_menu(self, length, buttons, original_texts, new_texts, left_menu, container, container_width)
+
+
 
     def StartImportProcess(self):
         AddProperties.check_for_duplicates_and_add_only_matches(self)
@@ -620,8 +604,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         input_layer.blockSignals(True)
         input_layer.removeSelection()
         input_layer.blockSignals(False)
-        
-        
         self.tabWidget_Propertie_list.show()
         self.tabWidget_Propertie_list.setCurrentIndex(0) 
         #PropertieLayerFunctions.generate_table_from_selected_map_items_simple(self,table_view, layer_name)
@@ -1028,7 +1010,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         label = self.lblSHPNewItems
         SHPLayerLoader.load_shp_layer(label)
         #shp_input = load.load_SHP_inputLayer_name()        
-        color_handler.changeButtonColor(self, self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)                                
+        ColorHandler.changeButtonColor(self, self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)                                
 
     def show_projects_on_map_with_cadastral_connection(self):
         #def show_connected_cadasters(values, layer_type):

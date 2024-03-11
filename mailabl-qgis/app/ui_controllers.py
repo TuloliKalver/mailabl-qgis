@@ -363,7 +363,7 @@ class LayerChecker:
         else:
             QMessageBox.warning(None, heading, text)
 
-class color_handler:
+class ColorHandler:
 
     def changeButtonColor(self, pbCadasters, pbExpand, pbRefresh, pbSyncMailabl, pbAvaMaaameti_veebikas, pbAdd_SHP_To_Project, input_layer_name, Start_update):
         # Check if a virtual layer is present and has features
@@ -504,3 +504,5 @@ class alter_containers():
         self.animation.setEndValue(new_width)
         self.animation.setEasingCurve(easing_curve)  # Set the easing curve here
         self.animation.start()
+        
+

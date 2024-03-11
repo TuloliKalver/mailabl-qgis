@@ -9,7 +9,7 @@ from PyQt5.uic import loadUi
 from qgis.core import QgsMapLayer, QgsProject
 
 # Local Application or Library Imports
-from .settings import Filepaths, SettingsDataSaveAndLoad
+from .settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 
 
@@ -22,7 +22,7 @@ class SetupCadastralLayers:
 
     def load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems):
         # Get the file path for the Layer Settings Widget .ui file
-        ui_file_path = Filepaths.Config_LayerSettings_Widget(self)
+        ui_file_path = Filepaths.get_conf_widget(FilesByNames().layer_setup_ui)
         #print(f"path: {ui_file_path}")
         widget = loadUi(ui_file_path)
         # Show the loaded widget

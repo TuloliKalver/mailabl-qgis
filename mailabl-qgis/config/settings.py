@@ -63,7 +63,7 @@ class IconsByName:
     def __init__(self):
         self.Mailabl_icon_name = "icon.png"
         self.icon_digi_doc_name = "Digidoc_512.png"
-        self.icon_show_on_map = "iconoir--map-pin-plus.svg"
+        self.icon_show_on_map = "game-icons--treasure-map.svg"
 
 class FilesByNames:
     def __init__(self):
@@ -85,7 +85,7 @@ class Filepaths:
 
     @staticmethod
     def get_conf_widget(widget_name):
-        return os.path.join(PLUGIN_DIR, CONF_FOLDER, widget_name)
+        return os.path.join(PLUGIN_DIR, CONF_WIDGETS_FOLDER, widget_name)
     
     @classmethod
     def get_widget(self, widget_name):
