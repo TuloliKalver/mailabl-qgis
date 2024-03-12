@@ -75,7 +75,7 @@ class tableView_functions():
         three_quarter_point = total * 3 // 4  # Calculate the three-quarter point
 
 
-        fields = shp_tools.get_field_names(self, layer)
+        fields = shp_tools.get_field_names(layer)
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(fields)
         view_item.setModel(model)    
@@ -133,7 +133,7 @@ class tableView_functions():
         halfway_point = total // 2
         three_quarter_point = total * 3 // 4
 
-        fields = shp_tools.get_field_names(self, layer_name)
+        fields = shp_tools.get_field_names(layer_name)
         model_without_transport = QStandardItemModel()
         model_without_transport.setHorizontalHeaderLabels(fields)
         model_with_transport = QStandardItemModel()
@@ -253,34 +253,37 @@ class listView_functions():
         
 class shp_tools:
     
-    
+    @staticmethod
     def clear_table_and_layer (table_view, layer):
         table_view.setModel(None)
         active_layer = QgsProject.instance().mapLayersByName(layer)[0]
         active_layer.removeSelection()
         
-    
-    def get_field_names(self, layer):
+    @staticmethod
+    def get_field_names(layer):
         input_layer = QgsProject.instance().mapLayersByName(layer)[0]
         # Get the field names from the layer
         fields = [field.name() for field in input_layer.fields()]
         return fields
     
-    def getLayerFieldItemsBasedonColumn(self, layer_name: str, desired_columns):
-        input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]        
-        # Get all field names from the layer
-        all_fields = [field.name() for field in input_layer.fields()]
-        # Filter out only the desired fields
-        desired_fields = [field for field in all_fields if field in desired_columns]
-        return desired_fields
     
-    def activateLayer_zoomTo(self, layer):
+    #@staticmethod 
+    #def getLayerFieldItemsBasedonColumn(layer_name: str, desired_columns):
+    #    input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]        
+    #    # Get all field names from the layer
+    #    all_fields = [field.name() for field in input_layer.fields()]
+    3    # Filter out only the desired fields
+    #    desired_fields = [field for field in all_fields if field in desired_columns]
+    #    return desired_fields
+    @staticmethod
+    def activateLayer_zoomTo(layer):
         #input_layer = QgsProject.instance().mapLayersByName(layer)[0]
         iface.setActiveLayer(layer)
         iface.zoomToActiveLayer()
         QCoreApplication.processEvents()
-    
-    def count_items_in_layer(self,layer):
+        
+    @staticmethod
+    def count_items_in_layer(layer):
         input_layer = QgsProject.instance().mapLayersByName(layer)[0]
         count = input_layer.featureCount()
         return count
@@ -301,8 +304,8 @@ class shp_tools:
             return 0
     
 
-    
-    def create_item_list(self, input_layer, field):
+    @staticmethod
+    def create_item_list(input_layer, field):
         #print(f"input layer {input_layer}")
         input_layer = QgsProject.instance().mapLayersByName(input_layer)[0]
         # Hangi atribuutide unikaalsed väärtused tulbast "MK_NIMI"
@@ -427,7 +430,7 @@ class shp_tools:
         expression = f"{county_nimi_field} IN ('{county_restriction}')"
         layer.setSubsetString(expression)
         
-    def universal_map_simplifier(self, 
+    def universal_map_simplifier(
                                 input_layer_name,
                                 county_nimi_field, 
                                 state_field,
@@ -442,7 +445,7 @@ class shp_tools:
             #print(f"Layer '{input_layer_name}' not found.")
             text = (f"Laetavate kinnistute kiht {input_layer_name} on puudu. \n Jätkamiseks lae algandmed")
             heading = pealkiri.warningSimple
-            QMessageBox.warning(self, heading, text)
+            QMessageBox.warning(None, heading, text)
             #print("No items selected")
             return
     

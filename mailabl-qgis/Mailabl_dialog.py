@@ -681,13 +681,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         city_restrictions_before = ""
         
         #print(f"Restriction: {restriction}")
-        item_count_before = graph_tools.count_items_in_layer(input_layer_name)
-        sorted_values = graph_tools.create_item_list_with_where(viewItem_state, item_count_before, county_restriction, input_layer_name, county_nimi_field, state_nimi_field)
+        item_count_before = shp_tools.count_items_in_layer(input_layer_name)
+        sorted_values = shp_tools().create_item_list_with_where(viewItem_state, item_count_before, county_restriction, input_layer_name, county_nimi_field, state_nimi_field)
         list_functions.insert_values_to_listView_object(viewItem_state,sorted_values) 
         #viewItem_state.addItems(sorted_values)
         #viewItem_state.update()
         
-        expression_before = graph_tools.universal_map_simplifier(
+        expression_before = shp_tools.universal_map_simplifier(
                             input_layer_name,
                             county_nimi_field, 
                             state_nimi_field,
@@ -700,8 +700,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         layer.setSubsetString(expression_before)
         layer.triggerRepaint()
         layer.updateExtents()
-        graph_tools.activateLayer_zoomTo(layer)
-        item_count = graph_tools.count_items_in_layer(input_layer_name)
+        shp_tools.activateLayer_zoomTo(layer)
+        item_count = shp_tools.count_items_in_layer(input_layer_name)
         self.lblCount.setText(f"{item_count}")
         self.pbDone_State.show()
         self.cbChooseAll_States.show()
@@ -766,7 +766,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             QMessageBox.information(self, heading, text)
         else:
             
-            expression_before = graph_tools.universal_map_simplifier(
+            expression_before = shp_tools.universal_map_simplifier(
                                 input_layer_name,
                                 county_nimi_field, 
                                 state_nimi_field,
@@ -792,12 +792,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 #print("No items selected")
                 pass
 
-            item_count_before = graph_tools.count_items_in_layer(input_layer_name)    
-            city_list = graph_tools.create_item_list_with_MultyWhere(item_count_before, items_name_state, input_layer_name, state_nimi_field, city_nimi_field)
+            item_count_before = shp_tools.count_items_in_layer(input_layer_name)    
+            city_list = shp_tools().create_item_list_with_MultyWhere(item_count_before, items_name_state, input_layer_name, state_nimi_field, city_nimi_field)
             list_functions.insert_values_to_listView_object(viewItem_city, city_list)
             #viewItem_city.update()
 
-            expression = graph_tools.universal_map_simplifier(
+            expression = shp_tools.universal_map_simplifier(
                                 input_layer_name,
                                 county_nimi_field, 
                                 state_nimi_field,
@@ -810,8 +810,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             layer.setSubsetString(expression)
             layer.triggerRepaint()
             layer.updateExtents()
-            graph_tools.activateLayer_zoomTo(layer)
-            item_count = graph_tools.count_items_in_layer(input_layer_name)
+            shp_tools.activateLayer_zoomTo(layer)
+            item_count = shp_tools.count_items_in_layer(input_layer_name)
             self.lblCount.setText(f"{item_count}")
             self.pbDoneCity.show()
             self.cbChooseAll_Cities.show()
@@ -874,7 +874,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.cbChooseAllAdd__street_properties.show()
         
         #Clean code in universal map simplifier because it creates only expression 
-        expression = graph_tools.universal_map_simplifier(
+        expression = shp_tools.universal_map_simplifier(
                             input_layer_name,
                             county_nimi_field, 
                             state_nimi_field,
@@ -1048,23 +1048,23 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             clear_table = widget.pbClear_list
             table_view = widget.tvProperties_AddTo_Projects
             
-            flag = Flags.active_properties_layer_flag 
-            flag = True        
+            flag = Flags.active_properties_layer_flag
+            flag = True    
             Flags.active_properties_layer_flag = flag
         
             
             PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
             map_selectors.activate_layer_and_use_selectTool_on_first_load(self, widget)
-            clear_table.clicked.connect(lambda: ComboBoxMapTools.clear_table_and_layer(table_view, layer_name))
+            clear_table.clicked.connect(lambda: shp_tools.clear_table_and_layer(table_view, layer_name))
 
             widget.show()
             
             widget.accepted.connect(lambda: ProjectsProperties.update_projects_properties(self, Mailabl_ID_text, widget, projects_name_text))
-            widget.rejected.connect(lambda: ProjectsProperties.on_cancel_button_clicked(widget))
+            widget.rejected.connect(lambda: ProjectsProperties.on_cancel_button_clicked())
             
         else:
-            text = ("Vali projekt")
-            heading = "Hoiatus"
+            text = HoiatusTexts().projekt_valimata
+            heading = Headings().warningSimple
             QMessageBox.information(self, heading, text)
 
     def connect_properties_with_contracts(self):
@@ -1102,7 +1102,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             
             PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
             ContractMapSelectors.activate_layer_and_use_selectTool_on_first_load(self,widget, table_view)
-            clear_table.clicked.connect(lambda: ComboBoxMapTools.clear_table_and_layer(table_view, layer_name))
+            clear_table.clicked.connect(lambda: shp_tools.clear_table_and_layer(table_view, layer_name))
 
             widget.show()
             
@@ -1162,7 +1162,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         Delete_Main_Process.Delete_process_view_on_countyListView_click(self)
         
     def Delete_reset_to_stage_state(self):
-        Delete_Main_Process.Delete_process_view_after_county(self)
+        Delete_Main_Process.Delete_process_view_after_state(self)
+        self.pbDel_City.hide()
+        self.lwDelete_Cities_Names.clear()
     
     def delete_process_after_county(self):
         lwDel_County_Names = self.lwDelete_County_Names
@@ -1209,8 +1211,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             Delete_Main_Process.Delete_process_view_after_unsuccessful_state(self)
             # No item selected, perform your desired action here
             text = ("Jätkamiseks vali ja kinnita omavalitsus")
-            heading = "Hoiatus"
-            QMessageBox.warning(self, heading, text)
+            heading = Headings().warningSimple
+            QMessageBox.warning(None, heading, text)
         else:
             Delete_Main_Process.Delete_process_view_after_state(self)
 
@@ -1276,7 +1278,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.tabW_Delete_list.show()
             Delete_Main_Process.Delete_process_view_after_city(self)
             #Clean code in universal map simplifier because it creates only expression 
-            expression = graph_tools.universal_map_simplifier(
+            expression = shp_tools.universal_map_simplifier(
                                 layer_name,
                                 county_nimi_field, 
                                 state_nimi_field,
@@ -1291,7 +1293,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             layer.updateExtents()
             layer.blockSignals(True)
             layer.selectAll()    
-            graph_tools.activateLayer_zoomTo(layer)
+            shp_tools.activateLayer_zoomTo(layer)
             model_without_transport, model_with_transport, total = table_functions.generate_table_from_selected_map_items_with_roads(layer_name)
             delete_tables.insert_data_to_tables(self, DelModel_streets=model_with_transport, DelModel_properties=model_without_transport, total=total, lbl=lbl)
             layer.blockSignals(False)

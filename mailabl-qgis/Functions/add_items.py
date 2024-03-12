@@ -1,29 +1,24 @@
 import os
-from qgis.core import edit
-from qgis.core import QgsFeature, QgsLayerTreeGroup, QgsProject, QgsVectorLayer
-
-from ..app.View_tools import listView_functions, shp_tools, finder_deque_method
-from ..Functions.Tools import tableFunctions, propertyUsages
 from PyQt5.uic import loadUi
-from ..queries.python.property_data import add_properties
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QTableWidgetItem
-from ..config.settings import DataSettings, Filepaths, SettingsDataSaveAndLoad
+
+from ..Functions.Tools import tableFunctions, propertyUsages
+from ..queries.python.property_data import add_properties
+from ..config.settings import SettingsDataSaveAndLoad
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 #Status bar widget folder
-widgets_folder = "widgets"  
+widgets_folder = "widgets" 
 #widgets_path = os.path.join(plugin_dir,widgets_folder, "WStatusBar.ui")
 widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui"))
 
-graph_tools = shp_tools()
-list_functions = listView_functions()
-deque_methods = finder_deque_method()
+
 load = SettingsDataSaveAndLoad()
 
 class DataPreparation:
+    @staticmethod
     def data_structuring(data, table):
         #print(f"in data_structuring 'data' is: {data}")
         headers = ['Katastri tunnus', 'Mailabl link']
@@ -100,43 +95,3 @@ class Add_Properties_final:
             if count % paus_interval == 0:
                 # Sleep for 0.5 seconds after every delete_interval items
                 time.sleep(sleep_duration)
-                
-        
-        #target_layer_name_2 = load.load_target_cadastral_name()
-        '''
-        target_layer_name = new_layer_name
-        input_layer_name = load.load_SHP_inputLayer_name()
-        #print("Layers before map conversion:")
-        #print(f"target_layer_name: '{target_layer_name}'")
-        #print(f"input_layer_name: '{input_layer_name}'")
-        target_layer = QgsProject.instance().mapLayersByName(target_layer_name)[0]
-        QgsProject.instance().layerTreeRoot().findLayer(target_layer.id()).setItemVisibilityChecked(True)
-        input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        QgsProject.instance().layerTreeRoot().findLayer(input_layer.id()).setItemVisibilityChecked(True)
-        #target_layer_2 = QgsProject.instance().mapLayersByName(target_layer_name_2)[0]
-        with edit(target_layer):
-            counter = 1
-            progress_bar.setValue(counter)
-            # Loop through selected features on the input layer
-            counted_features = input_layer.selectedFeatureCount()
-            progress_bar.setMaximum(counted_features)
-            progress_widget.setWindowTitle("Kopeerin kaardiandmeid")
-            print(f"counted features: {counted_features}")
-            if input_layer.selectedFeatureCount() > 0:
-                #print(f"entering loop to copy map features")
-                for feature in input_layer.selectedFeatures():
-                    #print(f"Feature: '{feature}'")
-
-                    #new_feature = QgsFeature(feature)
-                    #print(f"new_feature: {new_feature}")
-                    #target_layer.addFeature(new_feature)
-                    target_layer.addFeature(feature)
-                    counter +=1
-                    progress_bar.setValue(counter)
-                    QCoreApplication.processEvents()
-        # Commit changes to the target layer
-        target_layer.commitChanges()
-        target_layer.triggerRepaint()  # Refresh the map canvas
-        target_layer.updateExtents()
-        '''
-    

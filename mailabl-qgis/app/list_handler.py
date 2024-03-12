@@ -25,7 +25,7 @@ class ExpandProcessListsFunctions:
                 
                 object_county = self.listWidget_county
                 object_county.clear()
-                county_items = shp_tools.create_item_list(self, input_layer_name, field_county_name)
+                county_items = shp_tools.create_item_list(input_layer_name, field_county_name)
                 for county in county_items:
                     list_item = QListWidgetItem(county)
                     object_county.addItem(list_item)
@@ -33,5 +33,5 @@ class ExpandProcessListsFunctions:
 
                 #list_functions.insert_values_to_listView_object(object_county, county_items)
                 #object_county.update()
-                item_count = shp_tools.count_items_in_layer(self, input_layer_name)
+                item_count = shp_tools.count_items_in_layer(input_layer_name)
                 self.lblCount.setText(f"{item_count}")

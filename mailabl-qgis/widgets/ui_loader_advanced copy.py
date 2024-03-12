@@ -1,16 +1,10 @@
 import os
-from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.uic import loadUi
-from qgis.core import (QgsProject)
-from ..app.View_tools import shp_tools
 
 #testing imports remove in real life!
 from ..utils.utilys import random_string
 import random
 
 
-graph_tools = shp_tools()
-model = QStandardItemModel() 
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 

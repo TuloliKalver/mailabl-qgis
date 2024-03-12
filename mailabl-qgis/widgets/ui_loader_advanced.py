@@ -1,17 +1,13 @@
 import os
-from PyQt5.QtGui import QStandardItem, QStandardItemModel
+from PyQt5.QtGui import  QStandardItemModel
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QTableView
-from qgis.core import (QgsProject)
-from ..app.View_tools import shp_tools
 
-from ..Functions.add_items import Add_Properties_final, DataPreparation
-from PyQt5.QtCore import QCoreApplication, QTimer
-
-graph_tools = shp_tools()
+from ..Functions.add_items import DataPreparation
+from PyQt5.QtCore import QCoreApplication
 
 
-model = QStandardItemModel() 
+
+model = QStandardItemModel()
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -190,18 +186,3 @@ class loader():
         # Now, column_data contains the data from the first column of the updated model
         #print(column_data)
         progress_widget.hide()
-        '''
-        value = "TUNNUS"
-        expression = (f"{value} IN {tuple(column_data)}")
-        print(f"expression in 'clear_table_from_inMailabl_rows': {expression}")
-        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        layer.blockSignals(True)
-        layer.removeSelection()
-        layer.setSubsetString(expression)
-        layer.triggerRepaint()
-        layer.updateExtents()
-        layer.selectAll()
-        #graph_tools.zoom_to_layer_extent(layer)
-        layer.blockSignals(False)
-        #QCoreApplication.processEvents()
-        '''

@@ -16,9 +16,6 @@ plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 widgets_folder = "widgets"  
 widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui"))
 
-
-
-graph_tools = shp_tools()
 list_functions = listView_functions()
 deque_methods = finder_deque_method()
 load = SettingsDataSaveAndLoad()
@@ -50,6 +47,7 @@ class Delete_Main_Process():
         delete_buttons.buttons_show_after_county(self)
         delete_checkboxes.checkboxes_on_after_county(self)
         delete_frames.frames_on_load(self)
+        
 
     def Delete_process_view_after_unsuccessful_county(self):
         delete_buttons.buttons_on_load(self)
@@ -61,7 +59,8 @@ class Delete_Main_Process():
         delete_buttons.buttons_show_after_state(self)
         delete_checkboxes.checkboxes_on_after_state(self)
         delete_frames.frames_on_load(self)
-        delete_tables.tables_on_load
+        delete_tables.tables_on_load(self)
+
         
     def Delete_process_view_after_unsuccessful_state(self):
         delete_buttons.buttons_show_after_county(self)
@@ -138,13 +137,17 @@ class delete_buttons():
             self.pbDel_State
         ]
         actions.shower(self, elements=show_buttons)
+        self.pbDel_City.hide()
+        
+        
 
 
     def buttons_show_after_state(self):
         show_buttons = [
             self.pbDel_City
-        ]
+            ]
         actions.shower(self, elements=show_buttons)
+        
 
 
     def buttons_show_after_city(self):
@@ -194,7 +197,7 @@ class delete_listViews():
         actions.cleaner(self, items)
     
     def clear_after_state(self):
-        items= [self.lwDel_State_Names,
+        items= [
                 self.lwDelete_Cities_Names
                 ]
         actions.cleaner(self, items)
@@ -237,12 +240,14 @@ class delete_checkboxes():
                 ]
         actions.shower(self, elements=checkboxes)
         
+        
     
     def checkboxes_on_after_state(self):
         checkboxes = [ 
                 self.cbDel_ChooseAll_Cities
                 ]
         actions.shower(self, elements=checkboxes)
+        self.cbDel_ChooseAll_Cities.hide()
         
     def checkboxes_on_after_city(self):
         checkboxes = [ 
@@ -265,16 +270,14 @@ class delete_tables():
                         self.tbl_Delete_properties]
         actions.hider(self,elements=object_tables)
         
+        
 
     def table_after_city(self):
         object_tables = [self.tbl_Delete_streets,
                         self.tbl_Delete_properties]
         actions.shower(self,elements=object_tables)
             
-    # Add this method to your class
-    def select_all_items(self, table_view):
-        selection_model = table_view.selectionModel()
-        
+
     def insert_data_to_tables(self, DelModel_streets, DelModel_properties, total, lbl):
         lbl.setText(str(total))
         table_view_1 = self.tbl_Delete_streets
@@ -347,13 +350,12 @@ class DeletingProcesses:
             layer.setSubsetString(expression)
             layer.triggerRepaint()
             layer.updateExtents()   
-            graph_tools.activateLayer_zoomTo(layer)
-            data = graph_tools.create_item_list(layer_name, county_field)
+            shp_tools.activateLayer_zoomTo(layer)
+            data = shp_tools.create_item_list(layer_name, county_field)
             list_functions.insert_values_to_listView_object(lw_county, data)
             lw_county.update()
-            item_count = graph_tools.count_items_in_layer(layer_name)
+            item_count = shp_tools.count_items_in_layer(layer_name)
             lbl.setText(f"{item_count}")
-            #graph_tools.zoom_to_layer_extent(layer)
         else:
             print(f"layer {layer} not found")
                 
@@ -372,7 +374,7 @@ class DeletingProcesses:
             layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            text = (f"Laetavate kinnistute kiht {layer} on puudu.\n Jätkamiseks lae algandmed")
+            text = (f"Laetavate kinnistute kiht {layer_name} on puudu.\n Jätkamiseks lae algandmed")
             heading = pealkiri.warningSimple
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
@@ -381,23 +383,23 @@ class DeletingProcesses:
             
         
         county_restriction = item_county.text() if item_county is not None else ""
-        print(f"county restriction {county_restriction}")
+        #print(f"county restriction {county_restriction}")
         state_restrictions = "', '".join([item.text() for item in item_state]) if item_state else ""
-        print(f"Selected items state: {state_restrictions}")
+        #print(f"Selected items state: {state_restrictions}")
         city_restrictions_before = ""
         city_restrictions = "', '".join([item.text() for item in item_city]) if item_city else ""
-        print(f"Selected items city: {city_restrictions}")
+        #print(f"Selected items city: {city_restrictions}")
         
         #print(f"Restriction: {restriction}")
-        item_count_before = graph_tools.count_items_in_layer(layer_name)
-        sorted_values = graph_tools.create_item_list_with_where(lwDel_State_names, item_count_before, 
+        item_count_before = shp_tools.count_items_in_layer(layer_name)
+        sorted_values = shp_tools().create_item_list_with_where(lwDel_State_names, item_count_before, 
                                                                 county_restriction, layer_name, 
                                                                 county_field, state_field)
         list_functions.insert_values_to_listView_object(lwDel_State_names,sorted_values) 
         #viewItem_state.addItems(sorted_values)
         lwDel_State_names.update()
         
-        expression = graph_tools.universal_map_simplifier(
+        expression = shp_tools.universal_map_simplifier(
                             layer_name,
                             county_field, 
                             state_field,
@@ -410,8 +412,8 @@ class DeletingProcesses:
         layer.setSubsetString(expression)
         layer.triggerRepaint()
         layer.updateExtents()
-        graph_tools.activateLayer_zoomTo(layer)
-        item_count = graph_tools.count_items_in_layer(layer_name)
+        shp_tools.activateLayer_zoomTo(layer)
+        item_count = shp_tools.count_items_in_layer(layer_name)
         lbl.setText(f"{item_count}")
         
         button.blockSignals(False)  
@@ -432,7 +434,7 @@ class DeletingProcesses:
             layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            text = (f"Laetavate kinnistute kiht {layer} on puudu. \nJätkamiseks lae algandmed")
+            text = (f"Laetavate kinnistute kiht {layer_name} on puudu. \nJätkamiseks lae algandmed")
             heading = pealkiri.warningSimple
             QMessageBox.warning(self, heading, text)
             #print("No items selected")
@@ -447,12 +449,12 @@ class DeletingProcesses:
         print(f"Selected items city: {city_restrictions}")
         
         #print(f"Restriction: {restriction}")
-        item_count_before = graph_tools.count_items_in_layer(layer_name)
+        item_count_before = shp_tools.count_items_in_layer(layer_name)
         #testing method diferences
         #list method
         import time
         start = time.perf_counter()
-        sorted_values = graph_tools.create_item_list_with_MultyWhere(item_count_before, state_restrictions, layer_name, state_field, city_field)
+        sorted_values = shp_tools().create_item_list_with_MultyWhere(item_count_before, state_restrictions, layer_name, state_field, city_field)
         print(f"sorted values: {sorted_values}")
         stop = time.perf_counter()
         result = stop-start
@@ -463,7 +465,7 @@ class DeletingProcesses:
         #viewItem_state.addItems(sorted_values)
         lwDel_City_Names.update()
         
-        expression = graph_tools.universal_map_simplifier(
+        expression = shp_tools.universal_map_simplifier(
                             layer_name,
                             county_field, 
                             state_field,
@@ -476,8 +478,8 @@ class DeletingProcesses:
         layer.setSubsetString(expression)
         layer.triggerRepaint()
         layer.updateExtents()
-        graph_tools.activateLayer_zoomTo(layer)
-        item_count = graph_tools.count_items_in_layer(layer_name)
+        shp_tools.activateLayer_zoomTo(layer)
+        item_count = shp_tools.count_items_in_layer(layer_name)
         lbl.setText(f"{item_count}")
         
         button.blockSignals(False)  
