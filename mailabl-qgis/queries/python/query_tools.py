@@ -1,4 +1,5 @@
-import requests
+import requests, platform
+from qgis.core import Qgis
 from .access_credentials import load_token
 from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import GraphQLSettings
@@ -31,7 +32,8 @@ class requestBuilder:
         # Construct the HTTP headers with the access token
         headers = {
             "Authorization": f"Bearer {access_token}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "User-Agent": f"QGIS/{Qgis.QGIS_VERSION} ({platform.system()} {platform.release()})"
         }
 
         # Send the POST request to the GraphQL endpoint
