@@ -63,7 +63,7 @@ class IconsByName:
     def __init__(self):
         self.Mailabl_icon_name = "icon.png"
         self.icon_digi_doc_name = "Digidoc_512.png"
-        self.icon_show_on_map = "iconoir--map-pin-plus.svg"
+        self.icon_show_on_map = "codicon--checklist_tingimused_kooskõlastused.svg"
 
 class FilesByNames:
     def __init__(self):
