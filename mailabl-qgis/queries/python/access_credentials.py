@@ -1,6 +1,6 @@
-import requests
+import requests, platform
 from PyQt5.QtWidgets import QMessageBox
-from qgis.core import QgsSettings
+from qgis.core import QgsSettings, Qgis
 from ...config.settings import GraphQLSettings
 from ...processes.infomessages.messages import Headings
  
@@ -80,9 +80,13 @@ def get_access_token(self):
         "query": graphql_mutation
     }
 
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": f"QGIS/{Qgis.QGIS_VERSION} ({platform.system()} {platform.release()})"
+    }
+
     # Send the POST request to the GraphQL endpoint
-    response = requests.post(GRAPHQL_ENDPOINT, json=payload)
-  
+    response = requests.post(GRAPHQL_ENDPOINT, headers=headers, json=payload)
 
     if response.status_code == 200:
         response_data = response.json()

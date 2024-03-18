@@ -1,8 +1,9 @@
-from ..config.settings import SettingsDataSaveAndLoad
-from qgis.core import QgsLayerTreeGroup, QgsProject, QgsVectorLayer
-from .View_tools import shp_tools
+
+from qgis.core import QgsProject
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QListWidgetItem
+from .View_tools import shp_tools
+from ..config.settings import SettingsDataSaveAndLoad
 
 class ExpandProcessListsFunctions:
     
@@ -25,7 +26,7 @@ class ExpandProcessListsFunctions:
                 
                 object_county = self.listWidget_county
                 object_county.clear()
-                county_items = shp_tools.create_item_list(self, input_layer_name, field_county_name)
+                county_items = shp_tools.create_item_list(input_layer_name, field_county_name)
                 for county in county_items:
                     list_item = QListWidgetItem(county)
                     object_county.addItem(list_item)
@@ -33,5 +34,5 @@ class ExpandProcessListsFunctions:
 
                 #list_functions.insert_values_to_listView_object(object_county, county_items)
                 #object_county.update()
-                item_count = shp_tools.count_items_in_layer(self, input_layer_name)
+                item_count = shp_tools.count_items_in_layer(input_layer_name)
                 self.lblCount.setText(f"{item_count}")

@@ -1,17 +1,16 @@
-import time
+from PyQt5.uic import loadUi
 from qgis.core import  QgsProject, QgsMapLayer
 from qgis.utils import iface
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import GraphQLQueryLoader
 from PyQt5.QtWidgets import  QMessageBox, QWidget
-from ....config.settings import  connect_settings_to_layer, Flags
+from ..DataLoading_classes import GraphQLQueryLoader
 from ..property_data import PropertiesGeneralQueries
-from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from ..query_tools import requestBuilder
+from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
-from PyQt5.uic import loadUi
-from ....processes.infomessages.messages import Headings
+from ....config.settings import  connect_settings_to_layer, Flags
+from ....processes.infomessages.messages import Headings, HoiatusTexts, InfoTexts
  
 pealkiri = Headings()
 
@@ -57,7 +56,7 @@ class map_selectors:
             
         else:
             print("Flag is false")
-            pass
+            
 
     def activate_layer_and_use_selectTool(self, widget):
         global on_selection_changed_lambda
@@ -91,7 +90,6 @@ class map_selectors:
             
         else:
             print("Flag is false")
-            pass
         
     @staticmethod
     def on_selection_changed(widget):
@@ -119,12 +117,13 @@ class map_selectors:
 
 
 class ProjectsProperties:
-    def on_cancel_button_clicked(widget):
+    @staticmethod
+    def on_cancel_button_clicked():
         active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
         parent_widget = QWidget()
-        titleText = "Info"
-        infoText = "Kinnistute seostamine tühistatud"
+        titleText = Headings().informationSimple
+        infoText = HoiatusTexts().kasutaja_peatas_protsessi
         #active_layer.selectionChanged.disconnect()  
         QMessageBox.information(parent_widget, titleText, infoText)
         #import lamda here
@@ -144,10 +143,10 @@ class ProjectsProperties:
         count = model_properties.rowCount()
         if count == 0:
             parent_widget = QWidget()
-            heading = pealkiri.warningSimple
-            text = "Vali kaardikihil vähemalt üks kinnistu"  
+            heading = Headings().warningSimple
+            text = HoiatusTexts().kihil_kinnistu_valik
             QMessageBox.information(parent_widget, heading, text)
-            pass
+            
         for row in range(model_properties.rowCount()):
             item_column_0 = model_properties.item(row, 0)
             if item_column_0 is not None:
@@ -204,8 +203,9 @@ class ProjectsProperties:
             if count % paus_interval == 0:
                 timer_instance.pause()
 
-            text = (f"Projektile\n{project_name}\nlisatud\n{total_returned_ids}/{total_ids_Table}")
-            heading = pealkiri.informationSimple        
+        #text = (f"Projektile{project_name}\nlisatud \n{total_returned_ids}/{total_ids_Table} kinnistut!")
+        text = InfoTexts().properties_successfully_added(project_name, total_returned_ids, total_ids_Table)
+        heading = Headings().informationSimple      
         QMessageBox.information(self, heading, text)
         #print("Project updated successfully:")
         #print(updated_project)

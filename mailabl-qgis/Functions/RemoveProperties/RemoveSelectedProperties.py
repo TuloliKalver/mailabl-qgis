@@ -9,14 +9,14 @@ from ..QstandardModelTools.QStandardModelHandler import ModelHeadersGenerator, C
 from ..delete_items import Delete_finalProcess, Delete_Main_Process
 from ...queries.python.property_data import PropertiesGeneralQueries, deleteProperty
 from ...config.settings import SettingsDataSaveAndLoad
-from ...processes.infomessages.messages import Headings
+from ...processes.infomessages.messages import Headings, HoiatusTexts
  
 pealkiri = Headings()
 class DeleteActions:
     @staticmethod
     def delete_selected_items_from_mylabl(self):
-        load = SettingsDataSaveAndLoad()
-        active_cadastral_layer_name = load.load_target_cadastral_name()
+        active_cadastral_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        print(active_cadastral_layer_name)
         active_layer = QgsProject.instance().mapLayersByName(active_cadastral_layer_name)[0]
         
         button = self.pbDel_PreConfirm
@@ -30,8 +30,8 @@ class DeleteActions:
         data2 = tableFunctions.RemoveNonSelectedRowsFromTable(self, table_streets)
         
         if len(data) == 0 and len(data2) == 0:
-            text = ("Vali importimiseks vähemalt üks kinnistu")
-            heading = pealkiri.warningSimple
+            text = HoiatusTexts().kihil_kinnistu_valik
+            heading = Headings().warningSimple
             QMessageBox.warning(self,heading,text)
             return
         else:
@@ -61,20 +61,20 @@ class DeleteActions:
             properties = DataExtractors.ExtractCadastralNrDataFromModel(model,header_names)
             
             ToBe_deleted_properties, cadasters = PropertiesGeneralQueries.get_properties_MyLabl_idsAndCadastrals(self, properties)
-            #print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
-            #print(f"To be deleted properties: {len(cadasters)}")
+            print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
+            print(f"To be deleted properties: {len(cadasters)}")
             
             if len(cadasters) == 0:
-                text = ("Valitud kinnistuid Mailablis ei ole")
-                heading = pealkiri.warningSimple
-                QMessageBox.warning(self,heading,text)
+                text = HoiatusTexts().kinnistuid_ei_leidnud
+                heading = Headings().warningSimple
+                QMessageBox.warning(self, heading, text)
                 TabHandler.tabViewByState(tab_widget,True)
                 tab_widget.hide()
                 model_properties.clear()
                 model_streets.clear()
                 button.blockSignals(False)
                 return
-            else:        
+            else:
                 for unit in cadasters:
                     matching_rows = DataExtractors.CadasterMatcher(unit, model, header_names)
                 

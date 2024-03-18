@@ -63,7 +63,7 @@ class IconsByName:
     def __init__(self):
         self.Mailabl_icon_name = "icon.png"
         self.icon_digi_doc_name = "Digidoc_512.png"
-        self.icon_show_on_map = "codicon--checklist_tingimused_kooskõlastused.svg"
+        self.icon_show_on_map = "game-icons--treasure-map.svg"
 
 class FilesByNames:
     def __init__(self):
@@ -85,7 +85,7 @@ class Filepaths:
 
     @staticmethod
     def get_conf_widget(widget_name):
-        return os.path.join(PLUGIN_DIR, CONF_FOLDER, widget_name)
+        return os.path.join(PLUGIN_DIR, CONF_WIDGETS_FOLDER, widget_name)
     
     @classmethod
     def get_widget(self, widget_name):
@@ -178,7 +178,7 @@ class SettingsDataSaveAndLoad:
 
         
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties):
-        current_label_value = SettingsDataSaveAndLoad.load_target_cadastral_name(self)
+        current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
         create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
         SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
         projects_label_value = SettingsDataSaveAndLoad.load_projects_properties_layer_name(self)
@@ -227,8 +227,7 @@ class SettingsDataSaveAndLoad:
 
 class connect_settings_to_layer:    
     def ActiveMailablPropertiesLayer_name():
-        settings_loader = SettingsDataSaveAndLoad()
-        active_layer = settings_loader.load_target_cadastral_name()
+        active_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
         return active_layer
         
     def Import_Layer_name():

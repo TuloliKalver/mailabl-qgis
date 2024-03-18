@@ -114,8 +114,8 @@ class QGIS_data_transfers:
         # Commit changes and stop editing
         target_layer.commitChanges()
         target_layer.updateExtents()
-        graph_tools = shp_tools()
-        graph_tools.activateLayer_zoomTo(target_layer)        
+        
+        shp_tools.activateLayer_zoomTo(target_layer)
         
 
 

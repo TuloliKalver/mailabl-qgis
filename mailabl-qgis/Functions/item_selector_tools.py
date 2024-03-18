@@ -1,13 +1,11 @@
-
-from qgis.core import QgsProject, QgsFeature, edit
-
 from qgis.utils import iface
-from ..config.settings import SettingsDataSaveAndLoad, connect_settings_to_layer
+from qgis.core import QgsProject, QgsFeature, edit
 from PyQt5.QtCore import QCoreApplication
+from ..config.settings import SettingsDataSaveAndLoad, connect_settings_to_layer
+
 #Provides tools to select elements from map or from tables and show on map
 
-layer_namer = SettingsDataSaveAndLoad()
-active_layer_name = layer_namer.load_target_cadastral_name()
+active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         
 class properties_selectors:
     @staticmethod

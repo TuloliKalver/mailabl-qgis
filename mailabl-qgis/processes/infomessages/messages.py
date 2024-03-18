@@ -21,7 +21,6 @@ class HoiatusTexts:
         self.error = "Midagi läks valesti"        
         self.kinnistuid_ei_leidnud = "Ühtegi kinnistut ei leitud"
         self.andmed_valimata = "Andmeid ei ole valitud"
-        self.kinnistu_valimata = "Vali importimiseks vähemalt üks kinnistu"
         self.kinnistud_MLBs_olemas = "Kõik valitud kinnistud on juba Mailablis"
         self.kinnistuid_MLBs_pole = "Valitud kinnistuid Mailablis ei ole"
         self.kihinimetus_lisamata = "Kihinimetus on vigane või lisamata"
@@ -35,7 +34,7 @@ class HoiatusTexts:
         self.laadimine_error = "Laadimine on katkestatud"        
         self.projekti_ei_leidnud = "Antud numbriga projekti ei leitud"
         self.projektid_puuduvad = "Piirkonnas puuduvad teadaolevad projektid"        
-        self.kihil_kinnistu_valik = "Vali kaardikihil vähemalt üks kinnistu"
+        self.kihil_kinnistu_valik = "Vali vähemalt üks kinnistu"
         #self.???(f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
         #self.???(f"Projektile\n{project_name}\nlisatud\n{total_returned_ids}/{total_ids_Table}")
 
@@ -48,14 +47,22 @@ class HoiatusTextsAuto:
         self.kiht_error = (f"Error loading the new layer from:\n{output_file_path}") #kihi laadimine ebaõnnestus...???
         self.GPKG_fail_ei_leitud = (f"'GPKG' tüüpi faili asukohas:\n{output_file_path} ei leitud")
         self.kasutaja_tuvastatud = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
-
+    #def __init__(self):
+        #self.indekseerimine = (f"Paremaks toimimiseks toimub kihi:\n{new_layer_name} indekseerimine")
+        #self.kinnistud_eemaldatud = (f"Valitud kinnitsud eemaldati Mailablist ja kihilt {active_cadastral_layer_name}")
+        #self.kaardikiht_lisatud = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud:/n{new_layer.name}'")
+        #self.andmed_imporditud = (f"Andmed on edukalt imporditud ja lisatud '{import_subgroup_layer_name}' grupi kihile")
+        #self.andmed_laetud = "Andmed on laetud ja kaardikihile kantud"
+        
 class InfoTexts:
-    def __init__(self):
-        self.indekseerimine = (f"Paremaks toimimiseks toimub kihi:\n{new_layer_name} indekseerimine")
-        self.kinnistud_eemaldatud = (f"Valitud kinnitsud eemaldati Mailablist ja kihilt {active_cadastral_layer_name}")
-        self.kaardikiht_lisatud = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud:/n{new_layer.name}'")
-        self.andmed_imporditud = (f"Andmed on edukalt imporditud ja lisatud '{import_subgroup_layer_name}' grupi kihile")
-        self.andmed_laetud = "Andmed on laetud ja kaardikihile kantud"
+    @staticmethod
+    def properties_successfully_added(project_name, total_returned_ids,total_ids_table):
+        if total_returned_ids <= 1:
+            end_text = "1 kinnistu"
+        else:
+            end_text = f"{total_returned_ids}/{total_ids_table} kinnistut"
+        text = f"Projektile  <b>{project_name}</b> \nlisatud {end_text}!"
+        return text
 
 class KriitilisedTexts:
     def __init__(self):

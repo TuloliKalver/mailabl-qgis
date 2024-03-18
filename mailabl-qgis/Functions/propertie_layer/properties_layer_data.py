@@ -1,21 +1,11 @@
-import os
-from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMessageBox
-from qgis.core import (QgsFeature,
-                       QgsGeometry, QgsLayerTreeGroup,
-                       QgsMapLayer, QgsProject, QgsVectorLayer, edit)
-from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QAbstractItemView, QTableView
-from PyQt5.QtWidgets import QTableWidgetItem
-from PyQt5.QtCore import QDate
-from qgis.utils import iface
-from collections import deque
 from PyQt5.uic import loadUi
+from qgis.core import QgsProject
+from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
 from ...Functions.tableViewAdjust import ColumnResizer
 from ...processes.infomessages.messages import Headings
- 
+
 pealkiri = Headings()
 
 paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
@@ -57,7 +47,7 @@ class PropertiesLayerFunctions:
         view_item.setModel(model)
         # Set the row height to 20 pixels
         view_item.verticalHeader().setDefaultSectionSize(20)
-          # Define the columns to hide
+        # Define the columns to hide
         resizer = ColumnResizer(view_item)
         
         columns = [1, 5]
@@ -107,7 +97,7 @@ class PropertiesLayerFunctions:
             #print(f"row item: {row_items}")
 
         progress_widget.close() 
-        pass
+        
 
 
 class TableGenerator:
@@ -147,4 +137,3 @@ class TableGenerator:
             address_item = QStandardItem(address_value)
             model.setItem(0, len(fields), address_item)
         return model
-
