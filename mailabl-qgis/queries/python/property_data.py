@@ -525,26 +525,10 @@ class deleteProperty:
         # Check the response for errors
         if response.status_code != 200:
             print(f"Failed to delete property with ID {item}. Status Code: {response.status_code}")
-            raise Exception(f"GraphQL request failed. Status Code: {response.status_code}")
+            raise ValueError(f"GraphQL request failed. Status Code: {response.status_code}")
         
-        data = response.json()
-    
-        # Get the ID of the deleted property
-        deleted_property_id = data.get("data", {}).get("deleteProperty", {}).get("id")
-        if deleted_property_id:
-            pass
-            #print(f"Successfully deleted property with ID: {deleted_property_id}")
-        else:
-            print(f"Property with ID {item} not found.")
 
-        # Check the response for errors
-        #if response.status_code != 200:
-         #   raise Exception("GraphQL request failed")
 
-        # Get the ID of the deleted property
-        #deleted_property_id = response.json()#["data"]["deleteProperty"]["id"]
-
-        #print(deleted_property_id)
 
     @staticmethod
     def delete_multiple_items(self, item_list):
@@ -554,7 +538,6 @@ class deleteProperty:
         progress_bar.setMaximum(total)
         progress_widget.setWindowTitle("Eemaldan kinnistuid")
         progress_widget.show()
-        import time
         count = 0
         paus_interval = 25  # Set the interval for the sleep timer
         sleep_duration = 1  # Set the sleep duration in seconds
@@ -570,6 +553,7 @@ class deleteProperty:
                 
 class add_properties:
     # Function to extract street name and house number
+    @staticmethod
     def get_address_details_from_street(street):
         data = {}
         

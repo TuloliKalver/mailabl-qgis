@@ -1038,7 +1038,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             Mailabl_ID_text = Mailabl_ID.text()
             #print(f"Mailabl ID: {Mailabl_ID_text}")
             
-            layer_name = load.load_target_cadastral_name()
+            layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
             layer = QgsProject.instance().mapLayersByName(layer_name)[0]
             iface.setActiveLayer(layer)
             #layer.removeSelection()
@@ -1086,7 +1086,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             Mailabl_ID_text = Mailabl_ID.text()
             #print(f"Mailabl ID: {Mailabl_ID_text}")
             
-            layer_name = load.load_target_cadastral_name()
+            layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
             layer = QgsProject.instance().mapLayersByName(layer_name)[0]
             iface.setActiveLayer(layer)
             #layer.removeSelection()
@@ -1185,7 +1185,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             Delete_Main_Process.Delete_process_view_after_county(self)
             
             button_to_activate = self.pbDel_County
-            activ_cadastral_layer = load.load_target_cadastral_name()
+            activ_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
             f_delete.DeleteProcess_get_state_list(button_to_activate, activ_cadastral_layer, 
                                                 state_nimi_field, 
                                                 county_nimi_field,
@@ -1218,7 +1218,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
             lbl = self.lblDel_Amount        
             button = self.pbDel_State
-            activ_cadastral_layer = load.load_target_cadastral_name()
+            activ_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
             f_delete.DeleteProcess_get_city_list(button, activ_cadastral_layer, 
                                                 state_nimi_field, 
                                                 county_nimi_field,
@@ -1256,7 +1256,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             lbl = self.lblDel_Amount        
             button = self.pbDel_City
             
-            layer_name = load.load_target_cadastral_name()
+            layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
             #print(f"shp_input_layer_name {layer_name}")
             layer = QgsProject.instance().mapLayersByName(layer_name)[0]
             #TODO rethink signal blocking!
@@ -1302,8 +1302,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button.blockSignals(False)
 
     def DeleteProcess_check_validity_in_Mylabl (self):
-        activ_cadastral_layer = load.load_target_cadastral_name()
-        #Delete_finalProcess.delete_selected_items_from_mylabl(self, tbl_Delete_properties, tbl_Delete_streets)
+
         DeleteActions.delete_selected_items_from_mylabl(self)
         
     def toggle_settings_main_view(self):

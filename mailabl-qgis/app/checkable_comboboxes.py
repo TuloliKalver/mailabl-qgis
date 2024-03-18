@@ -1,3 +1,6 @@
+# pylint: disable=missing-class-docstring
+# pylint: disable=relative-beyond-top-level
+# pylint: disable=no-nam
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QComboBox
 from qgis.core import QgsProject
@@ -9,7 +12,7 @@ class ComboBoxFunctions():
         #Selectable comboboxes on Delete items page
         self.combo_box_county = 'mCB_County'
         self.combo_box_state =  'mCB_State'
-        self.combo_box_City = 'mCB_City'        
+        self.combo_box_City = 'mCB_City'  
 
     def insert_values_to_combobox(self,combo_box, data):
         #print(f"Combobox to insert value {combo_box}")

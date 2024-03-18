@@ -342,7 +342,7 @@ class DeletingProcesses:
         county_field = "MK_NIMI"
         lw_county = self.lwDelete_County_Names 
         lbl = self.lblDel_Amount     
-        layer_name = load.load_target_cadastral_name()
+        layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         expression = ""
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         if layer.isValid():

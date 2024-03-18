@@ -99,8 +99,7 @@ class Projects:
 class projectsTableDecorator:
     @staticmethod
     def load_Mailabl_projects_list_with_zoomed_map_elements(table):
-        load = SettingsDataSaveAndLoad()
-        layer_name = load.load_target_cadastral_name()
+        layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         selected_features = visibleSelector.get_visible_features(layer_name)
         if len(selected_features) < 500:
                 

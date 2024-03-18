@@ -1,8 +1,9 @@
-from ..config.settings import SettingsDataSaveAndLoad
-from qgis.core import QgsLayerTreeGroup, QgsProject, QgsVectorLayer
-from .View_tools import shp_tools
+
+from qgis.core import QgsProject
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QListWidgetItem
+from .View_tools import shp_tools
+from ..config.settings import SettingsDataSaveAndLoad
 
 class ExpandProcessListsFunctions:
     

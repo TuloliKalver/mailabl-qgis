@@ -110,7 +110,7 @@ class WorkSpaceHandler:
         Shp_layer = QgsProject.instance().mapLayersByName(shp_layer_name)[0]
         if Shp_layer:
             QgsProject.instance().layerTreeRoot().findLayer(Shp_layer.id()).setItemVisibilityChecked(False)
-        active_cadastral_layer = SettingsDataSaveAndLoad.load_target_cadastral_name(self)
+        active_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
         if active_cadastral_layer:
             layer = QgsProject.instance().mapLayersByName(active_cadastral_layer)[0]
             iface.setActiveLayer(layer)

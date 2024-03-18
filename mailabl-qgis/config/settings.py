@@ -178,7 +178,7 @@ class SettingsDataSaveAndLoad:
 
         
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties):
-        current_label_value = SettingsDataSaveAndLoad.load_target_cadastral_name(self)
+        current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
         create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
         SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
         projects_label_value = SettingsDataSaveAndLoad.load_projects_properties_layer_name(self)
@@ -227,8 +227,7 @@ class SettingsDataSaveAndLoad:
 
 class connect_settings_to_layer:    
     def ActiveMailablPropertiesLayer_name():
-        settings_loader = SettingsDataSaveAndLoad()
-        active_layer = settings_loader.load_target_cadastral_name()
+        active_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
         return active_layer
         
     def Import_Layer_name():
