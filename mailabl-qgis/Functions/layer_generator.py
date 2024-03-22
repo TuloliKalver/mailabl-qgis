@@ -3,10 +3,10 @@ from qgis.core import QgsVectorLayer, QgsProject, QgsCoordinateReferenceSystem, 
 from qgis.core import QgsVectorLayer, QgsProject, QgsFeature
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QFileDialog
-from..config.settings import Filepaths
+from..config.settings import Filepaths, FilesByNames
 from ..config.settings import connect_settings_to_layer
 from PyQt5.uic import loadUi
-from ..config.settings import Filepaths
+
 from PyQt5.QtCore import QCoreApplication
 from ..processes.infomessages.messages import Headings
  
@@ -160,7 +160,8 @@ class LayerCopier():
         new_layer.updateFields()
         new_layer.setExtent(layer.extent())
         new_layer.setCrs(layer.crs())
-        QGIS_Layer_style = Filepaths().File_MaaAmet_temporary_style()
+        style_name = FilesByNames().MaaAmet_temp
+        QGIS_Layer_style = Filepaths().get_style(style_name)
         new_layer.loadNamedStyle(QGIS_Layer_style)
         new_layer.triggerRepaint()
 
