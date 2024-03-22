@@ -118,7 +118,9 @@ class LayerCopier():
                         print(f"Memory layer '{memory_layer_name}' removed successfully.")
                 
             
-                QGIS_Layer_style = Filepaths().File_maaAmet_style()
+                style_name = FilesByNames().MaaAmet_import
+                QGIS_Layer_style = Filepaths().get_style(style_name)
+                
                 updated_layer = QgsProject.instance().mapLayersByName(new_layer_name)[0]
                 updated_layer.loadNamedStyle(QGIS_Layer_style)
                 updated_layer.triggerRepaint()
