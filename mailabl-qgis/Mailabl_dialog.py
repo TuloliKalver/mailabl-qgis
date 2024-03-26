@@ -553,14 +553,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                             hide_buttons,
                                             checkboxes)
 
-        shp_class = ComboBoxMapTools
+        shp_class = shp_tools
         viewItem_county = self.listWidget_county
         viewItem_state = self.listWidget_State
         viewItem_city = self.listWidget_City
         
         layer.blockSignals(False)
         shp_class.county_map_simplifier(self, county_nimi_field, input_layer_name, viewItem_county, viewItem_state, viewItem_city)
-
+        
     #Functions in Development
 
     def startLayerListener(self):

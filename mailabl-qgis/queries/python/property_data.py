@@ -128,7 +128,7 @@ class Properties:
         header_labels = ['ID','Vastutav isik','Kataster', 'Aadress', 'Pindala','Looja', 'Lisatud']
         
 
-        model.setHorizontalHeaderLabels(header_labels)
+        model.setHorizontalHeaderLabels(self, header_labels)
         # Set column width mode to adjust to contents
         self.tblOfContents.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
 
@@ -838,7 +838,7 @@ class MyLablChecker:
         return missing_items
 
 class PropertiesGeneralQueries:
-    def get_properties_MyLabl_idsAndCadastrals(self, properties_list): 
+    def get_properties_MyLabl_idsAndCadastrals(self, properties_list):
         total_in_list = len(properties_list)
         
         query_loader = Graphql_properties()
@@ -859,10 +859,12 @@ class PropertiesGeneralQueries:
         
         cadasters = []
         fetched_items = []
-        
-        while total_fetched < total_in_list:
-            chunk = properties_list[total_fetched:total_fetched + chunk_size]  # Slice next chunk of data
-            
+        has_next_page = True
+        while total_fetched < total_in_list or has_next_page:
+            chunk_start = total_fetched
+            chunk_end = total_fetched + chunk_size
+            chunk = properties_list[chunk_start:chunk_end]  # Slice next chunk of data
+
             variables = {
                 "after": end_cursor if end_cursor else None,  # Use the endCursor as the after value   
                 "where": {
@@ -881,7 +883,8 @@ class PropertiesGeneralQueries:
                 data = response.json()
                 pageInfo = data.get("data", {}).get("properties", {}).get("pageInfo", {})
                 end_cursor = pageInfo.get("endCursor")
-                
+                print(f"End cursor: {end_cursor}")
+                has_next_page = pageInfo.get("hasNextPage")
                 fetched_items.extend(returned_id)
                 cadasters.extend(cadaster)
                 
@@ -893,6 +896,7 @@ class PropertiesGeneralQueries:
             
             if len(chunk) < chunk_size or total_fetched % chunk_size == 0:
                 time.sleep(sleep_duration)
+
 
         return fetched_items, cadasters
 

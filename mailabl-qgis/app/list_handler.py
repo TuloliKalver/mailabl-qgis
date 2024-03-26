@@ -22,7 +22,7 @@ class ExpandProcessListsFunctions:
                 layer.setSubsetString(expression)
                 layer.triggerRepaint()
                 layer.updateExtents()   
-                shp_tools.activateLayer_zoomTo(self, layer)
+                shp_tools.activateLayer_zoomTo(layer)
                 
                 object_county = self.listWidget_county
                 object_county.clear()

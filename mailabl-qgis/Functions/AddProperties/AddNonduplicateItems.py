@@ -26,7 +26,7 @@ class AddProperties:
     def check_for_duplicates_and_add_only_matches(self):
         # Load necessary layers and prepare setup
         active_cadastral_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        input_layer_name = SettingsDataSaveAndLoad.load_SHP_inputLayer_name()
+        input_layer_name = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         active_layer = QgsProject.instance().mapLayersByName(active_cadastral_layer_name)[0]
 

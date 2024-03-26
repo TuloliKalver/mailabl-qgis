@@ -82,7 +82,8 @@ class DataExtractors:
                 #print(f"    {cadastral_column_name}: No item found")
                 pass
         return  units
-
+    
+    @staticmethod
     def CadasterMatcher(cadastral_unit: str ,model: QStandardItemModel, header_data: list) ->None:
         cadastral_column_name = "TUNNUS"
         # Get the column indexes based on column names
@@ -90,10 +91,8 @@ class DataExtractors:
         #if cadastral_number_index == -1:
         #    print("Cadastral column not found")
         #    return
-        
         # List to store row indices of matching rows
-        matching_rows = []
-        
+        matching_rows = []    
         # Retrieve property data from the selected row's columns
         for row in range(model.rowCount()):
             #print(f"Row {row}:")
@@ -107,4 +106,3 @@ class DataExtractors:
                 #print(f"    {cadastral_column_name}: No item found")
                 pass
         return matching_rows
-        

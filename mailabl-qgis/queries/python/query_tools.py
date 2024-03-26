@@ -23,8 +23,8 @@ class requestBuilder:
             "query": query,
             "variables": variables
         }
-        #print("'variables'")
-        #print(f"'{variables}'")
+        print("'variables'")
+        print(variables)
         # Print the query before sending
         #print("GraphQL Query:")
         #print(query)
@@ -37,7 +37,13 @@ class requestBuilder:
         }
 
         # Send the POST request to the GraphQL endpoint
-        response = requests.post(graphql_url, headers=headers, json=payload)
+        try:
+            # Send the POST request to the GraphQL endpoint with timeout
+            response = requests.post(graphql_url, headers=headers, json=payload, timeout=30)
+        except requests.Timeout:
+            print("Request timed out.")
+            return None
+        #response = requests.post(graphql_url, headers=headers, json=payload)
         #print("response")
         #print(response)
         # Check for empty response
@@ -47,8 +53,8 @@ class requestBuilder:
 
         # Parse the JSON response
         data = response.json()
-        #print("'data'")
-        #print(data)
+        print("'data'")
+        print(data)
         # Check if the response is empty
         if not data:
             print(f"Data returned empty - maybe need to check query: {query}")

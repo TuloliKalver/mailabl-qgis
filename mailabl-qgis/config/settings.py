@@ -61,9 +61,9 @@ class GraphQLSettings:
 
 class IconsByName:
     def __init__(self):
-        self.Mailabl_icon_name = "icon.png"
+        self.Mailabl_icon_name = "icon_Mailabl.png"
         self.icon_digi_doc_name = "Digidoc_512.png"
-        self.icon_show_on_map = "game-icons--treasure-map.svg" #ikoonide testimiseks
+        self.icon_show_on_map = "oui--app-gis_kaart_asukoht.svg" #ikoonide testimiseks
 
 class FilesByNames:
     def __init__(self):
