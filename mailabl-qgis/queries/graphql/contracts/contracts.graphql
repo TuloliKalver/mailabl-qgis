@@ -25,6 +25,7 @@ query contracts($first: Int, $after: String,
                 id,
                 number,
                 name,
+                dueAt,
                 isSubcontract,
                 filesPath
                 status{
@@ -34,7 +35,14 @@ query contracts($first: Int, $after: String,
                 createdAt,
                 updatedAt,
                 deletedAt
-
+                responsible {
+                    edges {
+                        node {
+                            id
+                            displayName
+                                        }
+                                    }
+                }    
                 properties(
                     first: $propertiesFirst 
                     after: $propertiesAfter

@@ -53,10 +53,11 @@ class ModelHandler:
         
         if date_item:
             date_str = date_item.text()
+            #print(date_str)
             if date_str:
                 original_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-                formatted_date = original_date.strftime('%d.%m.%Y')
-                date_item.setText(formatted_date)
+                formated_date = original_date.strftime('%d.%m.%Y')
+                date_item.setText(formated_date)
                 date_item.setTextAlignment(Qt.AlignCenter)
                 
                 # Apply conditional coloring

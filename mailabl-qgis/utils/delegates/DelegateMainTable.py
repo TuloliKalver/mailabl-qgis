@@ -11,9 +11,9 @@ from PyQt5.QtWidgets import QStyledItemDelegate
 from ...Functions.item_selector_tools import properties_selectors
 from ...queries.python.projects_pandas import GetProjectsWhere
 from ...config.settings import OpenLink
-
-
 from ...queries.python.projects_pandas import TableHeaders
+
+from ...Functions.ButtonDelegates import ContractButtonDelegate
 
 
 class DelegatesForTables():
@@ -35,7 +35,24 @@ class DelegatesForTables():
 
         show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
         table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
+    @staticmethod
+    def setup_delegates_contract_table(table, header_labels):
+        headers = TableHeaders()
+        ID_column_index = header_labels.index(headers.header_id)
+        webButton_Column_index = header_labels.index(headers.header_web_link_button)
+        dokAddress_column_index = header_labels.index(headers.header_documents)
+        cadastralButton_Column_index = header_labels.index(headers.header_properties_icon)
+        dokAddress_column_index = header_labels.index(headers.header_documents)
+        dokButton_column_index = header_labels.index(headers.header_file_path)
 
+        web_link_delegate = ContractButtonDelegate(ID_column_index, table)
+        table.setItemDelegateForColumn(webButton_Column_index, web_link_delegate)
+
+        file_delegate = FileDelegate(dokAddress_column_index, table)
+        table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
+
+        show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
+        table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
 
 
 class FileDelegate(QStyledItemDelegate):

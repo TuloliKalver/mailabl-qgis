@@ -3,15 +3,20 @@
 # pylint: disable=no-name-in-module
 
 import pandas as pd
+from datetime import datetime
+
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel, QColor, QBrush, QIcon
+from PyQt5.QtWidgets import QTableView
+from ..ButtonDelegates import ContractButtonDelegate, FileDelegate, SelectContractsOnMapElementsDelegate
+from ..tableViewAdjust import Colors, ColumnResizer
 from ...queries.python.Statuses.statusManager import Statuses, STATE_OPEN
 from ...queries.python.DataLoading_classes import GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
-from ..tableViewAdjust import Colors, ColumnResizer
 #from ...config.settings import Filepaths
+from ...utils.table_utilys import ModelHandler
+from ...utils.delegates.DelegateMainTable import DelegatesForTables
 from ...config.settings import Filepaths, IconsByName
-from ..ButtonDelegates import ContractButtonDelegate, FileDelegate, SelectContractsOnMapElementsDelegate
 from ...config.iconHandler import iconHandler
 from ...config.mylabl_API.modules import MODULE_CONTRACTS
 
@@ -31,155 +36,89 @@ header_statuses = 'Staatus'
 
 class ContractsMain:  
     @staticmethod
-    def main_contracts(self, table):
+    def main_contracts (self, table):
+
         con_model, header_labels = queryHandling.contracts_basic_data(self)
-        contracts_model = QStandardItemModel()
-        contracts_model.setHorizontalHeaderLabels(header_labels)
+
+        table_headers = queryHandling()
         
-        name_column_index = header_labels.index(header_name) 
-        status_column_index = header_labels.index(header_statuses)
-        number_column_index = header_labels.index(header_number)
-        color_column_index = header_labels.index(header_color)
-        Link_Column_index = header_labels.index(header_webLinkButton)
-        ID_column_index = header_labels.index(header_id)
-        dokAddress_column_index = header_labels.index(header_Documents)
-        dokButton_column_index = header_labels.index(header_file_path)
-        cadastralUnit_Column_index = header_labels.index(header_property_number)
-        cadastralUnit_Button_index = header_labels.index(header_properties_icon)
-        
+        number_column_index = header_labels.index(table_headers.header_number)
+        name_column_index = header_labels.index(table_headers.header_name)
+        #LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
+        responsible_column_index = header_labels.index(table_headers.header_responsible)        
+        ID_column_index = header_labels.index(table_headers.header_id)
+
         for row_index in range(con_model.rowCount()):
-            number_item = con_model.item(row_index, number_column_index)            
-            name_item = con_model.item(row_index, name_column_index)
-            status_item = con_model.item(row_index, status_column_index)
-            color_item = con_model.item(row_index, color_column_index)
-            id_item = con_model.item(row_index, ID_column_index)
-            dokAddress_item = con_model.item(row_index, dokAddress_column_index)
-            cadastralUnit_item = con_model.item(row_index,cadastralUnit_Column_index)
-            
-            number_item_text = QStandardItem(number_item.text())
-            name_item_text = QStandardItem(name_item.text())
-            status_item_text = QStandardItem(status_item.text())
-            id_item_text = QStandardItem(id_item.text())
-            Address_item_text = QStandardItem(dokAddress_item.text())
-            cadastralUnit_text = QStandardItem(cadastralUnit_item.text())
-            
-            
-            if color_item:
-                color_code = color_item.text()
-                if color_code:
-                    rgb_color = Colors.hex_to_rgb(color_code)
-                    rgb_black = '#181a1c'
-                    rgb_color_black = Colors.hex_to_rgb(rgb_black)
-                    color = QColor(*rgb_color)
-                    color_black = QColor(*rgb_color_black)
-                    status_item_text.setBackground(color)
-                    status_item_text.setForeground(color_black)
-                    status_item_text.setTextAlignment(Qt.AlignCenter)
+            con_model.item(row_index, ID_column_index)
 
-            contracts_model.setItem(row_index, number_column_index, number_item_text) 
-            contracts_model.setItem(row_index, name_column_index, name_item_text)
-            contracts_model.setItem(row_index, cadastralUnit_Column_index,cadastralUnit_text)
+            number_item =  con_model.item(row_index, number_column_index)
+            responsible_item = con_model.item(row_index,responsible_column_index)   
+            
+            number_item.setTextAlignment(Qt.AlignCenter)  
+            responsible_item.setTextAlignment(Qt.AlignCenter)
+
+            date_column_index = ModelHandler.format_date_item(con_model, row_index, header_labels)
+
+            status_column_index, color_column_index = ModelHandler.set_status_item_colors_from_model(con_model, row_index, header_labels)
+            # Call format_cadastral_item method
+            cadastral_column_index, cadastralButton_Column_index = ModelHandler.format_cadastral_item(con_model, row_index, header_labels)
+            # Call format_dok_item method
+            dokAddress_column_index, dokButton_column_index = ModelHandler.format_dok_item(con_model, row_index, header_labels)
+            # Call build_mailabl_link_button method
+            webButton_Column_index = ModelHandler.build_mailabl_link_button(con_model, row_index, header_labels)
 
 
-            dokAddress_index = con_model.index(row_index, dokAddress_column_index)
-            dokAddress_item = con_model.itemFromIndex(dokAddress_index)
-            contracts_model.setItem(row_index, dokAddress_column_index, Address_item_text)
+        DelegatesForTables.setup_delegates_contract_table(table, header_labels)
 
-            if dokAddress_item and dokAddress_item.data(Qt.DisplayRole):
-                dokLink = dokAddress_item.data(Qt.DisplayRole)
-                #print(f"dok Link {dokLink}")
-                if dokLink:
-                    pb_dokLink = QStandardItem()
-                    icon_path = iconHandler.set_document_icon_based_on_item(dokLink)
-                    icon = QIcon(icon_path)
-                    pb_dokLink.setIcon(icon)
-                    background_color2 = QColor("#40414f")  
-                    pb_dokLink.setBackground(QBrush(background_color2))
-                    # Set the foreground color (text color) to a contrasting color
-                    text_color2 = QColor("#FFFFFF")  # White
-                    pb_dokLink.setForeground(QBrush(text_color2))
-                    # Make the cell selectable and give it a raised effect
-                    pb_dokLink.setSelectable(True)
-                    pb_dokLink.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                    # Add a button to each row in the 'Button' column (column link_column_index)
-                    contracts_model.setItem(row_index, dokButton_column_index, pb_dokLink)
+        table.setModel(con_model)
+        # Set the row height to 20 pixels
+        table.verticalHeader().setDefaultSectionSize(20)
             
-            pb_openInMailabl = QStandardItem()
-            icon_path = Filepaths.get_icon(IconsByName().Mailabl_icon_name)
-            icon = QIcon(icon_path)
-            pb_openInMailabl.setIcon(icon)
-            pb_openInMailabl.setSelectable(True)
-            pb_openInMailabl.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-            # Set the item containing the icon to be centered within the cell
-            pb_openInMailabl.setTextAlignment(Qt.AlignCenter)
-            contracts_model.setItem(row_index, Link_Column_index, pb_openInMailabl)
-            contracts_model.setItem(row_index,ID_column_index, id_item_text)
-            contracts_model.setItem(row_index, status_column_index, status_item_text)
-            
-            if cadastralUnit_item:
-                cadastral_number = cadastralUnit_item.text()
-                if cadastral_number:
-                    pb_ShowCadasters = QStandardItem()
-                    text_color1 = QColor("#FFFFFF")  # White
-                    pb_ShowCadasters.setForeground(QBrush(text_color1))
-                    pb_ShowCadasters.setSelectable(True)
-                    pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
-                    icon_path = Filepaths.get_icon(IconsByName().icon_show_on_map)
-                    icon = QIcon(icon_path)
-                    pb_ShowCadasters.setIcon(icon)
-                    contracts_model.setItem(row_index, cadastralUnit_Button_index, pb_ShowCadasters)
-            
-                    # Set the custom delegate for the button column (column link_column_index)
-        button_delegate = ContractButtonDelegate(ID_column_index, table)
-        table.setItemDelegateForColumn(Link_Column_index, button_delegate)
-            
-                # Set the custom delegate for the file column
-        file_delegate = FileDelegate(dokAddress_column_index, table)
-        #print(f"dokAddress_column_index: {dokAddress_column_index}")
-        table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
-
-
-        show_onMap_delegate = SelectContractsOnMapElementsDelegate(ID_column_index, table)
-        table.setItemDelegateForColumn(cadastralUnit_Button_index, show_onMap_delegate)
-
-            
-        table.verticalHeader().setVisible(False)
-        table.setSortingEnabled(True)
-        table.setModel(contracts_model)
-        table.update()  # Refresh the view
-        
-                # Define the columns to hide
-        columns_to_hide = [color_column_index]
+        # Define the columns to hide
+        columns_to_hide = [color_column_index,  dokAddress_column_index]
         # Hide the specified columns
         for column_index in columns_to_hide:
             table.hideColumn(column_index)
+
         
         resizes = ColumnResizer(table)
-        columns_to_resize = [number_column_index, name_column_index, status_column_index]
+        columns_to_resize = [number_column_index, date_column_index, responsible_column_index, status_column_index]
         for column_index in columns_to_resize:
             resizes.resizeColumnByIndex(table, column_index)
-        
-        
-        columns_width_icons = [ID_column_index, Link_Column_index, dokButton_column_index, dokAddress_column_index]
-        column_widths = [0,10,10,0]
-        resizes.setColumnWidths(table,columns_width_icons,column_widths)
-        
-        # Hide certain column labels
-        #newLabel_Kataster = ""  # Replace with your actual column labels
-        newLabel_Dokumendid = ""
-        newLabel_Link = ""
-        #contracts_model.setHorizontalHeaderItem(kataster_column_index, QStandardItem(newLabel_Kataster))
-        contracts_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_Dokumendid))
-        contracts_model.setHorizontalHeaderItem(Link_Column_index, QStandardItem(newLabel_Link))
-        
             
+        columns_width_icons = [ID_column_index, name_column_index, cadastral_column_index,
+                            webButton_Column_index, dokButton_column_index, 
+                            cadastralButton_Column_index]
+        column_widths = [0,250,0,10,10,10]
+        resizes.setColumnWidths(table, columns_width_icons, column_widths)
+        # Hide certain column labels
+        newLabel_for_cadastral = ""  # Replace with your actual column labels
+        newLabel_documents = ""
+        newLabel_Link = ""
+        newLabel_ID = ""
+        newLabel_CadastralShow = ""
+        con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+        con_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
+        con_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
+        con_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
+        con_model.setHorizontalHeaderItem(cadastralButton_Column_index, QStandardItem(newLabel_CadastralShow))
+        table.verticalHeader().setVisible(False)
+        # Set selection behavior to select entire rows
+        table.setSelectionBehavior(QTableView.SelectRows)
+        # Set selection mode to single selection
+        table.setSelectionMode(QTableView.SingleSelection)
+
+        # Set sorting behavior
+        table.setSortingEnabled(True)
+        # Trigger a refresh of the view to reflect the changes
+        table.update()  # Refresh the view
         
 class queryHandling:
     def __init__(self):
         self.header_id = header_id
         self.header_number = header_number
         self.header_name = header_name
-        self.header_deadline =header_deadline
+        self.header_deadline = header_deadline
         self.header_color = header_color
         self.header_responsible = header_responsible
         self.header_property_number = header_property_number
@@ -193,7 +132,7 @@ class queryHandling:
     @staticmethod
     def contracts_basic_data(self):
             # Set header labels
-        header_labels = [header_id, header_number, header_name, header_color, header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_statuses]
+        header_labels = [header_id, header_number, header_name, header_deadline, header_responsible, header_color, header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_statuses]
 #       
         statuses = Statuses.by_module_and_state(self, MODULE_CONTRACTS, STATE_OPEN)
         #print("statuses")
@@ -210,11 +149,13 @@ class queryHandling:
             node = project_data.get("node", {})
             properties = node.get("properties", {}).get("edges", [])
             propertie_cadastralNr = [property["node"]["cadastralUnitNumber"] for property in properties] 
-
+            responsibles = node.get("responsible",{}).get("edges",[])
+            responsible_name = [responsible["node"]["displayName"] for responsible in responsibles]
+            print(f"responsible_name: {responsible_name}")
             row_data = {
                     header_number: node.get("number", "") or "",
                     header_name: node.get("name", "") or "",
-                    #'Tähtaeg': node.get("dueAt", "") or "",
+                    header_deadline: node.get("dueAt", "") or "",
                     header_statuses: node.get("status", {}).get("name", "") if node.get("status") else "",
                     header_color: node.get("status", {}).get("color", "") if node.get("status") else "",
                     header_property_number: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
@@ -224,13 +165,13 @@ class queryHandling:
                     header_webLinkButton: "",
                     header_file_path: "",
                     header_Documents: node.get("filesPath","") if ("filePath") else "Dokumendid puuduvad",
-                    #'Vastutav': ",".join(resposnisble_name) if resposnisble_name else ""
+                    header_responsible: ",".join(responsible_name) if responsible_name else ""
                 }
             #print(f"row_data: '{row_data}'")
             
             df_data.append(row_data)    
-        print("df_data")
-        print(df_data)
+        #print("df_data")
+        #print(df_data)
 
         QCoreApplication.processEvents()
         df = pd.DataFrame(df_data)
