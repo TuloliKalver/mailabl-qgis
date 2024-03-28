@@ -44,7 +44,9 @@ class WorkSpaceHandler:
     @staticmethod
     def swWorkSpace_Contracts_FrontPage(self):
         push_button = self.pbContracts
+        refresh_button = self.pbRefresh_tblMailabl_contracts
         push_button.blockSignals(True)
+        refresh_button.blockSignals(True)
         widget = self.pbContracts_SliderFrame
         WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
         self.sw_HM.setCurrentIndex(1)
@@ -52,6 +54,7 @@ class WorkSpaceHandler:
         table = self.ContractView
         ContractsMain.main_contracts(self, table)
         push_button.blockSignals(False)
+        refresh_button.blockSignals(False)
     
     @staticmethod
     def swWorkSpace_Substitutes_FrontPage(self):

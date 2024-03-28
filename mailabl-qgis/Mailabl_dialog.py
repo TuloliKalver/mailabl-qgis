@@ -21,7 +21,7 @@ import os
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
 from qgis.utils import iface
-from PyQt5.QtWidgets import  QLineEdit, QListView, QMessageBox, QTableView, QAbstractItemView, QMessageBox
+from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
@@ -210,6 +210,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pbSubstitutes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Substitutes_FrontPage(self))
         self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
+        self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
         self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
         self.pbAddDrawings.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self))
         
@@ -1110,8 +1111,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 #            widget.rejected.connect(lambda: ProjectsProperties.on_cancel_button_clicked(widget))
             
         else:
-            text = ("Vali projekt")
-            heading = "Hoiatus"
+            text = HoiatusTexts().andmed_valimata
+            heading = Headings().warningSimple
             QMessageBox.information(self, heading, text)         
 
         

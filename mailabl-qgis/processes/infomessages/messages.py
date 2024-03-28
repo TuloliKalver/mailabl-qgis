@@ -24,9 +24,9 @@ class HoiatusTexts:
         self.kinnistud_MLBs_olemas = "Kõik valitud kinnistud on juba Mailablis"
         self.kinnistuid_MLBs_pole = "Valitud kinnistuid Mailablis ei ole"
         self.kihinimetus_lisamata = "Kihinimetus on vigane või lisamata"
-        self.logimise_ebaonnestus = ("Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli")
-        self.logimise_ebaonnestus = ("Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti")
-        self.projektide_laadimine_error = ("Ala on projektide laadimiseks liiga suur\nZoomi lähemale")           
+        self.logimise_ebaonnestus = "Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli"
+        self.logimise_ebaonnestus = "Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti"
+        self.projektide_laadimine_error = "Ala on projektide laadimiseks liiga suur\nZoomi lähemale"          
         self.kasutaja_puudub = "Puudub kasutaja"
         self.projekt_valimata = "Vali projekt"
         self.QGIS_projekt_puudu = "Jätkamiseks ava projekt"
@@ -35,6 +35,7 @@ class HoiatusTexts:
         self.projekti_ei_leidnud = "Antud numbriga projekti ei leitud"
         self.projektid_puuduvad = "Piirkonnas puuduvad teadaolevad projektid"        
         self.kihil_kinnistu_valik = "Vali vähemalt üks kinnistu"
+        self.ostingu_tulemused_puuduvad = "Otsingule vastavaid tulemused puuduvad"
         #self.???(f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
         #self.???(f"Projektile\n{project_name}\nlisatud\n{total_returned_ids}/{total_ids_Table}")
 
