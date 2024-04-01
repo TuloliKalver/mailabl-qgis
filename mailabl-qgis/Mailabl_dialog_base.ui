@@ -1183,7 +1183,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>7</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -5057,6 +5057,18 @@ p, li { white-space: pre-wrap; }
                    <enum>QFrame::Raised</enum>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_37">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>6</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>10</number>
+                   </property>
                    <item>
                     <widget class="QFrame" name="frContracts_Tools">
                      <property name="styleSheet">
@@ -5107,7 +5119,7 @@ QPushButton:hover{
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QFrame" name="Toggleframe_2">
+                       <widget class="QFrame" name="Toggleframe_Contracts">
                         <property name="styleSheet">
                          <string notr="true"/>
                         </property>
@@ -5210,6 +5222,11 @@ QPushButton:hover{
                          </item>
                          <item>
                           <widget class="QPushButton" name="pbSearchContracts">
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
                            <property name="text">
                             <string>Otsi</string>
                            </property>
@@ -5232,16 +5249,58 @@ QPushButton:hover{
                     </widget>
                    </item>
                    <item>
-                    <widget class="QFrame" name="frame_28">
+                    <widget class="QFrame" name="frcontracts_Checkbox_holder">
                      <property name="frameShape">
                       <enum>QFrame::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
                       <enum>QFrame::Raised</enum>
                      </property>
-                     <layout class="QHBoxLayout" name="horizontalLayout_10">
+                     <layout class="QHBoxLayout" name="horizontalLayout_61">
+                      <property name="spacing">
+                       <number>10</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>10</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>10</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
                       <item>
-                       <spacer name="horizontalSpacer_22">
+                       <widget class="QPushButton" name="pbZoomedArea_Contracts">
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Zoomitud ala lepingud</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="cmbcontractStatuses">
+                        <property name="minimumSize">
+                         <size>
+                          <width>130</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_33">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
@@ -5263,19 +5322,6 @@ QPushButton:hover{
                           <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
                         </property>
                        </widget>
-                      </item>
-                      <item>
-                       <spacer name="horizontalSpacer">
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                       </spacer>
                       </item>
                      </layout>
                     </widget>
@@ -6901,6 +6947,11 @@ QPushButton:hover{
                       </item>
                       <item>
                        <widget class="QPushButton" name="pbSearchProjects">
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
                         <property name="text">
                          <string>Otsi</string>
                         </property>
@@ -7706,7 +7757,7 @@ QPushButton::menu-indicator {
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>8</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="w_HM_Avaleht">
                <property name="minimumSize">
@@ -7816,21 +7867,21 @@ p, li { white-space: pre-wrap; }
                </layout>
               </widget>
               <widget class="QWidget" name="w_HM_Lepingud">
-               <layout class="QVBoxLayout" name="verticalLayout_51">
+               <layout class="QVBoxLayout" name="verticalLayout_38">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>5</number>
                 </property>
                 <property name="leftMargin">
-                 <number>0</number>
+                 <number>6</number>
                 </property>
                 <property name="topMargin">
-                 <number>0</number>
+                 <number>5</number>
                 </property>
                 <property name="rightMargin">
-                 <number>0</number>
+                 <number>5</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>5</number>
                 </property>
                 <item>
                  <widget class="QFrame" name="f_HM_Lepingud_Pealkiri">
@@ -7867,6 +7918,70 @@ p, li { white-space: pre-wrap; }
                      </property>
                      <property name="text">
                       <string>Lepingud</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="f_HM_Lepingud_Sisu">
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_145">
+                   <property name="spacing">
+                    <number>5</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>6</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>5</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>5</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>5</number>
+                   </property>
+                   <item>
+                    <widget class="QTextEdit" name="te_HM_Lepingud_Sisu">
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                     <property name="readOnly">
+                      <bool>true</bool>
+                     </property>
+                     <property name="html">
+                      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Laetud aktiivse staatusega projektid ja mis on peaprojektid ja mis pole privaatsed.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Tulpades on sortimise võimalus.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Tabelis vastavale ikoonile vajutades saab:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;1. aluskaardil näha projektiga seotud kinnistuid&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;2. liikuda projektile Malilablis&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;3. avada projektiga seotud faile ja kaustasid&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Valides &amp;quot;Staatuse&amp;quot; rippmenüüs mõne muu staatuse saad projektide nimekirja värkesendada, mille tulemusena laetakse vastava staatusega projektid. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Projekti number, mille projekt on Mailablis loomise hetkel automaatselt saanud. Selle alusel on võimalik sul teha &amp;quot;täpse vaste otsing&amp;quot;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Nupp &amp;quot;Zoomitud ala projektid&amp;quot;:&lt;br /&gt;Kuna päring on mahukas on see hetkel piiratud 1000 katastriüksusega. Ole kannatlik sest tulemuste saamine võtab natuke aega.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&amp;quot;Kinnistutega sidumine&amp;quot;:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Seda nuppu vajutades aktiveeritakse eelseadisttaud kaardikiht ning aktiveeritakse valiku tööriist. Saad alustada koheselt kinnistute valimisega.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Juba seotud kinnistuid uuesti ei sostatat.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;kui oled teinud seose kinnistutega siis on vaja projketide nimekirja uuesti värskendada, kui soovid seoseid koheselt näha. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
                     </widget>
                    </item>
