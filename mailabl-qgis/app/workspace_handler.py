@@ -10,9 +10,9 @@ from .ui_controllers import WidgetAnimator
 from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
 from ..Functions.delete_items import Delete_Main_Process
-from ..Functions.Contracts.contractsItems import ContractsMain
+from ..Functions.Contracts.contractsItems import ContractsMain, ContractsQueries_list
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
-from ..config.mylabl_API.modules import MODULE_PROJECTS
+from ..config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
 from ..processes.infomessages.messages import Headings
  
 pealkiri = Headings()
@@ -52,9 +52,28 @@ class WorkSpaceHandler:
         self.sw_HM.setCurrentIndex(1)
         self.swWorkSpace.setCurrentIndex(2)
         table = self.ContractView
-        ContractsMain.main_contracts(self, table)
+        module = MODULE_CONTRACTS
+        comboBox = self.cmbcontractStatuses
+        #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
+        InsertStatusToComboBox.add_statuses_to_listview(self, comboBox, module )
+        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
+        #ContractsQueries_list.query_contracts_by_status(self, statusValue)
+        ContractsMain.main_contracts(self, table, statusValue)
         push_button.blockSignals(False)
         refresh_button.blockSignals(False)
+
+    @staticmethod
+    def contracts_reload(self):
+        refresh_button = self.pbRefresh_tblMailabl_contracts
+        refresh_button.blockSignals(True)
+        table = self.ContractView
+        comboBox = self.cmbcontractStatuses
+        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
+        #ContractsQueries_list.query_contracts_by_status(self, statusValue)
+        ContractsMain.main_contracts(self, table, statusValue)
+        refresh_button.blockSignals(False)
+
+
     
     @staticmethod
     def swWorkSpace_Substitutes_FrontPage(self):

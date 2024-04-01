@@ -52,6 +52,7 @@ from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
+from .Functions.Contracts.contractsItems import ContractsMain
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -210,7 +211,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pbSubstitutes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Substitutes_FrontPage(self))
         self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
-        self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
+        self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
         self.pbAddDrawings.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self))
         
@@ -283,6 +284,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.pbDelete_items_getCounty.clicked.connect(self.get_Mailabl_existing_counties)
         
         self.pbSearchProjects.clicked.connect(self.searchProjects)
+        self.pbSearchContracts.clicked.connect(self.searchContracts)
         
         
         
@@ -346,6 +348,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         search_items = lineEdit.displayText()
         searchProjects.search_projects_by_number(self, search_items, table)
 
+    def searchContracts(self):
+        lineEdit = self.le_searchContracts
+        table = self.ContractView
+        search_items = lineEdit.displayText()
+        ContractsMain.search_contracts(self, table, search_items)
         
     def limitedLoad(self):
         table = self.tblMailabl_projects

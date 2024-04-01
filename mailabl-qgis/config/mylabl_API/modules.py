@@ -1,3 +1,4 @@
+
 MODULE_CONTRACTS = "contracts"
 MODULE_PROJECTS = "projects"
 MODULE_TASKS = "tasks"
