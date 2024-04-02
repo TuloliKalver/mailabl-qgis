@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>718</width>
-    <height>150</height>
+    <height>248</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -103,21 +103,6 @@ QLabel {
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <property name="leftMargin">
-    <number>10</number>
-   </property>
-   <property name="topMargin">
-    <number>10</number>
-   </property>
-   <property name="rightMargin">
-    <number>10</number>
-   </property>
-   <property name="bottomMargin">
-    <number>10</number>
-   </property>
    <item>
     <widget class="QFrame" name="f_Label">
      <property name="frameShape">
@@ -176,7 +161,7 @@ QLabel {
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -188,7 +173,7 @@ QLabel {
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <item>
        <widget class="QFrame" name="f_Main_2">
@@ -200,7 +185,7 @@ QLabel {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -212,7 +197,7 @@ QLabel {
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>5</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="QFrame" name="f_Main_3">
@@ -224,7 +209,7 @@ QLabel {
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <property name="spacing">
-             <number>0</number>
+             <number>10</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -311,7 +296,7 @@ QLabel {
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -348,8 +333,157 @@ QLabel {
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QFrame" name="Projekcts_FolderSetup">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_62">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lblProjectsFolder">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Projekti baaskaust</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblProjectsFolder_location">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_22">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>370</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="Projekcts_FolderSetup_2">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_63">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lblProjectsTargetFolder">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Projekti sihtkaus</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblProjectsTargetFolder_location">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_34">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>370</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QFrame" name="f_Buttons">

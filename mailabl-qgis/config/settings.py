@@ -148,7 +148,16 @@ class SettingsDataSaveAndLoad:
         self.setup_label_cadastral_current = 'labels/projects_cadastrals'
         TARGET_CADASTRAL = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
         return TARGET_CADASTRAL
+    
+    def projects_copyFolderPath (self):
+        self.setup_label_cadastral_current = 'labels/projects_copyFolder'
+        COPYFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
+        return COPYFOLDER
 
+    def projects_targetFolderPath (self):
+        self.setup_label_cadastral_current = 'labels/projects_targetFolder'
+        TARGETFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
+        return TARGETFOLDER
     
     def save_SHP_layer_setting(self,label,layer):
         settings = QgsSettings()
@@ -176,6 +185,14 @@ class SettingsDataSaveAndLoad:
         target_settings_address = SettingsDataSaveAndLoad.projects_cadastral(self)
         settings.setValue(target_settings_address, input_value)
 
+    def save_FolderValues(self, copy_folder, target_folder):
+        settings = QgsSettings()
+        copy_folder_settings_address = SettingsDataSaveAndLoad.projects_copyFolderPath(self)
+        target_folder_settings_address = SettingsDataSaveAndLoad.projects_targetFolderPath(self)
+        settings.setValue(copy_folder_settings_address, copy_folder)
+        settings.setValue(target_folder_settings_address, target_folder)
+        
+
         
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties):
         current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -196,10 +213,13 @@ class SettingsDataSaveAndLoad:
         SettingsDataSaveAndLoad.save_target_cadastral(self,input_value, target_value)
         #print(f"Data saved {input_layer_combo_box} and {target_layer_combo_box}")
         
-    def on_save_button_clicked_projects(self, cmb_layers):
+    def on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location):
         #print("started to save")
+        copy_folder = lblProjectsFolder_location.Text()
+        Target_folder = lblProjectsTargetFolder_location.Text()
         project_value = cmb_layers.currentText()
         SettingsDataSaveAndLoad.save_target_projects(self, project_value)
+        SettingsDataSaveAndLoad.save_FolderValues(self, copy_folder, Target_folder)
         
         
         

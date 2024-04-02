@@ -53,6 +53,7 @@ from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
+from .Functions.Folders.folders import copy_and_rename_folder
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -337,9 +338,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 ############sort/cler/delete##############################
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
+
         
+        self.pushButton_2.clicked.connect(self.testsubject)
     
-        
+    def testsubject(self):
+        source_folder = r"C:\Users\Kalver\Desktop\Copydev\Copy_me"
+        target_folder = r"C:\Users\Kalver\Desktop\Copydev\Copy_Done"
+        new_name = "Some_random_name"
+        copy_and_rename_folder(source_folder, target_folder, new_name)
 
 ########################################################################
     def searchProjects(self):
