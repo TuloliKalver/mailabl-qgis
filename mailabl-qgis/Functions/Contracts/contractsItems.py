@@ -173,7 +173,7 @@ class ContractsMain:
             table.verticalHeader().setDefaultSectionSize(20)
                 
             # Define the columns to hide
-            columns_to_hide = [color_column_index,  dokAddress_column_index]
+            columns_to_hide = [color_column_index, dokAddress_column_index, ]
             # Hide the specified columns
             for column_index in columns_to_hide:
                 table.hideColumn(column_index)
@@ -439,52 +439,6 @@ class ContractsSearch:
                 }
             }
 
-            response = requestBuilder.construct_and_send_request(self, query, variables)
-
-            if response.status_code == 200:
-                data = response.json()
-                #print("data")
-                #print(data)
-                fetched_data = data.get("data", {}).get("contracts", {}).get("edges", [])
-                pageInfo = data.get("data", {}).get("contracts", {}).get("pageInfo", {})
-                #print(f"propesties_end_cursor: '{properties_end_cursor}'")
-                end_cursor = pageInfo.get("endCursor")
-                hasNextPage = pageInfo.get("hasNextPage")
-                fetched_items.extend(fetched_data)
-                total_fetched += len(fetched_data)
-
-                # Check whether the last page of projects has been reached
-                if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
-                    break
-
-            else:
-                #print(f"Error: {response.status_code}")
-                return None
-
-            QCoreApplication.processEvents()
-
-        # Return only the desired number of items
-        return fetched_items[:desired_total_items]
-
-    def query_contracts_by_id(self, id_value):
-        #print(statuses)
-        # Load the project query using the loader instance
-        query_loader = GraphqlQueriesContracts()
-        query = GraphqlQueriesContracts.load_query_for_contracts(self,query_loader.Q_All_contracts)        
-        # Set the desired total number of items to fetch
-        desired_total_items = None  # Adjust this to your desired value
-        #Initialize variables for pagination
-        end_cursor = None  # Initialize end_cursor before the loop
-        total_fetched = 0        
-        properties_items = [] # Initialize an empty list to store fetched items
-        
-        while (desired_total_items is None or total_fetched < desired_total_items):
-            # Construct variables for the GraphQL query
-            variables = {
-                    "propertiesFirst": Constants.items_for_page_large,
-                    "propertiesAfter": end_cursor if end_cursor else None,
-                    "id": id_value
-                    }
             response = requestBuilder.construct_and_send_request(self, query, variables)
 
             if response.status_code == 200:
