@@ -46,6 +46,7 @@ def copy_and_rename_folder(table):
                     shutil.copytree(source_folder, target_folder)
                     os.rename(target_folder, os.path.join(os.path.dirname(target_folder), project_name))
                     QMessageBox.information(None, "Success", f"Folder '{source_folder}' copied to '{target_folder}' and renamed to '{project_name}' successfully.")
+           
             except Exception as e:
                 QMessageBox.critical(None, "Error", f"An error occurred: {e}")
         
