@@ -4,7 +4,8 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import SettingsDataSaveAndLoad
 from ...queries.python.projects_pandas import TableHeaders
-
+from ...queries.python.DataLoading_classes import GraphQLQueryLoader
+from ...queries.python.query_tools import requestBuilder
 
 def copy_and_rename_folder(table):
     source_folder = SettingsDataSaveAndLoad().load_projcets_copy_folder_path_value()
@@ -36,7 +37,7 @@ def copy_and_rename_folder(table):
         # Get the value in the selected row and specified column
         project_name = model.data(model.index(selected_row_index, column_index))
         print(f"Selected value in column '{value}' for the selected row: {project_name}")
-    
+        project_id = model.data(model.index(selected_row_index, 0))    
         if project_name is not None or '':
             try:
                 # Check if the target folder with the new name already exists
@@ -45,6 +46,9 @@ def copy_and_rename_folder(table):
                 else:
                     shutil.copytree(source_folder, target_folder)
                     os.rename(target_folder, os.path.join(os.path.dirname(target_folder), project_name))
+                    link = os.path.join(os.path.dirname(target_folder), project_name)
+                    
+                    Link_updater().update_link(project_id, link)
                     QMessageBox.information(None, "Success", f"Folder '{source_folder}' copied to '{target_folder}' and renamed to '{project_name}' successfully.")
            
             except Exception as e:
@@ -56,5 +60,20 @@ def copy_and_rename_folder(table):
     else:
         print(f"Header '{value}' not found or empty in the model.")
 
+class Link_updater:
+    def update_link(self, project_id, link):
+            query_loader = GraphQLQueryLoader() 
+            query = query_loader.load_query_for_projects(query_loader.UPDATE_project_properties)
+            
+            variables = {
+                        "input": {
+                            "id": project_id,
+                            "filesPath": link
+                             
+                        }
+                        }
+            
+            response = requestBuilder.construct_and_send_request(self, query, variables)
+            print(response)
 
 
