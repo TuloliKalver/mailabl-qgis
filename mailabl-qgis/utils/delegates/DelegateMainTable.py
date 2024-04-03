@@ -35,6 +35,7 @@ class DelegatesForTables():
 
         show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
         table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
+        
     @staticmethod
     def setup_delegates_contract_table(table, header_labels):
         headers = TableHeaders()

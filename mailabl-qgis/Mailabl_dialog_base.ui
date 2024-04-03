@@ -1183,7 +1183,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -7222,7 +7222,7 @@ QPushButton:hover{
                       <item>
                        <widget class="QPushButton" name="pushButton_2">
                         <property name="text">
-                         <string>PushButton</string>
+                         <string>Projekti kausta genereerimine</string>
                         </property>
                        </widget>
                       </item>

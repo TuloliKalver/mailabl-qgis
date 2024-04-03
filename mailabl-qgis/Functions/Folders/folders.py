@@ -1,5 +1,6 @@
 import shutil
 import os
+import re
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import SettingsDataSaveAndLoad
@@ -33,11 +34,15 @@ def copy_and_rename_folder(table):
                 break
 
         if column_index is not None:
-            print(f"Column index of header '{value}': {column_index}")
+            #print(f"Column index of header '{value}': {column_index}")
             
             # Get the value in the selected row and specified column
-            project_name = model.data(model.index(selected_row_index, column_index))
-            print(f"Selected value in column '{value}' for the selected row: {project_name}")
+            project_name_raw = model.data(model.index(selected_row_index, column_index))
+
+            # Remove unwanted characters from the project name
+            project_name = re.sub(r'[<>:"/\\|?*.]', '', project_name_raw)
+            
+            #print(f"Selected value in column '{value}' for the selected row: {project_name}")
             project_id = model.data(model.index(selected_row_index, 0))    
             if project_name is not None or '':
                 try:
