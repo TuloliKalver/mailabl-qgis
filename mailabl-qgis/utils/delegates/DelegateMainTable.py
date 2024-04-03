@@ -13,7 +13,7 @@ from ...queries.python.projects_pandas import GetProjectsWhere
 from ...config.settings import OpenLink
 from ...queries.python.projects_pandas import TableHeaders
 
-from ...Functions.ButtonDelegates import ContractButtonDelegate
+from ...Functions.ButtonDelegates import ContractButtonDelegate, SelectContractsOnMapElementsDelegate
 
 
 class DelegatesForTables():
@@ -35,7 +35,7 @@ class DelegatesForTables():
 
         show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
         table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
-        
+
     @staticmethod
     def setup_delegates_contract_table(table, header_labels):
         headers = TableHeaders()
@@ -52,7 +52,7 @@ class DelegatesForTables():
         file_delegate = FileDelegate(dokAddress_column_index, table)
         table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
 
-        show_onMap_delegate = SelectMapElementsDelegate(ID_column_index, table)
+        show_onMap_delegate = SelectContractsOnMapElementsDelegate(ID_column_index, table)
         table.setItemDelegateForColumn(cadastralButton_Column_index, show_onMap_delegate)
 
 
@@ -92,8 +92,6 @@ class SelectMapElementsDelegate(QStyledItemDelegate):
                 return True
         return super().editorEvent(event, model, option, index)
     
-
-
 
 class WebLinkDelegate(QStyledItemDelegate):
     def __init__(self, id_column_index, parent=None):

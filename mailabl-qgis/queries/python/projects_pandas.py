@@ -113,6 +113,9 @@ class GetProjectsWhere:
         # Return only the desired number of items
         return properties_items
 
+
+
+
 class ProjectsWithPandas:    
     def query_active_main_projects_by_status(self, statuses):
         widgets_path = PathLoaderSimple.widget_statusBar_path(self)
