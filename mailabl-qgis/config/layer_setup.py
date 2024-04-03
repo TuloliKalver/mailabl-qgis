@@ -135,7 +135,7 @@ class Setup_ProjectLayers:
 
 
         SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location, target_value, input_value)
-        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)        
+        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location)        
         text = edu.salvestatud
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)

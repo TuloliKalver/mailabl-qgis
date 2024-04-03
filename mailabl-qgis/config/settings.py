@@ -150,13 +150,13 @@ class SettingsDataSaveAndLoad:
         return TARGET_CADASTRAL
     
     def projects_copyFolderPath (self):
-        self.setup_label_cadastral_current = 'labels/projects_copyFolder'
-        COPYFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
+        self.setuup_folder_input = 'labels/projects_copyFolder'
+        COPYFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setuup_folder_input}"
         return COPYFOLDER
 
     def projects_targetFolderPath (self):
-        self.setup_label_cadastral_current = 'labels/projects_targetFolder'
-        TARGETFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
+        self.setup_folder_output = 'labels/projects_targetFolder'
+        TARGETFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_folder_output}"
         return TARGETFOLDER
     
     def save_SHP_layer_setting(self,label,layer):
@@ -195,15 +195,20 @@ class SettingsDataSaveAndLoad:
         lblProjectsTargetFolder_location.setText(target_folder)
 
         
-    def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties):
+    def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location):
         current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
         create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
         SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
         projects_label_value = SettingsDataSaveAndLoad.load_projects_properties_layer_name(self)
+        input_folder_value = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
+        output_folder_value = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
         lblcurrent_main_layer_label.setText(current_label_value)
         lblnewCadastrals_input_layer_label.setText(create_new_layer_label_value)
         lblSHPNewItems.setText(SHP_layer_label_value)
         lblLayerProjects_Properties.setText(projects_label_value)
+        lblProjectsFolder_location.setText(input_folder_value)
+        lblProjectsTargetFolder_location.setText(output_folder_value)
+
         
     
         

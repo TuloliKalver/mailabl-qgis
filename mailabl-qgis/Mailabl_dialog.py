@@ -1015,7 +1015,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
         lblSHPNewItems = self.lblSHPNewItems
         lblLayerProjects_Properties = self.lblLayerProjects_Properties
-        load.startup_label_loader(lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)        
+        lblProjectsFolder_location = self.lblProjectsFolder_location
+        lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
+        load.startup_label_loader(lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location)        
 
     def load_cadastrals(self):
         self.sw_HM.setCurrentIndex(7)
@@ -1332,7 +1334,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
             lblSHPNewItems = self.lblSHPNewItems
             lblLayerProjects_Properties = self.lblLayerProjects_Properties
-            SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)
+            lblProjectsFolder_location = self.lblProjectsFolder_location 
+            lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
+            SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, lblProjectsTargetFolder_location)
 
             if Flags.Flag_settings_button:
                 print("toggle if")
