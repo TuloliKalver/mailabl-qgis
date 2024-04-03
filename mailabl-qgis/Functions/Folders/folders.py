@@ -10,7 +10,9 @@ from ...queries.python.query_tools import requestBuilder
 
 def copy_and_rename_folder(table):
 
-    overall_confirmation = QMessageBox.question(None, "Confirmation", "see on mõeldud eelkõige uutele projektidele projekti kausta koostamiseks \nEnne jätkamist kontrolli, et vajalik kasut juba loodud ei ole \nOled kindel, et soovid jätkata.",
+    text = "Ettevalmistatud struktuuriga projektikaustade genereerimine on mõeldud eelkõige uutele projektidele.\nEnne jätkamist kontrolli ega samasisulist kausta pole juba loodud.\nOled kindel, et soovid jätkata?"
+
+    overall_confirmation = QMessageBox.question(None, "Confirmation", text,
                                         QMessageBox.Yes | QMessageBox.No)
 
     if overall_confirmation == QMessageBox.Yes:
@@ -48,13 +50,13 @@ def copy_and_rename_folder(table):
                 try:
                     # Check if the target folder with the new name already exists
                     if os.path.exists(os.path.join(os.path.dirname(target_folder),project_name)):
-                        QMessageBox.information(None, "Error", f"A folder with the name '{project_name}' already exists in the target location.")
+                        QMessageBox.information(None, "Error", f"Kaust nimega '{project_name}' on juba sihtkohas olemas.")
                     else:
                         shutil.copytree(source_folder, target_folder)
                         os.rename(target_folder, os.path.join(os.path.dirname(target_folder), project_name))
                         
                         # Ask the user for confirmation
-                        confirmation = QMessageBox.question(None, "Confirmation", "Are you sure you want to run the linkUpdater function?",
+                        confirmation = QMessageBox.question(None, "Confirmation", "Oled kindel, et soovid genereeritud kausta lingi lisada Mailablis projektile?",
                                                             QMessageBox.Yes | QMessageBox.No)
                         
                         if confirmation == QMessageBox.Yes:
@@ -66,7 +68,7 @@ def copy_and_rename_folder(table):
                             print("Operation canceled by the user.")
 
                         
-                        QMessageBox.information(None, "Success", f"Folder '{source_folder}' copied to '{target_folder}' and renamed to '{project_name}' successfully.")
+                        QMessageBox.information(None, "Success", f"Kausta '{source_folder}'\n(k.a kaustas sisalduvad alamkaustad ja failid) dubleerimine õnnestus. \n\nSihtkohta on genereeritud kaust nimetusega \n'{target_folder}''{project_name}'.")
             
                 except Exception as e:
                     QMessageBox.critical(None, "Error", f"An error occurred: {e}")

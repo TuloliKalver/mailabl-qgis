@@ -178,7 +178,6 @@ class ContractsMain:
             for column_index in columns_to_hide:
                 table.hideColumn(column_index)
 
-            
             resizes = ColumnResizer(table)
             columns_to_resize = [number_column_index, date_column_index, responsible_column_index, status_column_index]
             for column_index in columns_to_resize:
