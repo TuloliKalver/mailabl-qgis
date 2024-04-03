@@ -343,10 +343,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pushButton_2.clicked.connect(self.testsubject)
     
     def testsubject(self):
-        source_folder = r"C:\Users\Kalver\Desktop\Copydev\Copy_me"
-        target_folder = r"C:\Users\Kalver\Desktop\Copydev\Copy_Done"
-        new_name = "Some_random_name"
-        copy_and_rename_folder(source_folder, target_folder, new_name)
+        table = self.tblMailabl_projects
+        copy_and_rename_folder(table)
 
 ########################################################################
     def searchProjects(self):
