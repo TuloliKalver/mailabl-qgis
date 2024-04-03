@@ -130,9 +130,11 @@ class Setup_ProjectLayers:
         lblSHPNewItems = self.lblSHPNewItems # pylint: disable=no-member
         lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
         lblProjectsFolder_location = self.lblProjectsFolder_location
+        input_value = widget.leProjectsFolder_location
+        target_value = widget.leProjectsTargetFolder_location
 
 
-        SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location)
+        SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location, target_value, input_value)
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)        
         text = edu.salvestatud
         heading = pealkiri.tubli

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>718</width>
-    <height>248</height>
+    <height>258</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -372,20 +372,6 @@ QLabel {
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lblProjectsFolder_location">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer_22">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -397,6 +383,16 @@ QLabel {
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="leProjectsFolder_location">
+           <property name="minimumSize">
+            <size>
+             <width>500</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -440,20 +436,6 @@ QLabel {
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lblProjectsTargetFolder_location">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer_34">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -465,6 +447,16 @@ QLabel {
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="leProjectsTargetFolder_location">
+           <property name="minimumSize">
+            <size>
+             <width>500</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

@@ -185,13 +185,14 @@ class SettingsDataSaveAndLoad:
         target_settings_address = SettingsDataSaveAndLoad.projects_cadastral(self)
         settings.setValue(target_settings_address, input_value)
 
-    def save_FolderValues(self, copy_folder, target_folder):
+    def save_FolderValues(self, lblProjectsFolder_location, lblProjectsTargetFolder_location, copy_folder, target_folder):
         settings = QgsSettings()
         copy_folder_settings_address = SettingsDataSaveAndLoad.projects_copyFolderPath(self)
         target_folder_settings_address = SettingsDataSaveAndLoad.projects_targetFolderPath(self)
         settings.setValue(copy_folder_settings_address, copy_folder)
         settings.setValue(target_folder_settings_address, target_folder)
-        
+        lblProjectsFolder_location.setText(copy_folder)
+        lblProjectsTargetFolder_location.setText(target_folder)
 
         
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties):
@@ -213,15 +214,23 @@ class SettingsDataSaveAndLoad:
         SettingsDataSaveAndLoad.save_target_cadastral(self,input_value, target_value)
         #print(f"Data saved {input_layer_combo_box} and {target_layer_combo_box}")
         
-    def on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location):
+    def on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location, target_value, input_value):
         #print("started to save")
-        copy_folder = lblProjectsFolder_location.Text()
-        Target_folder = lblProjectsTargetFolder_location.Text()
+        copy_folder = input_value.text()
+        target_folder = target_value.text()
         project_value = cmb_layers.currentText()
         SettingsDataSaveAndLoad.save_target_projects(self, project_value)
-        SettingsDataSaveAndLoad.save_FolderValues(self, copy_folder, Target_folder)
+        SettingsDataSaveAndLoad.save_FolderValues(self,lblProjectsFolder_location, lblProjectsTargetFolder_location, copy_folder, target_folder)
         
-        
+    def load_projcets_copy_folder_path_value(self):
+        settings_address = SettingsDataSaveAndLoad.projects_copyFolderPath(self)
+        settings = QgsSettings()
+        return settings.value(settings_address, '', type=str)
+    
+    def load_target_Folder_path_value(self):
+        settings_address = SettingsDataSaveAndLoad.projects_targetFolderPath(self)
+        settings = QgsSettings()
+        return settings.value(settings_address, '', type=str)
         
     def load_target_cadastral_name(self):
         settings_address = SettingsDataSaveAndLoad.target_cadastral(self)
