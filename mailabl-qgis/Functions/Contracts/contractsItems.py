@@ -7,20 +7,15 @@ from datetime import datetime
 
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel, QColor, QBrush, QIcon
-from PyQt5.QtWidgets import QTableView
-from ..ButtonDelegates import ContractButtonDelegate, FileDelegate, SelectContractsOnMapElementsDelegate
-from ..tableViewAdjust import Colors, ColumnResizer
-from ...queries.python.Statuses.statusManager import Statuses, STATE_OPEN
+from PyQt5.QtWidgets import QTableView, QMessageBox
+
+from ..tableViewAdjust import ColumnResizer
 from ...queries.python.DataLoading_classes import GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
-#from ...config.settings import Filepaths
 from ...utils.table_utilys import ModelHandler
 from ...utils.delegates.DelegateMainTable import DelegatesForTables
-from ...config.settings import Filepaths, IconsByName
 from ...config.settings import SettingsDataSaveAndLoad
 from ...queries.python.MapTools.selector import visibleSelector
-from ...config.iconHandler import iconHandler
-from ...config.mylabl_API.modules import MODULE_CONTRACTS
 from ...processes.infomessages.messages import Headings, HoiatusTexts
 
 
@@ -56,79 +51,85 @@ class ContractsMain:
 
         if result is not None:
             con_model, header_labels = result
-
-            table_headers = queryHandling()
+            if con_model.rowCount() == 0:
+                text = HoiatusTexts().ostingu_tulemused_puuduvad
+                heading = Headings().warningSimple
+                print(f"{heading}, {text}")
+                QMessageBox.information(None, heading, text)
             
-            number_column_index = header_labels.index(table_headers.header_number)
-            name_column_index = header_labels.index(table_headers.header_name)
-            #LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
-            responsible_column_index = header_labels.index(table_headers.header_responsible)        
-            ID_column_index = header_labels.index(table_headers.header_id)
-
-            for row_index in range(con_model.rowCount()):
-                con_model.item(row_index, ID_column_index)
-
-                number_item =  con_model.item(row_index, number_column_index)
-                responsible_item = con_model.item(row_index,responsible_column_index)   
+            else:
+                table_headers = queryHandling()
                 
-                number_item.setTextAlignment(Qt.AlignCenter)  
-                responsible_item.setTextAlignment(Qt.AlignCenter)
+                number_column_index = header_labels.index(table_headers.header_number)
+                name_column_index = header_labels.index(table_headers.header_name)
+                #LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
+                responsible_column_index = header_labels.index(table_headers.header_responsible)        
+                ID_column_index = header_labels.index(table_headers.header_id)
 
-                date_column_index = ModelHandler.format_date_item(con_model, row_index, header_labels)
+                for row_index in range(con_model.rowCount()):
+                    con_model.item(row_index, ID_column_index)
 
-                status_column_index, color_column_index = ModelHandler.set_status_item_colors_from_model(con_model, row_index, header_labels)
-                # Call format_cadastral_item method
-                cadastral_column_index, cadastralButton_Column_index = ModelHandler.format_cadastral_item(con_model, row_index, header_labels)
-                # Call format_dok_item method
-                dokAddress_column_index, dokButton_column_index = ModelHandler.format_dok_item(con_model, row_index, header_labels)
-                # Call build_mailabl_link_button method
-                webButton_Column_index = ModelHandler.build_mailabl_link_button(con_model, row_index, header_labels)
+                    number_item =  con_model.item(row_index, number_column_index)
+                    responsible_item = con_model.item(row_index,responsible_column_index)   
+                    
+                    number_item.setTextAlignment(Qt.AlignCenter)  
+                    responsible_item.setTextAlignment(Qt.AlignCenter)
+
+                    date_column_index = ModelHandler.format_date_item(con_model, row_index, header_labels)
+
+                    status_column_index, color_column_index = ModelHandler.set_status_item_colors_from_model(con_model, row_index, header_labels)
+                    # Call format_cadastral_item method
+                    cadastral_column_index, cadastralButton_Column_index = ModelHandler.format_cadastral_item(con_model, row_index, header_labels)
+                    # Call format_dok_item method
+                    dokAddress_column_index, dokButton_column_index = ModelHandler.format_dok_item(con_model, row_index, header_labels)
+                    # Call build_mailabl_link_button method
+                    webButton_Column_index = ModelHandler.build_mailabl_link_button(con_model, row_index, header_labels)
 
 
-            DelegatesForTables.setup_delegates_contract_table(table, header_labels)
+                DelegatesForTables.setup_delegates_contract_table(table, header_labels)
 
-            table.setModel(con_model)
-            # Set the row height to 20 pixels
-            table.verticalHeader().setDefaultSectionSize(20)
+                table.setModel(con_model)
+                # Set the row height to 20 pixels
+                table.verticalHeader().setDefaultSectionSize(20)
+                    
+                # Define the columns to hide
+                columns_to_hide = [color_column_index,  dokAddress_column_index]
+                # Hide the specified columns
+                for column_index in columns_to_hide:
+                    table.hideColumn(column_index)
+
                 
-            # Define the columns to hide
-            columns_to_hide = [color_column_index,  dokAddress_column_index]
-            # Hide the specified columns
-            for column_index in columns_to_hide:
-                table.hideColumn(column_index)
+                resizes = ColumnResizer(table)
+                columns_to_resize = [number_column_index, date_column_index, responsible_column_index, status_column_index]
+                for column_index in columns_to_resize:
+                    resizes.resizeColumnByIndex(table, column_index)
+                    
+                columns_width_icons = [ID_column_index, name_column_index, cadastral_column_index,
+                                    webButton_Column_index, dokButton_column_index, 
+                                    cadastralButton_Column_index]
+                column_widths = [0,250,0,10,10,10]
+                resizes.setColumnWidths(table, columns_width_icons, column_widths)
+                # Hide certain column labels
+                newLabel_for_cadastral = ""  # Replace with your actual column labels
+                newLabel_documents = ""
+                newLabel_Link = ""
+                newLabel_ID = ""
+                newLabel_CadastralShow = ""
+                con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+                con_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
+                con_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
+                con_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
+                con_model.setHorizontalHeaderItem(cadastralButton_Column_index, QStandardItem(newLabel_CadastralShow))
+                table.verticalHeader().setVisible(False)
+                # Set selection behavior to select entire rows
+                table.setSelectionBehavior(QTableView.SelectRows)
+                # Set selection mode to single selection
+                table.setSelectionMode(QTableView.SingleSelection)
 
-            
-            resizes = ColumnResizer(table)
-            columns_to_resize = [number_column_index, date_column_index, responsible_column_index, status_column_index]
-            for column_index in columns_to_resize:
-                resizes.resizeColumnByIndex(table, column_index)
-                
-            columns_width_icons = [ID_column_index, name_column_index, cadastral_column_index,
-                                webButton_Column_index, dokButton_column_index, 
-                                cadastralButton_Column_index]
-            column_widths = [0,250,0,10,10,10]
-            resizes.setColumnWidths(table, columns_width_icons, column_widths)
-            # Hide certain column labels
-            newLabel_for_cadastral = ""  # Replace with your actual column labels
-            newLabel_documents = ""
-            newLabel_Link = ""
-            newLabel_ID = ""
-            newLabel_CadastralShow = ""
-            con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
-            con_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
-            con_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
-            con_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
-            con_model.setHorizontalHeaderItem(cadastralButton_Column_index, QStandardItem(newLabel_CadastralShow))
-            table.verticalHeader().setVisible(False)
-            # Set selection behavior to select entire rows
-            table.setSelectionBehavior(QTableView.SelectRows)
-            # Set selection mode to single selection
-            table.setSelectionMode(QTableView.SingleSelection)
-
-            # Set sorting behavior
-            table.setSortingEnabled(True)
-            # Trigger a refresh of the view to reflect the changes
-            table.update()  # Refresh the view
+                # Set sorting behavior
+                table.setSortingEnabled(True)
+                # Trigger a refresh of the view to reflect the changes
+                table.update()  # Refresh the view
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
             heading = Headings().warningSimple
