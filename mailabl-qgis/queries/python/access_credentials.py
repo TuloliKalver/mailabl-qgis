@@ -64,6 +64,7 @@ def get_access_token(self):
     username = get_user_name()
     password = get_user_password()
 
+
     # Construct GraphQL mutation for authentication
     graphql_mutation = f'''
     mutation {{

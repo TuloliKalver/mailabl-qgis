@@ -52,7 +52,9 @@ class SetupCadastralLayers:
         # Handle logic when the save button is clicked
         SettingsDataSaveAndLoad.on_save_button_clicked_cadastrals(self, cmbCurrent_Layer, cmbTarget_layer)
         lblLayerProjects_Properties = self.lblLayerProjects_Properties # pylint: disable=no-member
-        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties)
+        lblProjectsFolder_location = self.lblProjectsFolder_location 
+        lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
+        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties,  lblProjectsFolder_location, lblProjectsTargetFolder_location)
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)

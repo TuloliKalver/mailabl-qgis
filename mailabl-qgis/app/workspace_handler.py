@@ -32,7 +32,8 @@ class WorkSpaceHandler:
         button = self.pbProjects
         button.blockSignals(True)
         table = self.tblMailabl_projects
-        
+        self.le_searchProjects.clear()
+
         module = MODULE_PROJECTS
         comboBox = self.cmbProjectStatuses
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
