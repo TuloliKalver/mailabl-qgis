@@ -1021,7 +1021,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblLayerProjects_Properties = self.lblLayerProjects_Properties
         lblProjectsFolder_location = self.lblProjectsFolder_location
         lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
-        load.startup_label_loader(lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location)        
+        lbl_preferred_project_status = self.lbl_preferred_project_status
+        load.startup_label_loader(lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
+                                    lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location,
+                                    lblProjectsTargetFolder_location, lbl_preferred_project_status)        
 
     def load_cadastrals(self):
         self.sw_HM.setCurrentIndex(7)
@@ -1340,7 +1343,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             lblLayerProjects_Properties = self.lblLayerProjects_Properties
             lblProjectsFolder_location = self.lblProjectsFolder_location 
             lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
-            SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, lblProjectsTargetFolder_location)
+            lbl_preferred_project_status = self.lbl_preferred_project_status
+            SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
+                                                         lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
+                                                         lblProjectsTargetFolder_location, lbl_preferred_project_status)
 
             if Flags.Flag_settings_button:
                 print("toggle if")

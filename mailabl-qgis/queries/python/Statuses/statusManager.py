@@ -122,10 +122,31 @@ class InsertStatusToComboBox:
             comboBox.addItem(item_text)
             comboBox.setItemData(comboBox.count() - 1, item_id)
         
+
+        
         # Ensure the first item is selected
         if comboBox.count() > 0:
             comboBox.setCurrentIndex(0)
             
+
+    def add_statuses_to_listview_set_status (self, comboBox, module_name, status_id):
+        # Clear existing items in the combo box
+        comboBox.clear()
+
+        # Populate the combo box with items and associate each item's text with its ID
+        statuses = Statuses.all_by_module_names(self, module_name)
+        print(statuses)
+        for item_text, item_id in statuses:
+            comboBox.addItem(item_text)
+            comboBox.setItemData(comboBox.count() - 1, item_id)
+        
+                # Find the index of the item with the provided status_id
+        for index in range(comboBox.count()):
+            if comboBox.itemData(index) == status_id:
+                comboBox.setCurrentIndex(index)
+                break
+
+        
             
         # Retrieving the selected item's ID
     def get_selected_status_id(comboBox):

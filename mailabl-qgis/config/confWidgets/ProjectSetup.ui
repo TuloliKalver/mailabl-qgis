@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>718</width>
-    <height>258</height>
+    <width>1016</width>
+    <height>317</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -324,11 +324,7 @@ QLabel {
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Tulekul</string>
-           </property>
-          </widget>
+          <widget class="QComboBox" name="cmbPreferred_Project_status"/>
          </item>
         </layout>
        </widget>

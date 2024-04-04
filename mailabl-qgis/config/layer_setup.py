@@ -9,9 +9,10 @@ from PyQt5.uic import loadUi
 from qgis.core import QgsMapLayer, QgsProject
 
 # Local Application or Library Imports
+from .mylabl_API.modules import MODULE_PROJECTS
 from .settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
-
+from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 
 
 pealkiri = Headings()
@@ -54,7 +55,10 @@ class SetupCadastralLayers:
         lblLayerProjects_Properties = self.lblLayerProjects_Properties # pylint: disable=no-member
         lblProjectsFolder_location = self.lblProjectsFolder_location 
         lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
-        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties,  lblProjectsFolder_location, lblProjectsTargetFolder_location)
+        lbl_preferred_project_status = self.lbl_preferred_project_status
+        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
+                                                     lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, 
+                                                     lblProjectsTargetFolder_location, lbl_preferred_project_status)
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)
@@ -117,27 +121,38 @@ class Setup_ProjectLayers:
         
         cmb_layers  = widget.cmbProjects_Layer
         QGIS_items.clear_and_populate_combo_box(self, cmb_layers)
+        module = MODULE_PROJECTS
+        combo_box = widget.cmbPreferred_Project_status
+        #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
+        InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module)
         
         # Connect signals to functions
-        save_button.clicked.connect(lambda: Setup_ProjectLayers.on_save_button_clicked(self, widget, cmb_layers))
+        save_button.clicked.connect(lambda: Setup_ProjectLayers.on_save_button_clicked(self, widget, cmb_layers, combo_box))
         cancel_button.clicked.connect(lambda: Setup_ProjectLayers.on_cancel_button_clicked(self, widget))
 
 
 
-    def on_save_button_clicked(self, widget, cmb_layers):
+    def on_save_button_clicked(self, widget, cmb_layers, combo_box):
         # Handle logic when the save button is clicked
         lblLayerProjects_Properties = self.lblLayerProjects_Properties # pylint: disable=no-member
         lblcurrent_main_layer_label = self.lblcurrent_main_layer_label # pylint: disable=no-member
         lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label # pylint: disable=no-member
+        project_status_label = self.lbl_preferred_project_status
         lblSHPNewItems = self.lblSHPNewItems # pylint: disable=no-member
         lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
         lblProjectsFolder_location = self.lblProjectsFolder_location
+        lbl_preferred_project_status = self.lbl_preferred_project_status
         input_value = widget.leProjectsFolder_location
         target_value = widget.leProjectsTargetFolder_location
 
 
+        status_value = InsertStatusToComboBox.get_selected_status_id(combo_box)
+        print(f"status_value: {status_value}")
+        SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value, project_status_label)
         SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location, target_value, input_value)
-        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location)        
+        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
+                                                     lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
+                                                     lbl_preferred_project_status)        
         text = edu.salvestatud
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)

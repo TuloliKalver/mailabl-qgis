@@ -3,10 +3,9 @@
 # pylint: disable=no-name-in-module
 
 import pandas as pd
-from datetime import datetime
 
 from PyQt5.QtCore import Qt, QCoreApplication
-from PyQt5.QtGui import QStandardItem, QStandardItemModel, QColor, QBrush, QIcon
+from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QTableView, QMessageBox
 
 from ..tableViewAdjust import ColumnResizer

@@ -159,6 +159,13 @@ class SettingsDataSaveAndLoad:
         TARGETFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_folder_output}"
         return TARGETFOLDER
     
+    def projects_preferred_status_ID (self):
+        self.setup_projects_preferred_status = 'labels/projects_preferred_status'
+        PROJECT_STATUS = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_projects_preferred_status}"
+        return PROJECT_STATUS
+
+
+
     def save_SHP_layer_setting(self,label,layer):
         settings = QgsSettings()
         #save setup target
@@ -194,20 +201,34 @@ class SettingsDataSaveAndLoad:
         lblProjectsFolder_location.setText(copy_folder)
         lblProjectsTargetFolder_location.setText(target_folder)
 
-        
-    def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location):
+    def save_preferred_projects_status_id(self, project_id, label):
+        settings = QgsSettings()
+        # Extract the integer value from the list
+        project_id_int = int(project_id[0]) if project_id else None
+        print(f"id_s: {project_id_int}")
+        path = SettingsDataSaveAndLoad.projects_preferred_status_ID(self)
+        settings.setValue(path, project_id_int)
+        # Set the text of the label to the string representation of project_id_int
+        label.setText(str(project_id_int))
+
+
+    def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
+                              lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
+                              lbl_preferred_project_status):
         current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
         create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
         SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
         projects_label_value = SettingsDataSaveAndLoad.load_projects_properties_layer_name(self)
         input_folder_value = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
         output_folder_value = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
+        projects_status_id_value = SettingsDataSaveAndLoad.load_projects_status_id(self)
         lblcurrent_main_layer_label.setText(current_label_value)
         lblnewCadastrals_input_layer_label.setText(create_new_layer_label_value)
         lblSHPNewItems.setText(SHP_layer_label_value)
         lblLayerProjects_Properties.setText(projects_label_value)
         lblProjectsFolder_location.setText(input_folder_value)
         lblProjectsTargetFolder_location.setText(output_folder_value)
+        lbl_preferred_project_status.setText(projects_status_id_value)
 
         
     
@@ -236,7 +257,14 @@ class SettingsDataSaveAndLoad:
         settings_address = SettingsDataSaveAndLoad.projects_targetFolderPath(self)
         settings = QgsSettings()
         return settings.value(settings_address, '', type=str)
+
+    def load_projects_status_id(self):
+        settings_projects_id = SettingsDataSaveAndLoad.projects_preferred_status_ID(self)
+        settings = QgsSettings()
+        return settings.value(settings_projects_id, '', type=str)
         
+
+
     def load_target_cadastral_name(self):
         settings_address = SettingsDataSaveAndLoad.target_cadastral(self)
         settings = QgsSettings()
