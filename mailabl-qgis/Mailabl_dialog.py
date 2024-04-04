@@ -330,7 +330,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pushButton.clicked.connect(self.limitedLoad)
         
-        
+#        self.pbZoomedArea_Contracts.clicked.connect(self.limitedLoad_contracts)    
         
         
 
@@ -342,6 +342,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pushButton_2.clicked.connect(self.testsubject)
     
+
     def testsubject(self):
         table = self.tblMailabl_projects
         copy_and_rename_folder(table)
@@ -363,6 +364,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         table = self.tblMailabl_projects
         projectsTableDecorator.load_Mailabl_projects_list_with_zoomed_map_elements(table)
         
+    
+    def limitedLoad_contracts(self):
+        pushButton = self.pbZoomedArea_Contracts
+        table = self.tblMailabl_projects
+        ContractsMain.load_contracts_list_with_zoomed_map_elements(self, table)
 
     def handleSidebar_help(self):
         button1 = self.pbMailabl        

@@ -375,7 +375,7 @@ class ProjectsWithPandas_3:
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(header_labels)
 
-        print(f"selected features: '{selected_features}' total:'{len(selected_features)}'")
+        #print(f"selected features: '{selected_features}' total:'{len(selected_features)}'")
         
         # Splitting the list into sublists with a maximum of 4 items each
         sublists = [selected_features[i:i+Constants.items_for_page_medium] for i in range(0, len(selected_features), Constants.items_for_page_medium)]
