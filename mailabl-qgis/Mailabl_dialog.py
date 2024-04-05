@@ -1005,9 +1005,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             results = UserSettings.user_data(self, username)
             if results:
                 user_name, user_lastname, roles_text = results
-                print(f"Final user_name: {user_name}")
-                print(f"Final user_lastname: {user_lastname}")
-                print(f"Final Roles: {roles_text}")
+
                 self.lbNuserName.setText(user_name)
                 self.lblNUserSurename.setText(user_lastname)
                 self.lblUserRoles.setText(roles_text)

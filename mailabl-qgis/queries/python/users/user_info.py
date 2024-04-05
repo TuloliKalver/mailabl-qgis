@@ -37,12 +37,9 @@ class UserSettings:
                 user_node = edge.get("node", {})
                 user_name = user_node.get("firstName", "")
                 user_lastname = user_node.get("lastName", "")
-                print(f"user_name: {user_name}")
-                print(f"user_lastname: {user_lastname}")
                 roles = user_node.get("roles", [])
                 role_names = [role.get("displayName", "") for role in roles]
                 roles_text = ", ".join(role_names)
-                print(f"Roles: {roles_text}")
 
         if end_cursor:
             return user_name, user_lastname, roles_text
