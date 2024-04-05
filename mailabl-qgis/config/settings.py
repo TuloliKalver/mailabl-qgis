@@ -254,7 +254,8 @@ class SettingsDataSaveAndLoad:
         project_value = cmb_layers.currentText()
         SettingsDataSaveAndLoad.save_target_projects(self, project_value)
         SettingsDataSaveAndLoad.save_FolderValues(self,lblProjectsFolder_location, lblProjectsTargetFolder_location, copy_folder, target_folder)
-        
+
+
     def load_projcets_copy_folder_path_value(self):
         settings_address = SettingsDataSaveAndLoad.projects_copyFolderPath(self)
         settings = QgsSettings()

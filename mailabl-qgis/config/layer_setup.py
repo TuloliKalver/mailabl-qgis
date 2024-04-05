@@ -119,13 +119,29 @@ class Setup_ProjectLayers:
         
         widget.show()
         
+        module = MODULE_PROJECTS
+ 
         cmb_layers  = widget.cmbProjects_Layer
         QGIS_items.clear_and_populate_combo_box(self, cmb_layers)
-        module = MODULE_PROJECTS
+ 
         combo_box = widget.cmbPreferred_Project_status
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
-        InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module)
-        
+        status_id = SettingsDataSaveAndLoad.load_projects_status_id(self)
+        if status_id is None or '':
+            InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module)
+        else:
+           InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, status_id)
+
+        copy_folder_path = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
+        if copy_folder_path:
+            lblProjectsFolder_location = widget.leProjectsFolder_location
+            lblProjectsFolder_location.setText(copy_folder_path)
+                    
+        target_folder_path = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
+        if target_folder_path:
+            lblProjectsTargetFolder_location = widget.leProjectsTargetFolder_location
+            lblProjectsTargetFolder_location.setText(target_folder_path)                
+ 
         # Connect signals to functions
         save_button.clicked.connect(lambda: Setup_ProjectLayers.on_save_button_clicked(self, widget, cmb_layers, combo_box))
         cancel_button.clicked.connect(lambda: Setup_ProjectLayers.on_cancel_button_clicked(self, widget))
