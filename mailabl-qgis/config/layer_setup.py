@@ -146,9 +146,11 @@ class Setup_ProjectLayers:
         target_value = widget.leProjectsTargetFolder_location
 
 
-        status_value = InsertStatusToComboBox.get_selected_status_id(combo_box)
-        print(f"status_value: {status_value}")
-        SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value, project_status_label)
+        status_value_id = InsertStatusToComboBox.get_selected_status_id(combo_box)
+        status_value_name = InsertStatusToComboBox.get_selected_status_name(combo_box)
+        print(f"status_value: {status_value_id}")
+        print(f"status value name: {status_value_name}")
+        SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value_id, status_value_name, project_status_label)
         SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location, target_value, input_value)
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
                                                      lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,

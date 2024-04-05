@@ -146,8 +146,7 @@ class InsertStatusToComboBox:
                 comboBox.setCurrentIndex(index)
                 break
 
-        
-            
+                    
         # Retrieving the selected item's ID
     def get_selected_status_id(comboBox):
         selected_index = comboBox.currentIndex()
@@ -156,4 +155,12 @@ class InsertStatusToComboBox:
             selected_id = comboBox.itemData(selected_index)
             id_s.append(selected_id)
             return id_s
+        return None
+
+    # Retrieving the selected item's value
+    def get_selected_status_name(comboBox):
+        selected_index = comboBox.currentIndex()
+        if selected_index != -1:
+            selected_text = comboBox.currentText()
+            return selected_text
         return None
