@@ -6691,13 +6691,6 @@ p, li { white-space: pre-wrap; }
                   </property>
                  </spacer>
                 </item>
-                <item alignment="Qt::AlignRight">
-                 <widget class="QPushButton" name="pushButton_3">
-                  <property name="text">
-                   <string>PushButton</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>

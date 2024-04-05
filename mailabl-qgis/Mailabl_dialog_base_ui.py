@@ -2820,9 +2820,6 @@ class Ui_MailablDialogBase(object):
         self.verticalLayout_139.addWidget(self.qwSU_Mailabl_Projects)
         spacerItem36 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_139.addItem(spacerItem36)
-        self.pushButton_3 = QtWidgets.QPushButton(self.SettingsPageMainFrame)
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.verticalLayout_139.addWidget(self.pushButton_3, 0, QtCore.Qt.AlignRight)
         self.verticalLayout_12.addWidget(self.SettingsPageMainFrame)
         self.swWorkSpace.addWidget(self.settings)
         self.Homepage = QtWidgets.QWidget()
@@ -4278,7 +4275,6 @@ class Ui_MailablDialogBase(object):
         self.lbl_preferred_project_status.setText(_translate("MailablDialogBase", "TextLabel"))
         self.lblProjectsFolder.setText(_translate("MailablDialogBase", "Projekti baaskaust"))
         self.lblProjectsTargetFolder.setText(_translate("MailablDialogBase", "Projekti sihtkaus"))
-        self.pushButton_3.setText(_translate("MailablDialogBase", "PushButton"))
         self.label_10.setText(_translate("MailablDialogBase", "Avaleht logoga"))
         self.teWelcomeContent.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
