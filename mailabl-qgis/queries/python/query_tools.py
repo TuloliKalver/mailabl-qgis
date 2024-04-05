@@ -23,8 +23,8 @@ class requestBuilder:
             "query": query,
             "variables": variables
         }
-        print("'variables'")
-        print(variables)
+        #print("'variables'")
+        #print(variables)
         # Print the query before sending
         #print("GraphQL Query:")
         #print(query)
@@ -53,7 +53,7 @@ class requestBuilder:
 
         # Parse the JSON response
         data = response.json()
-        print("'data'")
+        print("data:")
         print(data)
         # Check if the response is empty
         if not data:

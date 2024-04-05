@@ -81,7 +81,7 @@ class GraphQLQueryLoader:
         self.properties_WHERE_folder = 'queries/graphql/properties/WHERE'
         self.projects_folder = 'queries/graphql/projects'
         self.contracts_folder ='queries/graphql/contracts'
-        
+        self.user_folder ='queries/graphql/user'
         
         # Define query files
             #Properties related queries
@@ -105,6 +105,7 @@ class GraphQLQueryLoader:
 
             #User related queries
         self.Q_All_Users = 'users.graphql'
+        self.Q_Where_user = 'users_where.graphql'
 
             #Projects related queries
         self.Q_All_Projects = 'projects.graphql'
@@ -130,5 +131,11 @@ class GraphQLQueryLoader:
     def load_query_properties(self, query_file_name):
         path = GraphQLQueryLoader()
         graphql_path = os.path.join(path.plugin_dir, path.properties_folder, query_file_name)
+        with open(graphql_path, 'r') as file:
+            return file.read()
+
+    def load_query_users(self, query_file_name):
+        path = GraphQLQueryLoader()
+        graphql_path = os.path.join(path.plugin_dir,  path.user_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()

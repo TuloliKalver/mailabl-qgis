@@ -1,0 +1,34 @@
+query users($first: Int, $after: String, $search: String, $where: QueryUsersWhereWhereConditions) 
+{   
+users(
+  first: $first
+  after: $after
+  search: $search
+  where: $where
+  ) 
+{
+  pageInfo {
+    count
+    currentPage
+    startCursor
+    endCursor
+    hasNextPage
+    hasPreviousPage
+    lastPage
+    total
+  }
+  edges {
+    node {
+      id
+      firstName
+      lastName
+      displayName
+      email
+      roles{
+        id
+        displayName
+      }
+        }
+    }
+  }
+}

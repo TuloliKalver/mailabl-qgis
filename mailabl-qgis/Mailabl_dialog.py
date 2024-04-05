@@ -42,9 +42,10 @@ from .Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 from .processes.ImportProcesses.Import_shp_file import SHPLayerLoader
 from .processes.OnFirstLoad.FirstLoad import Startup
 from .processes.SyncProperties.syncMailablProperties import PropertiesBaseMap
-from .queries.python.access_credentials import (clear_UC_data,
+from .queries.python.access_credentials import  (clear_UC_data,
                                                 get_access_token, print_result,
                                                 save_user_name)
+from .queries.python.users.user_info import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator
 from .queries.python.update_relations.update_project_properties import ProjectsProperties,map_selectors
 from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
@@ -332,7 +333,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
 #        self.pbZoomedArea_Contracts.clicked.connect(self.limitedLoad_contracts)    
         
-        
+
 
 
 ############sort/cler/delete##############################
@@ -341,7 +342,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         
         self.pushButton_2.clicked.connect(self.testsubject)
-    
+
+        
+   
+
+
 
     def testsubject(self):
         table = self.tblMailabl_projects
@@ -981,7 +986,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         clear_UC_data()
 
     def save_user_data(self, frames):
-        save_user_name(self)
+        username = save_user_name(self)
         access_token_results = get_access_token(self)
         #print(access_token_results)
         if access_token_results == "success":
@@ -997,7 +1002,16 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 lblVersion.setStyleSheet("")  # Reset to default style
 
             lblVersion.setText(f"v.{version_nr}")
-            
+            results = UserSettings.user_data(self, username)
+            if results:
+                user_name, user_lastname, roles_text = results
+                print(f"Final user_name: {user_name}")
+                print(f"Final user_lastname: {user_lastname}")
+                print(f"Final Roles: {roles_text}")
+                self.lbNuserName.setText(user_name)
+                self.lblNUserSurename.setText(user_lastname)
+                self.lblUserRoles.setText(roles_text)
+
         elif access_token_results == "error on access token":
             # Handle the error condition
             # ... your code to handle the error
@@ -1344,9 +1358,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             lblProjectsFolder_location = self.lblProjectsFolder_location 
             lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
             lbl_preferred_project_status = self.lbl_preferred_project_status
+            lbl_user_name = self.lbNuserName
             SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                          lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
                                                          lblProjectsTargetFolder_location, lbl_preferred_project_status)
+            #user_name = UserSettings.get_user_name()
+            #lbl_user_name.setText(user_name)
 
             if Flags.Flag_settings_button:
                 print("toggle if")

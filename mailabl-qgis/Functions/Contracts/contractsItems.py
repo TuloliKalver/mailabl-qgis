@@ -570,7 +570,6 @@ class ContractsSearch:
         items_for_page = 50  # Adjust this to your desired value
         #items_for_properties_page = 50
         end_cursor = None  # Initialize end_cursor before the loop
-        end_cursor = None
         total_fetched = 0        # Initialize an empty list to store fetched items
         fetched_items = []
 

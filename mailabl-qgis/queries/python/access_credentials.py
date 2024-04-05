@@ -2,7 +2,9 @@ import requests, platform
 from PyQt5.QtWidgets import QMessageBox
 from qgis.core import QgsSettings, Qgis
 from ...config.settings import GraphQLSettings
+from ..python.DataLoading_classes import GraphQLQueryLoader
 from ...processes.infomessages.messages import Headings
+
  
 pealkiri = Headings()
 
@@ -14,6 +16,8 @@ USER_CREDENTIALS = '/Mailabl/Setting/UC'
 UC_USERNAME = '/Mailabl/Setting/UC/username'
 UC_PASSWORD = '/Mailabl/Setting/UC/password'
 ACCESS_TOKEN = '/Mailabl/Setting/UC/access_token'
+USER_FIRST = '/Mailabl/Setting/UC/first_name'
+USER_LAST = '/Mailabl/Setting/UC/last_name'
 
 # Save the entered username and password
 def save_user_name(self):
@@ -24,7 +28,9 @@ def save_user_name(self):
 
     settings.setValue(UC_USERNAME, username)
     settings.setValue(UC_PASSWORD, password)
-    #self.lbUC.setText(f"Kasutaja andmed on järgmised: Kasutaja: {username}, salasõna: {password}")
+    return username
+
+
 
 
 # Retrieve the saved username from QgsSettings
@@ -42,9 +48,6 @@ def get_user_password():
 def print_result(self):
     user = get_user_name()
     password = get_user_password()
-    print(f"username: ", user)
-    print(f"password: ", password)
-    self.lbUC.setText(f"Kasutaja andmed on järgmised: Kasutaja: {user}, salasõna: {password}")
 
 # Clear the saved user credentials
 def clear_UC_data():
@@ -112,3 +115,51 @@ def get_access_token(self):
 def save_access_token(token):
     settings = QgsSettings()
     settings.setValue(ACCESS_TOKEN, token)
+
+
+class UserSettings:
+
+    def user_data(self, username):
+        items_for_page = 1  # Adjust this to your desired value
+        #items_for_properties_page = 50
+        end_cursor = None # Initialize end_cursor before the loop
+        # Initialize an empty list to store fetched items
+    
+
+        query = GraphQLQueryLoader.load_query(GraphQLQueryLoader().Q_Where_user)
+
+        variables = {
+                "first": items_for_page,
+                "after": end_cursor if end_cursor else None,
+                "where": {
+                    "AND": [
+                        {"column": "EMAIL", "operator": "IN", "value": [username]}
+                    ]
+                }
+            }
+
+        response = requestBuilder.construct_and_send_request(self, query, variables)
+
+        if response.status_code == 200:
+            data = response.json()
+            #print("data")
+            #print(data)
+            #fetched_data = data.get("data", {}).get("contracts", {}).get("edges", [])
+            pageInfo = data.get("data", {}).get("contracts", {}).get("pageInfo", {})
+            #print(f"propesties_end_cursor: '{properties_end_cursor}'")
+            end_cursor = pageInfo.get("endCursor")
+            hasNextPage = pageInfo.get("hasNextPage")
+            #fetched_items.extend(fetched_data)
+            #total_fetched += len(fetched_data)
+
+            # Check whether the last page of projects has been reached
+            #if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
+            #    break
+            print(pageInfo)
+        if end_cursor:
+            return
+        
+
+    def get_user_name():
+        settings = QgsSettings()
+        return settings.value(UC_USERNAME, '', type=str)  

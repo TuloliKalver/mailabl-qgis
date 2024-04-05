@@ -168,7 +168,21 @@ class SettingsDataSaveAndLoad:
         self.setup_projects_preferred_status_name = 'labels/projects_preferred_status_name'
         PROJECT_STATUS_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_projects_preferred_status_name}"
         return PROJECT_STATUS_NAME
+    
+    def user_name (self):
+        user_name = 'labels/user_name'
+        USER_FIRSTNAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_name}"
+        return USER_FIRSTNAME
 
+    def user_lastname (self):
+        user_lastname = 'labels/user_lastname'
+        USER_LASTNAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_lastname}"
+        return USER_LASTNAME
+
+    def user_roles (self):
+        user_roles = 'labels/user_roles'
+        USER_ROLES = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_roles}"
+        return USER_ROLES
 
     def save_SHP_layer_setting(self,label,layer):
         settings = QgsSettings()
@@ -195,6 +209,16 @@ class SettingsDataSaveAndLoad:
         settings = QgsSettings()
         target_settings_address = SettingsDataSaveAndLoad.projects_cadastral(self)
         settings.setValue(target_settings_address, input_value)
+
+    def save_user_values(self, user_name, user_lastname, roles):
+        settings = QgsSettings()
+        user_name_address = SettingsDataSaveAndLoad.user_name(self)
+        user_lastname_address = SettingsDataSaveAndLoad.user_lastname(self)
+        user_roles_address = SettingsDataSaveAndLoad.user_roles(self)
+        settings.setValue(user_name_address, user_name)
+        settings.setValue(user_lastname_address, user_lastname)
+        settings.setValue(user_roles_address, roles)
+        
 
     def save_FolderValues(self, lblProjectsFolder_location, lblProjectsTargetFolder_location, copy_folder, target_folder):
         settings = QgsSettings()
@@ -228,6 +252,7 @@ class SettingsDataSaveAndLoad:
         input_folder_value = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
         output_folder_value = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
         projects_status_name_value = SettingsDataSaveAndLoad.load_projects_status_name(self)
+        
         
         lblcurrent_main_layer_label.setText(current_label_value)
         lblnewCadastrals_input_layer_label.setText(create_new_layer_label_value)
@@ -275,6 +300,22 @@ class SettingsDataSaveAndLoad:
         settings_projects_status_name = SettingsDataSaveAndLoad.projects_preferred_status_Name(self)
         settings = QgsSettings()
         return settings.value(settings_projects_status_name, '', type=str)
+
+    def load_user_name(self):
+        user_name = SettingsDataSaveAndLoad.user_name(self)
+        settings = QgsSettings()
+        return settings.value(user_name, '', type=str)
+
+    def load_user_lastname(self):
+        user_lastname = SettingsDataSaveAndLoad.user_lastname(self)
+        settings = QgsSettings()
+        return settings.value(user_lastname, '', type=str)
+
+    def load_user_roles(self):
+        user_roles = SettingsDataSaveAndLoad.user_roles(self)
+        settings = QgsSettings()
+        return settings.value(user_roles, '', type=str)
+
 
     def load_target_cadastral_name(self):
         settings_address = SettingsDataSaveAndLoad.target_cadastral(self)
