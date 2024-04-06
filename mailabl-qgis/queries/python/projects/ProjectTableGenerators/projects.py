@@ -134,7 +134,7 @@ class projectsTableDecorator:
                     number_item.setTextAlignment(Qt.AlignCenter)  
                     responsible_item.setTextAlignment(Qt.AlignCenter)
 
-                    ModelHandler.format_date_item(p_model, row_index, header_labels)
+                    date_column_index = ModelHandler.format_date_item(p_model, row_index, header_labels)
 
                     status_column_index, color_column_index = ModelHandler.set_status_item_colors_from_model(p_model, row_index, header_labels)
                     # Call format_cadastral_item method
@@ -159,14 +159,14 @@ class projectsTableDecorator:
                     table.hideColumn(column_index)
                         
                 resizes = ColumnResizer(table)
-                columns_to_resize = [number_column_index, name_column_index, status_column_index]
+                columns_to_resize = [number_column_index, responsible_column_index, date_column_index, status_column_index]
                 for column_index in columns_to_resize:
                     resizes.resizeColumnByIndex(table, column_index)
                     
-                columns_width_icons = [ID_column_index, cadastral_column_index,
+                columns_width_icons = [ID_column_index, name_column_index, cadastral_column_index,
                                     webButton_Column_index, dokButton_column_index, 
                                     cadastralButton_Column_index]
-                column_widths = [0,0,10,10,10]
+                column_widths = [0,250,0,10,10,10]
                 resizes.setColumnWidths(table, columns_width_icons, column_widths)
                 # Hide certain column labels
                 newLabel_for_cadastral = ""  # Replace with your actual column labels
@@ -251,14 +251,14 @@ class searchProjectsValue:
                 table.hideColumn(column_index)
                     
             resizes = ColumnResizer(table)
-            columns_to_resize = [number_column_index, name_column_index, status_column_index]
+            columns_to_resize = [number_column_index,  responsible_column_index, date_column_index ,status_column_index]
             for column_index in columns_to_resize:
                 resizes.resizeColumnByIndex(table, column_index)
                 
-            columns_width_icons = [ID_column_index, cadastral_column_index,
+            columns_width_icons = [ID_column_index, name_column_index, cadastral_column_index,
                                 webButton_Column_index, dokButton_column_index, 
                                 cadastralButton_Column_index]
-            column_widths = [0,0,10,10,10]
+            column_widths = [0,250,0,10,10,10]
             resizes.setColumnWidths(table, columns_width_icons, column_widths)
             # Hide certain column labels
             newLabel_for_cadastral = ""  # Replace with your actual column labels

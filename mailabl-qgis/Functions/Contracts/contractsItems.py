@@ -99,7 +99,7 @@ class ContractsMain:
 
                 
                 resizes = ColumnResizer(table)
-                columns_to_resize = [number_column_index, date_column_index, responsible_column_index, status_column_index]
+                columns_to_resize = [number_column_index,  date_column_index, responsible_column_index, status_column_index]
                 for column_index in columns_to_resize:
                     resizes.resizeColumnByIndex(table, column_index)
                     
@@ -454,10 +454,6 @@ class ContractsSearch:
        
        
         data = ContractsSearch.query_contracts_by_number(self, contract_number)
-        #print("recived data is")
-        #print(data)
-        #data_count = len(data)
-        # Build a pandas DataFrame
         df_data = []
         df = pd.DataFrame(df_data)
         for project_data in data:

@@ -343,10 +343,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pushButton_2.clicked.connect(self.testsubject)
 
-        
-   
-
-
 
     def testsubject(self):
         table = self.tblMailabl_projects
