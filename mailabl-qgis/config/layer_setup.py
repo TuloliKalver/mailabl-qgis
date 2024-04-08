@@ -9,10 +9,11 @@ from PyQt5.uic import loadUi
 from qgis.core import QgsMapLayer, QgsProject
 
 # Local Application or Library Imports
-from .mylabl_API.modules import MODULE_PROJECTS
+from .mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
 from .settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
+from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
 
 
 pealkiri = Headings()
@@ -185,3 +186,62 @@ class Setup_ProjectLayers:
         QMessageBox.information(widget, heading, text)
         widget.reject()  # Close the dialog        
 
+
+
+class Setup_Conrtacts:
+    def load_contract_settings_widget(self):
+        
+        ui_file_path = Filepaths.get_conf_widget(FilesByNames().contracts_setup_ui)
+        #print(f"path: {ui_file_path}")
+        # Load the UI from the specified .ui file
+        widget = loadUi(ui_file_path)
+        save_button = widget.pbSave
+        cancel_button = widget.pbCancel
+        
+        widget.show()
+
+        module = MODULE_CONTRACTS
+        combo_box = widget.cmbPreferredContractStatuses
+        types_combo_box = widget.cbcb_PreferredContractTypes
+        #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
+        InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module )
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box)
+
+        #combo_box = widget.cmbPreferred_Project_status
+        #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
+        #status_id = SettingsDataSaveAndLoad.load_projects_status_id(self)
+        #if status_id is None or '':
+        #    InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module)
+        #else:
+        #   InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, status_id)
+
+        #copy_folder_path = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
+        #if copy_folder_path:
+        #    lblProjectsFolder_location = widget.leProjectsFolder_location
+        #    lblProjectsFolder_location.setText(copy_folder_path)
+                    
+        #target_folder_path = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
+        #if target_folder_path:
+        #    lblProjectsTargetFolder_location = widget.leProjectsTargetFolder_location
+        #    lblProjectsTargetFolder_location.setText(target_folder_path)                
+ 
+        # Connect signals to functions
+        save_button.clicked.connect(lambda: Setup_Conrtacts.on_save_button_clicked(self, widget))
+        cancel_button.clicked.connect(lambda: Setup_Conrtacts.on_cancel_button_clicked(self, widget))
+
+    def on_save_button_clicked(self, widget):
+        # Handle logic when the save button is clicked
+  
+        text = edu.salvestatud
+        heading = pealkiri.tubli
+        QMessageBox.information(widget, heading, text)
+        # Additional logic if needed
+
+        widget.accept()  # Close the dialog
+
+    def on_cancel_button_clicked(self, widget):
+        # Handle logic when the cancel button is clicked
+        text = sisu.kasutaja_peatas_protsessi
+        heading = pealkiri.warningSimple
+        QMessageBox.information(widget, heading, text)
+        widget.reject()  # Close the dialog       

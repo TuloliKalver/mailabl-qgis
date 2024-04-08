@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
-from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers
+from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup_Conrtacts
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
@@ -261,6 +261,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #Setting workspace buttons and functions
         self.pbLayerSettings.clicked.connect(self.layer_setup)
         self.pbSettings_Setup_Projects.clicked.connect(lambda: Setup_ProjectLayers.load_project_settings_widget(self))
+        self.pbSettings_Setup_Contracts.clicked.connect(lambda: Setup_Conrtacts.load_contract_settings_widget(self))
         
 
         

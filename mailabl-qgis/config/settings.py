@@ -73,6 +73,7 @@ class FilesByNames:
         self.statusbar_widget = "WStatusBar.ui"
         self.layer_setup_ui = "LayerSetup.ui"
         self.projects_setup_ui = "ProjectSetup.ui"
+        self.contracts_setup_ui = "ContractsSetup.ui"
 
 class Filepaths:
     @staticmethod
