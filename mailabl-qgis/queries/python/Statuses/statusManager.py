@@ -122,8 +122,6 @@ class InsertStatusToComboBox:
             comboBox.addItem(item_text)
             comboBox.setItemData(comboBox.count() - 1, item_id)
         
-
-        
         # Ensure the first item is selected
         if comboBox.count() > 0:
             comboBox.setCurrentIndex(0)

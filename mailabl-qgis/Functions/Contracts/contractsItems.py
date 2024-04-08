@@ -306,7 +306,6 @@ class ContractsMain:
                 heading = Headings().warningSimple
                 print(f"{heading}, {text}")
 
-
 class queryHandling:
     def __init__(self):
         self.header_id = header_id
@@ -380,7 +379,6 @@ class queryHandling:
             model.appendRow(data_items)
 
         return model, header_labels
-
 
 class ContractsQueries_list:
     @staticmethod
@@ -552,9 +550,6 @@ class ContractsSearch:
 
         return model, header_labels
 
-
-
-
     @staticmethod
     def query_contracts_by_number(self, contract_number):
         #print(statuses)
@@ -672,5 +667,4 @@ class ContractsSearch:
 
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
-
 

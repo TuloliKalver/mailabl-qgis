@@ -52,6 +52,7 @@ from .queries.python.update_relations.update_contract_properties import Contract
 from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
+from .queries.python.Types_Tags.type_tag_manager import Types
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Folders.folders import copy_and_rename_folder
@@ -342,6 +343,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         
         self.pushButton_2.clicked.connect(self.testsubject)
+
+        self.getContractTypesdev.clicked.connect(self.testType)
+
+    def testType (self):
+        Types.types_by_module_names(self)
+        pass
 
 
     def testsubject(self):

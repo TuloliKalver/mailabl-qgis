@@ -1183,7 +1183,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -5281,6 +5281,13 @@ QPushButton:hover{
                         </property>
                         <property name="text">
                          <string>Zoomitud ala lepingud</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="getContractTypesdev">
+                        <property name="text">
+                         <string>Contracts types dev</string>
                         </property>
                        </widget>
                       </item>

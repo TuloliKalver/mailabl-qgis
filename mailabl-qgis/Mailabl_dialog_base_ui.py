@@ -2246,6 +2246,9 @@ class Ui_MailablDialogBase(object):
         self.pbZoomedArea_Contracts.setFont(font)
         self.pbZoomedArea_Contracts.setObjectName("pbZoomedArea_Contracts")
         self.horizontalLayout_61.addWidget(self.pbZoomedArea_Contracts)
+        self.getContractTypesdev = QtWidgets.QPushButton(self.frcontracts_Checkbox_holder)
+        self.getContractTypesdev.setObjectName("getContractTypesdev")
+        self.horizontalLayout_61.addWidget(self.getContractTypesdev)
         self.cmbcontractStatuses = QtWidgets.QComboBox(self.frcontracts_Checkbox_holder)
         self.cmbcontractStatuses.setMinimumSize(QtCore.QSize(130, 0))
         font = QtGui.QFont()
@@ -4104,7 +4107,7 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(4)
+        self.swWorkSpace.setCurrentIndex(2)
         self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -4236,6 +4239,7 @@ class Ui_MailablDialogBase(object):
         self.le_searchContracts.setPlaceholderText(_translate("MailablDialogBase", " Otsing - lepingu numbri järgi"))
         self.pbSearchContracts.setText(_translate("MailablDialogBase", "Otsi"))
         self.pbZoomedArea_Contracts.setText(_translate("MailablDialogBase", "Zoomitud ala lepingud"))
+        self.getContractTypesdev.setText(_translate("MailablDialogBase", "Contracts types dev"))
         self.label_20.setText(_translate("MailablDialogBase", "Help"))
         self.textEdit.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

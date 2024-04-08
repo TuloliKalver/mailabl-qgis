@@ -1,0 +1,10 @@
+query contractParameters($first: Int, $after: String) {
+  contractParameters(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
