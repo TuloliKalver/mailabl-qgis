@@ -4110,11 +4110,11 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(2)
+        self.swWorkSpace.setCurrentIndex(4)
         self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
-        self.sw_HM.setCurrentIndex(3)
+        self.sw_HM.setCurrentIndex(4)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
         self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(4)
         self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(3)
@@ -4508,21 +4508,24 @@ class Ui_MailablDialogBase(object):
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Sätete muutmine ja info valitud sätete kohta (täiendamisel)</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">1. Kasutaja sätted</span><span style=\" font-size:9pt;\"> (täiendamisel)</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; text-decoration: underline;\">1. Kasutaja sätted</span><span style=\" font-size:9pt; text-decoration: underline;\"> </span><span style=\" font-size:9pt;\">(täiendamisel)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">...</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">2. Kinnistute andmete sätted</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Andmekihi väli on informatiivne ja on automaatselt täidetud</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Katastriandmete kiht (nimi muutus?) - ...</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kiht, kuhu salvestatakse uued katastriandmed - ...</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kiht, kuhu... Kas see ja ülemine peavad alati üks ühele samad olema? Kui, siis miks eraldi täita vaja</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; text-decoration: underline;\">2. Kinnistute andmete sätted</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Andmekihi väli </span><span style=\" font-size:9pt;\">on informatiivne ja on automaatselt täidetud</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Katastriandmete kiht</span><span style=\" font-size:9pt;\"> (nimi muutus?) - ...</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Kiht, kuhu salvestatakse uued katastriandmed</span><span style=\" font-size:9pt;\"> - Kas see ja ülemine peavad alati üks ühele samad olema? Kui, siis miks eraldi täita vaja</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">3. Projektide sätted</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kinnistutega seotud projektikiht. Kas see peab olema sama, mis katastriandmete kiht? Kui, siis võiks automaatselt täidetud olema.</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projekti baaskaust - Projekti kaust (k.a selles sisalduvad kaustad ja failid), mida soovitakse uute projektide loomisel dubleerida</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projekti sihtkaust - kaust, milles hoiustatakse projekti baaskausta ja baaskaustast genereeritud uusi projekti kaustasid</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; text-decoration: underline;\">3. Projektide sätted</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Kinnistutega seotud projektikiht</span><span style=\" font-size:9pt;\"> - Kas see peab olema sama, mis katastriandmete kiht? Kui, siis võiks automaatselt täidetud olema.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale muudatuste salvestamist taaskäivita plugin!</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Järnev võimaldab uute projektide lisamisel genereerida kokkulepitud asukohta struktureeritud projekti kausta. </span><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Eeldab läbimõeldud ja toimivat kaustastruktuuri!</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Projekti baaskaust</span><span style=\" font-size:9pt;\"> - Projekti kaust (k.a selles sisalduvad kaustad ja failid), mida soovitakse uute projektide loomisel dubleerida</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Projekti sihtkaust</span><span style=\" font-size:9pt;\"> - kaust, milles hoiustatakse projekti baaskausta ja baaskaustast genereeritud uusi projekti kaustasid</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale muudatuste salvestamist taaskäivita plugin!</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\"><br /></p></body></html>"))
         self.lb_HM_Servituudid_Pealkiri.setText(_translate("MailablDialogBase", "Servituudid"))
         self.lb_HM_Teemakaardid_Pealkiri.setText(_translate("MailablDialogBase", "Teemakaardid"))
         self.lb_HM_Andmete_laadimine_Pealkiri.setText(_translate("MailablDialogBase", "Andmete laadimine"))
