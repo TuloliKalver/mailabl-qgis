@@ -2249,9 +2249,10 @@ class Ui_MailablDialogBase(object):
         self.getContractTypesdev = QtWidgets.QPushButton(self.frcontracts_Checkbox_holder)
         self.getContractTypesdev.setObjectName("getContractTypesdev")
         self.horizontalLayout_61.addWidget(self.getContractTypesdev)
-        self.cmbcontractTypes = QtWidgets.QComboBox(self.frcontracts_Checkbox_holder)
-        self.cmbcontractTypes.setObjectName("cmbcontractTypes")
-        self.horizontalLayout_61.addWidget(self.cmbcontractTypes)
+        self.cmbcontractTypes_checkable = QgsCheckableComboBox(self.frcontracts_Checkbox_holder)
+        self.cmbcontractTypes_checkable.setMinimumSize(QtCore.QSize(250, 0))
+        self.cmbcontractTypes_checkable.setObjectName("cmbcontractTypes_checkable")
+        self.horizontalLayout_61.addWidget(self.cmbcontractTypes_checkable)
         self.cmbcontractStatuses = QtWidgets.QComboBox(self.frcontracts_Checkbox_holder)
         self.cmbcontractStatuses.setMinimumSize(QtCore.QSize(130, 0))
         font = QtGui.QFont()
@@ -4110,8 +4111,8 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(4)
-        self.swCadastral_sub_processes.setCurrentIndex(0)
+        self.swWorkSpace.setCurrentIndex(2)
+        self.swCadastral_sub_processes.setCurrentIndex(4)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(4)
@@ -4242,7 +4243,7 @@ class Ui_MailablDialogBase(object):
         self.le_searchContracts.setPlaceholderText(_translate("MailablDialogBase", " Otsing - lepingu numbri järgi"))
         self.pbSearchContracts.setText(_translate("MailablDialogBase", "Otsi"))
         self.pbZoomedArea_Contracts.setText(_translate("MailablDialogBase", "Zoomitud ala lepingud"))
-        self.getContractTypesdev.setText(_translate("MailablDialogBase", "Contracts types dev"))
+        self.getContractTypesdev.setText(_translate("MailablDialogBase", "dev"))
         self.label_20.setText(_translate("MailablDialogBase", "Help"))
         self.textEdit.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -4583,3 +4584,4 @@ class Ui_MailablDialogBase(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"><br /></span></p></body></html>"))
         self.lbVersionNumber.setText(_translate("MailablDialogBase", "v.31.01.24"))
+from qgscheckablecombobox import QgsCheckableComboBox

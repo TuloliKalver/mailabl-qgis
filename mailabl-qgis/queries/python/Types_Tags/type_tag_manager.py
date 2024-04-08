@@ -5,20 +5,27 @@ from ....queries.python.query_tools import requestBuilder
 
 
 class InsertTypesToComboBox:
-    def add_elementTypes_to_listview (self, comboBox, module_name):
+    def add_elementTypes_to_listview (self, combo_box):
         # Clear existing items in the combo box
-        comboBox.clear()
+        combo_box.clear()
 
         # Populate the combo box with items and associate each item's text with its ID
-        types = Types.types_by_module_names(module_name)
+        types = Types.types_by_module_names(self)
         print(types)
         for item_text, item_id in types:
-            comboBox.addItem(item_text)
-            comboBox.setItemData(comboBox.count() - 1, item_id)
+            combo_box.addItem(item_text)
+            combo_box.setItemData(combo_box.count() - 1, item_id)
+
+
+        checked_items = ['Personal - töövõtuleping','Tellimus-PP']
+        combo_box.setCheckedItems(checked_items)
+                # Set items as selected based on their IDs
+        #for index in range(combo_box.count()):
+        #    item_id = combo_box.itemData(index)
+        #    if item_id in checked_items:
+        #        combo_box.setCurrentIndex(index)
+
         
-        # Ensure the first item is selected
-        if comboBox.count() > 0:
-            comboBox.setCurrentIndex(0)
 
 class Types:
     def types_by_module_names(self):
@@ -34,7 +41,7 @@ class Types:
         end_cursor = None
         total_fetched = 0        # Initialize an empty list to store fetched items
                         
-        fetched_items = []
+        contract_types = []
             
         while (desired_total_items is None or total_fetched < desired_total_items):
             variables = {
@@ -48,28 +55,39 @@ class Types:
                 data = response.json()
                 #print("data")
                 #print(data)
-                fetched_data = data.get("data", {}).get("contractTypes", {}).get("edges", [])
-                print("fetched_data")
-                print(fetched_data)
+                contract_types_data = data.get("data", {}).get("contractTypes", {}).get("edges", [])
+                #print("fetched_data")
+                #print(contract_types)
                 pageInfo = data.get("data", {}).get("contractTypes", {}).get("pageInfo", {})
-                print("page_info")
-                print(pageInfo)
+                #print("page_info")
+                #print(pageInfo)
                 #print(f"propesties_end_cursor: '{properties_end_cursor}'")
                 end_cursor = pageInfo.get("endCursor")
                 hasNextPage = pageInfo.get("hasNextPage")
-                #fetched_items.extend(fetched_data)
-                #total_fetched += len(fetched_data)
+                for contract_type_info in contract_types_data:
+                    # Access the node information
+                    node_info = contract_type_info.get('node', {})
+                    #print(f"node info: {node_info}")
+                    contract_type_name = node_info.get('name',"")
+                    #print(f"contract type name: {contract_type_name}")
+                    contract_type_id = node_info.get('id',"")
+                    #print(f"contract_type_id: {contract_type_id}")
+                    # Append the node_info to the list
+                    contract_types.append((contract_type_name, contract_type_id))
+                    
 
                 # Check whether the last page of projects has been reached
-                if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
-                    break
-                total_fetched += 1
+                #if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
+                #    break
+                #total_fetched += 1
+                QCoreApplication.processEvents()
+                #print(f"contract_types: {contract_types}")
+                return contract_types
             else:
                 print(f"Error: {response.status_code}")
                 return None
 
-            QCoreApplication.processEvents()
-
+            
         # Return only the desired number of items
         #return fetched_items[:desired_total_items]
             

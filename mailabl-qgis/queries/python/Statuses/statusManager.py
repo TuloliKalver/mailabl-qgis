@@ -155,6 +155,10 @@ class InsertStatusToComboBox:
             return id_s
         return None
 
+
+
+
+
     # Retrieving the selected item's value
     def get_selected_status_name(comboBox):
         selected_index = comboBox.currentIndex()

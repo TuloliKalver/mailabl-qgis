@@ -4,7 +4,8 @@
 
 from qgis.core import QgsProject
 from qgis.utils import iface
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QAbstractItemView
+
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .ui_controllers import WidgetAnimator
 from .list_handler import ExpandProcessListsFunctions
@@ -14,6 +15,7 @@ from ..Functions.Contracts.contractsItems import ContractsMain, ContractsQueries
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
 from ..processes.infomessages.messages import Headings
+from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
  
 pealkiri = Headings()
 
@@ -57,16 +59,22 @@ class WorkSpaceHandler:
         self.swWorkSpace.setCurrentIndex(2)
         table = self.ContractView
         module = MODULE_CONTRACTS
-        comboBox = self.cmbcontractStatuses
+        combo_box = self.cmbcontractStatuses
+        types_combo_box = self.cmbcontractTypes_checkable
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
-        InsertStatusToComboBox.add_statuses_to_listview(self, comboBox, module )
-        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
+        InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module )
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box)
+
+        
+        
+        statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
         #ContractsQueries_list.query_contracts_by_status(self, statusValue)
         ContractsMain.main_contracts(self, table, statusValue)
+                
         push_button.blockSignals(False)
         refresh_button.blockSignals(False)
 
-    @staticmethod
+
     def contracts_reload(self):
         refresh_button = self.pbRefresh_tblMailabl_contracts
         refresh_button.blockSignals(True)
