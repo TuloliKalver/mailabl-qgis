@@ -170,6 +170,21 @@ class SettingsDataSaveAndLoad:
         PROJECT_STATUS_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_projects_preferred_status_name}"
         return PROJECT_STATUS_NAME
     
+    def contracts_preferred_type_name(self):
+        setup_contracts_preferred_status_name = 'labels/contracts_preferred_type_name'
+        CONTRACT_TYPE_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_contracts_preferred_status_name}"
+        return CONTRACT_TYPE_NAME
+    
+    def contracts_preferred_status_ids(self):
+            setup_contracts_preferred_status_ids = 'labels/contracts_preferred_status_ids'
+            CONTRACT_STATUS_IDS = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_contracts_preferred_status_ids}"
+            return CONTRACT_STATUS_IDS
+        
+    def contracts_preferred_status_name(self):
+        setup_contracts_preferred_status_ids = 'labels/contracts_preferred_status_names'
+        CONTRACT_STATUS_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_contracts_preferred_status_ids}"
+        return CONTRACT_STATUS_NAME
+
     def user_name (self):
         user_name = 'labels/user_name'
         USER_FIRSTNAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_name}"
@@ -242,10 +257,25 @@ class SettingsDataSaveAndLoad:
         # Set the text of the label to the string representation of project_id_int
         label.setText(str(project_id_int))
 
+    def save_contract_settings(self, contract_type_names, contratc_status_names, contract_status_ids):
+        settings = QgsSettings()
+        contract_status_ids_int = int(contract_status_ids[0]) if contract_status_ids else None
+        print(f"id_s: {contract_status_ids_int}")
+        print(f"contract types: {contract_type_names}")
+        contrcts_status_ids_path = SettingsDataSaveAndLoad.contracts_preferred_status_ids(self)
+        contracts_status_name_path = SettingsDataSaveAndLoad.contracts_preferred_status_name(self)
+        contract_name_paths = SettingsDataSaveAndLoad.contracts_preferred_type_name(self)
+        settings.setValue(contrcts_status_ids_path, contract_status_ids_int)
+        settings.setValue(contracts_status_name_path, contratc_status_names)
+        settings.setValue(contract_name_paths, contract_type_names)
+
+
+        
+
 
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
                               lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
-                              lbl_preferred_project_status):
+                              lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value):
         current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
         create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
         SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
@@ -253,8 +283,10 @@ class SettingsDataSaveAndLoad:
         input_folder_value = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
         output_folder_value = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
         projects_status_name_value = SettingsDataSaveAndLoad.load_projects_status_name(self)
+        contracts_type_names = SettingsDataSaveAndLoad.load_contracts_type_names(self)
+        contracts_status_names = SettingsDataSaveAndLoad.load_contract_status_names(self)
         
-        
+
         lblcurrent_main_layer_label.setText(current_label_value)
         lblnewCadastrals_input_layer_label.setText(create_new_layer_label_value)
         lblSHPNewItems.setText(SHP_layer_label_value)
@@ -262,9 +294,9 @@ class SettingsDataSaveAndLoad:
         lblProjectsFolder_location.setText(input_folder_value)
         lblProjectsTargetFolder_location.setText(output_folder_value)
         lbl_preferred_project_status.setText(projects_status_name_value)
-
+        lblPreferredContractsTypes_value.setText(contracts_type_names)
+        lbl_preferred_contract_status.setText(contracts_status_names)
         
-    
         
     def on_save_button_clicked_cadastrals(self, input_layer_combo_box, target_layer_combo_box):
         #print("started to save")
@@ -339,6 +371,26 @@ class SettingsDataSaveAndLoad:
         settings = QgsSettings()
         value = settings.value(settings_address, '', type=str)
         return value
+
+    def load_contracts_type_names(self):
+        settings_address = SettingsDataSaveAndLoad.contracts_preferred_type_name(self)
+        settings = QgsSettings()
+        value = settings.value(settings_address, '', type=str)
+        return value
+    
+    def load_contract_status_ids(self):
+        settings_address = SettingsDataSaveAndLoad.contracts_preferred_status_ids(self)
+        settings = QgsSettings()
+        value = settings.value(settings_address, '', type=str)
+        return value
+    
+    def load_contract_status_names(self):
+        settings_address = SettingsDataSaveAndLoad.contracts_preferred_status_name(self)
+        settings = QgsSettings()
+        value = settings.value(settings_address, '', type=str)
+        return value
+
+
 
 class connect_settings_to_layer:    
     def ActiveMailablPropertiesLayer_name():

@@ -1041,9 +1041,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblProjectsFolder_location = self.lblProjectsFolder_location
         lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
         lbl_preferred_project_status = self.lbl_preferred_project_status
+        lbl_preferred_contract_status = self.lbl_preferred_contract_status
+        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
         load.startup_label_loader(lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                     lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location,
-                                    lblProjectsTargetFolder_location, lbl_preferred_project_status)        
+                                    lblProjectsTargetFolder_location, lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value)        
 
     def load_cadastrals(self):
         self.sw_HM.setCurrentIndex(7)
@@ -1364,11 +1366,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
             lbl_preferred_project_status = self.lbl_preferred_project_status
             lbl_user_name = self.lbNuserName
+            lbl_preferred_contract_status = self.lbl_preferred_contract_status 
+            lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
             SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                          lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
-                                                         lblProjectsTargetFolder_location, lbl_preferred_project_status)
-            #user_name = UserSettings.get_user_name()
-            #lbl_user_name.setText(user_name)
+                                                         lblProjectsTargetFolder_location, lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value)
+
 
             if Flags.Flag_settings_button:
                 print("toggle if")

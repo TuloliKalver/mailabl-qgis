@@ -4,7 +4,8 @@
 
 
 # Related Third-Party Imports
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QFrame
+from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 from qgis.core import QgsMapLayer, QgsProject
 
@@ -201,37 +202,57 @@ class Setup_Conrtacts:
         widget.show()
 
         module = MODULE_CONTRACTS
-        combo_box = widget.cmbPreferredContractStatuses
+        statuses_combo_box = widget.cmbPreferredContractStatuses
         types_combo_box = widget.cbcb_PreferredContractTypes
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
-        InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module )
-        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box)
 
-        #combo_box = widget.cmbPreferred_Project_status
-        #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
-        #status_id = SettingsDataSaveAndLoad.load_projects_status_id(self)
-        #if status_id is None or '':
-        #    InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module)
-        #else:
-        #   InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, status_id)
+        status_id = SettingsDataSaveAndLoad.load_contract_status_ids(self)
+        if status_id is None or '':
+            InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module)
+        else:
+            InsertStatusToComboBox.add_statuses_to_listview_set_status(self, statuses_combo_box, module, status_id)
 
-        #copy_folder_path = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
-        #if copy_folder_path:
-        #    lblProjectsFolder_location = widget.leProjectsFolder_location
-        #    lblProjectsFolder_location.setText(copy_folder_path)
-                    
-        #target_folder_path = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
-        #if target_folder_path:
-        #    lblProjectsTargetFolder_location = widget.leProjectsTargetFolder_location
-        #    lblProjectsTargetFolder_location.setText(target_folder_path)                
- 
+        #InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module )
+        preferred_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)
+
+        
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types)
+
+
+        
+
+
         # Connect signals to functions
-        save_button.clicked.connect(lambda: Setup_Conrtacts.on_save_button_clicked(self, widget))
+        save_button.clicked.connect(lambda: Setup_Conrtacts.on_save_button_clicked(self, widget, statuses_combo_box, types_combo_box))
         cancel_button.clicked.connect(lambda: Setup_Conrtacts.on_cancel_button_clicked(self, widget))
 
-    def on_save_button_clicked(self, widget):
+    def on_save_button_clicked(self, widget, statuses_combo_box, combo_box_checkable):
         # Handle logic when the save button is clicked
   
+        status_value_name = InsertStatusToComboBox.get_selected_status_name(statuses_combo_box)
+        status_value_ids = InsertStatusToComboBox.get_selected_status_id(statuses_combo_box)
+        checked_indexes = combo_box_checkable.checkedItemsData()
+        print(checked_indexes)
+        selected_types = combo_box_checkable.checkedItems()
+
+        selected_types_text = ''
+        for i, item in enumerate(selected_types):
+            if i % 2 == 0 and i > 0:
+                selected_types_text += ',\n'
+            elif i > 0:
+                selected_types_text += ', '
+            selected_types_text += item
+        label = self.lblPreferredContractsTypes_value
+        label.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        label.setAlignment(Qt.AlignBottom | Qt.AlignLeft)
+
+
+
+        SettingsDataSaveAndLoad.save_contract_settings(self, selected_types_text, status_value_name, status_value_ids)
+
+        label.setText(selected_types_text)
+        self.lbl_preferred_contract_status.setText(status_value_name)
+
         text = edu.salvestatud
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)
@@ -241,6 +262,7 @@ class Setup_Conrtacts:
 
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
+
         text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.warningSimple
         QMessageBox.information(widget, heading, text)

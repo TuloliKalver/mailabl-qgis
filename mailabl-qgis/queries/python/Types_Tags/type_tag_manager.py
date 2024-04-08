@@ -2,29 +2,30 @@ from PyQt5.QtCore import QCoreApplication
 
 from ....queries.python.DataLoading_classes import GraphqlQueriesContracts
 from ....queries.python.query_tools import requestBuilder
-
+from ....config.settings import SettingsDataSaveAndLoad
 
 class InsertTypesToComboBox:
-    def add_elementTypes_to_listview (self, combo_box):
+    def add_elementTypes_to_listview (self, combo_box, preferred_items):
         # Clear existing items in the combo box
         combo_box.clear()
 
         # Populate the combo box with items and associate each item's text with its ID
         types = Types.types_by_module_names(self)
-        print(types)
+
         for item_text, item_id in types:
             combo_box.addItem(item_text)
             combo_box.setItemData(combo_box.count() - 1, item_id)
 
+        selected_types = []
 
-        checked_items = ['Personal - töövõtuleping','Tellimus-PP']
-        combo_box.setCheckedItems(checked_items)
-                # Set items as selected based on their IDs
-        #for index in range(combo_box.count()):
-        #    item_id = combo_box.itemData(index)
-        #    if item_id in checked_items:
-        #        combo_box.setCurrentIndex(index)
+        # Split the text by newline characters
+        lines = preferred_items.split('\n')
+        for line in lines:
+            # Split each line by comma and add items to selected_types list
+            items = line.split(',')
+            selected_types.extend(item.strip() for item in items if item.strip())
 
+        combo_box.setCheckedItems(selected_types)
         
 
 class Types:

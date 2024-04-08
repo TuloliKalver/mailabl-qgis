@@ -62,11 +62,12 @@ class WorkSpaceHandler:
         combo_box = self.cmbcontractStatuses
         types_combo_box = self.cmbcontractTypes_checkable
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
-        InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module )
-        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box)
+        prefered_statuses = SettingsDataSaveAndLoad.load_contract_status_ids(self)
+        InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
+  
+        preferred_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)    
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types)
 
-        
-        
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
         #ContractsQueries_list.query_contracts_by_status(self, statusValue)
         ContractsMain.main_contracts(self, table, statusValue)
