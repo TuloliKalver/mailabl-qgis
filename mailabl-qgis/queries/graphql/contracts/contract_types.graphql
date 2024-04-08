@@ -1,5 +1,11 @@
-query contractParameters($first: Int, $after: String) {
-  contractParameters(first: $first, after: $after) {
+query contractTypes($first: Int, $after: String) {
+  contractTypes(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+      currentPage
+      total
+    }
     edges {
       node {
         id

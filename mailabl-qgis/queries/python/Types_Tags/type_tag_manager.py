@@ -36,7 +36,7 @@ class Types:
                         
         fetched_items = []
             
-        while total_fetched <= 1:#(desired_total_items is None or total_fetched < desired_total_items):
+        while (desired_total_items is None or total_fetched < desired_total_items):
             variables = {
                 "first": items_for_page,
                 "after": end_cursor if end_cursor else None
@@ -46,23 +46,27 @@ class Types:
 
             if response.status_code == 200:
                 data = response.json()
-                print("data")
-                print(data)
-                #fetched_data = data.get("data", {}).get("contracts", {}).get("edges", [])
-                #pageInfo = data.get("data", {}).get("contracts", {}).get("pageInfo", {})
+                #print("data")
+                #print(data)
+                fetched_data = data.get("data", {}).get("contractTypes", {}).get("edges", [])
+                print("fetched_data")
+                print(fetched_data)
+                pageInfo = data.get("data", {}).get("contractTypes", {}).get("pageInfo", {})
+                print("page_info")
+                print(pageInfo)
                 #print(f"propesties_end_cursor: '{properties_end_cursor}'")
-                #end_cursor = pageInfo.get("endCursor")
-                #hasNextPage = pageInfo.get("hasNextPage")
+                end_cursor = pageInfo.get("endCursor")
+                hasNextPage = pageInfo.get("hasNextPage")
                 #fetched_items.extend(fetched_data)
                 #total_fetched += len(fetched_data)
 
                 # Check whether the last page of projects has been reached
-                #if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
-                #    break
+                if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
+                    break
                 total_fetched += 1
-            #else:
-                #print(f"Error: {response.status_code}")
-            #    return None
+            else:
+                print(f"Error: {response.status_code}")
+                return None
 
             QCoreApplication.processEvents()
 

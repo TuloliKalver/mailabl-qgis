@@ -2249,6 +2249,9 @@ class Ui_MailablDialogBase(object):
         self.getContractTypesdev = QtWidgets.QPushButton(self.frcontracts_Checkbox_holder)
         self.getContractTypesdev.setObjectName("getContractTypesdev")
         self.horizontalLayout_61.addWidget(self.getContractTypesdev)
+        self.cmbcontractTypes = QtWidgets.QComboBox(self.frcontracts_Checkbox_holder)
+        self.cmbcontractTypes.setObjectName("cmbcontractTypes")
+        self.horizontalLayout_61.addWidget(self.cmbcontractTypes)
         self.cmbcontractStatuses = QtWidgets.QComboBox(self.frcontracts_Checkbox_holder)
         self.cmbcontractStatuses.setMinimumSize(QtCore.QSize(130, 0))
         font = QtGui.QFont()
@@ -4111,7 +4114,7 @@ class Ui_MailablDialogBase(object):
         self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
-        self.sw_HM.setCurrentIndex(1)
+        self.sw_HM.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
         self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(4)
         self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(3)
@@ -4268,17 +4271,17 @@ class Ui_MailablDialogBase(object):
         self.lblUserRoles.setText(_translate("MailablDialogBase", "rollid"))
         self.label_27.setText(_translate("MailablDialogBase", "Minu eelistatud avaleht:*"))
         self.label_28.setText(_translate("MailablDialogBase", "Tulekul"))
-        self.label_30.setText(_translate("MailablDialogBase", "Kinnistu andmete seadistus"))
+        self.label_30.setText(_translate("MailablDialogBase", "Kinnistute andmete sätted"))
         self.label_16.setText(_translate("MailablDialogBase", "Andmekiht, millelt imporditakse uued andmed:"))
         self.label_6.setText(_translate("MailablDialogBase", "Olemasolevate katastriandmete kiht:"))
         self.label_2.setText(_translate("MailablDialogBase", "Kiht, kuhu salvestatakse uued katastriandmed:"))
         self.label_31.setText(_translate("MailablDialogBase", "Projektid sätted"))
         self.label_22.setText(_translate("MailablDialogBase", "Kinnistutega seotud projekti kiht"))
         self.label_14.setText(_translate("MailablDialogBase", "Projektide vektor kaardikiht"))
-        self.label_13.setText(_translate("MailablDialogBase", "Eelistatud staatus projekt nimekirja laadimisel"))
+        self.label_13.setText(_translate("MailablDialogBase", "Eelistatud staatus projektide nimekirja laadimisel"))
         self.lbl_preferred_project_status.setText(_translate("MailablDialogBase", "TextLabel"))
         self.lblProjectsFolder.setText(_translate("MailablDialogBase", "Projekti baaskaust"))
-        self.lblProjectsTargetFolder.setText(_translate("MailablDialogBase", "Projekti sihtkaus"))
+        self.lblProjectsTargetFolder.setText(_translate("MailablDialogBase", "Projekti sihtkaust"))
         self.label_10.setText(_translate("MailablDialogBase", "Avaleht logoga"))
         self.teWelcomeContent.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -4503,20 +4506,23 @@ class Ui_MailablDialogBase(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; text-decoration: underline;\">Sätete muutmine ja info valitud sätete kohta</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Sätete muutmine ja info valitud sätete kohta (täiendamisel)</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Siin näed:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">1. Kasutaja sätted</span><span style=\" font-size:9pt;\"> (täiendamisel)</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">...</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. Kasutaja sätteid</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">2. Kinnistute andmete seadistust</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">3. Projektide sätteid</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">2. Kinnistute andmete sätted</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Andmekihi väli on informatiivne ja on automaatselt täidetud</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Katastriandmete kiht (nimi muutus?) - ...</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kiht, kuhu salvestatakse uued katastriandmed - ...</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kiht, kuhu... Kas see ja ülemine peavad alati üks ühele samad olema? Kui, siis miks eraldi täita vaja</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Seadistuste muutmine:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Siiia täpsemalt, milda saab muuta kasutaja ja mida administraartor</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">3. Projektide sätted</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kinnistutega seotud projektikiht. Kas see peab olema sama, mis katastriandmete kiht? Kui, siis võiks automaatselt täidetud olema.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projekti baaskaust - Projekti kaust (k.a selles sisalduvad kaustad ja failid), mida soovitakse uute projektide loomisel dubleerida</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projekti sihtkaust - kaust, milles hoiustatakse projekti baaskausta ja baaskaustast genereeritud uusi projekti kaustasid</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">NB! Peale muudatuste salvestamist peab plugina taaskäivitama.</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale muudatuste salvestamist taaskäivita plugin!</span></p></body></html>"))
         self.lb_HM_Servituudid_Pealkiri.setText(_translate("MailablDialogBase", "Servituudid"))
         self.lb_HM_Teemakaardid_Pealkiri.setText(_translate("MailablDialogBase", "Teemakaardid"))
         self.lb_HM_Andmete_laadimine_Pealkiri.setText(_translate("MailablDialogBase", "Andmete laadimine"))
