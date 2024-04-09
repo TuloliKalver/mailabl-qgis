@@ -1023,10 +1023,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lbl_preferred_project_status = self.lbl_preferred_project_status
         lbl_preferred_contract_status = self.lbl_preferred_contract_status
         lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
-        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
+
         load.startup_label_loader(lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                     lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location,
-                                    lblProjectsTargetFolder_location, lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value, lblPreferredFolderName_structure)        
+                                    lblProjectsTargetFolder_location, lbl_preferred_project_status, 
+                                    lbl_preferred_contract_status, lblPreferredContractsTypes_value)        
 
     def load_cadastrals(self):
         self.sw_HM.setCurrentIndex(7)
@@ -1350,11 +1351,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             lbl_preferred_contract_status = self.lbl_preferred_contract_status 
             lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
             lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
+            prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
+            lblPreferredFolderName_structure.setText(prefered_folder_structure_value)
             SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                          lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
                                                          lblProjectsTargetFolder_location, lbl_preferred_project_status, 
-                                                         lbl_preferred_contract_status, lblPreferredContractsTypes_value,
-                                                         lblPreferredFolderName_structure)
+                                                         lbl_preferred_contract_status, lblPreferredContractsTypes_value)
 
 
             if Flags.Flag_settings_button:

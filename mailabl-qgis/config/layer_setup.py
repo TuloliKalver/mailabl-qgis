@@ -59,10 +59,10 @@ class SetupCadastralLayers:
         lblProjectsFolder_location = self.lblProjectsFolder_location 
         lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
         lbl_preferred_project_status = self.lbl_preferred_project_status
-        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
+
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                      lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, 
-                                                     lblProjectsTargetFolder_location, lbl_preferred_project_status, lblPreferredFolderName_structure)
+                                                     lblProjectsTargetFolder_location, lbl_preferred_project_status)
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)
@@ -174,9 +174,9 @@ class Setup_ProjectLayers:
         lbl_preferred_project_status = self.lbl_preferred_project_status
         input_value = widget.leProjectsFolder_location
         target_value = widget.leProjectsTargetFolder_location
-        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
         lbl_preferred_contract_status = self.lbl_preferred_contract_status
-        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value,
+        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
+        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
         
 
 
@@ -184,11 +184,16 @@ class Setup_ProjectLayers:
         status_value_name = InsertStatusToComboBox.get_selected_status_name(combo_box)
         SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value_id, status_value_name, project_status_label)
         prefered_folder_name_structure = widget.lblPreferedFolderNamStructure.text()
+        print(f"prefered_folder_name_structure: {prefered_folder_name_structure}")
         SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, prefered_folder_name_structure)
-        SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location, target_value, input_value)
+        lblPreferredFolderName_structure.setText(prefered_folder_name_structure)
+        SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, 
+                                                                lblProjectsFolder_location, target_value, 
+                                                                input_value)
         SettingsDataSaveAndLoad.startup_label_loader(self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
                               lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
-                              lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value, lblPreferredFolderName_structure)        
+                              lbl_preferred_project_status, lbl_preferred_contract_status, 
+                              lblPreferredContractsTypes_value)        
         text = edu.salvestatud
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)
@@ -247,6 +252,7 @@ class Setup_ProjectLayers:
             all_disabled = all(not combo_box_name.model().item(i).isEnabled() for i in range(combo_box_name.count()))
             if all_disabled:
                 widget.Confir_selecteded_element.setEnabled(False)  # Disable the button
+                widget.Confir_selecteded_element.hide()
 
 
     def checkSelectedId(self, index, widget):
