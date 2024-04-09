@@ -13,33 +13,19 @@ class UserSettings:
         # Initialize an empty list to store fetched items
     
         loader = GraphQLQueryLoader()
-        query = loader.load_query_users(loader.Q_Where_user)
+        query = loader.load_query_users(loader.Q_me)
         roles = []
-        variables = {
-                "first": items_for_page,
-                "after": end_cursor if end_cursor else None,
-                "where": {
-                    "AND": [
-                        {"column": "EMAIL", "operator": "IN", "value": [username]}
-                    ]
-                }
-            }
+        variables = {}
 
         response = requestBuilder.construct_and_send_request(self, query, variables)
 
         if response.status_code == 200:
             data = response.json()
-            user_maindata = data.get("data", {}).get("users", {}).get("edges", [])
-            pageInfo = data.get("data", {}).get("users", {}).get("pageInfo", {})
-            end_cursor = pageInfo.get("endCursor")
+            user = data.get("data", {}).get("me", {})
+            user_name = user.get("firstName", "")
+            user_lastname = user.get("lastName", "")
+            roles = user.get("roles", [])
+            role_names = [role.get("displayName", "") for role in roles]
+            roles_text = ", ".join(role_names)
 
-            for edge in user_maindata:
-                user_node = edge.get("node", {})
-                user_name = user_node.get("firstName", "")
-                user_lastname = user_node.get("lastName", "")
-                roles = user_node.get("roles", [])
-                role_names = [role.get("displayName", "") for role in roles]
-                roles_text = ", ".join(role_names)
-
-        if end_cursor:
-            return user_name, user_lastname, roles_text
+        return user_name, user_lastname, roles_text

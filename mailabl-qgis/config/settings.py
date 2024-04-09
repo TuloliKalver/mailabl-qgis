@@ -283,8 +283,6 @@ class SettingsDataSaveAndLoad:
         settings.setValue(contract_name_paths, contract_type_names)
 
 
-        
-
 
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
                               lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,

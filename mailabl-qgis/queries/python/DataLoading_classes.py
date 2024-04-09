@@ -108,6 +108,7 @@ class GraphQLQueryLoader:
             #User related queries
         self.Q_All_Users = 'users.graphql'
         self.Q_Where_user = 'users_where.graphql'
+        self.Q_me = 'me.graphql'
 
             #Projects related queries
         self.Q_All_Projects = 'projects.graphql'
