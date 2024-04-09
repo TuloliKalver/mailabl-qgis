@@ -1183,7 +1183,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -5541,7 +5541,15 @@ p, li { white-space: pre-wrap; }
 #lblSHPNewItems,
 #lblSHPNewItems_2,
 #lblnewCadastrals_input_layer_label_2, 
-#lblcurrent_main_layer_label_2
+#lblcurrent_main_layer_label_2,
+#lblLayerProjects_Properties, 
+#lblLayerProjects_Vector,
+#lbl_preferred_project_status,
+#lblProjectsFolder_location,
+#lblProjectsTargetFolder_location,
+#lblPreferredFolderName_structure,
+#lbl_preferred_contract_status,
+#lblPreferredContractsTypes_value
 {
 
 	background-color:#40414f;
@@ -5552,7 +5560,7 @@ p, li { white-space: pre-wrap; }
 }
 
 /* Apply a bottom border with a solid line */
-#qwSU_Mailabl_Users,#qwSU_Mailabl_Projects, #qwSU_Layers  {
+#qwSU_Mailabl_Users,#qwSU_Mailabl_Projects, #qwSU_Layers, #qwSU_Mailabl_Contracts  {
   border-bottom: 1px solid rgb(255, 255, 255); /* Replace #000 with the desired color */
 }
 
@@ -6091,8 +6099,15 @@ p, li { white-space: pre-wrap; }
                       </item>
                       <item>
                        <widget class="QLabel" name="lblSHPNewItems">
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
                         <property name="text">
-                         <string/>
+                         <string>Veel Määramata</string>
                         </property>
                        </widget>
                       </item>
@@ -6160,7 +6175,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string/>
+                         <string>Veel Määramata</string>
                         </property>
                        </widget>
                       </item>
@@ -6228,7 +6243,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string/>
+                         <string>Veel Määrmata</string>
                         </property>
                        </widget>
                       </item>
@@ -6257,6 +6272,21 @@ p, li { white-space: pre-wrap; }
                    <string notr="true"/>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_46">
+                   <property name="spacing">
+                    <number>8</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>5</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>5</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>5</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>5</number>
+                   </property>
                    <item>
                     <widget class="QFrame" name="frame_27">
                      <property name="frameShape">
@@ -6373,8 +6403,15 @@ p, li { white-space: pre-wrap; }
                       </item>
                       <item>
                        <widget class="QLabel" name="lblLayerProjects_Properties">
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
                         <property name="text">
-                         <string/>
+                         <string>Veel määramata</string>
                         </property>
                        </widget>
                       </item>
@@ -6442,7 +6479,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string/>
+                         <string>Veel määramata</string>
                         </property>
                        </widget>
                       </item>
@@ -6462,7 +6499,7 @@ p, li { white-space: pre-wrap; }
                      </layout>
                     </widget>
                    </item>
-                   <item>
+                   <item alignment="Qt::AlignLeft">
                     <widget class="QFrame" name="frame_20">
                      <property name="frameShape">
                       <enum>QFrame::StyledPanel</enum>
@@ -6496,7 +6533,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string>Eelistatud staatus projektide nimekirja laadimisel</string>
+                         <string>Eelistatud staatus</string>
                         </property>
                        </widget>
                       </item>
@@ -6505,10 +6542,12 @@ p, li { white-space: pre-wrap; }
                         <property name="font">
                          <font>
                           <pointsize>10</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="text">
-                         <string>TextLabel</string>
+                         <string>Veel määramata</string>
                         </property>
                        </widget>
                       </item>
@@ -6590,7 +6629,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string/>
+                         <string>Veel määramata</string>
                         </property>
                        </widget>
                       </item>
@@ -6658,7 +6697,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string/>
+                         <string>Veel määramata</string>
                         </property>
                        </widget>
                       </item>
@@ -6674,6 +6713,61 @@ p, li { white-space: pre-wrap; }
                          </size>
                         </property>
                        </spacer>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignLeft">
+                    <widget class="QFrame" name="frame_31">
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_65">
+                      <property name="spacing">
+                       <number>10</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>15</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="lblFolder_nameStructureLabel">
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Projektikausta eelistatud nime struktuur</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="lblPreferredFolderName_structure">
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Veel määramata</string>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </widget>
@@ -6711,6 +6805,21 @@ p, li { white-space: pre-wrap; }
                       <string notr="true"/>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_51">
+                      <property name="spacing">
+                       <number>8</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>5</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>5</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>5</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>5</number>
+                      </property>
                       <item>
                        <widget class="QFrame" name="frame_30">
                         <property name="frameShape">
@@ -6784,7 +6893,7 @@ p, li { white-space: pre-wrap; }
                         </layout>
                        </widget>
                       </item>
-                      <item>
+                      <item alignment="Qt::AlignLeft">
                        <widget class="QFrame" name="frame_33">
                         <property name="frameShape">
                          <enum>QFrame::StyledPanel</enum>
@@ -6808,7 +6917,7 @@ p, li { white-space: pre-wrap; }
                          <property name="bottomMargin">
                           <number>0</number>
                          </property>
-                         <item>
+                         <item alignment="Qt::AlignLeft">
                           <widget class="QLabel" name="label_36">
                            <property name="font">
                             <font>
@@ -6818,49 +6927,24 @@ p, li { white-space: pre-wrap; }
                             </font>
                            </property>
                            <property name="text">
-                            <string>Eelistatud staatus lepingute nimekirja laadimisel</string>
+                            <string>Eelistatud staatus</string>
                            </property>
                           </widget>
                          </item>
-                         <item>
+                         <item alignment="Qt::AlignLeft">
                           <widget class="QLabel" name="lbl_preferred_contract_status">
                            <property name="font">
                             <font>
                              <pointsize>10</pointsize>
+                             <weight>50</weight>
+                             <bold>false</bold>
                             </font>
                            </property>
                            <property name="text">
-                            <string>TextLabel</string>
+                            <string>Veel määramata</string>
                            </property>
                           </widget>
                          </item>
-                        </layout>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QFrame" name="frame_34">
-                        <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
-                        </property>
-                        <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
-                        </property>
-                        <layout class="QHBoxLayout" name="horizontalLayout_68">
-                         <property name="spacing">
-                          <number>10</number>
-                         </property>
-                         <property name="leftMargin">
-                          <number>15</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
                         </layout>
                        </widget>
                       </item>
@@ -6924,7 +7008,7 @@ p, li { white-space: pre-wrap; }
                             </font>
                            </property>
                            <property name="text">
-                            <string>TextLabel</string>
+                            <string>Veel määramata</string>
                            </property>
                           </widget>
                          </item>

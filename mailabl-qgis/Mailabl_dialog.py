@@ -332,17 +332,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbMainMenu.clicked.connect(self.handleSidebar_leftButtons)
         
         self.pushButton.clicked.connect(self.limitedLoad)
-        
-
-        
-
-
 
 ############sort/cler/delete##############################
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
 
-        
         self.pushButton_2.clicked.connect(self.testsubject)
 
 
