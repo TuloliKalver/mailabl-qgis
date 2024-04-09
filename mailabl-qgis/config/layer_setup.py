@@ -4,11 +4,11 @@
 
 
 # Related Third-Party Imports
+from qgis.core import QgsMapLayer, QgsProject
 from PyQt5.QtWidgets import QMessageBox, QFrame
-from PyQt5.QtGui import QCursor
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
-from qgis.core import QgsMapLayer, QgsProject
 
 # Local Application or Library Imports
 from .mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
@@ -59,9 +59,10 @@ class SetupCadastralLayers:
         lblProjectsFolder_location = self.lblProjectsFolder_location 
         lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
         lbl_preferred_project_status = self.lbl_preferred_project_status
+        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                      lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, 
-                                                     lblProjectsTargetFolder_location, lbl_preferred_project_status)
+                                                     lblProjectsTargetFolder_location, lbl_preferred_project_status, lblPreferredFolderName_structure)
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)
@@ -144,7 +145,17 @@ class Setup_ProjectLayers:
         if target_folder_path:
             lblProjectsTargetFolder_location = widget.leProjectsTargetFolder_location
             lblProjectsTargetFolder_location.setText(target_folder_path)                
- 
+
+        line_edit_symbol = widget.leSymbolCharacter
+        line_edit_symbol.setVisible(False)
+
+      # Connect signal to function
+        cmb_folder_name_optoins = widget.cmbNameElements
+        cmb_folder_name_optoins.currentIndexChanged.connect(lambda index: Setup_ProjectLayers().checkSelectedId(index, widget))
+
+        append_button = widget.Confir_selecteded_element
+        append_button.clicked.connect(lambda: Setup_ProjectLayers.addSelectedItem(widget))
+
         # Connect signals to functions
         save_button.clicked.connect(lambda: Setup_ProjectLayers.on_save_button_clicked(self, widget, cmb_layers, combo_box))
         cancel_button.clicked.connect(lambda: Setup_ProjectLayers.on_cancel_button_clicked(self, widget))
@@ -163,17 +174,21 @@ class Setup_ProjectLayers:
         lbl_preferred_project_status = self.lbl_preferred_project_status
         input_value = widget.leProjectsFolder_location
         target_value = widget.leProjectsTargetFolder_location
+        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
+        lbl_preferred_contract_status = self.lbl_preferred_contract_status
+        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value,
+        
 
 
         status_value_id = InsertStatusToComboBox.get_selected_status_id(combo_box)
         status_value_name = InsertStatusToComboBox.get_selected_status_name(combo_box)
-        print(f"status_value: {status_value_id}")
-        print(f"status value name: {status_value_name}")
         SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value_id, status_value_name, project_status_label)
+        prefered_folder_name_structure = widget.lblPreferedFolderNamStructure.text()
+        SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, prefered_folder_name_structure)
         SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location, target_value, input_value)
-        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
-                                                     lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
-                                                     lbl_preferred_project_status)        
+        SettingsDataSaveAndLoad.startup_label_loader(self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
+                              lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
+                              lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value, lblPreferredFolderName_structure)        
         text = edu.salvestatud
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)
@@ -188,6 +203,60 @@ class Setup_ProjectLayers:
         QMessageBox.information(widget, heading, text)
         widget.reject()  # Close the dialog        
 
+    def addSelectedItem(widget):
+        combo_box_name = widget.cmbNameElements
+        label_prefered_name = widget.lblPreferedFolderNamStructure
+        label_symbol = widget.leSymbolCharacter
+
+        selected_item = combo_box_name.currentText()
+        if selected_item:
+            # Check if the button was clicked and the index is 1
+            if widget.Confir_selecteded_element.isEnabled() and combo_box_name.currentIndex() == 1:
+                label_text = label_prefered_name.text()
+                symbol_text = label_symbol.text()
+                if symbol_text:
+                    label_text = f"{label_text} + {selected_item}({symbol_text})"
+                else:
+                    label_text = f"{label_text} + {selected_item}"
+                label_prefered_name.setText(label_text)
+            else:
+                # Add selected item to label without parentheses
+                current_text = label_prefered_name.text()
+                if current_text:
+                    current_text += f" + {selected_item}"
+                else:
+                    current_text = selected_item
+                label_prefered_name.setText(current_text)
+
+            # Disable selected item in combobox
+            index = combo_box_name.findText(selected_item)
+            if index != -1:
+                item = combo_box_name.model().item(index)
+                item.setEnabled(False)
+
+                # Set icon for the disabled item
+                done_icon_path = ":/qt-project.org/styles/commonstyle/images/standardbutton-apply-16.png"
+                icon = QIcon(done_icon_path)
+                item.setIcon(icon)
+
+
+            # Reset combobox to index -1
+            combo_box_name.setCurrentIndex(-1)
+
+            # Check if all items are disabled
+            all_disabled = all(not combo_box_name.model().item(i).isEnabled() for i in range(combo_box_name.count()))
+            if all_disabled:
+                widget.Confir_selecteded_element.setEnabled(False)  # Disable the button
+
+
+    def checkSelectedId(self, index, widget):
+        # Check if the selected item has id 1
+        if index != -1:
+            #selected_id = widget.cmbProjects_Layer.itemData(index)
+            if index == 1:
+                widget.leSymbolCharacter.setVisible(True)
+            else:
+                widget.leSymbolCharacter.setVisible(False)
 
 
 class Setup_Conrtacts:
@@ -215,13 +284,8 @@ class Setup_Conrtacts:
 
         #InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module )
         preferred_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)
-
         
         InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types)
-
-
-        
-
 
         # Connect signals to functions
         save_button.clicked.connect(lambda: Setup_Conrtacts.on_save_button_clicked(self, widget, statuses_combo_box, types_combo_box))

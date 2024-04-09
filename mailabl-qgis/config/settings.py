@@ -155,10 +155,15 @@ class SettingsDataSaveAndLoad:
         COPYFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setuup_folder_input}"
         return COPYFOLDER
 
-    def projects_targetFolderPath (self):
+    def projects_targetFolderPath(self):
         self.setup_folder_output = 'labels/projects_targetFolder'
         TARGETFOLDER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_folder_output}"
         return TARGETFOLDER
+    
+    def projects_Folder_preferred_name_structure(self):
+        preferred_projects_name_structure = 'labels/projects_preferred_projects_name_structure'
+        FOLDER_NAME_STRUCTURE = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{preferred_projects_name_structure}"
+        return FOLDER_NAME_STRUCTURE
     
     def projects_preferred_status_ID (self):
         self.setup_projects_preferred_status = 'labels/projects_preferred_status'
@@ -227,6 +232,13 @@ class SettingsDataSaveAndLoad:
         target_settings_address = SettingsDataSaveAndLoad.projects_cadastral(self)
         settings.setValue(target_settings_address, input_value)
 
+    def save_projects_folder_preferred_name_structure(self, input_value):
+        settings = QgsSettings()
+        preferred_folder_name_adress = SettingsDataSaveAndLoad.projects_Folder_preferred_name_structure(self)
+        settings.setValue(preferred_folder_name_adress, input_value)
+
+
+
     def save_user_values(self, user_name, user_lastname, roles):
         settings = QgsSettings()
         user_name_address = SettingsDataSaveAndLoad.user_name(self)
@@ -276,7 +288,7 @@ class SettingsDataSaveAndLoad:
 
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
                               lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
-                              lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value):
+                              lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value, lblPreferredFolderName_structure):
         current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
         create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
         SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
@@ -286,8 +298,9 @@ class SettingsDataSaveAndLoad:
         projects_status_name_value = SettingsDataSaveAndLoad.load_projects_status_name(self)
         contracts_type_names = SettingsDataSaveAndLoad.load_contracts_type_names(self)
         contracts_status_names = SettingsDataSaveAndLoad.load_contract_status_names(self)
+        prefered_folder_name_structure = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
         
-
+        lblPreferredFolderName_structure.setText(prefered_folder_name_structure)
         lblcurrent_main_layer_label.setText(current_label_value)
         lblnewCadastrals_input_layer_label.setText(create_new_layer_label_value)
         lblSHPNewItems.setText(SHP_layer_label_value)
@@ -334,6 +347,12 @@ class SettingsDataSaveAndLoad:
         settings_projects_status_name = SettingsDataSaveAndLoad.projects_preferred_status_Name(self)
         settings = QgsSettings()
         return settings.value(settings_projects_status_name, '', type=str)
+    
+    def load_projects_prefered_folder_name_structure(self):
+        settings_projects_preferred_folder_name = SettingsDataSaveAndLoad.projects_Folder_preferred_name_structure(self)
+        settings = QgsSettings()
+        return settings.value(settings_projects_preferred_folder_name, '', type=str)
+    
 
     def load_user_name(self):
         user_name = SettingsDataSaveAndLoad.user_name(self)
