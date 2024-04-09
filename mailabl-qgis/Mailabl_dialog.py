@@ -345,15 +345,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pushButton_2.clicked.connect(self.testsubject)
 
-        self.getContractTypesdev.clicked.connect(self.testType)
-
-    def testType (self):
-        combo_box_checkable = self.cmbcontractTypes_checkable
-        checked_indexes = combo_box_checkable.checkedItemsData()
-        print("Checked items:")
-        print(checked_indexes)
-        #statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box_checkable)
-        #print(statusValue)
 
     def testsubject(self):
         table = self.tblMailabl_projects

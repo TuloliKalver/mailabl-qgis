@@ -1,4 +1,4 @@
-query contracts($first: Int, $after: String, $search: String, $where: QueryContractsWhereWhereConditions, $orderBy: [QueryContractsOrderByOrderByClause!], $trashed: Trashed) {
+query contracts($first: Int, $after: String, $propertiesFirst: Int, $propertiesAfter: String, $search: String, $where: QueryContractsWhereWhereConditions, $orderBy: [QueryContractsOrderByOrderByClause!], $trashed: Trashed) {
   contracts(
     first: $first
     after: $after
@@ -6,6 +6,7 @@ query contracts($first: Int, $after: String, $search: String, $where: QueryContr
     where: $where
     orderBy: $orderBy
     trashed: $trashed
+
   ) {
     pageInfo {
       currentPage
@@ -13,34 +14,51 @@ query contracts($first: Int, $after: String, $search: String, $where: QueryContr
       hasNextPage
       endCursor
     }
-    edges {
-      node {
-        __typename
-        id
-        number
-        name
-        sum {
-          amount
-          currencyCode
-        }
-        signedAt
-        completedAt
-        warrantyDueAt
-        members {
-          edges {
-            isResponsible
+    edges{
+      node{
+          id,
+          number,
+          name,
+          dueAt,
+          isSubcontract,
+          filesPath
+          status{
+              name, 
+              color
+              }
+          createdAt,
+          updatedAt,
+          deletedAt
+          responsible {
+              edges {
+                  node {
+                      id
+                      displayName
+                                  }
+                              }
+          }    
+          properties(
+              first: $propertiesFirst 
+              after: $propertiesAfter
+                      ) {
+                      pageInfo {
+                          count
+                          currentPage
+                          startCursor
+                          endCursor
+                          hasNextPage
+                          hasPreviousPage
+                          lastPage
+                          total
+                      }
+                      edges {
+                          node {
+                              id,
+                              cadastralUnitNumber
+                              }
+                          }
+                      }
+                  }
+              }
           }
-        }
-        status {
-          id
-          name
-          color
-          type
-        }
-        type {
-          name
-        }
       }
-    }
-  }
-}

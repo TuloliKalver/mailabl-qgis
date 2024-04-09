@@ -44,9 +44,9 @@ header_statuses = 'Staatus'
 
 class ContractsMain:
     @staticmethod
-    def main_contracts (self, table, statuses):
+    def main_contracts (self, table, types, statuses):
 
-        result = queryHandling.contracts_basic_data(self, statuses)
+        result = queryHandling.contracts_basic_data(self, types, statuses)
 
         if result is not None:
             con_model, header_labels = result
@@ -323,7 +323,7 @@ class queryHandling:
         self.header_statuses = header_statuses
         
     @staticmethod
-    def contracts_basic_data(self, statuses):
+    def contracts_basic_data(self, types, statuses):
             # Set header labels
         header_labels = [header_id, header_number, header_name, header_deadline, header_responsible, header_color, header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_statuses]
        
@@ -331,7 +331,7 @@ class queryHandling:
         #print("statuses")
         #print(statuses)
 
-        data = ContractsQueries_list.query_contracts_by_status(self, statuses)
+        data = ContractsSearch.query_contracts_by_type_status_elements(self, types, statuses)
         #print("recived data is")
         #print(data)
         #data_count = len(data)
@@ -603,12 +603,12 @@ class ContractsSearch:
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
 
-    def query_contracts_for_zoomed_elements(self, selected_features):
-        print(f"selected_features: '{selected_features}'")
+    def query_contracts_by_type_status_elements(self, type_values, statuses):
+        print(f"type_values: '{type_values}'")
         #print(statuses)
         # Load the project query using the loader instance
         query_loader = GraphqlQueriesContracts()
-        query = GraphqlQueriesContracts.load_query_for_contracts(self, query_loader.Q_where_Contracts_by_cadastrals)        
+        query = GraphqlQueriesContracts.load_query_for_contracts(self, query_loader.Q_where_contracts_type_status)        
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value
@@ -623,47 +623,61 @@ class ContractsSearch:
         fetched_items = []
 
         count = 0
-        
-        for feature in selected_features:
             
-            while (desired_total_items is None or total_fetched < desired_total_items):
-                variables = {
-                    "first": items_for_page,
-                    "after": end_cursor if end_cursor else None,
-                    "where": {
-                        "AND": [
-                                {
-                                    "column": "CADASTRAL_UNIT_NUMBER",
-                                    "operator": "IN",
-                                    "value": feature
-                                }
-                        ]
+        while (desired_total_items is None or total_fetched < desired_total_items):
+            variables = {
+                "first": items_for_page,
+                "after": end_cursor if end_cursor else None,
+                "where": {
+                    "AND": [
+                        {
+                        "column": "TYPE",
+                        "operator": "IN",
+                        "value": type_values
+                        #"value": ["1", "2", "3"]
+                        },
+                        {
+                        "column": "STATUS",
+                        "operator": "IN",
+                        "value": statuses
+                        #"value": ["62"]
+                        }
+                    ]
+                    },
+                    "orderBy": [
+                    {
+                        "column": "NUMBER",
+                        "order": "ASC"
                     }
+                    ],
+                    "trashed": "WITHOUT"
                 }
 
-                response = requestBuilder.construct_and_send_request(self, query, variables)
 
-                if response.status_code == 200:
-                    data = response.json()
-                    #print("data")
-                    #print(data)
-                    fetched_data = data.get("data", {}).get("contracts", {}).get("edges", [])
-                    pageInfo = data.get("data", {}).get("contracts", {}).get("pageInfo", {})
-                    #print(f"propesties_end_cursor: '{properties_end_cursor}'")
-                    end_cursor = pageInfo.get("endCursor")
-                    hasNextPage = pageInfo.get("hasNextPage")
-                    fetched_items.extend(fetched_data)
-                    total_fetched += len(fetched_data)
 
-                    # Check whether the last page of projects has been reached
-                    if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
-                        break
+            response = requestBuilder.construct_and_send_request(self, query, variables)
 
-                else:
-                    #print(f"Error: {response.status_code}")
-                    return None
+            if response.status_code == 200:
+                data = response.json()
+                #print("data")
+                #print(data)
+                fetched_data = data.get("data", {}).get("contracts", {}).get("edges", [])
+                pageInfo = data.get("data", {}).get("contracts", {}).get("pageInfo", {})
+                #print(f"propesties_end_cursor: '{properties_end_cursor}'")
+                end_cursor = pageInfo.get("endCursor")
+                hasNextPage = pageInfo.get("hasNextPage")
+                fetched_items.extend(fetched_data)
+                total_fetched += len(fetched_data)
 
-                QCoreApplication.processEvents()
+                # Check whether the last page of projects has been reached
+                if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
+                    break
+
+            else:
+                #print(f"Error: {response.status_code}")
+                return None
+
+            QCoreApplication.processEvents()
 
         # Return only the desired number of items
         return fetched_items[:desired_total_items]

@@ -5273,13 +5273,6 @@ QPushButton:hover{
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QPushButton" name="getContractTypesdev">
-                        <property name="text">
-                         <string>dev</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
                        <widget class="QgsCheckableComboBox" name="cmbcontractTypes_checkable">
                         <property name="minimumSize">
                          <size>

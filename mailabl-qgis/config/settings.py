@@ -175,6 +175,7 @@ class SettingsDataSaveAndLoad:
         CONTRACT_TYPE_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_contracts_preferred_status_name}"
         return CONTRACT_TYPE_NAME
     
+
     def contracts_preferred_status_ids(self):
             setup_contracts_preferred_status_ids = 'labels/contracts_preferred_status_ids'
             CONTRACT_STATUS_IDS = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_contracts_preferred_status_ids}"
@@ -389,6 +390,7 @@ class SettingsDataSaveAndLoad:
         settings = QgsSettings()
         value = settings.value(settings_address, '', type=str)
         return value
+    
 
 
 

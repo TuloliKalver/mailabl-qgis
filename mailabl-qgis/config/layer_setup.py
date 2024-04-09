@@ -5,6 +5,7 @@
 
 # Related Third-Party Imports
 from PyQt5.QtWidgets import QMessageBox, QFrame
+from PyQt5.QtGui import QCursor
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 from qgis.core import QgsMapLayer, QgsProject
@@ -204,7 +205,7 @@ class Setup_Conrtacts:
         module = MODULE_CONTRACTS
         statuses_combo_box = widget.cmbPreferredContractStatuses
         types_combo_box = widget.cbcb_PreferredContractTypes
-        #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
+        # Assuming types_combo_box is an instance of QgsSelectableComboBox
 
         status_id = SettingsDataSaveAndLoad.load_contract_status_ids(self)
         if status_id is None or '':

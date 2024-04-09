@@ -2240,9 +2240,6 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_61.setContentsMargins(10, 0, 10, 0)
         self.horizontalLayout_61.setSpacing(10)
         self.horizontalLayout_61.setObjectName("horizontalLayout_61")
-        self.getContractTypesdev = QtWidgets.QPushButton(self.frcontracts_Checkbox_holder)
-        self.getContractTypesdev.setObjectName("getContractTypesdev")
-        self.horizontalLayout_61.addWidget(self.getContractTypesdev)
         self.cmbcontractTypes_checkable = QgsCheckableComboBox(self.frcontracts_Checkbox_holder)
         self.cmbcontractTypes_checkable.setMinimumSize(QtCore.QSize(250, 0))
         self.cmbcontractTypes_checkable.setObjectName("cmbcontractTypes_checkable")
@@ -4342,7 +4339,6 @@ class Ui_MailablDialogBase(object):
         self.pbContracts_Connect_properties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
         self.le_searchContracts.setPlaceholderText(_translate("MailablDialogBase", " Otsing - lepingu numbri järgi"))
         self.pbSearchContracts.setText(_translate("MailablDialogBase", "Otsi"))
-        self.getContractTypesdev.setText(_translate("MailablDialogBase", "dev"))
         self.label_20.setText(_translate("MailablDialogBase", "Help"))
         self.textEdit.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

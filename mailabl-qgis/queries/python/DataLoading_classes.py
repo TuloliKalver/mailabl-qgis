@@ -61,6 +61,7 @@ class GraphqlQueriesContracts:
         self.Q_where_Contracts_by_cadastrals = 'propertiesrelated_contracts.graphql'
         self.UPDATE_contract_properties = 'update_contract_properties.graphql'     
         self.contracts_types = 'contract_types.graphql'   
+        self.Q_where_contracts_type_status = 'contracts_type_status.graphql'
 
     def load_query_for_contracts(self,query_file_name):
         path = GraphQLQueryLoader()

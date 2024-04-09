@@ -65,12 +65,16 @@ class WorkSpaceHandler:
         prefered_statuses = SettingsDataSaveAndLoad.load_contract_status_ids(self)
         InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
   
-        preferred_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)    
-        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types)
+        prefered_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)    
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types)
+        selected_types_ids = types_combo_box.checkedItemsData()
+        
+
 
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
+
         #ContractsQueries_list.query_contracts_by_status(self, statusValue)
-        ContractsMain.main_contracts(self, table, statusValue)
+        ContractsMain.main_contracts(self, table, selected_types_ids, statusValue)
                 
         push_button.blockSignals(False)
         refresh_button.blockSignals(False)
@@ -81,9 +85,12 @@ class WorkSpaceHandler:
         refresh_button.blockSignals(True)
         table = self.ContractView
         comboBox = self.cmbcontractStatuses
+        types_combo_box = self.cmbcontractTypes_checkable
+        selected_types_ids = types_combo_box.checkedItemsData()
         statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
-        #ContractsQueries_list.query_contracts_by_status(self, statusValue)
-        ContractsMain.main_contracts(self, table, statusValue)
+  
+        ContractsMain.main_contracts(self, table, selected_types_ids, statusValue)
+
         refresh_button.blockSignals(False)
 
 
