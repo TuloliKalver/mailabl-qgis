@@ -244,7 +244,6 @@ class Setup_ProjectLayers:
                 icon = QIcon(done_icon_path)
                 item.setIcon(icon)
 
-
             # Reset combobox to index -1
             combo_box_name.setCurrentIndex(-1)
 
