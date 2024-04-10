@@ -335,7 +335,9 @@ class Ui_LayeAdjuster(object):
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.groupBox = QtWidgets.QGroupBox(self.fSettingsFolderStucture)
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
         self.groupBox.setFont(font)
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.groupBox)
@@ -447,6 +449,11 @@ class Ui_LayeAdjuster(object):
         self.verticalLayout_10.setContentsMargins(0, 5, 0, 0)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
         self.label_2 = QtWidgets.QLabel(self.fHelpMenu)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.verticalLayout_10.addWidget(self.label_2)
         self.textEdit = QtWidgets.QTextEdit(self.fHelpMenu)
@@ -465,9 +472,9 @@ class Ui_LayeAdjuster(object):
     def retranslateUi(self, LayeAdjuster):
         _translate = QtCore.QCoreApplication.translate
         LayeAdjuster.setWindowTitle(_translate("LayeAdjuster", "Mailabl projektide eelistused"))
-        self.label.setText(_translate("LayeAdjuster", "Projektide seadistused"))
-        self.lblCurrect_Cadastral_2.setText(_translate("LayeAdjuster", "Projektide kaardikiht"))
-        self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Projekti staatuse eelistus"))
+        self.label.setText(_translate("LayeAdjuster", "Projektide sätted"))
+        self.lblCurrect_Cadastral_2.setText(_translate("LayeAdjuster", "Kaardikiht"))
+        self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Staatuse eelistus"))
         self.lblProjectsTargetFolder.setText(_translate("LayeAdjuster", "Projekti sihtkaus"))
         self.lblProjectsFolder.setText(_translate("LayeAdjuster", "Projekti baaskaust"))
         self.groupBox.setTitle(_translate("LayeAdjuster", "Projekti kausta nime struktuuri määrmine"))
@@ -478,9 +485,9 @@ class Ui_LayeAdjuster(object):
         self.Confir_selecteded_element.setText(_translate("LayeAdjuster", "Lisa"))
         self.pbCancel.setText(_translate("LayeAdjuster", "Tühista"))
         self.pbSave.setText(_translate("LayeAdjuster", "Salvesta andmed"))
-        self.label_2.setText(_translate("LayeAdjuster", "Juhend"))
+        self.label_2.setText(_translate("LayeAdjuster", "Seadete selgitused"))
         self.textEdit.setHtml(_translate("LayeAdjuster", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">pikk jutt sitt jutt</p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
