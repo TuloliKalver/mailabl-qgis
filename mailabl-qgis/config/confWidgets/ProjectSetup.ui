@@ -28,8 +28,13 @@
     <height>530</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>Mailabl projektide eelistused</string>
+   <string>Projektide seaded</string>
   </property>
   <property name="styleSheet">
    <string notr="true">/*üleüldine taust ja toonid*/
@@ -53,7 +58,7 @@
 #fSettingsFolders, #fSettingsFolderStucture,
 #fSettingsMain 
 {
-    border: 2px solid #4d4d5b;  /* Same border style as QLineEdit */
+   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */
     border-radius: 5px;
 	border-top: none;
     border-left: none;
@@ -132,7 +137,7 @@ QLabel {
 QLineEdit {
     background-color: #35363f;  /* Lighter background color */
     color: #ececf1;
-    border: 1px solid #4d4d5b;  /* Thinner border with a different color */
+    /*border: 1px solid #4d4d5b;  Thinner border with a different color */
     border-radius: 5px;
     padding: 4px;
 }
@@ -169,54 +174,6 @@ QLineEdit {
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="fHeader">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>10</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>10</number>
-      </property>
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QLabel" name="label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <family>Tahoma</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Projektide sätted</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QFrame" name="fContent">
      <property name="minimumSize">
       <size>
@@ -241,7 +198,7 @@ QLineEdit {
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
