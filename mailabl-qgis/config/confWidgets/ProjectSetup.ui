@@ -130,15 +130,15 @@ QLabel {
 }
 
 QLineEdit {
-    background-color: #2d2e3b;  /* Slightly darker background color */
+    background-color: #35363f;  /* Lighter background color */
     color: #ececf1;
-    border: 2px solid #4d4d5b;  /* Thicker border with a different color */
+    border: 1px solid #4d4d5b;  /* Thinner border with a different color */
     border-radius: 5px;
     padding: 4px;
 }
 
 QLineEdit:hover {
-    background-color: #373845;  /* Darker background color on hover */
+    background-color: #3d3e47;  /* Slightly darker background color on hover */
 }
 
 /* Remove top and side borders */
