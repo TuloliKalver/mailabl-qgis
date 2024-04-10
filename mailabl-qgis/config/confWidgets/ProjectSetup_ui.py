@@ -24,6 +24,8 @@ class Ui_LayeAdjuster(object):
         LayeAdjuster.setMaximumSize(QtCore.QSize(900, 530))
         font = QtGui.QFont()
         font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
         LayeAdjuster.setFont(font)
         LayeAdjuster.setStyleSheet("/*üleüldine taust ja toonid*/\n"
 "/*--gray-0: #fff;\n"
@@ -367,8 +369,8 @@ class Ui_LayeAdjuster(object):
         self.leSymbolCharacter = QtWidgets.QLineEdit(self.frame_4)
         self.leSymbolCharacter.setMinimumSize(QtCore.QSize(400, 0))
         self.leSymbolCharacter.setMaximumSize(QtCore.QSize(300, 16777215))
-        self.leSymbolCharacter.setText("")
         self.leSymbolCharacter.setMaxLength(5)
+        self.leSymbolCharacter.setPlaceholderText("")
         self.leSymbolCharacter.setObjectName("leSymbolCharacter")
         self.verticalLayout_13.addWidget(self.leSymbolCharacter)
         self.verticalLayout_5.addWidget(self.frame_4)
@@ -456,17 +458,17 @@ class Ui_LayeAdjuster(object):
         self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Staatuse eelistus"))
         self.lblProjectsTargetFolder.setText(_translate("LayeAdjuster", "Projekti sihtkaus"))
         self.lblProjectsFolder.setText(_translate("LayeAdjuster", "Projekti baaskaust"))
-        self.groupBox.setTitle(_translate("LayeAdjuster", "Projekti kausta nime struktuuri määrmine"))
+        self.groupBox.setTitle(_translate("LayeAdjuster", "Projekti kausta nime seadistamine"))
         self.cmbNameElements.setPlaceholderText(_translate("LayeAdjuster", "Vali element"))
         self.cmbNameElements.setItemText(0, _translate("LayeAdjuster", "Projekti number"))
         self.cmbNameElements.setItemText(1, _translate("LayeAdjuster", "Sümbol"))
         self.cmbNameElements.setItemText(2, _translate("LayeAdjuster", "Projekti nimetus"))
         self.Confir_selecteded_element.setText(_translate("LayeAdjuster", "Lisa"))
         self.pbCancel.setText(_translate("LayeAdjuster", "Tühista"))
-        self.pbSave.setText(_translate("LayeAdjuster", "Salvesta andmed"))
-        self.label_2.setText(_translate("LayeAdjuster", "Seadete selgitused"))
+        self.pbSave.setText(_translate("LayeAdjuster", "Salvesta"))
+        self.label_2.setText(_translate("LayeAdjuster", "Seadete selgitused (täiendamisel)"))
         self.textEdit.setHtml(_translate("LayeAdjuster", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">NB! projekti kausta nimedes ei saa kasutada (kuna need ei vasta Windowsi standarditele) järgmisi sümboleid: &quot;&lt;&gt;:&quot;/\\\\|?*.&quot;, </span></p></body></html>"))

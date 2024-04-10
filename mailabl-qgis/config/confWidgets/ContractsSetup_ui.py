@@ -20,6 +20,11 @@ class Ui_LayeAdjuster(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(LayeAdjuster.sizePolicy().hasHeightForWidth())
         LayeAdjuster.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        LayeAdjuster.setFont(font)
         LayeAdjuster.setStyleSheet("/*üleüldine taust ja toonid*/\n"
 "/*--gray-0: #fff;\n"
 "    --gray-50: #f7f7f8;\n"
@@ -207,5 +212,5 @@ class Ui_LayeAdjuster(object):
         self.lblCurrect_Cadastral_2.setText(_translate("LayeAdjuster", "Eelistatud staatus"))
         self.lblPreferedContractTypes.setText(_translate("LayeAdjuster", "Eelistatud lepingu liigid"))
         self.pbCancel.setText(_translate("LayeAdjuster", "Tühista"))
-        self.pbSave.setText(_translate("LayeAdjuster", "Salvesta andmed"))
+        self.pbSave.setText(_translate("LayeAdjuster", "Salvesta"))
 from qgscheckablecombobox import QgsCheckableComboBox
