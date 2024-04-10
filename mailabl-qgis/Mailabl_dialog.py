@@ -55,7 +55,7 @@ from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboB
 from .queries.python.Types_Tags.type_tag_manager import Types, InsertTypesToComboBox
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
-from .Functions.Folders.folders import copy_and_rename_folder
+from .Functions.Folders.folders import copy_and_rename_folder, FolderNameGenerator
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -338,6 +338,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
 
         self.pushButton_2.clicked.connect(self.testsubject)
+
+        self.pushButton_3.clicked.connect(self.folder_structure_name_order_dev)
+    
+    def folder_structure_name_order_dev(self):
+        project_name = "Example name"
+        project_number = "10928AA"
+        FolderNameGenerator.folder_structure_name_order(self,project_name, project_number)
+
 
 
     def testsubject(self):

@@ -9,7 +9,6 @@ from ...queries.python.DataLoading_classes import GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 
 def copy_and_rename_folder(table):
-
     text = "Ettevalmistatud struktuuriga projektikaustade genereerimine on mõeldud eelkõige uutele projektidele.\nEnne jätkamist kontrolli ega samasisulist kausta pole juba loodud.\nOled kindel, et soovid jätkata?"
 
     overall_confirmation = QMessageBox.question(None, "Confirmation", text,
@@ -36,24 +35,25 @@ def copy_and_rename_folder(table):
                 break
 
         if column_index is not None:
-            #print(f"Column index of header '{value}': {column_index}")
-            
             # Get the value in the selected row and specified column
             project_name_raw = model.data(model.index(selected_row_index, column_index))
 
             # Remove unwanted characters from the project name
             project_name = re.sub(r'[<>:"/\\|?*.]', '', project_name_raw)
-            
-            #print(f"Selected value in column '{value}' for the selected row: {project_name}")
-            project_id = model.data(model.index(selected_row_index, 0))    
-            if project_name is not None or '':
+
+            project_number = model.data(model.index(selected_row_index, 0))
+
+            if project_name:
                 try:
+                    # Use the FolderNameGenerator to generate the folder name based on the user-defined order
+                    folder_name = FolderNameGenerator().folder_structure_name_order(project_name, project_number)
+                    
                     # Check if the target folder with the new name already exists
-                    if os.path.exists(os.path.join(os.path.dirname(target_folder),project_name)):
-                        QMessageBox.information(None, "Error", f"Kaust nimega '{project_name}' on juba sihtkohas olemas.")
+                    if os.path.exists(os.path.join(os.path.dirname(target_folder), folder_name)):
+                        QMessageBox.information(None, "Error", f"Kaust nimega '{folder_name}' on juba sihtkohas olemas.")
                     else:
                         shutil.copytree(source_folder, target_folder)
-                        os.rename(target_folder, os.path.join(os.path.dirname(target_folder), project_name))
+                        os.rename(target_folder, os.path.join(os.path.dirname(target_folder), folder_name))
                         
                         # Ask the user for confirmation
                         confirmation = QMessageBox.question(None, "Confirmation", "Oled kindel, et soovid genereeritud kausta lingi lisada Mailablis projektile?",
@@ -61,15 +61,14 @@ def copy_and_rename_folder(table):
                         
                         if confirmation == QMessageBox.Yes:
                             # Call the linkUpdater function
-                            link = os.path.join(os.path.dirname(target_folder), project_name)
-                            Link_updater().update_link(project_id, link)
+                            link = os.path.join(os.path.dirname(target_folder), folder_name)
+                            Link_updater().update_link(project_number, link)
 
                         else:
                             print("Operation canceled by the user.")
 
-                        
-                        QMessageBox.information(None, "Success", f"Kausta '{source_folder}'\n(k.a kaustas sisalduvad alamkaustad ja failid) dubleerimine õnnestus. \n\nSihtkohta on genereeritud kaust nimetusega \n'{target_folder}''{project_name}'.")
-            
+                        QMessageBox.information(None, "Success", f"Kausta '{source_folder}'\n(k.a kaustas sisalduvad alamkaustad ja failid) dubleerimine õnnestus. \n\nSihtkohta on genereeritud kaust nimetusega \n'{folder_name}'.")
+
                 except Exception as e:
                     QMessageBox.critical(None, "Error", f"An error occurred: {e}")
             
@@ -98,5 +97,84 @@ class Link_updater:
             
             response = requestBuilder.construct_and_send_request(self, query, variables)
             print(response)
+
+class FolderNameGenerator:
+    def folder_structure_name_order(self, project_name, project_number):
+        value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
+        print(f"Value: {value}")
+
+        # Split the value into individual components
+        components = value.split(" + ")
+
+        # Initialize an empty list to hold the parts of the folder name
+        folder_name_parts = []
+
+        # Iterate through each component and construct the folder name parts
+        for component in components:
+            # Check if the component contains a symbol in parentheses
+            if "(" in component and ")" in component:
+                # Extract the symbol from the parentheses
+                symbol = component.split("(")[-1].split(")")[0]
+                # Remove the symbol part from the component
+                component = component.replace(f"({symbol})", "")
+            else:
+                # If no symbol is specified, set it to an empty string
+                symbol = ""
+
+            # Check the component type and add the corresponding part to the folder name
+            if component == "Projekti number":
+                folder_name_parts.append(project_number)
+            elif component == "Sümbol":
+                folder_name_parts.append(symbol)
+            elif component == "Projekti nimetus":
+                folder_name_parts.append(project_name)
+
+        # Construct the final folder name by joining the parts
+        folder_name = "".join(folder_name_parts)
+
+        # Print the constructed folder name
+        QMessageBox.information(None, "tulemus", f"Näidis nimetus{folder_name}")
+        #print("Folder name:", folder_name)
+
+
+
+class FolderNameGenerator:
+    def folder_structure_name_order(self, project_name, project_number):
+        value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
+        print(f"Value: {value}")
+
+        # Split the value into individual components
+        components = value.split(" + ")
+
+        # Initialize an empty list to hold the parts of the folder name
+        folder_name_parts = []
+
+        # Iterate through each component and construct the folder name parts
+        for component in components:
+            # Check if the component contains a symbol in parentheses
+            if "(" in component and ")" in component:
+                # Extract the symbol from the parentheses
+                symbol = component.split("(")[-1].split(")")[0]
+                # Remove the symbol part from the component
+                component = component.replace(f"({symbol})", "")
+            else:
+                # If no symbol is specified, set it to an empty string
+                symbol = ""
+
+            # Check the component type and add the corresponding part to the folder name
+            if component == "Projekti number":
+                folder_name_parts.append(project_number)
+            elif component == "Sümbol":
+                folder_name_parts.append(symbol)
+            elif component == "Projekti nimetus":
+                folder_name_parts.append(project_name)
+
+        # Construct the final folder name by joining the parts
+        folder_name = "".join(folder_name_parts)
+
+        # Return the constructed folder name
+        return folder_name
+
+
 
 
