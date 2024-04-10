@@ -56,7 +56,7 @@ from .queries.python.Types_Tags.type_tag_manager import Types, InsertTypesToComb
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Folders.folders import copy_and_rename_folder, FolderNameGenerator
-
+from .utils.handlers import Scrollers
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'Mailabl_dialog_base.ui'))
@@ -345,6 +345,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         project_name = "Example name"
         project_number = "10928AA"
         FolderNameGenerator.folder_structure_name_order(self,project_name, project_number)
+
+
 
 
 
@@ -1341,44 +1343,45 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         DeleteActions.delete_selected_items_from_mylabl(self)
         
     def toggle_settings_main_view(self):
-            input_layer_name = load.load_SHP_inputLayer_name()
-            color.changeButtonColor(self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)
-            self.swWorkSpace.setCurrentIndex(4)
-            self.sw_HM.setCurrentIndex(4)
-            self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-            widget = self.pbSettings_SliderFrame   
-            
-            lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
-            lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
-            lblSHPNewItems = self.lblSHPNewItems
-            lblLayerProjects_Properties = self.lblLayerProjects_Properties
-            lblProjectsFolder_location = self.lblProjectsFolder_location 
-            lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
-            lbl_preferred_project_status = self.lbl_preferred_project_status
-            lbl_user_name = self.lbNuserName
-            lbl_preferred_contract_status = self.lbl_preferred_contract_status 
-            lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
-            lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
-            prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
-            lblPreferredFolderName_structure.setText(prefered_folder_structure_value)
-            SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
-                                                         lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
-                                                         lblProjectsTargetFolder_location, lbl_preferred_project_status, 
-                                                         lbl_preferred_contract_status, lblPreferredContractsTypes_value)
+        input_layer_name = load.load_SHP_inputLayer_name()
+        
+        color.changeButtonColor(self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)
+        self.swWorkSpace.setCurrentIndex(4)
+        self.sw_HM.setCurrentIndex(4)
+        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
+        widget = self.pbSettings_SliderFrame   
+        
+        lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
+        lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
+        lblSHPNewItems = self.lblSHPNewItems
+        lblLayerProjects_Properties = self.lblLayerProjects_Properties
+        lblProjectsFolder_location = self.lblProjectsFolder_location 
+        lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
+        lbl_preferred_project_status = self.lbl_preferred_project_status
+        lbl_user_name = self.lbNuserName
+        lbl_preferred_contract_status = self.lbl_preferred_contract_status 
+        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
+        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
+        prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
+        lblPreferredFolderName_structure.setText(prefered_folder_structure_value)
+        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
+                                                        lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
+                                                        lblProjectsTargetFolder_location, lbl_preferred_project_status, 
+                                                        lbl_preferred_contract_status, lblPreferredContractsTypes_value)
 
-
-            if Flags.Flag_settings_button:
-                print("toggle if")
-                WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
-                #widget.setMaximumHeight(16777215)
-                #QTimer.singleShot(600, lambda: WidgetAnimator.toggle_Frame_height_for_settings(self, widget))
-            else:
-                print("toggle else")
-                secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self)
-                secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self)
-                #widget.setMaximumHeight(0)
-            Flags.Flag_settings_button = not Flags.Flag_settings_button
-            print(f"Flags: {Flags.Flag_settings_button}")
-
+        
+        if Flags.Flag_settings_button:
+            print("toggle if")
+            WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
+            #widget.setMaximumHeight(16777215)
+            #QTimer.singleShot(600, lambda: WidgetAnimator.toggle_Frame_height_for_settings(self, widget))
+        else:
+            print("toggle else")
+            secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self)
+            secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self)
+            #widget.setMaximumHeight(0)
+        Flags.Flag_settings_button = not Flags.Flag_settings_button
+        print(f"Flags: {Flags.Flag_settings_button}")
+        
 
 ################################################################################################################
