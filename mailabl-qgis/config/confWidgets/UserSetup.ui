@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>722</width>
     <height>150</height>
    </rect>
   </property>
@@ -337,7 +337,7 @@ QPushButton:hover{
       <item>
        <widget class="QPushButton" name="pbDel_Project_Settings">
         <property name="text">
-         <string>Tühista seadistused</string>
+         <string>Tühista</string>
         </property>
         <property name="icon">
          <iconset>
@@ -372,7 +372,7 @@ QPushButton:hover{
          </font>
         </property>
         <property name="text">
-         <string>Salvesta andmed</string>
+         <string>Salvesta</string>
         </property>
         <property name="icon">
          <iconset>
