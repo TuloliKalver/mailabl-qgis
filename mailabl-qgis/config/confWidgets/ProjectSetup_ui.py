@@ -22,6 +22,9 @@ class Ui_LayeAdjuster(object):
         LayeAdjuster.setSizePolicy(sizePolicy)
         LayeAdjuster.setMinimumSize(QtCore.QSize(900, 530))
         LayeAdjuster.setMaximumSize(QtCore.QSize(900, 530))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        LayeAdjuster.setFont(font)
         LayeAdjuster.setStyleSheet("/*üleüldine taust ja toonid*/\n"
 "/*--gray-0: #fff;\n"
 "    --gray-50: #f7f7f8;\n"
@@ -43,7 +46,7 @@ class Ui_LayeAdjuster(object):
 "#fSettingsFolders, #fSettingsFolderStucture,\n"
 "#fSettingsMain \n"
 "{\n"
-"    border: 2px solid #4d4d5b;  /* Same border style as QLineEdit */\n"
+"   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */\n"
 "    border-radius: 5px;\n"
 "    border-top: none;\n"
 "    border-left: none;\n"
@@ -122,7 +125,7 @@ class Ui_LayeAdjuster(object):
 "QLineEdit {\n"
 "    background-color: #35363f;  /* Lighter background color */\n"
 "    color: #ececf1;\n"
-"    border: 1px solid #4d4d5b;  /* Thinner border with a different color */\n"
+"    /*border: 1px solid #4d4d5b;  Thinner border with a different color */\n"
 "    border-radius: 5px;\n"
 "    padding: 4px;\n"
 "}\n"
@@ -145,29 +148,6 @@ class Ui_LayeAdjuster(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.fHeader = QtWidgets.QFrame(LayeAdjuster)
-        self.fHeader.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.fHeader.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.fHeader.setObjectName("fHeader")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.fHeader)
-        self.verticalLayout_2.setContentsMargins(0, 10, 0, 10)
-        self.verticalLayout_2.setSpacing(0)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.label = QtWidgets.QLabel(self.fHeader)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Tahoma")
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
-        self.verticalLayout_2.addWidget(self.label, 0, QtCore.Qt.AlignHCenter)
-        self.verticalLayout.addWidget(self.fHeader)
         self.fContent = QtWidgets.QFrame(LayeAdjuster)
         self.fContent.setMinimumSize(QtCore.QSize(0, 100))
         self.fContent.setStyleSheet("")
@@ -175,7 +155,7 @@ class Ui_LayeAdjuster(object):
         self.fContent.setFrameShadow(QtWidgets.QFrame.Raised)
         self.fContent.setObjectName("fContent")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.fContent)
-        self.horizontalLayout_4.setContentsMargins(0, 0, 10, 10)
+        self.horizontalLayout_4.setContentsMargins(0, 10, 10, 10)
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.SettingElements = QtWidgets.QFrame(self.fContent)
@@ -471,8 +451,7 @@ class Ui_LayeAdjuster(object):
 
     def retranslateUi(self, LayeAdjuster):
         _translate = QtCore.QCoreApplication.translate
-        LayeAdjuster.setWindowTitle(_translate("LayeAdjuster", "Mailabl projektide eelistused"))
-        self.label.setText(_translate("LayeAdjuster", "Projektide sätted"))
+        LayeAdjuster.setWindowTitle(_translate("LayeAdjuster", "Projektide seaded"))
         self.lblCurrect_Cadastral_2.setText(_translate("LayeAdjuster", "Kaardikiht"))
         self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Staatuse eelistus"))
         self.lblProjectsTargetFolder.setText(_translate("LayeAdjuster", "Projekti sihtkaus"))
