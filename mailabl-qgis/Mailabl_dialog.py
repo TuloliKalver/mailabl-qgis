@@ -52,7 +52,7 @@ from .queries.python.update_relations.update_contract_properties import Contract
 from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
-from .queries.python.Types_Tags.type_tag_manager import Types, InsertTypesToComboBox
+from .queries.python.Types_Tags.type_tag_manager import ContractTypes, InsertTypesToComboBox
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Folders.folders import copy_and_rename_folder, FolderNameGenerator
@@ -212,7 +212,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.pbActivateLabelSettings.clicked.connect(self.SaveToLabel)
 
 
-        self.pbEasments.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Substitutes_FrontPage(self))
+        self.pbeasements.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_easements_frontpage(self))
         self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
@@ -427,7 +427,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button14 = self.pbHome
         button15 = self.pbMapThemes
         button16 = self.pbProjects
-        button17 = self.pbEasments
+        button17 = self.pbeasements
         button18 = self.pbSyncMailabl
 
         left_menu = self.leftMenuContainer

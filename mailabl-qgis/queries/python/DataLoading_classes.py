@@ -69,6 +69,18 @@ class GraphqlQueriesContracts:
         with open(graphql_path, 'r') as file:
             return file.read()
 
+class GraphqlQuerieseasements:
+    def __init__(self):     
+        self.easement_types = 'easements_types.graphql'   
+
+
+    def load_query_for_easements(self, query_file_name):
+        path = GraphQLQueryLoader()
+        graphql_path = os.path.join(path.plugin_dir, path.easements_folder, query_file_name)
+        with open(graphql_path, 'r') as file:
+            return file.read()
+
+
 class GraphQLQueryLoader:
     def __init__(self):
         current_dir = os.path.abspath(__file__)
@@ -84,6 +96,7 @@ class GraphQLQueryLoader:
         self.projects_folder = 'queries/graphql/projects'
         self.contracts_folder ='queries/graphql/contracts'
         self.user_folder ='queries/graphql/user'
+        self.easements_folder = 'queries/graphql/easements'
         
         # Define query files
             #Properties related queries

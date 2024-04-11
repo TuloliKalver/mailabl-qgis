@@ -13,7 +13,7 @@ from ..config.settings import SettingsDataSaveAndLoad
 from ..Functions.delete_items import Delete_Main_Process
 from ..Functions.Contracts.contractsItems import ContractsMain, ContractsQueries_list
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
-from ..config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
+from ..config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS, MODULE_EASEMENTS
 from ..processes.infomessages.messages import Headings
 from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
  
@@ -66,11 +66,9 @@ class WorkSpaceHandler:
         InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
   
         prefered_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)    
-        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types)
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
         selected_types_ids = types_combo_box.checkedItemsData()
         
-
-
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
 
         #ContractsQueries_list.query_contracts_by_status(self, statusValue)
@@ -96,10 +94,21 @@ class WorkSpaceHandler:
 
     
     @staticmethod
-    def swWorkSpace_Substitutes_FrontPage(self):
+    def swWorkSpace_easements_frontpage(self):
+        self.pbeasements.blockSignals(True)
         self.swWorkSpace.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(5)
-    
+        module = MODULE_EASEMENTS
+        combo_box = self.cmbeasementStatuses
+        types_combo_box = self.cmbeasementTypesCheckable
+        #prefered_statuses = SettingsDataSaveAndLoad.load_contract_status_ids(self)
+        InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module)
+        prefered_types = ''
+        #prefered_types = SettingsDataSaveAndLoad.load_contracts_type_names(self) 
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
+
+        self.pbeasements.blockSignals(False)
+
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
         self.swWorkSpace.setCurrentIndex(6)

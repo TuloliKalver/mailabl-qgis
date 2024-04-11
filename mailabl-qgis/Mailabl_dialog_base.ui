@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1208</width>
-    <height>1941</height>
+    <width>1224</width>
+    <height>1142</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -548,7 +548,7 @@ QComboBox::on{
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pbEasments">
+             <widget class="QPushButton" name="pbeasements">
               <property name="text">
                <string>Servituudid</string>
               </property>
@@ -1203,7 +1203,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -1226,7 +1226,7 @@ QComboBox::on{
               <number>10</number>
              </property>
              <item>
-              <widget class="QWidget" name="fEasmentPageName" native="true">
+              <widget class="QWidget" name="feasementPageName" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_50">
                 <property name="spacing">
                  <number>0</number>
@@ -1244,7 +1244,7 @@ QComboBox::on{
                  <number>10</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="lblEasmentPageName">
+                 <widget class="QLabel" name="lbleasementPageName">
                   <property name="font">
                    <font>
                     <pointsize>13</pointsize>
@@ -1283,7 +1283,7 @@ QComboBox::on{
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QFrame" name="fEasmenttMainFrame">
+                 <widget class="QFrame" name="feasementtMainFrame">
                   <property name="styleSheet">
                    <string notr="true"/>
                   </property>
@@ -1310,7 +1310,7 @@ QComboBox::on{
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QFrame" name="fEasmentButtons">
+                    <widget class="QFrame" name="feasementButtons">
                      <property name="styleSheet">
                       <string notr="true"/>
                      </property>
@@ -1334,7 +1334,7 @@ QComboBox::on{
                        <number>10</number>
                       </property>
                       <item>
-                       <widget class="QFrame" name="frEasmentTools">
+                       <widget class="QFrame" name="freasementTools">
                         <property name="styleSheet">
                          <string notr="true">
 QPushButton{
@@ -1433,7 +1433,7 @@ QPushButton:hover{
                           </widget>
                          </item>
                          <item>
-                          <widget class="QFrame" name="fEasmentSeachframe">
+                          <widget class="QFrame" name="feasementSeachframe">
                            <property name="styleSheet">
                             <string notr="true">#le_searchProjects{
 
@@ -1467,7 +1467,7 @@ QPushButton:hover{
                              <number>0</number>
                             </property>
                             <item>
-                             <widget class="QLineEdit" name="leSearchEasment">
+                             <widget class="QLineEdit" name="leSearcheasement">
                               <property name="font">
                                <font>
                                 <pointsize>10</pointsize>
@@ -1482,7 +1482,7 @@ QPushButton:hover{
                              </widget>
                             </item>
                             <item>
-                             <widget class="QPushButton" name="pbSearchEasment">
+                             <widget class="QPushButton" name="pbSearcheasement">
                               <property name="font">
                                <font>
                                 <pointsize>10</pointsize>
@@ -1510,7 +1510,7 @@ QPushButton:hover{
                        </widget>
                       </item>
                       <item>
-                       <widget class="QFrame" name="fEasmentCheckboxholder">
+                       <widget class="QFrame" name="feasementCheckboxholder">
                         <property name="frameShape">
                          <enum>QFrame::StyledPanel</enum>
                         </property>
@@ -1534,7 +1534,7 @@ QPushButton:hover{
                           <number>0</number>
                          </property>
                          <item>
-                          <widget class="QgsCheckableComboBox" name="cmbEasmentTypesCheckable">
+                          <widget class="QgsCheckableComboBox" name="cmbeasementTypesCheckable">
                            <property name="minimumSize">
                             <size>
                              <width>250</width>
@@ -1549,10 +1549,10 @@ QPushButton:hover{
                           </widget>
                          </item>
                          <item>
-                          <widget class="QComboBox" name="cmEasmentStatuses">
+                          <widget class="QComboBox" name="cmbeasementStatuses">
                            <property name="minimumSize">
                             <size>
-                             <width>130</width>
+                             <width>250</width>
                              <height>0</height>
                             </size>
                            </property>
@@ -1577,7 +1577,7 @@ QPushButton:hover{
                           </spacer>
                          </item>
                          <item>
-                          <widget class="QPushButton" name="pbRefreshEasmentTable">
+                          <widget class="QPushButton" name="pbRefresheasementTable">
                            <property name="text">
                             <string/>
                            </property>
@@ -1594,7 +1594,7 @@ QPushButton:hover{
                     </widget>
                    </item>
                    <item>
-                    <widget class="QFrame" name="fEasmentInfoFrame">
+                    <widget class="QFrame" name="feasementInfoFrame">
                      <property name="frameShape">
                       <enum>QFrame::StyledPanel</enum>
                      </property>
@@ -1618,7 +1618,7 @@ QPushButton:hover{
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QTableView" name="twEasmentView">
+                       <widget class="QTableView" name="tweasementView">
                         <property name="styleSheet">
                          <string notr="true">background-color: rgb(52, 59, 71);</string>
                         </property>
@@ -5810,9 +5810,9 @@ p, li { white-space: pre-wrap; }
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>0</y>
-                  <width>703</width>
-                  <height>713</height>
+                  <y>-67</y>
+                  <width>738</width>
+                  <height>730</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_159">
@@ -5852,7 +5852,9 @@ p, li { white-space: pre-wrap; }
 #lblProjectsTargetFolder_location,
 #lblPreferredFolderName_structure,
 #lbl_preferred_contract_status,
-#lblPreferredContractsTypes_value
+#lblPreferredContractsTypes_value,
+#lblPreferredEasementsTypes_value,
+#lblPreferredEasementsStatus
 {
 
 	background-color:#40414f;
@@ -5863,28 +5865,13 @@ p, li { white-space: pre-wrap; }
 }
 
 /* Apply a bottom border with a solid line */
-#qwSU_Mailabl_Users,#qwSU_Mailabl_Projects, #qwSU_Layers, #qwSU_Mailabl_Contracts  {
+#qwSU_Mailabl_Users,#qwSU_Mailabl_Projects, #qwSU_Layers, #qwSU_Mailabl_Contracts, #qwSU_Mailabl_Easements  {
   border-bottom: 1px solid rgb(255, 255, 255); /* Replace #000 with the desired color */
 }
 
 </string>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_139">
-                    <property name="spacing">
-                     <number>10</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_161">
                     <item>
                      <widget class="QLabel" name="label_23">
                       <property name="minimumSize">
@@ -7106,7 +7093,7 @@ p, li { white-space: pre-wrap; }
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="frame_29">
+                     <widget class="QFrame" name="qwSU_Mailabl_Contracts_Main">
                       <property name="frameShape">
                        <enum>QFrame::StyledPanel</enum>
                       </property>
@@ -7344,6 +7331,262 @@ p, li { white-space: pre-wrap; }
                              </item>
                              <item>
                               <spacer name="horizontalSpacer_39">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>370</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QFrame" name="qwSU_Mailabl_Easements_Main">
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_139">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>10</number>
+                       </property>
+                       <item>
+                        <widget class="QWidget" name="qwSU_Mailabl_Easements" native="true">
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_160">
+                          <property name="spacing">
+                           <number>8</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>5</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>5</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>5</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>5</number>
+                          </property>
+                          <item>
+                           <widget class="QFrame" name="frame_35">
+                            <property name="frameShape">
+                             <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                             <enum>QFrame::Raised</enum>
+                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_66">
+                             <property name="spacing">
+                              <number>0</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <widget class="QLabel" name="label_35">
+                               <property name="font">
+                                <font>
+                                 <pointsize>10</pointsize>
+                                 <weight>75</weight>
+                                 <italic>false</italic>
+                                 <bold>true</bold>
+                                 <underline>false</underline>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Servituutide seaded</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_36">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>567</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="pbSettingsSetupEasements">
+                               <property name="text">
+                                <string/>
+                               </property>
+                               <property name="icon">
+                                <iconset>
+                                 <normaloff>icons/Icons_hele/settings.svg</normaloff>icons/Icons_hele/settings.svg</iconset>
+                               </property>
+                               <property name="iconSize">
+                                <size>
+                                 <width>16</width>
+                                 <height>16</height>
+                                </size>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item alignment="Qt::AlignLeft">
+                           <widget class="QFrame" name="frame_36">
+                            <property name="frameShape">
+                             <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                             <enum>QFrame::Raised</enum>
+                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_68">
+                             <property name="spacing">
+                              <number>10</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>15</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item alignment="Qt::AlignLeft">
+                              <widget class="QLabel" name="label_37">
+                               <property name="font">
+                                <font>
+                                 <pointsize>10</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Eelistatud staatus</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item alignment="Qt::AlignLeft">
+                              <widget class="QLabel" name="lblPreferredEasementsStatus">
+                               <property name="font">
+                                <font>
+                                 <pointsize>10</pointsize>
+                                 <weight>50</weight>
+                                 <bold>false</bold>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Veel määramata</string>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QFrame" name="fEasementsType">
+                            <property name="frameShape">
+                             <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                             <enum>QFrame::Raised</enum>
+                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_71">
+                             <property name="spacing">
+                              <number>10</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>15</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <widget class="QLabel" name="lblPreferredEasementsTypes_text">
+                               <property name="font">
+                                <font>
+                                 <pointsize>10</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Eelistatud servituudi liigid</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="lblPreferredEasementsTypes_value">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>450</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>450</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
+                               <property name="font">
+                                <font>
+                                 <pointsize>10</pointsize>
+                                 <weight>50</weight>
+                                 <bold>false</bold>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Veel määramata</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_40">
                                <property name="orientation">
                                 <enum>Qt::Horizontal</enum>
                                </property>
