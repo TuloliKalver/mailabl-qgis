@@ -337,20 +337,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
 
-        self.pushButton_2.clicked.connect(self.testsubject)
-
-        self.pushButton_3.clicked.connect(self.folder_structure_name_order_dev)
-    
-    def folder_structure_name_order_dev(self):
-        project_name = "Example name"
-        project_number = "10928AA"
-        FolderNameGenerator.folder_structure_name_order(self,project_name, project_number)
+        self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
 
 
-
-
-
-    def testsubject(self):
+    def generate_project_folder(self):
         table = self.tblMailabl_projects
         copy_and_rename_folder(table)
 
