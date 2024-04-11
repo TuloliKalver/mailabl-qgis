@@ -794,9 +794,9 @@ QLineEdit {
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QVBoxLayout" name="verticalLayout_6">
+                       <layout class="QHBoxLayout" name="horizontalLayout_6">
                         <property name="spacing">
-                         <number>0</number>
+                         <number>10</number>
                         </property>
                         <property name="leftMargin">
                          <number>0</number>
@@ -826,6 +826,17 @@ QLineEdit {
                           </property>
                           <property name="text">
                            <string/>
+                          </property>
+                         </widget>
+                        </item>
+                        <item alignment="Qt::AlignLeft">
+                         <widget class="QPushButton" name="pbResetFolderSetup">
+                          <property name="text">
+                           <string>Seadista uuesti</string>
+                          </property>
+                          <property name="icon">
+                           <iconset>
+                            <normaloff>../../icons/Icons_hele/x-circle.svg</normaloff>../../icons/Icons_hele/x-circle.svg</iconset>
                           </property>
                          </widget>
                         </item>

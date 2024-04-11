@@ -145,17 +145,43 @@ class Setup_ProjectLayers:
         target_folder_path = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
         if target_folder_path:
             lblProjectsTargetFolder_location = widget.leProjectsTargetFolder_location
-            lblProjectsTargetFolder_location.setText(target_folder_path)                
+            lblProjectsTargetFolder_location.setText(target_folder_path)
 
+        folder_structure_text = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
+        if folder_structure_text:
+            widget.lblPreferedFolderNamStructure.setText(folder_structure_text)
+            combo_box_name = widget.cmbNameElements
+
+            # Disable all items in the combo box
+            for i in range(combo_box_name.count()):
+                index = combo_box_name.model().index(i, 0)
+                if index.isValid():
+                    item = combo_box_name.model().itemFromIndex(index)
+                    if item:
+                        item.setEnabled(False)
+                        done_icon_path = ":/qt-project.org/styles/commonstyle/images/standardbutton-apply-16.png"
+                        icon = QIcon(done_icon_path)
+                        item.setIcon(icon)
+
+
+            # Check if all items are disabled
+            all_disabled = all(not combo_box_name.model().item(i).isEnabled() for i in range(combo_box_name.count()))
+            if all_disabled:
+                widget.Confir_selecteded_element.setEnabled(False)  # Disable the button
+                widget.Confir_selecteded_element.hide()
+                
         line_edit_symbol = widget.leSymbolCharacter
         line_edit_symbol.setVisible(False)
 
       # Connect signal to function
         cmb_folder_name_optoins = widget.cmbNameElements
-        cmb_folder_name_optoins.currentIndexChanged.connect(lambda index: Setup_ProjectLayers().checkSelectedId(index, widget))
+        cmb_folder_name_optoins.currentIndexChanged.connect(lambda index: Setup_ProjectLayers.checkSelectedId(index, widget))
 
         append_button = widget.Confir_selecteded_element
         append_button.clicked.connect(lambda: Setup_ProjectLayers.addSelectedItem(widget))
+
+        reset_button = widget.pbResetFolderSetup
+        reset_button.clicked.connect(lambda: Setup_ProjectLayers.reset_setup_of_folder_setup(widget))
 
         # Connect signals to functions
         save_button.clicked.connect(lambda: Setup_ProjectLayers.on_save_button_clicked(self, widget, cmb_layers, combo_box))
@@ -269,7 +295,27 @@ class Setup_ProjectLayers:
                 widget.Confir_selecteded_element.hide()
 
 
-    def checkSelectedId(self, index, widget):
+    def reset_setup_of_folder_setup(widget):
+        # Clear the label text
+        widget.lblPreferedFolderNamStructure.clear()
+
+        # Enable all items in the combo box
+        combo_box_name = widget.cmbNameElements
+        for i in range(combo_box_name.count()):
+            index = combo_box_name.model().index(i, 0)
+            if index.isValid():
+                item = combo_box_name.model().itemFromIndex(index)
+                if item:
+                    item.setEnabled(True)
+                    # Clear the icon
+                    item.setIcon(QIcon())
+
+        # Show and enable the hidden button
+        widget.Confir_selecteded_element.setEnabled(True)
+        widget.Confir_selecteded_element.show()
+
+
+    def checkSelectedId(index, widget):
         # Check if the selected item has id 1
         line_edit = widget.leSymbolCharacter
         line_edit.setStyleSheet("border: None")
@@ -281,6 +327,7 @@ class Setup_ProjectLayers:
 
             else:
                 line_edit.setVisible(False)
+
 
 
 class Setup_Conrtacts:
