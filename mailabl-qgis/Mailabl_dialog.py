@@ -33,7 +33,7 @@ from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
-from .Functions.SearchEngines import searchGeneral, searchProjects
+from .Functions.SearchEngines import searchGeneral, searchProjects, searchProjectsValue
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
 from .Functions.Tools import tableFunctions
 from .Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
@@ -341,15 +341,28 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
     def generate_project_folder(self):
+        self.pbGenProjectFolder.blockSignals(True)
         table = self.tblMailabl_projects
-        copy_and_rename_folder(table)
+        selection_model = table.selectionModel()
+
+        if selection_model.hasSelection():
+            copy_and_rename_folder(table)
+        
+        else:
+            text = HoiatusTexts().projekt_valimata
+            heading = Headings().warningSimple
+            QMessageBox.information(self, heading, text)
+        
+        self.pbGenProjectFolder.blockSignals(False)
 
 ########################################################################
     def searchProjects(self):
         lineEdit = self.le_searchProjects
         table = self.tblMailabl_projects
         search_items = lineEdit.displayText()
-        searchProjects.search_projects_by_number(self, search_items, table)
+        item = search_items.strip()
+        searchProjectsValue.load_Mailabl_projects_by_number(item, table)
+
 
     def searchContracts(self):
         lineEdit = self.le_searchContracts
