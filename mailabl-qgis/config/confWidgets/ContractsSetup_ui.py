@@ -11,23 +11,23 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_LayeAdjuster(object):
-    def setupUi(self, LayeAdjuster):
-        LayeAdjuster.setObjectName("LayeAdjuster")
-        LayeAdjuster.resize(900, 350)
+class Ui_ContractSettings(object):
+    def setupUi(self, ContractSettings):
+        ContractSettings.setObjectName("ContractSettings")
+        ContractSettings.resize(900, 350)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(LayeAdjuster.sizePolicy().hasHeightForWidth())
-        LayeAdjuster.setSizePolicy(sizePolicy)
-        LayeAdjuster.setMinimumSize(QtCore.QSize(900, 350))
-        LayeAdjuster.setMaximumSize(QtCore.QSize(900, 350))
+        sizePolicy.setHeightForWidth(ContractSettings.sizePolicy().hasHeightForWidth())
+        ContractSettings.setSizePolicy(sizePolicy)
+        ContractSettings.setMinimumSize(QtCore.QSize(900, 350))
+        ContractSettings.setMaximumSize(QtCore.QSize(900, 350))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        LayeAdjuster.setFont(font)
-        LayeAdjuster.setStyleSheet("\n"
+        ContractSettings.setFont(font)
+        ContractSettings.setStyleSheet("\n"
 "\n"
 "#fHelpMenu, \n"
 "#fSettingsPreferrences\n"
@@ -130,11 +130,11 @@ class Ui_LayeAdjuster(object):
 "\n"
 "\n"
 "")
-        self.verticalLayout = QtWidgets.QVBoxLayout(LayeAdjuster)
+        self.verticalLayout = QtWidgets.QVBoxLayout(ContractSettings)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.fContent = QtWidgets.QFrame(LayeAdjuster)
+        self.fContent = QtWidgets.QFrame(ContractSettings)
         self.fContent.setMinimumSize(QtCore.QSize(0, 100))
         self.fContent.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.fContent.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -143,15 +143,15 @@ class Ui_LayeAdjuster(object):
         self.horizontalLayout_6.setContentsMargins(0, 10, 10, 10)
         self.horizontalLayout_6.setSpacing(0)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.frame = QtWidgets.QFrame(self.fContent)
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame)
+        self.fSettingsMain = QtWidgets.QFrame(self.fContent)
+        self.fSettingsMain.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.fSettingsMain.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.fSettingsMain.setObjectName("fSettingsMain")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.fSettingsMain)
         self.verticalLayout_2.setContentsMargins(10, 0, 10, 0)
         self.verticalLayout_2.setSpacing(10)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.fSettingsPreferrences = QtWidgets.QFrame(self.frame)
+        self.fSettingsPreferrences = QtWidgets.QFrame(self.fSettingsMain)
         self.fSettingsPreferrences.setStyleSheet("")
         self.fSettingsPreferrences.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.fSettingsPreferrences.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -215,7 +215,7 @@ class Ui_LayeAdjuster(object):
         self.verticalLayout_2.addWidget(self.fSettingsPreferrences)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
-        self.f_Buttons = QtWidgets.QFrame(self.frame)
+        self.f_Buttons = QtWidgets.QFrame(self.fSettingsMain)
         self.f_Buttons.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.f_Buttons.setFrameShadow(QtWidgets.QFrame.Raised)
         self.f_Buttons.setObjectName("f_Buttons")
@@ -242,7 +242,7 @@ class Ui_LayeAdjuster(object):
         self.pbSave.setObjectName("pbSave")
         self.horizontalLayout_2.addWidget(self.pbSave)
         self.verticalLayout_2.addWidget(self.f_Buttons)
-        self.horizontalLayout_6.addWidget(self.frame)
+        self.horizontalLayout_6.addWidget(self.fSettingsMain)
         self.fHelpMenu = QtWidgets.QFrame(self.fContent)
         self.fHelpMenu.setMinimumSize(QtCore.QSize(200, 0))
         self.fHelpMenu.setMaximumSize(QtCore.QSize(200, 16777215))
@@ -271,18 +271,18 @@ class Ui_LayeAdjuster(object):
         self.horizontalLayout_6.addWidget(self.fHelpMenu)
         self.verticalLayout.addWidget(self.fContent)
 
-        self.retranslateUi(LayeAdjuster)
-        QtCore.QMetaObject.connectSlotsByName(LayeAdjuster)
+        self.retranslateUi(ContractSettings)
+        QtCore.QMetaObject.connectSlotsByName(ContractSettings)
 
-    def retranslateUi(self, LayeAdjuster):
+    def retranslateUi(self, ContractSettings):
         _translate = QtCore.QCoreApplication.translate
-        LayeAdjuster.setWindowTitle(_translate("LayeAdjuster", "Lepingute seaded"))
-        self.lblCurrect_Cadastral_3.setText(_translate("LayeAdjuster", "Eelistatud staatus"))
-        self.lblPreferedContractTypes_2.setText(_translate("LayeAdjuster", "Eelistatud lepingu liigid"))
-        self.pbCancel.setText(_translate("LayeAdjuster", "Tühista"))
-        self.pbSave.setText(_translate("LayeAdjuster", "Salvesta"))
-        self.label_2.setText(_translate("LayeAdjuster", "Seadete selgitused"))
-        self.textEdit.setHtml(_translate("LayeAdjuster", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        ContractSettings.setWindowTitle(_translate("ContractSettings", "Lepingute seaded"))
+        self.lblCurrect_Cadastral_3.setText(_translate("ContractSettings", "Eelistatud staatus"))
+        self.lblPreferedContractTypes_2.setText(_translate("ContractSettings", "Eelistatud lepingu liigid"))
+        self.pbCancel.setText(_translate("ContractSettings", "Tühista"))
+        self.pbSave.setText(_translate("ContractSettings", "Salvesta"))
+        self.label_2.setText(_translate("ContractSettings", "Seadete selgitused"))
+        self.textEdit.setHtml(_translate("ContractSettings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"

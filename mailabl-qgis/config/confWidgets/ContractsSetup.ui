@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LayeAdjuster</class>
- <widget class="QDialog" name="LayeAdjuster">
+ <class>ContractSettings</class>
+ <widget class="QDialog" name="ContractSettings">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -190,7 +190,7 @@ QLineEdit {
        <number>10</number>
       </property>
       <item>
-       <widget class="QFrame" name="frame">
+       <widget class="QFrame" name="fSettingsMain">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
