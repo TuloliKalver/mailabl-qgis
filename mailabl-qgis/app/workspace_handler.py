@@ -101,10 +101,9 @@ class WorkSpaceHandler:
         module = MODULE_EASEMENTS
         combo_box = self.cmbeasementStatuses
         types_combo_box = self.cmbeasementTypesCheckable
-        #prefered_statuses = SettingsDataSaveAndLoad.load_contract_status_ids(self)
-        InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module)
-        prefered_types = ''
-        #prefered_types = SettingsDataSaveAndLoad.load_contracts_type_names(self) 
+        prefered_statuses = SettingsDataSaveAndLoad.load_easements_status_ids(self)
+        InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
+        prefered_types = SettingsDataSaveAndLoad.load_easements_type_names(self) 
         InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
 
         self.pbeasements.blockSignals(False)

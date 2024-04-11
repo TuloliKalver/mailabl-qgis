@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
-from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup_Conrtacts
+from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup_Conrtacts, SetupEasments
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
@@ -57,6 +57,8 @@ from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseText
 from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Folders.folders import copy_and_rename_folder, FolderNameGenerator
 from .utils.handlers import Scrollers
+
+
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'Mailabl_dialog_base.ui'))
@@ -262,7 +264,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbLayerSettings.clicked.connect(self.layer_setup)
         self.pbSettings_Setup_Projects.clicked.connect(lambda: Setup_ProjectLayers.load_project_settings_widget(self))
         self.pbSettings_Setup_Contracts.clicked.connect(lambda: Setup_Conrtacts.load_contract_settings_widget(self))
-        
+        self.pbSettingsSetupEasements.clicked.connect(lambda: SetupEasments.load_easements_settings_widget(self))
 
         
         
@@ -1384,6 +1386,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
         prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
         lblPreferredFolderName_structure.setText(prefered_folder_structure_value)
+        lblPreferredEasementsStatus = self.lblPreferredEasementsStatus
+        PreferredEasementsStatus_Value = SettingsDataSaveAndLoad.load_easements_status_names(self)
+        lblPreferredEasementsStatus.setText(PreferredEasementsStatus_Value)
+        lblPreferredEasementsTypes_value = self.lblPreferredEasementsTypes_value
+        PreferredEasementsTypes_values = SettingsDataSaveAndLoad.load_easements_type_names(self)
+        lblPreferredEasementsTypes_value.setText(PreferredEasementsTypes_values)
+
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                         lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
                                                         lblProjectsTargetFolder_location, lbl_preferred_project_status, 

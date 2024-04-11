@@ -74,6 +74,7 @@ class FilesByNames:
         self.layer_setup_ui = "LayerSetup.ui"
         self.projects_setup_ui = "ProjectSetup.ui"
         self.contracts_setup_ui = "ContractsSetup.ui"
+        self.easements_setup_ui = "EasementsSetup.ui"
 
 class Filepaths:
     @staticmethod
@@ -191,6 +192,23 @@ class SettingsDataSaveAndLoad:
         CONTRACT_STATUS_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_contracts_preferred_status_ids}"
         return CONTRACT_STATUS_NAME
 
+    def easements_preferred_type_name(self):
+        setup_easements_preferred_status_name = 'labels/easements_preferred_type_name'
+        EASEMENTS_TYPE_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_easements_preferred_status_name}"
+        return EASEMENTS_TYPE_NAME
+    
+
+    def easements_preferred_status_ids(self):
+            setup_easements_preferred_status_ids = 'labels/easements_preferred_status_ids'
+            EASEMENTS_STATUS_IDS = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_easements_preferred_status_ids}"
+            return EASEMENTS_STATUS_IDS
+        
+    def easements_preferred_status_name(self):
+        setup_easements_preferred_status_ids = 'labels/easements_preferred_status_names'
+        EASEMENTS_STATUS_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{setup_easements_preferred_status_ids}"
+        return EASEMENTS_STATUS_NAME
+
+
     def user_name (self):
         user_name = 'labels/user_name'
         USER_FIRSTNAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_name}"
@@ -282,6 +300,17 @@ class SettingsDataSaveAndLoad:
         settings.setValue(contracts_status_name_path, contratc_status_names)
         settings.setValue(contract_name_paths, contract_type_names)
 
+    def save_easements_settings(self, easements_type_names, contratc_status_names, easements_status_ids):
+        settings = QgsSettings()
+        easements_status_ids_int = int(easements_status_ids[0]) if easements_status_ids else None
+        print(f"id_s: {easements_status_ids_int}")
+        print(f"easements types: {easements_type_names}")
+        easments_status_ids_path = SettingsDataSaveAndLoad.easements_preferred_status_ids(self)
+        easements_status_name_path = SettingsDataSaveAndLoad.easements_preferred_status_name(self)
+        easements_name_paths = SettingsDataSaveAndLoad.easements_preferred_type_name(self)
+        settings.setValue(easments_status_ids_path, easements_status_ids_int)
+        settings.setValue(easements_status_name_path, contratc_status_names)
+        settings.setValue(easements_name_paths, easements_type_names)
 
 
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
@@ -407,7 +436,23 @@ class SettingsDataSaveAndLoad:
         value = settings.value(settings_address, '', type=str)
         return value
     
-
+    def load_easements_type_names(self):
+        settings_address = SettingsDataSaveAndLoad.easements_preferred_type_name(self)
+        settings = QgsSettings()
+        value = settings.value(settings_address, '', type=str)
+        return value
+    
+    def load_easements_status_ids(self):
+        settings_address = SettingsDataSaveAndLoad.easements_preferred_status_ids(self)
+        settings = QgsSettings()
+        value = settings.value(settings_address, '', type=str)
+        return value
+    
+    def load_easements_status_names(self):
+        settings_address = SettingsDataSaveAndLoad.easements_preferred_status_name(self)
+        settings = QgsSettings()
+        value = settings.value(settings_address, '', type=str)
+        return value
 
 
 class connect_settings_to_layer:    
