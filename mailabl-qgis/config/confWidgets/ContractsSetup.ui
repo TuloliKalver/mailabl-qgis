@@ -278,7 +278,7 @@ QLineEdit {
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="cmbPreferredContractStatuses_2">
+                <widget class="QComboBox" name="cmbPreferredContractStatuses">
                  <property name="baseSize">
                   <size>
                    <width>0</width>
@@ -362,7 +362,7 @@ QLineEdit {
                 </widget>
                </item>
                <item>
-                <widget class="QgsCheckableComboBox" name="cbcb_PreferredContractTypes_2"/>
+                <widget class="QgsCheckableComboBox" name="cbcb_PreferredContractTypes"/>
                </item>
               </layout>
              </widget>
