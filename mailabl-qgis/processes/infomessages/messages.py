@@ -23,7 +23,7 @@ class HoiatusTexts:
         self.andmed_valimata = "Andmeid ei ole valitud"
         self.otsing_puudu = "Otsingu lahtris andmed puuduvad"
         self.korrigeeri_sümbolit = "Sümbol ei vasta standardile"
-        self.puudulikud_andmed = "andmed puuduvad"
+        self.puudulikud_andmed = "Andmed puuduvad"
         self.kinnistud_MLBs_olemas = "Kõik valitud kinnistud on juba Mailablis"
         self.kinnistuid_MLBs_pole = "Valitud kinnistuid Mailablis ei ole"
         self.kihinimetus_lisamata = "Kihinimetus on vigane või lisamata"

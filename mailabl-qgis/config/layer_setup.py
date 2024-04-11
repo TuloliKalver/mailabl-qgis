@@ -211,7 +211,6 @@ class Setup_ProjectLayers:
         status_value_name = InsertStatusToComboBox.get_selected_status_name(combo_box)
         SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value_id, status_value_name, project_status_label)
         prefered_folder_name_structure = widget.lblPreferedFolderNamStructure.text()
-        print(f"prefered_folder_name_structure: {prefered_folder_name_structure}")
         SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, prefered_folder_name_structure)
         lblPreferredFolderName_structure.setText(prefered_folder_name_structure)
         SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, 
@@ -248,30 +247,35 @@ class Setup_ProjectLayers:
                 symbol_text = label_symbol.text()
                 label_symbol.setStyleSheet("border: None")
                 if symbol_text == '' or None:
-                    label_symbol.setStyleSheet("border: 1px solid red;")
+                    label_symbol.setStyleSheet("border: 1px solid #D32F2F;")
                     QMessageBox.warning(widget, pealkiri.warningSimple, sisu.puudulikud_andmed)
                     return
                 # Check if the symbol_text contains disallowed characters
                 if re.search(r'[<>:"/\\|?*.]', symbol_text):
                     # Display warning message
-                    label_symbol.setStyleSheet("border: 1px solid red;")
+                    label_symbol.setStyleSheet("border: 1px solid #D32F2F;")
                     QMessageBox.warning(widget, pealkiri.warningSimple, sisu.korrigeeri_sümbolit)
                     return
                 else:
-                    # Add selected item to label without parentheses
+                    # Add selected item to label with or without parentheses
                     label_symbol.setStyleSheet("border: None")
-                    label_prefered_name.setText(f"{label_text} + {selected_item}({symbol_text})" if symbol_text else f"{label_text} + {selected_item}")
+                    if label_text:
+                        label_prefered_name.setText(f"{label_text} + {selected_item}({symbol_text})")
+                    else:
+                        label_prefered_name.setText(f"{selected_item}({symbol_text})")
                     # Hide symbol line edit
                     label_symbol.hide()
             else:
                 # Hide symbol line edit and set border to None
                 label_symbol.clear()
                 label_symbol.hide()
- 
 
                 # Add selected item to label without parentheses
                 label_text = label_prefered_name.text()
-                current_text = f"{label_text} + {selected_item}" if label_text else selected_item
+                if label_text:
+                    current_text = f"{label_text} + {selected_item}"
+                else:
+                    current_text = selected_item
                 label_prefered_name.setText(current_text)
 
             # Disable selected item in combobox
@@ -293,6 +297,7 @@ class Setup_ProjectLayers:
             if all_disabled:
                 widget.Confir_selecteded_element.setEnabled(False)  # Disable the button
                 widget.Confir_selecteded_element.hide()
+
 
 
     def reset_setup_of_folder_setup(widget):

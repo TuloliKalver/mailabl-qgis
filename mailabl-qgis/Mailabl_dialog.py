@@ -362,10 +362,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         search_items = lineEdit.displayText()
         item = search_items.strip()
         if item == '' or None:
+            # Frame the label with red border
+            lineEdit.setStyleSheet("border: 1px solid #D32F2F;")
             # Display warning message
             QMessageBox.warning(self, pealkiri.warningSimple, sisu.otsing_puudu)
-            # Frame the label with red border
-            lineEdit.setStyleSheet("border: 1px solid red;")
             return
         else: 
             lineEdit.setStyleSheet("border: None")
@@ -378,10 +378,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         search_items = lineEdit.displayText()
         item = search_items.strip()
         if item == '' or None:
+            # Frame the label with red border
+            lineEdit.setStyleSheet("border: 1px solid #D32F2F;")
             # Display warning message
             QMessageBox.warning(self, pealkiri.warningSimple, sisu.otsing_puudu)
-            # Frame the label with red border
-            lineEdit.setStyleSheet("border: 1px solid red;")
             return
         else: 
             lineEdit.setStyleSheet("border: None")
