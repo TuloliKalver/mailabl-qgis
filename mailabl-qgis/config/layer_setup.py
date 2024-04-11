@@ -4,9 +4,10 @@
 
 
 # Related Third-Party Imports
+import re
 from qgis.core import QgsMapLayer, QgsProject
 from PyQt5.QtWidgets import QMessageBox, QFrame
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
@@ -219,11 +220,19 @@ class Setup_ProjectLayers:
             if widget.Confir_selecteded_element.isEnabled() and combo_box_name.currentIndex() == 1:
                 label_text = label_prefered_name.text()
                 symbol_text = label_symbol.text()
-                if symbol_text:
-                    label_text = f"{label_text} + {selected_item}({symbol_text})"
+                # Check if the symbol_text contains disallowed characters
+                if re.search(r'[<>:"/\\|?*.]', symbol_text):
+                    # Display warning message
+                    QMessageBox.warning(widget, "Warning", "The symbol contains disallowed characters.")
+                    # Frame the label with red border
+                    label_symbol.setStyleSheet("border: 1px solid red;")
+                    return
                 else:
-                    label_text = f"{label_text} + {selected_item}"
-                label_prefered_name.setText(label_text)
+                    if symbol_text:
+                        label_text = f"{label_text} + {selected_item}({symbol_text})"
+                    else:
+                        label_text = f"{label_text} + {selected_item}"
+                    label_prefered_name.setText(label_text)
             else:
                 # Add selected item to label without parentheses
                 current_text = label_prefered_name.text()
@@ -252,7 +261,6 @@ class Setup_ProjectLayers:
             if all_disabled:
                 widget.Confir_selecteded_element.setEnabled(False)  # Disable the button
                 widget.Confir_selecteded_element.hide()
-
 
     def checkSelectedId(self, index, widget):
         # Check if the selected item has id 1
