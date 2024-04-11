@@ -373,7 +373,7 @@ class Setup_Conrtacts:
 
         selected_types_text = ''
         for i, item in enumerate(selected_types):
-            if i % 2 == 0 and i > 0:
+            if i % 1 == 0 and i > 0:
                 selected_types_text += ',\n'
             elif i > 0:
                 selected_types_text += ', '
