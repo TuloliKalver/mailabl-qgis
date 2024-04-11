@@ -69,10 +69,10 @@ class GraphqlQueriesContracts:
         with open(graphql_path, 'r') as file:
             return file.read()
 
-class GraphqlQuerieseasements:
-    def __init__(self):     
+class GraphqlQueriesEasements:
+    def __init__(self):
         self.easement_types = 'easements_types.graphql'   
-
+        self.Q_where_easements_type_status = 'easements_type_status.graphql'
 
     def load_query_for_easements(self, query_file_name):
         path = GraphQLQueryLoader()

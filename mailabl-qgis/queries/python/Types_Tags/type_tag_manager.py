@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QCoreApplication
 
-from ....queries.python.DataLoading_classes import GraphqlQueriesContracts, GraphqlQuerieseasements
+from ....queries.python.DataLoading_classes import GraphqlQueriesContracts, GraphqlQueriesEasements
 from ....queries.python.query_tools import requestBuilder
 from ....config.settings import SettingsDataSaveAndLoad
 from ....config.mylabl_API.modules import MODULE_CONTRACTS, MODULE_EASEMENTS
@@ -94,8 +94,8 @@ class ContractTypes:
 class easementTypes:
     def easement_types(self):
 
-        query_loader = GraphqlQuerieseasements()
-        query = GraphqlQuerieseasements.load_query_for_easements(self, query_loader.easement_types)        
+        query_loader = GraphqlQueriesEasements()
+        query = GraphqlQueriesEasements.load_query_for_easements(self, query_loader.easement_types)        
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value

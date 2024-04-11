@@ -12,6 +12,7 @@ from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
 from ..Functions.delete_items import Delete_Main_Process
 from ..Functions.Contracts.contractsItems import ContractsMain, ContractsQueries_list
+from ..Functions.Easements.EasementsItems import EasementssMain
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS, MODULE_EASEMENTS
 from ..processes.infomessages.messages import Headings
@@ -71,7 +72,6 @@ class WorkSpaceHandler:
         
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
 
-        #ContractsQueries_list.query_contracts_by_status(self, statusValue)
         ContractsMain.main_contracts(self, table, selected_types_ids, statusValue)
                 
         push_button.blockSignals(False)
@@ -98,6 +98,7 @@ class WorkSpaceHandler:
         self.pbeasements.blockSignals(True)
         self.swWorkSpace.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(5)
+        table = self.tweasementView
         module = MODULE_EASEMENTS
         combo_box = self.cmbeasementStatuses
         types_combo_box = self.cmbeasementTypesCheckable
@@ -105,7 +106,10 @@ class WorkSpaceHandler:
         InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
         prefered_types = SettingsDataSaveAndLoad.load_easements_type_names(self) 
         InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
-
+        self.pbeasements.blockSignals(False)
+        statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
+        QMessageBox.information(None, "Peagi tulemas", "Hetkel veel nimekirja laadimine puudub")
+        #EasementssMain.main_asements(self, table, prefered_types, statusValue)
         self.pbeasements.blockSignals(False)
 
     @staticmethod
