@@ -14,33 +14,30 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_LayeAdjuster(object):
     def setupUi(self, LayeAdjuster):
         LayeAdjuster.setObjectName("LayeAdjuster")
-        LayeAdjuster.resize(690, 226)
+        LayeAdjuster.resize(900, 350)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(LayeAdjuster.sizePolicy().hasHeightForWidth())
         LayeAdjuster.setSizePolicy(sizePolicy)
+        LayeAdjuster.setMinimumSize(QtCore.QSize(900, 350))
+        LayeAdjuster.setMaximumSize(QtCore.QSize(900, 350))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         LayeAdjuster.setFont(font)
-        LayeAdjuster.setStyleSheet("/*üleüldine taust ja toonid*/\n"
-"/*--gray-0: #fff;\n"
-"    --gray-50: #f7f7f8;\n"
-"    --gray-100: #ececf1;\n"
-"    --gray-200: #d9d9e3;\n"
-"    --gray-300: #c5c5d2;\n"
-"    --gray-400: #acacbe;\n"
-"    --gray-500: #8e8ea0;\n"
-"    --gray-600: #565869;\n"
-"    --gray-700: #40414f;\n"
-"    --gray-800: #343541;\n"
-"    --gray-900: #202123;\n"
-"    --gray-950: #050509;\n"
-"*/\n"
+        LayeAdjuster.setStyleSheet("\n"
 "\n"
-"/*style the combobox itself*/\n"
+"#fHelpMenu, \n"
+"#fSettingsPreferrences\n"
+"{\n"
+"   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */\n"
+"    border-radius: 5px;\n"
+"    border-top: none;\n"
+"    border-left: none;\n"
+"    border-right: none;\n"
+"}\n"
 "\n"
 "\n"
 "QWidget{\n"
@@ -104,104 +101,175 @@ class Ui_LayeAdjuster(object):
 "}\n"
 "\n"
 "QLabel {\n"
+"    background-color: #40414f;\n"
+"    color: #ececf1;\n"
+"    border: 1px solid #565869;\n"
+"    border-radius: 3px;\n"
+"    padding: 3px;\n"
+"}\n"
 "\n"
-"}")
+"QLineEdit {\n"
+"    background-color: #35363f;  /* Lighter background color */\n"
+"    color: #ececf1;\n"
+"    /*border: 1px solid #4d4d5b;  Thinner border with a different color */\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
+"}\n"
+"\n"
+"QLineEdit:hover {\n"
+"    background-color: #3d3e47;  /* Slightly darker background color on hover */\n"
+"}\n"
+"\n"
+"/* Remove top and side borders */\n"
+"QLineEdit {\n"
+"    border-top: none;\n"
+"    border-left: none;\n"
+"    border-right: none;\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
         self.verticalLayout = QtWidgets.QVBoxLayout(LayeAdjuster)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.f_Main = QtWidgets.QFrame(LayeAdjuster)
-        self.f_Main.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.f_Main.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.f_Main.setObjectName("f_Main")
-        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.f_Main)
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 10)
-        self.verticalLayout_4.setSpacing(5)
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.f_Main_2 = QtWidgets.QFrame(self.f_Main)
-        self.f_Main_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.f_Main_2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.f_Main_2.setObjectName("f_Main_2")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.f_Main_2)
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_3.setSpacing(10)
+        self.fContent = QtWidgets.QFrame(LayeAdjuster)
+        self.fContent.setMinimumSize(QtCore.QSize(0, 100))
+        self.fContent.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.fContent.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.fContent.setObjectName("fContent")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.fContent)
+        self.horizontalLayout_6.setContentsMargins(0, 10, 10, 10)
+        self.horizontalLayout_6.setSpacing(0)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.frame = QtWidgets.QFrame(self.fContent)
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame)
+        self.verticalLayout_2.setContentsMargins(10, 0, 10, 0)
+        self.verticalLayout_2.setSpacing(10)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.fSettingsPreferrences = QtWidgets.QFrame(self.frame)
+        self.fSettingsPreferrences.setStyleSheet("")
+        self.fSettingsPreferrences.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.fSettingsPreferrences.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.fSettingsPreferrences.setObjectName("fSettingsPreferrences")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.fSettingsPreferrences)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 5)
+        self.verticalLayout_3.setSpacing(5)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.f_Main_3 = QtWidgets.QFrame(self.f_Main_2)
-        self.f_Main_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.f_Main_3.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.f_Main_3.setObjectName("f_Main_3")
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.f_Main_3)
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_3.setSpacing(10)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.lblCurrect_Cadastral_2 = QtWidgets.QLabel(self.f_Main_3)
+        self.f_Main_5 = QtWidgets.QFrame(self.fSettingsPreferrences)
+        self.f_Main_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.f_Main_5.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.f_Main_5.setObjectName("f_Main_5")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.f_Main_5)
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_5.setSpacing(10)
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.lblCurrect_Cadastral_3 = QtWidgets.QLabel(self.f_Main_5)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
-        self.lblCurrect_Cadastral_2.setFont(font)
-        self.lblCurrect_Cadastral_2.setObjectName("lblCurrect_Cadastral_2")
-        self.horizontalLayout_3.addWidget(self.lblCurrect_Cadastral_2)
-        self.cmbPreferredContractStatuses = QtWidgets.QComboBox(self.f_Main_3)
-        self.cmbPreferredContractStatuses.setBaseSize(QtCore.QSize(0, 0))
+        self.lblCurrect_Cadastral_3.setFont(font)
+        self.lblCurrect_Cadastral_3.setObjectName("lblCurrect_Cadastral_3")
+        self.horizontalLayout_5.addWidget(self.lblCurrect_Cadastral_3, 0, QtCore.Qt.AlignLeft)
+        self.cmbPreferredContractStatuses_2 = QtWidgets.QComboBox(self.f_Main_5)
+        self.cmbPreferredContractStatuses_2.setBaseSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setPointSize(10)
-        self.cmbPreferredContractStatuses.setFont(font)
-        self.cmbPreferredContractStatuses.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
-        self.cmbPreferredContractStatuses.setIconSize(QtCore.QSize(6, 6))
-        self.cmbPreferredContractStatuses.setObjectName("cmbPreferredContractStatuses")
-        self.cmbPreferredContractStatuses.addItem("")
-        self.cmbPreferredContractStatuses.setItemText(0, "")
-        self.cmbPreferredContractStatuses.addItem("")
-        self.cmbPreferredContractStatuses.setItemText(1, "")
-        self.cmbPreferredContractStatuses.addItem("")
-        self.cmbPreferredContractStatuses.setItemText(2, "")
-        self.cmbPreferredContractStatuses.addItem("")
-        self.cmbPreferredContractStatuses.setItemText(3, "")
-        self.horizontalLayout_3.addWidget(self.cmbPreferredContractStatuses)
-        self.verticalLayout_3.addWidget(self.f_Main_3)
-        self.verticalLayout_4.addWidget(self.f_Main_2)
-        self.f_Main_1 = QtWidgets.QFrame(self.f_Main)
-        self.f_Main_1.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.f_Main_1.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.f_Main_1.setObjectName("f_Main_1")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.f_Main_1)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setSpacing(10)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.lblPreferedContractTypes = QtWidgets.QLabel(self.f_Main_1)
+        self.cmbPreferredContractStatuses_2.setFont(font)
+        self.cmbPreferredContractStatuses_2.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
+        self.cmbPreferredContractStatuses_2.setIconSize(QtCore.QSize(6, 6))
+        self.cmbPreferredContractStatuses_2.setObjectName("cmbPreferredContractStatuses_2")
+        self.cmbPreferredContractStatuses_2.addItem("")
+        self.cmbPreferredContractStatuses_2.setItemText(0, "")
+        self.cmbPreferredContractStatuses_2.addItem("")
+        self.cmbPreferredContractStatuses_2.setItemText(1, "")
+        self.cmbPreferredContractStatuses_2.addItem("")
+        self.cmbPreferredContractStatuses_2.setItemText(2, "")
+        self.cmbPreferredContractStatuses_2.addItem("")
+        self.cmbPreferredContractStatuses_2.setItemText(3, "")
+        self.horizontalLayout_5.addWidget(self.cmbPreferredContractStatuses_2)
+        self.verticalLayout_3.addWidget(self.f_Main_5)
+        self.f_Main_4 = QtWidgets.QFrame(self.fSettingsPreferrences)
+        self.f_Main_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.f_Main_4.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.f_Main_4.setObjectName("f_Main_4")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.f_Main_4)
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4.setSpacing(10)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.lblPreferedContractTypes_2 = QtWidgets.QLabel(self.f_Main_4)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
-        self.lblPreferedContractTypes.setFont(font)
-        self.lblPreferedContractTypes.setObjectName("lblPreferedContractTypes")
-        self.horizontalLayout.addWidget(self.lblPreferedContractTypes)
-        self.cbcb_PreferredContractTypes = QgsCheckableComboBox(self.f_Main_1)
-        self.cbcb_PreferredContractTypes.setObjectName("cbcb_PreferredContractTypes")
-        self.horizontalLayout.addWidget(self.cbcb_PreferredContractTypes)
-        self.verticalLayout_4.addWidget(self.f_Main_1)
-        self.verticalLayout.addWidget(self.f_Main)
+        self.lblPreferedContractTypes_2.setFont(font)
+        self.lblPreferedContractTypes_2.setObjectName("lblPreferedContractTypes_2")
+        self.horizontalLayout_4.addWidget(self.lblPreferedContractTypes_2, 0, QtCore.Qt.AlignLeft)
+        self.cbcb_PreferredContractTypes_2 = QgsCheckableComboBox(self.f_Main_4)
+        self.cbcb_PreferredContractTypes_2.setObjectName("cbcb_PreferredContractTypes_2")
+        self.horizontalLayout_4.addWidget(self.cbcb_PreferredContractTypes_2)
+        self.verticalLayout_3.addWidget(self.f_Main_4)
+        self.verticalLayout_2.addWidget(self.fSettingsPreferrences)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem)
-        self.f_Buttons = QtWidgets.QFrame(LayeAdjuster)
+        self.verticalLayout_2.addItem(spacerItem)
+        self.f_Buttons = QtWidgets.QFrame(self.frame)
         self.f_Buttons.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.f_Buttons.setFrameShadow(QtWidgets.QFrame.Raised)
         self.f_Buttons.setObjectName("f_Buttons")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.f_Buttons)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 10, 0)
+        self.horizontalLayout_2.setSpacing(10)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         spacerItem1 = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.pbCancel = QtWidgets.QPushButton(self.f_Buttons)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbCancel.setIcon(icon)
         self.pbCancel.setObjectName("pbCancel")
         self.horizontalLayout_2.addWidget(self.pbCancel)
         self.pbSave = QtWidgets.QPushButton(self.f_Buttons)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         self.pbSave.setFont(font)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbSave.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbSave.setIcon(icon1)
         self.pbSave.setIconSize(QtCore.QSize(18, 18))
         self.pbSave.setObjectName("pbSave")
         self.horizontalLayout_2.addWidget(self.pbSave)
-        self.verticalLayout.addWidget(self.f_Buttons)
+        self.verticalLayout_2.addWidget(self.f_Buttons)
+        self.horizontalLayout_6.addWidget(self.frame)
+        self.fHelpMenu = QtWidgets.QFrame(self.fContent)
+        self.fHelpMenu.setMinimumSize(QtCore.QSize(200, 0))
+        self.fHelpMenu.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.fHelpMenu.setStyleSheet("")
+        self.fHelpMenu.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.fHelpMenu.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.fHelpMenu.setObjectName("fHelpMenu")
+        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.fHelpMenu)
+        self.verticalLayout_10.setContentsMargins(0, 5, 0, 0)
+        self.verticalLayout_10.setSpacing(5)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.label_2 = QtWidgets.QLabel(self.fHelpMenu)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_10.addWidget(self.label_2)
+        self.textEdit = QtWidgets.QTextEdit(self.fHelpMenu)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.textEdit.setFont(font)
+        self.textEdit.setObjectName("textEdit")
+        self.verticalLayout_10.addWidget(self.textEdit)
+        self.horizontalLayout_6.addWidget(self.fHelpMenu)
+        self.verticalLayout.addWidget(self.fContent)
 
         self.retranslateUi(LayeAdjuster)
         QtCore.QMetaObject.connectSlotsByName(LayeAdjuster)
@@ -209,8 +277,16 @@ class Ui_LayeAdjuster(object):
     def retranslateUi(self, LayeAdjuster):
         _translate = QtCore.QCoreApplication.translate
         LayeAdjuster.setWindowTitle(_translate("LayeAdjuster", "Lepingute seaded"))
-        self.lblCurrect_Cadastral_2.setText(_translate("LayeAdjuster", "Eelistatud staatus"))
-        self.lblPreferedContractTypes.setText(_translate("LayeAdjuster", "Eelistatud lepingu liigid"))
+        self.lblCurrect_Cadastral_3.setText(_translate("LayeAdjuster", "Eelistatud staatus"))
+        self.lblPreferedContractTypes_2.setText(_translate("LayeAdjuster", "Eelistatud lepingu liigid"))
         self.pbCancel.setText(_translate("LayeAdjuster", "Tühista"))
         self.pbSave.setText(_translate("LayeAdjuster", "Salvesta"))
+        self.label_2.setText(_translate("LayeAdjuster", "Seadete selgitused"))
+        self.textEdit.setHtml(_translate("LayeAdjuster", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Eelistatud staatus:</span><br />Millist staatust eelistad esmase nimekirja laadimisel.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Eelistatud lepingu liigid:</span><br />Vali lepingu liigid mida kuvatakse lepingute laadimisel.</p></body></html>"))
 from qgscheckablecombobox import QgsCheckableComboBox

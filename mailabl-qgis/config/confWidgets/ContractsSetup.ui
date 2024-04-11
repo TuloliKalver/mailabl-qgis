@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
-    <height>226</height>
+    <width>900</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -15,6 +15,18 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>900</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>900</width>
+    <height>350</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -27,22 +39,17 @@
    <string>Lepingute seaded</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*üleüldine taust ja toonid*/
-/*--gray-0: #fff;
-    --gray-50: #f7f7f8;
-    --gray-100: #ececf1;
-    --gray-200: #d9d9e3;
-    --gray-300: #c5c5d2;
-    --gray-400: #acacbe;
-    --gray-500: #8e8ea0;
-    --gray-600: #565869;
-    --gray-700: #40414f;
-    --gray-800: #343541;
-    --gray-900: #202123;
-    --gray-950: #050509;
-*/
+   <string notr="true">
 
-/*style the combobox itself*/
+#fHelpMenu, 
+#fSettingsPreferrences
+{
+   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */
+    border-radius: 5px;
+	border-top: none;
+    border-left: none;
+    border-right: none;
+}
 
 
 QWidget{
@@ -106,69 +113,120 @@ QPushButton:hover{
 }
 
 QLabel {
+    background-color: #40414f;
+    color: #ececf1;
+    border: 1px solid #565869;
+    border-radius: 3px;
+    padding: 3px;
+}
 
-}</string>
+QLineEdit {
+    background-color: #35363f;  /* Lighter background color */
+    color: #ececf1;
+    /*border: 1px solid #4d4d5b;  Thinner border with a different color */
+    border-radius: 5px;
+    padding: 4px;
+}
+
+QLineEdit:hover {
+    background-color: #3d3e47;  /* Slightly darker background color on hover */
+}
+
+/* Remove top and side borders */
+QLineEdit {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <widget class="QFrame" name="f_Main">
+    <widget class="QFrame" name="fContent">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>100</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
       <property name="spacing">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="bottomMargin">
        <number>10</number>
       </property>
       <item>
-       <widget class="QFrame" name="f_Main_2">
+       <widget class="QFrame" name="frame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <property name="spacing">
           <number>10</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
-          <widget class="QFrame" name="f_Main_3">
+          <widget class="QFrame" name="fSettingsPreferrences">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="spacing">
-             <number>10</number>
+             <number>5</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -180,63 +238,219 @@ QLabel {
              <number>0</number>
             </property>
             <property name="bottomMargin">
+             <number>5</number>
+            </property>
+            <item>
+             <widget class="QFrame" name="f_Main_5">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item alignment="Qt::AlignLeft">
+                <widget class="QLabel" name="lblCurrect_Cadastral_3">
+                 <property name="font">
+                  <font>
+                   <family>Tahoma</family>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Eelistatud staatus</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="cmbPreferredContractStatuses_2">
+                 <property name="baseSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="sizeAdjustPolicy">
+                  <enum>QComboBox::AdjustToContents</enum>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>6</width>
+                   <height>6</height>
+                  </size>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="f_Main_4">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item alignment="Qt::AlignLeft">
+                <widget class="QLabel" name="lblPreferedContractTypes_2">
+                 <property name="font">
+                  <font>
+                   <family>Tahoma</family>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Eelistatud lepingu liigid</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QgsCheckableComboBox" name="cbcb_PreferredContractTypes_2"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QFrame" name="f_Buttons">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="lblCurrect_Cadastral_2">
-              <property name="font">
-               <font>
-                <family>Tahoma</family>
-                <pointsize>10</pointsize>
-               </font>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>411</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbCancel">
               <property name="text">
-               <string>Eelistatud staatus</string>
+               <string>Tühista</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../../icons/Icons_hele/x-circle.svg</normaloff>../../icons/Icons_hele/x-circle.svg</iconset>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="cmbPreferredContractStatuses">
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
+             <widget class="QPushButton" name="pbSave">
               <property name="font">
                <font>
-                <pointsize>10</pointsize>
+                <family>Tahoma</family>
                </font>
               </property>
-              <property name="sizeAdjustPolicy">
-               <enum>QComboBox::AdjustToContents</enum>
+              <property name="text">
+               <string>Salvesta</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../../icons/Icons_hele/save.svg</normaloff>../../icons/Icons_hele/save.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
-                <width>6</width>
-                <height>6</height>
+                <width>18</width>
+                <height>18</height>
                </size>
               </property>
-              <item>
-               <property name="text">
-                <string/>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string/>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string/>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string/>
-               </property>
-              </item>
              </widget>
             </item>
            </layout>
@@ -246,22 +460,37 @@ QLabel {
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="f_Main_1">
+       <widget class="QFrame" name="fHelpMenu">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QVBoxLayout" name="verticalLayout_10">
          <property name="spacing">
-          <number>10</number>
+          <number>5</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -270,89 +499,38 @@ QLabel {
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="lblPreferedContractTypes">
+          <widget class="QLabel" name="label_2">
            <property name="font">
             <font>
-             <family>Tahoma</family>
              <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
             </font>
            </property>
            <property name="text">
-            <string>Eelistatud lepingu liigid</string>
+            <string>Seadete selgitused</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QgsCheckableComboBox" name="cbcb_PreferredContractTypes"/>
+          <widget class="QTextEdit" name="textEdit">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="html">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Eelistatud staatus:&lt;/span&gt;&lt;br /&gt;Millist staatust eelistad esmase nimekirja laadimisel.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Eelistatud lepingu liigid:&lt;/span&gt;&lt;br /&gt;Vali lepingu liigid mida kuvatakse lepingute laadimisel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
          </item>
         </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QFrame" name="f_Buttons">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>411</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbCancel">
-        <property name="text">
-         <string>Tühista</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbSave">
-        <property name="font">
-         <font>
-          <family>Tahoma</family>
-         </font>
-        </property>
-        <property name="text">
-         <string>Salvesta</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../icons/Icons_hele/save.svg</normaloff>../../icons/Icons_hele/save.svg</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>18</width>
-          <height>18</height>
-         </size>
-        </property>
        </widget>
       </item>
      </layout>

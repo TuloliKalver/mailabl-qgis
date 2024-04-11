@@ -27,20 +27,7 @@ class Ui_LayeAdjuster(object):
         font.setBold(True)
         font.setWeight(75)
         LayeAdjuster.setFont(font)
-        LayeAdjuster.setStyleSheet("/*üleüldine taust ja toonid*/\n"
-"/*--gray-0: #fff;\n"
-"    --gray-50: #f7f7f8;\n"
-"    --gray-100: #ececf1;\n"
-"    --gray-200: #d9d9e3;\n"
-"    --gray-300: #c5c5d2;\n"
-"    --gray-400: #acacbe;\n"
-"    --gray-500: #8e8ea0;\n"
-"    --gray-600: #565869;\n"
-"    --gray-700: #40414f;\n"
-"    --gray-800: #343541;\n"
-"    --gray-900: #202123;\n"
-"    --gray-950: #050509;\n"
-"*/\n"
+        LayeAdjuster.setStyleSheet("\n"
 "\n"
 "/*style the combobox itself*/\n"
 "\n"
@@ -148,7 +135,7 @@ class Ui_LayeAdjuster(object):
 "")
         self.verticalLayout = QtWidgets.QVBoxLayout(LayeAdjuster)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setSpacing(10)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.fContent = QtWidgets.QFrame(LayeAdjuster)
         self.fContent.setMinimumSize(QtCore.QSize(0, 100))
@@ -405,16 +392,19 @@ class Ui_LayeAdjuster(object):
         spacerItem1 = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.pbCancel = QtWidgets.QPushButton(self.fButtons)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbCancel.setIcon(icon)
         self.pbCancel.setObjectName("pbCancel")
         self.horizontalLayout_2.addWidget(self.pbCancel)
         self.pbSave = QtWidgets.QPushButton(self.fButtons)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         self.pbSave.setFont(font)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbSave.setIcon(icon)
-        self.pbSave.setIconSize(QtCore.QSize(18, 18))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbSave.setIcon(icon1)
+        self.pbSave.setIconSize(QtCore.QSize(16, 16))
         self.pbSave.setObjectName("pbSave")
         self.horizontalLayout_2.addWidget(self.pbSave)
         self.verticalLayout_8.addWidget(self.fButtons)
@@ -429,6 +419,7 @@ class Ui_LayeAdjuster(object):
         self.fHelpMenu.setObjectName("fHelpMenu")
         self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.fHelpMenu)
         self.verticalLayout_10.setContentsMargins(0, 5, 0, 0)
+        self.verticalLayout_10.setSpacing(5)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
         self.label_2 = QtWidgets.QLabel(self.fHelpMenu)
         font = QtGui.QFont()
@@ -455,7 +446,7 @@ class Ui_LayeAdjuster(object):
         _translate = QtCore.QCoreApplication.translate
         LayeAdjuster.setWindowTitle(_translate("LayeAdjuster", "Projektide seaded"))
         self.lblCurrect_Cadastral_2.setText(_translate("LayeAdjuster", "Kaardikiht"))
-        self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Staatuse eelistus"))
+        self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Eelistatud staatus"))
         self.lblProjectsTargetFolder.setText(_translate("LayeAdjuster", "Projekti sihtkaus"))
         self.lblProjectsFolder.setText(_translate("LayeAdjuster", "Projekti baaskaust"))
         self.groupBox.setTitle(_translate("LayeAdjuster", "Projekti kausta nime seadistamine"))
@@ -466,9 +457,18 @@ class Ui_LayeAdjuster(object):
         self.Confir_selecteded_element.setText(_translate("LayeAdjuster", "Lisa"))
         self.pbCancel.setText(_translate("LayeAdjuster", "Tühista"))
         self.pbSave.setText(_translate("LayeAdjuster", "Salvesta"))
-        self.label_2.setText(_translate("LayeAdjuster", "Seadete selgitused (täiendamisel)"))
+        self.label_2.setText(_translate("LayeAdjuster", "Seadete selgitused"))
         self.textEdit.setHtml(_translate("LayeAdjuster", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Kaardikiht*:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"> on loomisel funktsionaalsus, kus projekti element seostatakse projekti ala jooniskihiga. N: vaja tänava alal detailsem projekti ulatus jne. Omadus on loomisel ja luuakse koos vajalike tööriistadega.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600; text-decoration: underline;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Eelistatud staatus:</span><br />Millist staatust eelistad esmase nimekirja laadimisel.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Eelistatud lepingu liigid:</span><br />Vali lepingu liigid mida kuvatakse lepingute laadimisel.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Projekti kausta nime seadistamine:</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">NB! projekti kausta nimedes ei saa kasutada (kuna need ei vasta Windowsi standarditele) järgmisi sümboleid: &quot;&lt;&gt;:&quot;/\\\\|?*.&quot;, </span></p></body></html>"))
