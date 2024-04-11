@@ -212,7 +212,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.pbActivateLabelSettings.clicked.connect(self.SaveToLabel)
 
 
-        self.pbSubstitutes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Substitutes_FrontPage(self))
+        self.pbEasments.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Substitutes_FrontPage(self))
         self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
@@ -427,7 +427,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button14 = self.pbHome
         button15 = self.pbMapThemes
         button16 = self.pbProjects
-        button17 = self.pbSubstitutes
+        button17 = self.pbEasments
         button18 = self.pbSyncMailabl
 
         left_menu = self.leftMenuContainer

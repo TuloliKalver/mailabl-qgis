@@ -548,7 +548,7 @@ QComboBox::on{
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pbSubstitutes">
+             <widget class="QPushButton" name="pbEasments">
               <property name="text">
                <string>Servituudid</string>
               </property>

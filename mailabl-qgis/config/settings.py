@@ -233,7 +233,6 @@ class SettingsDataSaveAndLoad:
         settings.setValue(target_settings_address, input_value)
 
     def save_projects_folder_preferred_name_structure(self, input_value):
-
         settings = QgsSettings()
         preferred_folder_name_adress = SettingsDataSaveAndLoad.projects_Folder_preferred_name_structure(self)
         settings.setValue(preferred_folder_name_adress, input_value)
