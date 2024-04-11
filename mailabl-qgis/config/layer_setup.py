@@ -12,7 +12,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
 # Local Application or Library Imports
-from .mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
+from .mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS, MODULE_EASEMENTS
 from .settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
@@ -361,7 +361,7 @@ class Setup_Conrtacts:
         #InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module )
         preferred_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)
         
-        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types)
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types, module)
 
         # Connect signals to functions
         save_button.clicked.connect(lambda: Setup_Conrtacts.on_save_button_clicked(self, widget, statuses_combo_box, types_combo_box))
@@ -400,6 +400,81 @@ class Setup_Conrtacts:
         # Additional logic if needed
 
         widget.accept()  # Close the dialog
+
+    def on_cancel_button_clicked(self, widget):
+        # Handle logic when the cancel button is clicked
+
+        text = sisu.kasutaja_peatas_protsessi
+        heading = pealkiri.warningSimple
+        QMessageBox.information(widget, heading, text)
+        widget.reject()  # Close the dialog       
+
+
+class SetupEasments:
+    def load_easements_settings_widget(self):
+        
+        ui_file_path = Filepaths.get_conf_widget(FilesByNames().easements_setup_ui)
+        #print(f"path: {ui_file_path}")
+        # Load the UI from the specified .ui file
+        widget = loadUi(ui_file_path)
+        save_button = widget.pbSave
+        cancel_button = widget.pbCancel
+        
+        widget.show()
+
+        module = MODULE_EASEMENTS
+        statuses_combo_box = widget.cmbPreferredEasementStatuses
+        types_combo_box = widget.cbcb_PreferredEasementTypes
+        # Assuming types_combo_box is an instance of QgsSelectableComboBox
+
+        status_id = '' # SettingsDataSaveAndLoad.load_contract_status_ids(self)
+        if status_id is None or '':
+            InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module)
+        else:
+            InsertStatusToComboBox.add_statuses_to_listview_set_status(self, statuses_combo_box, module, status_id)
+
+        preferred_types = '' #SettingsDataSaveAndLoad.load_contracts_type_names(self)
+        
+        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types, module)
+
+        # Connect signals to functions
+        save_button.clicked.connect(lambda: SetupEasments.on_save_button_clicked(self, widget, statuses_combo_box, types_combo_box))
+        cancel_button.clicked.connect(lambda: SetupEasments.on_cancel_button_clicked(self, widget))
+
+    def on_save_button_clicked(self, widget, statuses_combo_box, combo_box_checkable):
+        # Handle logic when the save button is clicked
+  
+        status_value_name = InsertStatusToComboBox.get_selected_status_name(statuses_combo_box)
+        status_value_ids = InsertStatusToComboBox.get_selected_status_id(statuses_combo_box)
+        checked_indexes = combo_box_checkable.checkedItemsData()
+        #print(checked_indexes)
+        selected_types = combo_box_checkable.checkedItems()
+
+        selected_types_text = ''
+        for i, item in enumerate(selected_types):
+            if i % 1 == 0 and i > 0:
+                selected_types_text += ',\n'
+            elif i > 0:
+                selected_types_text += ', '
+            selected_types_text += item
+        label = self.lblPreferredEasementsTypes_value
+        label.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        label.setAlignment(Qt.AlignBottom | Qt.AlignLeft)
+
+
+        SettingsDataSaveAndLoad.save_easements_settings(self, selected_types_text, status_value_name, status_value_ids)
+
+        label.setText(selected_types_text)
+        self.lblPreferredEasementsStatus.setText(status_value_name)
+
+        text = edu.salvestatud
+        heading = pealkiri.tubli
+        QMessageBox.information(widget, heading, text)
+        # Additional logic if needed
+        print("saved")
+
+        widget.accept()  # Close the dialog
+
 
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
