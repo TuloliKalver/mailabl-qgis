@@ -220,26 +220,32 @@ class Setup_ProjectLayers:
             if widget.Confir_selecteded_element.isEnabled() and combo_box_name.currentIndex() == 1:
                 label_text = label_prefered_name.text()
                 symbol_text = label_symbol.text()
+                label_symbol.setStyleSheet("border: None")
+                if symbol_text == '' or None:
+                    label_symbol.setStyleSheet("border: 1px solid red;")
+                    QMessageBox.warning(widget, pealkiri.warningSimple, sisu.puudulikud_andmed)
+                    return
                 # Check if the symbol_text contains disallowed characters
                 if re.search(r'[<>:"/\\|?*.]', symbol_text):
                     # Display warning message
-                    QMessageBox.warning(widget, "Warning", "The symbol contains disallowed characters.")
-                    # Frame the label with red border
                     label_symbol.setStyleSheet("border: 1px solid red;")
+                    QMessageBox.warning(widget, pealkiri.warningSimple, sisu.korrigeeri_sümbolit)
                     return
                 else:
-                    if symbol_text:
-                        label_text = f"{label_text} + {selected_item}({symbol_text})"
-                    else:
-                        label_text = f"{label_text} + {selected_item}"
-                    label_prefered_name.setText(label_text)
+                    # Add selected item to label without parentheses
+                    label_symbol.setStyleSheet("border: None")
+                    label_prefered_name.setText(f"{label_text} + {selected_item}({symbol_text})" if symbol_text else f"{label_text} + {selected_item}")
+                    # Hide symbol line edit
+                    label_symbol.hide()
             else:
+                # Hide symbol line edit and set border to None
+                label_symbol.clear()
+                label_symbol.hide()
+ 
+
                 # Add selected item to label without parentheses
-                current_text = label_prefered_name.text()
-                if current_text:
-                    current_text += f" + {selected_item}"
-                else:
-                    current_text = selected_item
+                label_text = label_prefered_name.text()
+                current_text = f"{label_text} + {selected_item}" if label_text else selected_item
                 label_prefered_name.setText(current_text)
 
             # Disable selected item in combobox
@@ -262,14 +268,19 @@ class Setup_ProjectLayers:
                 widget.Confir_selecteded_element.setEnabled(False)  # Disable the button
                 widget.Confir_selecteded_element.hide()
 
+
     def checkSelectedId(self, index, widget):
         # Check if the selected item has id 1
+        line_edit = widget.leSymbolCharacter
+        line_edit.setStyleSheet("border: None")
+        line_edit.clear()
         if index != -1:
             #selected_id = widget.cmbProjects_Layer.itemData(index)
             if index == 1:
-                widget.leSymbolCharacter.setVisible(True)
+                line_edit.setVisible(True)
+
             else:
-                widget.leSymbolCharacter.setVisible(False)
+                line_edit.setVisible(False)
 
 
 class Setup_Conrtacts:

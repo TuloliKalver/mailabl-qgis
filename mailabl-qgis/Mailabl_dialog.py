@@ -361,14 +361,31 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         table = self.tblMailabl_projects
         search_items = lineEdit.displayText()
         item = search_items.strip()
-        searchProjectsValue.load_Mailabl_projects_by_number(item, table)
+        if item == '' or None:
+            # Display warning message
+            QMessageBox.warning(self, pealkiri.warningSimple, sisu.otsing_puudu)
+            # Frame the label with red border
+            lineEdit.setStyleSheet("border: 1px solid red;")
+            return
+        else: 
+            lineEdit.setStyleSheet("border: None")
+            searchProjectsValue.load_Mailabl_projects_by_number(item, table)
 
 
     def searchContracts(self):
         lineEdit = self.le_searchContracts
         table = self.ContractView
         search_items = lineEdit.displayText()
-        ContractsMain.search_contracts(self, table, search_items)
+        item = search_items.strip()
+        if item == '' or None:
+            # Display warning message
+            QMessageBox.warning(self, pealkiri.warningSimple, sisu.otsing_puudu)
+            # Frame the label with red border
+            lineEdit.setStyleSheet("border: 1px solid red;")
+            return
+        else: 
+            lineEdit.setStyleSheet("border: None")
+            ContractsMain.search_contracts(self, table, search_items)
         
     def limitedLoad(self):
         table = self.tblMailabl_projects
