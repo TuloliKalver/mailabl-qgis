@@ -14,28 +14,25 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_LayeAdjuster(object):
     def setupUi(self, LayeAdjuster):
         LayeAdjuster.setObjectName("LayeAdjuster")
-        LayeAdjuster.resize(573, 158)
+        LayeAdjuster.resize(900, 350)
+        LayeAdjuster.setMinimumSize(QtCore.QSize(900, 350))
+        LayeAdjuster.setMaximumSize(QtCore.QSize(900, 350))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         LayeAdjuster.setFont(font)
-        LayeAdjuster.setStyleSheet("/*üleüldine taust ja toonid*/\n"
-"/*--gray-0: #fff;\n"
-"    --gray-50: #f7f7f8;\n"
-"    --gray-100: #ececf1;\n"
-"    --gray-200: #d9d9e3;\n"
-"    --gray-300: #c5c5d2;\n"
-"    --gray-400: #acacbe;\n"
-"    --gray-500: #8e8ea0;\n"
-"    --gray-600: #565869;\n"
-"    --gray-700: #40414f;\n"
-"    --gray-800: #343541;\n"
-"    --gray-900: #202123;\n"
-"    --gray-950: #050509;\n"
-"*/\n"
+        LayeAdjuster.setStyleSheet("\n"
 "\n"
-"/*style the combobox itself*/\n"
+"#fHelpMenu, \n"
+"#fSettingsProperties\n"
+"{\n"
+"   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */\n"
+"    border-radius: 5px;\n"
+"    border-top: none;\n"
+"    border-left: none;\n"
+"    border-right: none;\n"
+"}\n"
 "\n"
 "\n"
 "QWidget{\n"
@@ -98,67 +95,79 @@ class Ui_LayeAdjuster(object):
 "    \n"
 "}\n"
 "\n"
+"QLabel {\n"
+"    background-color: #40414f;\n"
+"    color: #ececf1;\n"
+"    border: 1px solid #565869;\n"
+"    border-radius: 3px;\n"
+"    padding: 3px;\n"
+"}\n"
+"\n"
+"QLineEdit {\n"
+"    background-color: #35363f;  /* Lighter background color */\n"
+"    color: #ececf1;\n"
+"    /*border: 1px solid #4d4d5b;  Thinner border with a different color */\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
+"}\n"
+"\n"
+"QLineEdit:hover {\n"
+"    background-color: #3d3e47;  /* Slightly darker background color on hover */\n"
+"}\n"
+"\n"
+"/* Remove top and side borders */\n"
+"QLineEdit {\n"
+"    border-top: none;\n"
+"    border-left: none;\n"
+"    border-right: none;\n"
+"}\n"
+"\n"
+"\n"
+"\n"
 "")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(LayeAdjuster)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(LayeAdjuster)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_4.setSpacing(0)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.fContent = QtWidgets.QFrame(LayeAdjuster)
+        self.fContent.setMinimumSize(QtCore.QSize(0, 100))
+        self.fContent.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.fContent.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.fContent.setObjectName("fContent")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.fContent)
+        self.horizontalLayout_6.setContentsMargins(0, 10, 10, 10)
+        self.horizontalLayout_6.setSpacing(0)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.frame = QtWidgets.QFrame(self.fContent)
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame)
+        self.verticalLayout_2.setContentsMargins(10, 0, 10, 0)
+        self.verticalLayout_2.setSpacing(10)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.Layer_Adjuster_Frame = QtWidgets.QWidget(LayeAdjuster)
-        self.Layer_Adjuster_Frame.setObjectName("Layer_Adjuster_Frame")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.Layer_Adjuster_Frame)
+        self.fSettingsProperties = QtWidgets.QWidget(self.frame)
+        self.fSettingsProperties.setObjectName("fSettingsProperties")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.fSettingsProperties)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 5)
+        self.verticalLayout.setSpacing(5)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.Main_frame = QtWidgets.QWidget(self.Layer_Adjuster_Frame)
-        self.Main_frame.setStyleSheet("")
-        self.Main_frame.setObjectName("Main_frame")
-        self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.Main_frame)
-        self.verticalLayout_16.setContentsMargins(10, 0, 0, 0)
-        self.verticalLayout_16.setSpacing(0)
-        self.verticalLayout_16.setObjectName("verticalLayout_16")
-        self.mainFrame_subFrame = QtWidgets.QWidget(self.Main_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.mainFrame_subFrame.sizePolicy().hasHeightForWidth())
-        self.mainFrame_subFrame.setSizePolicy(sizePolicy)
-        self.mainFrame_subFrame.setMinimumSize(QtCore.QSize(40, 0))
-        self.mainFrame_subFrame.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.mainFrame_subFrame.setStyleSheet("")
-        self.mainFrame_subFrame.setObjectName("mainFrame_subFrame")
-        self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.mainFrame_subFrame)
-        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_9.setSpacing(0)
-        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.SubFrame_labels = QtWidgets.QFrame(self.mainFrame_subFrame)
-        self.SubFrame_labels.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.SubFrame_labels.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.SubFrame_labels.setObjectName("SubFrame_labels")
-        self.verticalLayout_47 = QtWidgets.QVBoxLayout(self.SubFrame_labels)
-        self.verticalLayout_47.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_47.setSpacing(5)
-        self.verticalLayout_47.setObjectName("verticalLayout_47")
-        self.lblCurrect_Cadastral = QtWidgets.QLabel(self.SubFrame_labels)
+        self.frame_2 = QtWidgets.QFrame(self.fSettingsProperties)
+        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_2.setObjectName("frame_2")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.frame_2)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setSpacing(10)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.lblCurrect_Cadastral = QtWidgets.QLabel(self.frame_2)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
         self.lblCurrect_Cadastral.setFont(font)
         self.lblCurrect_Cadastral.setObjectName("lblCurrect_Cadastral")
-        self.verticalLayout_47.addWidget(self.lblCurrect_Cadastral)
-        self.lblTarget_Cadastral = QtWidgets.QLabel(self.SubFrame_labels)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.lblTarget_Cadastral.setFont(font)
-        self.lblTarget_Cadastral.setObjectName("lblTarget_Cadastral")
-        self.verticalLayout_47.addWidget(self.lblTarget_Cadastral)
-        self.horizontalLayout_9.addWidget(self.SubFrame_labels)
-        self.subFrame_comboBoxes = QtWidgets.QFrame(self.mainFrame_subFrame)
-        self.subFrame_comboBoxes.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.subFrame_comboBoxes.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.subFrame_comboBoxes.setObjectName("subFrame_comboBoxes")
-        self.verticalLayout_48 = QtWidgets.QVBoxLayout(self.subFrame_comboBoxes)
-        self.verticalLayout_48.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_48.setSpacing(5)
-        self.verticalLayout_48.setObjectName("verticalLayout_48")
-        self.cbCurrent_Cadastral = QtWidgets.QComboBox(self.subFrame_comboBoxes)
+        self.horizontalLayout_2.addWidget(self.lblCurrect_Cadastral, 0, QtCore.Qt.AlignLeft)
+        self.cbCurrent_Cadastral = QtWidgets.QComboBox(self.frame_2)
         self.cbCurrent_Cadastral.setBaseSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -174,8 +183,24 @@ class Ui_LayeAdjuster(object):
         self.cbCurrent_Cadastral.setItemText(2, "")
         self.cbCurrent_Cadastral.addItem("")
         self.cbCurrent_Cadastral.setItemText(3, "")
-        self.verticalLayout_48.addWidget(self.cbCurrent_Cadastral)
-        self.cbTarget_Cadastral = QtWidgets.QComboBox(self.subFrame_comboBoxes)
+        self.horizontalLayout_2.addWidget(self.cbCurrent_Cadastral)
+        self.verticalLayout.addWidget(self.frame_2)
+        self.frame_3 = QtWidgets.QFrame(self.fSettingsProperties)
+        self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_3.setObjectName("frame_3")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.frame_3)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setSpacing(10)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.lblTarget_Cadastral = QtWidgets.QLabel(self.frame_3)
+        self.lblTarget_Cadastral.setMinimumSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.lblTarget_Cadastral.setFont(font)
+        self.lblTarget_Cadastral.setObjectName("lblTarget_Cadastral")
+        self.horizontalLayout_3.addWidget(self.lblTarget_Cadastral, 0, QtCore.Qt.AlignLeft)
+        self.cbTarget_Cadastral = QtWidgets.QComboBox(self.frame_3)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.cbTarget_Cadastral.setFont(font)
@@ -188,28 +213,25 @@ class Ui_LayeAdjuster(object):
         self.cbTarget_Cadastral.setItemText(2, "")
         self.cbTarget_Cadastral.addItem("")
         self.cbTarget_Cadastral.setItemText(3, "")
-        self.verticalLayout_48.addWidget(self.cbTarget_Cadastral)
-        self.horizontalLayout_9.addWidget(self.subFrame_comboBoxes)
-        self.verticalLayout_16.addWidget(self.mainFrame_subFrame)
-        self.Buttons = QtWidgets.QFrame(self.Main_frame)
+        self.horizontalLayout_3.addWidget(self.cbTarget_Cadastral)
+        self.verticalLayout.addWidget(self.frame_3)
+        self.verticalLayout_2.addWidget(self.fSettingsProperties)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem)
+        self.Buttons = QtWidgets.QFrame(self.frame)
         self.Buttons.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Buttons.setFrameShadow(QtWidgets.QFrame.Raised)
         self.Buttons.setObjectName("Buttons")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.Buttons)
+        self.horizontalLayout.setContentsMargins(0, 0, 10, 0)
+        self.horizontalLayout.setSpacing(10)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.pbPrintSettings = QtWidgets.QPushButton(self.Buttons)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/printer.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbPrintSettings.setIcon(icon)
-        self.pbPrintSettings.setIconSize(QtCore.QSize(16, 16))
-        self.pbPrintSettings.setObjectName("pbPrintSettings")
-        self.horizontalLayout.addWidget(self.pbPrintSettings)
-        spacerItem = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
+        spacerItem1 = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         self.pbCancelSave = QtWidgets.QPushButton(self.Buttons)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/x-square.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbCancelSave.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbCancelSave.setIcon(icon)
         self.pbCancelSave.setIconSize(QtCore.QSize(16, 16))
         self.pbCancelSave.setObjectName("pbCancelSave")
         self.horizontalLayout.addWidget(self.pbCancelSave)
@@ -217,24 +239,57 @@ class Ui_LayeAdjuster(object):
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         self.pbSaveLayerSettings.setFont(font)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbSaveLayerSettings.setIcon(icon2)
-        self.pbSaveLayerSettings.setIconSize(QtCore.QSize(18, 18))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\confWidgets\\../../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbSaveLayerSettings.setIcon(icon1)
+        self.pbSaveLayerSettings.setIconSize(QtCore.QSize(16, 16))
         self.pbSaveLayerSettings.setObjectName("pbSaveLayerSettings")
         self.horizontalLayout.addWidget(self.pbSaveLayerSettings)
-        self.verticalLayout_16.addWidget(self.Buttons)
-        self.verticalLayout.addWidget(self.Main_frame)
-        self.verticalLayout_2.addWidget(self.Layer_Adjuster_Frame)
+        self.verticalLayout_2.addWidget(self.Buttons)
+        self.horizontalLayout_6.addWidget(self.frame)
+        self.fHelpMenu = QtWidgets.QFrame(self.fContent)
+        self.fHelpMenu.setMinimumSize(QtCore.QSize(200, 0))
+        self.fHelpMenu.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.fHelpMenu.setStyleSheet("")
+        self.fHelpMenu.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.fHelpMenu.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.fHelpMenu.setObjectName("fHelpMenu")
+        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.fHelpMenu)
+        self.verticalLayout_10.setContentsMargins(0, 5, 0, 0)
+        self.verticalLayout_10.setSpacing(5)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.label_2 = QtWidgets.QLabel(self.fHelpMenu)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_10.addWidget(self.label_2)
+        self.textEdit = QtWidgets.QTextEdit(self.fHelpMenu)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.textEdit.setFont(font)
+        self.textEdit.setObjectName("textEdit")
+        self.verticalLayout_10.addWidget(self.textEdit)
+        self.horizontalLayout_6.addWidget(self.fHelpMenu)
+        self.verticalLayout_4.addWidget(self.fContent)
 
         self.retranslateUi(LayeAdjuster)
         QtCore.QMetaObject.connectSlotsByName(LayeAdjuster)
 
     def retranslateUi(self, LayeAdjuster):
         _translate = QtCore.QCoreApplication.translate
-        LayeAdjuster.setWindowTitle(_translate("LayeAdjuster", "Kihtide seadistamine"))
-        self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Valitud aluskiht"))
-        self.lblTarget_Cadastral.setText(_translate("LayeAdjuster", "Määra, millisele kihile andmed salvestatakse"))
-        self.pbPrintSettings.setText(_translate("LayeAdjuster", "Prindi andmed_pythonis"))
+        LayeAdjuster.setWindowTitle(_translate("LayeAdjuster", "Maa-ameti aluskaardi seadistamine"))
+        self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Peamine kinnistute aluskiht"))
+        self.lblTarget_Cadastral.setText(_translate("LayeAdjuster", "Peamine kinnistute aluskiht*"))
         self.pbCancelSave.setText(_translate("LayeAdjuster", "Tühista"))
         self.pbSaveLayerSettings.setText(_translate("LayeAdjuster", "Salvesta"))
+        self.label_2.setText(_translate("LayeAdjuster", "Seadete selgitused"))
+        self.textEdit.setHtml(_translate("LayeAdjuster", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Peamine kinnistute aluskiht:</span><br />Selle kaardikihi kohta saad teha seotud kinnistute päringuid. Kõik vajalikud tööriistad, mida kasutatakse kinnistutega toimetamiseks suhtlevad selle kaardikihiga.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Sekundaarne kaardikiht:</span><br />See valik eemaldatakse järgnevates versioonides kuna arendusekäigus on osutunud ebavajalikuks, kuid korrektseks eemaldamiseks vajab täiendavaid kontrolle ja tegevusi.</p></body></html>"))
