@@ -49,6 +49,26 @@ class Ui_MailablDialogBase(object):
 "    color: #c5c5d2;\n"
 "}\n"
 "\n"
+"QLineEdit {\n"
+"    background-color: #35363f;  /* Lighter background color */\n"
+"    color: #ececf1;\n"
+"    /*border: 1px solid #4d4d5b;  Thinner border with a different color */\n"
+"    border-radius: 5px;\n"
+"    padding: 4px;\n"
+"}\n"
+"\n"
+"QLineEdit:hover {\n"
+"    background-color: #3d3e47;  /* Slightly darker background color on hover */\n"
+"}\n"
+"\n"
+"/* Remove top and side borders */\n"
+"QLineEdit {\n"
+"    border-top: none;\n"
+"    border-left: none;\n"
+"    border-right: none;\n"
+"}\n"
+"\n"
+"\n"
 "/*konteinerite peamised omadused*/\n"
 "\n"
 "#centerMenuSubContainer{\n"
@@ -3047,9 +3067,7 @@ class Ui_MailablDialogBase(object):
         self.verticalLayout_84.setSpacing(10)
         self.verticalLayout_84.setObjectName("verticalLayout_84")
         self.frProjects_Tools = QtWidgets.QFrame(self.ProjectsMainFrame)
-        self.frProjects_Tools.setStyleSheet("*{\n"
-" background-color: #272c35;\n"
-"}\n"
+        self.frProjects_Tools.setStyleSheet("\n"
 "\n"
 "QPushButton{\n"
 "    padding: 1px 8px;\n"
@@ -3074,8 +3092,8 @@ class Ui_MailablDialogBase(object):
         self.frProjects_Tools.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frProjects_Tools.setObjectName("frProjects_Tools")
         self.horizontalLayout_26 = QtWidgets.QHBoxLayout(self.frProjects_Tools)
-        self.horizontalLayout_26.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_26.setSpacing(20)
+        self.horizontalLayout_26.setContentsMargins(0, 0, 10, 0)
+        self.horizontalLayout_26.setSpacing(10)
         self.horizontalLayout_26.setObjectName("horizontalLayout_26")
         self.Toggleframe = QtWidgets.QFrame(self.frProjects_Tools)
         self.Toggleframe.setStyleSheet("")
@@ -3102,14 +3120,7 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_25.addWidget(self.pbProjects_Connect_properties)
         self.horizontalLayout_26.addWidget(self.Toggleframe)
         self.Project_Seachframe = QtWidgets.QFrame(self.frProjects_Tools)
-        self.Project_Seachframe.setStyleSheet("#le_searchProjects{\n"
-"\n"
-"    background-color:#40414f;\n"
-"    color:#ececf1;\n"
-"    border: 1px solid #565869;\n"
-"    border-radius: 3px;\n"
-"    padding: 1px\n"
-"}")
+        self.Project_Seachframe.setStyleSheet("")
         self.Project_Seachframe.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Project_Seachframe.setFrameShadow(QtWidgets.QFrame.Raised)
         self.Project_Seachframe.setObjectName("Project_Seachframe")
@@ -3147,7 +3158,7 @@ class Ui_MailablDialogBase(object):
         font.setPointSize(10)
         self.pushButton.setFont(font)
         icon22 = QtGui.QIcon()
-        icon22.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/gis--magnify-map_kaart.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon22.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/gis--search-map_zoomitudalale_2.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton.setIcon(icon22)
         self.pushButton.setIconSize(QtCore.QSize(18, 18))
         self.pushButton.setObjectName("pushButton")
@@ -3184,6 +3195,7 @@ class Ui_MailablDialogBase(object):
         icon23 = QtGui.QIcon()
         icon23.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/folder-plus.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pbGenProjectFolder.setIcon(icon23)
+        self.pbGenProjectFolder.setIconSize(QtCore.QSize(18, 18))
         self.pbGenProjectFolder.setObjectName("pbGenProjectFolder")
         self.horizontalLayout_10.addWidget(self.pbGenProjectFolder)
         self.verticalLayout_84.addWidget(self.frame_28)
@@ -4265,7 +4277,7 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(7)
+        self.swWorkSpace.setCurrentIndex(4)
         self.swCadastral_sub_processes.setCurrentIndex(4)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -4288,7 +4300,7 @@ class Ui_MailablDialogBase(object):
         self.pbMapThemes.setText(_translate("MailablDialogBase", "Teemakaardid"))
         self.pbAddDrawings.setText(_translate("MailablDialogBase", "Teostusjoonised"))
         self.pbSettings.setToolTip(_translate("MailablDialogBase", "Sätted"))
-        self.pbSettings.setText(_translate("MailablDialogBase", "Sätted"))
+        self.pbSettings.setText(_translate("MailablDialogBase", "Seaded"))
         self.pbUpdateData.setText(_translate("MailablDialogBase", "Andmete laadimine"))
         self.pbSettings_AddShapeFile.setText(_translate("MailablDialogBase", "Lae algandmed"))
         self.pbAvaMaaAmet.setText(_translate("MailablDialogBase", "Maa-ametisse"))
