@@ -13,7 +13,7 @@ from ...queries.python.DataLoading_classes import GraphqlQueriesEasements
 from ...queries.python.query_tools import requestBuilder
 from ...utils.table_utilys import ModelHandler
 from ...utils.delegates.DelegateMainTable import DelegatesForTables
-from ...config.settings import SettingsDataSaveAndLoad
+from ...config.settings import SettingsDataSaveAndLoad, MailablWebModules
 from ...queries.python.MapTools.selector import visibleSelector
 from ...processes.infomessages.messages import Headings, HoiatusTexts
 
@@ -84,8 +84,8 @@ class EasementssMain:
                     # Call build_mailabl_link_button method
                     webButton_Column_index = ModelHandler.build_mailabl_link_button(eas_model, row_index, header_labels)
 
-
-                DelegatesForTables.setup_delegates_asement_table(table, header_labels)
+                module = MailablWebModules().easements
+                DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
 
                 table.setModel(eas_model)
                 # Set the row height to 20 pixels
@@ -155,10 +155,6 @@ class queryHandling:
             # Set header labels
         header_labels = [header_id, header_number, header_name, header_deadline, header_creator, header_color, header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_statuses]
        
-        #statuses = Statuses.by_module_and_state(self, MODULE_CONTRACTS, STATE_OPEN)
-        #print("statuses")
-        #print(statuses)
-
         data = EasmentsSearch.query_easements_by_type_status_elements(self, types, statuses)
         #print("recived data is")
         #print(data)
@@ -232,25 +228,36 @@ class EasmentsSearch:
             
         while (desired_total_items is None or total_fetched < desired_total_items):
             variables = {
-                "first": items_for_page,
-                "after": end_cursor if end_cursor else None,
+                "first": 20,
+                "after": None,
+                "search": None,
                 "where": {
-                    "AND": [
-                        {
-                        "column": "TYPE",
-                        "operator": "IN",
-                        "value": type_values
-                        #"value": ["1", "2", "3"]
-                        },
-                        {
-                        "column": "STATUS",
-                        "operator": "IN",
-                        "value": statuses
-                        #"value": ["62"]
-                        }
+                "AND": [
+                    {
+                    "column": "TYPE",
+                    "operator": "IN",
+                    "value": [
+                        "49",
+                        "2"
+                    ]
+                    },
+                    {
+                    "column": "STATUS",
+                    "operator": "IN",
+                    "value": [
+                        "43"
                     ]
                     }
-            }
+                ]
+                },
+                "orderBy": [
+                {
+                    "column": "NAME",
+                    "order": "ASC"
+                }
+                ],
+                "trashed": "WITHOUT"
+                }
 
 
 
@@ -258,8 +265,8 @@ class EasmentsSearch:
 
             if response.status_code == 200:
                 data = response.json()
-                #print("data")
-                #print(data)
+                print("data")
+                print(data)
                 fetched_data = data.get("data", {}).get("easements", {}).get("edges", [])
                 pageInfo = data.get("data", {}).get("easements", {}).get("pageInfo", {})
                 #print(f"propesties_end_cursor: '{properties_end_cursor}'")

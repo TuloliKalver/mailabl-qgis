@@ -26,6 +26,12 @@ class Version:
                 if line.strip().startswith("version="):
                     return line.strip().split('=')[1]
 
+class MailablWebModules:
+    def __init__(self):
+        self.projects = '/projects/'
+        self.contracts = '/contracts/'
+        self.easements = '/easements/'    
+
 class Flags:
     active_properties_layer_flag = False
     Flag_settings_button = True
@@ -45,6 +51,12 @@ class OpenLink:
     @staticmethod
     def weblink_single_contract():
         return f'{OpenLink.main}/contracts/'
+
+    @staticmethod
+    def weblink_by_module(module):
+        print
+        return f"{OpenLink.main}{module}"
+
 
     @staticmethod
     def weblink_privacy():

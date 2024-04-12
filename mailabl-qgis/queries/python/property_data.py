@@ -457,60 +457,82 @@ class WhereProperties:
                 city_name  = address.get("city", "")
                 
         return city_name, hasNextPage, total, count, end_cursor
-   
+    
     @staticmethod
     def Return_Mailabl_Properties_Where_City_IN(self, city_item, state_item, next_page):
         query_loader = Graphql_properties()
         query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_ID_CadastralNR)
-        #print("Query added")
-
+        
         items_for_page = 50  # Adjust this to your desired value
-        #next_page = None  # Initialize end_cursor before the loop
 
-        variables = {
-            "first": items_for_page,  # Fetch 50 items per query
-            "after": next_page if next_page else None,  # Use the endCursor as the after value
-            "where": {
-                    "AND": [
+        # Counter to keep track of consecutive requests
+        consecutive_requests = 0
+        
+        # Attempt the request at least 10 times
+        for _ in range(10):
+            try:
+                variables = {
+                    "first": items_for_page,
+                    "after": next_page if next_page else None,
+                    "where": {
+                        "AND": [
                             {
-                            "column": "STATE",
-                            "operator": "EQ",
-                            "value": state_item
+                                "column": "STATE",
+                                "operator": "EQ",
+                                "value": state_item
                             },
-                        
-                        {
-                            "column": "CITY",
-                            "operator": "EQ",
-                            "value": city_item
-                        }
-                    ]
+                            {
+                                "column": "CITY",
+                                "operator": "EQ",
+                                "value": city_item
+                            }
+                        ]
                     }
                 }
-        
-        response = requestBuilder.construct_and_send_request(self,query, variables)
+                
+                response = requestBuilder.construct_and_send_request(self, query, variables)
 
-        #start do use data
-        if response.status_code == 200:
-            data = response.json()
-            #print(f"Data {data}")
-            pageInfo = data.get("data",{}).get("properties",{}).get("pageInfo",{})
-            #print(f"PageInfo: {pageInfo}")
-            #print(f"End cursor: {end_cursor}")
-            hasNextPage = pageInfo.get("hasNextPage")
-            end_cursor = pageInfo.get("endCursor")
-            #print(f"Last page: {hasNextPage}")
-            total = pageInfo.get("total","")
-            count = pageInfo.get("count","")
-            fetched_data_list = data.get("data", {}).get("properties", {}).get("edges", [])
-            #print(f"data list: {fetched_data_list} ")
-            cadastral_units = []
-            for item in fetched_data_list:
-                node = item.get("node", {})
-                cadastral_unit = node.get("cadastralUnit", {})
-                cadastral_unit_value = cadastral_unit.get("number", "")
-                cadastral_units.append(cadastral_unit_value)
-                QCoreApplication.processEvents()
-        return cadastral_units, hasNextPage, total, count, end_cursor
+                # Check if response is None
+                if response is not None:
+                    # Proceed with processing the response
+                    if response.status_code == 200:
+                        data = response.json()
+                        pageInfo = data.get("data", {}).get("properties", {}).get("pageInfo", {})
+                        hasNextPage = pageInfo.get("hasNextPage")
+                        end_cursor = pageInfo.get("endCursor")
+                        total = pageInfo.get("total", "")
+                        count = pageInfo.get("count", "")
+                        fetched_data_list = data.get("data", {}).get("properties", {}).get("edges", [])
+                        cadastral_units = []
+                        for item in fetched_data_list:
+                            node = item.get("node", {})
+                            cadastral_unit = node.get("cadastralUnit", {})
+                            cadastral_unit_value = cadastral_unit.get("number", "")
+                            cadastral_units.append(cadastral_unit_value)
+                        return cadastral_units, hasNextPage, total, count, end_cursor
+                    else:
+                        print("Error: Response status code is not 200")
+                        # Optionally, you can raise an exception here if needed
+                else:
+                    print("Error: Response is None")
+                    # Optionally, you can raise an exception here if needed
+            except Exception as e:
+                # Handle any exceptions that occur during the request
+                print(f"Error occurred: {e}")
+            
+            # Increment the consecutive requests counter
+            consecutive_requests += 1
+            
+            # Check if 10 consecutive requests have been made
+            if consecutive_requests == 10:
+                # Rest for 3 seconds
+                time.sleep(3)
+                # Reset the consecutive requests counter
+                consecutive_requests = 0
+        
+        # If the request fails after 10 attempts, return default values or handle the failure accordingly
+        return [], False, "", "", ""
+
 
 class deleteProperty:
     def delete_single_item(self, item):

@@ -109,7 +109,7 @@ class WorkSpaceHandler:
         self.pbeasements.blockSignals(False)
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
         QMessageBox.information(None, "Peagi tulemas", "Hetkel veel nimekirja laadimine puudub")
-        #EasementssMain.main_asements(self, table, prefered_types, statusValue)
+        EasementssMain.main_asements(self, table, prefered_types, statusValue)
         self.pbeasements.blockSignals(False)
 
     @staticmethod

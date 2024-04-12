@@ -9,7 +9,7 @@ from ...MapTools.selector import visibleSelector
 from ...projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, TableHeaders
 from .....utils.delegates.DelegateMainTable import DelegatesForTables
 from .....Functions.tableViewAdjust import ColumnResizer
-from .....config.settings import SettingsDataSaveAndLoad
+from .....config.settings import SettingsDataSaveAndLoad, MailablWebModules
 from .....utils.table_utilys import ModelHandler
 from .....processes.infomessages.messages import Headings, HoiatusTexts
  
@@ -59,8 +59,8 @@ class Projects:
                     # Call build_mailabl_link_button method
                     webButton_Column_index = ModelHandler.build_mailabl_link_button(p_model, row_index, header_labels)
 
-
-                DelegatesForTables.setup_delegates_standard_table(table, header_labels)
+                module = MailablWebModules().projects
+                DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
 
                 table.setModel(p_model)
                 # Set the row height to 20 pixels
@@ -144,8 +144,9 @@ class projectsTableDecorator:
                     # Call build_mailabl_link_button method
                     webButton_Column_index = ModelHandler.build_mailabl_link_button(p_model, row_index, header_labels)
 
-
-                DelegatesForTables.setup_delegates_standard_table(table, header_labels)
+                
+                module = MailablWebModules().projects
+                DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
 
 
                 table.setModel(p_model)
@@ -235,9 +236,8 @@ class searchProjectsValue:
                 # Call build_mailabl_link_button method
                 webButton_Column_index = ModelHandler.build_mailabl_link_button(p_model, row_index, header_labels)
 
-
-            DelegatesForTables.setup_delegates_standard_table(table, header_labels)
-
+                module = MailablWebModules().projects
+                DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
 
 
             table.setModel(p_model)

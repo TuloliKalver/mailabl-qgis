@@ -12,8 +12,8 @@ from ..tableViewAdjust import ColumnResizer
 from ...queries.python.DataLoading_classes import GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
 from ...utils.table_utilys import ModelHandler
-from ...utils.delegates.DelegateMainTable import DelegatesForTables
-from ...config.settings import SettingsDataSaveAndLoad
+from ...utils.delegates.DelegateMainTable import DelegatesForTables, ModuleButtonDelegate
+from ...config.settings import SettingsDataSaveAndLoad, MailablWebModules
 from ...queries.python.MapTools.selector import visibleSelector
 from ...processes.infomessages.messages import Headings, HoiatusTexts
 
@@ -84,8 +84,8 @@ class ContractsMain:
                     # Call build_mailabl_link_button method
                     webButton_Column_index = ModelHandler.build_mailabl_link_button(con_model, row_index, header_labels)
 
-
-                DelegatesForTables.setup_delegates_contract_table(table, header_labels)
+                module = MailablWebModules().contracts
+                DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
 
                 table.setModel(con_model)
                 # Set the row height to 20 pixels
@@ -168,8 +168,8 @@ class ContractsMain:
                 # Call build_mailabl_link_button method
                 webButton_Column_index = ModelHandler.build_mailabl_link_button(con_model, row_index, header_labels)
 
-
-            DelegatesForTables.setup_delegates_contract_table(table, header_labels)
+            module = MailablWebModules().contracts
+            DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
 
             table.setModel(con_model)
             # Set the row height to 20 pixels
@@ -256,8 +256,8 @@ class ContractsMain:
                     # Call build_mailabl_link_button method
                     webButton_Column_index = ModelHandler.build_mailabl_link_button(con_model, row_index, header_labels)
 
-
-                DelegatesForTables.setup_delegates_contract_table(table, header_labels)
+                module = MailablWebModules().contracts
+                DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
 
                 table.setModel(con_model)
                 # Set the row height to 20 pixels
