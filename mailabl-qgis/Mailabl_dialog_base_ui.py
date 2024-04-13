@@ -4291,8 +4291,8 @@ class Ui_MailablDialogBase(object):
         self.sw_HM.addWidget(self.w_HM_Satted)
         self.w_HM_Servituudid = QtWidgets.QWidget()
         self.w_HM_Servituudid.setObjectName("w_HM_Servituudid")
-        self.verticalLayout_122 = QtWidgets.QVBoxLayout(self.w_HM_Servituudid)
-        self.verticalLayout_122.setObjectName("verticalLayout_122")
+        self.verticalLayout_86 = QtWidgets.QVBoxLayout(self.w_HM_Servituudid)
+        self.verticalLayout_86.setObjectName("verticalLayout_86")
         self.f_HM_Servituudid_Pealkiri = QtWidgets.QFrame(self.w_HM_Servituudid)
         self.f_HM_Servituudid_Pealkiri.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.f_HM_Servituudid_Pealkiri.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -4309,7 +4309,22 @@ class Ui_MailablDialogBase(object):
         self.lb_HM_Servituudid_Pealkiri.setFont(font)
         self.lb_HM_Servituudid_Pealkiri.setObjectName("lb_HM_Servituudid_Pealkiri")
         self.verticalLayout_116.addWidget(self.lb_HM_Servituudid_Pealkiri)
-        self.verticalLayout_122.addWidget(self.f_HM_Servituudid_Pealkiri)
+        self.verticalLayout_86.addWidget(self.f_HM_Servituudid_Pealkiri)
+        self.f_HM_Lepingud_Sisu_2 = QtWidgets.QFrame(self.w_HM_Servituudid)
+        self.f_HM_Lepingud_Sisu_2.setStyleSheet("")
+        self.f_HM_Lepingud_Sisu_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.f_HM_Lepingud_Sisu_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.f_HM_Lepingud_Sisu_2.setObjectName("f_HM_Lepingud_Sisu_2")
+        self.verticalLayout_167 = QtWidgets.QVBoxLayout(self.f_HM_Lepingud_Sisu_2)
+        self.verticalLayout_167.setContentsMargins(6, 5, 5, 5)
+        self.verticalLayout_167.setSpacing(5)
+        self.verticalLayout_167.setObjectName("verticalLayout_167")
+        self.te_HM_Lepingud_Sisu_2 = QtWidgets.QTextEdit(self.f_HM_Lepingud_Sisu_2)
+        self.te_HM_Lepingud_Sisu_2.setStyleSheet("")
+        self.te_HM_Lepingud_Sisu_2.setReadOnly(True)
+        self.te_HM_Lepingud_Sisu_2.setObjectName("te_HM_Lepingud_Sisu_2")
+        self.verticalLayout_167.addWidget(self.te_HM_Lepingud_Sisu_2)
+        self.verticalLayout_86.addWidget(self.f_HM_Lepingud_Sisu_2)
         self.sw_HM.addWidget(self.w_HM_Servituudid)
         self.w_HM_Teemakaardid = QtWidgets.QWidget()
         self.w_HM_Teemakaardid.setObjectName("w_HM_Teemakaardid")
@@ -4526,7 +4541,7 @@ class Ui_MailablDialogBase(object):
         self.swCadastral_sub_processes.setCurrentIndex(4)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
-        self.sw_HM.setCurrentIndex(3)
+        self.sw_HM.setCurrentIndex(5)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(2)
         self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(4)
         self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(3)
@@ -4965,7 +4980,35 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale muudatuste salvestamist taaskäivita plugin!</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\"><br /></p></body></html>"))
-        self.lb_HM_Servituudid_Pealkiri.setText(_translate("MailablDialogBase", "Servituudid"))
+        self.lb_HM_Servituudid_Pealkiri.setText(_translate("MailablDialogBase", "Servituudid*"))
+        self.te_HM_Lepingud_Sisu_2.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Nimekirjas on esmase valikuna </span><span style=\" font-size:9pt; font-weight:600;\">servituudid</span><span style=\" font-size:9pt;\">. </span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituutidel on Mailablis </span><span style=\" font-size:9pt; font-weight:600;\">määratud parameetrid</span><span style=\" font-size:9pt;\"> (staatused, liigid jne).  </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituudid saad vastavalt liikidele ja staatusele </span><span style=\" font-size:9pt; font-weight:600;\">filtreerida ja määrata eelistatav staatus </span><span style=\" font-size:9pt;\">(soovituslikult aktiivne staatus, nt &quot;Sõlmitud&quot; või &quot;Allkirjastamisel&quot;). </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale filtri valikut vajuta värskendamise nuppu!</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Tulpadel on </span><span style=\" font-size:9pt; font-weight:600;\">sortimise võimalus</span><span style=\" font-size:9pt;\">.</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Plugina lepingute andmed on </span><span style=\" font-size:9pt; font-weight:600;\">sünkroonis Mailabli servituudi andmetega</span><span style=\" font-size:9pt;\"> (servituudi number, nimetus, staatus jne). Kui soovid midagi muuta või näha servituudi kohta rohkem infot, siis tee seda Mailablis. </span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Pluginas </span><span style=\" font-size:9pt; font-weight:600;\">Mailabli märgile</span><span style=\" font-size:9pt;\"> vajutades jõuad kiiresti Mailablis õigele kandele. </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Asukoha ikoonile</span><span style=\" font-size:9pt;\"> vajutades, näed aluskaardil servituudiga seotud kinnistuid. </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Failile viitavale</span><span style=\" font-size:9pt;\"> ikoonile vajutades, saad otse servituudiga seotud failidele või kaustadele.</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Soovitud servituudi leiad ka, kui sisestad</span><span style=\" font-size:9pt; font-weight:600;\"> servituudi täpse numbri otingu väljale</span><span style=\" font-size:9pt;\">  ja vajutad &quot;Otsi&quot; nuppu&quot;.</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Nupp &quot;Kinnistutega sidumine&quot;* </span><span style=\" font-size:9pt; font-weight:600; text-decoration: underline;\">tulekul</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Seda nuppu vajutades aktiveeritakse eelseadistatud kaardikiht ning valiku tööriist. Vali servituut, millele tahad kinnistuid lisada. Vajuta nupule &quot;Kinnistutega sidumine&quot;. Avaneb aken, milles näed infot juba valitud kinnistute kohta. Tabel on tühi, kui kinnistute valikuid pole veel tehtud. Alusta kaardil kinnistute valimist. </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituudiga juba seotud kinnistuid uuesti valides, süsteem topelt seoseid ei tee.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale kinnistutega sidumist vajuta uute seoste nägemiseks värskendamise nuppu!</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\"><br /></p></body></html>"))
         self.lb_HM_Teemakaardid_Pealkiri.setText(_translate("MailablDialogBase", "Teemakaardid"))
         self.lb_HM_Andmete_laadimine_Pealkiri.setText(_translate("MailablDialogBase", "Andmete laadimine "))
         self.lbl_HM_Andmete_Laadimine_Yldine.setText(_translate("MailablDialogBase", "Andmete Laadimine üldiselt"))
