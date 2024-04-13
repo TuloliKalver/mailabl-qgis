@@ -1251,7 +1251,7 @@ QComboBox::on{
                    </font>
                   </property>
                   <property name="text">
-                   <string>Toimingud servituutidega - PEAGI TULEMAS</string>
+                   <string>Servituudid - ARENDUSES - * märgitud elemendid ei ole kasutatavad</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -1268,7 +1268,7 @@ QComboBox::on{
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_164">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -1380,7 +1380,7 @@ QPushButton:hover{
                           <number>0</number>
                          </property>
                          <item>
-                          <widget class="QFrame" name="Toggleframe_Contracts_3">
+                          <widget class="QFrame" name="ToggleframeEasements">
                            <property name="styleSheet">
                             <string notr="true"/>
                            </property>
@@ -1407,7 +1407,7 @@ QPushButton:hover{
                              <number>0</number>
                             </property>
                             <item>
-                             <widget class="QPushButton" name="pbContracts_Connect_properties_3">
+                             <widget class="QPushButton" name="pbEasementsConnectProperties">
                               <property name="font">
                                <font>
                                 <pointsize>10</pointsize>
@@ -1424,8 +1424,11 @@ QPushButton:hover{
                               <property name="whatsThis">
                                <string/>
                               </property>
+                              <property name="styleSheet">
+                               <string notr="true">background-color: rgb(131, 142, 162);</string>
+                              </property>
                               <property name="text">
-                               <string>Kinnistutega sidumine</string>
+                               <string>Kinnistutega sidumine*</string>
                               </property>
                              </widget>
                             </item>
@@ -1625,6 +1628,66 @@ QPushButton:hover{
                        </widget>
                       </item>
                      </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="fActionButtons">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_14">
+                   <property name="spacing">
+                    <number>10</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>10</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <spacer name="horizontalSpacer_38">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>625</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pbEasementsTools">
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(131, 142, 162);</string>
+                     </property>
+                     <property name="text">
+                      <string>Koosta servituut*</string>
+                     </property>
+                     <property name="icon">
+                      <iconset>
+                       <normaloff>icons/design.png</normaloff>icons/design.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>18</width>
+                       <height>18</height>
+                      </size>
+                     </property>
                     </widget>
                    </item>
                   </layout>
@@ -8093,6 +8156,21 @@ QPushButton:hover{
                       <enum>QFrame::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_10">
+                      <property name="spacing">
+                       <number>10</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>10</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
                       <item>
                        <spacer name="horizontalSpacer">
                         <property name="orientation">
@@ -8121,54 +8199,6 @@ QPushButton:hover{
                           <height>18</height>
                          </size>
                         </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QFrame" name="frame">
-                     <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
-                     </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_86">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
-                      <item>
-                       <widget class="QWidget" name="widget_12" native="true">
-                        <property name="styleSheet">
-                         <string notr="true">background-color: rgb(44, 49, 60);</string>
-                        </property>
-                        <layout class="QHBoxLayout" name="horizontalLayout_23">
-                         <property name="leftMargin">
-                          <number>6</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>6</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                        </layout>
                        </widget>
                       </item>
                      </layout>
