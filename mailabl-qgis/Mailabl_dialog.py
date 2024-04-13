@@ -33,7 +33,7 @@ from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
-from .Functions.SearchEngines import searchGeneral, searchProjects, searchProjectsValue
+from .Functions.SearchEngines import searchGeneral, searchProjectsValue
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
 from .Functions.Tools import tableFunctions
 from .Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
@@ -49,15 +49,14 @@ from .queries.python.users.user_info import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator
 from .queries.python.update_relations.update_project_properties import ProjectsProperties,map_selectors
 from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
-from .queries.python.MapTools.selector import visibleSelector
 from .queries.python.property_data import Properties, MyLablChecker
-from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboBox
-from .queries.python.Types_Tags.type_tag_manager import ContractTypes, InsertTypesToComboBox
+from .queries.python.Statuses.statusManager import InsertStatusToComboBox
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Easements.EasementsItems import EasementssMain
-from .Functions.Folders.folders import copy_and_rename_folder, FolderNameGenerator
-from .utils.handlers import Scrollers
+from . Functions.Easements.EasementsToolsHandler import EasementTools
+from .Functions.Folders.folders import copy_and_rename_folder
+
 
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -249,6 +248,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbShowOnMap.clicked.connect(self.show_projects_on_map_with_cadastral_connection)
         self.pbProjects_Connect_properties.clicked.connect(self.connect_properties_with_projects)
+        self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
         self.pbContracts_Connect_properties.clicked.connect(self.connect_properties_with_contracts)
 
         # Logo ja kodukas
@@ -342,7 +342,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
 
-        self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
+        self.pbEasementsTools.clicked.connect((lambda: EasementTools.load_widget(self)))
+
 
 
     def generate_project_folder(self):

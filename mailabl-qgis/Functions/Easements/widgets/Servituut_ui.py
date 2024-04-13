@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\Kalver\Desktop\Plugins\mailabl-qgis\mailabl-qgis\config\Easements\Servituut_dialog_base.ui'
+# Form implementation generated from reading ui file 'c:\Users\Kalver\Desktop\Plugins\mailabl-qgis\mailabl-qgis\Functions\Easements\Widget\Servituut.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -490,7 +490,7 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_7.addItem(spacerItem8)
         self.pbCancel = QtWidgets.QPushButton(self.fButtons)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\Easements\\../../icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\Functions\\Easements\\Widget\\../../icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pbCancel.setIcon(icon1)
         self.pbCancel.setObjectName("pbCancel")
         self.horizontalLayout_7.addWidget(self.pbCancel)
@@ -499,7 +499,7 @@ class Ui_servituutDialogBase(object):
         font.setFamily("Tahoma")
         self.pbSave.setFont(font)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\config\\Easements\\../../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\Functions\\Easements\\Widget\\../../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pbSave.setIcon(icon2)
         self.pbSave.setIconSize(QtCore.QSize(16, 16))
         self.pbSave.setObjectName("pbSave")

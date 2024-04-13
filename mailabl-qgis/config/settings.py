@@ -13,6 +13,8 @@ QGIS_STYLES_FOLDER = "QGIS_styles"
 ICONS_FOLDER = "icons/"
 WIDGETS_FOLDER = "widgets"
 CONFIG_FILE = "config.json"
+FUNCTIONS_FOLDER = "Functions"
+EASEMENTS_FOLDER = "Easements"
 
 # Load configuration
 with open(os.path.join(PLUGIN_DIR, CONFIG_FILE), "r") as json_content:
@@ -86,6 +88,7 @@ class FilesByNames:
         self.projects_setup_ui = "ProjectSetup.ui"
         self.contracts_setup_ui = "ContractsSetup.ui"
         self.easements_setup_ui = "EasementsSetup.ui"
+        self.easement_tools_ui = "Servituut.ui"
 
 class Filepaths:
     @staticmethod
@@ -95,6 +98,10 @@ class Filepaths:
     @staticmethod
     def get_style(style_name):
         return os.path.join(PLUGIN_DIR_MAIN, QGIS_STYLES_FOLDER, style_name)
+
+    @staticmethod
+    def get_easements_tools():
+        return os.path.join(PLUGIN_DIR_MAIN, FUNCTIONS_FOLDER, EASEMENTS_FOLDER, WIDGETS_FOLDER, FilesByNames().easement_tools_ui)
 
     @staticmethod
     def get_conf_widget(widget_name):
@@ -107,7 +114,6 @@ class Filepaths:
     @staticmethod
     def load_ui_file(ui_file_path):
         return loadUi(ui_file_path)
-
 
 #Handles storing and displaying data in labels on other places
 class DataSettings:
