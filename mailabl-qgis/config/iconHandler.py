@@ -2,10 +2,12 @@ from .settings import Filepaths, IconsByName
 
 icon_paths = Filepaths()
 
-open_folder = ":/oauth2method/svg/fileopen.svg"   #ava kaust ikoon - uus vaja
+open_folder = Filepaths.get_icon(IconsByName().icon_folder)   #ava kaust ikoon - uus vaja
 digidoc_file = Filepaths.get_icon(IconsByName().icon_digi_doc_name)
-universal_file = ":/qt-project.org/styles/commonstyle/images/filelink-128.png"   #Üldine fail millelle sisu hetkel ei anna
-pdf_file = ":/images/themes/default/mActionSaveAsPDF.svg"    #pdf failid 
+word_file = Filepaths.get_icon(IconsByName().icon_word)
+exel_file = Filepaths.get_icon(IconsByName().icon_xls)
+universal_file = Filepaths.get_icon(IconsByName().icon_unknown)  #Üldine fail millelle sisu hetkel ei anna
+pdf_file = Filepaths.get_icon(IconsByName().icon_pdf)    #pdf failid 
 
 
 
@@ -19,9 +21,14 @@ class iconHandler:
             if extension in ['pdf']:
                 #print("file handler specific file type (pdf)")
                 folder_icon_path = pdf_file  # PDF file icon
-            elif extension in ['asice']:
+            elif extension in ['asice', 'bdoc', 'ddoc']:
                 #print("file handler specific file type (asice)")
                 folder_icon_path = digidoc_file  # Digidoc file icon
+            elif extension in ['xlsx', 'xls']:
+                folder_icon_path = exel_file
+            elif extension in ['docx', 'doc']:
+                folder_icon_path = word_file
+
             else:
                 # Handle other file extensions or set a default file icon
                 #print("file handler other file types")

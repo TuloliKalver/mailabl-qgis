@@ -95,22 +95,39 @@ class WorkSpaceHandler:
     
     @staticmethod
     def swWorkSpace_easements_frontpage(self):
-        self.pbeasements.blockSignals(True)
+        button = self.pbeasements
+        button.blockSignals(True)
         self.swWorkSpace.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(5)
         table = self.tweasementView
+        # Assuming 'table' is your QTableView object
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
         module = MODULE_EASEMENTS
         combo_box = self.cmbeasementStatuses
         types_combo_box = self.cmbeasementTypesCheckable
         prefered_statuses = SettingsDataSaveAndLoad.load_easements_status_ids(self)
-        InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
-        prefered_types = SettingsDataSaveAndLoad.load_easements_type_names(self) 
-        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
-        self.pbeasements.blockSignals(False)
+        if prefered_statuses == '' or None:
+            QMessageBox.warning(None, Headings().warningSimple, "Jätkamiseks seadista eelistatud staatused")
+            button.blockSignals(False)
+            return
+        else:
+            InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
+        prefered_types = SettingsDataSaveAndLoad.load_easements_type_names(self)
+        if prefered_types == '' or None:
+            QMessageBox.warning(None, Headings().warningSimple, "Jätkamiseks seadista eelistatud kitsenduste liigid")
+            button.blockSignals(False)
+            return
+        else:
+            InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
+            
+        prefered_types_ids = types_combo_box.checkedItemsData()
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
-        QMessageBox.information(None, "Peagi tulemas", "Hetkel veel nimekirja laadimine puudub")
-        EasementssMain.main_asements(self, table, prefered_types, statusValue)
-        self.pbeasements.blockSignals(False)
+        #QMessageBox.information(None, "Peagi tulemas", "Hetkel veel nimekirja laadimine puudub")
+        EasementssMain.main_asements(self, table, prefered_types_ids, statusValue)
+        button.blockSignals(False)
+
 
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):

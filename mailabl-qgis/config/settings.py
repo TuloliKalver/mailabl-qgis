@@ -26,12 +26,6 @@ class Version:
                 if line.strip().startswith("version="):
                     return line.strip().split('=')[1]
 
-class MailablWebModules:
-    def __init__(self):
-        self.projects = '/projects/'
-        self.contracts = '/contracts/'
-        self.easements = '/easements/'    
-
 class Flags:
     active_properties_layer_flag = False
     Flag_settings_button = True
@@ -40,31 +34,31 @@ class Flags:
     Flag_Running_Process = False
 
 class OpenLink:
-    main = config.get('weblink', '')
-    privacy = config.get('privacy', '')
-    terms = config.get('terms', '')
-
-    @staticmethod
-    def web_link_single_projects():
-        return f'{OpenLink.main}/projects/'
-
-    @staticmethod
-    def weblink_single_contract():
-        return f'{OpenLink.main}/contracts/'
+    def __init__(self):
+        self.main = config.get('weblink', '')
+        self.privacy = config.get('privacy', '')
+        self.terms = config.get('terms', '')
 
     @staticmethod
     def weblink_by_module(module):
         print
-        return f"{OpenLink.main}{module}"
+        return f"{OpenLink().main}{module}"
+
+
+class MailablWebModules:
+    def __init__(self):
+        self.projects = '/projects/'
+        self.contracts = '/contracts/'
+        self.easements = '/easements/'
 
 
     @staticmethod
     def weblink_privacy():
-        return OpenLink.privacy
+        return OpenLink().privacy
 
     @staticmethod
     def weblink_terms_of_use():
-        return OpenLink.terms
+        return OpenLink().terms
 
 class GraphQLSettings:
     @staticmethod
@@ -75,6 +69,11 @@ class IconsByName:
     def __init__(self):
         self.Mailabl_icon_name = "icon_Mailabl.png"
         self.icon_digi_doc_name = "Digidoc_512.png"
+        self.icon_word = 'doc.png'
+        self.icon_xls = 'xls.png'
+        self.icon_pdf = 'pdf-file-format.png'
+        self.icon_unknown = 'unknown-type.png'
+        self.icon_folder = 'folder.png'
         self.icon_show_on_map = "oui--app-gis_kaart_asukoht.svg" #ikoonide testimiseks
 
 class FilesByNames:

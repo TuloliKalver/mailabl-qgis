@@ -103,10 +103,10 @@ class EasementssMain:
                 for column_index in columns_to_resize:
                     resizes.resizeColumnByIndex(table, column_index)
                     
-                columns_width_icons = [ID_column_index, name_column_index, cadastral_column_index,
+                columns_width_icons = [ID_column_index, number_column_index, name_column_index, cadastral_column_index,
                                     webButton_Column_index, dokButton_column_index, 
                                     cadastralButton_Column_index]
-                column_widths = [0,250,0,10,10,10]
+                column_widths = [0,100,250,0,10,10,10]
                 resizes.setColumnWidths(table, columns_width_icons, column_widths)
                 # Hide certain column labels
                 newLabel_for_cadastral = ""  # Replace with your actual column labels
@@ -166,9 +166,9 @@ class queryHandling:
             node = project_data.get("node", {})
             #properties = node.get("properties", {}).get("edges", [])
             #propertie_cadastralNr = [property["node"]["cadastralUnitNumber"] for property in properties] 
-            creators = node.get("managers",{}).get("edges",[])
-            creator_name = [creator["node"]["displayName"] for creator in creators]
-            print(f"creator_name: {creator_name}")
+            managers = node.get("managers",{}).get("edges",[])
+            manager_name = [creator["node"]["displayName"] for creator in managers]
+            #print(f"creator_name: {creator_name}")
             row_data = {
                     header_number: node.get("number", "") or "",
                     header_name: node.get("name", "") or "",
@@ -182,7 +182,7 @@ class queryHandling:
                     header_webLinkButton: "",
                     header_file_path: "",
                     header_Documents: node.get("filesPath","") if ("filePath") else "Dokumendid puuduvad",
-                    header_creator: ",".join(creator_name) if creator_name else ""
+                    header_creator: ",".join(manager_name) if manager_name else ""
                 }
             #print(f"row_data: '{row_data}'")
             
@@ -216,37 +216,25 @@ class EasmentsSearch:
         items_for_page = 50  # Adjust this to your desired value
         #items_for_properties_page = 50
         end_cursor = None  # Initialize end_cursor before the loop
-        end_cursor = None
-        total_fetched = 0        # Initialize an empty list to store fetched items
-        
-        # Splitting the list into sublists with a maximum of 4 items each
-        #sublists = [selected_features[i:i+Constants.items_for_page_medium] for i in range(0, len(selected_features), Constants.items_for_page_medium)]
-                
+        total_fetched = 0        # Initialize an empty list to store fetched items        
         fetched_items = []
-
-        count = 0
-            
+    
         while (desired_total_items is None or total_fetched < desired_total_items):
             variables = {
-                "first": 20,
-                "after": None,
+                "first": items_for_page,
+                "after": end_cursor if end_cursor else None,
                 "search": None,
                 "where": {
                 "AND": [
                     {
                     "column": "TYPE",
                     "operator": "IN",
-                    "value": [
-                        "49",
-                        "2"
-                    ]
+                    "value": type_values
                     },
                     {
                     "column": "STATUS",
                     "operator": "IN",
-                    "value": [
-                        "43"
-                    ]
+                    "value": statuses
                     }
                 ]
                 },
@@ -259,17 +247,14 @@ class EasmentsSearch:
                 "trashed": "WITHOUT"
                 }
 
-
-
             response = requestBuilder.construct_and_send_request(self, query, variables)
 
             if response.status_code == 200:
                 data = response.json()
-                print("data")
-                print(data)
+                #print("data")
+                #print(data)
                 fetched_data = data.get("data", {}).get("easements", {}).get("edges", [])
                 pageInfo = data.get("data", {}).get("easements", {}).get("pageInfo", {})
-                #print(f"propesties_end_cursor: '{properties_end_cursor}'")
                 end_cursor = pageInfo.get("endCursor")
                 hasNextPage = pageInfo.get("hasNextPage")
                 fetched_items.extend(fetched_data)

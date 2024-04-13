@@ -427,13 +427,13 @@ class SetupEasments:
         types_combo_box = widget.cbcb_PreferredEasementTypes
         # Assuming types_combo_box is an instance of QgsSelectableComboBox
 
-        status_id = '' # SettingsDataSaveAndLoad.load_contract_status_ids(self)
+        status_id = SettingsDataSaveAndLoad.load_easements_status_ids(self)
         if status_id is None or '':
             InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module)
         else:
             InsertStatusToComboBox.add_statuses_to_listview_set_status(self, statuses_combo_box, module, status_id)
 
-        preferred_types = '' #SettingsDataSaveAndLoad.load_contracts_type_names(self)
+        preferred_types = SettingsDataSaveAndLoad.load_easements_type_names(self)
         
         InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types, module)
 
