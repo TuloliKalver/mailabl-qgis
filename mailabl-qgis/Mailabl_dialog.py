@@ -55,6 +55,7 @@ from .queries.python.Statuses.statusManager import Statuses,InsertStatusToComboB
 from .queries.python.Types_Tags.type_tag_manager import ContractTypes, InsertTypesToComboBox
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
+from .Functions.Easements.EasementsItems import EasementssMain
 from .Functions.Folders.folders import copy_and_rename_folder, FolderNameGenerator
 from .utils.handlers import Scrollers
 
@@ -215,6 +216,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
         self.pbeasements.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_easements_frontpage(self))
+        self.pbRefreshEasementTable.clicked.connect(lambda: WorkSpaceHandler.easements_reload(self))
         self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
@@ -291,6 +293,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbSearchProjects.clicked.connect(self.searchProjects)
         self.pbSearchContracts.clicked.connect(self.searchContracts)
+        self.pbSearcheasements.clicked.connect(self.searchEasements)
         
         
         
@@ -389,6 +392,23 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             lineEdit.setStyleSheet("border: None")
             ContractsMain.search_contracts(self, table, search_items)
         
+
+    def searchEasements(self):
+        lineEdit = self.leSearcheasements
+        table = self.tweasementView
+        search_items = lineEdit.displayText()
+        item = search_items.strip()
+        if item == '' or None:
+            # Frame the label with red border
+            lineEdit.setStyleSheet("border: 1px solid #D32F2F;")
+            # Display warning message
+            QMessageBox.warning(self, pealkiri.warningSimple, sisu.otsing_puudu)
+            return
+        else: 
+            lineEdit.setStyleSheet("border: None")
+            EasementssMain.easmenets_by_number(self, table, search_items)
+        
+
     def limitedLoad(self):
         table = self.tblMailabl_projects
         projectsTableDecorator.load_Mailabl_projects_list_with_zoomed_map_elements(table)

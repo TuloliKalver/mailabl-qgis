@@ -73,6 +73,7 @@ class GraphqlQueriesEasements:
     def __init__(self):
         self.easement_types = 'easements_types.graphql'   
         self.Q_where_easements_type_status = 'easements_type_status.graphql'
+        self.Q_All_easements = 'easements.graphql'
 
     def load_query_for_easements(self, query_file_name):
         path = GraphQLQueryLoader()

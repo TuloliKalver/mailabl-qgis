@@ -47,92 +47,105 @@ class EasementssMain:
     def main_asements (self, table, types, statuses):
 
         result = queryHandling.easments_basic_data(self, types, statuses)
-
         if result is not None:
-            eas_model, header_labels = result
-            if eas_model.rowCount() == 0:
-                text = HoiatusTexts().ostingu_tulemused_puuduvad
-                heading = Headings().warningSimple
-                print(f"{heading}, {text}")
-                QMessageBox.information(None, heading, text)
-            
-            else:
-                table_headers = queryHandling()
-                
-                number_column_index = header_labels.index(table_headers.header_number)
-                name_column_index = header_labels.index(table_headers.header_name)
-                #LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
-                creator_column_index = header_labels.index(table_headers.header_creator)        
-                ID_column_index = header_labels.index(table_headers.header_id)
-
-                for row_index in range(eas_model.rowCount()):
-                    eas_model.item(row_index, ID_column_index)
-
-                    number_item =  eas_model.item(row_index, number_column_index)
-                    creator_item = eas_model.item(row_index,creator_column_index)   
-                    
-                    number_item.setTextAlignment(Qt.AlignCenter)  
-                    creator_item.setTextAlignment(Qt.AlignCenter)
-
-                    date_column_index = ModelHandler.format_date_item(eas_model, row_index, header_labels)
-
-                    status_column_index, color_column_index = ModelHandler.set_status_item_colors_from_model(eas_model, row_index, header_labels)
-                    # Call format_cadastral_item method
-                    cadastral_column_index, cadastralButton_Column_index = ModelHandler.format_cadastral_item(eas_model, row_index, header_labels)
-                    # Call format_dok_item method
-                    dokAddress_column_index, dokButton_column_index = ModelHandler.format_dok_item(eas_model, row_index, header_labels)
-                    # Call build_mailabl_link_button method
-                    webButton_Column_index = ModelHandler.build_mailabl_link_button(eas_model, row_index, header_labels)
-
-                module = MailablWebModules().easements
-                DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
-
-                table.setModel(eas_model)
-                # Set the row height to 20 pixels
-                table.verticalHeader().setDefaultSectionSize(20)
-                    
-                # Define the columns to hide
-                columns_to_hide = [color_column_index,  dokAddress_column_index]
-                # Hide the specified columns
-                for column_index in columns_to_hide:
-                    table.hideColumn(column_index)
-
-                
-                resizes = ColumnResizer(table)
-                columns_to_resize = [number_column_index,  date_column_index, creator_column_index, status_column_index]
-                for column_index in columns_to_resize:
-                    resizes.resizeColumnByIndex(table, column_index)
-                    
-                columns_width_icons = [ID_column_index, number_column_index, name_column_index, cadastral_column_index,
-                                    webButton_Column_index, dokButton_column_index, 
-                                    cadastralButton_Column_index]
-                column_widths = [0,100,250,0,10,10,10]
-                resizes.setColumnWidths(table, columns_width_icons, column_widths)
-                # Hide certain column labels
-                newLabel_for_cadastral = ""  # Replace with your actual column labels
-                newLabel_documents = ""
-                newLabel_Link = ""
-                newLabel_ID = ""
-                newLabel_CadastralShow = ""
-                eas_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
-                eas_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
-                eas_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
-                eas_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
-                eas_model.setHorizontalHeaderItem(cadastralButton_Column_index, QStandardItem(newLabel_CadastralShow))
-                table.verticalHeader().setVisible(False)
-                # Set selection behavior to select entire rows
-                table.setSelectionBehavior(QTableView.SelectRows)
-                # Set selection mode to single selection
-                table.setSelectionMode(QTableView.SingleSelection)
-
-                # Set sorting behavior
-                table.setSortingEnabled(True)
-                # Trigger a refresh of the view to reflect the changes
-                table.update()  # Refresh the view
+            InputeasmentsToTable.input_data_to_table(self,result, table)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
             heading = Headings().warningSimple
+            QMessageBox.warning(None, heading, text)
+
+    def easmenets_by_number(self, table, search_values):
+        result = queryHandling.easments_search(self, search_values)
+        if result is not None:
+            InputeasmentsToTable.input_data_to_table(self,result, table)
+        else:            
+            text = HoiatusTexts().ostingu_tulemused_puuduvad
+            heading = Headings().warningSimple
+            QMessageBox.warning(None, heading, text)
+
+
+class InputeasmentsToTable:
+    def input_data_to_table(self, result, table):
+        eas_model, header_labels = result
+        if eas_model.rowCount() == 0:
+            text = HoiatusTexts().ostingu_tulemused_puuduvad
+            heading = Headings().warningSimple
             print(f"{heading}, {text}")
+            QMessageBox.information(None, heading, text)
+        
+        else:
+            table_headers = queryHandling()
+            
+            number_column_index = header_labels.index(table_headers.header_number)
+            name_column_index = header_labels.index(table_headers.header_name)
+            #LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
+            creator_column_index = header_labels.index(table_headers.header_creator)        
+            ID_column_index = header_labels.index(table_headers.header_id)
+
+            for row_index in range(eas_model.rowCount()):
+                eas_model.item(row_index, ID_column_index)
+
+                number_item =  eas_model.item(row_index, number_column_index)
+                creator_item = eas_model.item(row_index,creator_column_index)   
+                
+                number_item.setTextAlignment(Qt.AlignCenter)  
+                creator_item.setTextAlignment(Qt.AlignCenter)
+
+                date_column_index = ModelHandler.format_date_item(eas_model, row_index, header_labels)
+
+                status_column_index, color_column_index = ModelHandler.set_status_item_colors_from_model(eas_model, row_index, header_labels)
+                # Call format_cadastral_item method
+                cadastral_column_index, cadastralButton_Column_index = ModelHandler.format_cadastral_item(eas_model, row_index, header_labels)
+                # Call format_dok_item method
+                dokAddress_column_index, dokButton_column_index = ModelHandler.format_dok_item(eas_model, row_index, header_labels)
+                # Call build_mailabl_link_button method
+                webButton_Column_index = ModelHandler.build_mailabl_link_button(eas_model, row_index, header_labels)
+
+            module = MailablWebModules().easements
+            DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
+
+            table.setModel(eas_model)
+            # Set the row height to 20 pixels
+            table.verticalHeader().setDefaultSectionSize(20)
+                
+            # Define the columns to hide
+            columns_to_hide = [color_column_index,  dokAddress_column_index]
+            # Hide the specified columns
+            for column_index in columns_to_hide:
+                table.hideColumn(column_index)
+
+            
+            resizes = ColumnResizer(table)
+            columns_to_resize = [number_column_index,  date_column_index, creator_column_index, status_column_index]
+            for column_index in columns_to_resize:
+                resizes.resizeColumnByIndex(table, column_index)
+                
+            columns_width_icons = [ID_column_index, number_column_index, name_column_index, cadastral_column_index,
+                                webButton_Column_index, dokButton_column_index, 
+                                cadastralButton_Column_index]
+            column_widths = [0,100,250,0,10,10,10]
+            resizes.setColumnWidths(table, columns_width_icons, column_widths)
+            # Hide certain column labels
+            newLabel_for_cadastral = ""  # Replace with your actual column labels
+            newLabel_documents = ""
+            newLabel_Link = ""
+            newLabel_ID = ""
+            newLabel_CadastralShow = ""
+            eas_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+            eas_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
+            eas_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
+            eas_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
+            eas_model.setHorizontalHeaderItem(cadastralButton_Column_index, QStandardItem(newLabel_CadastralShow))
+            table.verticalHeader().setVisible(False)
+            # Set selection behavior to select entire rows
+            table.setSelectionBehavior(QTableView.SelectRows)
+            # Set selection mode to single selection
+            table.setSelectionMode(QTableView.SingleSelection)
+
+            # Set sorting behavior
+            table.setSortingEnabled(True)
+            # Trigger a refresh of the view to reflect the changes
+            table.update()  # Refresh the view
 
 class queryHandling:
     def __init__(self):
@@ -160,6 +173,24 @@ class queryHandling:
         #print(data)
         #data_count = len(data)
         # Build a pandas DataFrame
+        model = queryHandling.create_data_model(header_labels, data)
+
+        return model, header_labels
+    
+    def easments_search(self, search_values):
+        header_labels = [header_id, header_number, header_name, header_deadline, header_creator, header_color, header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_statuses]
+       
+        data = EasmentsSearch.query_easements_by_number(self, search_values)
+        #print("recived data is")
+        #print(data)
+        #data_count = len(data)
+        # Build a pandas DataFrame
+        model = queryHandling.create_data_model(header_labels, data)
+
+        return model, header_labels
+    
+
+    def create_data_model(header_labels, data):
         df_data = []
         df = pd.DataFrame(df_data)
         for project_data in data:
@@ -202,7 +233,7 @@ class queryHandling:
             data_items = [QStandardItem(str(row_data[label])) for label in header_labels]
             model.appendRow(data_items)
 
-        return model, header_labels
+        return model
 
 class EasmentsSearch:    
     def query_easements_by_type_status_elements(self, type_values, statuses):
@@ -255,6 +286,60 @@ class EasmentsSearch:
                 #print(data)
                 fetched_data = data.get("data", {}).get("easements", {}).get("edges", [])
                 pageInfo = data.get("data", {}).get("easements", {}).get("pageInfo", {})
+                end_cursor = pageInfo.get("endCursor")
+                hasNextPage = pageInfo.get("hasNextPage")
+                fetched_items.extend(fetched_data)
+                total_fetched += len(fetched_data)
+
+                # Check whether the last page of projects has been reached
+                if not end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items or not hasNextPage):
+                    break
+
+            else:
+                #print(f"Error: {response.status_code}")
+                return None
+
+            QCoreApplication.processEvents()
+
+        # Return only the desired number of items
+        return fetched_items[:desired_total_items]
+    
+
+    @staticmethod
+    def query_easements_by_number(self, easement_number):
+        #print(statuses)
+        # Load the project query using the loader instance
+        query_loader = GraphqlQueriesEasements()
+        query = query_loader.load_query_for_easements(query_loader.Q_where_easements_type_status)        
+        # Set the desired total number of items to fetch
+        desired_total_items = None  # Adjust this to your desired value
+        items_for_page = 50  # Adjust this to your desired value
+        #items_for_properties_page = 50
+        end_cursor = None  # Initialize end_cursor before the loop
+        total_fetched = 0        # Initialize an empty list to store fetched items
+        fetched_items = []
+
+        
+        while (desired_total_items is None or total_fetched < desired_total_items):
+            variables = {
+                "first": items_for_page,
+                "after": end_cursor if end_cursor else None,
+                "where": {
+                    "AND": [
+                        {"column": "NUMBER", "operator": "IN", "value": [easement_number]}
+                    ]
+                }
+            }
+
+            response = requestBuilder.construct_and_send_request(self, query, variables)
+
+            if response.status_code == 200:
+                data = response.json()
+                #print("data")
+                #print(data)
+                fetched_data = data.get("data", {}).get("easements", {}).get("edges", [])
+                pageInfo = data.get("data", {}).get("easements", {}).get("pageInfo", {})
+                #print(f"propesties_end_cursor: '{properties_end_cursor}'")
                 end_cursor = pageInfo.get("endCursor")
                 hasNextPage = pageInfo.get("hasNextPage")
                 fetched_items.extend(fetched_data)

@@ -85,10 +85,8 @@ class WorkSpaceHandler:
         comboBox = self.cmbcontractStatuses
         types_combo_box = self.cmbcontractTypes_checkable
         selected_types_ids = types_combo_box.checkedItemsData()
-        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
-  
+        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)  
         ContractsMain.main_contracts(self, table, selected_types_ids, statusValue)
-
         refresh_button.blockSignals(False)
 
 
@@ -128,6 +126,23 @@ class WorkSpaceHandler:
         EasementssMain.main_asements(self, table, prefered_types_ids, statusValue)
         button.blockSignals(False)
 
+    def easements_reload(self):
+        button = self.pbeasements
+        button.blockSignals(True)
+        self.swWorkSpace.setCurrentIndex(0)
+        self.sw_HM.setCurrentIndex(5)
+        table = self.tweasementView
+        # Assuming 'table' is your QTableView object
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
+        combo_box = self.cmbeasementStatuses
+        types_combo_box = self.cmbeasementTypesCheckable
+        selected_types_ids = types_combo_box.checkedItemsData()
+        statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
+        EasementssMain.main_asements(self, table, selected_types_ids, statusValue)
+        button.blockSignals(False)
+        
 
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
