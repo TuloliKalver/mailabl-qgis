@@ -349,7 +349,7 @@ class WidgetTools:
             number = model.data(model.index(selected_row_index, column_index_number))
 
             if name !='' and number !='':
-                text = f"{number} - {name}"
+                text = f"{number} {name}"
             
             
             elif name is not None:

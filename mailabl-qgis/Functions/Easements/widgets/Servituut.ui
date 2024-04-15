@@ -289,7 +289,7 @@ QLineEdit {
                </font>
               </property>
               <property name="text">
-               <string>Ala koostatakse järgmisele kandele</string>
+               <string>Ala koostatakse kandele:</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -306,7 +306,7 @@ QLineEdit {
                </font>
               </property>
               <property name="text">
-               <string>Valituut servituudi kanne</string>
+               <string>Valitut servituudi nimi</string>
               </property>
              </widget>
             </item>
