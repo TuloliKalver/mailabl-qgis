@@ -35,6 +35,9 @@ class WorkSpaceHandler:
         button = self.pbProjects
         button.blockSignals(True)
         table = self.tblMailabl_projects
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
         self.le_searchProjects.clear()
 
         module = MODULE_PROJECTS
@@ -54,11 +57,14 @@ class WorkSpaceHandler:
         refresh_button = self.pbRefresh_tblMailabl_contracts
         push_button.blockSignals(True)
         refresh_button.blockSignals(True)
-        widget = self.pbContracts_SliderFrame
-        WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
+        #widget = self.pbContracts_SliderFrame
+        #WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
         self.sw_HM.setCurrentIndex(1)
         self.swWorkSpace.setCurrentIndex(2)
         table = self.ContractView
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
         module = MODULE_CONTRACTS
         combo_box = self.cmbcontractStatuses
         types_combo_box = self.cmbcontractTypes_checkable
@@ -82,6 +88,9 @@ class WorkSpaceHandler:
         refresh_button = self.pbRefresh_tblMailabl_contracts
         refresh_button.blockSignals(True)
         table = self.ContractView
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
         comboBox = self.cmbcontractStatuses
         types_combo_box = self.cmbcontractTypes_checkable
         selected_types_ids = types_combo_box.checkedItemsData()

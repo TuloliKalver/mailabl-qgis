@@ -1240,6 +1240,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button = self.pbRefresh_tblMailabl_projects
         button.blockSingnals = True
         table = self.tblMailabl_projects
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
         comboBox = self.cmbProjectStatuses
         statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
         Projects.load_mailabl_projects_list(table, statusValue)
