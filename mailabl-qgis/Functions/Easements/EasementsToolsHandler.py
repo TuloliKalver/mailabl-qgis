@@ -23,6 +23,8 @@ pealkiri = Headings()
 sisu = HoiatusTexts()
 edu = EdukuseTexts()
 
+on_selection_changed_lambda_easements = None
+
 
 class EasementTools:
     def __init__(self, tweasementView):
@@ -31,6 +33,7 @@ class EasementTools:
         self.is_select_tool_activated = False
         self.select_tool = None
         self.select_tool_connection = None
+
         # Connect button click signal outside the load_widget method
 
     def load_widget(self):
@@ -59,6 +62,8 @@ class EasementTools:
 
                 if self.select_tool is None:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
+            
+            
                 clear_table = self.widget_EasmentTools.pbClearCadastrals
 
 
@@ -88,6 +93,7 @@ class EasementTools:
                 self.select_tool_connection = select_button.clicked.connect(
                     lambda: WidgetTools.activate_layer_and_use_selectTool(self, self.widget_EasmentTools)
                 )
+
     def closeEvent(self, event):
         self.cleanup()
         text = sisu.kasutaja_peatas_protsessi
@@ -120,15 +126,20 @@ class EasementTools:
             QMessageBox.information(self.widget_EasmentTools, heading, text)
 
     def cleanup(self):
+        
         if self.is_select_tool_activated:
             # Deactivate select tool
             self.deactivate_select_tool()
             self.is_select_tool_activated = False
         if self.widget_EasmentTools is not None:
             # Disconnect the signal only if the connection was made
-            if self.select_tool_connection:
-                self.widget_EasmentTools.pbValiKinnistu.clicked.disconnect(self.select_tool_connection)
-                self.select_tool_connection = None
+            active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+            active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
+            
+            flag = Flags.active_properties_layer_flag 
+            flag = False        
+            Flags.active_properties_layer_flag = flag
 
             self.widget_EasmentTools.close()
             self.widget_EasmentTools = None
@@ -141,6 +152,7 @@ class EasementTools:
 
 
 class WidgetTools:
+
     @staticmethod
     def dialer(widget):
         value = widget.dPuhvriSuurus.value() / 10  # divide by 10 to convert to the desired units
@@ -168,49 +180,47 @@ class WidgetTools:
             widget.showNormal()
         pass
 
-    @staticmethod
     def activate_layer_and_use_selectTool(self, widget):
+        #print("started with activated layer")
         global on_selection_changed_lambda_easements
-
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-
         if not isinstance(active_layer, QgsMapLayer):
-            heading = Headings().warningSimple
-            text = HoiatusTexts().puudulik_kinnistute_seadistus
-            QMessageBox.warning(self, heading, text)
             return
-
         iface.setActiveLayer(active_layer)
-        self.select_tool = iface.actionSelect().trigger()
-        self.is_select_tool_activated = True
-
+        iface.actionSelect().trigger()
+        #print("start selecting stuff")
+        #Hide the main window
+        flag = Flags.active_properties_layer_flag
+        #print(f"Flag status befor if statement {flag}")
+        
         if active_layer and active_layer.selectedFeatureCount() > 0:
+            # Show the widget when there are selected features
             table_view = widget.tvProperties
+
             help = PropertiesLayerFunctions()
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
-
-        flag = Flags.active_properties_layer_flag
-        print(f"flag is: {flag}")
-        flag = True
-        Flags.active_properties_layer_flag = flag
-        print(f"flag afther reser: {flag}")
+            widget.showNormal()
 
         if flag:
-            on_selection_changed_lambda_easements = lambda: WidgetTools.on_selection_changed(widget)
-            widget.showMinimized()
+            #print("Flag is true in activate_layer function")
+            on_selection_changed_lambda_easements = lambda: map_selectors.on_selection_changed(widget)
+            #print(f"lambda value {on_selection_changed_lambda}")
             active_layer.selectionChanged.connect(on_selection_changed_lambda_easements)
+     
+            widget.showMinimized()
+            
         else:
             print("Flag is false")
-        pass
+
 
     @staticmethod
     def on_selection_changed(widget):
+            
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         if Flags.active_properties_layer_flag:
-            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-
+            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]       
             if active_layer and active_layer.selectedFeatureCount() > 0:
                 # Show the widget when there are selected features
                 table_view = widget.tvProperties

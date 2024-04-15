@@ -346,7 +346,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
 
         # Connect button click to load easement widget using instance method
-        #self.pbEasementsTools.clicked.connect(self.load_easement_widget)
+        self.pbEasementsTools.clicked.connect(self.load_easement_widget)
 
     def load_easement_widget(self):
         # Call the load_widget method of the EasementTools instance

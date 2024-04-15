@@ -587,6 +587,7 @@ class Ui_servituutDialogBase(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_4.setFont(font)
+        self.label_4.setTextFormat(QtCore.Qt.AutoText)
         self.label_4.setObjectName("label_4")
         self.verticalLayout_10.addWidget(self.label_4)
         self.textEdit = QtWidgets.QTextEdit(self.fHelpMenu)
@@ -640,13 +641,13 @@ class Ui_servituutDialogBase(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("servituutDialogBase", "Page"))
         self.pbCancel.setText(_translate("servituutDialogBase", "Tühista"))
         self.pbSave.setText(_translate("servituutDialogBase", "Salvesta"))
-        self.label_4.setText(_translate("servituutDialogBase", "Kuidas tööriista kasutada"))
+        self.label_4.setText(_translate("servituutDialogBase", "Kuidas tööriista\n"
+"kasutada?\n"
+"(juhend koostamisel)"))
         self.textEdit.setHtml(_translate("servituutDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Juhend on koostamisel</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Vali kinnistu:</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Aktiveerib kinnistute aluskihi ning võimaldab valida kinnistuid:</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">Vali kinnistu</span> vajutades hiirega sobival kinnistul. </p>\n"
