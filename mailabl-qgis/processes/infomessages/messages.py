@@ -9,7 +9,7 @@ class Headings:
         
 class HoiatusTexts:
     def __init__(self):       
-        
+        self.puudulik_kinnistute_seadistus = "Kontrolli kinnistute seadistusi"
         self.juurdepaas_ei = "Juurdepääsuluba ei leitud"        
         self.linn_kyla_valimata = "Jätkamiseks vali ja kinnita linn või küla"
         self.maakond_valimata = "Jätkamiseks vali ja kinnita maakond"

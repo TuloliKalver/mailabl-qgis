@@ -40,7 +40,7 @@ class map_selectors:
         
         if active_layer and active_layer.selectedFeatureCount() > 0:
             # Show the widget when there are selected features
-            table_view = widget.tvProperties_AddTo_Projects
+            table_view = widget.tvProperties
 
             help = PropertiesLayerFunctions()
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
@@ -74,7 +74,7 @@ class map_selectors:
         
         if active_layer and active_layer.selectedFeatureCount() > 0:
             # Show the widget when there are selected features
-            table_view = widget.tvProperties_AddTo_Projects
+            table_view = widget.tvProperties
 
             help = PropertiesLayerFunctions()
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
@@ -103,7 +103,7 @@ class map_selectors:
 
             if active_layer and active_layer.selectedFeatureCount() > 0:
                 # Show the widget when there are selected features
-                table_view = widget.tvProperties_AddTo_Projects
+                table_view = widget.tvProperties
 
                 help = PropertiesLayerFunctions()
                 help.generate_table_from_selected_map_items(table_view, active_layer_name)
@@ -136,7 +136,7 @@ class ProjectsProperties:
     @staticmethod    
     def update_projects_properties(self, project_id, widget, project_name):
         active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-        properties_table = widget.tvProperties_AddTo_Projects
+        properties_table = widget.tvProperties
         model_properties = properties_table.model()
         
         properties = []

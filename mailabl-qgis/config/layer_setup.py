@@ -60,10 +60,12 @@ class SetupCadastralLayers:
         lblProjectsFolder_location = self.lblProjectsFolder_location 
         lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
         lbl_preferred_project_status = self.lbl_preferred_project_status
+        lbl_preferred_contract_status = self.lbl_preferred_contract_status
+        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
 
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                      lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location, 
-                                                     lblProjectsTargetFolder_location, lbl_preferred_project_status)
+                                                     lblProjectsTargetFolder_location, lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value)
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
         QMessageBox.information(widget, heading, text)

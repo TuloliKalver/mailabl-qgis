@@ -122,6 +122,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.setupUi(self)
 
+        # Create an instance of EasementTools and pass tweasementView
+        self.easement_tools = EasementTools(self.tweasementView)
+
         self.sw_HM.setCurrentIndex(0)
         initial_size = self.UC_Main_Frame.size()
         self.resize(initial_size.width()+5, initial_size.height()+5)
@@ -342,8 +345,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
 
-        self.pbEasementsTools.clicked.connect((lambda: EasementTools.load_widget(self)))
+        # Connect button click to load easement widget using instance method
+        #self.pbEasementsTools.clicked.connect(self.load_easement_widget)
 
+    def load_easement_widget(self):
+        # Call the load_widget method of the EasementTools instance
+        self.easement_tools.load_widget()
 
 
     def generate_project_folder(self):
@@ -1126,7 +1133,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             widget = ToolsProject.projects_toolWidget(self, projects_name_text, projects_number_text)
             projects_widget = widget
             clear_table = widget.pbClear_list
-            table_view = widget.tvProperties_AddTo_Projects
+            table_view = widget.tvProperties
             
             flag = Flags.active_properties_layer_flag
             flag = True    

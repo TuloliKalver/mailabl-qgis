@@ -24,15 +24,25 @@ def copy_and_rename_folder(table):
         selected_row_index = table.selectionModel().currentIndex().row()
         # Get the model associated with the table
         model = table.model()
-        value = headers.header_name
+        value_name = headers.header_name
     
         # Find the column index by header name, skipping empty headers
         column_index = None
         for column in range(model.columnCount()):
             header_data = model.headerData(column, QtCore.Qt.Horizontal)
-            if header_data and header_data == value:
+            if header_data and header_data == value_name:
                 column_index = column
                 break
+
+        value_number = headers.header_number
+        column_number_index = None
+        for column in range(model.columnCount()):
+            header_data = model.headerData(column, QtCore.Qt.Horizontal)
+            if header_data and header_data == value_number:
+                column_number_index = column
+                break
+
+
 
         if column_index is not None:
             # Get the value in the selected row and specified column
@@ -41,7 +51,9 @@ def copy_and_rename_folder(table):
             # Remove unwanted characters from the project name
             project_name = re.sub(r'[<>:"/\\|?*.]', '', project_name_raw)
 
-            project_number = model.data(model.index(selected_row_index, 0))
+            project_number = model.data(model.index(selected_row_index, column_number_index))
+
+
 
             if project_name:
                 try:
@@ -58,11 +70,14 @@ def copy_and_rename_folder(table):
                         # Ask the user for confirmation
                         confirmation = QMessageBox.question(None, "Confirmation", "Oled kindel, et soovid genereeritud kausta lingi lisada Mailablis projektile?",
                                                             QMessageBox.Yes | QMessageBox.No)
-                        
+
+
                         if confirmation == QMessageBox.Yes:
                             # Call the linkUpdater function
+                            project_id = model.data(model.index(selected_row_index, 0))
+                            print(f"project_id {project_id}")
                             link = os.path.join(os.path.dirname(target_folder), folder_name)
-                            Link_updater().update_link(project_number, link)
+                            Link_updater().update_link(project_id, link)
 
                         else:
                             print("Operation canceled by the user.")
