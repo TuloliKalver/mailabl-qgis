@@ -1,6 +1,12 @@
+
+
+
 import re
+import processing
+
 from qgis.utils import iface
-from qgis.core import QgsMapLayer, QgsProject
+from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinition, QgsVectorLayer
+
 from PyQt5.QtCore import pyqtSlot
 from qgis.gui import QgsMapToolPan
 from PyQt5.QtWidgets import QMessageBox, QWidget
@@ -10,6 +16,8 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, uic, QtSvg
 from PyQt5 import QtCore
 
+
+from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 from ...config.settings import SettingsDataSaveAndLoad
 from .EasementsItems import queryHandling
 from ...queries.python.DataLoading_classes import GraphQLQueryLoader
@@ -24,7 +32,8 @@ sisu = HoiatusTexts()
 edu = EdukuseTexts()
 
 on_selection_changed_lambda_easements = None
-
+buffer_layer_name = 'puhver_kinnistu'
+goup_layer_name = ''
 
 class EasementTools:
     def __init__(self, tweasementView):
@@ -33,6 +42,7 @@ class EasementTools:
         self.is_select_tool_activated = False
         self.select_tool = None
         self.select_tool_connection = None
+
 
         # Connect button click signal outside the load_widget method
 
@@ -48,7 +58,8 @@ class EasementTools:
                 self.widget_EasmentTools = loadUi(ui_file_path)
                 save_button = self.widget_EasmentTools.pbSave
                 cancel_button = self.widget_EasmentTools.pbCancel
- 
+                buffer_button = self.widget_EasmentTools.pbCreateProperties
+                clear_buffer_button = self.widget_EasmentTools.pbClearPuhver2m
 
                 # Connect button click signals
                 self.connect_button_click_signal()
@@ -62,13 +73,15 @@ class EasementTools:
                     lambda: WidgetTools.dialer(self.widget_EasmentTools))
                 self.widget_EasmentTools.dPuhvriSuurus.setValue(20)
 
+
                 if self.select_tool is None:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
             
             
-                clear_table = self.widget_EasmentTools.pbClearCadastrals
+                #button_clear_table = self.widget_EasmentTools.pbClearCadastrals
 
-
+                #button_clear_table.clicked.connect
+                buffer_button.clicked.connect(lambda: WidgetTools.generate_buffer_around_properties(self, self.widget_EasmentTools))
                 save_button.clicked.connect(lambda: self.on_save_button_clicked())
                 cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked())
                     # Activate select tool and generate table if needed
@@ -98,9 +111,6 @@ class EasementTools:
 
     def closeEvent(self, event):
         self.cleanup()
-        text = sisu.kasutaja_peatas_protsessi
-        heading = pealkiri.informationSimple
-        QMessageBox.information(self.widget_EasmentTools, heading, text)
         if on_selection_changed_lambda_easements:
             active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
             active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
@@ -171,6 +181,74 @@ class WidgetTools:
         value = widget.dPuhvriSuurus.value() / 10  # divide by 10 to convert to the desired units
         puhver = round(value * 2) / 2  # round up to nearest 0.5 increment
         widget.label.setText(f'Puhver: {puhver:.1f}m')
+
+        
+    def generate_buffer_around_properties(self, widget):
+        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+        
+        if active_layer:
+            # Check if there are any selected features
+            if active_layer.selectedFeatureCount() > 0:
+                # Get the selected features
+                selected_features = active_layer.selectedFeatures()
+                
+                # Create a buffer around the selected features
+                puhver = widget.dPuhvriSuurus.value() / 10
+                distance = round(puhver * 2) / 2
+                result = processing.run("native:buffer", {
+                    'INPUT': QgsProcessingFeatureSourceDefinition(active_layer.source(), True),
+                    'DISTANCE': distance,
+                    'SEGMENTS': 5,
+                    'OUTPUT': 'memory:',
+                    'FEATURES': selected_features,
+                    'DISSOLVE': False,
+                    'END_CAP_STYLE': 0,
+                    'JOIN_STYLE': 0,
+                    'MITER_LIMIT': 2,
+                })
+                
+                # Load the QGIS layer style
+                style_name = FilesByNames().Servituut_style
+                QGIS_Layer_style = Filepaths().get_style(style_name)
+
+                # Get the group layer name
+                group_layer_name = SetupLayers().tools_layer_name
+
+                # Get the group layer or create it if it doesn't exist
+                root = QgsProject.instance().layerTreeRoot()
+                group = root.findGroup(group_layer_name)
+                if group is None:
+                    group = root.addGroup(group_layer_name)
+
+                # Check if a layer with the same name already exists
+                existing_layers = QgsProject.instance().mapLayersByName(buffer_layer_name)
+                if existing_layers:
+                    # Remove the existing layer before continuing
+                    QgsProject.instance().removeMapLayer(existing_layers[0])
+                    
+                # Add the buffer layer to the group layer
+                buffer_layer = QgsProject.instance().addMapLayer(result['OUTPUT'], False)
+                buffer_layer.setName(buffer_layer_name)
+                group.addLayer(buffer_layer)
+                
+                # Apply the layer style
+                buffer_layer.loadNamedStyle(QGIS_Layer_style)
+                buffer_layer.triggerRepaint()
+
+            else:
+                QMessageBox.information(self, Headings().informationSimple, HoiatusTexts().kihil_kinnistu_valik)
+                
+        else:
+            QMessageBox.warning(self, Headings().warningCritical, HoiatusTexts().puudulik_kinnistute_seadistus)
+
+    def clearPuhver2m(self):
+
+        if QgsProject.instance().mapLayersByName(buffer_layer_name):
+            QgsProject.instance().removeMapLayer(QgsProject.instance().mapLayersByName(buffer_layer_name)[0])
+            QMessageBox.information(self, Headings().tubli, EdukuseTexts().tehtud)
+        else:
+            print('No ei ole ju enam olemas!')
 
     @staticmethod
     def loadselectedProperties(self, widget):

@@ -83,6 +83,7 @@ class FilesByNames:
         self.Setup_ConfigUI = "ProjectSetup.ui"
         self.MaaAmet_import = "MaaAmet_Layer_backround.qml"
         self.MaaAmet_temp = "Maa_amet_temp_layer.qml"
+        self.Servituut_style = "Servituut.qml"
         self.statusbar_widget = "WStatusBar.ui"
         self.layer_setup_ui = "LayerSetup.ui"
         self.projects_setup_ui = "ProjectSetup.ui"

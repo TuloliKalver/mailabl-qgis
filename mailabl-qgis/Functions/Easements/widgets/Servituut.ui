@@ -451,8 +451,11 @@ QLineEdit {
                       <bold>true</bold>
                      </font>
                     </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(131, 142, 162);</string>
+                    </property>
                     <property name="text">
-                     <string>Tühista</string>
+                     <string>Tühista*</string>
                     </property>
                     <property name="icon">
                      <iconset>
@@ -658,13 +661,16 @@ QLineEdit {
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(131, 142, 162);</string>
+                 </property>
                  <property name="text">
-                  <string>Leia torud läheduses</string>
+                  <string>Leia torud läheduses*</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pbTest">
+                <widget class="QPushButton" name="pbCreateProperties">
                  <property name="font">
                   <font>
                    <weight>75</weight>
@@ -689,8 +695,11 @@ QLineEdit {
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(131, 142, 162);</string>
+                 </property>
                  <property name="text">
-                  <string>Koosta servituut</string>
+                  <string>Koosta servituut*</string>
                  </property>
                  <property name="icon">
                   <iconset>
@@ -710,7 +719,7 @@ QLineEdit {
             <item>
              <widget class="QGroupBox" name="groupBox_5">
               <property name="title">
-               <string>Reset</string>
+               <string>Tühista joonis</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_2">
                <item>
@@ -724,8 +733,12 @@ QLineEdit {
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(131, 142, 162);</string>
+                 </property>
                  <property name="text">
-                  <string>2m</string>
+                  <string>Eemalda kinnistu 
+ *</string>
                  </property>
                 </widget>
                </item>
@@ -738,8 +751,11 @@ QLineEdit {
                    <bold>true</bold>
                   </font>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(131, 142, 162);</string>
+                 </property>
                  <property name="text">
-                  <string>Servituudid</string>
+                  <string>Servituudid*</string>
                  </property>
                 </widget>
                </item>
@@ -807,22 +823,31 @@ QLineEdit {
               <layout class="QVBoxLayout" name="verticalLayout_4">
                <item>
                 <widget class="QPushButton" name="pushButton_5">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(131, 142, 162);</string>
+                 </property>
                  <property name="text">
-                  <string>Puhver</string>
+                  <string>Puhver*</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QPushButton" name="pbKinnistuAndmed">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(131, 142, 162);</string>
+                 </property>
                  <property name="text">
-                  <string>Mis see on</string>
+                  <string>Mis see on*</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QPushButton" name="pbServituutInfo">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(131, 142, 162);</string>
+                 </property>
                  <property name="text">
-                  <string>Servituudi info</string>
+                  <string>Servituudi info*</string>
                  </property>
                 </widget>
                </item>
