@@ -107,7 +107,7 @@ class WorkSpaceHandler:
         types_combo_box = self.cmbeasementTypesCheckable
         prefered_statuses = SettingsDataSaveAndLoad.load_easements_status_ids(self)
         if prefered_statuses == '' or None:
-            QMessageBox.warning(None, Headings().warningSimple, "Jätkamiseks seadista eelistatud staatused")
+            QMessageBox.warning(None, Headings().warningSimple, "Jätkamiseks seadista eelistatud staatus")
             button.blockSignals(False)
             return
         else:
