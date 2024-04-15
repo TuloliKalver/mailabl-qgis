@@ -14,6 +14,8 @@ from PyQt5.uic import loadUi
 # Local Application or Library Imports
 from .mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS, MODULE_EASEMENTS
 from .settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
+from .QGISSettingPaths import LayerSettings, SettingsLoader
+from ..app.ComboBoxTools import ComboBoxTools
 from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
@@ -39,8 +41,8 @@ class SetupCadastralLayers:
         save_button = widget.pbSaveLayerSettings
         cancel_button = widget.pbCancelSave
         
-        QGIS_items.clear_and_populate_combo_box(self, cmbCurrent_Layer)
-        QGIS_items.clear_and_populate_combo_box(self, cmbTarget_layer)
+        QGIS_items.clear_and_add_layerNames(self, cmbCurrent_Layer)
+        QGIS_items.clear_and_add_layerNames(self, cmbTarget_layer)
 
         
         # Access the variables through the instance
@@ -85,10 +87,19 @@ class QGIS_items:
     def __init__(self):
         pass
     
-    def clear_and_populate_combo_box(self, combo_box):
+    def clear_and_add_layerNames(self, combo_box):
         combo_box.clear()
         layer_names = QGIS_items.get_sorted_layer_names(self)
         combo_box.addItems(layer_names)
+
+    def clear_and_add_layerNames_selected(self, combo_box, layer_name):
+        combo_box.clear()
+        layer_names = QGIS_items.get_sorted_layer_names(self)
+        combo_box.addItems(layer_names)
+        
+        # Set the current text of the combo box to the layer name if it exists
+        if layer_name:
+            combo_box.setCurrentText(layer_name)
 
     def get_sorted_layer_names(self):
         excluded_group = 'Imporditavad kinnistud' 
@@ -106,13 +117,7 @@ class QGIS_items:
         sorted_layer_names = sorted(layer_names)
         return sorted_layer_names
         
-    def set_layer_settings_labels(self):
-        #load = SettingsDataSaveAndLoad()
-        current_label = self.lblCurrentLayer # pylint: disable=no-member
-        #Mailabl_Project_Label = self.lblSHPNewItems_2
-        load = SettingsDataSaveAndLoad()
-        load.startup_label_loader(current_label)
-        
+
 
 class Setup_ProjectLayers:
     def load_project_settings_widget(self):
@@ -129,7 +134,7 @@ class Setup_ProjectLayers:
         module = MODULE_PROJECTS
  
         cmb_layers  = widget.cmbProjects_Layer
-        QGIS_items.clear_and_populate_combo_box(self, cmb_layers)
+        QGIS_items.clear_and_add_layerNames(self, cmb_layers)
  
         combo_box = widget.cmbPreferred_Project_status
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
@@ -427,6 +432,22 @@ class SetupEasments:
         module = MODULE_EASEMENTS
         statuses_combo_box = widget.cmbPreferredEasementStatuses
         types_combo_box = widget.cbcb_PreferredEasementTypes
+        water_cb = widget.cbWater_Pipes
+        sewer_cb = widget.cbSewer_pipes
+        sewer_pressure_cb = widget.cbSewer_Pressure_pipes
+        drainage_cb = widget.cbDrainage_Pipes
+
+        water_layer_name = SettingsLoader.get_setting(self,LayerSettings.WATER_LAYER)
+        sewer_layer_name = SettingsLoader.get_setting(self,LayerSettings.SEWER_LAYER)
+        pressure_sewer_layer_name = SettingsLoader.get_setting(self,LayerSettings.PRESSURE_SEWER_LAYER)
+        drainage_layer_name = SettingsLoader.get_setting(self,LayerSettings.DRAINAGE_LAYER)
+
+
+        QGIS_items.clear_and_add_layerNames_selected(self, water_cb, water_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(self, sewer_cb, sewer_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(self, sewer_pressure_cb, pressure_sewer_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(self, drainage_cb, drainage_layer_name)
+
         # Assuming types_combo_box is an instance of QgsSelectableComboBox
 
         status_id = SettingsDataSaveAndLoad.load_easements_status_ids(self)
@@ -440,12 +461,18 @@ class SetupEasments:
         InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, preferred_types, module)
 
         # Connect signals to functions
-        save_button.clicked.connect(lambda: SetupEasments.on_save_button_clicked(self, widget, statuses_combo_box, types_combo_box))
+        save_button.clicked.connect(lambda: SetupEasments.on_save_button_clicked(self, widget, statuses_combo_box, types_combo_box, water_cb, sewer_cb, sewer_pressure_cb, drainage_cb))
         cancel_button.clicked.connect(lambda: SetupEasments.on_cancel_button_clicked(self, widget))
 
-    def on_save_button_clicked(self, widget, statuses_combo_box, combo_box_checkable):
+    def on_save_button_clicked(self, widget, statuses_combo_box, combo_box_checkable, water_cb, sewer_cb, sewer_pressure_cb, drainage_cb):
         # Handle logic when the save button is clicked
-  
+
+        water_layer_name = ComboBoxTools.get_selected_item_name(water_cb)
+        sewer_layer_name = ComboBoxTools.get_selected_item_name(sewer_cb)
+        pressure_sewer_layer_name = ComboBoxTools.get_selected_item_name(sewer_pressure_cb)
+        drainage_layer_name = ComboBoxTools.get_selected_item_name(drainage_cb)
+
+
         status_value_name = InsertStatusToComboBox.get_selected_status_name(statuses_combo_box)
         status_value_ids = InsertStatusToComboBox.get_selected_status_id(statuses_combo_box)
         checked_indexes = combo_box_checkable.checkedItemsData()
@@ -463,11 +490,25 @@ class SetupEasments:
         label.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         label.setAlignment(Qt.AlignBottom | Qt.AlignLeft)
 
+        setting_water = LayerSettings().WATER_LAYER
+        setting_sewer = LayerSettings().SEWER_LAYER
+        setting_pressure_sewer = LayerSettings().PRESSURE_SEWER_LAYER
+        setting_drainage = LayerSettings().DRAINAGE_LAYER
+
+        SettingsLoader.save_setting(self,setting_water, water_layer_name)
+        SettingsLoader.save_setting(self,setting_sewer, sewer_layer_name)
+        SettingsLoader.save_setting(self,setting_pressure_sewer, pressure_sewer_layer_name)
+        SettingsLoader.save_setting(self,setting_drainage, drainage_layer_name)
+        
 
         SettingsDataSaveAndLoad.save_easements_settings(self, selected_types_text, status_value_name, status_value_ids)
 
         label.setText(selected_types_text)
         self.lblPreferredEasementsStatus.setText(status_value_name)
+        self.lblWaterPipesValue.setText(water_layer_name)
+        self.lblSewerPipesValue.setText(sewer_layer_name)
+        self.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)
+        self.lblDrainagePipesValue.setText(drainage_layer_name)
 
         text = edu.salvestatud
         heading = pealkiri.tubli

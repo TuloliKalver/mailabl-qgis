@@ -615,8 +615,8 @@ class Ui_servituutDialogBase(object):
         _translate = QtCore.QCoreApplication.translate
         servituutDialogBase.setWindowTitle(_translate("servituutDialogBase", "servituut"))
         self.label_5.setText(_translate("servituutDialogBase", "NB! tööriist on eksperimentaalne*"))
-        self.leInfo.setText(_translate("servituutDialogBase", "Ala koostatakse järgmisele kandele"))
-        self.lSelectedEasment.setText(_translate("servituutDialogBase", "Valituut servituudi kanne"))
+        self.leInfo.setText(_translate("servituutDialogBase", "Ala koostatakse kandele:"))
+        self.lSelectedEasment.setText(_translate("servituutDialogBase", "Valitut servituudi nimi"))
         self.leSelectedProperties.setText(_translate("servituutDialogBase", "Kinnistud"))
         self.pbValiKinnistu.setText(_translate("servituutDialogBase", "Vali kinnistu"))
         self.pbClearCadastrals.setText(_translate("servituutDialogBase", "Tühista*"))

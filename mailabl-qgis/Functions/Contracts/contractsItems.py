@@ -14,6 +14,7 @@ from ...queries.python.query_tools import requestBuilder
 from ...utils.table_utilys import ModelHandler
 from ...utils.delegates.DelegateMainTable import DelegatesForTables, ModuleButtonDelegate
 from ...config.settings import SettingsDataSaveAndLoad, MailablWebModules
+from ...config.QGISSettingPaths import LayerSettings, SettingsLoader
 from ...queries.python.MapTools.selector import visibleSelector
 from ...processes.infomessages.messages import Headings, HoiatusTexts
 
@@ -220,6 +221,7 @@ class ContractsMain:
 
     
     def load_contracts_list_with_zoomed_map_elements(self, table):
+
         layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         selected_features = visibleSelector.get_visible_features(layer_name)
         if len(selected_features) < 500:

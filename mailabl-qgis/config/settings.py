@@ -116,6 +116,18 @@ class Filepaths:
     def load_ui_file(ui_file_path):
         return loadUi(ui_file_path)
 
+
+class QGISSavedMAilablSettings:
+    def __init__(self):
+        self.main_path = '/Mailabl/Setting/'
+        self.setup_label_cadastral_current = '/Mailabl/Setting/labels/cadastralCurrent'
+        self.setup_label_cadastral_toBeAdded = '/Mailabl/Setting/labels/cadastralToBeAdded'
+        self.setup_label_cadastrals_for_importing ='/Mailabl/Settings/lables/SHP_Layer'
+        
+
+
+
+
 #Handles storing and displaying data in labels on other places
 class DataSettings:
     def __init__(self):
@@ -277,6 +289,7 @@ class SettingsDataSaveAndLoad:
 
     def save_user_values(self, user_name, user_lastname, roles):
         settings = QgsSettings()
+        
         user_name_address = SettingsDataSaveAndLoad.user_name(self)
         user_lastname_address = SettingsDataSaveAndLoad.user_lastname(self)
         user_roles_address = SettingsDataSaveAndLoad.user_roles(self)

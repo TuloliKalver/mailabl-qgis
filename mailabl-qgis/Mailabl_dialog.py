@@ -27,6 +27,7 @@ from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup_Conrtacts, SetupEasments
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
+from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
@@ -54,7 +55,7 @@ from .queries.python.Statuses.statusManager import InsertStatusToComboBox
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Easements.EasementsItems import EasementssMain
-from . Functions.Easements.EasementsToolsHandler import EasementTools
+from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
 
 
@@ -1422,6 +1423,17 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblPreferredEasementsTypes_value = self.lblPreferredEasementsTypes_value
         PreferredEasementsTypes_values = SettingsDataSaveAndLoad.load_easements_type_names(self)
         lblPreferredEasementsTypes_value.setText(PreferredEasementsTypes_values)
+        
+        water_layer_name = SettingsLoader.get_setting(self, LayerSettings.WATER_LAYER)
+        sewer_layer_name = SettingsLoader.get_setting(self, LayerSettings.SEWER_LAYER)
+        pressure_sewer_layer_name = SettingsLoader.get_setting(self, LayerSettings.PRESSURE_SEWER_LAYER)
+        drainage_layer_name = SettingsLoader.get_setting(self, LayerSettings.DRAINAGE_LAYER)
+        
+        self.lblWaterPipesValue.setText(water_layer_name)
+        self.lblSewerPipesValue.setText(sewer_layer_name)
+        self.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)
+        self.lblDrainagePipesValue.setText(drainage_layer_name)
+
 
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                         lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
