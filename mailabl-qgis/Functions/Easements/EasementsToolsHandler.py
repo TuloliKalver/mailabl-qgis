@@ -101,9 +101,10 @@ class EasementTools:
         text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.informationSimple
         QMessageBox.information(self.widget_EasmentTools, heading, text)
-        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
+        if on_selection_changed_lambda_easements:
+            active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+            active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
         
         Flags.active_properties_layer_flag = False
         self.widget_EasmentTools.close()
@@ -115,9 +116,6 @@ class EasementTools:
             if model is not None:
                 model.clear()
 
-    def activate_select_tool(self):
-        # Add logic to activate select tool
-        pass
 
     def on_save_button_clicked(self):
         if self.widget_EasmentTools is not None:
@@ -125,9 +123,10 @@ class EasementTools:
             heading = pealkiri.tubli
             self.cleanup()
             QMessageBox.information(self.widget_EasmentTools, heading, text)
-            active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-            active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
+            if on_selection_changed_lambda_easements:
+                active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+                active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
             
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.accept()
@@ -140,9 +139,11 @@ class EasementTools:
             text = sisu.kasutaja_peatas_protsessi
             heading = pealkiri.informationSimple
             QMessageBox.information(self.widget_EasmentTools, heading, text)
-            active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-            active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
+            if on_selection_changed_lambda_easements:
+                active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+                active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+                
+                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
             
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.reject()
@@ -173,7 +174,6 @@ class WidgetTools:
 
     @staticmethod
     def loadselectedProperties(self, widget):
-        pbClearTable = widget.pbClearCadastrals
         table_view = widget.tvProperties
 
         flag = Flags.active_properties_layer_flag
@@ -270,8 +270,10 @@ class WidgetTools:
             name = model.data(model.index(selected_row_index, column_index_name))
             number = model.data(model.index(selected_row_index, column_index_number))
 
-            if name is not None and number is not None:
-                text = f"{number} - {number}"
+            if name !='' and number !='':
+                text = f"{number} - {name}"
+            
+            
             elif name is not None:
                 text = name
             elif number is not None:
