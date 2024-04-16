@@ -1,5 +1,8 @@
+
+import processing
 from qgis.utils import iface
-from qgis.core import QgsProject, QgsFeature, edit
+from qgis.core import QgsProcessingFeatureSourceDefinition, QgsProject, QgsFeature, edit
+
 from PyQt5.QtCore import QCoreApplication
 from ..config.settings import SettingsDataSaveAndLoad, connect_settings_to_layer
 
@@ -100,9 +103,6 @@ class properties_selectors:
             input_layer.removeSelection()
         else:
             print("No features selected on the input layer.")
-
-
-        
         
 
     @staticmethod
@@ -204,16 +204,26 @@ class CadasterSelector:
         cadasters_str = ", ".join(cadasters_list)
         return cadasters_str
 
-#FrSync_County_Heading,
-#FrSync_County,
-#FrSync_State,
-#FrSync_City,
 
 
-#FrSync_County_Heading,
-#FrSync_State_Heading,
-#FrSync_City_Heading,
+class UseQGISNative:
+    def select_elements_from_layer(layer, reference_layer):
+        # Set input and reference layer names
 
-#lblSync_County,
-#lblSync_State,
-#lblSync_City,
+        #for layer in layers:
+            # Set distance in meters
+        distance = 5
+
+        # Run select within distance algorithm
+        result = processing.run("native:selectwithindistance", {
+            'INPUT': layer,
+            'REFERENCE': QgsProcessingFeatureSourceDefinition(reference_layer),
+            'DISTANCE': distance,
+            'METHOD': 0, # Use planar distance
+        })
+
+        # Get selected features
+        selected_features = result['OUTPUT']
+
+        # Print number of selected features
+        print(f"{len(selected_features)} features selected within {distance}m of {reference_layer}")

@@ -19,6 +19,7 @@ from PyQt5 import QtCore
 
 from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 from ...config.settings import SettingsDataSaveAndLoad
+from ...config.QGISSettingPaths import LayerSettings, SettingsLoader, EasementsSettings
 from .EasementsItems import queryHandling
 from ...queries.python.DataLoading_classes import GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
@@ -26,6 +27,7 @@ from ...queries.python.update_relations.update_project_properties import map_sel
 from ...config.settings import Filepaths, Flags, SettingsDataSaveAndLoad, FilesByNames
 from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..propertie_layer.properties_layer_data import PropertiesLayerFunctions
+from ..item_selector_tools import UseQGISNative
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -60,6 +62,11 @@ class EasementTools:
                 cancel_button = self.widget_EasmentTools.pbCancel
                 buffer_button = self.widget_EasmentTools.pbCreateProperties
                 clear_buffer_button = self.widget_EasmentTools.pbClearPuhver2m
+                water_checkbox = self.widget_EasmentTools.cbV
+                sewer_checkbox = self.widget_EasmentTools.cbK
+                prSewer_checkbox = self.widget_EasmentTools.cbKSK
+                drainage_checkbox = self.widget_EasmentTools.cbD
+
 
                 # Connect button click signals
                 self.connect_button_click_signal()
@@ -84,8 +91,12 @@ class EasementTools:
                 buffer_button.clicked.connect(lambda: WidgetTools.generate_buffer_around_properties(self, self.widget_EasmentTools))
                 save_button.clicked.connect(lambda: self.on_save_button_clicked())
                 cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked())
-                    # Activate select tool and generate table if needed
-
+                
+                
+                water_checkbox.stateChanged.connect(cbMapSelectors.selectWater_pipes)
+                sewer_checkbox.stateChanged.connect(cbMapSelectors.selectSewer_pipes) 
+                prSewer_checkbox.stateChanged.connect(cbMapSelectors.selectprSewer_pipes)
+                drainage_checkbox.stateChanged.connect(cbMapSelectors.selectDrainage_pipes)
 
                 # Connect closeEvent method to handle window close event
                 self.widget_EasmentTools.closeEvent = self.closeEvent
@@ -375,3 +386,21 @@ class WidgetTools:
             help = PropertiesLayerFunctions()
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
+
+class cbMapSelectors:
+    
+    def selectWater_pipes():
+        layer = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)
+        UseQGISNative.select_elements_from_layer(layer, buffer_layer_name)
+    
+    def selectSewer_pipes():
+        layer = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)
+        UseQGISNative.select_elements_from_layer(layer, buffer_layer_name)
+    
+    def selectprSewer_pipes():
+        layer = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)
+        UseQGISNative.select_elements_from_layer(layer, buffer_layer_name)
+
+    def selectDrainage_pipes():
+        layer = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)
+        UseQGISNative.select_elements_from_layer(layer, buffer_layer_name)
