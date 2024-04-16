@@ -437,10 +437,10 @@ class SetupEasments:
         sewer_pressure_cb = widget.cbSewer_Pressure_pipes
         drainage_cb = widget.cbDrainage_Pipes
 
-        water_layer_name = SettingsLoader.get_setting(self,LayerSettings.WATER_LAYER)
-        sewer_layer_name = SettingsLoader.get_setting(self,LayerSettings.SEWER_LAYER)
-        pressure_sewer_layer_name = SettingsLoader.get_setting(self,LayerSettings.PRESSURE_SEWER_LAYER)
-        drainage_layer_name = SettingsLoader.get_setting(self,LayerSettings.DRAINAGE_LAYER)
+        water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)
+        sewer_layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)
+        pressure_sewer_layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)
+        drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)
 
 
         QGIS_items.clear_and_add_layerNames_selected(self, water_cb, water_layer_name)
@@ -472,6 +472,11 @@ class SetupEasments:
         pressure_sewer_layer_name = ComboBoxTools.get_selected_item_name(sewer_pressure_cb)
         drainage_layer_name = ComboBoxTools.get_selected_item_name(drainage_cb)
 
+        SettingsLoader.save_setting(LayerSettings().WATER_LAYER,water_layer_name)
+        SettingsLoader.save_setting(LayerSettings().SEWER_LAYER, sewer_layer_name)
+        SettingsLoader.save_setting(LayerSettings().PRESSURE_SEWER_LAYER, pressure_sewer_layer_name)
+        SettingsLoader.save_setting(LayerSettings().DRAINAGE_LAYER, drainage_layer_name)
+
 
         status_value_name = InsertStatusToComboBox.get_selected_status_name(statuses_combo_box)
         status_value_ids = InsertStatusToComboBox.get_selected_status_id(statuses_combo_box)
@@ -490,18 +495,17 @@ class SetupEasments:
         label.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         label.setAlignment(Qt.AlignBottom | Qt.AlignLeft)
 
-        setting_water = LayerSettings().WATER_LAYER
-        setting_sewer = LayerSettings().SEWER_LAYER
-        setting_pressure_sewer = LayerSettings().PRESSURE_SEWER_LAYER
-        setting_drainage = LayerSettings().DRAINAGE_LAYER
 
-        SettingsLoader.save_setting(self,setting_water, water_layer_name)
-        SettingsLoader.save_setting(self,setting_sewer, sewer_layer_name)
-        SettingsLoader.save_setting(self,setting_pressure_sewer, pressure_sewer_layer_name)
-        SettingsLoader.save_setting(self,setting_drainage, drainage_layer_name)
+
+        water_layer_name = SettingsLoader.get_setting(LayerSettings().WATER_LAYER)
+        sewer_layer_name = SettingsLoader.get_setting(LayerSettings().SEWER_LAYER)
+        pressure_sewer_layer_name = SettingsLoader.get_setting(LayerSettings().PRESSURE_SEWER_LAYER)
+        drainage_layer_name = SettingsLoader.get_setting(LayerSettings().DRAINAGE_LAYER)
         
 
         SettingsDataSaveAndLoad.save_easements_settings(self, selected_types_text, status_value_name, status_value_ids)
+
+
 
         label.setText(selected_types_text)
         self.lblPreferredEasementsStatus.setText(status_value_name)

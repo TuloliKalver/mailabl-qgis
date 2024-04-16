@@ -1424,10 +1424,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         PreferredEasementsTypes_values = SettingsDataSaveAndLoad.load_easements_type_names(self)
         lblPreferredEasementsTypes_value.setText(PreferredEasementsTypes_values)
         
-        water_layer_name = SettingsLoader.get_setting(self, LayerSettings.WATER_LAYER)
-        sewer_layer_name = SettingsLoader.get_setting(self, LayerSettings.SEWER_LAYER)
-        pressure_sewer_layer_name = SettingsLoader.get_setting(self, LayerSettings.PRESSURE_SEWER_LAYER)
-        drainage_layer_name = SettingsLoader.get_setting(self, LayerSettings.DRAINAGE_LAYER)
+        water_layer_name = SettingsLoader.get_setting( LayerSettings.WATER_LAYER)
+        sewer_layer_name = SettingsLoader.get_setting( LayerSettings.SEWER_LAYER)
+        pressure_sewer_layer_name = SettingsLoader.get_setting( LayerSettings.PRESSURE_SEWER_LAYER)
+        drainage_layer_name = SettingsLoader.get_setting( LayerSettings.DRAINAGE_LAYER)
         
         self.lblWaterPipesValue.setText(water_layer_name)
         self.lblSewerPipesValue.setText(sewer_layer_name)

@@ -41,20 +41,20 @@ class SettingsLoader:
     def __init__(self):
         self.settings = QgsSettings()
  
-    def save_setting(self, setting_name, value):
-        print(f"setting name: {setting_name}")
-        print(f"setting value: {value}")
+    def save_setting(setting_name, value):
+        #print(f"setting name: {setting_name}")
+        #print(f"setting value: {value}")
         
-        if hasattr(setting_name, 'value'):
+        if setting_name:
             settings = QgsSettings()
-            print("next step")
+            #print("next step")
             setting_address = MAIN_PATH + setting_name
-            print(f"Setting addrss: {setting_address} + {value}")
+            #print(f"Setting addrss: {setting_address} + {value}")
             settings.setValue(setting_address, value)
-            
-        print("no next step")
+        else:    
+            print("no next step")
 
-    def get_setting(self, setting_name):
+    def get_setting(setting_name):
         # Check if the setting exists
         print(f"setting name: {setting_name}")
         if setting_name:
@@ -63,3 +63,6 @@ class SettingsLoader:
             settings = QgsSettings()
             value = settings.value(setting_address, '', type=str)
             return value
+        
+        else:    
+            print("no next step")
