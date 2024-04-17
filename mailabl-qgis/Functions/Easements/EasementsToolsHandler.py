@@ -10,7 +10,7 @@ from qgis.utils import iface
 from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinition, QgsVectorLayer
 
 from PyQt5.QtCore import pyqtSlot
-from qgis.gui import QgsMapToolPan
+from qgis.gui import QgsMapToolPan, QgsMapCanvas
 from PyQt5.QtWidgets import QMessageBox, QWidget
 from PyQt5.QtGui import QIcon, QColor
 from PyQt5.QtCore import Qt
@@ -137,13 +137,13 @@ class EasementTools:
 
     def closeEvent(self, event):
         self.cleanup()
+        self.Buffer_cleanup()
         if on_selection_changed_lambda_easements:
-            active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+            active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
             active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
             active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
-        
 
-        
+
         Flags.active_properties_layer_flag = False
         self.widget_EasmentTools.close()
         event.accept()  # Allow the window to close
@@ -156,13 +156,14 @@ class EasementTools:
 
 
     def on_save_button_clicked(self):
+        self.Buffer_cleanup()
         if self.widget_EasmentTools is not None:
             text = "Olen alles arenduses. \n mitte midagi ei salvestatud"
             heading = pealkiri.tubli
             self.cleanup()
             QMessageBox.information(self.widget_EasmentTools, heading, text)
             if on_selection_changed_lambda_easements:
-                active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
                 active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
             self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)    
@@ -170,17 +171,16 @@ class EasementTools:
             self.widget_EasmentTools.accept()
 
 
-
     def on_cancel_button_clicked(self):
+        self.Buffer_cleanup()
         if self.widget_EasmentTools is not None:
             self.cleanup()
             text = sisu.kasutaja_peatas_protsessi
             heading = pealkiri.informationSimple
             QMessageBox.information(self.widget_EasmentTools, heading, text)
             if on_selection_changed_lambda_easements:
-                active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)            
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-                
                 active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
             
             Flags.active_properties_layer_flag = False
@@ -193,8 +193,24 @@ class EasementTools:
             # Deactivate select tool
             self.deactivate_select_tool()
             self.is_select_tool_activated = False
+        
+
+    def Buffer_cleanup(self):
+        layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)        
+        all_fuffers = TempBufferLayerNames.buffer_layers
+        for temp_layer_name in all_fuffers:
+            MapCleaners.clear_selection_and_delete_temp_layer(layer_name,temp_layer_name)
+        WorkLayers = WorkingLayers.list_of_workinglayers()
+        for layer_name in WorkLayers:    
+            layer = QgsProject.instance().mapLayersByName(layer_name)
+            if layer:
+                layer = layer[0]
+                layer.removeSelection()
             
-            
+        
+        
+
+
     def deactivate_select_tool(self):
         # Deactivate selection tool
         if self.select_tool:
@@ -340,13 +356,24 @@ class WidgetTools:
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
 
+
 class TempBufferLayerNames:
     water_temp_name = 'Ajutine_V'
     sewer_temp_name = 'Ajutine_K'
     prSewer_temp_name = 'Ajutine_KS'
     drainage_temp_name = 'Ajudine_D'
     buffer_layer_name = 'puhver_kinnistu'
+    buffer_layers = [water_temp_name, sewer_temp_name,prSewer_temp_name, drainage_temp_name, buffer_layer_name]
 
+class WorkingLayers:
+    @staticmethod
+    def list_of_workinglayers():
+        water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
+        sewer_layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
+        prSewer_layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
+        drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)        
+        list_of_working_layers = [water_layer_name, sewer_layer_name, prSewer_layer_name, drainage_layer_name]
+        return list_of_working_layers    
 
 class BufferTools:    
     def generate_buffer_around_selected_item(widget, tempp_buffer_layer, layer_name):
@@ -410,7 +437,6 @@ class BufferTools:
             QMessageBox.warning(None, Headings().warningCritical, HoiatusTexts().puudulik_kinnistute_seadistus)
 
 
-
 class cbMapSelectors:    
 
     def selectWater_pipes(widget, value, checkbox):
@@ -462,15 +488,25 @@ class cbMapSelectors:
 class MapCleaners:
     @staticmethod
     def clear_selection_and_delete_temp_layer(layer_name, temp_layer_name):
+        print(f"temp_layer_name: {temp_layer_name}")
         # Clear the selection when checkbox is unchecked
-        layer = QgsProject.instance().mapLayersByName(layer_name)[0]
+        layer = QgsProject.instance().mapLayersByName(layer_name)
         if layer:
+            layer = layer[0]
             layer.removeSelection()
+        else:
+            print(f"Layer '{layer_name}' not found.")
+        
         # Delete the temporary layer
-        temp_layer = QgsProject.instance().mapLayersByName(temp_layer_name)[0]
+        temp_layer = QgsProject.instance().mapLayersByName(temp_layer_name)
         if temp_layer:
+            temp_layer = temp_layer[0]
             QgsProject.instance().removeMapLayer(temp_layer.id())
-
+        else:
+            print(f"Temporary layer '{temp_layer_name}' not found.")
+        # Refresh the canvas
+            # Refresh the canvas
+        iface.mapCanvas().refresh()
 
 
     def clearPuhver2m(table):
@@ -486,3 +522,4 @@ class MapCleaners:
         model = table.model()
         rowCount = model.rowCount()
         model.removeRows(0, rowCount)
+        iface.mapCanvas().refresh()
