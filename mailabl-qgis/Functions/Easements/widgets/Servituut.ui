@@ -452,10 +452,10 @@ QLineEdit {
                      </font>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">background-color: rgb(131, 142, 162);</string>
+                     <string notr="true"/>
                     </property>
                     <property name="text">
-                     <string>Tühista*</string>
+                     <string>Tühista</string>
                     </property>
                     <property name="icon">
                      <iconset>

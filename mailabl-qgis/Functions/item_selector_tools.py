@@ -204,15 +204,10 @@ class CadasterSelector:
         cadasters_str = ", ".join(cadasters_list)
         return cadasters_str
 
-
-
 class UseQGISNative:
-    def select_elements_from_layer(layer, reference_layer):
-        # Set input and reference layer names
-
-        #for layer in layers:
-            # Set distance in meters
-        distance = 5
+    def select_elements_from_layer(layer, reference_layer, dial_value):
+        puhver = dial_value / 10
+        distance = round(puhver * 2) / 2
 
         # Run select within distance algorithm
         result = processing.run("native:selectwithindistance", {

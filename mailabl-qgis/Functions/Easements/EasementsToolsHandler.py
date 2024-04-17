@@ -2,6 +2,8 @@
 
 
 import re
+from PyQt5.QtCore import Qt
+
 import processing
 
 from qgis.utils import iface
@@ -34,7 +36,7 @@ sisu = HoiatusTexts()
 edu = EdukuseTexts()
 
 on_selection_changed_lambda_easements = None
-buffer_layer_name = 'puhver_kinnistu'
+
 goup_layer_name = ''
 
 class EasementTools:
@@ -60,13 +62,13 @@ class EasementTools:
                 self.widget_EasmentTools = loadUi(ui_file_path)
                 save_button = self.widget_EasmentTools.pbSave
                 cancel_button = self.widget_EasmentTools.pbCancel
-                buffer_button = self.widget_EasmentTools.pbCreateProperties
-                clear_buffer_button = self.widget_EasmentTools.pbClearPuhver2m
+                buffer_properties_button = self.widget_EasmentTools.pbCreateProperties
+                clear_buffer_button = self.widget_EasmentTools.pbClearCadastrals
                 water_checkbox = self.widget_EasmentTools.cbV
                 sewer_checkbox = self.widget_EasmentTools.cbK
                 prSewer_checkbox = self.widget_EasmentTools.cbKSK
                 drainage_checkbox = self.widget_EasmentTools.cbD
-
+                properties_table = self.widget_EasmentTools.tvProperties
 
                 # Connect button click signals
                 self.connect_button_click_signal()
@@ -87,16 +89,25 @@ class EasementTools:
             
                 #button_clear_table = self.widget_EasmentTools.pbClearCadastrals
 
-                #button_clear_table.clicked.connect
-                buffer_button.clicked.connect(lambda: WidgetTools.generate_buffer_around_properties(self, self.widget_EasmentTools))
+                clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))            
+                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
+                buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name))
                 save_button.clicked.connect(lambda: self.on_save_button_clicked())
                 cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked())
                 
-                
-                water_checkbox.stateChanged.connect(cbMapSelectors.selectWater_pipes)
-                sewer_checkbox.stateChanged.connect(cbMapSelectors.selectSewer_pipes) 
-                prSewer_checkbox.stateChanged.connect(cbMapSelectors.selectprSewer_pipes)
-                drainage_checkbox.stateChanged.connect(cbMapSelectors.selectDrainage_pipes)
+
+                value = self.widget_EasmentTools.dPuhvriSuurus.value()
+
+                water_checkbox = self.widget_EasmentTools.cbV
+                sewer_checkbox = self.widget_EasmentTools.cbK
+                prSewer_checkbox = self.widget_EasmentTools.cbKSK
+                drainage_checkbox = self.widget_EasmentTools.cbD
+
+
+                water_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectWater_pipes(self.widget_EasmentTools, value, water_checkbox))
+                sewer_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectSewer_pipes(self.widget_EasmentTools,  value, sewer_checkbox)) 
+                prSewer_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectprSewer_pipes(self.widget_EasmentTools, value, prSewer_checkbox))
+                drainage_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectDrainage_pipes(self.widget_EasmentTools, value, drainage_checkbox))
 
                 # Connect closeEvent method to handle window close event
                 self.widget_EasmentTools.closeEvent = self.closeEvent
@@ -194,73 +205,6 @@ class WidgetTools:
         widget.label.setText(f'Puhver: {puhver:.1f}m')
 
         
-    def generate_buffer_around_properties(self, widget):
-        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        
-        if active_layer:
-            # Check if there are any selected features
-            if active_layer.selectedFeatureCount() > 0:
-                # Get the selected features
-                selected_features = active_layer.selectedFeatures()
-                
-                # Create a buffer around the selected features
-                puhver = widget.dPuhvriSuurus.value() / 10
-                distance = round(puhver * 2) / 2
-                result = processing.run("native:buffer", {
-                    'INPUT': QgsProcessingFeatureSourceDefinition(active_layer.source(), True),
-                    'DISTANCE': distance,
-                    'SEGMENTS': 5,
-                    'OUTPUT': 'memory:',
-                    'FEATURES': selected_features,
-                    'DISSOLVE': False,
-                    'END_CAP_STYLE': 0,
-                    'JOIN_STYLE': 0,
-                    'MITER_LIMIT': 2,
-                })
-                
-                # Load the QGIS layer style
-                style_name = FilesByNames().Servituut_style
-                QGIS_Layer_style = Filepaths().get_style(style_name)
-
-                # Get the group layer name
-                group_layer_name = SetupLayers().tools_layer_name
-
-                # Get the group layer or create it if it doesn't exist
-                root = QgsProject.instance().layerTreeRoot()
-                group = root.findGroup(group_layer_name)
-                if group is None:
-                    group = root.addGroup(group_layer_name)
-
-                # Check if a layer with the same name already exists
-                existing_layers = QgsProject.instance().mapLayersByName(buffer_layer_name)
-                if existing_layers:
-                    # Remove the existing layer before continuing
-                    QgsProject.instance().removeMapLayer(existing_layers[0])
-                    
-                # Add the buffer layer to the group layer
-                buffer_layer = QgsProject.instance().addMapLayer(result['OUTPUT'], False)
-                buffer_layer.setName(buffer_layer_name)
-                group.addLayer(buffer_layer)
-                
-                # Apply the layer style
-                buffer_layer.loadNamedStyle(QGIS_Layer_style)
-                buffer_layer.triggerRepaint()
-
-            else:
-                QMessageBox.information(self, Headings().informationSimple, HoiatusTexts().kihil_kinnistu_valik)
-                
-        else:
-            QMessageBox.warning(self, Headings().warningCritical, HoiatusTexts().puudulik_kinnistute_seadistus)
-
-    def clearPuhver2m(self):
-
-        if QgsProject.instance().mapLayersByName(buffer_layer_name):
-            QgsProject.instance().removeMapLayer(QgsProject.instance().mapLayersByName(buffer_layer_name)[0])
-            QMessageBox.information(self, Headings().tubli, EdukuseTexts().tehtud)
-        else:
-            print('No ei ole ju enam olemas!')
-
     @staticmethod
     def loadselectedProperties(self, widget):
         table_view = widget.tvProperties
@@ -279,6 +223,9 @@ class WidgetTools:
             PropertiesLayerFunctions.generate_table_from_selected_map_items(self, table_view, active_layer_name)
             table_view.update()
             widget.showNormal()
+            active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
+            BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name)
+
         pass
 
     def activate_layer_and_use_selectTool(self, widget):
@@ -387,20 +334,148 @@ class WidgetTools:
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
 
-class cbMapSelectors:
-    
-    def selectWater_pipes():
-        layer = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)
-        UseQGISNative.select_elements_from_layer(layer, buffer_layer_name)
-    
-    def selectSewer_pipes():
-        layer = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)
-        UseQGISNative.select_elements_from_layer(layer, buffer_layer_name)
-    
-    def selectprSewer_pipes():
-        layer = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)
-        UseQGISNative.select_elements_from_layer(layer, buffer_layer_name)
+class TempBufferLayerNames:
+    water_temp_name = 'Ajutine_V'
+    sewer_temp_name = 'Ajutine_K'
+    prSewer_temp_name = 'Ajutine_KS'
+    drainage_temp_name = 'Ajudine_D'
+    buffer_layer_name = 'puhver_kinnistu'
 
-    def selectDrainage_pipes():
-        layer = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)
-        UseQGISNative.select_elements_from_layer(layer, buffer_layer_name)
+
+class BufferTools:    
+    def generate_buffer_around_selected_item(widget, tempp_buffer_layer, layer_name):
+        active_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
+        
+        if active_layer:
+            # Check if there are any selected features
+            if active_layer.selectedFeatureCount() > 0:
+                # Get the selected features
+                selected_features = active_layer.selectedFeatures()
+                
+                # Create a buffer around the selected features
+                puhver = widget.dPuhvriSuurus.value() / 10
+                distance = round(puhver * 2) / 2
+                result = processing.run("native:buffer", {
+                    'INPUT': QgsProcessingFeatureSourceDefinition(active_layer.source(), True),
+                    'DISTANCE': distance,
+                    'SEGMENTS': 5,
+                    'OUTPUT': 'memory:',
+                    'FEATURES': selected_features,
+                    'DISSOLVE': False,
+                    'END_CAP_STYLE': 0,
+                    'JOIN_STYLE': 0,
+                    'MITER_LIMIT': 2,
+                })
+                
+                # Load the QGIS layer style
+                style_name = FilesByNames().Servituut_style
+                QGIS_Layer_style = Filepaths().get_style(style_name)
+
+                # Get the group layer name
+                group_layer_name = SetupLayers().tools_layer_name
+
+                # Get the group layer or create it if it doesn't exist
+                root = QgsProject.instance().layerTreeRoot()
+                group = root.findGroup(group_layer_name)
+                if group is None:
+                    group = root.addGroup(group_layer_name)
+
+                # Check if a layer with the same name already exists
+                existing_layers = QgsProject.instance().mapLayersByName(tempp_buffer_layer)
+                if existing_layers:
+                    # Remove the existing layer before continuing
+                    QgsProject.instance().removeMapLayer(existing_layers[0])
+                    
+                # Add the buffer layer to the group layer
+                buffer_layer = QgsProject.instance().addMapLayer(result['OUTPUT'], False)
+                buffer_layer.setName(tempp_buffer_layer)
+                group.addLayer(buffer_layer)
+                
+                # Apply the layer style
+                buffer_layer.loadNamedStyle(QGIS_Layer_style)
+                buffer_layer.triggerRepaint()
+
+            else:
+                QMessageBox.information(None, Headings().informationSimple, HoiatusTexts().kihil_kinnistu_valik)
+                
+        else:
+            QMessageBox.warning(None, Headings().warningCritical, HoiatusTexts().puudulik_kinnistute_seadistus)
+
+
+
+class cbMapSelectors:    
+
+    def selectWater_pipes(widget, value, checkbox):
+        layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
+        temp_layer_name = TempBufferLayerNames.water_temp_name
+        properties_buffer = TempBufferLayerNames.buffer_layer_name
+    
+        if checkbox.isChecked():
+            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name)
+        if not checkbox.isChecked():
+            MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
+    
+    def selectSewer_pipes(widget, value, checkbox):
+        layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
+        temp_layer_name = TempBufferLayerNames.sewer_temp_name
+        properties_buffer = TempBufferLayerNames.buffer_layer_name
+    
+        if checkbox.isChecked():
+            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name)
+        if not checkbox.isChecked():
+            MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
+    
+    def selectprSewer_pipes(widget, value, checkbox):
+        layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
+        temp_layer_name = TempBufferLayerNames.prSewer_temp_name
+        properties_buffer = TempBufferLayerNames.buffer_layer_name
+    
+        if checkbox.isChecked():
+            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name)
+        if not checkbox.isChecked():
+            MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
+    
+
+    def selectDrainage_pipes(widget, value, checkbox):
+        layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)        
+        temp_layer_name = TempBufferLayerNames.drainage_temp_name
+        properties_buffer = TempBufferLayerNames.buffer_layer_name
+    
+        if checkbox.isChecked():
+            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name)
+        if not checkbox.isChecked():
+            MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
+    
+
+class MapCleaners:
+    @staticmethod
+    def clear_selection_and_delete_temp_layer(layer_name, temp_layer_name):
+        # Clear the selection when checkbox is unchecked
+        layer = QgsProject.instance().mapLayersByName(layer_name)[0]
+        if layer:
+            layer.removeSelection()
+        
+        # Delete the temporary layer
+        temp_layer = QgsProject.instance().mapLayersByName(temp_layer_name)[0]
+        if temp_layer:
+            QgsProject.instance().removeMapLayer(temp_layer.id())
+
+
+
+    def clearPuhver2m(table):
+        layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
+        layer = QgsProject.instance().mapLayersByName(layer_name)[0]
+        if layer:
+            layer.removeSelection()
+        else:
+            print('No ei ole ju enam olemas!')
+        temp_layer_name = TempBufferLayerNames.buffer_layer_name
+        MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
+        # Clear the model from rows
+        model = table.model()
+        rowCount = model.rowCount()
+        model.removeRows(0, rowCount)
