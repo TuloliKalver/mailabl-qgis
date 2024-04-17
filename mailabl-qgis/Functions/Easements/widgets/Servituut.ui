@@ -516,19 +516,6 @@ QLineEdit {
              <number>0</number>
             </property>
             <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QFrame" name="frame_4">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -653,23 +640,6 @@ QLineEdit {
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_12">
                <item>
-                <widget class="QPushButton" name="pbPuhverYle">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(131, 142, 162);</string>
-                 </property>
-                 <property name="text">
-                  <string>Leia torud läheduses*</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QPushButton" name="pbCreateProperties">
                  <property name="font">
                   <font>
@@ -699,7 +669,7 @@ QLineEdit {
                   <string notr="true">background-color: rgb(131, 142, 162);</string>
                  </property>
                  <property name="text">
-                  <string>Koosta servituut*</string>
+                  <string>Koosta skeem*</string>
                  </property>
                  <property name="icon">
                   <iconset>
@@ -710,52 +680,6 @@ QLineEdit {
                    <width>25</width>
                    <height>25</height>
                   </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_5">
-              <property name="title">
-               <string>Tühista joonis</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_2">
-               <item>
-                <widget class="QPushButton" name="pbClearPuhver2m">
-                 <property name="font">
-                  <font>
-                   <family>MS Shell Dlg 2</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(131, 142, 162);</string>
-                 </property>
-                 <property name="text">
-                  <string>Eemalda kinnistu 
- *</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pbClearEvvServituudid">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(131, 142, 162);</string>
-                 </property>
-                 <property name="text">
-                  <string>Servituudid*</string>
                  </property>
                 </widget>
                </item>
@@ -815,45 +739,6 @@ QLineEdit {
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QGroupBox" name="groupBox_4">
-              <property name="title">
-               <string>Lõika kinnistuga</string>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
-               <item>
-                <widget class="QPushButton" name="pushButton_5">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(131, 142, 162);</string>
-                 </property>
-                 <property name="text">
-                  <string>Puhver*</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pbKinnistuAndmed">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(131, 142, 162);</string>
-                 </property>
-                 <property name="text">
-                  <string>Mis see on*</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pbServituutInfo">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(131, 142, 162);</string>
-                 </property>
-                 <property name="text">
-                  <string>Servituudi info*</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>

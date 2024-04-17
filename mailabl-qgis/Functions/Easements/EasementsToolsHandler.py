@@ -46,6 +46,7 @@ class EasementTools:
         self.is_select_tool_activated = False
         self.select_tool = None
         self.select_tool_connection = None
+        self.Buffer_tool_connection = None
 
 
         # Connect button click signal outside the load_widget method
@@ -86,11 +87,14 @@ class EasementTools:
                 if self.select_tool is None:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
             
-            
+                
                 #button_clear_table = self.widget_EasmentTools.pbClearCadastrals
 
                 clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))            
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
+
+                if self.Buffer_tool_connection is None:
+                    BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name)
                 buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name))
                 save_button.clicked.connect(lambda: self.on_save_button_clicked())
                 cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked())
@@ -136,7 +140,9 @@ class EasementTools:
         if on_selection_changed_lambda_easements:
             active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
             active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-            active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
+            active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
+        
+
         
         Flags.active_properties_layer_flag = False
         self.widget_EasmentTools.close()
@@ -159,7 +165,7 @@ class EasementTools:
                 active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
                 active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
-            
+            self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)    
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.accept()
 
@@ -395,6 +401,8 @@ class BufferTools:
                 buffer_layer.loadNamedStyle(QGIS_Layer_style)
                 buffer_layer.triggerRepaint()
 
+
+
             else:
                 QMessageBox.information(None, Headings().informationSimple, HoiatusTexts().kihil_kinnistu_valik)
                 
@@ -458,7 +466,6 @@ class MapCleaners:
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         if layer:
             layer.removeSelection()
-        
         # Delete the temporary layer
         temp_layer = QgsProject.instance().mapLayersByName(temp_layer_name)[0]
         if temp_layer:
