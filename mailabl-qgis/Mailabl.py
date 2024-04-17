@@ -52,6 +52,7 @@ class Mailabl:
         :type iface: QgsInterface
         """
 
+
         # Save reference to the QGIS interface
         self.iface = iface
         # initialize plugin directory
