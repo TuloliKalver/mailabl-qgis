@@ -72,29 +72,22 @@ class EasementTools:
                 properties_table = self.widget_EasmentTools.tvProperties
 
                 # Connect button click signals
-                self.connect_button_click_signal()
 
-
+                active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+                self.connect_button_click_signal(active_layer_name)
 
                 self.widget_EasmentTools.show()
                 WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
 
                 self.widget_EasmentTools.dPuhvriSuurus.valueChanged.connect(
-                    lambda: WidgetTools.dialer(self.widget_EasmentTools))
+                    lambda: WidgetTools.activ_dialer(self.widget_EasmentTools))
                 self.widget_EasmentTools.dPuhvriSuurus.setValue(20)
-
-
+                
                 if self.select_tool is None:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
             
                 
-                #button_clear_table = self.widget_EasmentTools.pbClearCadastrals
-
                 clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))            
-                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
-
-                if self.Buffer_tool_connection is None:
-                    BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name)
                 buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name))
                 save_button.clicked.connect(lambda: self.on_save_button_clicked())
                 cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked())
@@ -126,7 +119,7 @@ class EasementTools:
             self.cleanup()
             self.widget_EasmentTools.show()
 
-    def connect_button_click_signal(self):
+    def connect_button_click_signal(self, active_layer_name):
         if self.widget_EasmentTools:
             # Connect the button click signal only if the widget exists
             select_button = self.widget_EasmentTools.pbValiKinnistu
@@ -186,8 +179,6 @@ class EasementTools:
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.reject()
             
-
-
     def cleanup(self):
         if self.is_select_tool_activated:
             # Deactivate select tool
@@ -221,6 +212,11 @@ class EasementTools:
 class WidgetTools:
 
     @staticmethod
+    def activ_dialer(widget):
+        WidgetTools.dialer(widget)
+        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        BufferTools.generate_buffer_around_selected_item(widget,TempBufferLayerNames.buffer_layer_name, active_layer_name)
+
     def dialer(widget):
         value = widget.dPuhvriSuurus.value() / 10  # divide by 10 to convert to the desired units
         puhver = round(value * 2) / 2  # round up to nearest 0.5 increment
@@ -271,8 +267,10 @@ class WidgetTools:
 
             help = PropertiesLayerFunctions()
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
+            BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name)
             table_view.update()
             widget.showNormal()
+
 
         flag = Flags.active_properties_layer_flag
         if flag:
@@ -297,6 +295,8 @@ class WidgetTools:
                 table_view = widget.tvProperties
                 help = PropertiesLayerFunctions()
                 help.generate_table_from_selected_map_items(table_view, active_layer_name)
+                BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name)
+
                 table_view.update()
                 widget.showNormal()
         else:
@@ -366,22 +366,27 @@ class TempBufferLayerNames:
     buffer_layers = [water_temp_name, sewer_temp_name,prSewer_temp_name, drainage_temp_name, buffer_layer_name]
 
 class WorkingLayers:
+    water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
+    sewer_layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
+    prSewer_layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
+    drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)        
+
     @staticmethod
     def list_of_workinglayers():
-        water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
-        sewer_layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
-        prSewer_layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
-        drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)        
-        list_of_working_layers = [water_layer_name, sewer_layer_name, prSewer_layer_name, drainage_layer_name]
+        a = WorkingLayers
+        list_of_working_layers = [a.water_layer_name, a.sewer_layer_name, a.prSewer_layer_name, a.drainage_layer_name]
         return list_of_working_layers    
 
 class BufferTools:    
     def generate_buffer_around_selected_item(widget, tempp_buffer_layer, layer_name):
+        print(f"in generator. tempp_buffer_layer: {tempp_buffer_layer}, layer_name: {layer_name}")
         active_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         
         if active_layer:
+            print("yess")
             # Check if there are any selected features
             if active_layer.selectedFeatureCount() > 0:
+                print("yess 2")
                 # Get the selected features
                 selected_features = active_layer.selectedFeatures()
                 
