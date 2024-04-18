@@ -18,18 +18,19 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, uic, QtSvg
 from PyQt5 import QtCore
 
-
+from .EasementsItems import queryHandling
+from ..propertie_layer.properties_layer_data import PropertiesLayerFunctions
+from ..item_selector_tools import UseQGISNative
 from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 from ...config.settings import SettingsDataSaveAndLoad
 from ...config.QGISSettingPaths import LayerSettings, SettingsLoader, EasementsSettings
-from .EasementsItems import queryHandling
 from ...queries.python.DataLoading_classes import GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...queries.python.update_relations.update_project_properties import map_selectors
 from ...config.settings import Filepaths, Flags, SettingsDataSaveAndLoad, FilesByNames
 from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
-from ..propertie_layer.properties_layer_data import PropertiesLayerFunctions
-from ..item_selector_tools import UseQGISNative
+from ..intersect import Intersect, TempIntersectLayerName
+from ..join_layers import JoinLayers
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -70,7 +71,7 @@ class EasementTools:
                 prSewer_checkbox = self.widget_EasmentTools.cbKSK
                 drainage_checkbox = self.widget_EasmentTools.cbD
                 properties_table = self.widget_EasmentTools.tvProperties
-
+                pbGen_easement = self.widget_EasmentTools.pbKoostaServituut
                 # Connect button click signals
 
                 active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -85,10 +86,13 @@ class EasementTools:
                 
                 if self.select_tool is None:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
-            
+
+
+                pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement())            
                 
-                clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))            
-                buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name))
+                clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))
+                style_name = FilesByNames().Easement_style         
+                buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name))
                 save_button.clicked.connect(lambda: self.on_save_button_clicked())
                 cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked())
                 
@@ -99,7 +103,6 @@ class EasementTools:
                 sewer_checkbox = self.widget_EasmentTools.cbK
                 prSewer_checkbox = self.widget_EasmentTools.cbKSK
                 drainage_checkbox = self.widget_EasmentTools.cbD
-
 
                 water_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectWater_pipes(self.widget_EasmentTools, value, water_checkbox))
                 sewer_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectSewer_pipes(self.widget_EasmentTools,  value, sewer_checkbox)) 
@@ -215,7 +218,8 @@ class WidgetTools:
     def activ_dialer(widget):
         WidgetTools.dialer(widget)
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        BufferTools.generate_buffer_around_selected_item(widget,TempBufferLayerNames.buffer_layer_name, active_layer_name)
+        style_name = FilesByNames().Easement_style
+        BufferTools.generate_buffer_around_selected_item(widget,TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name)
 
     def dialer(widget):
         value = widget.dPuhvriSuurus.value() / 10  # divide by 10 to convert to the desired units
@@ -242,7 +246,8 @@ class WidgetTools:
             table_view.update()
             widget.showNormal()
             active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
-            BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name)
+            style_name = FilesByNames().Easement_style
+            BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name)
 
         pass
 
@@ -267,7 +272,8 @@ class WidgetTools:
 
             help = PropertiesLayerFunctions()
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
-            BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name)
+            style_name = FilesByNames().Easement_style
+            BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name)
             table_view.update()
             widget.showNormal()
 
@@ -295,7 +301,8 @@ class WidgetTools:
                 table_view = widget.tvProperties
                 help = PropertiesLayerFunctions()
                 help.generate_table_from_selected_map_items(table_view, active_layer_name)
-                BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name)
+                style_name = FilesByNames().Easement_style
+                BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name)
 
                 table_view.update()
                 widget.showNormal()
@@ -364,7 +371,7 @@ class TempBufferLayerNames:
     drainage_temp_name = 'Ajudine_D'
     buffer_layer_name = 'puhver_kinnistu'
     buffer_layers = [water_temp_name, sewer_temp_name,prSewer_temp_name, drainage_temp_name, buffer_layer_name]
-
+    
 class WorkingLayers:
     water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
     sewer_layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
@@ -378,7 +385,7 @@ class WorkingLayers:
         return list_of_working_layers    
 
 class BufferTools:    
-    def generate_buffer_around_selected_item(widget, tempp_buffer_layer, layer_name):
+    def generate_buffer_around_selected_item(widget, tempp_buffer_layer, layer_name, style_name):
         print(f"in generator. tempp_buffer_layer: {tempp_buffer_layer}, layer_name: {layer_name}")
         active_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         
@@ -406,7 +413,7 @@ class BufferTools:
                 })
                 
                 # Load the QGIS layer style
-                style_name = FilesByNames().Servituut_style
+
                 QGIS_Layer_style = Filepaths().get_style(style_name)
 
                 # Get the group layer name
@@ -451,7 +458,8 @@ class cbMapSelectors:
     
         if checkbox.isChecked():
             UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
-            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name)
+            style_name = FilesByNames().Easement_Water
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
     
@@ -462,7 +470,8 @@ class cbMapSelectors:
     
         if checkbox.isChecked():
             UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
-            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name)
+            style_name = FilesByNames().Easement_sewage
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
     
@@ -473,7 +482,8 @@ class cbMapSelectors:
     
         if checkbox.isChecked():
             UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
-            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name)
+            style_name = FilesByNames().Easement_prSewage
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
     
@@ -485,7 +495,8 @@ class cbMapSelectors:
     
         if checkbox.isChecked():
             UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
-            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name)
+            style_name = FilesByNames().Easement_Drainage
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
     
@@ -528,3 +539,31 @@ class MapCleaners:
         rowCount = model.rowCount()
         model.removeRows(0, rowCount)
         iface.mapCanvas().refresh()
+
+
+class GenerateEasement:
+    @staticmethod
+    def generate_easement():
+        print("started Intersection")
+
+        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+
+        # Slice the lists to include only the first four items
+        buffer_layers = TempBufferLayerNames.buffer_layers[:4]
+        intersect_layers = TempIntersectLayerName.intersect_layers[:4]
+
+        # Create a dictionary to map buffer layers to intersect layers
+        layer_mapping = dict(zip(buffer_layers, intersect_layers))
+
+        # Iterate through the buffer layers and perform operations for each
+        for buffer_layer in buffer_layers:
+            intersect_layer = layer_mapping.get(buffer_layer)
+            if intersect_layer:  # Check if intersect layer exists
+                Intersect.intersect_two_layers(buffer_layer, active_layer_name, intersect_layer)
+                JoinLayers.join_all_layers()
+
+        # Remove buffer and intersect layers from the project
+        for layer_name in buffer_layers + intersect_layers:
+            QgsProject.instance().removeMapLayer(layer_name)
+            iface.mapCanvas().refresh()
+
