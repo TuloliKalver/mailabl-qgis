@@ -470,6 +470,22 @@ QLineEdit {
                    </widget>
                   </item>
                   <item>
+                   <widget class="QPushButton" name="pbCreateProperties">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="autoFillBackground">
+                     <bool>false</bool>
+                    </property>
+                    <property name="text">
+                     <string>Koosta puhver</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
                    <spacer name="verticalSpacer_3">
                     <property name="orientation">
                      <enum>Qt::Vertical</enum>
@@ -640,22 +656,6 @@ QLineEdit {
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_12">
                <item>
-                <widget class="QPushButton" name="pbCreateProperties">
-                 <property name="font">
-                  <font>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Koosta puhver</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
                 <widget class="QPushButton" name="pbKoostaServituut">
                  <property name="font">
                   <font>
@@ -666,10 +666,10 @@ QLineEdit {
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(131, 142, 162);</string>
+                  <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>Koosta skeem*</string>
+                  <string>Koosta skeem(v1)</string>
                  </property>
                  <property name="icon">
                   <iconset>

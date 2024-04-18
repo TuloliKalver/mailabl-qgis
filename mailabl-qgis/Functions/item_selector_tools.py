@@ -206,6 +206,17 @@ class CadasterSelector:
 
 class UseQGISNative:
     def select_elements_from_layer(layer, reference_layer, dial_value):
+        # Find and select all features in the input layer
+        input_layer = QgsProject.instance().mapLayersByName(layer)
+        if not input_layer:
+            print(f"Input layer '{input_layer}' not found")
+            return
+
+        reference = QgsProject.instance().mapLayersByName(reference_layer)
+        if not reference:
+            print(f"Input layer '{reference_layer}' not found")
+            return
+
         puhver = dial_value / 10
         distance = round(puhver * 2) / 2
 
