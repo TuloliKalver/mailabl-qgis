@@ -17,7 +17,6 @@ class WaterWorksLinks:
     link_2 = "https://www.riigiteataja.ee/akt/106082019008" # "Kanalisatsiooniehitise planeerimise, ehitamise ja kasutamise nõuded ning..."
     link_3 = "https://www.riigiteataja.ee/akt/170179" # "Teeseadus" § 13.Tee kaitsevöönd
 
-
 class Electrisity: 
     elekter_1 = "2" # kuni 1 kV pingega liinide korral 2 meetrit
     elekter_2 = "3" # 1 kuni 20 kV pingega liinidel õhukaabli kasutamise korral 3 meetrit
