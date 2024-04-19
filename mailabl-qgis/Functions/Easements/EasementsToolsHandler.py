@@ -19,6 +19,7 @@ from PyQt5 import QtWidgets, uic, QtSvg
 from PyQt5 import QtCore
 
 from .EasementsItems import queryHandling
+from .resticon import WaterWorks
 from ..propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from ..item_selector_tools import UseQGISNative
 from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
@@ -400,6 +401,9 @@ class BufferTools:
                 # Create a buffer around the selected features
                 puhver = widget.dPuhvriSuurus.value() / 10
                 distance = round(puhver * 2) / 2
+                
+                #distance = WaterWorks.survetorustik_1
+
                 result = processing.run("native:buffer", {
                     'INPUT': QgsProcessingFeatureSourceDefinition(active_layer.source(), True),
                     'DISTANCE': distance,
@@ -551,19 +555,73 @@ class GenerateEasement:
         # Slice the lists to include only the first four items
         buffer_layers = TempBufferLayerNames.buffer_layers[:4]
         intersect_layers = TempIntersectLayerName.intersect_layers[:4]
+        
 
         # Create a dictionary to map buffer layers to intersect layers
         layer_mapping = dict(zip(buffer_layers, intersect_layers))
-
+        print("mapped layers:")
+        print(layer_mapping)
         # Iterate through the buffer layers and perform operations for each
+        
         for buffer_layer in buffer_layers:
             intersect_layer = layer_mapping.get(buffer_layer)
+
             if intersect_layer:  # Check if intersect layer exists
                 Intersect.intersect_two_layers(buffer_layer, active_layer_name, intersect_layer)
-                JoinLayers.join_all_layers()
+        
+        intersect_layers = QgsProject.instance().mapLayers().values()
+        intersect_layer_names = [layer.name() for layer in intersect_layers if layer.name().startswith("Ajutine_intersect_")]
+        print("intersect_layer_names:")
+        print(intersect_layer_names)
+        if not intersect_layer_names:
+            print("No intersect layers found.")
+            return
+        # Check if join layer exists and remove it if present
+        existing_layers = QgsProject.instance().mapLayersByName(JoinLayers.join_layer_name)
+        if existing_layers:
+            for layer in existing_layers:
+                QgsProject.instance().removeMapLayer(layer)
 
+        # Check the number of intersect layers found
+        num_intersect_layers = len(intersect_layer_names)
+        print("num_intersect_layers:")
+        print(num_intersect_layers)
+        join_layer_name = "Joined_layer"
+        while num_intersect_layers >= 1:
+            JoinLayers.join_all_layers(intersect_layer_names, num_intersect_layers, join_layer_name)
+                # Decrement the number of intersect layers
+            num_intersect_layers -= 1
         # Remove buffer and intersect layers from the project
-        for layer_name in buffer_layers + intersect_layers:
-            QgsProject.instance().removeMapLayer(layer_name)
-            iface.mapCanvas().refresh()
+        
+        for layer_name in buffer_layers + TempIntersectLayerName.intersect_layers:
+            layer = QgsProject.instance().mapLayersByName(layer_name)
+            if layer:
+                layer = layer[0]  # Get the first layer if found
+                QgsProject.instance().removeMapLayer(layer)
+            else:
+                print(f"layer '{layer_name}' not found.")
+                pass
 
+        joined_layers = QgsProject.instance().mapLayers().values()
+        joined_layer_names = [layer.name() for layer in joined_layers if layer.name().startswith("Joined_layer")]
+        num_join_layers = len(joined_layer_names)
+        print("num_join_layers")
+        print(num_join_layers)
+        final_layer_name = "Final_joined"
+
+        while num_join_layers >= 1:
+            print("num_join_layers in loop")
+            print(num_join_layers)
+            JoinLayers.join_all_layers(joined_layer_names, num_join_layers, final_layer_name)
+                # Decrement the number of intersect layers
+            num_join_layers -= 1
+        # Remove buffer and intersect layers from the project
+        for layer_name in buffer_layers + list(intersect_layers):
+            layer = QgsProject.instance().mapLayersByName(layer_name)
+            if layer:
+                layer = layer[0].id()  # Get the first layer if found
+                QgsProject.instance().removeMapLayer(layer)
+            else:
+                print(f"layer '{layer_name}' not found.")
+                return
+        
