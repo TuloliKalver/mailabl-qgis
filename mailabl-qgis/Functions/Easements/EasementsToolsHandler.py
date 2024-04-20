@@ -186,12 +186,16 @@ class EasementTools:
         for checkbox, (text, connect_function) in checkboxes_info.items():
             if checkbox:
                 current_text = checkbox.text()
-                checkbox.setText(f"{current_text} ({text}m)*")
+                checkbox.setText(f"{current_text} ({text}m)")
+                checkbox.setStyleSheet("color: #c5c5d2")  # Set text background color and text color
                 if connect_function is not None:
+                    checkbox.setText(f"{current_text}*")
                     checkbox.setEnabled(True)
                     checkbox.clicked.connect(connect_function)
                 else:
                     checkbox.setEnabled(False)
+                    checkbox.setStyleSheet("color: #8a95a5")
+                    
 
     def closeEvent(self, event):
         self.cleanup()

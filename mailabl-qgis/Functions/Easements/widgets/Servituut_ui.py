@@ -22,13 +22,7 @@ class Ui_servituutDialogBase(object):
         servituutDialogBase.setSizePolicy(sizePolicy)
         servituutDialogBase.setMinimumSize(QtCore.QSize(900, 750))
         servituutDialogBase.setMaximumSize(QtCore.QSize(900, 750))
-        servituutDialogBase.setStyleSheet("#pbClearPuhver2m,#pbClearEvvServituudid\n"
-"{\n"
-"background-color: qradialgradient(spread:pad, cx:0.494, cy:0.5, radius:0.5, fx:0.42, fy:0.5, stop:0 rgba(218, 0, 0, 232), stop:1 rgba(255, 81, 81, 200));\n"
-"    color: rgb(238, 238, 238);\n"
-"    border-radiusr: 1px;\n"
-"}\n"
-"\n"
+        servituutDialogBase.setStyleSheet("\n"
 "#lblDialer{\n"
 "    background-color: None;\n"
 "    backround: None;\n"
@@ -45,7 +39,6 @@ class Ui_servituutDialogBase(object):
 "    padding-bottom: 0px; /* Adjust the bottom padding as needed */\n"
 "}\n"
 "\n"
-"/*style the combobox itself*/\n"
 "\n"
 "#fHeader, #fHelpMenu, \n"
 "#fSettingsFolders, #fSettingsFolderStucture,\n"
@@ -608,16 +601,16 @@ class Ui_servituutDialogBase(object):
         self.groupBox_4.setTitle(_translate("servituutDialogBase", "Revee võrk"))
         self.cbK.setText(_translate("servituutDialogBase", "Torud"))
         self.cbKSK.setText(_translate("servituutDialogBase", "Surve torud"))
-        self.cbsewagePupming.setText(_translate("servituutDialogBase", "Pumpla*"))
-        self.cbSewageDump.setText(_translate("servituutDialogBase", "Purgimissõlm*"))
-        self.cbsewagePlant.setText(_translate("servituutDialogBase", "Reoveepuhasti*"))
+        self.cbsewagePupming.setText(_translate("servituutDialogBase", "Pumpla"))
+        self.cbSewageDump.setText(_translate("servituutDialogBase", "Purgimissõlm"))
+        self.cbsewagePlant.setText(_translate("servituutDialogBase", "Reoveepuhasti"))
         self.groupBox.setTitle(_translate("servituutDialogBase", "Vee võrk"))
         self.cbV.setText(_translate("servituutDialogBase", "Torud"))
-        self.cbWaterStation.setText(_translate("servituutDialogBase", "Jaam*"))
+        self.cbWaterStation.setText(_translate("servituutDialogBase", "Jaam"))
         self.groupBox_3.setTitle(_translate("servituutDialogBase", "Sademevee võrk"))
-        self.cbSK.setText(_translate("servituutDialogBase", "Torud*"))
+        self.cbSK.setText(_translate("servituutDialogBase", "Torud"))
         self.cbD.setText(_translate("servituutDialogBase", "Drenaaž"))
-        self.cbRainPump.setText(_translate("servituutDialogBase", "Pumpla*"))
+        self.cbRainPump.setText(_translate("servituutDialogBase", "Pumpla"))
         self.pbKoostaServituut.setText(_translate("servituutDialogBase", "Koosta skeem(v1)"))
         self.lnameKataster.setText(_translate("servituutDialogBase", "Kataster:"))
         self.laKataster.setText(_translate("servituutDialogBase", "TextLabel"))
