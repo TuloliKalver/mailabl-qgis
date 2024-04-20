@@ -59,7 +59,7 @@ class EasementTools:
                 self.widget_EasmentTools = loadUi(ui_file_path)
                 save_button = self.widget_EasmentTools.pbSave
                 cancel_button = self.widget_EasmentTools.pbCancel
-                buffer_properties_button = self.widget_EasmentTools.pbCreateProperties
+                #buffer_properties_button = self.widget_EasmentTools.pbCreateProperties
                 clear_buffer_button = self.widget_EasmentTools.pbClearCadastrals
 
                 
@@ -72,12 +72,12 @@ class EasementTools:
 
                 self.widget_EasmentTools.show()
                 self.widget_EasmentTools.tabWidget.hide()
-                water_checkbox = self.widget_EasmentTools.cbV
-                sewer_checkbox = self.widget_EasmentTools.cbK
-                prSewer_checkbox = self.widget_EasmentTools.cbKSK
-                drainage_checkbox = self.widget_EasmentTools.cbD
-                EasementTools.checkbox_auto_labeling(self.widget_EasmentTools)
-            
+
+                                # Get the checkboxes and their associated texts and functions
+                checkboxes_info = EasementTools.get_checkbox_info(self.widget_EasmentTools)
+
+                # Update checkbox texts and connect them to functions
+                EasementTools.update_checkboxes(self.widget_EasmentTools, checkboxes_info)
                 
                 WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
 
@@ -92,24 +92,11 @@ class EasementTools:
                 pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement())            
                 
                 clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))
-                style_name = FilesByNames().Easement_style         
-                buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name))
+                #style_name = FilesByNames().Easement_style         
+                #buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name))
                 save_button.clicked.connect(lambda: self.on_save_button_clicked())
                 cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked())
                 
-
-                value = self.widget_EasmentTools.dPuhvriSuurus.value()
-
-                water_checkbox = self.widget_EasmentTools.cbV
-                sewer_checkbox = self.widget_EasmentTools.cbK
-                prSewer_checkbox = self.widget_EasmentTools.cbKSK
-                drainage_checkbox = self.widget_EasmentTools.cbD
-
-                water_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectWater_pipes(self.widget_EasmentTools, value, water_checkbox))
-                sewer_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectSewer_pipes(self.widget_EasmentTools,  value, sewer_checkbox)) 
-                prSewer_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectprSewer_pipes(self.widget_EasmentTools, value, prSewer_checkbox))
-                drainage_checkbox.stateChanged.connect(lambda: cbMapSelectors.selectDrainage_pipes(self.widget_EasmentTools, value, drainage_checkbox))
-
                 # Connect closeEvent method to handle window close event
                 self.widget_EasmentTools.closeEvent = self.closeEvent
 
@@ -138,29 +125,73 @@ class EasementTools:
         sewer_checkbox = widget.cbK
         prSewer_checkbox = widget.cbKSK
         drainage_checkbox = widget.cbD
+        sewagePupming_checkbox = widget.cbsewagePupming
+        SewageDump_checkbox = widget.cbSewageDump #Purgimissõlm
+        sewagePlant_checkbox = widget.cbsewagePlant
+        WaterStation_checkbox = widget.cbWaterStation
+        Rainwater_checkbox = widget.cbSK
+        RainPump_checkbox = widget.cbRainPump
 
-        # Get the current text of each checkbox
-        if water_checkbox:
-            current_text_water = water_checkbox.text()
-            text = WaterWorks.survetorustik_1
-            water_checkbox.setText(f"{current_text_water} ({text}m)*")
+    @staticmethod
+    def get_checkbox_info(widget):
+        water_checkbox = getattr(widget, 'cbV', None)
+        sewer_checkbox = getattr(widget, 'cbK', None)
+        prSewer_checkbox = getattr(widget, 'cbKSK', None)
+        drainage_checkbox = getattr(widget, 'cbD', None)
+        sewagePumping_checkbox = getattr(widget, 'cbsewagePupming', None)
+        SewageDump_checkbox = getattr(widget, 'cbSewageDump', None) #Purgimissõlm
+        sewagePlant_checkbox = getattr(widget, 'cbsewagePlant', None)
+        WaterStation_checkbox = getattr(widget, 'cbWaterStation', None)
+        Rainwater_checkbox = getattr(widget, 'cbSK', None)
+        RainPump_checkbox = getattr(widget, 'cbRainPump', None)
 
-        if sewer_checkbox:
-            current_text_sewer = sewer_checkbox.text()
-            text = WaterWorks.vabavoolsed_torustikud_1
-            sewer_checkbox.setText(f"{current_text_sewer} ({text}m)*")
+      # Define texts for checkboxes
+        checkbox_texts = {
+            water_checkbox: WaterWorks.survetorustik_1,
+            sewer_checkbox: WaterWorks.vabavoolsed_torustikud_1,
+            prSewer_checkbox: WaterWorks.survetorustik_1,
+            drainage_checkbox: WaterWorks.vabavoolsed_torustikud_1,
+            sewagePumping_checkbox: WaterWorks.pumpla_1,
+            SewageDump_checkbox: WaterWorks.purgimissõlm,
+            sewagePlant_checkbox: WaterWorks.purgimissõlm,
+            WaterStation_checkbox: WaterWorks.purgimissõlm,
+            Rainwater_checkbox: WaterWorks.vabavoolsed_torustikud_1,
+            RainPump_checkbox: WaterWorks.pumpla_1,
+        }
 
-        if prSewer_checkbox:
-            current_text_prSewer = prSewer_checkbox.text()
-            text = WaterWorks.survetorustik_1
-            prSewer_checkbox.setText(f"{current_text_prSewer} ({text}m)*")
+        # Define lambdas to connect checkboxes to functions (to be implemented)
+        checkbox_functions = {
+            water_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, water_checkbox),
+            sewer_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, sewer_checkbox),
+            prSewer_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, prSewer_checkbox),
+            drainage_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, drainage_checkbox),
+            sewagePumping_checkbox: None ,
+            SewageDump_checkbox: None,
+            sewagePlant_checkbox: None,
+            WaterStation_checkbox: None,
+            Rainwater_checkbox: None,
+            RainPump_checkbox: None,
+        }
 
-        if drainage_checkbox:
-            current_text_drainage = drainage_checkbox.text()
-            text = WaterWorks.vabavoolsed_torustikud_1
-            drainage_checkbox.setText(f"{current_text_drainage} ({text}m)*")
+        # Create checkboxes_info dictionary
+        checkboxes_info = {}
+        for checkbox, text in checkbox_texts.items():
+            if checkbox:
+                checkboxes_info[checkbox] = (text, checkbox_functions.get(checkbox))
 
+        return checkboxes_info
 
+    @staticmethod
+    def update_checkboxes(widget, checkboxes_info):
+        for checkbox, (text, connect_function) in checkboxes_info.items():
+            if checkbox:
+                current_text = checkbox.text()
+                checkbox.setText(f"{current_text} ({text}m)*")
+                if connect_function is not None:
+                    checkbox.setEnabled(True)
+                    checkbox.clicked.connect(connect_function)
+                else:
+                    checkbox.setEnabled(False)
 
     def closeEvent(self, event):
         self.cleanup()
@@ -500,39 +531,39 @@ class BufferTools:
                 
 class cbMapSelectors:    
 
-    def selectWater_pipes(widget, value, checkbox):
+    def selectWater_pipes(widget, checkbox):
         layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
         temp_layer_name = TempBufferLayerNames.water_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
     
         if checkbox.isChecked():
-            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
+            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
             style_name = FilesByNames().Easement_Water
             distance = WaterWorks.vabavoolsed_torustikud_1
             BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
     
-    def selectSewer_pipes(widget, value, checkbox):
+    def selectSewer_pipes(widget, checkbox):
         layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
         temp_layer_name = TempBufferLayerNames.sewer_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
     
         if checkbox.isChecked():
-            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
+            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
             style_name = FilesByNames().Easement_sewage
             distance = WaterWorks.vabavoolsed_torustikud_1
             BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
     
-    def selectprSewer_pipes(widget, value, checkbox):
+    def selectprSewer_pipes(widget, checkbox):
         layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
         temp_layer_name = TempBufferLayerNames.prSewer_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
     
         if checkbox.isChecked():
-            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
+            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
             style_name = FilesByNames().Easement_prSewage
             distance = WaterWorks.survetorustik_1
             BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)

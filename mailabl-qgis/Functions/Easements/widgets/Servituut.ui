@@ -281,7 +281,7 @@ QLineEdit {
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>20</number>
+             <number>0</number>
             </property>
             <item>
              <widget class="QLineEdit" name="leInfo">
@@ -506,7 +506,7 @@ QLineEdit {
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <property name="spacing">
-             <number>10</number>
+             <number>5</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -553,6 +553,14 @@ QLineEdit {
                <property name="verticalSpacing">
                 <number>5</number>
                </property>
+               <item row="0" column="1">
+                <widget class="QLabel" name="lblDialer">
+                 <property name="text">
+                  <string>Muuda kinnistu 
+ puhvri ulatust</string>
+                 </property>
+                </widget>
+               </item>
                <item row="2" column="1">
                 <widget class="QDial" name="dPuhvriSuurus">
                  <property name="sizePolicy">
@@ -563,22 +571,6 @@ QLineEdit {
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
-                <widget class="QPushButton" name="pbCreateProperties">
-                 <property name="font">
-                  <font>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Koosta puhver</string>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="1">
                 <widget class="QLabel" name="label">
                  <property name="text">
@@ -586,177 +578,85 @@ QLineEdit {
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
-                <widget class="QLabel" name="lblDialer">
-                 <property name="text">
-                  <string>Kinnistu buhvri ulatus</string>
-                 </property>
-                </widget>
-               </item>
               </layout>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_5">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+             <widget class="QGroupBox" name="groupBox_4">
+              <property name="title">
+               <string>Revee võrk</string>
               </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_11">
+              <layout class="QVBoxLayout" name="verticalLayout_8">
                <property name="spacing">
-                <number>0</number>
+                <number>5</number>
                </property>
                <property name="leftMargin">
-                <number>0</number>
+                <number>6</number>
                </property>
                <property name="topMargin">
-                <number>0</number>
+                <number>6</number>
                </property>
                <property name="rightMargin">
-                <number>0</number>
+                <number>6</number>
                </property>
                <property name="bottomMargin">
-                <number>0</number>
+                <number>6</number>
                </property>
                <item>
-                <widget class="QGroupBox" name="groupBox_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                <widget class="QCheckBox" name="cbK">
+                 <property name="text">
+                  <string>Torud</string>
                  </property>
-                 <property name="title">
-                  <string>Võrk või jaam</string>
+                 <property name="checked">
+                  <bool>false</bool>
                  </property>
-                 <layout class="QGridLayout" name="gridLayout_7">
-                  <property name="leftMargin">
-                   <number>6</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>6</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>6</number>
-                  </property>
-                  <property name="bottomMargin">
-                   <number>6</number>
-                  </property>
-                  <property name="spacing">
-                   <number>5</number>
-                  </property>
-                  <item row="5" column="0">
-                   <widget class="QCheckBox" name="checkBox_2">
-                    <property name="text">
-                     <string>Purgimissõlm*</string>
-                    </property>
-                    <property name="checkable">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="6" column="0">
-                   <widget class="QCheckBox" name="checkBox_3">
-                    <property name="text">
-                     <string>Pumpla*</string>
-                    </property>
-                    <property name="checkable">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0" colspan="2">
-                   <widget class="QCheckBox" name="cbV">
-                    <property name="text">
-                     <string>Vesi</string>
-                    </property>
-                    <property name="checked">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="0" colspan="2">
-                   <widget class="QCheckBox" name="cbKSK">
-                    <property name="text">
-                     <string>Survekanal</string>
-                    </property>
-                    <property name="checked">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0" colspan="2">
-                   <widget class="QCheckBox" name="cbK">
-                    <property name="text">
-                     <string>Kanal</string>
-                    </property>
-                    <property name="checked">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0" colspan="2">
-                   <widget class="QCheckBox" name="cbD">
-                    <property name="text">
-                     <string>Drenaaž</string>
-                    </property>
-                    <property name="checked">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="0">
-                   <widget class="QCheckBox" name="checkBox">
-                    <property name="text">
-                     <string>Sadamevesi*</string>
-                    </property>
-                    <property name="checkable">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="0">
-                   <widget class="QCheckBox" name="checkBox_4">
-                    <property name="text">
-                     <string>Reoveepuhasti*</string>
-                    </property>
-                    <property name="checkable">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
                 </widget>
                </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QFrame" name="frame_2">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_12">
                <item>
-                <spacer name="verticalSpacer">
+                <widget class="QCheckBox" name="cbKSK">
+                 <property name="text">
+                  <string>Surve torud</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                 <property name="checked">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="cbsewagePupming">
+                 <property name="text">
+                  <string>Pumpla*</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="cbSewageDump">
+                 <property name="text">
+                  <string>Purgimissõlm*</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="cbsewagePlant">
+                 <property name="text">
+                  <string>Reoveepuhasti*</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_7">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
                  </property>
@@ -768,35 +668,190 @@ QLineEdit {
                  </property>
                 </spacer>
                </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox">
+              <property name="title">
+               <string>Vee võrk</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <property name="spacing">
+                <number>5</number>
+               </property>
+               <property name="leftMargin">
+                <number>6</number>
+               </property>
+               <property name="topMargin">
+                <number>6</number>
+               </property>
+               <property name="rightMargin">
+                <number>6</number>
+               </property>
+               <property name="bottomMargin">
+                <number>6</number>
+               </property>
                <item>
-                <widget class="QPushButton" name="pbKoostaServituut">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
+                <widget class="QCheckBox" name="cbV">
                  <property name="text">
-                  <string>Koosta skeem(v1)</string>
+                  <string>Torud</string>
                  </property>
-                 <property name="icon">
-                  <iconset>
-                   <normaloff>:/newPrefix/Icons_a/cloud-lightning.svg</normaloff>:/newPrefix/Icons_a/cloud-lightning.svg</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>25</width>
-                   <height>25</height>
-                  </size>
+                 <property name="checked">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QCheckBox" name="cbWaterStation">
+                 <property name="text">
+                  <string>Jaam*</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
               </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBox_3">
+              <property name="title">
+               <string>Sademevee võrk</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <property name="spacing">
+                <number>5</number>
+               </property>
+               <property name="leftMargin">
+                <number>6</number>
+               </property>
+               <property name="topMargin">
+                <number>6</number>
+               </property>
+               <property name="rightMargin">
+                <number>6</number>
+               </property>
+               <property name="bottomMargin">
+                <number>6</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="cbSK">
+                 <property name="text">
+                  <string>Torud*</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="cbD">
+                 <property name="text">
+                  <string>Drenaaž</string>
+                 </property>
+                 <property name="checked">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="cbRainPump">
+                 <property name="text">
+                  <string>Pumpla*</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_6">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignRight">
+          <widget class="QFrame" name="frame_2">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbKoostaServituut">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Koosta skeem(v1)</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>:/newPrefix/Icons_a/cloud-lightning.svg</normaloff>:/newPrefix/Icons_a/cloud-lightning.svg</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
              </widget>
             </item>
            </layout>
