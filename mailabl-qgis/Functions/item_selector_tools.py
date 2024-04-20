@@ -209,7 +209,7 @@ class UseQGISNative:
         # Find and select all features in the input layer
         input_layer = QgsProject.instance().mapLayersByName(layer)
         if not input_layer:
-            print(f"Input layer '{input_layer}' not found")
+            print(f"Missing elements from '{input_layer}' layers")
             return
 
         reference = QgsProject.instance().mapLayersByName(reference_layer)
