@@ -82,6 +82,7 @@ class EasementTools:
                 
                 WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
 
+                self.widget_EasmentTools.pbprint.setEnabled(False)
                 self.widget_EasmentTools.dPuhvriSuurus.valueChanged.connect(
                     lambda: WidgetTools.activ_dialer(self.widget_EasmentTools))
                 self.widget_EasmentTools.dPuhvriSuurus.setValue(20)
@@ -90,7 +91,7 @@ class EasementTools:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
 
 
-                self.widget_EasmentTools.pbprint.clicked.connect(lambda: EasementTools.PrintEasement())
+                self.widget_EasmentTools.pbprint.clicked.connect(lambda: EasementTools.PrintEasement(self.widget_EasmentTools))
 
                 pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement())            
                 
@@ -113,10 +114,11 @@ class EasementTools:
             self.cleanup()
             self.widget_EasmentTools.show()
 
-    def PrintEasement():
-        layout_name = "Kitsendus"
+    def PrintEasement(widget):
+        layout_name = widget.lblLayoutName.text()
+        layout_map_item = widget.lblMapObject.text()
         layer_name = Union().UnionLayer
-        PrintEasement.print_selected_items(layer_name, layout_name)
+        PrintEasement.print_selected_items(layer_name, layout_name, layout_map_item)
 
 
     def connect_button_click_signal(self, active_layer_name):

@@ -2,7 +2,7 @@ from qgis.utils import iface
 from qgis.core import QgsProject, QgsLayoutExporter
 
 class PrintEasement:
-    def print_selected_items(layer_name, layout_name):
+    def print_selected_items(layer_name, layout_name, layout_map_item):
         # Get the layer
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         if layer is None:
@@ -24,22 +24,32 @@ class PrintEasement:
             return
 
         # Find the "Map 1" item in the layout
-        map_item = layout.itemById("Map 1")
+        map_item = layout.itemById(layout_map_item)
+        label_item = layout.itemById("easement_nr")
+
+        if label_item is None:
+            print("Label item 'easement_nr' not found in selected layout.")
+        else:
+            # Set the text of the label item
+            label_item.setText("See on test")
 
         if map_item is None:
             print("Map item 'Map 1' not found in selected layout.")
             return
 
-        # Adjust the extent of the map item to focus on the selected features
-        if layer.selectedFeatureCount() > 0:
-            # Get the extent of the selected features
-            extent = layer.selectedFeaturesBounds()
+        # Get the extent of the selected features
+        selected_features = layer.selectedFeatures()
+        if selected_features:
+            # Adjust the extent of the map item to focus on the selected features
+            if layer.selectedFeatureCount() > 0:   
+                extent = selected_features[0].geometry().boundingBox()
+                for feature in selected_features[1:]:
+                    extent.combineExtentWith(feature.geometry().boundingBox())
 
-            # Set the extent of the map item to the extent of the selected features
-            map_item.zoomToExtent(extent)
-
-            # Refresh the layout to reflect the changes
-            layout.refresh()
+                # Set the extent of the map item
+                map_item.setExtent(extent)
+                # Refresh the layout to reflect the changes
+                layout.refresh()
         else:
             print("No features selected in the layer.")
 

@@ -1201,7 +1201,7 @@ QLineEdit {
             <item>
              <widget class="QGroupBox" name="groupBox_4">
               <property name="title">
-               <string>Revee võrk</string>
+               <string>Reveevõrk</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_8">
                <property name="spacing">
@@ -1232,7 +1232,7 @@ QLineEdit {
                <item>
                 <widget class="QCheckBox" name="cbKSK">
                  <property name="text">
-                  <string>Surve torud</string>
+                  <string>Survetorud</string>
                  </property>
                  <property name="checkable">
                   <bool>true</bool>
@@ -1291,7 +1291,7 @@ QLineEdit {
             <item>
              <widget class="QGroupBox" name="groupBox">
               <property name="title">
-               <string>Vee võrk</string>
+               <string>Veevõrk</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_2">
                <property name="spacing">
@@ -1474,11 +1474,92 @@ QLineEdit {
            </layout>
           </widget>
          </item>
-         <item alignment="Qt::AlignRight">
-          <widget class="QPushButton" name="pbprint">
-           <property name="text">
-            <string>Print</string>
+         <item>
+          <widget class="QGroupBox" name="groupBox_7">
+           <property name="title">
+            <string>Prindi Layoudi seaded ja trükkimine*</string>
            </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_17">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Layoudi nimetus:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lblLayoutName">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(131, 142, 162);</string>
+              </property>
+              <property name="text">
+               <string>Kitsendus</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>Kuva ala</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lblMapObject">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(131, 142, 162);</string>
+              </property>
+              <property name="text">
+               <string>Map 1</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbprint">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(131, 142, 162);</string>
+              </property>
+              <property name="text">
+               <string>Print*</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../../../icons/Icons_hele/printer.svg</normaloff>../../../icons/Icons_hele/printer.svg</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame_4">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_16"/>
           </widget>
          </item>
          <item>
