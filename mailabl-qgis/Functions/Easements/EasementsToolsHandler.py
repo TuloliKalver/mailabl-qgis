@@ -15,7 +15,7 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtCore
 
 from .EasementsItems import queryHandling
-from .resticon import WaterWorks
+from .resticon import WaterWorks, GetRuledRestriction
 from ..Union import Union
 from ..propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from ..item_selector_tools import UseQGISNative
@@ -74,10 +74,10 @@ class EasementTools:
                 self.widget_EasmentTools.tabWidget.hide()
 
                                 # Get the checkboxes and their associated texts and functions
-                checkboxes_info = EasementTools.get_checkbox_info(self.widget_EasmentTools)
+                self.checkboxes_info = EasementTools.get_checkbox_info(self.widget_EasmentTools)
 
                 # Update checkbox texts and connect them to functions
-                EasementTools.update_checkboxes(self.widget_EasmentTools, checkboxes_info)
+                EasementTools.update_checkboxes(self.checkboxes_info)
                 
                 WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
 
@@ -94,8 +94,8 @@ class EasementTools:
                 clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))
                 #style_name = FilesByNames().Easement_style         
                 #buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name))
-                save_button.clicked.connect(lambda: self.on_save_button_clicked())
-                cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked())
+                save_button.clicked.connect(lambda: self.on_save_button_clicked(self.checkboxes_info))
+                cancel_button.clicked.connect(lambda: self.on_cancel_button_clicked(self.checkboxes_info))
                 
                 # Connect closeEvent method to handle window close event
                 self.widget_EasmentTools.closeEvent = self.closeEvent
@@ -119,19 +119,6 @@ class EasementTools:
                     lambda: WidgetTools.activate_layer_and_use_selectTool(self, self.widget_EasmentTools)
                 )
 
-
-    def checkbox_auto_labeling(widget):
-        water_checkbox = widget.cbV
-        sewer_checkbox = widget.cbK
-        prSewer_checkbox = widget.cbKSK
-        drainage_checkbox = widget.cbD
-        sewagePupming_checkbox = widget.cbsewagePupming
-        SewageDump_checkbox = widget.cbSewageDump #Purgimissõlm
-        sewagePlant_checkbox = widget.cbsewagePlant
-        WaterStation_checkbox = widget.cbWaterStation
-        Rainwater_checkbox = widget.cbSK
-        RainPump_checkbox = widget.cbRainPump
-
     @staticmethod
     def get_checkbox_info(widget):
         water_checkbox = getattr(widget, 'cbV', None)
@@ -147,16 +134,16 @@ class EasementTools:
 
       # Define texts for checkboxes
         checkbox_texts = {
-            water_checkbox: WaterWorks.survetorustik_1,
-            sewer_checkbox: WaterWorks.vabavoolsed_torustikud_1,
-            prSewer_checkbox: WaterWorks.survetorustik_1,
-            drainage_checkbox: WaterWorks.vabavoolsed_torustikud_1,
-            sewagePumping_checkbox: WaterWorks.pumpla_1,
-            SewageDump_checkbox: WaterWorks.purgimissõlm,
-            sewagePlant_checkbox: WaterWorks.purgimissõlm,
-            WaterStation_checkbox: WaterWorks.purgimissõlm,
-            Rainwater_checkbox: WaterWorks.vabavoolsed_torustikud_1,
-            RainPump_checkbox: WaterWorks.pumpla_1,
+            water_checkbox: WaterWorks().survetorustik_1,
+            sewer_checkbox: WaterWorks().vabavoolsed_torustikud_1,
+            prSewer_checkbox: WaterWorks().survetorustik_1,
+            drainage_checkbox: WaterWorks().vabavoolsed_torustikud_1,
+            sewagePumping_checkbox: WaterWorks().pumpla_1,
+            SewageDump_checkbox: WaterWorks().purgimissõlm,
+            sewagePlant_checkbox: WaterWorks().purgimissõlm,
+            WaterStation_checkbox: WaterWorks().purgimissõlm,
+            Rainwater_checkbox: WaterWorks().vabavoolsed_torustikud_1,
+            RainPump_checkbox: WaterWorks().pumpla_1
         }
 
         # Define lambdas to connect checkboxes to functions (to be implemented)
@@ -182,21 +169,26 @@ class EasementTools:
         return checkboxes_info
 
     @staticmethod
-    def update_checkboxes(widget, checkboxes_info):
+    def uncheck_checkboxes(widget, checkboxes_info):
+        for checkbox, (text, connect_function) in checkboxes_info.items():
+            if checkbox:
+                checkbox.setChecked(False)
+
+    @staticmethod
+    def update_checkboxes(checkboxes_info):
         for checkbox, (text, connect_function) in checkboxes_info.items():
             if checkbox:
                 current_text = checkbox.text()
-                checkbox.setText(f"{current_text} ({text}m)")
+                checkbox.setText(f"{current_text}* ({text}m)")
                 checkbox.setStyleSheet("color: #c5c5d2")  # Set text background color and text color
                 if connect_function is not None:
-                    checkbox.setText(f"{current_text}*")
+                    checkbox.setText(f"{current_text} ({text}m)")
                     checkbox.setEnabled(True)
                     checkbox.clicked.connect(connect_function)
                 else:
                     checkbox.setEnabled(False)
                     checkbox.setStyleSheet("color: #8a95a5")
                     
-
     def closeEvent(self, event):
         self.cleanup()
         self.Buffer_cleanup()
@@ -205,9 +197,9 @@ class EasementTools:
             active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
             active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
 
-
         Flags.active_properties_layer_flag = False
         self.widget_EasmentTools.close()
+        self.uncheck_checkboxes(self.widget_EasmentTools, self.checkboxes_info)  # Uncheck checkboxes
         event.accept()  # Allow the window to close
 
     def clear_table(self):
@@ -216,24 +208,24 @@ class EasementTools:
             if model is not None:
                 model.clear()
 
-
-    def on_save_button_clicked(self):
+    def on_save_button_clicked(self, checkboxes_info):
         self.Buffer_cleanup()
         if self.widget_EasmentTools is not None:
             text = "Olen alles arenduses. \n mitte midagi ei salvestatud"
             heading = pealkiri.tubli
             self.cleanup()
+            self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
             QMessageBox.information(self.widget_EasmentTools, heading, text)
             if on_selection_changed_lambda_easements:
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
-            self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)    
+                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
+                self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)
             Flags.active_properties_layer_flag = False
+            
             self.widget_EasmentTools.accept()
-
-
-    def on_cancel_button_clicked(self):
+            
+    def on_cancel_button_clicked(self, checkboxes_info):
         self.Buffer_cleanup()
         if self.widget_EasmentTools is not None:
             self.cleanup()
@@ -241,12 +233,13 @@ class EasementTools:
             heading = pealkiri.informationSimple
             QMessageBox.information(self.widget_EasmentTools, heading, text)
             if on_selection_changed_lambda_easements:
-                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)            
+                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)            
-            
+                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
+
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.reject()
+            self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
             
     def cleanup(self):
         if self.is_select_tool_activated:
@@ -267,7 +260,7 @@ class EasementTools:
             layer = layer[0].id()  # Get the first layer if found
             QgsProject.instance().removeMapLayer(layer)
         else:
-            print(f"layer '{layer_name}' not found.")
+            # print(f"layer '{layer_name}' not found.")
             pass
         
         WorkLayers = WorkingLayers.list_of_workinglayers()
@@ -357,15 +350,15 @@ class WidgetTools:
         flag = Flags.active_properties_layer_flag
         if flag:
             
-            print(f"value of lambda_esaments before connecting: {on_selection_changed_lambda_easements}")
+          # print(f"value of lambda_esaments before connecting: {on_selection_changed_lambda_easements}")
             on_selection_changed_lambda_easements = lambda: WidgetTools.on_selection_changed(widget)
             active_layer.selectionChanged.connect(on_selection_changed_lambda_easements)
-            print(f"value of lambda_esaments: {on_selection_changed_lambda_easements}")
+          # print(f"value of lambda_esaments: {on_selection_changed_lambda_easements}")
             widget.showMinimized()  # Assuming widget is defined somewhere     
             
         else:
-            print("Flag is false")
-
+            # print("Flag is false")
+            pass
 
     @staticmethod
     def on_selection_changed(widget):
@@ -384,7 +377,8 @@ class WidgetTools:
                 widget.showNormal()
         else:
             # If the flag is false, do nothing
-            print("Flag is false")
+            # print("Flag is false")
+            pass
 
     @staticmethod
     def load_selected_item_name(table, widget):
@@ -462,7 +456,7 @@ class WorkingLayers:
 
 class BufferTools:    
     def generate_buffer_around_selected_item(widget, tempp_buffer_layer, layer_name, style_name, checkbox=None, insert_distance = None):
-        print(f"in generator. tempp_buffer_layer: {tempp_buffer_layer}, layer_name: {layer_name}")
+        #print(f"in generator. tempp_buffer_layer: {tempp_buffer_layer}, layer_name: {layer_name}")
         active_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         
         if active_layer:
@@ -473,9 +467,11 @@ class BufferTools:
                 # Get the selected features
                 selected_features = active_layer.selectedFeatures()
                 
-                                # Determine the distance for buffering
+                # Determine the distance for buffering
                 if insert_distance is not None:
-                    distance = insert_distance
+                # Convert comma to period if necessary
+                   distance = insert_distance.replace(',', '.')
+
                 else:
                     # Calculate distance based on widget value
                     puhver = widget.dPuhvriSuurus.value() / 10
@@ -539,11 +535,29 @@ class cbMapSelectors:
         layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
         temp_layer_name = TempBufferLayerNames.water_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
-    
+        #depth = 2.3  # meters
+        #inner_diameter = 250  # millimeters
+
+        depth = widget.lblHV.text()
+        inner_diameter = widget.lblDeV.text()
+
         if checkbox.isChecked():
-            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
+            selected_features = UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
+            #diameters, begin_z_coords = UseQGISNative.get_diameter_and_Z(selected_features)
+
+            #print("diameters")
+            #print(diameters)
+
+            #print("z_coordinat")
+            #print(begin_z_coords)
+
             style_name = FilesByNames().Easement_Water
-            distance = WaterWorks.vabavoolsed_torustikud_1
+
+            distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
+            print(f"Applicable restriction: {distance}")
+
+            checkbox.setText(f"Torud ({distance}m)")
+            #distance = WaterWorks.vabavoolsed_torustikud_1
             BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
@@ -552,11 +566,23 @@ class cbMapSelectors:
         layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
         temp_layer_name = TempBufferLayerNames.sewer_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
-    
+
+        depth = widget.lblHK.text()
+        inner_diameter = widget.lblDeK.text()
+
+        distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
+        print(f"Applicable restriction: {distance}")
+
+        checkbox.setText(f"Torud ({distance}m)")
+
+
         if checkbox.isChecked():
             UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
             style_name = FilesByNames().Easement_sewage
-            distance = WaterWorks.vabavoolsed_torustikud_1
+            distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
+            print(f"Applicable restriction: {distance}")
+
+            #distance = WaterWorks.vabavoolsed_torustikud_1
             BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
@@ -565,7 +591,16 @@ class cbMapSelectors:
         layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
         temp_layer_name = TempBufferLayerNames.prSewer_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
-    
+
+        depth = widget.lblHK.text()
+        inner_diameter = widget.lblDeK.text()
+
+        distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
+        print(f"Applicable restriction: {distance}")
+
+        checkbox.setText(f"Torud ({distance}m)")
+
+
         if checkbox.isChecked():
             UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
             style_name = FilesByNames().Easement_prSewage
@@ -587,29 +622,36 @@ class cbMapSelectors:
             BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
-    
+
+        depth = widget.lblHK.text()
+        inner_diameter = widget.lblDeK.text()
+
+        distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
+        print(f"Applicable restriction: {distance}")
+
+        checkbox.setText(f"Torud ({distance}m)")
+
 
 class MapCleaners:
     @staticmethod
     def clear_selection_and_delete_temp_layer(layer_name, temp_layer_name):
-        print(f"temp_layer_name: {temp_layer_name}")
+      # print(f"temp_layer_name: {temp_layer_name}")
         # Clear the selection when checkbox is unchecked
         layer = QgsProject.instance().mapLayersByName(layer_name)
         if layer:
             layer = layer[0]
             layer.removeSelection()
         else:
-            print(f"Layer '{layer_name}' not found.")
-        
+            # print(f"layer '{layer_name}' not found.")
+            pass
         # Delete the temporary layer
         temp_layer = QgsProject.instance().mapLayersByName(temp_layer_name)
         if temp_layer:
             temp_layer = temp_layer[0]
             QgsProject.instance().removeMapLayer(temp_layer.id())
         else:
-            print(f"Temporary layer '{temp_layer_name}' not found.")
-        # Refresh the canvas
-            # Refresh the canvas
+            # print(f"Temporary layer '{temp_layer_name}' not found.")
+            pass
         iface.mapCanvas().refresh()
 
 
@@ -619,7 +661,8 @@ class MapCleaners:
         if layer:
             layer.removeSelection()
         else:
-            print('No ei ole ju enam olemas!')
+            # print('No ei ole ju enam olemas!')
+            pass
         temp_layer_name = TempBufferLayerNames.buffer_layer_name
         MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
         # Clear the model from rows
@@ -633,7 +676,6 @@ class GenerateEasement:
     @staticmethod
     def generate_easement():
         print("started Intersection")
-
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
 
         # Slice the lists to include only the first four items
@@ -643,8 +685,8 @@ class GenerateEasement:
 
         # Create a dictionary to map buffer layers to intersect layers
         layer_mapping = dict(zip(buffer_layers, intersect_layers))
-        print("mapped layers:")
-        print(layer_mapping)
+        #print("mapped layers:")
+        #print(layer_mapping)
         # Iterate through the buffer layers and perform operations for each
         
         for buffer_layer in buffer_layers:
@@ -655,10 +697,10 @@ class GenerateEasement:
         
         intersect_layers = QgsProject.instance().mapLayers().values()
         intersect_layer_names = [layer.name() for layer in intersect_layers if layer.name().startswith("Ajutine_intersect_")]
-        print("intersect_layer_names:")
-        print(intersect_layer_names)
+        #print("intersect_layer_names:")
+        #print(intersect_layer_names)
         if not intersect_layer_names:
-            print("No intersect layers found.")
+            #print("No intersect layers found.")
             return
         # Check if join layer exists and remove it if present
         existing_layers = QgsProject.instance().mapLayersByName(JoinLayers.join_layer_name)
@@ -668,14 +710,14 @@ class GenerateEasement:
                     layer = layer[0].id()  # Get the first layer if found
                     QgsProject.instance().removeMapLayer(layer)
                 else:
-                    print(f"layer '{layer}' not found.")
+                    #print(f"layer '{layer}' not found.")
                     pass
 
  
         # Check the number of intersect layers found
         num_intersect_layers = len(intersect_layer_names)
-        print("num_intersect_layers:")
-        print(num_intersect_layers)
+        #print("num_intersect_layers:")
+        #print(num_intersect_layers)
         join_layer_name = "Joined_layer"
         while num_intersect_layers >= 1:
             JoinLayers.join_all_layers(intersect_layer_names, num_intersect_layers, join_layer_name)
@@ -689,19 +731,19 @@ class GenerateEasement:
                 layer = layer[0].id()  # Get the first layer if found
                 QgsProject.instance().removeMapLayer(layer)
             else:
-                print(f"layer '{layer_name}' not found.")
+                # print(f"layer '{layer_name}' not found.")
                 pass
 
         joined_layers = QgsProject.instance().mapLayers().values()
         joined_layer_names = [layer.name() for layer in joined_layers if layer.name().startswith("Joined_layer")]
         num_join_layers = len(joined_layer_names)
-        print("num_join_layers")
-        print(num_join_layers)
+        #print("num_join_layers")
+        #print(num_join_layers)
         final_layer_name = "Final_joined"
 
         while num_join_layers >= 1:
-            print("num_join_layers in loop")
-            print(num_join_layers)
+            #print("num_join_layers in loop")
+            #print(num_join_layers)
             JoinLayers.join_all_layers(joined_layer_names, num_join_layers, final_layer_name)
                 # Decrement the number of intersect layers
             num_join_layers -= 1
@@ -720,7 +762,7 @@ class GenerateEasement:
                 layer = layer[0]
                 layer.removeSelection()
             else:
-                print(f"layer '{layer_name}' not found.")
+                # print(f"layer '{layer_name}' not found.")
                 pass
 
         properties_buffer = TempBufferLayerNames.buffer_layer_name    
@@ -729,5 +771,5 @@ class GenerateEasement:
             layer = layer[0].id()  # Get the first layer if found
             QgsProject.instance().removeMapLayer(layer)
         else:
-            print(f"layer '{layer_name}' not found.")
+            # print(f"layer '{layer_name}' not found.")
             pass

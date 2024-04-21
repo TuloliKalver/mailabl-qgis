@@ -1,7 +1,8 @@
 
 import processing
+
 from qgis.utils import iface
-from qgis.core import QgsProcessingFeatureSourceDefinition, QgsProject, QgsFeature, edit
+from qgis.core import QgsProcessingFeatureSourceDefinition, QgsProject, QgsFeature, edit, QgsVectorLayer
 
 from PyQt5.QtCore import QCoreApplication
 from ..config.settings import SettingsDataSaveAndLoad, connect_settings_to_layer
@@ -209,12 +210,12 @@ class UseQGISNative:
         # Find and select all features in the input layer
         input_layer = QgsProject.instance().mapLayersByName(layer)
         if not input_layer:
-            print(f"Missing elements from '{input_layer}' layers")
+            #print(f"Missing elements from '{input_layer}' layers")
             return
 
         reference = QgsProject.instance().mapLayersByName(reference_layer)
         if not reference:
-            print(f"Input layer '{reference_layer}' not found")
+            #print(f"Input layer '{reference_layer}' not found")
             return
         
         dial_value = widget.dPuhvriSuurus.value()
@@ -232,5 +233,20 @@ class UseQGISNative:
         # Get selected features
         selected_features = result['OUTPUT']
 
-        # Print number of selected features
-        print(f"{len(selected_features)} features selected within {distance}m of {reference_layer}")
+        return selected_features
+ 
+
+    @staticmethod
+    def get_diameter_and_Z(selected_features):
+        diameters = []
+        begin_z_coords = []
+
+        for feature in selected_features:
+            diameter = feature.attribute('diameter')
+            begin_z_coord = feature.attribute('begin_z_coord')
+
+            # Append the attributes to the respective lists
+            diameters.append(diameter)
+            begin_z_coords.append(begin_z_coord)
+
+        return diameters, begin_z_coords
