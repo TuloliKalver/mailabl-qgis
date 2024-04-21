@@ -1474,6 +1474,13 @@ QLineEdit {
            </layout>
           </widget>
          </item>
+         <item alignment="Qt::AlignRight">
+          <widget class="QPushButton" name="pbprint">
+           <property name="text">
+            <string>Print</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QFrame" name="ActionTools">
            <property name="frameShape">

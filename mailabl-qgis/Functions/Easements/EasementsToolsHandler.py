@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
 from PyQt5 import QtCore
 
+from ...utils.printers import PrintEasement
 from .EasementsItems import queryHandling
 from .resticon import WaterWorks, GetRuledRestriction
 from ..Union import Union
@@ -89,6 +90,8 @@ class EasementTools:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
 
 
+                self.widget_EasmentTools.pbprint.clicked.connect(lambda: EasementTools.PrintEasement())
+
                 pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement())            
                 
                 clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))
@@ -109,6 +112,12 @@ class EasementTools:
             # If an instance already exists, simply show it
             self.cleanup()
             self.widget_EasmentTools.show()
+
+    def PrintEasement():
+        layout_name = "Kitsendus"
+        layer_name = Union().UnionLayer
+        PrintEasement.print_selected_items(layer_name, layout_name)
+
 
     def connect_button_click_signal(self, active_layer_name):
         if self.widget_EasmentTools:
@@ -678,6 +687,7 @@ class MapCleaners:
 
 
 class GenerateEasement:
+
     @staticmethod
     def generate_easement():
         print("started Intersection")
