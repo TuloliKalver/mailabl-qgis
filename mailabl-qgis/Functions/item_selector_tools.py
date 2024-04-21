@@ -208,6 +208,8 @@ class CadasterSelector:
 class UseQGISNative:
     def select_elements_from_layer(layer, reference_layer, widget):
         # Find and select all features in the input layer
+        
+        print(f"select elements from '{layer}' layer")
         input_layer = QgsProject.instance().mapLayersByName(layer)
         if not input_layer:
             #print(f"Missing elements from '{input_layer}' layers")

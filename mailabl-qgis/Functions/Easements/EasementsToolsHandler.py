@@ -149,9 +149,9 @@ class EasementTools:
         # Define lambdas to connect checkboxes to functions (to be implemented)
         checkbox_functions = {
             water_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, water_checkbox),
-            sewer_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, sewer_checkbox),
-            prSewer_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, prSewer_checkbox),
-            drainage_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, drainage_checkbox),
+            sewer_checkbox: lambda: cbMapSelectors.selectSewer_pipes(widget, sewer_checkbox),
+            prSewer_checkbox: lambda: cbMapSelectors.selectprSewer_pipes(widget, prSewer_checkbox),
+            drainage_checkbox: lambda: cbMapSelectors.selectDrainage_pipes(widget, drainage_checkbox),
             sewagePumping_checkbox: None ,
             SewageDump_checkbox: None,
             sewagePlant_checkbox: None,
@@ -532,17 +532,17 @@ class BufferTools:
 class cbMapSelectors:    
 
     def selectWater_pipes(widget, checkbox):
-        layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
+        print(f"ccheckbox: {checkbox}")
+        water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)
+                
         temp_layer_name = TempBufferLayerNames.water_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
-        #depth = 2.3  # meters
-        #inner_diameter = 250  # millimeters
-
+        
         depth = widget.lblHV.text()
         inner_diameter = widget.lblDeV.text()
 
         if checkbox.isChecked():
-            selected_features = UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
+            selected_features = UseQGISNative.select_elements_from_layer(water_layer_name, properties_buffer, widget)
             #diameters, begin_z_coords = UseQGISNative.get_diameter_and_Z(selected_features)
 
             #print("diameters")
@@ -558,12 +558,13 @@ class cbMapSelectors:
 
             checkbox.setText(f"Torud ({distance}m)")
             #distance = WaterWorks.vabavoolsed_torustikud_1
-            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, water_layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
-            MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
+            MapCleaners.clear_selection_and_delete_temp_layer(water_layer_name, temp_layer_name)
     
     def selectSewer_pipes(widget, checkbox):
-        layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
+        print(f"ccheckbox: {checkbox}")
+        sewer_layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
         temp_layer_name = TempBufferLayerNames.sewer_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
 
@@ -577,18 +578,19 @@ class cbMapSelectors:
 
 
         if checkbox.isChecked():
-            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
+            UseQGISNative.select_elements_from_layer(sewer_layer_name, properties_buffer, widget)
             style_name = FilesByNames().Easement_sewage
             distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
             print(f"Applicable restriction: {distance}")
 
             #distance = WaterWorks.vabavoolsed_torustikud_1
-            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, sewer_layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
-            MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
+            MapCleaners.clear_selection_and_delete_temp_layer(sewer_layer_name, temp_layer_name)
     
     def selectprSewer_pipes(widget, checkbox):
-        layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
+        print(f"ccheckbox: {checkbox}")
+        prSerer_layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
         temp_layer_name = TempBufferLayerNames.prSewer_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
 
@@ -598,39 +600,42 @@ class cbMapSelectors:
         distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
         print(f"Applicable restriction: {distance}")
 
-        checkbox.setText(f"Torud ({distance}m)")
+        checkbox.setText(f"Surve torud ({distance}m)")
 
 
         if checkbox.isChecked():
-            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, widget)
+            UseQGISNative.select_elements_from_layer(prSerer_layer_name, properties_buffer, widget)
             style_name = FilesByNames().Easement_prSewage
-            distance = WaterWorks.survetorustik_1
-            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
+            #distance = WaterWorks.survetorustik_1
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, prSerer_layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
-            MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
+            MapCleaners.clear_selection_and_delete_temp_layer(prSerer_layer_name, temp_layer_name)
     
 
-    def selectDrainage_pipes(widget, value, checkbox):
-        layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)        
+    def selectDrainage_pipes(widget, checkbox):
+        print(f"ccheckbox: {checkbox}")
+        drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)        
         temp_layer_name = TempBufferLayerNames.drainage_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
     
-        if checkbox.isChecked():
-            UseQGISNative.select_elements_from_layer(layer_name, properties_buffer, value)
-            style_name = FilesByNames().Easement_Drainage
-            distance = WaterWorks.vabavoolsed_torustikud_1
-            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, layer_name, style_name, checkbox, distance)
-        if not checkbox.isChecked():
-            MapCleaners.clear_selection_and_delete_temp_layer(layer_name, temp_layer_name)
-
         depth = widget.lblHK.text()
         inner_diameter = widget.lblDeK.text()
 
         distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
         print(f"Applicable restriction: {distance}")
 
-        checkbox.setText(f"Torud ({distance}m)")
+        checkbox.setText(f"Drenaaž ({distance}m)")
 
+
+        if checkbox.isChecked():
+            UseQGISNative.select_elements_from_layer(drainage_layer_name, properties_buffer, widget)
+            style_name = FilesByNames().Easement_Drainage
+            #distance = WaterWorks.vabavoolsed_torustikud_1
+            BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, drainage_layer_name, style_name, checkbox, distance)
+        if not checkbox.isChecked():
+            MapCleaners.clear_selection_and_delete_temp_layer(drainage_layer_name, temp_layer_name)
+
+        
 
 class MapCleaners:
     @staticmethod
@@ -750,7 +755,7 @@ class GenerateEasement:
         
         joined_layers = QgsProject.instance().mapLayers().values()
         joined_layer_name = [layer.name() for layer in joined_layers if layer.name().startswith(final_layer_name)]
-
+        print(f"joined_layer_name: {joined_layer_name}")        
         Union.make_unioned_layer(joined_layer_name)
 
         working_layers = WorkingLayers.list_of_workinglayers() 
