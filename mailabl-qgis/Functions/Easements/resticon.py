@@ -34,7 +34,7 @@ class KaugKüte:
     maapealsed_soojustorustikud = "5" # aurutorustikul töörõhul 16 baari ja alla selle on 5 meetrit
     maapealsed_soojustorustikud = "5" # veetorustikul töörõhul üle 6 baari on 5 meetrit
     maapealsed_soojustorustikud = "2" # veetorustikul töörõhul 6 baari ja alla selle on 2 meetrit
-    Vedelkütusetorustik = "5" # torustiku välisseina äärmistest punktidest 5 meetrit
+    vedelkütusetorustik = "5" # torustiku välisseina äärmistest punktidest 5 meetrit
 
 class KaugküteLinks:
     link_1 ="https://www.riigiteataja.ee/akt/103022022020" # "Ehitise kaitsevööndi ulatus, kaitsevööndis tegutsemise kord ja..." § 11.Kaugküttevõrgu ehitiste kaitsevöönd ja § 12.Vedelkütusetorustike kaitsevöönd
