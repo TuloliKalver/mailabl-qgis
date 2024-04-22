@@ -357,7 +357,7 @@ QLineEdit {
                   </font>
                  </property>
                  <property name="text">
-                  <string>Eelistatud lepingu liigid</string>
+                  <string>Eelistatud lepingu liik</string>
                  </property>
                 </widget>
                </item>

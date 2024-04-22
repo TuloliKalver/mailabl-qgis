@@ -510,7 +510,7 @@ QLineEdit {
                   </font>
                  </property>
                  <property name="text">
-                  <string>Kanalitorud</string>
+                  <string>Kanalisatsioonitorud</string>
                  </property>
                 </widget>
                </item>
@@ -579,7 +579,7 @@ QLineEdit {
                   </font>
                  </property>
                  <property name="text">
-                  <string>Survekanalisatsioon</string>
+                  <string>Survekanalisatsiooni torud</string>
                  </property>
                 </widget>
                </item>
@@ -663,7 +663,7 @@ QLineEdit {
                   </font>
                  </property>
                  <property name="text">
-                  <string>Drenaaz</string>
+                  <string>Drenaažitorud</string>
                  </property>
                 </widget>
                </item>
