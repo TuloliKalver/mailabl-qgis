@@ -1,7 +1,8 @@
 
 import processing
+
 from qgis.utils import iface
-from qgis.core import QgsProcessingFeatureSourceDefinition, QgsProject, QgsFeature, edit
+from qgis.core import QgsProcessingFeatureSourceDefinition, QgsProject, QgsFeature, edit, QgsVectorLayer
 
 from PyQt5.QtCore import QCoreApplication
 from ..config.settings import SettingsDataSaveAndLoad, connect_settings_to_layer
@@ -205,18 +206,21 @@ class CadasterSelector:
         return cadasters_str
 
 class UseQGISNative:
-    def select_elements_from_layer(layer, reference_layer, dial_value):
+    def select_elements_from_layer(layer, reference_layer, widget):
         # Find and select all features in the input layer
+        
+        print(f"select elements from '{layer}' layer")
         input_layer = QgsProject.instance().mapLayersByName(layer)
         if not input_layer:
-            print(f"Input layer '{input_layer}' not found")
+            #print(f"Missing elements from '{input_layer}' layers")
             return
 
         reference = QgsProject.instance().mapLayersByName(reference_layer)
         if not reference:
-            print(f"Input layer '{reference_layer}' not found")
+            #print(f"Input layer '{reference_layer}' not found")
             return
-
+        
+        dial_value = widget.dPuhvriSuurus.value()
         puhver = dial_value / 10
         distance = round(puhver * 2) / 2
 
@@ -231,5 +235,20 @@ class UseQGISNative:
         # Get selected features
         selected_features = result['OUTPUT']
 
-        # Print number of selected features
-        print(f"{len(selected_features)} features selected within {distance}m of {reference_layer}")
+        return selected_features
+ 
+
+    @staticmethod
+    def get_diameter_and_Z(selected_features):
+        diameters = []
+        begin_z_coords = []
+
+        for feature in selected_features:
+            diameter = feature.attribute('diameter')
+            begin_z_coord = feature.attribute('begin_z_coord')
+
+            # Append the attributes to the respective lists
+            diameters.append(diameter)
+            begin_z_coords.append(begin_z_coord)
+
+        return diameters, begin_z_coords

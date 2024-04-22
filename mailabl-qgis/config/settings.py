@@ -94,6 +94,7 @@ class FilesByNames:
         self.contracts_setup_ui = "ContractsSetup.ui"
         self.easements_setup_ui = "EasementsSetup.ui"
         self.easement_tools_ui = "Servituut.ui"
+        self.easement_unined = "UnionedEasement.qml"
 
 class Filepaths:
     @staticmethod

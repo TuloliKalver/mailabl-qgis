@@ -4,7 +4,8 @@ from qgis.core import QgsSettings, Qgis
 from ...config.settings import GraphQLSettings
 from ..python.DataLoading_classes import GraphQLQueryLoader
 from ...processes.infomessages.messages import Headings
-
+#from ...queries.python.query_tools import requestBuilder
+# Kontolli ja lahenda lõplikult miks ei saa kasutada request builderit selles moodulis?
  
 pealkiri = Headings()
 
