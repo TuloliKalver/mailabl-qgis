@@ -77,7 +77,7 @@
          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Üks hetk. Nuputan, mida sulle järgmisena näidata.</string>
+            <string>Üks hetk! Nuputame, mida sulle järgmisena näidata.</string>
            </property>
           </widget>
          </item>
@@ -97,7 +97,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Kas sa oled täna juba arvutiekraanist silmi puhanud?</string>
+            <string>Kas oled täna juba iekraanist silmi puhanud?</string>
            </property>
           </widget>
          </item>

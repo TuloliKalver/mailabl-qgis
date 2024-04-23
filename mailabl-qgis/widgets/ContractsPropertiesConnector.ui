@@ -114,17 +114,17 @@ QPushButton:hover{
      </layout>
     </widget>
    </item>
-   <item alignment="Qt::AlignHCenter">
+   <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Nüüd on kõik vajalik juba aktiveeritud ja saad alustada kohe kinnistute valikuga.</string>
+      <string>Alusta kaardil kinnistute lisamist.</string>
      </property>
     </widget>
    </item>
    <item alignment="Qt::AlignHCenter">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string> NB! kui varasemalt on kinnituid juba valitud siis need kuvatakse juba tabelis. </string>
+      <string>NB! Tabelis kuvatakse hetkel kaardil valitud kinnistud. Võid tühistada valiku (nupp &quot;Tühista valik&quot; või jätkata kinnistute lisamist. Valik kinnita &quot;OK&quot; nupuga.</string>
      </property>
     </widget>
    </item>
