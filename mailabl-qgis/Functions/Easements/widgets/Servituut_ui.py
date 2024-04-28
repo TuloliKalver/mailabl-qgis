@@ -111,8 +111,13 @@ class Ui_servituutDialogBase(object):
 "    color: #343541;\n"
 "    text-align: center;    \n"
 "    padding: 2px 8px;\n"
-"    border-radius: 6px;\n"
-"    \n"
+"    border-radius: 6px;    \n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background-color: #303040; /* Adjusted disabled background color */\n"
+"    border: 1px solid #707070; /* Adjust border color for disabled state */\n"
+"    color: #8a95a5; /* Adjust text color for disabled state */\n"
 "}\n"
 "\n"
 "QLabel {\n"
@@ -622,7 +627,8 @@ class Ui_servituutDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pbprint.setFont(font)
-        self.pbprint.setStyleSheet("background-color: rgb(131, 142, 162);")
+        self.pbprint.setStyleSheet("\n"
+"")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\Functions\\Easements\\widgets\\../../../icons/Icons_hele/printer.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pbprint.setIcon(icon3)

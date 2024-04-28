@@ -121,8 +121,13 @@ QPushButton:hover{
 	color: #343541;
 	text-align: center;	
 	padding: 2px 8px;
-    border-radius: 6px;
-	
+    border-radius: 6px;	
+}
+
+QPushButton:disabled {
+    background-color: #303040; /* Adjusted disabled background color */
+    border: 1px solid #707070; /* Adjust border color for disabled state */
+    color: #8a95a5; /* Adjust text color for disabled state */
 }
 
 QLabel {
@@ -1537,7 +1542,8 @@ QLineEdit {
                </font>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color: rgb(131, 142, 162);</string>
+               <string notr="true">
+</string>
               </property>
               <property name="text">
                <string>Print*</string>

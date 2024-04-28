@@ -36,6 +36,8 @@ on_selection_changed_lambda_easements = None
 
 goup_layer_name = ''
 
+
+
 class EasementTools:
     def __init__(self, tweasementView):
         self.tweasementView = tweasementView
@@ -44,7 +46,6 @@ class EasementTools:
         self.select_tool = None
         self.select_tool_connection = None
         self.Buffer_tool_connection = None
-
 
         # Connect button click signal outside the load_widget method
 
@@ -73,8 +74,8 @@ class EasementTools:
 
                 self.widget_EasmentTools.show()
                 self.widget_EasmentTools.tabWidget.hide()
-
-                                # Get the checkboxes and their associated texts and functions
+                self.widget_EasmentTools.pbprint.setEnabled(False)
+                # Get the checkboxes and their associated texts and functions
                 self.checkboxes_info = EasementTools.get_checkbox_info(self.widget_EasmentTools)
 
                 # Update checkbox texts and connect them to functions
@@ -82,7 +83,7 @@ class EasementTools:
                 
                 WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
 
-                self.widget_EasmentTools.pbprint.setEnabled(False)
+
                 self.widget_EasmentTools.dPuhvriSuurus.valueChanged.connect(
                     lambda: WidgetTools.activ_dialer(self.widget_EasmentTools))
                 self.widget_EasmentTools.dPuhvriSuurus.setValue(20)
@@ -93,7 +94,7 @@ class EasementTools:
 
                 self.widget_EasmentTools.pbprint.clicked.connect(lambda: EasementTools.PrintEasement(self.widget_EasmentTools))
 
-                pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement())            
+                pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement(self.widget_EasmentTools))            
                 
                 clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))
                 #style_name = FilesByNames().Easement_style         
@@ -211,6 +212,7 @@ class EasementTools:
         Flags.active_properties_layer_flag = False
         self.widget_EasmentTools.close()
         self.uncheck_checkboxes(self.widget_EasmentTools, self.checkboxes_info)  # Uncheck checkboxes
+        self.widget_EasmentTools.pbprint.setEnabled(False)
         event.accept()  # Allow the window to close
 
     def clear_table(self):
@@ -233,7 +235,7 @@ class EasementTools:
                 active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
                 self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)
             Flags.active_properties_layer_flag = False
-            
+            self.widget_EasmentTools.pbprint.setEnabled(False)            
             self.widget_EasmentTools.accept()
             
     def on_cancel_button_clicked(self, checkboxes_info):
@@ -247,10 +249,10 @@ class EasementTools:
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
                 active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
-
+            self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
+            self.widget_EasmentTools.pbprint.setEnabled(False)
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.reject()
-            self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
             
     def cleanup(self):
         if self.is_select_tool_activated:
@@ -691,7 +693,7 @@ class MapCleaners:
 class GenerateEasement:
 
     @staticmethod
-    def generate_easement():
+    def generate_easement(widget):
         print("started Intersection")
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
 
@@ -790,3 +792,4 @@ class GenerateEasement:
         else:
             # print(f"layer '{layer_name}' not found.")
             pass
+        widget.pbprint.setEnabled(True)
