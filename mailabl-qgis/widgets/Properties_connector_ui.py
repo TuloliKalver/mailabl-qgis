@@ -131,6 +131,6 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.lblDescription.setText(_translate("Dialog", "Kinnistud lisatakse projektile:"))
-        self.label.setText(_translate("Dialog", "Nüüd on kõik vajalik juba aktiveeritud ja saad alustada kohe kinnistute valikuga."))
-        self.label_2.setText(_translate("Dialog", " NB! kui varasemalt on kinnituid juba valitud siis need kuvatakse juba tabelis. "))
+        self.label.setText(_translate("Dialog", "Alusta kaardil kinnistute lisamist."))
+        self.label_2.setText(_translate("Dialog", "NB! Tabelis kuvatakse hetkel kaardil valitud kinnistud. Võid tühistada valiku (nupp \"Tühista valik\" või jätkata kinnistute lisamist. Valik kinnita \"OK\" nupuga."))
         self.pbClear_list.setText(_translate("Dialog", "Tühista valik"))

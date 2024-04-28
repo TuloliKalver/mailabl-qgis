@@ -671,7 +671,6 @@ class Ui_MailablDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.leSearcheasements.setFont(font)
-        self.leSearcheasements.setText("")
         self.leSearcheasements.setObjectName("leSearcheasements")
         self.horizontalLayout_74.addWidget(self.leSearcheasements)
         self.pbSearcheasements = QtWidgets.QPushButton(self.feasementSeachframe)
@@ -2354,7 +2353,6 @@ class Ui_MailablDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.le_searchContracts.setFont(font)
-        self.le_searchContracts.setText("")
         self.le_searchContracts.setObjectName("le_searchContracts")
         self.horizontalLayout_60.addWidget(self.le_searchContracts)
         self.pbSearchContracts = QtWidgets.QPushButton(self.Contracts_Seachframe)
@@ -2479,7 +2477,7 @@ class Ui_MailablDialogBase(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -129, 738, 842))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 740, 961))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_159 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_159.setObjectName("verticalLayout_159")
@@ -3469,7 +3467,6 @@ class Ui_MailablDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.le_searchProjects.setFont(font)
-        self.le_searchProjects.setText("")
         self.le_searchProjects.setObjectName("le_searchProjects")
         self.horizontalLayout_27.addWidget(self.le_searchProjects)
         self.pbSearchProjects = QtWidgets.QPushButton(self.Project_Seachframe)
@@ -4654,9 +4651,9 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(4)
-        self.swCadastral_sub_processes.setCurrentIndex(4)
-        self.tabWidget_Propertie_list.setCurrentIndex(0)
+        self.swWorkSpace.setCurrentIndex(7)
+        self.swCadastral_sub_processes.setCurrentIndex(2)
+        self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(3)
@@ -4688,9 +4685,10 @@ class Ui_MailablDialogBase(object):
         self.pbExpand.setText(_translate("MailablDialogBase", "Kinnistute lisamine"))
         self.lbleasementPageName.setText(_translate("MailablDialogBase", "Servituudid - ARENDUSES - * märgitud elemendid ei ole kasutatavad"))
         self.pbEasementsConnectProperties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine*"))
-        self.leSearcheasements.setPlaceholderText(_translate("MailablDialogBase", " Otsing - servituudi numbri järgi"))
+        self.leSearcheasements.setText(_translate("MailablDialogBase", "Servituudi numbri järgi otsing"))
+        self.leSearcheasements.setPlaceholderText(_translate("MailablDialogBase", "Sisesta servituudi number"))
         self.pbSearcheasements.setText(_translate("MailablDialogBase", "Otsi"))
-        self.pbEasementsTools.setText(_translate("MailablDialogBase", "Koosta servituut*"))
+        self.pbEasementsTools.setText(_translate("MailablDialogBase", "Koosta joonis*"))
         self.CadastralMovesMainLabel.setText(_translate("MailablDialogBase", "Andmete laadimine"))
         self.label_29.setText(_translate("MailablDialogBase", "Lisamiseks on valmis"))
         self.label_11.setText(_translate("MailablDialogBase", "kinnistut."))
@@ -4735,7 +4733,7 @@ class Ui_MailablDialogBase(object):
         self.textEdit_2.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; text-decoration: underline;\">Aluskaart koostatakse Mailablis olevate kinnistute andmebaasi põhjal.</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; text-decoration: underline;\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">Mailablisse esitatakse päring andmete kohta. Kinnistud leitakse katastriüksus SHP_KATASTRIYKSUS kihilt ja imporditakse uuele loodavale kinnistute aluskaardi kihile, mida kasutaja saab kasutada aluskaardina oma toimingutes.</span></p>\n"
@@ -4759,7 +4757,7 @@ class Ui_MailablDialogBase(object):
         self.textEdit_3.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Kinnistute andmed on oluline osa Mailabl plugina korralikust toimimisest.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">      </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">QGIS-is saad kihi aluskaardi omadusi muuta (kihil parem hiireklõps, Omadused ja Sümbolid)</span></p>\n"
@@ -4780,14 +4778,15 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Olemasolevate kinnistute uuendamine</span></p></body></html>"))
         self.label_18.setText(_translate("MailablDialogBase", "Lepingud"))
         self.pbContracts_Connect_properties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
+        self.le_searchContracts.setText(_translate("MailablDialogBase", "Lepingu numbri järgi otsing"))
         self.le_searchContracts.setPlaceholderText(_translate("MailablDialogBase", " Otsing - lepingu numbri järgi"))
         self.pbSearchContracts.setText(_translate("MailablDialogBase", "Otsi"))
         self.label_20.setText(_translate("MailablDialogBase", "Help"))
         self.textEdit.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Aluskihi struktuur peab vastama Maa-ameti katastri struktuurile.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p>\n"
@@ -4814,40 +4813,40 @@ class Ui_MailablDialogBase(object):
         self.label_16.setText(_translate("MailablDialogBase", "Andmekiht, millelt imporditakse uued andmed:"))
         self.lblSHPNewItems.setText(_translate("MailablDialogBase", "Veel Määramata"))
         self.label_6.setText(_translate("MailablDialogBase", "Valitud katastriandmete kiht:"))
-        self.lblcurrent_main_layer_label.setText(_translate("MailablDialogBase", "Veel Määramata"))
+        self.lblcurrent_main_layer_label.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_2.setText(_translate("MailablDialogBase", "Kiht, kuhu salvestatakse uued katastriandmed:"))
-        self.lblnewCadastrals_input_layer_label.setText(_translate("MailablDialogBase", "Veel Määrmata"))
+        self.lblnewCadastrals_input_layer_label.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_31.setText(_translate("MailablDialogBase", "Projektide seaded"))
         self.label_22.setText(_translate("MailablDialogBase", "Kinnistutega seotud projekti kiht"))
-        self.lblLayerProjects_Properties.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblLayerProjects_Properties.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_14.setText(_translate("MailablDialogBase", "Projektide vektor kaardikiht"))
-        self.lblLayerProjects_Vector.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblLayerProjects_Vector.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_13.setText(_translate("MailablDialogBase", "Eelistatud staatus"))
-        self.lbl_preferred_project_status.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lbl_preferred_project_status.setText(_translate("MailablDialogBase", "Määramata"))
         self.lblProjectsFolder.setText(_translate("MailablDialogBase", "Projekti baaskaust"))
-        self.lblProjectsFolder_location.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblProjectsFolder_location.setText(_translate("MailablDialogBase", "Määramata"))
         self.lblProjectsTargetFolder.setText(_translate("MailablDialogBase", "Projekti sihtkaust"))
-        self.lblProjectsTargetFolder_location.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblProjectsTargetFolder_location.setText(_translate("MailablDialogBase", "Määramata"))
         self.lblFolder_nameStructureLabel.setText(_translate("MailablDialogBase", "Projekti kaustale määratud nime struktuur"))
-        self.lblPreferredFolderName_structure.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblPreferredFolderName_structure.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_34.setText(_translate("MailablDialogBase", "Lepingute seaded"))
         self.label_36.setText(_translate("MailablDialogBase", "Eelistatud staatus"))
-        self.lbl_preferred_contract_status.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lbl_preferred_contract_status.setText(_translate("MailablDialogBase", "Määramata"))
         self.lblPreferredContractsTypes_text.setText(_translate("MailablDialogBase", "Eelistatud lepingu liigid"))
-        self.lblPreferredContractsTypes_value.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblPreferredContractsTypes_value.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_35.setText(_translate("MailablDialogBase", "Servituutide seaded"))
         self.label_37.setText(_translate("MailablDialogBase", "Eelistatud staatus"))
-        self.lblPreferredEasementsStatus.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblPreferredEasementsStatus.setText(_translate("MailablDialogBase", "Määramata"))
         self.lblPreferredEasementsTypes_text.setText(_translate("MailablDialogBase", "Eelistatud servituudi liigid"))
-        self.lblPreferredEasementsTypes_value.setText(_translate("MailablDialogBase", "Veel määramata"))
-        self.lblWaterPipes.setText(_translate("MailablDialogBase", "Vee torud"))
-        self.lblWaterPipesValue.setText(_translate("MailablDialogBase", "Veel määramata"))
-        self.lblSewerPipes.setText(_translate("MailablDialogBase", "Kanali torud"))
-        self.lblSewerPipesValue.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblPreferredEasementsTypes_value.setText(_translate("MailablDialogBase", "Määramata"))
+        self.lblWaterPipes.setText(_translate("MailablDialogBase", "Veetorud"))
+        self.lblWaterPipesValue.setText(_translate("MailablDialogBase", "Määramata"))
+        self.lblSewerPipes.setText(_translate("MailablDialogBase", "Kanalitorud"))
+        self.lblSewerPipesValue.setText(_translate("MailablDialogBase", "Määramata"))
         self.lblPrSewagePipes.setText(_translate("MailablDialogBase", "Survekanalisatsiooni torud"))
-        self.lblPrSewagePipesValue.setText(_translate("MailablDialogBase", "Veel määramata"))
-        self.lblPrainagePipes.setText(_translate("MailablDialogBase", "Drenaazitorud"))
-        self.lblDrainagePipesValue.setText(_translate("MailablDialogBase", "Veel määramata"))
+        self.lblPrSewagePipesValue.setText(_translate("MailablDialogBase", "Määramata"))
+        self.lblPrainagePipes.setText(_translate("MailablDialogBase", "Drenaažitorud"))
+        self.lblDrainagePipesValue.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_10.setText(_translate("MailablDialogBase", "Avaleht"))
         self.teWelcomeContent.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -4867,14 +4866,15 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">Kombineeritud variant majasiseste võimalustega annab ettevõttele suurema vabaduse ja kiiruse teemakaartide ühenduse haldamiseks.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">Soovitame eelistada kombineeritud varianti.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">Oluline on, et ettevõtte kinnistute aluskaart oleks loodud Maa-ameti struktuuri alusel läbi Mailabli pulgina. Selliselt tagatakse toimiv andmeühendus kõikides moodulites. </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">Oluline on, et ettevõtte kinnistute aluskaart oleks loodud Maa-ameti struktuuri alusel läbi Mailabli plugina. Selliselt tagatakse toimiv andmeühendus kõikides moodulites. </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">NB! Jälgi infoaknaid, mis annavad info vajalike tegevuste kohta või on hoiatava informatsiooniga. </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">NB! Jälgi infoaknaid ja selgitusi akna paremas osas (avatavad/suletavad), mis annavad infot vajalike tegevuste kohta või on hoiatava informatsiooniga.  </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\"><br /></span><span style=\" font-size:12pt; text-decoration: underline;\">NB! Tegemist on Mailabli beeta versiooniga, mis ei ole lõplik toode ja mille arendus sõltub olulisel määral kasutajate tagasisidest!</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p></body></html>"))
         self.lbl_heading_Projects.setText(_translate("MailablDialogBase", "Projektid"))
         self.pbProjects_Connect_properties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
-        self.le_searchProjects.setPlaceholderText(_translate("MailablDialogBase", " Otsing - projekti numbri järgi"))
+        self.le_searchProjects.setText(_translate("MailablDialogBase", "Projekti numbri järgi otsing"))
+        self.le_searchProjects.setPlaceholderText(_translate("MailablDialogBase", " Sisesta projekti number"))
         self.pbSearchProjects.setText(_translate("MailablDialogBase", "Otsi"))
         self.pushButton.setText(_translate("MailablDialogBase", "Zoomitud ala projektid"))
         self.pbGenProjectFolder.setText(_translate("MailablDialogBase", "Projekti kausta genereerimine"))
@@ -4901,28 +4901,27 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Avaleht_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.lb_HM_LepingudPealkiri.setText(_translate("MailablDialogBase", "Lepingud"))
         self.te_HM_Lepingud_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Nimekirjas on esmase valikuna </span><span style=\" font-size:9pt; font-weight:600;\">pealepingud</span><span style=\" font-size:9pt;\"> (lepingu lisade ja seotud lepingute filtreerimise võimalus loomisel). </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Lepingutel on Mailablis </span><span style=\" font-size:9pt; font-weight:600;\">määratud parameetrid</span><span style=\" font-size:9pt;\"> (staatused, liigid jne).  </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Lepinguid saad vastavalt liikidele ja staatusele </span><span style=\" font-size:9pt; font-weight:600;\">filtreerida ja määrata eelistatav staatus </span><span style=\" font-size:9pt;\">(soovituslikult aktiivne staatus, nt &quot;Sõlmitud&quot; või &quot;Allkirjastamisel&quot;). </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Lepinguid saad vastavalt liikidele ja staatusele </span><span style=\" font-size:9pt; font-weight:600;\">filtreerida ja Seadetes määrata eelistatav staatus </span><span style=\" font-size:9pt;\">(soovituslikult aktiivne staatus, nt &quot;Sõlmitud&quot; või &quot;Allkirjastamisel&quot;). </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale filtri valikut vajuta värskendamise nuppu!</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Tulpadel on </span><span style=\" font-size:9pt; font-weight:600;\">sortimise võimalus</span><span style=\" font-size:9pt;\">.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Plugina lepingute andmed on </span><span style=\" font-size:9pt; font-weight:600;\">sünkroonis Mailabli lepingute andmetega</span><span style=\" font-size:9pt;\"> (lepingu number, nimetus, staatus jne). Kui soovid midagi muuta või näha projekti kohta rohkem infot, siis tee seda Mailablis. </span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Pluginas </span><span style=\" font-size:9pt; font-weight:600;\">Mailabli märgile</span><span style=\" font-size:9pt;\"> vajutades jõuad kiiresti Mailablis õige lepingu kandele. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Asukoha ikoonile</span><span style=\" font-size:9pt;\"> vajutades, näed aluskaardil lepinguga seotud kinnistuid. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Failile viitavale</span><span style=\" font-size:9pt;\"> ikoonile vajutades, saad otse lepinguga seotud failidele või kaustadele.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Soovitud lepingu leiad ka, kui sisestad</span><span style=\" font-size:9pt; font-weight:600;\"> lepingu täpse numbri otingu väljale</span><span style=\" font-size:9pt;\">  ja vajutad &quot;Otsi&quot; nuppu&quot;.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Soovitud lepingu leiad ka, kui sisestad</span><span style=\" font-size:9pt; font-weight:600;\"> lepingu täpse numbri otingu väljale </span><span style=\" font-size:9pt;\">&quot;Lepingu numbri järgi otsing&quot;  ja vajutad &quot;Otsi&quot; nuppu&quot;.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Nupp &quot;Kinnistutega sidumine&quot;</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Seda nuppu vajutades aktiveeritakse eelseadistatud kaardikiht ning valiku tööriist. Vali leping, millele tahad kinnistuid lisada. Vajuta nupule &quot;Kinnistutega sidumine&quot;. Avaneb aken, milles näed infot juba valitud kinnistute kohta. Tabel on tühi, kui kinnistute valikuid pole veel tehtud. Alusta kaardil kinnistute valimist. </span></p>\n"
@@ -4938,12 +4937,12 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Toimingud_kinnistutega_Laiendamine_Yldine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Laiendamine_Maakond.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Maakond</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. Vali maakond (valida saab ühe maakonna korraga).</span></p>\n"
@@ -4952,13 +4951,13 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">2. Kinnita maakond (</span><span style=\" font-size:9pt; font-weight:600;\">&quot;Kinnita&quot;</span><span style=\" font-size:9pt;\"> nupp&quot;)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">3. Oota omavalitsuste nimekirja laadimist.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.te_Laiente_HM_Toimingud_kinnistutega_Laiendamine_Omavalitsus.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Omavalitsus</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. Vali valitud maakonna omavalitsuste nimekirjast soovitud omavalitsus. Võimalus on valida üks, mitu või kõik omavalitsused (viimasel </span><span style=\" font-size:9pt; font-weight:600;\">&quot;Vali kõik&quot;</span><span style=\" font-size:9pt;\"> nupp).</span></p>\n"
@@ -4967,12 +4966,12 @@ class Ui_MailablDialogBase(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">NB! Peale valiku kinnitamist näed valitud omavalitsuse piire ka aluskaardil ja saad kinnistu või kinnistute valikuid seal teha (nupp &quot;Vali kaardilt&quot;). Kaardil valituid kinnistuid näed plugina akna alumises tabelis. </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#ff0000;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Laiendamine_Linn_Kyla.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Linn/Küla</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kui jätkad tabelis kinnistute valimist, siis:</span></p>\n"
@@ -4987,7 +4986,7 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Toimingud_kinnistutega_Laiendamine_LaetudKinnistud.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Laetud kinnistute tabel</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Mida näed?</span></p>\n"
@@ -5003,39 +5002,39 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Yldine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Siia üldine jutt kitsendamise kohta.</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Miks üldse ja mida kitsendamisega teha saab?</span></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Maakond.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Maakond</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kirjuta sisu</span></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Omavalitsus.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Omavalitsus</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kirjuta sisu</span></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Linn_Kyla.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Yldine_kirjeldus.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.lb_HM_Toimingud_kinnistutega_Aluskaardi_koostamine_Pealkiri.setText(_translate("MailablDialogBase", "Aluskaardi koostamine"))
         self.te_HM_Toimingud_kinnistutega_Aluskaardi_koostamine_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Selle toiminguga saab luua oma GIS projekti ja Mailablis olevate kinnistutega sünkroonis aluskaardi.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Toiming on vajalik kui:</span></p>\n"
@@ -5057,7 +5056,7 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Satted_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; text-decoration: underline;\">Kasutaja seaded</span><span style=\" font-size:10pt; text-decoration: underline;\"> </span><span style=\" font-size:10pt;\">(loomisel)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Näed kasutaja andmeid, millised õigused tal on (millisesse kasutajategruppi või gruppidesse ta kuulub). Samuti on võimalik teha eelistusi avalehe valiku osas.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Valikute tegemiseks vali &quot;mutrivõti&quot; ja alusta seadistamist.</span></p>\n"
@@ -5087,7 +5086,7 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Lepingud_Sisu_2.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Nimekirjas on esmase valikuna </span><span style=\" font-size:9pt; font-weight:600;\">servituudid</span><span style=\" font-size:9pt;\">. </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituutidel on Mailablis </span><span style=\" font-size:9pt; font-weight:600;\">määratud parameetrid</span><span style=\" font-size:9pt;\"> (staatused, liigid jne).  </span></p>\n"
@@ -5116,51 +5115,50 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Andmete_laadimine_Yldine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.te_HM_Andmete_laadimine_Algandmete_laadimine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.te_HM_Andmete_laadimine_MaaAmetisse.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Maa-ametist laadimine</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>"))
         self.lb_HM_Projektid_Pealkiri.setText(_translate("MailablDialogBase", "Projektid"))
         self.te_HM_Projektid_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Nimekirjas on esmase valikuna</span><span style=\" font-size:9pt; font-weight:600;\"> peaprojektid</span><span style=\" font-size:9pt;\"> (alamprojektide filtreerimise võimalus loomisel). Projektid on avalikud (ei ole privaatsed). </span></p>\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Nimekirjas on esmase valikuna</span><span style=\" font-size:9pt; font-weight:600;\"> peaprojektid</span><span style=\" font-size:9pt;\"> (alamprojektide filtreerimise võimalus loomisel). Projektid on avalikud (st ei ole privaatsed). </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projektidel on Mailablis </span><span style=\" font-size:9pt; font-weight:600;\">määratud parameetrid </span><span style=\" font-size:9pt;\">(staatused, nimetused, numbrid jne). </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projekte saad vastavalt staatusele</span><span style=\" font-size:9pt; font-weight:600;\"> filtreerida ja määrata eelistatav staatus </span><span style=\" font-size:9pt;\">(soovituslikult aktiivne staatus, nt &quot;Töös&quot; või &quot;Ettevalmistamisel&quot;).</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projekte saad vastavalt staatusele</span><span style=\" font-size:9pt; font-weight:600;\"> filtreerida ja Seadetes määrata eelistatav staatus </span><span style=\" font-size:9pt;\">(soovituslikult aktiivne staatus, nt &quot;Töös&quot; või &quot;Ettevalmistamisel&quot;).</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic;\">NB! </span><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">Peale filtri valikut, vajuta värskendamise nuppu!</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Tulpadel on </span><span style=\" font-size:9pt; font-weight:600;\">sortimise võimalus</span><span style=\" font-size:9pt;\">.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Plugina projekti andmed on </span><span style=\" font-size:9pt; font-weight:600;\">sünkroonis Mailabli projektide andmetega</span><span style=\" font-size:9pt;\"> (projekti number, nimetus, staatus jne). Kui soovid midagi muuta või näha projekti kohta rohkem infot, siis tee seda Mailablis. </span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Pluginas </span><span style=\" font-size:9pt; font-weight:600;\">Mailabli ikoonile</span><span style=\" font-size:9pt;\"> vajutades jõuad kiiresti Mailablis õige projekti kandele. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Asukoha ikoonile</span><span style=\" font-size:9pt;\"> vajutades, näed aluskaardil projektiga seotud kinnistuid. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Failile viitavale ikoonile</span><span style=\" font-size:9pt;\"> vajutades, saad otse projektiga seotud failidele või kaustadele.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Soovitud projekti leiad ka, kui sisestad </span><span style=\" font-size:9pt; font-weight:600;\">projekti täpse numbri otsingu</span><span style=\" font-size:9pt;\"> väljale (&quot;Otsi&quot;).</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Soovitud projekti leiad ka, kui sisestad </span><span style=\" font-size:9pt; font-weight:600;\">projekti täpse numbri otsingu</span><span style=\" font-size:9pt;\"> väljale (&quot;Projekti numbri järgi otsing&quot; ja &quot;Otsi&quot;).</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Nupp &quot;Zoomitud ala projektid&quot;</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Selle valikuga saad nimekirja zoomitud alaga seotud projektidest. Kuna päring on mahukas, on see hetkel piiratud 1000 katastriüksusega. </span><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Ole kannatlik, sest tulemuste saamine võtab natuke aega!</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Nupp &quot;Kinnistutega sidumine&quot;</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Seda nuppu vajutades aktiveeritakse eelseadistatud kaardikiht ning valiku tööriist. Vali projekt, millele tahad kinnistuid lisada. Vajuta nupule &quot;Kinnistutega sidumine&quot;. Avaneb aken, milles näed infot juba valitud kinnistute kohta. Tabel on tühi, kui kinnistute valikuid pole veel tehtud. Alusta kaardil kinnistute valimist. </span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projektiga juba seotud kinnistuid uuesti valides, süsteem topelt seoseid ei tee.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projektiga juba seotud kinnistuid uuesti valides süsteem topelt seoseid ei tee.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale kinnistutega sidumist vajuta uute seoste nägemiseks värskendamise nuppu.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"><br /></span></p></body></html>"))
         self.lbVersionNumber.setText(_translate("MailablDialogBase", "v.31.01.24"))
 from qgscheckablecombobox import QgsCheckableComboBox

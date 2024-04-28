@@ -278,7 +278,7 @@ class Ui_ContractSettings(object):
         _translate = QtCore.QCoreApplication.translate
         ContractSettings.setWindowTitle(_translate("ContractSettings", "Lepingute seaded"))
         self.lblCurrect_Cadastral_3.setText(_translate("ContractSettings", "Eelistatud staatus"))
-        self.lblPreferedContractTypes_2.setText(_translate("ContractSettings", "Eelistatud lepingu liigid"))
+        self.lblPreferedContractTypes_2.setText(_translate("ContractSettings", "Eelistatud lepingu liik"))
         self.pbCancel.setText(_translate("ContractSettings", "Tühista"))
         self.pbSave.setText(_translate("ContractSettings", "Salvesta"))
         self.label_2.setText(_translate("ContractSettings", "Seadete selgitused"))
