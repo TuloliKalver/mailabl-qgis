@@ -133,7 +133,7 @@ class InsertStatusToComboBox:
 
         # Populate the combo box with items and associate each item's text with its ID
         statuses = Statuses.all_by_module_names(self, module_name)
-        print(statuses)
+        #print(statuses)
         for item_text, item_id in statuses:
             comboBox.addItem(item_text)
             comboBox.setItemData(comboBox.count() - 1, item_id)

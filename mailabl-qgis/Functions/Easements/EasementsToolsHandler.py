@@ -88,6 +88,13 @@ class EasementTools:
                     lambda: WidgetTools.activ_dialer(self.widget_EasmentTools))
                 self.widget_EasmentTools.dPuhvriSuurus.setValue(20)
                 
+                combobox = self.widget_EasmentTools.cmbScale
+                available_scale_factors = [(100, 0), (250, 1), (500, 2), (750, 3), (1000, 4), (5000, 5)]
+                selection_id = 0
+                ComboBoxInputs.add_values_and_set_first(combobox, available_scale_factors, selection_id)
+                combobox.setEnabled(False)
+                
+
                 if self.select_tool is None:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
 
@@ -119,7 +126,16 @@ class EasementTools:
         layout_name = widget.lblLayoutName.text()
         layout_map_item = widget.lblMapObject.text()
         layer_name = Union().UnionLayer
-        PrintEasement.print_selected_items(layer_name, layout_name, layout_map_item)
+        comboBox = widget.cmbScale
+        scale_text = comboBox.currentText()
+        value_string = ""
+        model = widget.tvProperties.model()
+        for row in range(model.rowCount()):
+            index = model.index(row, 1)  # 1 represents the second column (0-indexed)
+            value = index.data()
+            value_string += str(value) + " "
+
+        PrintEasement.print_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string)
 
 
     def connect_button_click_signal(self, active_layer_name):
@@ -213,6 +229,7 @@ class EasementTools:
         self.widget_EasmentTools.close()
         self.uncheck_checkboxes(self.widget_EasmentTools, self.checkboxes_info)  # Uncheck checkboxes
         self.widget_EasmentTools.pbprint.setEnabled(False)
+        self.widget_EasmentTools.setEnabled(False)
         event.accept()  # Allow the window to close
 
     def clear_table(self):
@@ -236,6 +253,7 @@ class EasementTools:
                 self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.pbprint.setEnabled(False)            
+            self.widget_EasmentTools.cmbScale.setEnabled(False)
             self.widget_EasmentTools.accept()
             
     def on_cancel_button_clicked(self, checkboxes_info):
@@ -251,9 +269,11 @@ class EasementTools:
                 active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
             self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
             self.widget_EasmentTools.pbprint.setEnabled(False)
+            self.widget_EasmentTools.cmbScale.setEnabled(False)
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.reject()
-            
+
+
     def cleanup(self):
         if self.is_select_tool_activated:
             # Deactivate select tool
@@ -793,3 +813,20 @@ class GenerateEasement:
             # print(f"layer '{layer_name}' not found.")
             pass
         widget.pbprint.setEnabled(True)
+        widget.cmbScale.setEnabled(True)
+
+
+class ComboBoxInputs:
+    def add_values_and_set_first(comboBox, values, standard_id):
+        # Clear existing items in the combo box
+        comboBox.clear()
+        # Add items to the combo box
+        for value, item_id in values:
+            comboBox.addItem(str(value))
+            comboBox.setItemData(comboBox.count() - 1, item_id)
+        
+        # Find the index of the item with the provided standard_id and set it as current
+        for index in range(comboBox.count()):
+            if comboBox.itemData(index) == standard_id:
+                comboBox.setCurrentIndex(index)
+                break

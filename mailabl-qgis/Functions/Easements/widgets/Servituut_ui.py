@@ -87,6 +87,13 @@ class Ui_servituutDialogBase(object):
 "      border: 0.5px solid #acacbe;\n"
 "}\n"
 "\n"
+"\n"
+"QComboBox:disabled {\n"
+"    background-color: #303040; /* Adjusted disabled background color */\n"
+"    border: 1px solid #707070; /* Adjust border color for disabled state */\n"
+"    color: #8a95a5; /* Adjust text color for disabled state */\n"
+"}\n"
+"\n"
 "QAbstractItemView {\n"
 "    background-color:#40414f;\n"
 "    color:#ececf1;\n"
@@ -623,7 +630,24 @@ class Ui_servituutDialogBase(object):
         self.lblMapObject.setStyleSheet("background-color: rgb(131, 142, 162);")
         self.lblMapObject.setObjectName("lblMapObject")
         self.horizontalLayout_17.addWidget(self.lblMapObject)
-        self.pbprint = QtWidgets.QPushButton(self.groupBox_7)
+        self.verticalLayout_9.addWidget(self.groupBox_7)
+        self.frame_11 = QtWidgets.QFrame(self.fMainTools)
+        self.frame_11.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_11.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_11.setObjectName("frame_11")
+        self.horizontalLayout_18 = QtWidgets.QHBoxLayout(self.frame_11)
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_18.addItem(spacerItem5)
+        self.label_7 = QtWidgets.QLabel(self.frame_11)
+        self.label_7.setObjectName("label_7")
+        self.horizontalLayout_18.addWidget(self.label_7)
+        self.cmbScale = QtWidgets.QComboBox(self.frame_11)
+        self.cmbScale.setMinimumSize(QtCore.QSize(150, 0))
+        self.cmbScale.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.cmbScale.setObjectName("cmbScale")
+        self.horizontalLayout_18.addWidget(self.cmbScale)
+        self.pbprint = QtWidgets.QPushButton(self.frame_11)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pbprint.setFont(font)
@@ -633,8 +657,8 @@ class Ui_servituutDialogBase(object):
         icon3.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\Functions\\Easements\\widgets\\../../../icons/Icons_hele/printer.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pbprint.setIcon(icon3)
         self.pbprint.setObjectName("pbprint")
-        self.horizontalLayout_17.addWidget(self.pbprint)
-        self.verticalLayout_9.addWidget(self.groupBox_7)
+        self.horizontalLayout_18.addWidget(self.pbprint)
+        self.verticalLayout_9.addWidget(self.frame_11)
         self.frame_4 = QtWidgets.QFrame(self.fMainTools)
         self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -713,8 +737,8 @@ class Ui_servituutDialogBase(object):
         self.laAadress.setObjectName("laAadress")
         self.horizontalLayout_6.addWidget(self.laAadress)
         self.verticalLayout_3.addLayout(self.horizontalLayout_6)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem5)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem6)
         self.gridLayout_9.addLayout(self.verticalLayout_3, 0, 0, 1, 1)
         self.tabWidget.addTab(self.taKinnistuLabel, "")
         self.tab = QtWidgets.QWidget()
@@ -760,8 +784,8 @@ class Ui_servituutDialogBase(object):
         self.graphicsView.setObjectName("graphicsView")
         self.tabWidget.addTab(self.tab_2, "")
         self.verticalLayout_9.addWidget(self.tabWidget)
-        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_9.addItem(spacerItem6)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_9.addItem(spacerItem7)
         self.fButtons = QtWidgets.QFrame(self.fMainTools)
         self.fButtons.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.fButtons.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -770,8 +794,8 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_7.setSpacing(10)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        spacerItem7 = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem7)
+        spacerItem8 = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem8)
         self.pbCancel = QtWidgets.QPushButton(self.fButtons)
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\Functions\\Easements\\widgets\\../../icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -869,13 +893,14 @@ class Ui_servituutDialogBase(object):
         self.cbSK.setText(_translate("servituutDialogBase", "Torud"))
         self.cbD.setText(_translate("servituutDialogBase", "Drenaaž"))
         self.cbRainPump.setText(_translate("servituutDialogBase", "Pumpla"))
-        self.pbKoostaServituut.setText(_translate("servituutDialogBase", "Koosta skeem(v1)"))
+        self.pbKoostaServituut.setText(_translate("servituutDialogBase", "Koosta skeem"))
         self.groupBox_7.setTitle(_translate("servituutDialogBase", "Prindi Layoudi seaded ja trükkimine*"))
         self.label_3.setText(_translate("servituutDialogBase", "Layoudi nimetus:"))
         self.lblLayoutName.setText(_translate("servituutDialogBase", "Kitsendus"))
         self.label_6.setText(_translate("servituutDialogBase", "Kuva ala"))
         self.lblMapObject.setText(_translate("servituutDialogBase", "Map 1"))
-        self.pbprint.setText(_translate("servituutDialogBase", "Print*"))
+        self.label_7.setText(_translate("servituutDialogBase", "Mõõtkava"))
+        self.pbprint.setText(_translate("servituutDialogBase", "Eelvaade*"))
         self.lnameKataster.setText(_translate("servituutDialogBase", "Kataster:"))
         self.laKataster.setText(_translate("servituutDialogBase", "TextLabel"))
         self.label_2.setText(_translate("servituutDialogBase", "Aadress:"))

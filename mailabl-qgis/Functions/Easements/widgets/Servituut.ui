@@ -97,6 +97,13 @@ QComboBox::on{
   	border: 0.5px solid #acacbe;
 }
 
+
+QComboBox:disabled {
+    background-color: #303040; /* Adjusted disabled background color */
+    border: 1px solid #707070; /* Adjust border color for disabled state */
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
+
 QAbstractItemView {
 	background-color:#40414f;
 	color:#ececf1;
@@ -1462,7 +1469,7 @@ QLineEdit {
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>Koosta skeem(v1)</string>
+               <string>Koosta skeem</string>
               </property>
               <property name="icon">
                <iconset>
@@ -1534,6 +1541,54 @@ QLineEdit {
               </property>
              </widget>
             </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame_11">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_18">
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Mõõtkava</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cmbScale">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QPushButton" name="pbprint">
               <property name="font">
@@ -1546,7 +1601,7 @@ QLineEdit {
 </string>
               </property>
               <property name="text">
-               <string>Print*</string>
+               <string>Eelvaade*</string>
               </property>
               <property name="icon">
                <iconset>
