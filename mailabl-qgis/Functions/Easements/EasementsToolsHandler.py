@@ -81,7 +81,7 @@ class EasementTools:
                 # Update checkbox texts and connect them to functions
                 EasementTools.update_checkboxes(self.checkboxes_info)
                 
-                WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
+                number = WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
 
 
                 self.widget_EasmentTools.dPuhvriSuurus.valueChanged.connect(
@@ -99,7 +99,7 @@ class EasementTools:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
 
 
-                self.widget_EasmentTools.pbprint.clicked.connect(lambda: EasementTools.PrintEasement(self.widget_EasmentTools))
+                self.widget_EasmentTools.pbprint.clicked.connect(lambda: EasementTools.PrintEasement(self.widget_EasmentTools, number))
 
                 pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement(self.widget_EasmentTools))            
                 
@@ -122,7 +122,7 @@ class EasementTools:
             self.cleanup()
             self.widget_EasmentTools.show()
 
-    def PrintEasement(widget):
+    def PrintEasement(widget, number):
         layout_name = widget.lblLayoutName.text()
         layout_map_item = widget.lblMapObject.text()
         layer_name = Union().UnionLayer
@@ -131,11 +131,18 @@ class EasementTools:
         value_string = ""
         model = widget.tvProperties.model()
         for row in range(model.rowCount()):
-            index = model.index(row, 1)  # 1 represents the second column (0-indexed)
-            value = index.data()
-            value_string += str(value) + " "
+            index_1 = model.index(row, 1)  # 1 represents the second column (0-indexed)
+            index_2 = model.index(row, 2)
+            index_3 = model.index(row, 3)
+            index_4 = model.index(row, 4)
+            value1 = index_1.data()
+            value2 = index_2.data()
+            value3 = index_3.data()
+            value4 = index_4.data()
 
-        PrintEasement.print_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string)
+            value_string += str(value1) + ", " + str(value2) + ", "+ str(value3) + ", " + str(value4)
+            
+        PrintEasement.print_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number)
 
 
     def connect_button_click_signal(self, active_layer_name):
@@ -450,6 +457,8 @@ class WidgetTools:
                 text = sisu.puudulikud_andmed
 
             label.setText(text)
+
+            return number
 
     @staticmethod
     def generate_table(self, widget):

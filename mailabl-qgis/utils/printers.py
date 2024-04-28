@@ -9,7 +9,7 @@ lblPropertie = "Propertie"
 
 class PrintEasement:
     @staticmethod
-    def print_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string):
+    def print_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number = None):
         # Get the layer
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         if layer is None:
@@ -40,7 +40,7 @@ class PrintEasement:
             print("Label item 'easement_nr' not found in selected layout.")
         else:
             # Set the text of the label item
-            label_nr.setText("See on test")
+            label_nr.setText(f"Lepingu nr: {number}")
 
         if map_item is None:
             print("Map item 'Map 1' not found in selected layout.")
