@@ -64,6 +64,7 @@ class EasementTools:
                 #buffer_properties_button = self.widget_EasmentTools.pbCreateProperties
                 clear_buffer_button = self.widget_EasmentTools.pbClearCadastrals
 
+
                 
                 properties_table = self.widget_EasmentTools.tvProperties
                 pbGen_easement = self.widget_EasmentTools.pbKoostaServituut
@@ -82,10 +83,9 @@ class EasementTools:
                 
                 number = WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
 
-
-                self.widget_EasmentTools.dPuhvriSuurus.valueChanged.connect(
-                    lambda: WidgetTools.activ_dialer(self.widget_EasmentTools))
-                self.widget_EasmentTools.dPuhvriSuurus.setValue(20)
+                buffer_dialer = self.widget_EasmentTools.dPuhvriSuurus
+                buffer_dialer.setValue(20)
+                buffer_dialer.setEnabled(False)
                 
                 combobox = self.widget_EasmentTools.cmbScale
                 available_scale_factors = [(100, 0), (250, 1), (500, 2), (750, 3), (1000, 4), (5000, 5)]
@@ -94,11 +94,13 @@ class EasementTools:
                 combobox.setEnabled(False)
                 
 
-                if self.select_tool is None:
-                    WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
+
 
                 all_line_edits = EasementTools.widget_line_edits(self.widget_EasmentTools)[0] #returns the first return value of the set 
                 EasementTools.disable_UIelements(all_line_edits)
+                if self.select_tool is None:
+                    WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
+                    
                 self.widget_EasmentTools.pbprint.clicked.connect(lambda: EasementTools.PrintEasement(self.widget_EasmentTools, number))
 
                 pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement(self.widget_EasmentTools))            
@@ -273,6 +275,7 @@ class EasementTools:
         self.uncheck_checkboxes(self.widget_EasmentTools, self.checkboxes_info)  # Uncheck checkboxes
         self.widget_EasmentTools.pbprint.setEnabled(False)
         self.widget_EasmentTools.setEnabled(False)
+
         event.accept()  # Allow the window to close
 
     def clear_table(self):
@@ -294,6 +297,7 @@ class EasementTools:
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
                 active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
                 self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)
+                self.widget_EasmentTools.dPuhvriSuurus.disconnet(WidgetTools.activ_dialer)
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.pbprint.setEnabled(False)            
             self.widget_EasmentTools.cmbScale.setEnabled(False)
@@ -393,7 +397,18 @@ class WidgetTools:
             active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
             style_name = FilesByNames().Easement_style
             BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name)
+            labels = EasementTools.widget_line_edits(self.widget_EasmentTools)[1] #acces first item set returned by function
+            print(f"lineEdist: {labels}")
+            EasementTools.enable_UIelements(labels)
 
+            checkbox_info = EasementTools.get_checkbox_info(widget)
+            EasementTools.update_checkboxes(checkbox_info,table_view)
+
+            buffer_dialer = widget.dPuhvriSuurus
+            buffer_dialer.setEnabled(True)
+            buffer_dialer.valueChanged.connect(
+                    lambda: WidgetTools.activ_dialer(widget))
+                
         pass
 
     def activate_layer_and_use_selectTool(self, widget):
@@ -454,6 +469,11 @@ class WidgetTools:
                 EasementTools.update_checkboxes(checkbox_info,table_view)
                 labels = EasementTools.widget_line_edits(widget)[1] #acces first item set returned by function
                 EasementTools.enable_UIelements(labels)
+                buffer_dialer = widget.dPuhvriSuurus
+                buffer_dialer.setEnabled(True)
+                
+                buffer_dialer.valueChanged.connect(
+                        lambda: WidgetTools.activ_dialer(widget))
                 widget.showNormal()
 
         else:
@@ -864,6 +884,7 @@ class GenerateEasement:
             pass
         widget.pbprint.setEnabled(True)
         widget.cmbScale.setEnabled(True)
+        
         print_prewiew_lineEdist = EasementTools.widget_line_edits(widget)[2]
         EasementTools.enable_UIelements(print_prewiew_lineEdist)
 
