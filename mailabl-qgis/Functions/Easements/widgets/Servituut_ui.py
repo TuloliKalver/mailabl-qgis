@@ -94,6 +94,15 @@ class Ui_servituutDialogBase(object):
 "    color: #8a95a5; /* Adjust text color for disabled state */\n"
 "}\n"
 "\n"
+"\n"
+"QCheckBox:disabled {\n"
+"    color: #8a95a5; /* Adjust text color for disabled state */\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
 "QAbstractItemView {\n"
 "    background-color:#40414f;\n"
 "    color:#ececf1;\n"
@@ -163,6 +172,9 @@ class Ui_servituutDialogBase(object):
 "    border-right: none;\n"
 "}\n"
 "\n"
+"QLineEdit:disabled {\n"
+"    color: #8a95a5; /* Adjust text color for disabled state */\n"
+"}\n"
 "\n"
 "\n"
 "")
@@ -356,6 +368,8 @@ class Ui_servituutDialogBase(object):
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.horizontalLayout_10.addWidget(self.lineEdit_3)
         self.lblDeK = QtWidgets.QLineEdit(self.frame_12)
+        self.lblDeK.setMinimumSize(QtCore.QSize(100, 0))
+        self.lblDeK.setMaximumSize(QtCore.QSize(100, 16777215))
         self.lblDeK.setObjectName("lblDeK")
         self.horizontalLayout_10.addWidget(self.lblDeK)
         self.lineEdit_11 = QtWidgets.QLineEdit(self.frame_12)
@@ -382,6 +396,8 @@ class Ui_servituutDialogBase(object):
         self.lineEdit_5.setObjectName("lineEdit_5")
         self.horizontalLayout_15.addWidget(self.lineEdit_5)
         self.lblHK = QtWidgets.QLineEdit(self.frame_5)
+        self.lblHK.setMinimumSize(QtCore.QSize(100, 0))
+        self.lblHK.setMaximumSize(QtCore.QSize(100, 16777215))
         self.lblHK.setObjectName("lblHK")
         self.horizontalLayout_15.addWidget(self.lblHK)
         self.lineEdit_8 = QtWidgets.QLineEdit(self.frame_5)
@@ -415,6 +431,8 @@ class Ui_servituutDialogBase(object):
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.horizontalLayout_11.addWidget(self.lineEdit_2, 0, QtCore.Qt.AlignLeft)
         self.lblDeV = QtWidgets.QLineEdit(self.frame_7)
+        self.lblDeV.setMinimumSize(QtCore.QSize(100, 0))
+        self.lblDeV.setMaximumSize(QtCore.QSize(100, 16777215))
         self.lblDeV.setObjectName("lblDeV")
         self.horizontalLayout_11.addWidget(self.lblDeV)
         self.lineEdit = QtWidgets.QLineEdit(self.frame_7)
@@ -440,6 +458,8 @@ class Ui_servituutDialogBase(object):
         self.lineEdit_7.setObjectName("lineEdit_7")
         self.horizontalLayout_12.addWidget(self.lineEdit_7)
         self.lblHV = QtWidgets.QLineEdit(self.frame_8)
+        self.lblHV.setMinimumSize(QtCore.QSize(100, 0))
+        self.lblHV.setMaximumSize(QtCore.QSize(100, 16777215))
         self.lblHV.setObjectName("lblHV")
         self.horizontalLayout_12.addWidget(self.lblHV)
         self.lineEdit_10 = QtWidgets.QLineEdit(self.frame_8)
@@ -473,6 +493,8 @@ class Ui_servituutDialogBase(object):
         self.lineEdit_4.setObjectName("lineEdit_4")
         self.horizontalLayout_13.addWidget(self.lineEdit_4)
         self.lblDeSK = QtWidgets.QLineEdit(self.frame_9)
+        self.lblDeSK.setMinimumSize(QtCore.QSize(100, 0))
+        self.lblDeSK.setMaximumSize(QtCore.QSize(100, 16777215))
         self.lblDeSK.setObjectName("lblDeSK")
         self.horizontalLayout_13.addWidget(self.lblDeSK)
         self.lineEdit_12 = QtWidgets.QLineEdit(self.frame_9)
@@ -499,6 +521,8 @@ class Ui_servituutDialogBase(object):
         self.lineEdit_6.setObjectName("lineEdit_6")
         self.horizontalLayout_14.addWidget(self.lineEdit_6)
         self.lblHSK = QtWidgets.QLineEdit(self.frame_10)
+        self.lblHSK.setMinimumSize(QtCore.QSize(100, 0))
+        self.lblHSK.setMaximumSize(QtCore.QSize(100, 16777215))
         self.lblHSK.setObjectName("lblHSK")
         self.horizontalLayout_14.addWidget(self.lblHSK)
         self.lineEdit_9 = QtWidgets.QLineEdit(self.frame_10)
@@ -613,23 +637,43 @@ class Ui_servituutDialogBase(object):
         self.groupBox_7 = QtWidgets.QGroupBox(self.fMainTools)
         self.groupBox_7.setObjectName("groupBox_7")
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.groupBox_7)
-        self.horizontalLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_17.setContentsMargins(0, 5, 0, 0)
         self.horizontalLayout_17.setSpacing(5)
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.label_3 = QtWidgets.QLabel(self.groupBox_7)
-        self.label_3.setObjectName("label_3")
-        self.horizontalLayout_17.addWidget(self.label_3)
-        self.lblLayoutName = QtWidgets.QLineEdit(self.groupBox_7)
-        self.lblLayoutName.setStyleSheet("background-color: rgb(131, 142, 162);")
+        self.groupBox_8 = QtWidgets.QGroupBox(self.groupBox_7)
+        self.groupBox_8.setObjectName("groupBox_8")
+        self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.groupBox_8)
+        self.verticalLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_16.setSpacing(0)
+        self.verticalLayout_16.setObjectName("verticalLayout_16")
+        self.lblLayoutName = QtWidgets.QLineEdit(self.groupBox_8)
+        self.lblLayoutName.setStyleSheet("")
         self.lblLayoutName.setObjectName("lblLayoutName")
-        self.horizontalLayout_17.addWidget(self.lblLayoutName)
-        self.label_6 = QtWidgets.QLabel(self.groupBox_7)
-        self.label_6.setObjectName("label_6")
-        self.horizontalLayout_17.addWidget(self.label_6)
-        self.lblMapObject = QtWidgets.QLineEdit(self.groupBox_7)
-        self.lblMapObject.setStyleSheet("background-color: rgb(131, 142, 162);")
+        self.verticalLayout_16.addWidget(self.lblLayoutName)
+        self.horizontalLayout_17.addWidget(self.groupBox_8)
+        self.groupBox_9 = QtWidgets.QGroupBox(self.groupBox_7)
+        self.groupBox_9.setObjectName("groupBox_9")
+        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.groupBox_9)
+        self.verticalLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_17.setSpacing(0)
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+        self.lblMapObject = QtWidgets.QLineEdit(self.groupBox_9)
+        self.lblMapObject.setStyleSheet("")
         self.lblMapObject.setObjectName("lblMapObject")
-        self.horizontalLayout_17.addWidget(self.lblMapObject)
+        self.verticalLayout_17.addWidget(self.lblMapObject)
+        self.horizontalLayout_17.addWidget(self.groupBox_9)
+        self.groupBox_10 = QtWidgets.QGroupBox(self.groupBox_7)
+        self.groupBox_10.setObjectName("groupBox_10")
+        self.verticalLayout_18 = QtWidgets.QVBoxLayout(self.groupBox_10)
+        self.verticalLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_18.setSpacing(0)
+        self.verticalLayout_18.setObjectName("verticalLayout_18")
+        self.cmbScale = QtWidgets.QComboBox(self.groupBox_10)
+        self.cmbScale.setMinimumSize(QtCore.QSize(150, 0))
+        self.cmbScale.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.cmbScale.setObjectName("cmbScale")
+        self.verticalLayout_18.addWidget(self.cmbScale)
+        self.horizontalLayout_17.addWidget(self.groupBox_10)
         self.verticalLayout_9.addWidget(self.groupBox_7)
         self.frame_11 = QtWidgets.QFrame(self.fMainTools)
         self.frame_11.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -639,14 +683,6 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_18.setObjectName("horizontalLayout_18")
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_18.addItem(spacerItem5)
-        self.label_7 = QtWidgets.QLabel(self.frame_11)
-        self.label_7.setObjectName("label_7")
-        self.horizontalLayout_18.addWidget(self.label_7)
-        self.cmbScale = QtWidgets.QComboBox(self.frame_11)
-        self.cmbScale.setMinimumSize(QtCore.QSize(150, 0))
-        self.cmbScale.setMaximumSize(QtCore.QSize(150, 16777215))
-        self.cmbScale.setObjectName("cmbScale")
-        self.horizontalLayout_18.addWidget(self.cmbScale)
         self.pbprint = QtWidgets.QPushButton(self.frame_11)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -894,12 +930,12 @@ class Ui_servituutDialogBase(object):
         self.cbD.setText(_translate("servituutDialogBase", "Drenaaž"))
         self.cbRainPump.setText(_translate("servituutDialogBase", "Pumpla"))
         self.pbKoostaServituut.setText(_translate("servituutDialogBase", "Koosta skeem"))
-        self.groupBox_7.setTitle(_translate("servituutDialogBase", "Prindi Layoudi seaded ja trükkimine*"))
-        self.label_3.setText(_translate("servituutDialogBase", "Layoudi nimetus:"))
+        self.groupBox_7.setTitle(_translate("servituutDialogBase", "Trükkimis lehe seadistused"))
+        self.groupBox_8.setTitle(_translate("servituutDialogBase", "Trüki lehe nimetus"))
         self.lblLayoutName.setText(_translate("servituutDialogBase", "Kitsendus"))
-        self.label_6.setText(_translate("servituutDialogBase", "Kuva ala"))
+        self.groupBox_9.setTitle(_translate("servituutDialogBase", "Kaardi kuva ala nimetus"))
         self.lblMapObject.setText(_translate("servituutDialogBase", "Map 1"))
-        self.label_7.setText(_translate("servituutDialogBase", "Mõõtkava"))
+        self.groupBox_10.setTitle(_translate("servituutDialogBase", "Mõõtkava"))
         self.pbprint.setText(_translate("servituutDialogBase", "Eelvaade*"))
         self.lnameKataster.setText(_translate("servituutDialogBase", "Kataster:"))
         self.laKataster.setText(_translate("servituutDialogBase", "TextLabel"))
@@ -930,4 +966,15 @@ class Ui_servituutDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hoides all Ctrl saad kinnistuid<span style=\" font-style:italic;\"> lisada/või eemaldada</span> valikust.</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Tühista:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Tühistab varasema kinnistute valiku.</p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Tühistab varasema kinnistute valiku.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; color:#ff0000;\">Eelvaade:</span><br />Testimiseks seadista: QGIS&gt;Seaded&gt;Suvandid&gt;Layouts</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Lisa aadress kus asub sinu:Qgis: </p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">C:/Users/&quot;Kasutaja&quot;/Desktop/Plugins/mailabl-qgis/mailabl-qgis/QGIS_styles/Layouts</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Koosta uus Layout: </p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Projekt&gt;Layout&gt;Manager&gt;Uus Mallist</span><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Vali rippmenüüst &quot;MailablEasementLayoutTemp&quot;<br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ja vajuta nupp <span style=\" font-weight:600;\">&quot;Koosta&quot;</span> või <span style=\" font-weight:600;\">&quot;Graete&quot;</span><br /><br />Koosta uue nimega mall (<span style=\" font-weight:600;\">Testimiseks</span> nimeta see <span style=\" font-weight:600;\">&quot;Kitsendus&quot;</span>)</p></body></html>"))

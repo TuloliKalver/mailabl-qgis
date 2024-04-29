@@ -9,7 +9,7 @@ lblPropertie = "Propertie"
 
 class PrintEasement:
     @staticmethod
-    def print_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number = None):
+    def printprewiev_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number = None):
         # Get the layer
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         if layer is None:

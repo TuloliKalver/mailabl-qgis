@@ -104,6 +104,15 @@ QComboBox:disabled {
     color: #8a95a5; /* Adjust text color for disabled state */
 }
 
+
+QCheckBox:disabled {
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
+
+
+
+
+
 QAbstractItemView {
 	background-color:#40414f;
 	color:#ececf1;
@@ -173,6 +182,9 @@ QLineEdit {
     border-right: none;
 }
 
+QLineEdit:disabled {
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
 
 
 </string>
@@ -682,6 +694,18 @@ QLineEdit {
                   </item>
                   <item>
                    <widget class="QLineEdit" name="lblDeK">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>100</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>160</string>
                     </property>
@@ -766,6 +790,18 @@ QLineEdit {
                   </item>
                   <item>
                    <widget class="QLineEdit" name="lblHK">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>100</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>1,98</string>
                     </property>
@@ -874,6 +910,18 @@ QLineEdit {
                   </item>
                   <item>
                    <widget class="QLineEdit" name="lblDeV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>100</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>110</string>
                     </property>
@@ -955,6 +1003,18 @@ QLineEdit {
                   </item>
                   <item>
                    <widget class="QLineEdit" name="lblHV">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>100</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>1,65</string>
                     </property>
@@ -1063,6 +1123,18 @@ QLineEdit {
                   </item>
                   <item>
                    <widget class="QLineEdit" name="lblDeSK">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>100</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>250</string>
                     </property>
@@ -1147,6 +1219,18 @@ QLineEdit {
                   </item>
                   <item>
                    <widget class="QLineEdit" name="lblHSK">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>100</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <property name="text">
                      <string>1,9</string>
                     </property>
@@ -1489,7 +1573,7 @@ QLineEdit {
          <item>
           <widget class="QGroupBox" name="groupBox_7">
            <property name="title">
-            <string>Prindi Layoudi seaded ja trükkimine*</string>
+            <string>Trükkimis lehe seadistused</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_17">
             <property name="spacing">
@@ -1499,7 +1583,7 @@ QLineEdit {
              <number>0</number>
             </property>
             <property name="topMargin">
-             <number>0</number>
+             <number>5</number>
             </property>
             <property name="rightMargin">
              <number>0</number>
@@ -1508,37 +1592,111 @@ QLineEdit {
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Layoudi nimetus:</string>
+             <widget class="QGroupBox" name="groupBox_8">
+              <property name="title">
+               <string>Trüki lehe nimetus</string>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_16">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLineEdit" name="lblLayoutName">
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>Kitsendus</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lblLayoutName">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(131, 142, 162);</string>
+             <widget class="QGroupBox" name="groupBox_9">
+              <property name="title">
+               <string>Kaardi kuva ala nimetus</string>
               </property>
-              <property name="text">
-               <string>Kitsendus</string>
-              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_17">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLineEdit" name="lblMapObject">
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string>Map 1</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>Kuva ala</string>
+             <widget class="QGroupBox" name="groupBox_10">
+              <property name="title">
+               <string>Mõõtkava</string>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lblMapObject">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(131, 142, 162);</string>
-              </property>
-              <property name="text">
-               <string>Map 1</string>
-              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_18">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QComboBox" name="cmbScale">
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -1565,29 +1723,6 @@ QLineEdit {
                </size>
               </property>
              </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_7">
-              <property name="text">
-               <string>Mõõtkava</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="cmbScale">
-              <property name="minimumSize">
-               <size>
-                <width>150</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>150</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="pbprint">
@@ -2020,7 +2155,18 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hoides all Ctrl saad kinnistuid&lt;span style=&quot; font-style:italic;&quot;&gt; lisada/või eemaldada&lt;/span&gt; valikust.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Tühista:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tühistab varasema kinnistute valiku.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tühistab varasema kinnistute valiku.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Eelvaade:&lt;/span&gt;&lt;br /&gt;Testimiseks seadista: QGIS&amp;gt;Seaded&amp;gt;Suvandid&amp;gt;Layouts&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Lisa aadress kus asub sinu:Qgis: &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;C:/Users/&amp;quot;Kasutaja&amp;quot;/Desktop/Plugins/mailabl-qgis/mailabl-qgis/QGIS_styles/Layouts&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Koosta uus Layout: &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Projekt&amp;gt;Layout&amp;gt;Manager&amp;gt;Uus Mallist&lt;/span&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vali rippmenüüst &amp;quot;MailablEasementLayoutTemp&amp;quot;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ja vajuta nupp &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;quot;Koosta&amp;quot;&lt;/span&gt; või &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;quot;Graete&amp;quot;&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;Koosta uue nimega mall (&lt;span style=&quot; font-weight:600;&quot;&gt;Testimiseks&lt;/span&gt; nimeta see &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;quot;Kitsendus&amp;quot;&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="overwriteMode">
             <bool>false</bool>

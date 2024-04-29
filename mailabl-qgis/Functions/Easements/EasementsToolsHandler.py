@@ -69,8 +69,7 @@ class EasementTools:
                 pbGen_easement = self.widget_EasmentTools.pbKoostaServituut
                 # Connect button click signals
 
-                active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-                self.connect_button_click_signal(active_layer_name)
+                self.connect_button_click_signal()
 
                 self.widget_EasmentTools.show()
                 self.widget_EasmentTools.tabWidget.hide()
@@ -79,7 +78,7 @@ class EasementTools:
                 self.checkboxes_info = EasementTools.get_checkbox_info(self.widget_EasmentTools)
 
                 # Update checkbox texts and connect them to functions
-                EasementTools.update_checkboxes(self.checkboxes_info)
+                EasementTools.update_checkboxes(self.checkboxes_info, properties_table)
                 
                 number = WidgetTools.load_selected_item_name(table, self.widget_EasmentTools)
 
@@ -98,7 +97,8 @@ class EasementTools:
                 if self.select_tool is None:
                     WidgetTools.loadselectedProperties(self, self.widget_EasmentTools)
 
-
+                all_line_edits = EasementTools.widget_line_edits(self.widget_EasmentTools)[0] #returns the first return value of the set 
+                EasementTools.disable_UIelements(all_line_edits)
                 self.widget_EasmentTools.pbprint.clicked.connect(lambda: EasementTools.PrintEasement(self.widget_EasmentTools, number))
 
                 pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement(self.widget_EasmentTools))            
@@ -139,13 +139,12 @@ class EasementTools:
             value2 = index_2.data()
             value3 = index_3.data()
             value4 = index_4.data()
-
             value_string += str(value1) + ", " + str(value2) + ", "+ str(value3) + ", " + str(value4)
-            
-        PrintEasement.print_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number)
+
+        PrintEasement.printprewiev_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number)
 
 
-    def connect_button_click_signal(self, active_layer_name):
+    def connect_button_click_signal(self):
         if self.widget_EasmentTools:
             # Connect the button click signal only if the widget exists
             select_button = self.widget_EasmentTools.pbValiKinnistu
@@ -153,6 +152,7 @@ class EasementTools:
                 self.select_tool_connection = select_button.clicked.connect(
                     lambda: WidgetTools.activate_layer_and_use_selectTool(self, self.widget_EasmentTools)
                 )
+            
 
     @staticmethod
     def get_checkbox_info(widget):
@@ -204,26 +204,62 @@ class EasementTools:
         return checkboxes_info
 
     @staticmethod
+    def widget_line_edits(widget):
+        le1 = widget.lblDeK
+        le2 = widget.lblDeV
+        le3 = widget.lblDeSK
+        le4 = widget.lblHK
+        le5 = widget.lblHV
+        le6 = widget.lblHSK  # Purgimissõlm
+        le7 = widget.lblLayoutName
+        le8 = widget.lblMapObject
+
+        # Create label_info dictionary
+        widget_all_hiden_lineedits = {le1,le2,le3,le4,le5,le6,le7,le8}
+        on_selectio_change = {le1,le2,le3,le4,le5,le6}
+        preprint_set = {le7,le8}
+        
+        return widget_all_hiden_lineedits, on_selectio_change, preprint_set
+
+    def disable_UIelements(UI_element_list):
+        for element in UI_element_list:
+            element.setEnabled(False) 
+
+    def enable_UIelements(UI_element_list):
+        for label in UI_element_list:
+            label.setEnabled(True) 
+
+    @staticmethod
     def uncheck_checkboxes(widget, checkboxes_info):
         for checkbox, (text, connect_function) in checkboxes_info.items():
             if checkbox:
                 checkbox.setChecked(False)
 
     @staticmethod
-    def update_checkboxes(checkboxes_info):
+    def update_checkboxes(checkboxes_info, table):
+        if table:
+            model = table.model()
+           
+
         for checkbox, (text, connect_function) in checkboxes_info.items():
             if checkbox:
                 current_text = checkbox.text()
                 if connect_function is not None:
-                    checkbox.setStyleSheet("color: #c5c5d2")  # Set text background color and text color
-                    #checkbox.setText(f"{current_text}")
-                    checkbox.setEnabled(True)
-                    checkbox.clicked.connect(connect_function)
+                    if model is None:
+                        checkbox.setEnabled(False)
+                    elif model is not  None:
+                        item_count = model.rowCount()
+                        if item_count == 0:
+                            checkbox.setEnabled(False)
+                        else:
+                            checkbox.setEnabled(True)
+                            checkbox.clicked.connect(connect_function)
                 else:
                     checkbox.setText(f"{current_text}* ({text}m)")
                     checkbox.setEnabled(False)
-                    checkbox.setStyleSheet("color: #8a95a5")
                     
+
+
     def closeEvent(self, event):
         self.cleanup()
         self.Buffer_cleanup()
@@ -414,7 +450,12 @@ class WidgetTools:
                 BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name)
 
                 table_view.update()
+                checkbox_info = EasementTools.get_checkbox_info(widget)
+                EasementTools.update_checkboxes(checkbox_info,table_view)
+                labels = EasementTools.widget_line_edits(widget)[1] #acces first item set returned by function
+                EasementTools.enable_UIelements(labels)
                 widget.showNormal()
+
         else:
             # If the flag is false, do nothing
             # print("Flag is false")
@@ -723,7 +764,7 @@ class GenerateEasement:
 
     @staticmethod
     def generate_easement(widget):
-        print("started Intersection")
+        #print("started Intersection")
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
 
         # Slice the lists to include only the first four items
@@ -823,7 +864,8 @@ class GenerateEasement:
             pass
         widget.pbprint.setEnabled(True)
         widget.cmbScale.setEnabled(True)
-
+        print_prewiew_lineEdist = EasementTools.widget_line_edits(widget)[2]
+        EasementTools.enable_UIelements(print_prewiew_lineEdist)
 
 class ComboBoxInputs:
     def add_values_and_set_first(comboBox, values, standard_id):
