@@ -347,10 +347,22 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbEasementsTools.clicked.connect(self.load_easement_widget)
 
     def load_easement_widget(self):
+        # Minimize the main dialog
+        self.showMinimized()
         # Create an instance of EasementTools and pass tweasementView
         self.easement_tools = EasementTools(self.tweasementView)
+        # Connect the widgetClosed signal to a method in your main class
+        self.easement_tools.widgetClosed.connect(self.on_easement_widget_closed)
         # Call the load_widget method of the EasementTools instance
         self.easement_tools.load_widget()
+
+    def on_easement_widget_closed (self):
+        # Maximize the main dialog when the Easement dialog is closed
+        self.showNormal()
+        # Perform actions when the widget is closed
+        print("Easement widget closed")
+        # Add your custom actions here
+
 
 
     def generate_project_folder(self):

@@ -1,8 +1,7 @@
 
 
 
-import re
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QObject, pyqtSignal
 
 import processing
 
@@ -38,8 +37,11 @@ goup_layer_name = ''
 
 
 
-class EasementTools:
+class EasementTools(QObject):
+    widgetClosed = pyqtSignal()
+
     def __init__(self, tweasementView):
+        super().__init__()  # Call the __init__ method of the QObject superclass
         self.tweasementView = tweasementView
         self.widget_EasmentTools = None
         self.is_select_tool_activated = False
@@ -123,6 +125,7 @@ class EasementTools:
             # If an instance already exists, simply show it
             self.cleanup()
             self.widget_EasmentTools.show()
+        pass
 
     def PrintEasement(widget, number):
         layout_name = widget.lblLayoutName.text()
@@ -277,6 +280,7 @@ class EasementTools:
         self.widget_EasmentTools.setEnabled(False)
 
         event.accept()  # Allow the window to close
+        self.widgetClosed.emit()
 
     def clear_table(self):
         if self.widget_EasmentTools is not None:
@@ -302,6 +306,7 @@ class EasementTools:
             self.widget_EasmentTools.pbprint.setEnabled(False)            
             self.widget_EasmentTools.cmbScale.setEnabled(False)
             self.widget_EasmentTools.accept()
+        self.widgetClosed.emit()
             
     def on_cancel_button_clicked(self, checkboxes_info):
         self.Buffer_cleanup()
@@ -319,7 +324,7 @@ class EasementTools:
             self.widget_EasmentTools.cmbScale.setEnabled(False)
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.reject()
-
+        self.widgetClosed.emit()
 
     def cleanup(self):
         if self.is_select_tool_activated:
@@ -351,8 +356,6 @@ class EasementTools:
                 layer.removeSelection()
             
         
-        
-
 
     def deactivate_select_tool(self):
         # Deactivate selection tool
