@@ -363,14 +363,22 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     def load_properties_connector(self):
         table = self.tblMailabl_projects
-        module = "Projects"
-        self.showMinimized()
-        # Create an instance of PropertiesConnector with the table instance
-        self.properties_connector = PropertiesConnector(table)
-        # Connect the widgetClosed signal to a method in your main class
-        self.properties_connector.ConnectorWidgetClosed.connect(self.on_properties_connector_widget_closed)
-        # Load the properties connector widget UI
-        self.properties_connector.load_propertiesconnector_widget_ui(module)
+        selection_model = table.selectionModel()
+        if selection_model.hasSelection():
+            module = "Projekt"
+            self.showMinimized()
+            # Create an instance of PropertiesConnector with the table instance
+            self.properties_connector = PropertiesConnector(table)
+            # Connect the widgetClosed signal to a method in your main class
+            self.properties_connector.ConnectorWidgetClosed.connect(self.on_properties_connector_widget_closed)
+            # Load the properties connector widget UI
+            self.properties_connector.load_propertiesconnector_widget_ui(module)
+        
+        else:
+            text = HoiatusTexts().andmed_valimata
+            heading = Headings().warningSimple
+            QMessageBox.information(self, heading, text)
+            return
 
 
     def on_properties_connector_widget_closed(self):

@@ -298,89 +298,41 @@ QLineEdit:disabled {
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="lblElementName">
+                <widget class="QLineEdit" name="leElementNumber">
                  <property name="minimumSize">
                   <size>
                    <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="lblElementNumber">
-                 <property name="minimumSize">
+                 <property name="maximumSize">
                   <size>
                    <width>100</width>
-                   <height>0</height>
+                   <height>16777215</height>
                   </size>
                  </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                  </font>
+                 <property name="acceptDrops">
+                  <bool>false</bool>
                  </property>
-                 <property name="text">
-                  <string/>
+                 <property name="readOnly">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
                <item>
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
+                <widget class="QLineEdit" name="leElementName">
+                 <property name="acceptDrops">
+                  <bool>false</bool>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
+                 <property name="readOnly">
+                  <bool>true</bool>
                  </property>
-                </spacer>
+                </widget>
                </item>
               </layout>
              </widget>
             </item>
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Alusta kaardil kinnistute lisamist.</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>NB! Tabelis kuvatakse hetkel kaardil valitud kinnistud.</string>
-              </property>
-             </widget>
-            </item>
            </layout>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignLeft">
-          <widget class="QPushButton" name="pbClear_list">
-           <property name="text">
-            <string>Alusta valimist uuesti</string>
-           </property>
           </widget>
          </item>
          <item>
@@ -437,6 +389,13 @@ QLineEdit:disabled {
             <property name="bottomMargin">
              <number>0</number>
             </property>
+            <item>
+             <widget class="QPushButton" name="pbClear_list">
+              <property name="text">
+               <string>Alusta valimist uuesti</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">

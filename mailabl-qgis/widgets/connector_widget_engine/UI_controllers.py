@@ -25,10 +25,14 @@ class PropertiesConnector(QObject):
         widget = loadUi(ui_file_path)
         widget.show()
         self.widget = widget
-        #button_save = widget.pbSave
-        #button_cancel = widget.pbCancel
         widget.show()
+        table_view = widget.tvProperties
+    
+        input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module)
         PropertiesConnector.button_controller(self, widget)
+ 
+        id_column_index = input_headers.index(module_headers.header_id)
+        id_value = TableExtractor.value_from_selected_row_by_column(self.table, id_column_index)
 
         widget.closeEvent = self.closeEvent
 
@@ -78,35 +82,36 @@ class PropertiesConnector(QObject):
 
 
 class WidgetLabels:
-    def widget_elements(widget):
+    def widget_label_elements(widget, table, module):
         label_descripton = widget.lblDescription
         lable_element_name = widget.lblElementName
         label_element_number = widget.lblElementNumber
+        line_element_number = widget.leElementNumber
+        line_element_name = widget.leElementName
 
+        input_headers = TableExtractor.table_header_extractor(table)
+        module_headers = TableHeaders()
+        
+        name_colum_index = input_headers.index(module_headers.header_name)
+        number_column_index = input_headers.index(module_headers.header_number)
+
+        object_number = TableExtractor.value_from_selected_row_by_column(table, number_column_index)
+        object_name = TableExtractor.value_from_selected_row_by_column(table, name_colum_index)
+        lable_element_name.setText(object_name)
+        label_element_number.setText(object_number)
+        line_element_name.setText(object_name)
+        line_element_number.setText(object_number)
+
+        module_text = f"{module}i Nr. ja nimetus"
+        label_descripton.setText(module_text)
+
+
+        return input_headers, module_headers
 
 class ConnectorFunctions:
 
     def ConnectProperties(id_value):
     
-            #table_view = widget.tvProperties
-        #button_clear_model_data = widget.pbClear_list
-        #label_descripton = widget.lblDescription
-        #lable_element_name = widget.lblElementName
-        #label_element_number = widget.lblElementNumber
-        #label_element_number.hide()
-        #use if needed 
-        #label_element_number.show()
-        
-        #input_headers = TableExtractor.table_header_extractor(self.table)
-        #module_headers = TableHeaders()
-        #id_column_index = input_headers.index(module_headers.header_id)
-        #name_colum_index = input_headers.index(module_headers.header_name)
-        #number_column_index = input_headers.index(module_headers.header_number)
-
-        #indexes = [number_column_index, name_colum_index]
-        #object_heading = TableExtractor.values_from_selected_row_by_columns(self.table, indexes)
-        #lable_element_name.setText(object_heading)
-        #id_value = TableExtractor.value_from_selected_row_by_column(self.table, 0)
 
 
         pass
