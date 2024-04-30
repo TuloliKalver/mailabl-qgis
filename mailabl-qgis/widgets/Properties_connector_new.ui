@@ -14,57 +14,161 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">*{
-	border: transparent;
-	background-color: transparent;
-    background: transparent;
-	padding: 0;
-	margin: 0;
-	color: #c5c5d2;
+   <string notr="true">
+#lblDialer{
+	background-color: None;
+	backround: None;
+	border: None
 }
 
-/*konteinerite peamised omadused*/
 
-QDialog{
+
+
+#leInfo,#leSelectedProperties {
+    border: None;
     background-color: #272c35;
+    color: #c5c5d2;
+    padding-left: 10px; /* Adjust the left padding as needed */
+    padding-right: 0px; /* Adjust the right padding as needed */
+    padding-top: 0px; /* Adjust the top padding as needed */
+    padding-bottom: 0px; /* Adjust the bottom padding as needed */
 }
 
-#swWorkSpace{
-    background-color: #202123;
-}
-#Sevituudid{
-    background-color: #343b47;
+
+#fHeader, #fHelpMenu, 
+#fSettingsFolders, #fSettingsFolderStucture,
+#fSettingsMain 
+{
+   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */
+    border-radius: 5px;
+	border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
-#leftMenuContainer{
-    background-color: #202123 ;
-}
 
-#rightMenuContainer{
+QWidget{
     background-color: #272c35;
+	color:#c5c5d2
 }
 
 
-/*nuppu peamised omadused*/
-/*Üldomadused*/
-QPushButton{
-	padding: 1px 8px;
-    border-radius: 6px;
+/*esialgu jaotamata omadused*/
+QComboBox{
+
 	background-color:#40414f;
-	border: 0.5px solid #565869;
+	color:#ececf1;
+	border: 1px solid #565869;
+	border-radius: 3px;
+	padding-left: 5px
+}
+
+/*Style the dropdown area*/
+QComboBox::drop-down{
+	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));
+	border: 1px solid #565869;
+	border-radius: 8px;
+	height:16px;
+	width: 16px;
+	subcontrol-origin: padding;
+    subcontrol-position: left
+}
+
+QComboBox::on{
+
+  	border: 0.5px solid #acacbe;
+}
+
+
+QComboBox:disabled {
+    background-color: #303040; /* Adjusted disabled background color */
+    border: 1px solid #707070; /* Adjust border color for disabled state */
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
+
+
+QCheckBox:disabled {
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
+
+
+
+
+
+QAbstractItemView {
+	background-color:#40414f;
+	color:#ececf1;
+	border: 1px solid #565869;
+	border-radius: 4px;
+	padding-left: 5px
+}
+
+
+QPushButton{
+	padding: 2px 8px;
+	text-align: center;
+	border-radius: 6px;
+	background-color:#40414f;
+	border: 1px solid #565869;
 }
 
 
 QPushButton:hover{
     background-color: #8e8ea0;
-	padding: 1px 8px;
-    border-radius: 8px;
 	border: 0.5px solid #acacbe;
-    
-	color: rgb(255, 255, 255);
+	color: #343541;
+	text-align: center;	
 	padding: 2px 8px;
-    border-radius: 6px;
+    border-radius: 6px;	
 }
+
+QPushButton:disabled {
+    background-color: #303040; /* Adjusted disabled background color */
+    border: 1px solid #707070; /* Adjust border color for disabled state */
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
+
+QLabel {
+    background-color: #40414f;
+    color: #ececf1;
+    border: 1px solid #565869;
+    border-radius: 3px;
+    padding: 3px;
+}
+
+#label_12,
+#label_11
+ {
+    background-color: #40414f;
+    color: #ececf1;
+    border: 1px solid #565869;
+
+}
+
+QLineEdit {
+    background-color: #35363f;  /* Lighter background color */
+    color: #ececf1;
+    /*border: 1px solid #4d4d5b;  Thinner border with a different color */
+    border-radius: 5px;
+    padding: 4px;
+}
+
+QLineEdit:hover {
+    background-color: #3d3e47;  /* Slightly darker background color on hover */
+}
+
+/* Remove top and side borders */
+QLineEdit {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+QLineEdit:disabled {
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
+
+
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">

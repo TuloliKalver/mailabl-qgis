@@ -29,8 +29,6 @@ class PropertiesConnector(QObject):
         #button_cancel = widget.pbCancel
         widget.show()
         PropertiesConnector.button_controller(self, widget)
-        #button_save.clicked.connect(lambda: PropertiesConnector.on_save_button_clicked(self, widget))
-        #button_cancel.clicked.connect(lambda: PropertiesConnector.on_cancel_button_clicked(self, widget))
 
         widget.closeEvent = self.closeEvent
 
