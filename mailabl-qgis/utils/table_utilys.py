@@ -38,8 +38,7 @@ class ModelHandler:
                     status_item.setTextAlignment(Qt.AlignCenter)
                     
         return status_column_index, color_column_index
-                    
-                    
+                                        
     @staticmethod
     def format_date_item(p_model, row_index, headers):
         """
@@ -68,9 +67,6 @@ class ModelHandler:
                     date_item.setForeground(QColor(*rgb_color_date))
                     
         return date_column_index
-        
-                    
-                    
 
     @staticmethod
     def format_cadastral_item(p_model, row_index, headers):
@@ -141,7 +137,6 @@ class ModelHandler:
                 
         return dokAddress_column_index, dokButton_column_index
 
-
     @staticmethod
     def build_mailabl_link_button(p_model, row_index, headers):
         """
@@ -174,3 +169,46 @@ class ModelHandler:
         p_model.setItem(row_index, webButton_Column_index, pb_openInMailabl)
 
         return webButton_Column_index
+    
+class TableExtractor:
+    def __init__(self) -> None:
+
+        pass
+
+    @staticmethod
+    def table_header_extractor(table):
+        table_headers = []
+        model = table.model()
+        if model is not None:
+            for column in range(model.columnCount()):
+                header_label = model.headerData(column, Qt.Horizontal, Qt.DisplayRole)
+                table_headers.append(header_label)
+        return table_headers
+
+    @staticmethod
+    def value_from_selected_row_by_column(table, index) -> str: 
+        model = table.model()
+        selection_model = table.selectionModel()
+        value_text = "" #set standard value if empty
+
+        if selection_model.hasSelection():
+            selected_index = selection_model.currentIndex()
+            value = model.item(selected_index.row(), index)
+            if value is not None:
+                value_text = value.text()
+        return value_text
+    
+    @staticmethod
+    def values_from_selected_row_by_columns(table, indexes) -> str:
+        model = table.model()
+        selection_model = table.selectionModel()
+        values = []
+
+        if selection_model.hasSelection():
+            selected_index = selection_model.currentIndex()
+            for index in indexes:
+                if 0 <= index < model.columnCount():
+                    value = model.item(selected_index.row(), index)
+                    if value is not None:
+                        values.append(value.text())
+        return ", ".join(values)

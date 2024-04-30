@@ -49,8 +49,6 @@ class EasementTools(QObject):
         self.select_tool_connection = None
         self.Buffer_tool_connection = None
 
-        # Connect button click signal outside the load_widget method
-
     def load_widget(self):
         global on_selection_changed_lambda_easements
         on_selection_changed_lambda_easements = None
@@ -127,6 +125,62 @@ class EasementTools(QObject):
             self.widget_EasmentTools.show()
         pass
 
+    def closeEvent(self, event):
+        self.cleanup()
+        self.Buffer_cleanup()
+        if on_selection_changed_lambda_easements:
+            active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
+            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+            active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
+
+        Flags.active_properties_layer_flag = False
+        self.widget_EasmentTools.close()
+        self.uncheck_checkboxes(self.widget_EasmentTools, self.checkboxes_info)  # Uncheck checkboxes
+        self.widget_EasmentTools.pbprint.setEnabled(False)
+        self.widget_EasmentTools.setEnabled(False)
+
+        event.accept()  # Allow the window to close
+        self.widgetClosed.emit()
+
+    def on_save_button_clicked(self, checkboxes_info):
+        self.Buffer_cleanup()
+        if self.widget_EasmentTools is not None:
+            text = "Olen alles arenduses. \n mitte midagi ei salvestatud"
+            heading = pealkiri.tubli
+            self.cleanup()
+            self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
+            QMessageBox.information(self.widget_EasmentTools, heading, text)
+            if on_selection_changed_lambda_easements:
+                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
+                active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
+                self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)
+                self.widget_EasmentTools.dPuhvriSuurus.disconnet(WidgetTools.activ_dialer)
+            Flags.active_properties_layer_flag = False
+            self.widget_EasmentTools.pbprint.setEnabled(False)            
+            self.widget_EasmentTools.cmbScale.setEnabled(False)
+            self.widget_EasmentTools.accept()
+        self.widgetClosed.emit()
+            
+    def on_cancel_button_clicked(self, checkboxes_info):
+        self.Buffer_cleanup()
+        if self.widget_EasmentTools is not None:
+            self.cleanup()
+            text = sisu.kasutaja_peatas_protsessi
+            heading = pealkiri.informationSimple
+            QMessageBox.information(self.widget_EasmentTools, heading, text)
+            if on_selection_changed_lambda_easements:
+                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
+                active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
+            self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
+            self.widget_EasmentTools.pbprint.setEnabled(False)
+            self.widget_EasmentTools.cmbScale.setEnabled(False)
+            Flags.active_properties_layer_flag = False
+            self.widget_EasmentTools.reject()
+        self.widgetClosed.emit()
+
+    @staticmethod
     def PrintEasement(widget, number):
         layout_name = widget.lblLayoutName.text()
         layout_map_item = widget.lblMapObject.text()
@@ -147,7 +201,6 @@ class EasementTools(QObject):
             value_string += str(value1) + ", " + str(value2) + ", "+ str(value3) + ", " + str(value4)
 
         PrintEasement.printprewiev_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number)
-
 
     def connect_button_click_signal(self):
         if self.widget_EasmentTools:
@@ -262,25 +315,6 @@ class EasementTools(QObject):
                 else:
                     checkbox.setText(f"{current_text}* ({text}m)")
                     checkbox.setEnabled(False)
-                    
-
-
-    def closeEvent(self, event):
-        self.cleanup()
-        self.Buffer_cleanup()
-        if on_selection_changed_lambda_easements:
-            active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
-            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-            active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
-
-        Flags.active_properties_layer_flag = False
-        self.widget_EasmentTools.close()
-        self.uncheck_checkboxes(self.widget_EasmentTools, self.checkboxes_info)  # Uncheck checkboxes
-        self.widget_EasmentTools.pbprint.setEnabled(False)
-        self.widget_EasmentTools.setEnabled(False)
-
-        event.accept()  # Allow the window to close
-        self.widgetClosed.emit()
 
     def clear_table(self):
         if self.widget_EasmentTools is not None:
@@ -288,50 +322,11 @@ class EasementTools(QObject):
             if model is not None:
                 model.clear()
 
-    def on_save_button_clicked(self, checkboxes_info):
-        self.Buffer_cleanup()
-        if self.widget_EasmentTools is not None:
-            text = "Olen alles arenduses. \n mitte midagi ei salvestatud"
-            heading = pealkiri.tubli
-            self.cleanup()
-            self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
-            QMessageBox.information(self.widget_EasmentTools, heading, text)
-            if on_selection_changed_lambda_easements:
-                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
-                active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
-                self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)
-                self.widget_EasmentTools.dPuhvriSuurus.disconnet(WidgetTools.activ_dialer)
-            Flags.active_properties_layer_flag = False
-            self.widget_EasmentTools.pbprint.setEnabled(False)            
-            self.widget_EasmentTools.cmbScale.setEnabled(False)
-            self.widget_EasmentTools.accept()
-        self.widgetClosed.emit()
-            
-    def on_cancel_button_clicked(self, checkboxes_info):
-        self.Buffer_cleanup()
-        if self.widget_EasmentTools is not None:
-            self.cleanup()
-            text = sisu.kasutaja_peatas_protsessi
-            heading = pealkiri.informationSimple
-            QMessageBox.information(self.widget_EasmentTools, heading, text)
-            if on_selection_changed_lambda_easements:
-                active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
-                active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-                active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
-            self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
-            self.widget_EasmentTools.pbprint.setEnabled(False)
-            self.widget_EasmentTools.cmbScale.setEnabled(False)
-            Flags.active_properties_layer_flag = False
-            self.widget_EasmentTools.reject()
-        self.widgetClosed.emit()
-
     def cleanup(self):
         if self.is_select_tool_activated:
             # Deactivate select tool
             self.deactivate_select_tool()
             self.is_select_tool_activated = False
-        
 
     def Buffer_cleanup(self):
         layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)        
@@ -354,8 +349,6 @@ class EasementTools(QObject):
             if layer:
                 layer = layer[0]
                 layer.removeSelection()
-            
-        
 
     def deactivate_select_tool(self):
         # Deactivate selection tool
@@ -538,7 +531,6 @@ class WidgetTools:
             help = PropertiesLayerFunctions()
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
-
 
 class TempBufferLayerNames:
     water_temp_name = 'Ajutine_V'
@@ -740,9 +732,7 @@ class cbMapSelectors:
             BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, drainage_layer_name, style_name, checkbox, distance)
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(drainage_layer_name, temp_layer_name)
-
         
-
 class MapCleaners:
     @staticmethod
     def clear_selection_and_delete_temp_layer(layer_name, temp_layer_name):
@@ -781,7 +771,6 @@ class MapCleaners:
         rowCount = model.rowCount()
         model.removeRows(0, rowCount)
         iface.mapCanvas().refresh()
-
 
 class GenerateEasement:
 

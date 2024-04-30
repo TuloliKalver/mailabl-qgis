@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(543, 352)
+        Dialog.resize(745, 352)
         Dialog.setStyleSheet("*{\n"
 "    border: transparent;\n"
 "    background-color: transparent;\n"
@@ -91,7 +91,7 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.fMainLabel)
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.label)
+        self.verticalLayout.addWidget(self.label, 0, QtCore.Qt.AlignHCenter)
         self.label_2 = QtWidgets.QLabel(Dialog)
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2, 0, QtCore.Qt.AlignHCenter)

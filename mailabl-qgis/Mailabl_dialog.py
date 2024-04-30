@@ -57,7 +57,7 @@ from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Easements.EasementsItems import EasementssMain
 from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
-
+from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -248,7 +248,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         
         self.pbShowOnMap.clicked.connect(self.show_projects_on_map_with_cadastral_connection)
-        self.pbProjects_Connect_properties.clicked.connect(self.connect_properties_with_projects)
+      
+        #self.pbProjects_Connect_properties.clicked.connect(self.connect_properties_with_projects)
+        self.pbProjects_Connect_properties.clicked.connect(self.load_properties_connector)
+
+
         self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
         self.pbContracts_Connect_properties.clicked.connect(self.connect_properties_with_contracts)
 
@@ -338,16 +342,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbMainMenu.clicked.connect(self.handleSidebar_leftButtons)
         
         self.pushButton.clicked.connect(self.limitedLoad)
-
-############sort/cler/delete##############################
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
 
-        # Connect button click to load easement widget using instance method
+
         self.pbEasementsTools.clicked.connect(self.load_easement_widget)
 
+
     def load_easement_widget(self):
-        # Minimize the main dialog
         self.showMinimized()
         # Create an instance of EasementTools and pass tweasementView
         self.easement_tools = EasementTools(self.tweasementView)
@@ -357,12 +359,23 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.easement_tools.load_widget()
 
     def on_easement_widget_closed (self):
-        # Maximize the main dialog when the Easement dialog is closed
         self.showNormal()
-        # Perform actions when the widget is closed
-        print("Easement widget closed")
-        # Add your custom actions here
 
+    def load_properties_connector(self):
+        table = self.tblMailabl_projects
+        module = "Projects"
+        self.showMinimized()
+        # Create an instance of PropertiesConnector with the table instance
+        self.properties_connector = PropertiesConnector(table)
+        # Connect the widgetClosed signal to a method in your main class
+        self.properties_connector.ConnectorWidgetClosed.connect(self.on_properties_connector_widget_closed)
+        # Load the properties connector widget UI
+        self.properties_connector.load_propertiesconnector_widget_ui(module)
+
+
+    def on_properties_connector_widget_closed(self):
+        print("Closed properties loader window")
+        self.showNormal()
 
 
     def generate_project_folder(self):
@@ -1118,6 +1131,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         properties_selectors.show_connected_cadasters(self, layer_type=layer_type, values=cadasters)
         cadasters.clear()
 
+
+
+
     def connect_properties_with_projects(self):
         global projects_widget
         table = self.tblMailabl_projects
@@ -1140,7 +1156,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
             layer = QgsProject.instance().mapLayersByName(layer_name)[0]
             iface.setActiveLayer(layer)
-            #layer.removeSelection()
             
             widget = ToolsProject.projects_toolWidget(self, projects_name_text, projects_number_text)
             projects_widget = widget
@@ -1165,6 +1180,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             text = HoiatusTexts().projekt_valimata
             heading = Headings().warningSimple
             QMessageBox.information(self, heading, text)
+
 
     def connect_properties_with_contracts(self):
         global projects_widget

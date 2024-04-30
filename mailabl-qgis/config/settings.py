@@ -12,9 +12,11 @@ CONF_WIDGETS_FOLDER = "confWidgets"
 QGIS_STYLES_FOLDER = "QGIS_styles"
 ICONS_FOLDER = "icons/"
 WIDGETS_FOLDER = "widgets"
+WIDGET_MODULAR_FOLDER = "connector_widget_engine"
 CONFIG_FILE = "config.json"
 FUNCTIONS_FOLDER = "Functions"
 EASEMENTS_FOLDER = "Easements"
+
 
 # Load configuration
 with open(os.path.join(PLUGIN_DIR, CONFIG_FILE), "r") as json_content:
@@ -80,7 +82,7 @@ class IconsByName:
 
 class FilesByNames:
     def __init__(self):
-        self.Setup_ConfigUI = "ProjectSetup.ui"
+
         self.MaaAmet_import = "MaaAmet_Layer_backround.qml"
         self.MaaAmet_temp = "Maa_amet_temp_layer.qml"
         self.Easement_style = "Easement_Properties.qml"
@@ -88,13 +90,16 @@ class FilesByNames:
         self.Easement_sewage = "Easement_Sew.qml"
         self.Easement_prSewage = "Easement_PrSew.qml"
         self.Easement_Drainage = "Easement_Drainage.qml"
+        self.easement_unined = "UnionedEasement.qml"
+        #Need to be separated into diferent classes!
         self.statusbar_widget = "WStatusBar.ui"
         self.layer_setup_ui = "LayerSetup.ui"
         self.projects_setup_ui = "ProjectSetup.ui"
         self.contracts_setup_ui = "ContractsSetup.ui"
         self.easements_setup_ui = "EasementsSetup.ui"
         self.easement_tools_ui = "Servituut.ui"
-        self.easement_unined = "UnionedEasement.qml"
+        self.Setup_ConfigUI = "ProjectSetup.ui"
+        self.add_properties_to_module_ui = "Properties_connector_new.ui"
 
 class Filepaths:
     @staticmethod
@@ -116,6 +121,8 @@ class Filepaths:
     @classmethod
     def get_widget(self, widget_name):
         return os.path.join(PLUGIN_DIR_MAIN, WIDGETS_FOLDER, widget_name)
+
+    
 
     @staticmethod
     def load_ui_file(ui_file_path):
