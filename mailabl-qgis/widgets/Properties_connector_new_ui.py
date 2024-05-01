@@ -14,22 +14,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(1018, 607)
+        Dialog.resize(700, 375)
+        Dialog.setMinimumSize(QtCore.QSize(700, 375))
+        Dialog.setMaximumSize(QtCore.QSize(700, 375))
         Dialog.setStyleSheet("\n"
-"#lblDialer{\n"
-"    background-color: None;\n"
-"    backround: None;\n"
-"    border: None\n"
-"}\n"
-"\n"
-"\n"
-"\n"
 "\n"
 "#leInfo,#leSelectedProperties {\n"
 "    border: None;\n"
 "    background-color: #272c35;\n"
 "    color: #c5c5d2;\n"
-"    padding-left: 10px; /* Adjust the left padding as needed */\n"
+"    padding-left: 0px; /* Adjust the left padding as needed */\n"
 "    padding-right: 0px; /* Adjust the right padding as needed */\n"
 "    padding-top: 0px; /* Adjust the top padding as needed */\n"
 "    padding-bottom: 0px; /* Adjust the bottom padding as needed */\n"
@@ -93,15 +87,12 @@ class Ui_Dialog(object):
 "}\n"
 "\n"
 "\n"
-"\n"
-"\n"
-"\n"
 "QAbstractItemView {\n"
 "    background-color:#40414f;\n"
 "    color:#ececf1;\n"
 "    border: 1px solid #565869;\n"
 "    border-radius: 4px;\n"
-"    padding-left: 5px\n"
+"    padding-left: 0px\n"
 "}\n"
 "\n"
 "\n"
@@ -181,7 +172,7 @@ class Ui_Dialog(object):
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.frame_2)
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_2.setSpacing(5)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.frame_3 = QtWidgets.QFrame(self.frame_2)
@@ -210,6 +201,8 @@ class Ui_Dialog(object):
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.frame)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setSpacing(5)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.lblDescription = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
@@ -249,7 +242,7 @@ class Ui_Dialog(object):
         self.fButtons.setObjectName("fButtons")
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.fButtons)
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_7.setSpacing(10)
+        self.horizontalLayout_7.setSpacing(5)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.pbClear_list = QtWidgets.QPushButton(self.fButtons)
         self.pbClear_list.setObjectName("pbClear_list")
@@ -273,14 +266,6 @@ class Ui_Dialog(object):
         self.pbSave.setObjectName("pbSave")
         self.horizontalLayout_7.addWidget(self.pbSave)
         self.verticalLayout_4.addWidget(self.fButtons)
-        self.frFooter = QtWidgets.QFrame(self.frame_3)
-        self.frFooter.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frFooter.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frFooter.setObjectName("frFooter")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frFooter)
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.verticalLayout_4.addWidget(self.frFooter)
         self.horizontalLayout_2.addWidget(self.frame_3)
         self.fHelpMenu = QtWidgets.QFrame(self.frame_2)
         self.fHelpMenu.setMinimumSize(QtCore.QSize(200, 0))

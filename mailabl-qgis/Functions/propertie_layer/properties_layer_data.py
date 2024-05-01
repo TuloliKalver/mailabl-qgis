@@ -42,7 +42,7 @@ class PropertiesLayerFunctions:
         model.setHorizontalHeaderLabels(fields)
         # Add a new 'Address' column
         model.setHorizontalHeaderItem(len(fields), QStandardItem('Address'))
-
+        print(f"table view: {view_item}")
         # Set the model for the view
         view_item.setModel(model)
         # Set the row height to 20 pixels

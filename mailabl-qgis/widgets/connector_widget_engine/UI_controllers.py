@@ -1,12 +1,16 @@
+from qgis.utils import iface
+from qgis.core import QgsMapLayer, QgsProject
 
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
-
+from ...queries.python.update_relations.update_project_properties import ProjectsProperties
 from ...utils.table_utilys import TableExtractor
 from ...queries.python.projects_pandas import TableHeaders
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
+from ...config.settings import connect_settings_to_layer, Flags, settingPageElements
+from ...Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 
 
 class PropertiesConnector(QObject):
@@ -20,56 +24,112 @@ class PropertiesConnector(QObject):
 
 
     def load_propertiesconnector_widget_ui(self, module):
+        global selection_monitor
         widget_file = FilesByNames().add_properties_to_module_ui
         ui_file_path = Filepaths.get_widget(widget_file)
         widget = loadUi(ui_file_path)
         widget.show()
         self.widget = widget
-        widget.show()
         table_view = widget.tvProperties
-    
-        input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module)
-        PropertiesConnector.button_controller(self, widget)
- 
-        id_column_index = input_headers.index(module_headers.header_id)
-        id_value = TableExtractor.value_from_selected_row_by_column(self.table, id_column_index)
+        
 
+        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+        if not isinstance(active_layer, QgsMapLayer):
+            return
+        
+        WidgetTools.load_tool_and_fill_table(self, widget, table_view, active_layer_name)
+        
+        selection_monitor = None
+        flag = True
+        Flags.active_properties_layer_flag = flag
+        
+        if flag:            
+            selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
+            active_layer.selectionChanged.connect(selection_monitor)
+            widget.showMinimized()  # Assuming widget is defined somewhere     
+
+        input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module)    
+        name_column_index = input_headers.index(module_headers.header_name)
+        element_name = TableExtractor.value_from_selected_row_by_column(self.table, name_column_index)
+
+        id_column_index = input_headers.index(module_headers.header_id)
+        element_id = TableExtractor.value_from_selected_row_by_column(self.table, id_column_index)
+        
+        PropertiesConnector.button_controller(self, widget, module, element_id, element_name)
+                                             
         widget.closeEvent = self.closeEvent
 
     def closeEvent(self, event):
-        self.widget.close()
+        try:
+            iface.actionPan().trigger()  # Trigger pan tool
+            global selection_monitor
+            if selection_monitor:
+                active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+                active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+                if active_layer:
+                    active_layer.selectionChanged.disconnect(selection_monitor)  # Disconnect the signal
+                    selection_monitor = None
+            flag = False
+            Flags.active_properties_layer_flag = flag
+        
+        except Exception as e:
+            print("Error occurred during disconnection:", e)
+        # Close the widget
+        if self.widget:
+            self.widget.close()
         event.accept()  # Allow the window to close
         self.ConnectorWidgetClosed.emit()
-
+                
     def on_cancel_button_clicked(self, widget):
         if widget is not None:
-            widget.reject()
-            self.ConnectorWidgetClosed.emit()
-
-    def on_save_button_clicked(self, widget):
-        if widget is not None:
+            self.unset_widget_actions(widget)
             widget.accept()
             self.ConnectorWidgetClosed.emit()
 
+    def on_save_button_clicked(self, widget, module, element_id, element_name):
+        ConnectorFunctions.add_properties_to_module(self, widget, module, element_id, element_name)
+        if widget is not None:
+            self.unset_widget_actions(widget)
+            widget.accept()
+            self.ConnectorWidgetClosed.emit()
 
+    def unset_widget_actions(self, widget):
+        iface.actionPan().trigger()
+        global selection_monitor
+        if selection_monitor:
+            print("Selection monitor true")
+            active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+            active_layer.selectionChanged.disconnect(selection_monitor)
+            selection_monitor = None
+        flag = False
+        Flags.active_properties_layer_flag = flag
+        #PropertiesConnector.clear_table(widget)
+        print(f"Selection monitor after close: {selection_monitor}")
+        
 
-    def button_controller(self, widget):
-
+    def button_controller(self, widget, module, element_id, element_name):
         button_save = getattr(widget, 'pbSave', None)
         button_cancel = getattr(widget, 'pbCancel', None)
         button_clear_model_data = getattr(widget, 'pbClear_list', None)
 
         # Define lambdas to connect buttons to functions
         button_functions = {
-            button_save: lambda: PropertiesConnector.on_save_button_clicked(self, widget),
+            button_save: lambda: PropertiesConnector.on_save_button_clicked(self, widget, module, element_id, element_name),
             button_cancel: lambda: PropertiesConnector.on_cancel_button_clicked(self, widget),
-            button_clear_model_data: None
+            button_clear_model_data: lambda: PropertiesConnector.clear_table(widget)
         }
         
        # Connect buttons to functions
         for button, function in button_functions.items():
             PropertiesConnector.connect_button(button, function)
-
+    @staticmethod
+    def clear_table(widget):
+        model = widget.tvProperties.model()
+        if model is not None:
+            model.clear()
+            
     @staticmethod
     def connect_button(button, function):
         # Check if button and function are assigned
@@ -81,11 +141,38 @@ class PropertiesConnector(QObject):
             button.setEnabled(False)
 
 
+class WidgetTools:
+    def load_tool_and_fill_table(self, widget, table_view, active_layer_name):
+        
+        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+        iface.setActiveLayer(active_layer)
+        iface.actionSelect().trigger()
+                
+        if active_layer and active_layer.selectedFeatureCount() > 0:
+            # Show the widget when there are selected features
+            layer_functions = PropertiesLayerFunctions()
+
+            layer_functions.generate_table_from_selected_map_items(table_view, active_layer_name)
+            table_view.update()
+            widget.showNormal()
+        
+
+    @staticmethod
+    def on_selection_changed(widget):
+        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        if Flags.active_properties_layer_flag:
+            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+            if active_layer and active_layer.selectedFeatureCount() > 0:
+                table_view = widget.tvProperties
+                help = PropertiesLayerFunctions()
+                help.generate_table_from_selected_map_items(table_view, active_layer_name)
+                table_view.update()
+                widget.showNormal()
+
+
 class WidgetLabels:
     def widget_label_elements(widget, table, module):
         label_descripton = widget.lblDescription
-        lable_element_name = widget.lblElementName
-        label_element_number = widget.lblElementNumber
         line_element_number = widget.leElementNumber
         line_element_name = widget.leElementName
 
@@ -97,23 +184,23 @@ class WidgetLabels:
 
         object_number = TableExtractor.value_from_selected_row_by_column(table, number_column_index)
         object_name = TableExtractor.value_from_selected_row_by_column(table, name_colum_index)
-        lable_element_name.setText(object_name)
-        label_element_number.setText(object_number)
+
         line_element_name.setText(object_name)
         line_element_number.setText(object_number)
 
         module_text = f"{module}i Nr. ja nimetus"
         label_descripton.setText(module_text)
 
-
         return input_headers, module_headers
 
 class ConnectorFunctions:
 
-    def ConnectProperties(id_value):
-    
-
-
-        pass
-
-
+    def add_properties_to_module(self, widget, module, element_id, element_name):
+        print(f"Module: {module}")
+        print(f"Elament id: {element_id}")
+        print(f"Element name: {element_name}")
+        if module == "Projekt":
+            print("started projects module proerties")
+            ProjectsProperties.update_projects_properties(self, element_id, widget, element_name)
+        if module == "Leping":
+            pass

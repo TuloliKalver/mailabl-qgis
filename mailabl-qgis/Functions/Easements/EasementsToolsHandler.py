@@ -47,7 +47,7 @@ class EasementTools(QObject):
         self.is_select_tool_activated = False
         self.select_tool = None
         self.select_tool_connection = None
-        self.Buffer_tool_connection = None
+
 
     def load_widget(self):
         global on_selection_changed_lambda_easements
@@ -63,9 +63,6 @@ class EasementTools(QObject):
                 cancel_button = self.widget_EasmentTools.pbCancel
                 #buffer_properties_button = self.widget_EasmentTools.pbCreateProperties
                 clear_buffer_button = self.widget_EasmentTools.pbClearCadastrals
-
-
-                
                 properties_table = self.widget_EasmentTools.tvProperties
                 pbGen_easement = self.widget_EasmentTools.pbKoostaServituut
                 # Connect button click signals
@@ -114,11 +111,6 @@ class EasementTools(QObject):
                 # Connect closeEvent method to handle window close event
                 self.widget_EasmentTools.closeEvent = self.closeEvent
 
-            else:
-                text = HoiatusTexts().andmed_valimata
-                heading = Headings().warningSimple
-                QMessageBox.information(self.tweasementView, heading, text)
-                return
         else:
             # If an instance already exists, simply show it
             self.cleanup()
@@ -419,7 +411,6 @@ class WidgetTools:
         iface.actionSelect().trigger()
         #print("start selecting stuff")
         #Hide the main window
-        flag = Flags.active_properties_layer_flag
         #print(f"Flag status befor if statement {flag}")
         
         if active_layer and active_layer.selectedFeatureCount() > 0:
@@ -709,7 +700,6 @@ class cbMapSelectors:
         if not checkbox.isChecked():
             MapCleaners.clear_selection_and_delete_temp_layer(prSerer_layer_name, temp_layer_name)
     
-
     def selectDrainage_pipes(widget, checkbox):
         print(f"ccheckbox: {checkbox}")
         drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)        

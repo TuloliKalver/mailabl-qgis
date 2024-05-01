@@ -14,7 +14,6 @@ from ....processes.infomessages.messages import Headings, HoiatusTexts, InfoText
  
 pealkiri = Headings()
 
-on_selection_changed_lambda = None
 # Adjust the delay interval and sleep duration according to your requirements
 delay_interval = 10
 sleep_duration = 2
@@ -22,123 +21,14 @@ timer_instance = Timer(delay_interval=delay_interval, sleep_duration=sleep_durat
 
 
 
-class map_selectors:        
-    def activate_layer_and_use_selectTool_on_first_load(self, widget):
-        global on_selection_changed_lambda
-        #print("started with activated layer")
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        if not isinstance(active_layer, QgsMapLayer):
-            #print(f"Ei leidnud kinnistute kihti '{layer}'")
-            return
-        iface.setActiveLayer(active_layer)
-        iface.actionSelect().trigger()
-        #print("start selecting stuff")
-        #Hide the main window
-        flag = Flags.active_properties_layer_flag
-        print(f"Flag status before if statement {flag}")
-        
-        if active_layer and active_layer.selectedFeatureCount() > 0:
-            # Show the widget when there are selected features
-            table_view = widget.tvProperties
-
-            help = PropertiesLayerFunctions()
-            help.generate_table_from_selected_map_items(table_view, active_layer_name)
-            table_view.update()
-            widget.showNormal()
-
-        if flag:
-            print("Flag is true in activate_layer function")
             
-            on_selection_changed_lambda = lambda: map_selectors.on_selection_changed(widget)
-            print(f"lambda value {on_selection_changed_lambda}")
-            active_layer.selectionChanged.connect(on_selection_changed_lambda)
-            
-        else:
-            print("Flag is false")
-            
-
-    def activate_layer_and_use_selectTool(self, widget):
-        global on_selection_changed_lambda
-        #print("started with activated layer")
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        if not isinstance(active_layer, QgsMapLayer):
-            return
-        iface.setActiveLayer(active_layer)
-        iface.actionSelect().trigger()
-        #print("start selecting stuff")
-        #Hide the main window
-        flag = Flags.active_properties_layer_flag
-        #print(f"Flag status befor if statement {flag}")
-        
-        if active_layer and active_layer.selectedFeatureCount() > 0:
-            # Show the widget when there are selected features
-            table_view = widget.tvProperties
-
-            help = PropertiesLayerFunctions()
-            help.generate_table_from_selected_map_items(table_view, active_layer_name)
-            table_view.update()
-            widget.showNormal()
-
-        if flag:
-            #print("Flag is true in activate_layer function")
-            on_selection_changed_lambda = lambda: map_selectors.on_selection_changed(widget)
-            #print(f"lambda value {on_selection_changed_lambda}")
-            widget.showMinimized()
-            active_layer.selectionChanged.connect(on_selection_changed_lambda)
-            
-        else:
-            print("Flag is false")
-        
-    @staticmethod
-    def on_selection_changed(widget):
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-#        print("on_selection_changed")
-        if Flags.active_properties_layer_flag:
-            # If the flag is true, execute the function
-#            print("Flag is true in selection change")
-#            print(f"And active_properties_layer flag is {Flags.active_properties_layer_flag}")
-            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-
-            if active_layer and active_layer.selectedFeatureCount() > 0:
-                # Show the widget when there are selected features
-                table_view = widget.tvProperties
-
-                help = PropertiesLayerFunctions()
-                help.generate_table_from_selected_map_items(table_view, active_layer_name)
-                table_view.update()
-                widget.showNormal()
-
-        else:
-            # If the flag is false, do nothing
-            print("Flag is false")
-        
 
 
 class ProjectsProperties:
-    @staticmethod
-    def on_cancel_button_clicked():
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        parent_widget = QWidget()
-        titleText = Headings().informationSimple
-        infoText = HoiatusTexts().kasutaja_peatas_protsessi
-        #active_layer.selectionChanged.disconnect()  
-        QMessageBox.information(parent_widget, titleText, infoText)
-        #import lamda here
-        active_layer.selectionChanged.disconnect(on_selection_changed_lambda)
-
-        flag = Flags.active_properties_layer_flag 
-        flag = False            
-        Flags.active_properties_layer_flag = flag
-
     @staticmethod    
     def update_projects_properties(self, project_id, widget, project_name):
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
         properties_table = widget.tvProperties
         model_properties = properties_table.model()
-        
         properties = []
         count = model_properties.rowCount()
         if count == 0:
@@ -157,13 +47,13 @@ class ProjectsProperties:
                 print(f"Row {row}, Column 0: No item")
 
         total_ids_Table = len(properties)
-        #print(f"properties {properties}")
+        print(f"properties {properties}")
         
         returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, properties_list=properties)
         
         total_returned_ids = len(returned_ids)
-        #print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")
-        #print(returned_ids)
+        print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")
+        print(returned_ids)
         
         chunk_size = 25
         count = 0
@@ -192,26 +82,16 @@ class ProjectsProperties:
                         }
                         }
             
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            requestBuilder.construct_and_send_request(self, query, variables)
             #print(f"Response: {response.status_code}")
             #print(response.text)
             count += paus_interval
             progress_bar.setValue(count)
             QCoreApplication.processEvents()
-            
-            
+             
             if count % paus_interval == 0:
                 timer_instance.pause()
 
-        #text = (f"Projektile{project_name}\nlisatud \n{total_returned_ids}/{total_ids_Table} kinnistut!")
         text = InfoTexts().properties_successfully_added(project_name, total_returned_ids, total_ids_Table)
         heading = Headings().informationSimple      
-        QMessageBox.information(self, heading, text)
-        #print("Project updated successfully:")
-        #print(updated_project)
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        active_layer.selectionChanged.disconnect(on_selection_changed_lambda)
-            
-        flag = Flags.active_properties_layer_flag 
-        flag = False        
-        Flags.active_properties_layer_flag = flag
+        QMessageBox.information(None, heading, text)
