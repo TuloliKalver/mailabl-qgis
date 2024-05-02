@@ -19,7 +19,7 @@ class Ui_Dialog(object):
         Dialog.setMaximumSize(QtCore.QSize(700, 375))
         Dialog.setStyleSheet("\n"
 "\n"
-"#leInfo,#leSelectedProperties {\n"
+"#lblDescription {\n"
 "    border: None;\n"
 "    background-color: #272c35;\n"
 "    color: #c5c5d2;\n"
@@ -245,23 +245,26 @@ class Ui_Dialog(object):
         self.horizontalLayout_7.setSpacing(5)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.pbClear_list = QtWidgets.QPushButton(self.fButtons)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\widgets\\../icons/Icons_hele/refresh-cw.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbClear_list.setIcon(icon)
         self.pbClear_list.setObjectName("pbClear_list")
         self.horizontalLayout_7.addWidget(self.pbClear_list)
         spacerItem = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_7.addItem(spacerItem)
         self.pbCancel = QtWidgets.QPushButton(self.fButtons)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\widgets\\../Functions/icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbCancel.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\widgets\\../icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbCancel.setIcon(icon1)
         self.pbCancel.setObjectName("pbCancel")
         self.horizontalLayout_7.addWidget(self.pbCancel)
         self.pbSave = QtWidgets.QPushButton(self.fButtons)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         self.pbSave.setFont(font)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\widgets\\../Functions/icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbSave.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\widgets\\../icons/Icons_hele/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbSave.setIcon(icon2)
         self.pbSave.setIconSize(QtCore.QSize(16, 16))
         self.pbSave.setObjectName("pbSave")
         self.horizontalLayout_7.addWidget(self.pbSave)

@@ -113,9 +113,9 @@ class ContractsMain:
                 newLabel_for_cadastral = ""  # Replace with your actual column labels
                 newLabel_documents = ""
                 newLabel_Link = ""
-                newLabel_ID = ""
+                #newLabel_ID = ""
                 newLabel_CadastralShow = ""
-                con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+                #con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
                 con_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
                 con_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
                 con_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
@@ -196,9 +196,9 @@ class ContractsMain:
             newLabel_for_cadastral = ""  # Replace with your actual column labels
             newLabel_documents = ""
             newLabel_Link = ""
-            newLabel_ID = ""
+            #newLabel_ID = ""
             newLabel_CadastralShow = ""
-            con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+            #con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
             con_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
             con_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
             con_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
@@ -218,7 +218,6 @@ class ContractsMain:
             text = HoiatusTexts().ostingu_tulemused_puuduvad
             heading = Headings().warningSimple
             print(f"{heading}, {text}")
-
     
     def load_contracts_list_with_zoomed_map_elements(self, table):
 
@@ -285,9 +284,9 @@ class ContractsMain:
                 newLabel_for_cadastral = ""  # Replace with your actual column labels
                 newLabel_documents = ""
                 newLabel_Link = ""
-                newLabel_ID = ""
+                #newLabel_ID = ""
                 newLabel_CadastralShow = ""
-                con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+                #con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
                 con_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
                 con_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
                 con_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))

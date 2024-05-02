@@ -28,7 +28,7 @@
   <property name="styleSheet">
    <string notr="true">
 
-#leInfo,#leSelectedProperties {
+#lblDescription {
     border: None;
     background-color: #272c35;
     color: #c5c5d2;
@@ -410,6 +410,10 @@ QLineEdit:disabled {
               <property name="text">
                <string>Alusta valimist uuesti</string>
               </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>../icons/Icons_hele/refresh-cw.svg</normaloff>../icons/Icons_hele/refresh-cw.svg</iconset>
+              </property>
              </widget>
             </item>
             <item>
@@ -432,7 +436,7 @@ QLineEdit:disabled {
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../Functions/icons/Icons_hele/x-circle.svg</normaloff>../Functions/icons/Icons_hele/x-circle.svg</iconset>
+                <normaloff>../icons/Icons_hele/x-circle.svg</normaloff>../icons/Icons_hele/x-circle.svg</iconset>
               </property>
              </widget>
             </item>
@@ -448,7 +452,7 @@ QLineEdit:disabled {
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>../Functions/icons/Icons_hele/save.svg</normaloff>../Functions/icons/Icons_hele/save.svg</iconset>
+                <normaloff>../icons/Icons_hele/save.svg</normaloff>../icons/Icons_hele/save.svg</iconset>
               </property>
               <property name="iconSize">
                <size>

@@ -29,6 +29,7 @@ from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
+from .config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
@@ -57,6 +58,7 @@ from .Functions.Easements.EasementsItems import EasementssMain
 from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
+
 
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -248,12 +250,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbShowOnMap.clicked.connect(self.show_projects_on_map_with_cadastral_connection)
       
-        #self.pbProjects_Connect_properties.clicked.connect(self.connect_properties_with_projects)
-        self.pbProjects_Connect_properties.clicked.connect(self.load_properties_connector)
-
+        table_projects = self.tblMailabl_projects
+        pbProjects_Connect_properties = self.pbProjects_Connect_properties        
+        self.pbProjects_Connect_properties.clicked.connect(lambda: self.load_properties_connector(MODULE_PROJECTS, table_projects, pbProjects_Connect_properties))
 
         self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
-        self.pbContracts_Connect_properties.clicked.connect(self.connect_properties_with_contracts)
+
+        table_contracts = self.ContractView
+        pbContracts_Connect_properties = self.pbContracts_Connect_properties
+        self.pbContracts_Connect_properties.clicked.connect(lambda: self.load_properties_connector(MODULE_CONTRACTS, table_contracts, pbContracts_Connect_properties))
 
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
@@ -299,14 +304,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSearchContracts.clicked.connect(self.searchContracts)
         self.pbSearcheasements.clicked.connect(self.searchEasements)
         
-        
-        
-        
     #Adding and removing        
         self.pbSearch_Add.clicked.connect(lambda: searchGeneral.search_cadastral_items_by_values(self))
         
-        
-
     #update selections in adding proccess
         self.cbChooseAll_States.stateChanged.connect(lambda state, view_state=object_listView_Add_State: list_functions.toggleListSelection(view_state, state))
         self.cbChooseAll_Cities.stateChanged.connect(lambda state, view_state=object_listView_Add_City: list_functions.toggleListSelection(view_state, state))
@@ -344,12 +344,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
 
+        pbEasementTools = self.pbEasementsTools
+        pbEasementTools.clicked.connect(lambda: self.load_easement_widget(pbEasementTools))
 
-        self.pbEasementsTools.clicked.connect(self.load_easement_widget)
 
-
-    def load_easement_widget(self):
-
+    def load_easement_widget(self, button):
+        button.setEnabled(False)
         # Create an instance of EasementTools and pass tweasementView
         self.easement_tools = EasementTools(self.tweasementView)
         # Connect the widgetClosed signal to a method in your main class
@@ -357,7 +357,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         selection_model = table.selectionModel()
         if selection_model.hasSelection():
             self.showMinimized()
-            self.easement_tools.widgetClosed.connect(self.on_easement_widget_closed)
+            self.easement_tools.widgetClosed.connect(self.on_easement_widget_closed(button))
             # Call the load_widget method of the EasementTools instance
             self.easement_tools.load_widget()
         else:
@@ -365,21 +365,23 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             heading = Headings().warningSimple
             QMessageBox.information(self.tweasementView, heading, text)
             self.showNormal()
+            button.setEnabled(True)
             return
 
-    def on_easement_widget_closed (self):
+    def on_easement_widget_closed(self, button):
+        button.setEnabled(True)
         self.showNormal()
 
-    def load_properties_connector(self):
-        table = self.tblMailabl_projects
+
+    def load_properties_connector(self, module, table, button):
+        button.setEnabled(False)
         selection_model = table.selectionModel()
         if selection_model.hasSelection():
-            module = "Projekt"
             self.showMinimized()
             # Create an instance of PropertiesConnector with the table instance
             self.properties_connector = PropertiesConnector(table)
             # Connect the widgetClosed signal to a method in your main class
-            self.properties_connector.ConnectorWidgetClosed.connect(self.on_properties_connector_widget_closed)
+            self.properties_connector.ConnectorWidgetClosed.connect(lambda: self.on_properties_connector_widget_closed(button))
             # Load the properties connector widget UI
             self.properties_connector.load_propertiesconnector_widget_ui(module)
         
@@ -387,10 +389,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             text = HoiatusTexts().andmed_valimata
             heading = Headings().warningSimple
             QMessageBox.information(table, heading, text)
+            button.setEnabled(True)
             return
 
-
-    def on_properties_connector_widget_closed(self):
+    def on_properties_connector_widget_closed(self, button):
+        button.setEnabled(True)
         #print("Closed properties loader window")
         self.showNormal()
 
@@ -1147,56 +1150,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         cadasters = CadasterSelector.projects_return_cadasters(self,table = self.tblProjects) 
         properties_selectors.show_connected_cadasters(self, layer_type=layer_type, values=cadasters)
         cadasters.clear()
-
-
-
-    def connect_properties_with_contracts(self):
-        global projects_widget
-        table = self.ContractView
-        model = table.model()
-        selection_model = table.selectionModel()
-
-        if selection_model.hasSelection():
-            selected_index = selection_model.currentIndex()
-            contract_name = model.item(selected_index.row(), 2)
-            if contract_name is not None:
-                contract_name_text = contract_name.text()
-            
-            contract_number = model.item(selected_index.row(), 1)
-            contract_number_text = contract_number.text()
-            
-            Mailabl_ID = model.item(selected_index.row(), 0)
-            Mailabl_ID_text = Mailabl_ID.text()
-            #print(f"Mailabl ID: {Mailabl_ID_text}")
-            
-            layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-            layer = QgsProject.instance().mapLayersByName(layer_name)[0]
-            iface.setActiveLayer(layer)
-            #layer.removeSelection()
-            
-            widget = ToolsContract.contract_toolWidget(self, contract_name_text, contract_number_text)
-            clear_table = widget.pbClear_list
-            table_view = widget.tvProperties_AddTo_Contracts
-            
-            flag = Flags.active_properties_layer_flag 
-            flag = True        
-            Flags.active_properties_layer_flag = flag
-        
-            
-            PropertiesLayerFunctions.generate_table_from_selected_map_items(self,table_view, layer_name)
-            ContractMapSelectors.activate_layer_and_use_selectTool_on_first_load(self,widget, table_view)
-            clear_table.clicked.connect(lambda: shp_tools.clear_table_and_layer(table_view, layer_name))
-
-            widget.show()
-            
-            widget.accepted.connect(lambda: ContractProperties.update_contract_properties(self, Mailabl_ID_text, widget, contract_name_text))
-#            widget.rejected.connect(lambda: ProjectsProperties.on_cancel_button_clicked(widget))
-            
-        else:
-            text = HoiatusTexts().andmed_valimata
-            heading = Headings().warningSimple
-            QMessageBox.information(self, heading, text)         
-
         
     def generate_virtual_mapLayer_synced_with_Mailabl(self):
         # Create an instance of YourClas

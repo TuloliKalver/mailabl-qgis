@@ -31,6 +31,8 @@ HEADER_DOCUMENTS = 'Dokumendid'
 HEADER_FILE_PATH = "file_path_button"
 HEADER_STATUS = 'Staatus'
 
+
+
 class TableHeaders:
     def __init__(self):
         self.header_id = HEADER_ID
@@ -112,9 +114,6 @@ class GetProjectsWhere:
                 return None
         # Return only the desired number of items
         return properties_items
-
-
-
 
 class ProjectsWithPandas:    
     def query_active_main_projects_by_status(self, statuses):
@@ -363,7 +362,6 @@ class ProjectsWithPandas_2:
                 model.appendRow(data_items)
             
             return model, header_labels
-
 
 class ProjectsWithPandas_3:
 

@@ -4,14 +4,14 @@ from qgis.core import QgsMapLayer, QgsProject
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
-from ...queries.python.update_relations.update_project_properties import ProjectsProperties
+from ...config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
 from ...utils.table_utilys import TableExtractor
 from ...queries.python.projects_pandas import TableHeaders
-from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
+from ...queries.python.update_relations.update_project_properties import ProjectsProperties
+from ...queries.python.update_relations.update_contract_properties import ContractProperties
+from ...config.settings import Filepaths, SettingsDataSaveAndLoad, Flags, FilesByNames
 from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
-from ...config.settings import connect_settings_to_layer, Flags, settingPageElements
 from ...Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
-
 
 class PropertiesConnector(QObject):
     ConnectorWidgetClosed = pyqtSignal()
@@ -21,7 +21,7 @@ class PropertiesConnector(QObject):
         self.table = table
         self.widget = None
         self.SelectionTools = None
-
+        self.module = None
 
     def load_propertiesconnector_widget_ui(self, module):
         global selection_monitor
@@ -31,8 +31,7 @@ class PropertiesConnector(QObject):
         widget.show()
         self.widget = widget
         table_view = widget.tvProperties
-        
-
+        '''        
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
         if not isinstance(active_layer, QgsMapLayer):
@@ -40,16 +39,59 @@ class PropertiesConnector(QObject):
         
         WidgetTools.load_tool_and_fill_table(self, widget, table_view, active_layer_name)
         
+
+        if flag:                            
+            if active_layer and active_layer.selectedFeatureCount() > 0:        
+                WidgetTools.load_tool_and_fill_table(self, widget, table_view, active_layer_name)
+                selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
+                active_layer.selectionChanged.connect(selection_monitor)
+                widget.showNormal()
+            else: 
+                selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
+                active_layer.selectionChanged.connect(selection_monitor)
+                widget.showMinimized()  # Assuming widget is defined somewhere 
+
+        '''
+
+
+        if module is not None:
+            if module == MODULE_PROJECTS:
+                self.module = MODULE_PROJECTS
+                module_text = "Projekt"
+            if module == MODULE_CONTRACTS:
+                self.module = MODULE_CONTRACTS
+                module_text = "Leping"
+
         selection_monitor = None
         flag = True
         Flags.active_properties_layer_flag = flag
-        
+        '''
         if flag:            
             selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
             active_layer.selectionChanged.connect(selection_monitor)
             widget.showMinimized()  # Assuming widget is defined somewhere     
+        '''
+        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+        if not isinstance(active_layer, QgsMapLayer):
+            return
 
-        input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module)    
+        if flag:
+            iface.setActiveLayer(active_layer)
+            iface.actionSelect().trigger()                            
+            if active_layer and active_layer.selectedFeatureCount() > 0:
+
+                WidgetTools.load_tool_and_fill_table(self, widget, table_view, active_layer_name)
+                selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
+                active_layer.selectionChanged.connect(selection_monitor)
+                widget.showNormal()
+            else: 
+                selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
+                active_layer.selectionChanged.connect(selection_monitor)
+                widget.showMinimized()  # Assuming widget is defined somewhere 
+
+
+        input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module_text)    
         name_column_index = input_headers.index(module_headers.header_name)
         element_name = TableExtractor.value_from_selected_row_by_column(self.table, name_column_index)
 
@@ -74,7 +116,8 @@ class PropertiesConnector(QObject):
             Flags.active_properties_layer_flag = flag
         
         except Exception as e:
-            print("Error occurred during disconnection:", e)
+            #print("Error occurred during disconnection:", e)
+            pass
         # Close the widget
         if self.widget:
             self.widget.close()
@@ -98,7 +141,7 @@ class PropertiesConnector(QObject):
         iface.actionPan().trigger()
         global selection_monitor
         if selection_monitor:
-            print("Selection monitor true")
+            #print("Selection monitor true")
             active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
             active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
             active_layer.selectionChanged.disconnect(selection_monitor)
@@ -106,7 +149,7 @@ class PropertiesConnector(QObject):
         flag = False
         Flags.active_properties_layer_flag = flag
         #PropertiesConnector.clear_table(widget)
-        print(f"Selection monitor after close: {selection_monitor}")
+        #print(f"Selection monitor after close: {selection_monitor}")
         
 
     def button_controller(self, widget, module, element_id, element_name):
@@ -145,9 +188,7 @@ class WidgetTools:
     def load_tool_and_fill_table(self, widget, table_view, active_layer_name):
         
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        iface.setActiveLayer(active_layer)
-        iface.actionSelect().trigger()
-                
+                        
         if active_layer and active_layer.selectedFeatureCount() > 0:
             # Show the widget when there are selected features
             layer_functions = PropertiesLayerFunctions()
@@ -160,6 +201,7 @@ class WidgetTools:
     @staticmethod
     def on_selection_changed(widget):
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+
         if Flags.active_properties_layer_flag:
             active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
             if active_layer and active_layer.selectedFeatureCount() > 0:
@@ -171,7 +213,7 @@ class WidgetTools:
 
 
 class WidgetLabels:
-    def widget_label_elements(widget, table, module):
+    def widget_label_elements(widget, table, module_text):
         label_descripton = widget.lblDescription
         line_element_number = widget.leElementNumber
         line_element_name = widget.leElementName
@@ -188,19 +230,18 @@ class WidgetLabels:
         line_element_name.setText(object_name)
         line_element_number.setText(object_number)
 
-        module_text = f"{module}i Nr. ja nimetus"
-        label_descripton.setText(module_text)
+        text = f"{module_text}i Nr. ja nimetus"
+        label_descripton.setText(text)
 
         return input_headers, module_headers
 
 class ConnectorFunctions:
 
     def add_properties_to_module(self, widget, module, element_id, element_name):
-        print(f"Module: {module}")
-        print(f"Elament id: {element_id}")
-        print(f"Element name: {element_name}")
-        if module == "Projekt":
-            print("started projects module proerties")
+        if module == MODULE_PROJECTS:
+            #print(f"started {MODULE_PROJECTS} proerties")
             ProjectsProperties.update_projects_properties(self, element_id, widget, element_name)
-        if module == "Leping":
+        if module == MODULE_CONTRACTS:
+            #print(f"started {MODULE_CONTRACTS} proerties")
+            ContractProperties.update_contract_properties(self, element_id, widget, element_name)
             pass

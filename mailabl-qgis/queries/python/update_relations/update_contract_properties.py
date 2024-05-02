@@ -101,7 +101,7 @@ class ContractProperties:
     @staticmethod    
     def update_contract_properties(self, contract_id, widget, project_name):
         active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-        properties_table = widget.tvProperties_AddTo_Contracts
+        properties_table = widget.tvProperties
         model_properties = properties_table.model()
         
         properties = []
@@ -163,20 +163,11 @@ class ContractProperties:
             progress_bar.setValue(count)
             QCoreApplication.processEvents()
             
-            
             if count % paus_interval == 0:
                 timer_instance.pause()
 
             text = (f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
             heading = pealkiri.informationSimple
-        QMessageBox.information(self, heading, text)
-        #print("Project updated successfully:")
-        #print(updated_project)
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        active_layer.selectionChanged.disconnect(on_selection_changed_lambda)
-            
-        flag = Flags.active_properties_layer_flag 
-        flag = False        
-        Flags.active_properties_layer_flag = flag
+        QMessageBox.information(None, heading, text)
 
 
