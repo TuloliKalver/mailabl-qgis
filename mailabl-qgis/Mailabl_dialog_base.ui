@@ -1208,7 +1208,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -1430,7 +1430,7 @@ QPushButton:hover{
                                <string/>
                               </property>
                               <property name="styleSheet">
-                               <string notr="true">background-color: rgb(131, 142, 162);</string>
+                               <string notr="true"/>
                               </property>
                               <property name="text">
                                <string>Kinnistutega sidumine*</string>

@@ -38,7 +38,6 @@ from .Functions.item_selector_tools import CadasterSelector, properties_selector
 from .Functions.SearchEngines import searchGeneral, searchProjectsValue
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
 from .Functions.Tools import tableFunctions
-from .Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from .Functions.AddProperties.AddNonduplicateItems import AddProperties
 from .Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 from .processes.ImportProcesses.Import_shp_file import SHPLayerLoader
@@ -49,7 +48,6 @@ from .queries.python.access_credentials import  (clear_UC_data,
                                                 save_user_name)
 from .queries.python.users.user_info import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator
-from .queries.python.update_relations.update_contract_properties import ContractProperties, ContractMapSelectors
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import InsertStatusToComboBox
 from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
@@ -250,15 +248,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbShowOnMap.clicked.connect(self.show_projects_on_map_with_cadastral_connection)
       
-        table_projects = self.tblMailabl_projects
-        pbProjects_Connect_properties = self.pbProjects_Connect_properties        
-        self.pbProjects_Connect_properties.clicked.connect(lambda: self.load_properties_connector(MODULE_PROJECTS, table_projects, pbProjects_Connect_properties))
 
         self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
 
+        table_projects = self.tblMailabl_projects
         table_contracts = self.ContractView
-        pbContracts_Connect_properties = self.pbContracts_Connect_properties
-        self.pbContracts_Connect_properties.clicked.connect(lambda: self.load_properties_connector(MODULE_CONTRACTS, table_contracts, pbContracts_Connect_properties))
+        ConnectAddPropertiesButtons.button_controller(self,table_contracts, table_projects)
 
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
@@ -374,7 +369,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
     def load_properties_connector(self, module, table, button):
-        button.setEnabled(False)
+        button_contracts = self.pbContracts_Connect_properties
+        button_projects = self.pbProjects_Connect_properties
+        button_easements = self.pbEasementsConnectProperties
+        buttons = [button_contracts, button_easements, button_projects]
+        for single_button in buttons:
+            single_button.setEnabled(False)
+
+        #button.setEnabled(False)
         selection_model = table.selectionModel()
         if selection_model.hasSelection():
             self.showMinimized()
@@ -393,6 +395,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             return
 
     def on_properties_connector_widget_closed(self, button):
+        button_contracts = self.pbContracts_Connect_properties
+        button_projects = self.pbProjects_Connect_properties
+        button_easements = self.pbEasementsConnectProperties
+        buttons = [button_contracts, button_easements, button_projects]
+        for single_button in buttons:
+            single_button.setEnabled(True)
         button.setEnabled(True)
         #print("Closed properties loader window")
         self.showNormal()
@@ -1405,3 +1413,25 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
 
 ################################################################################################################
+
+
+class ConnectAddPropertiesButtons:
+    def button_controller(self, table_contracts, table_projects):
+        button_contracts = getattr(self, 'pbContracts_Connect_properties', None)
+        button_projects = getattr(self, 'pbProjects_Connect_properties', None)
+        button_easements = getattr(self, 'pbEasementsConnectProperties', None)
+        # Define lambdas to connect buttons to functions
+        button_functions = {
+            button_contracts: lambda: MailablDialog.load_properties_connector(self, MODULE_CONTRACTS,table_contracts, button_contracts),
+            button_projects: lambda: MailablDialog.load_properties_connector(self, MODULE_PROJECTS, table_projects, button_contracts),
+            button_easements: None
+        }
+       # Connect buttons to functions
+        for button, function in button_functions.items():
+            PropertiesConnector.connect_button(button, function)
+        
+       # Populate the buttons list
+        buttons = [button_contracts, button_easements, button_projects]
+
+
+        return buttons

@@ -1,16 +1,12 @@
-import time
-from qgis.core import  QgsProject, QgsMapLayer
-from qgis.utils import iface
+
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
+from ..DataLoading_classes import GraphqlQueriesContracts
 from PyQt5.QtWidgets import  QMessageBox, QWidget
-from ....config.settings import  connect_settings_to_layer, Flags
 from ..property_data import PropertiesGeneralQueries
-from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from ..query_tools import requestBuilder
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
-from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
+
 from PyQt5.uic import loadUi
 from ....processes.infomessages.messages import Headings
  
@@ -22,85 +18,9 @@ delay_interval = 10
 sleep_duration = 2
 timer_instance = Timer(delay_interval=delay_interval, sleep_duration=sleep_duration)
 
-
-
-class ContractMapSelectors:
-    @staticmethod
-    def activate_layer_and_use_selectTool_on_first_load(self, widget, table_view):
-        global on_selection_changed_lambda
-        print("started with activated layer")
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        if not isinstance(active_layer, QgsMapLayer):
-            #print(f"Ei leidnud kinnistute kihti '{layer}'")
-            return
-        iface.setActiveLayer(active_layer)
-        iface.actionSelect().trigger()
-        #print("start selecting stuff")
-        #Hide the main window
-        flag = Flags.active_properties_layer_flag
-        print(f"Flag status befor if statement {flag}")
-        
-        if active_layer and active_layer.selectedFeatureCount() > 0:
-            # Show the widget when there are selected features
-
-            generator = PropertiesLayerFunctions()
-            generator.generate_table_from_selected_map_items(table_view, active_layer_name)
-            table_view.update()
-            widget.showNormal()
-
-        if flag:
-            print("Flag is true in activate_layer function")
-            
-            on_selection_changed_lambda = lambda: ContractMapSelectors.on_selection_changed(widget, table_view)
-            print(f"lambda value {on_selection_changed_lambda}")
-            active_layer.selectionChanged.connect(on_selection_changed_lambda)
-            
-        else:
-            print("Flag is false")
-            pass
-        
-    @staticmethod
-    def on_selection_changed(widget, table_view):
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-#        print("on_selection_changed")
-        if Flags.active_properties_layer_flag:
-            # If the flag is true, execute the function
-#            print("Flag is true in selection change")
-#            print(f"And active_properties_layer flag is {Flags.active_properties_layer_flag}")
-            active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-
-            if active_layer and active_layer.selectedFeatureCount() > 0:
-                # Show the widget when there are selected features
-                generator = PropertiesLayerFunctions()
-                generator.generate_table_from_selected_map_items(table_view, active_layer_name)
-                table_view.update()
-                widget.showNormal()
-
-        else:
-            # If the flag is false, do nothing
-            print("Flag is false")
-        
-
 class ContractProperties:
-    def on_cancel_button_clicked(widget):
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        parent_widget = QWidget()
-        titleText = "Info"
-        infoText = "Kinnistute seostamine tühistatud"
-        #active_layer.selectionChanged.disconnect()  
-        QMessageBox.information(parent_widget, titleText, infoText)
-        #import lamda here
-        active_layer.selectionChanged.disconnect(on_selection_changed_lambda)
-
-        flag = Flags.active_properties_layer_flag 
-        flag = False            
-        Flags.active_properties_layer_flag = flag
-
     @staticmethod    
     def update_contract_properties(self, contract_id, widget, project_name):
-        active_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
         properties_table = widget.tvProperties
         model_properties = properties_table.model()
         

@@ -89,9 +89,6 @@ class EasementTools(QObject):
                 selection_id = 0
                 ComboBoxInputs.add_values_and_set_first(combobox, available_scale_factors, selection_id)
                 combobox.setEnabled(False)
-                
-
-
 
                 all_line_edits = EasementTools.widget_line_edits(self.widget_EasmentTools)[0] #returns the first return value of the set 
                 EasementTools.disable_UIelements(all_line_edits)

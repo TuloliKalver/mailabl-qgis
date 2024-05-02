@@ -1,6 +1,6 @@
 from qgis.utils import iface
 from qgis.core import QgsMapLayer, QgsProject
-
+from functools import wraps
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
@@ -12,6 +12,17 @@ from ...queries.python.update_relations.update_contract_properties import Contra
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, Flags, FilesByNames
 from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
+
+
+
+def disable_button(func):
+    def wrapper(*args, **kwargs):
+        button = args[0]
+        if button is not None:
+            button.setEnabled(False)
+        return func(*args, **kwargs)
+    return wrapper
+
 
 class PropertiesConnector(QObject):
     ConnectorWidgetClosed = pyqtSignal()
@@ -65,12 +76,7 @@ class PropertiesConnector(QObject):
         selection_monitor = None
         flag = True
         Flags.active_properties_layer_flag = flag
-        '''
-        if flag:            
-            selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
-            active_layer.selectionChanged.connect(selection_monitor)
-            widget.showMinimized()  # Assuming widget is defined somewhere     
-        '''
+
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
         if not isinstance(active_layer, QgsMapLayer):
@@ -88,7 +94,7 @@ class PropertiesConnector(QObject):
             else: 
                 selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
                 active_layer.selectionChanged.connect(selection_monitor)
-                widget.showMinimized()  # Assuming widget is defined somewhere 
+                widget.showMinimized()  
 
 
         input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module_text)    
@@ -110,7 +116,8 @@ class PropertiesConnector(QObject):
                 active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
                 if active_layer:
-                    active_layer.selectionChanged.disconnect(selection_monitor)  # Disconnect the signal
+                    active_layer.selectionChanged.disconnect(selection_monitor)
+                    active_layer.removeSelection()
                     selection_monitor = None
             flag = False
             Flags.active_properties_layer_flag = flag
@@ -131,6 +138,7 @@ class PropertiesConnector(QObject):
             self.ConnectorWidgetClosed.emit()
 
     def on_save_button_clicked(self, widget, module, element_id, element_name):
+
         ConnectorFunctions.add_properties_to_module(self, widget, module, element_id, element_name)
         if widget is not None:
             self.unset_widget_actions(widget)
@@ -145,6 +153,11 @@ class PropertiesConnector(QObject):
             active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
             active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
             active_layer.selectionChanged.disconnect(selection_monitor)
+            if active_layer:
+                active_layer.removeSelection()
+        else:
+            # print(f"layer '{layer_name}' not found.")
+            pass
             selection_monitor = None
         flag = False
         Flags.active_properties_layer_flag = flag
@@ -167,6 +180,7 @@ class PropertiesConnector(QObject):
        # Connect buttons to functions
         for button, function in button_functions.items():
             PropertiesConnector.connect_button(button, function)
+        
     @staticmethod
     def clear_table(widget):
         model = widget.tvProperties.model()
@@ -175,7 +189,6 @@ class PropertiesConnector(QObject):
             
     @staticmethod
     def connect_button(button, function):
-        # Check if button and function are assigned
         if button is not None and function is not None:
             # Connect button to function
             button.clicked.connect(function)

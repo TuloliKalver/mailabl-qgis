@@ -652,7 +652,7 @@ class Ui_MailablDialogBase(object):
         self.pbEasementsConnectProperties.setToolTip("")
         self.pbEasementsConnectProperties.setStatusTip("")
         self.pbEasementsConnectProperties.setWhatsThis("")
-        self.pbEasementsConnectProperties.setStyleSheet("background-color: rgb(131, 142, 162);")
+        self.pbEasementsConnectProperties.setStyleSheet("")
         self.pbEasementsConnectProperties.setObjectName("pbEasementsConnectProperties")
         self.horizontalLayout_73.addWidget(self.pbEasementsConnectProperties)
         self.horizontalLayout_72.addWidget(self.ToggleframeEasements)
@@ -4656,7 +4656,7 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(2)
+        self.swWorkSpace.setCurrentIndex(0)
         self.swCadastral_sub_processes.setCurrentIndex(2)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)

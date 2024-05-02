@@ -17,6 +17,7 @@ class Ui_Dialog(object):
         Dialog.resize(700, 375)
         Dialog.setMinimumSize(QtCore.QSize(700, 375))
         Dialog.setMaximumSize(QtCore.QSize(700, 375))
+        Dialog.setWindowOpacity(1.0)
         Dialog.setStyleSheet("\n"
 "\n"
 "#lblDescription {\n"
@@ -162,6 +163,7 @@ class Ui_Dialog(object):
 "\n"
 "\n"
 "")
+        Dialog.setModal(False)
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(5)
@@ -306,7 +308,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Kinnistutega sidumine"))
         self.lblDescription.setText(_translate("Dialog", "Objekti nimetus:"))
         self.pbClear_list.setText(_translate("Dialog", "Alusta valimist uuesti"))
         self.pbCancel.setText(_translate("Dialog", "Tühista"))
