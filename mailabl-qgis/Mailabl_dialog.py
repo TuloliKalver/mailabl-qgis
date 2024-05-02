@@ -253,7 +253,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         table_projects = self.tblMailabl_projects
         table_contracts = self.ContractView
-        ConnectAddPropertiesButtons.button_controller(self,table_contracts, table_projects)
+        ConnectPropertiesModuleButtons.button_controller(self,table_contracts, table_projects)
 
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
@@ -391,6 +391,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             text = HoiatusTexts().andmed_valimata
             heading = Headings().warningSimple
             QMessageBox.information(table, heading, text)
+            for single_button in buttons:
+                single_button.setEnabled(True)
             button.setEnabled(True)
             return
 
@@ -1415,7 +1417,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 ################################################################################################################
 
 
-class ConnectAddPropertiesButtons:
+class ConnectPropertiesModuleButtons:
+    
     def button_controller(self, table_contracts, table_projects):
         button_contracts = getattr(self, 'pbContracts_Connect_properties', None)
         button_projects = getattr(self, 'pbProjects_Connect_properties', None)
