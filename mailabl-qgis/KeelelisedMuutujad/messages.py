@@ -4,7 +4,9 @@ class Headings:
         self.warningCritical = "Oi Oi Oi!"
         self.tubli = "Tubli!" 
         self.informationSimple = "Info"
-        
+        self.lisan_kinnistuid = "Lisan kinnistuid"
+        self.katastrid_laetud = "Katastrid laetud"
+
 class HoiatusTexts:
     def __init__(self):       
         self.puudulik_kinnistute_seadistus = "Kontrolli kinnistute seadistusi"
@@ -44,6 +46,11 @@ class HoiatusTextsAuto:
     def input_layer_missing(layer_name_text):
         aluskiht_puudu = f"Laaditavate kinnistute kiht {layer_name_text} on puudu.\nJätkamiseks lae algandmed."
         return aluskiht_puudu
+
+    @staticmethod
+    def generated_layer_in_subgroup (new_layer_name, group_layer_name):
+        text = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/{group_layer_name}':/n{new_layer_name}")
+        return text
     
     #Viga kui andmepäring Mailabli API suunal saab errori
     @staticmethod
@@ -51,9 +58,13 @@ class HoiatusTextsAuto:
         GraphQL_päring_error = f"GraphQL päring ebaõnnestus:\n{error_message}"    
         return GraphQL_päring_error
 
+    def layer_indexing (layer_name):
+        text = (f"Paremaks toimimiseks toimub kihi:\n{layer_name}\nindekseerimine")
+        return text
+
     @staticmethod
-    def deleted_output_file (output_file_path):
-        fail_kustutatud = (f"Samanimeline fail on kustutatud:\n{output_file_path}")
+    def deleted_output_file_sucess (output_file_path):
+        fail_kustutatud = (f"Olemasolev fail on edukalt kustutatud:\n{output_file_path}")
         return fail_kustutatud
     
     @staticmethod
@@ -73,6 +84,16 @@ class HoiatusTextsAuto:
     def some_user_message(matching_users):
         kasutaja_tuvastatud = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
         return kasutaja_tuvastatud
+    
+    def unable_to_delete_output_file (output_file_path, e):
+        text = f"Ei saa faili '{output_file_path}' kustutada: {e}"
+        return text
+
+class LabelsTexts:
+    def name_number_by_module(module_text):
+        text = f"{module_text} number ja nimetus"
+        return text
+
 
 class InfoTexts:
     @staticmethod
@@ -84,6 +105,8 @@ class InfoTexts:
         text = f"Projektile  <b>{project_name}</b> \nlisatud {end_text}!"
         return text
 
+
+
 class KriitilisedTexts:
     def __init__(self):
         self.error = "Midagi läks valesti.\nPöördu admini poole"
@@ -92,3 +115,7 @@ class EdukuseTexts:
     def __init__(self):
         self.tehtud = "Tubli! Kõik on tehtud"
         self.salvestatud = "Kõik on salvestatud"
+
+class Salvestamisel:
+    def __init__(self):
+        self.vali_kausta_asukoht ="Valik asukoht kuhu aluskaardi fail salvestatakse!"

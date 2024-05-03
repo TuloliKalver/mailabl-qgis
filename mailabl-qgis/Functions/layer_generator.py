@@ -1,14 +1,11 @@
 import os
-from qgis.core import QgsVectorLayer, QgsProject, QgsCoordinateReferenceSystem, QgsVectorFileWriter
-from qgis.core import QgsVectorLayer, QgsProject, QgsFeature
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtWidgets import QFileDialog
-from..config.settings import Filepaths, FilesByNames
-from ..config.settings import connect_settings_to_layer
-from PyQt5.uic import loadUi
 
+from qgis.core import QgsVectorLayer, QgsProject, QgsCoordinateReferenceSystem, QgsVectorFileWriter, QgsFeature
+from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
-from ..KeelelisedMuutujad.messages import Headings
+from PyQt5.QtWidgets import QMessageBox, QFileDialog
+from ..config.settings import Filepaths, FilesByNames, connect_settings_to_layer
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
  
 pealkiri = Headings()
 
@@ -16,30 +13,26 @@ plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 #Status bar widget folder
 widgets_folder = "widgets"  
-#widgets_path = os.path.join(plugin_dir,widgets_folder, "WStatusBar.ui")
 widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui"))
 
 
 
 class LayerCopier():
-
     def __init__(self):
         super(LayerCopier, self).__init__()
         
     @staticmethod
-    def StartSaving_virtual_Layer(self, memory_layer_name, new_layer_name, group_layer_name):
-        print(f"add memory layer: {memory_layer_name}")
-        print(f"new_layer_name: {new_layer_name}")
-        print(f"group_layer_name: {group_layer_name}")
-        #layer names and other variables
-        #TODO add layer storing fixed location
-
+    def StartSaving_virtual_Layer( memory_layer_name, new_layer_name, group_layer_name):
+        #print(f"add memory layer: {memory_layer_name}")
+        #print(f"new_layer_name: {new_layer_name}")
+        #print(f"group_layer_name: {group_layer_name}")
+        
         # User can select a folder to save file!
         selected_folder = LayerCopier.user_folder_location_path()
         #print(f"File will be saved into: {selected_folder}")
         if selected_folder is None:
             # User canceled the folder selection, handle accordingly
-            text = "Kasutaja tühistas kausta valiku. Protsess on peatatud"
+            text = HoiatusTexts().kasutaja_peatas_protsessi
             heading = pealkiri.informationSimple
             QMessageBox.information(None, heading, text)
             return  # or raise an exception or perform other actions as needed
@@ -57,11 +50,13 @@ class LayerCopier():
             # File already exists, delete it
             try:
                 os.remove(output_file_path)
-                text = (f"Samanimeline fail on kustutatud:\n{output_file_path}")
+                text = HoiatusTextsAuto.deleted_output_file_sucess(output_file_path)
                 heading = pealkiri.warningSimple
                 QMessageBox.information(None, heading, text)
             except OSError as e:
-                QMessageBox.critical(None, "Viga!!!", f"Ei saa faili '{output_file_path}' kustutada: {e}")
+                heading = Headings().warningCritical
+                text = HoiatusTextsAuto.unable_to_delete_output_file(output_file_path, e)
+                QMessageBox.critical(None, heading, text)
                 # Handle the error as needed
         else:
             #print("started generating file")
@@ -85,8 +80,7 @@ class LayerCopier():
 
             else:
                 heading = pealkiri.warningSimple
-                text = (f"Kihi salvestamine ebaõnnestus:\n{error_message}")
-
+                text = HoiatusTextsAuto.save_layer_error(error_message)
                 QMessageBox.information(None,text,heading)
                 
             # Check if the GeoPackage file exists
@@ -105,7 +99,7 @@ class LayerCopier():
                     group.insertLayer(0, new_layer)
 
                 else:
-                    text = (f"Error loading the new layer from {output_file_path}")
+                    text = HoiatusTextsAuto.load_layer_error(output_file_path)
                     heading = pealkiri.warningSimple
                     QMessageBox.information(None,heading,text)
             
@@ -115,25 +109,24 @@ class LayerCopier():
                     if memory_layer:
                         layer_id = memory_layer[0].id()
                         QgsProject.instance().removeMapLayer(layer_id)
-                        print(f"Memory layer '{memory_layer_name}' removed successfully.")
+                        print(HoiatusTextsAuto.deleted_output_file_sucess(memory_layer_name))
                 
-            
                 style_name = FilesByNames().MaaAmet_import
                 QGIS_Layer_style = Filepaths().get_style(style_name)
                 
                 updated_layer = QgsProject.instance().mapLayersByName(new_layer_name)[0]
                 updated_layer.loadNamedStyle(QGIS_Layer_style)
                 updated_layer.triggerRepaint()
-                text = (f"Paremaks toimimiseks toimub kihi:\n{new_layer_name}\nindekseerimine")
+                text = HoiatusTextsAuto.layer_indexing(new_layer_name)
                 heading = pealkiri.informationSimple
                 QMessageBox.information(None, heading, text)
                 updated_layer.dataProvider().createSpatialIndex()
-                text = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud':/n{new_layer_name}")
+                text = HoiatusTextsAuto.generated_layer_in_subgroup(new_layer_name, group_layer_name)
                 heading = pealkiri.informationSimple
                 QMessageBox.information(None, heading,text)                
                 
             else:
-                text = (f"'GPKG' tüüpi faili asukohas:\n{output_file_path}\nei leitud")
+                text = HoiatusTextsAuto.load_gpkg_file_error(output_file_path)
                 heading = pealkiri.informationSimple
                 QMessageBox.information(None, heading, text)
 
@@ -180,20 +173,16 @@ class LayerCopier():
         file_dialog.setFileMode(QFileDialog.Directory)
 
         ## Open the file dialog and get the selected folder
-        selected_folder = file_dialog.getExistingDirectory(None, "Valik asukoht kuhu aluskaardi fail salvestatakse!", '', QFileDialog.ShowDirsOnly)
+        selected_folder = file_dialog.getExistingDirectory(None, Salvestamisel().vali_kausta_asukoht, '', QFileDialog.ShowDirsOnly)
 
         if selected_folder:
             return selected_folder
         else:
-            text = "Laadimine on katkestatud"
+            text = HoiatusTexts().laadimine_error
             heading = pealkiri.informationSimple
             QMessageBox.information(None, heading,text)
         return None
-        
-    # This function creates spatial indexes for a given layer
-    #TODO add spatial index functionality
-
-
+    
     
     def generate_data_from_source(source_layer):
         # Get the source layer
@@ -243,14 +232,14 @@ class LayerCopier():
         
         
         if selected_features == 0:
-            text = ("Ühtegi kinnistut ei leitud")
+            text = HoiatusTexts().kinnistuid_ei_leidnud
             heading = pealkiri.informationSimple
             QMessageBox.warning(self, heading, text)
 
         count = 1
         progress_widget = loadUi(widgets_path)
         progress_bar = progress_widget.testBar
-        progress_widget.setWindowTitle("Lisan kinnistuid")
+        progress_widget.setWindowTitle(Headings().lisan_kinnistuid)
         progress_bar.setMaximum(len(selected_features))
         progress_bar.setValue(count)
         progress_widget.show()

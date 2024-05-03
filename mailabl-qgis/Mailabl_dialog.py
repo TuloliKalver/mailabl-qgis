@@ -130,10 +130,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.lePassword.setEchoMode(QLineEdit.Password)
         self.widget_19.setVisible(False)
         
-        # anneli_demo
-        #anneli_text = msg_text.kinnistud_MLBs_olemas
-        #print(f"anneli_test_print:{anneli_text}")
-        #print(f"anneli_testib-otsevalik:{msg_text.kasutaja_puudub}")
         
         # declaring Delete process elements    
         pbDel_State = self.pbDel_State

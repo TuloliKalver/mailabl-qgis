@@ -1,6 +1,5 @@
 from qgis.utils import iface
 from qgis.core import QgsMapLayer, QgsProject
-from functools import wraps
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
@@ -10,7 +9,7 @@ from ...queries.python.projects_pandas import TableHeaders
 from ...queries.python.update_relations.update_project_properties import ProjectsProperties
 from ...queries.python.update_relations.update_contract_properties import ContractProperties
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, Flags, FilesByNames
-from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts, LabelsTexts
 from ...Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 
 language = Languages.ESTONIA
@@ -210,13 +209,12 @@ class WidgetLabels:
         line_element_name.setText(object_name)
         line_element_number.setText(object_number)
 
-        text = f"{module_text} number ja nimetus"
+        text = LabelsTexts.name_number_by_module(module_text)
         label_descripton.setText(text)
 
         return input_headers, module_headers
 
 class ConnectorFunctions:
-
     def add_properties_to_module(self, widget, module, element_id, element_name):
         if module == Modules.MODULE_PROJECTS:
             #print(f"started {MODULE_PROJECTS} proerties")

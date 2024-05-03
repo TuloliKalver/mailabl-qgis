@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QPushButton, QFrame, QMessageBox
 from qgis.core import (QgsProject, QgsVectorLayer)
 from ..config.settings import Flags
 from PyQt5.QtCore import QTimer
-from ..KeelelisedMuutujad.messages import Headings
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
  
 pealkiri = Headings()
 
@@ -84,10 +84,10 @@ class WidgetAnimator:
 
 #Run this to change frame width
     def toggle_Frame_width(self, widget):
-        print("Toggle started")
-        print(f"Widget {widget}")
+        #print("Toggle started")
+        #print(f"Widget {widget}")
         width = widget.width()
-        print(f"Initial width: {width}")
+        #print(f"Initial width: {width}")
         
         if width == 40:
             #print("Started to expand")
@@ -106,10 +106,10 @@ class WidgetAnimator:
         self.animation.start()
         
     def buttons_sliderFrame_name(self, push_button):
-        print(f"button name {push_button.objectName()}")       
+        #print(f"button name {push_button.objectName()}")       
         #Step 1: Find the frame in which the button is inside
         button_frame = push_button.parentWidget()
-        print(f"Button Frame: {button_frame.objectName()}")
+        #print(f"Button Frame: {button_frame.objectName()}")
         if button_frame is None:
             #print("Button Frame not found")
             return None
@@ -130,19 +130,19 @@ class WidgetAnimator:
 
         slider_frame_name = remaining_frames[0]
         slider_frame = button_frame_parent.findChild(QFrame, slider_frame_name)
-        print(f"Slider frame name {slider_frame}")
+        #print(f"Slider frame name {slider_frame}")
         return slider_frame
 
     def buttons_sliderFrame_height(self, push_button, padding):
         button_frame = push_button.parentWidget()
-        print(f"Button Frame: {button_frame.objectName()}")
+        #print(f"Button Frame: {button_frame.objectName()}")
         if button_frame is None:
             #print("Button Frame not found")
             return None
 
         # Step 2: Find the frame of the button frame
         button_frame_parent = button_frame.parentWidget()
-        print(f"Button Frame Parent: {button_frame_parent.objectName()}")
+        #print(f"Button Frame Parent: {button_frame_parent.objectName()}")
         
         if button_frame_parent is None:
             #print("Button Frame Parent not found")
@@ -217,28 +217,28 @@ class WidgetAnimator:
             animation.stop()
 
     def calculate_total_widget_max_height_needed(self, widget,push_button):
-        print(f"widget {widget}")
-        print(f"Push button name {push_button}")
+        #print(f"widget {widget}")
+        #print(f"Push button name {push_button}")
         total_height = 0
         parent_widget = push_button.parentWidget().objectName()
-        print(f"Parent widget: {parent_widget}")
+        #print(f"Parent widget: {parent_widget}")
         child_buttons = widget.findChildren(QPushButton)
         top_level_frames = widget.findChildren(QFrame)
 
-        print("=== All child buttons ===")
-        print(f"children count: {len(child_buttons)}")
+        #print("=== All child buttons ===")
+        #print(f"children count: {len(child_buttons)}")
 
         # Create a set to store the object names of top-level frames
         top_level_frame_names = set(frame.objectName() for frame in top_level_frames)
-        print(f"Top level names: {top_level_frame_names}")
+        #print(f"Top level names: {top_level_frame_names}")
         for button in child_buttons:
             # Check if the button's parent frame is a top-level frame
             if button.parentWidget().objectName() in top_level_frame_names:
-                print("Button in first level frame:", button.objectName())
+                #print("Button in first level frame:", button.objectName())
                 total_height += button.height()
                 total_height += self.button_padding
 
-        print("Total buttons height in first level frames:", total_height)
+        #print("Total buttons height in first level frames:", total_height)
         return total_height
 
 class secondLevelButtonsHandler:
@@ -339,13 +339,9 @@ class FrameHandler:
 class LayerChecker:
     def SHP_Layer_Checker(self, input_layer_name):
         #setup messagebox
-        text = (
-                "Lae õige fail! SHP_KATASTRIÜKSUS.SHP\n"
-                "Uued andmed saad Maa-ametist, kasutades Sätete nenüüst valikut 'Maa-ametisse'"
-            )      
+        text = HoiatusTexts().SHPfaili_laadimine
         heading = pealkiri.warningSimple
     
-        
         # Check if a virtual layer is present and has features
         input_layers = QgsProject.instance().mapLayersByName(input_layer_name)
         if input_layers:
@@ -353,7 +349,6 @@ class LayerChecker:
             if isinstance(input_layer, QgsVectorLayer):
                 feature_count = input_layer.featureCount()
                 #print("Feature Count:", feature_count)  # Print the feature count for debugging
-
                 if feature_count > 0:
                     pass
                 else:
@@ -378,7 +373,7 @@ class ColorHandler:
                     Start_update.setStyleSheet(background_green)
                     pbAvaMaaameti_veebikas.setStyleSheet(background_green)
                     pbAdd_SHP_To_Project.setStyleSheet(background_green)
-                    pbAdd_SHP_To_Project.setText("Katastrid laetud")
+                    pbAdd_SHP_To_Project.setText(Headings().katastrid_laetud)
                     #activate buttons
                     pbExpand.blockSignals(False)
                     pbRefresh.blockSignals(False)
