@@ -1,5 +1,3 @@
-from PyQt5.QtWidgets import QMessageBox, QPushButton
-
 class Headings:
     def __init__(self):
         self.warningSimple = "Hoiatus!" 
@@ -39,25 +37,43 @@ class HoiatusTexts:
         self.projektid_puuduvad = "Piirkonnas puuduvad teadaolevad projektid"        
         self.kihil_kinnistu_valik = "Vali vähemalt üks kinnistu"
         self.ostingu_tulemused_puuduvad = "Otsingule vastavaid tulemused puuduvad"
-        #self.???(f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
-        #self.???(f"Projektile\n{project_name}\nlisatud\n{total_returned_ids}/{total_ids_Table}")
 
-class HoiatusTextsAuto:
-    def __init__(self): 
-        self.aluskiht_puudu = (f"Laaditavate kinnistute kiht {input_layer_name} on puudu.\nJätkamiseks lae algandmed.")
-        self.GraphQL_päring_error = (f"GraphQL päring ebaõnnestus:\n{error_message}")
-        self.fail_kustutatud = (f"Samanimeline fail on kustutatud:\n{output_file_path}")
-        self.kiht_error = (f"Kihi salvestamine ebaõnnestus:\n{error_message}")
-        self.kiht_error = (f"Error loading the new layer from:\n{output_file_path}") #kihi laadimine ebaõnnestus...???
-        self.GPKG_fail_ei_leitud = (f"'GPKG' tüüpi faili asukohas:\n{output_file_path} ei leitud")
-        self.kasutaja_tuvastatud = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
-    #def __init__(self):
-        #self.indekseerimine = (f"Paremaks toimimiseks toimub kihi:\n{new_layer_name} indekseerimine")
-        #self.kinnistud_eemaldatud = (f"Valitud kinnitsud eemaldati Mailablist ja kihilt {active_cadastral_layer_name}")
-        #self.kaardikiht_lisatud = (f"Kaardikiht on lisatud kaardikihtide alamgruppi 'Mailabl settings/Uued kinnistud:/n{new_layer.name}'")
-        #self.andmed_imporditud = (f"Andmed on edukalt imporditud ja lisatud '{import_subgroup_layer_name}' grupi kihile")
-        #self.andmed_laetud = "Andmed on laetud ja kaardikihile kantud"
-        
+class HoiatusTextsAuto:        
+    @staticmethod
+    # Kuvab kihi nimetust mis laadimisel jäeb puudu - kommentaati vaja lisada kasutuskoht. ise ei mäleta. 
+    def input_layer_missing(layer_name_text):
+        aluskiht_puudu = f"Laaditavate kinnistute kiht {layer_name_text} on puudu.\nJätkamiseks lae algandmed."
+        return aluskiht_puudu
+    
+    #Viga kui andmepäring Mailabli API suunal saab errori
+    @staticmethod
+    def warning_message_qraphql_error(error_message):
+        GraphQL_päring_error = f"GraphQL päring ebaõnnestus:\n{error_message}"    
+        return GraphQL_päring_error
+
+    @staticmethod
+    def deleted_output_file (output_file_path):
+        fail_kustutatud = (f"Samanimeline fail on kustutatud:\n{output_file_path}")
+        return fail_kustutatud
+    
+    @staticmethod
+    def save_layer_error (error_message):
+        kiht_error = (f"Kihi salvestamine ebaõnnestus:\n{error_message}")
+        return kiht_error
+    
+    @staticmethod
+    def load_layer_error (output_file_path):
+        kiht_error = (f"Uue kihi laadimine failist:\n\n{output_file_path}\n\nebaõnnetsus") #kihi laadimine ebaõnnestus...???
+        return kiht_error
+    
+    def load_gpkg_file_error(output_file_path):
+        GPKG_fail_ei_leitud = (f"'GPKG' tüüpi faili asukohas:\n{output_file_path} ei leitud")
+        return GPKG_fail_ei_leitud
+
+    def some_user_message(matching_users):
+        kasutaja_tuvastatud = (f"Kasutaja\n{len(matching_users)}\ntuvastatud")
+        return kasutaja_tuvastatud
+
 class InfoTexts:
     @staticmethod
     def properties_successfully_added(project_name, total_returned_ids,total_ids_table):
@@ -70,7 +86,7 @@ class InfoTexts:
 
 class KriitilisedTexts:
     def __init__(self):
-        self.error = ("Midagi läks valesti.\nPöördu admini poole")
+        self.error = "Midagi läks valesti.\nPöördu admini poole"
 
 class EdukuseTexts:
     def __init__(self):
