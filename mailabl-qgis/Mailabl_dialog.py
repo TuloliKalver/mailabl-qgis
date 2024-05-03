@@ -17,7 +17,6 @@
 
 """
 import os
-
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
 from qgis.utils import iface
@@ -50,7 +49,7 @@ from .queries.python.users.user_info import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import InsertStatusToComboBox
-from .KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
+from .KeelelisedMuutujad.messages import Headings, HoiatusTexts,HoiatusTextsAuto, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Easements.EasementsItems import EasementssMain
 from .Functions.Easements.EasementsToolsHandler import EasementTools
@@ -758,10 +757,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            text = (f"Laetavate kinnistute kiht {input_layer_name} on puudu.\nJätkamiseks lae algandmed")
-            heading = "Hoiatus"
+            text = HoiatusTextsAuto.input_layer_missing(input_layer_name)
+            heading = Headings().warningSimple
             QMessageBox.warning(self, heading, text)
-            #print("No items selected")
+            
             return
         hide_buttons = [self.pbDone_State, 
                         self.pbDoneCity,
@@ -883,8 +882,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         if item_county is None:
             #print("print")
-            text = ("Jätkamiseks vali ja kinnita omavalitsus")
-            heading = "Hoiatus"     
+            text = HoiatusTexts().omavalitsus_valimata
+            heading = Headings().warningSimple
             QMessageBox.information(self, heading, text)
         else:
             
@@ -908,8 +907,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 items_name_state = [item.text() for item in item_state]
                 #print(f"Selected items: {items_name_state}")
             else:
-                text = ("Jätkamiseks vali ja kinnita linn või küla")
-                heading = "Hoiatus"
+                text = HoiatusTexts().linn_kyla_valimata
+                heading = Headings().warningSimple
                 QMessageBox.warning(self, heading, text)
                 #print("No items selected")
                 pass
@@ -1220,8 +1219,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if not check_items:
             Delete_Main_Process.Delete_process_view_after_unsuccessful_county(self)
             # No item selected, perform your desired action here
-            text = ("Jätkamiseks vali ja kinnita maakond")
-            heading = "Hoiatus"
+            text = HoiatusTexts().maakond_valimata
+            heading = Headings().warningSimple
             QMessageBox.warning(self, heading, text)
             
         else:
@@ -1255,7 +1254,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if not check_items:
             Delete_Main_Process.Delete_process_view_after_unsuccessful_state(self)
             # No item selected, perform your desired action here
-            text = ("Jätkamiseks vali ja kinnita omavalitsus")
+            text = HoiatusTexts().omavalitsus_valimata
             heading = Headings().warningSimple
             QMessageBox.warning(None, heading, text)
         else:
@@ -1293,8 +1292,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if not check_items:
             Delete_Main_Process.Delete_process_view_after_unsuccessful_city(self)
             # No item selected, perform your desired action here
-            text = ("Jätkamiseks vali ja kinnita omavalitsus")
-            heading = "Hoiatus"
+            text = HoiatusTexts().omavalitsus_valimata
+            heading = Headings().warningSimple
             QMessageBox.warning(self, heading, text)
         else:
             Delete_Main_Process.Delete_process_view_after_city(self)
