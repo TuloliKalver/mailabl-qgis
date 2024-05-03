@@ -15,7 +15,7 @@ class HoiatusTexts:
         self.maakond_valimata = "Jätkamiseks vali ja kinnita maakond"
         self.omavalitsus_valimata = "Jätkamiseks vali ja kinnita omavalitsus"        
         self.SHPfaili_laadimine = (
-                "Lae õige fail! SHP_KATASTRIÜKSUS.SHP\n"
+                "Laadi õige fail! SHP_KATASTRIÜKSUS.SHP\n"
                 "Uued andmed saad Maa-ametist kasutades Seadete menüüst valikut 'Maa-ametisse'"
             )
         self.error = "Midagi läks valesti"        
@@ -44,7 +44,7 @@ class HoiatusTexts:
 
 class HoiatusTextsAuto:
     def __init__(self): 
-        self.aluskiht_puudu = (f"Laetavate kinnistute kiht {input_layer_name} on puudu.\nJätkamiseks lae algandmed.")
+        self.aluskiht_puudu = (f"Laaditavate kinnistute kiht {input_layer_name} on puudu.\nJätkamiseks lae algandmed.")
         self.GraphQL_päring_error = (f"GraphQL päring ebaõnnestus:\n{error_message}")
         self.fail_kustutatud = (f"Samanimeline fail on kustutatud:\n{output_file_path}")
         self.kiht_error = (f"Kihi salvestamine ebaõnnestus:\n{error_message}")
