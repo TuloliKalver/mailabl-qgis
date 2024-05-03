@@ -68,10 +68,10 @@ class PropertiesConnector(QObject):
         if module is not None:
             if module == MODULE_PROJECTS:
                 self.module = MODULE_PROJECTS
-                module_text = "Projekt"
+                module_text = "Projekti"
             if module == MODULE_CONTRACTS:
                 self.module = MODULE_CONTRACTS
-                module_text = "Leping"
+                module_text = "Lepingu"
 
         selection_monitor = None
         flag = True
@@ -198,10 +198,8 @@ class PropertiesConnector(QObject):
 
 
 class WidgetTools:
-    def load_tool_and_fill_table(self, widget, table_view, active_layer_name):
-        
+    def load_tool_and_fill_table(self, widget, table_view, active_layer_name):        
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-                        
         if active_layer and active_layer.selectedFeatureCount() > 0:
             # Show the widget when there are selected features
             layer_functions = PropertiesLayerFunctions()
@@ -243,7 +241,7 @@ class WidgetLabels:
         line_element_name.setText(object_name)
         line_element_number.setText(object_number)
 
-        text = f"{module_text}i Nr. ja nimetus"
+        text = f"{module_text} number ja nimetus"
         label_descripton.setText(text)
 
         return input_headers, module_headers

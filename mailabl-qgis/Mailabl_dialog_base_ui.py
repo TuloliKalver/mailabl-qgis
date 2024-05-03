@@ -98,21 +98,21 @@ class Ui_MailablDialogBase(object):
 "/*nuppu peamised omadused*/\n"
 "/*Üldomadused*/\n"
 "QPushButton{\n"
-"    padding: 1px 8px;\n"
-"    border-radius: 6px;\n"
+"    padding: 1px 5px;\n"
+"    text-align: center;\n"
+"    border-radius: 5px;\n"
 "    background-color:#40414f;\n"
-"    border: 0.5px solid #565869;\n"
+"    border: 1px solid #565869;\n"
 "}\n"
+"\n"
 "\n"
 "QPushButton:hover{\n"
 "    background-color: #8e8ea0;\n"
-"    padding: 1px 8px;\n"
-"    border-radius: 8px;\n"
 "    border: 0.5px solid #acacbe;\n"
-"    \n"
-"    color: rgb(255, 255, 255);\n"
-"    padding: 2px 8px;\n"
-"    border-radius: 6px;\n"
+"    color: #343541;\n"
+"    text-align: center;\n"
+"    padding: 2px 5px;\n"
+"    border-radius: 5px;    \n"
 "}\n"
 "\n"
 "QPushButton:disabled {\n"
@@ -171,29 +171,45 @@ class Ui_MailablDialogBase(object):
 "}\n"
 "\n"
 "/*esialgu jaotamata omadused*/\n"
-"QComboBox{\n"
-"\n"
-"    background-color:#40414f;\n"
-"    color:#ececf1;\n"
+"QComboBox {\n"
+"    background-color: #40414f; /* Set the background color */\n"
+"    color: #ececf1;\n"
 "    border: 1px solid #565869;\n"
 "    border-radius: 3px;\n"
-"    padding-left: 5px\n"
+"    padding-left: 5px;\n"
 "}\n"
 "\n"
-"/*Style the dropdown area*/\n"
-"QComboBox::drop-down{\n"
-"    background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));\n"
-"    border: 1px solid #565869;\n"
-"    border-radius: 8px;\n"
-"    height:16px;\n"
+"/* Style the dropdown area */\n"
+"QComboBox::drop-down {\n"
+"    background-color: #40414f;\n"
+"    border: 0px solid #40414f;\n"
+"    border-radius: 10px;\n"
 "    width: 16px;\n"
+"    height: 16px;\n"
 "    subcontrol-origin: padding;\n"
-"    subcontrol-position: left\n"
+"    subcontrol-position: left; /* Center the arrow icon */\n"
 "}\n"
 "\n"
-"QComboBox::on{\n"
+"/* Style the arrow inside the dropdown */\n"
+"QComboBox::down-arrow {\n"
+"    width: 0;\n"
+"    height: 0;\n"
+"    border-left: 8px solid;\n"
+"    border-right: 8px solid;\n"
+"    border-top: 12px solid #ececf1; /* Adjust the color to match your design */\n"
+"    margin: 10px auto; /* Center the arrow */\n"
+"}\n"
+"\n"
+"QComboBox::on {\n"
 "    border: 0.5px solid #acacbe;\n"
-"}")
+"}\n"
+"\n"
+"QComboBox:disabled {\n"
+"    background-color: #40414f; /* Set the background color for the disabled state */\n"
+"    border: 1px solid #565869; /* Adjust border color for disabled state */\n"
+"    color: #8a95a5; /* Adjust text color for disabled state */\n"
+"}\n"
+"")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout(MailablDialogBase)
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_6.setSpacing(0)
@@ -653,6 +669,9 @@ class Ui_MailablDialogBase(object):
         self.pbEasementsConnectProperties.setStatusTip("")
         self.pbEasementsConnectProperties.setWhatsThis("")
         self.pbEasementsConnectProperties.setStyleSheet("")
+        icon18 = QtGui.QIcon()
+        icon18.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/iconoir--map-pin-plus_asukoht.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbEasementsConnectProperties.setIcon(icon18)
         self.pbEasementsConnectProperties.setObjectName("pbEasementsConnectProperties")
         self.horizontalLayout_73.addWidget(self.pbEasementsConnectProperties)
         self.horizontalLayout_72.addWidget(self.ToggleframeEasements)
@@ -682,10 +701,10 @@ class Ui_MailablDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pbSearcheasements.setFont(font)
-        icon18 = QtGui.QIcon()
-        icon18.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/search.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbSearcheasements.setIcon(icon18)
-        self.pbSearcheasements.setIconSize(QtCore.QSize(18, 18))
+        icon19 = QtGui.QIcon()
+        icon19.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/search.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbSearcheasements.setIcon(icon19)
+        self.pbSearcheasements.setIconSize(QtCore.QSize(16, 16))
         self.pbSearcheasements.setObjectName("pbSearcheasements")
         self.horizontalLayout_74.addWidget(self.pbSearcheasements)
         self.horizontalLayout_72.addWidget(self.feasementSeachframe)
@@ -747,9 +766,9 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_14.addItem(spacerItem2)
         self.pbEasementsTools = QtWidgets.QPushButton(self.fActionButtons)
         self.pbEasementsTools.setStyleSheet("background-color: rgb(131, 142, 162);")
-        icon19 = QtGui.QIcon()
-        icon19.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/design.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbEasementsTools.setIcon(icon19)
+        icon20 = QtGui.QIcon()
+        icon20.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/design.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbEasementsTools.setIcon(icon20)
         self.pbEasementsTools.setIconSize(QtCore.QSize(18, 18))
         self.pbEasementsTools.setObjectName("pbEasementsTools")
         self.horizontalLayout_14.addWidget(self.pbEasementsTools)
@@ -925,14 +944,14 @@ class Ui_MailablDialogBase(object):
         self.leSearch_Add.setObjectName("leSearch_Add")
         self.horizontalLayout_3.addWidget(self.leSearch_Add)
         self.pbSearch_Add = QtWidgets.QPushButton(self.wOlAndmed_LabelHolder)
-        self.pbSearch_Add.setIcon(icon18)
+        self.pbSearch_Add.setIcon(icon19)
         self.pbSearch_Add.setIconSize(QtCore.QSize(18, 18))
         self.pbSearch_Add.setObjectName("pbSearch_Add")
         self.horizontalLayout_3.addWidget(self.pbSearch_Add)
         self.pbCooseFromMap_Add = QtWidgets.QPushButton(self.wOlAndmed_LabelHolder)
-        icon20 = QtGui.QIcon()
-        icon20.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/mouse-pointer.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbCooseFromMap_Add.setIcon(icon20)
+        icon21 = QtGui.QIcon()
+        icon21.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/mouse-pointer.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbCooseFromMap_Add.setIcon(icon21)
         self.pbCooseFromMap_Add.setIconSize(QtCore.QSize(18, 18))
         self.pbCooseFromMap_Add.setObjectName("pbCooseFromMap_Add")
         self.horizontalLayout_3.addWidget(self.pbCooseFromMap_Add)
@@ -1243,9 +1262,9 @@ class Ui_MailablDialogBase(object):
         spacerItem7 = QtWidgets.QSpacerItem(658, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem7)
         self.pbConfirm_action = QtWidgets.QPushButton(self.frame_3)
-        icon21 = QtGui.QIcon()
-        icon21.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/check.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbConfirm_action.setIcon(icon21)
+        icon22 = QtGui.QIcon()
+        icon22.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/check.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pbConfirm_action.setIcon(icon22)
         self.pbConfirm_action.setIconSize(QtCore.QSize(18, 18))
         self.pbConfirm_action.setObjectName("pbConfirm_action")
         self.horizontalLayout_5.addWidget(self.pbConfirm_action)
@@ -1570,7 +1589,7 @@ class Ui_MailablDialogBase(object):
         spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_43.addItem(spacerItem9)
         self.pbDel_PreConfirm = QtWidgets.QPushButton(self.frDel_data_properties_heading)
-        self.pbDel_PreConfirm.setIcon(icon21)
+        self.pbDel_PreConfirm.setIcon(icon22)
         self.pbDel_PreConfirm.setObjectName("pbDel_PreConfirm")
         self.horizontalLayout_43.addWidget(self.pbDel_PreConfirm)
         self.verticalLayout_110.addWidget(self.frDel_data_properties_heading)
@@ -2335,6 +2354,7 @@ class Ui_MailablDialogBase(object):
         self.pbContracts_Connect_properties.setToolTip("")
         self.pbContracts_Connect_properties.setStatusTip("")
         self.pbContracts_Connect_properties.setWhatsThis("")
+        self.pbContracts_Connect_properties.setIcon(icon18)
         self.pbContracts_Connect_properties.setObjectName("pbContracts_Connect_properties")
         self.horizontalLayout_59.addWidget(self.pbContracts_Connect_properties)
         self.horizontalLayout_58.addWidget(self.Toggleframe_Contracts)
@@ -2364,7 +2384,7 @@ class Ui_MailablDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pbSearchContracts.setFont(font)
-        self.pbSearchContracts.setIcon(icon18)
+        self.pbSearchContracts.setIcon(icon19)
         self.pbSearchContracts.setIconSize(QtCore.QSize(18, 18))
         self.pbSearchContracts.setObjectName("pbSearchContracts")
         self.horizontalLayout_60.addWidget(self.pbSearchContracts)
@@ -2482,7 +2502,7 @@ class Ui_MailablDialogBase(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 738, 842))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 741, 834))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_159 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_159.setObjectName("verticalLayout_159")
@@ -2928,16 +2948,9 @@ class Ui_MailablDialogBase(object):
         self.lbl_preferred_project_status.setFont(font)
         self.lbl_preferred_project_status.setObjectName("lbl_preferred_project_status")
         self.horizontalLayout_56.addWidget(self.lbl_preferred_project_status)
-        self.verticalLayout_46.addWidget(self.frame_20, 0, QtCore.Qt.AlignLeft)
-        self.frame_22 = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
-        self.frame_22.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_22.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_22.setObjectName("frame_22")
-        self.horizontalLayout_35 = QtWidgets.QHBoxLayout(self.frame_22)
-        self.horizontalLayout_35.setContentsMargins(15, 0, 0, 0)
-        self.horizontalLayout_35.setSpacing(10)
-        self.horizontalLayout_35.setObjectName("horizontalLayout_35")
-        self.verticalLayout_46.addWidget(self.frame_22)
+        spacerItem34 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_56.addItem(spacerItem34)
+        self.verticalLayout_46.addWidget(self.frame_20)
         self.Projekcts_FolderSetup = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
         self.Projekcts_FolderSetup.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Projekcts_FolderSetup.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -2962,8 +2975,8 @@ class Ui_MailablDialogBase(object):
         self.lblProjectsFolder_location.setFont(font)
         self.lblProjectsFolder_location.setObjectName("lblProjectsFolder_location")
         self.horizontalLayout_62.addWidget(self.lblProjectsFolder_location)
-        spacerItem34 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_62.addItem(spacerItem34)
+        spacerItem35 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_62.addItem(spacerItem35)
         self.verticalLayout_46.addWidget(self.Projekcts_FolderSetup)
         self.Projekcts_FolderSetup_2 = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
         self.Projekcts_FolderSetup_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -2989,8 +3002,8 @@ class Ui_MailablDialogBase(object):
         self.lblProjectsTargetFolder_location.setFont(font)
         self.lblProjectsTargetFolder_location.setObjectName("lblProjectsTargetFolder_location")
         self.horizontalLayout_63.addWidget(self.lblProjectsTargetFolder_location)
-        spacerItem35 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_63.addItem(spacerItem35)
+        spacerItem36 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_63.addItem(spacerItem36)
         self.verticalLayout_46.addWidget(self.Projekcts_FolderSetup_2)
         self.frame_31 = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
         self.frame_31.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3051,8 +3064,8 @@ class Ui_MailablDialogBase(object):
         self.label_34.setFont(font)
         self.label_34.setObjectName("label_34")
         self.horizontalLayout_64.addWidget(self.label_34)
-        spacerItem36 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_64.addItem(spacerItem36)
+        spacerItem37 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_64.addItem(spacerItem37)
         self.pbSettings_Setup_Contracts = QtWidgets.QPushButton(self.frame_30)
         self.pbSettings_Setup_Contracts.setText("")
         self.pbSettings_Setup_Contracts.setIcon(icon9)
@@ -3084,6 +3097,8 @@ class Ui_MailablDialogBase(object):
         self.lbl_preferred_contract_status.setFont(font)
         self.lbl_preferred_contract_status.setObjectName("lbl_preferred_contract_status")
         self.horizontalLayout_67.addWidget(self.lbl_preferred_contract_status, 0, QtCore.Qt.AlignLeft)
+        spacerItem38 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_67.addItem(spacerItem38)
         self.verticalLayout_51.addWidget(self.frame_33)
         self.Contract_TypeFrame = QtWidgets.QFrame(self.qwSU_Mailabl_Contracts)
         self.Contract_TypeFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3111,8 +3126,8 @@ class Ui_MailablDialogBase(object):
         self.lblPreferredContractsTypes_value.setFont(font)
         self.lblPreferredContractsTypes_value.setObjectName("lblPreferredContractsTypes_value")
         self.horizontalLayout_70.addWidget(self.lblPreferredContractsTypes_value)
-        spacerItem37 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_70.addItem(spacerItem37)
+        spacerItem39 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_70.addItem(spacerItem39)
         self.verticalLayout_51.addWidget(self.Contract_TypeFrame)
         self.verticalLayout_158.addWidget(self.qwSU_Mailabl_Contracts)
         self.verticalLayout_161.addWidget(self.qwSU_Mailabl_Contracts_Main)
@@ -3148,8 +3163,8 @@ class Ui_MailablDialogBase(object):
         self.label_35.setFont(font)
         self.label_35.setObjectName("label_35")
         self.horizontalLayout_66.addWidget(self.label_35)
-        spacerItem38 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_66.addItem(spacerItem38)
+        spacerItem40 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_66.addItem(spacerItem40)
         self.pbSettingsSetupEasements = QtWidgets.QPushButton(self.frame_35)
         self.pbSettingsSetupEasements.setText("")
         self.pbSettingsSetupEasements.setIcon(icon9)
@@ -3181,8 +3196,8 @@ class Ui_MailablDialogBase(object):
         self.lblPreferredEasementsStatus.setFont(font)
         self.lblPreferredEasementsStatus.setObjectName("lblPreferredEasementsStatus")
         self.horizontalLayout_68.addWidget(self.lblPreferredEasementsStatus)
-        spacerItem39 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_68.addItem(spacerItem39)
+        spacerItem41 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_68.addItem(spacerItem41)
         self.verticalLayout_122.addWidget(self.frame_36)
         self.fEasementsType = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fEasementsType.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3210,8 +3225,8 @@ class Ui_MailablDialogBase(object):
         self.lblPreferredEasementsTypes_value.setFont(font)
         self.lblPreferredEasementsTypes_value.setObjectName("lblPreferredEasementsTypes_value")
         self.horizontalLayout_71.addWidget(self.lblPreferredEasementsTypes_value)
-        spacerItem40 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_71.addItem(spacerItem40)
+        spacerItem42 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_71.addItem(spacerItem42)
         self.verticalLayout_122.addWidget(self.fEasementsType)
         self.fWaterLayer = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fWaterLayer.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3239,8 +3254,8 @@ class Ui_MailablDialogBase(object):
         self.lblWaterPipesValue.setFont(font)
         self.lblWaterPipesValue.setObjectName("lblWaterPipesValue")
         self.horizontalLayout_76.addWidget(self.lblWaterPipesValue)
-        spacerItem41 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_76.addItem(spacerItem41)
+        spacerItem43 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_76.addItem(spacerItem43)
         self.verticalLayout_122.addWidget(self.fWaterLayer)
         self.fSewerLayer = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fSewerLayer.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3268,8 +3283,8 @@ class Ui_MailablDialogBase(object):
         self.lblSewerPipesValue.setFont(font)
         self.lblSewerPipesValue.setObjectName("lblSewerPipesValue")
         self.horizontalLayout_79.addWidget(self.lblSewerPipesValue)
-        spacerItem42 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_79.addItem(spacerItem42)
+        spacerItem44 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_79.addItem(spacerItem44)
         self.verticalLayout_122.addWidget(self.fSewerLayer)
         self.fPrSewerLayer = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fPrSewerLayer.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3297,8 +3312,8 @@ class Ui_MailablDialogBase(object):
         self.lblPrSewagePipesValue.setFont(font)
         self.lblPrSewagePipesValue.setObjectName("lblPrSewagePipesValue")
         self.horizontalLayout_78.addWidget(self.lblPrSewagePipesValue)
-        spacerItem43 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_78.addItem(spacerItem43)
+        spacerItem45 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_78.addItem(spacerItem45)
         self.verticalLayout_122.addWidget(self.fPrSewerLayer)
         self.fDrainageLayer = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fDrainageLayer.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3326,8 +3341,8 @@ class Ui_MailablDialogBase(object):
         self.lblDrainagePipesValue.setFont(font)
         self.lblDrainagePipesValue.setObjectName("lblDrainagePipesValue")
         self.horizontalLayout_77.addWidget(self.lblDrainagePipesValue)
-        spacerItem44 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_77.addItem(spacerItem44)
+        spacerItem46 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_77.addItem(spacerItem46)
         self.verticalLayout_122.addWidget(self.fDrainageLayer)
         self.verticalLayout_139.addWidget(self.qwSU_Mailabl_Easements)
         self.verticalLayout_161.addWidget(self.qwSU_Mailabl_Easements_Main)
@@ -3453,9 +3468,7 @@ class Ui_MailablDialogBase(object):
         self.pbProjects_Connect_properties.setToolTip("")
         self.pbProjects_Connect_properties.setStatusTip("")
         self.pbProjects_Connect_properties.setWhatsThis("")
-        icon22 = QtGui.QIcon()
-        icon22.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/iconoir--map-pin-plus_asukoht.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pbProjects_Connect_properties.setIcon(icon22)
+        self.pbProjects_Connect_properties.setIcon(icon18)
         self.pbProjects_Connect_properties.setObjectName("pbProjects_Connect_properties")
         self.horizontalLayout_25.addWidget(self.pbProjects_Connect_properties)
         self.horizontalLayout_26.addWidget(self.Toggleframe)
@@ -3478,8 +3491,8 @@ class Ui_MailablDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pbSearchProjects.setFont(font)
-        self.pbSearchProjects.setIcon(icon18)
-        self.pbSearchProjects.setIconSize(QtCore.QSize(18, 18))
+        self.pbSearchProjects.setIcon(icon19)
+        self.pbSearchProjects.setIconSize(QtCore.QSize(16, 16))
         self.pbSearchProjects.setObjectName("pbSearchProjects")
         self.horizontalLayout_27.addWidget(self.pbSearchProjects)
         self.horizontalLayout_26.addWidget(self.Project_Seachframe)
@@ -3499,7 +3512,7 @@ class Ui_MailablDialogBase(object):
         icon23 = QtGui.QIcon()
         icon23.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/gis--search-map_zoomitudalale_2.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton.setIcon(icon23)
-        self.pushButton.setIconSize(QtCore.QSize(18, 18))
+        self.pushButton.setIconSize(QtCore.QSize(16, 16))
         self.pushButton.setObjectName("pushButton")
         self.horizontalLayout_21.addWidget(self.pushButton)
         self.cmbProjectStatuses = QtWidgets.QComboBox(self.frProjects_Checkbox_holder)
@@ -3509,8 +3522,8 @@ class Ui_MailablDialogBase(object):
         self.cmbProjectStatuses.setFont(font)
         self.cmbProjectStatuses.setObjectName("cmbProjectStatuses")
         self.horizontalLayout_21.addWidget(self.cmbProjectStatuses)
-        spacerItem45 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_21.addItem(spacerItem45)
+        spacerItem47 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_21.addItem(spacerItem47)
         self.pbRefresh_tblMailabl_projects = QtWidgets.QPushButton(self.frProjects_Checkbox_holder)
         self.pbRefresh_tblMailabl_projects.setText("")
         self.pbRefresh_tblMailabl_projects.setIcon(icon15)
@@ -3530,8 +3543,8 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_10.setContentsMargins(0, 0, 10, 0)
         self.horizontalLayout_10.setSpacing(10)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
-        spacerItem46 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem46)
+        spacerItem48 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem48)
         self.pbGenProjectFolder = QtWidgets.QPushButton(self.frame_28)
         icon24 = QtGui.QIcon()
         icon24.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/folder-plus.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -3610,8 +3623,8 @@ class Ui_MailablDialogBase(object):
         self.label_17.setStyleSheet("background-color: rgb(131, 142, 162);")
         self.label_17.setObjectName("label_17")
         self.verticalLayout_165.addWidget(self.label_17)
-        spacerItem47 = QtWidgets.QSpacerItem(20, 1207, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_165.addItem(spacerItem47)
+        spacerItem49 = QtWidgets.QSpacerItem(20, 1207, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_165.addItem(spacerItem49)
         self.verticalLayout_166.addWidget(self.frame_32)
         self.verticalLayout_88.addWidget(self.Prygikast)
         self.swWorkSpace.addWidget(self.RemoveProperties)
@@ -3717,8 +3730,8 @@ class Ui_MailablDialogBase(object):
         self.pbUC_Save.setObjectName("pbUC_Save")
         self.horizontalLayout_24.addWidget(self.pbUC_Save, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.verticalLayout_25.addWidget(self.UC_Buttton_Frame)
-        spacerItem48 = QtWidgets.QSpacerItem(20, 116, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_25.addItem(spacerItem48)
+        spacerItem50 = QtWidgets.QSpacerItem(20, 116, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_25.addItem(spacerItem50)
         self.pbUC_Cancel = QtWidgets.QPushButton(self.UC_Main_Frame)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -3767,8 +3780,8 @@ class Ui_MailablDialogBase(object):
         self.btnPrivacyPolicy = QtWidgets.QPushButton(self.frAgreements)
         self.btnPrivacyPolicy.setObjectName("btnPrivacyPolicy")
         self.horizontalLayout_57.addWidget(self.btnPrivacyPolicy)
-        spacerItem49 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_57.addItem(spacerItem49)
+        spacerItem51 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_57.addItem(spacerItem51)
         self.verticalLayout_10.addWidget(self.frAgreements)
         self.horizontalLayout_6.addWidget(self.centerMenuContainer)
         self.rightMenuContainer = QtWidgets.QWidget(MailablDialogBase)
@@ -4656,8 +4669,8 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(0)
-        self.swCadastral_sub_processes.setCurrentIndex(2)
+        self.swWorkSpace.setCurrentIndex(2)
+        self.swCadastral_sub_processes.setCurrentIndex(5)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(3)
@@ -4816,7 +4829,7 @@ class Ui_MailablDialogBase(object):
         self.label_28.setText(_translate("MailablDialogBase", "Tulekul"))
         self.label_30.setText(_translate("MailablDialogBase", "Kinnistute andmete seaded"))
         self.label_16.setText(_translate("MailablDialogBase", "Andmekiht, millelt imporditakse uued andmed:"))
-        self.lblSHPNewItems.setText(_translate("MailablDialogBase", "Veel Määramata"))
+        self.lblSHPNewItems.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_6.setText(_translate("MailablDialogBase", "Valitud katastriandmete kiht:"))
         self.lblcurrent_main_layer_label.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_2.setText(_translate("MailablDialogBase", "Kiht, kuhu salvestatakse uued katastriandmed:"))

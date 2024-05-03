@@ -109,9 +109,9 @@ QAbstractItemView {
 
 
 QPushButton{
-	padding: 2px 8px;
+	padding: 2px 5px;
 	text-align: center;
-	border-radius: 6px;
+	border-radius: 5px;
 	background-color:#40414f;
 	border: 1px solid #565869;
 }
@@ -121,9 +121,9 @@ QPushButton:hover{
     background-color: #8e8ea0;
 	border: 0.5px solid #acacbe;
 	color: #343541;
-	text-align: center;	
-	padding: 2px 8px;
-    border-radius: 6px;	
+	text-align: center;
+	padding: 2px 5px;
+    border-radius: 5px;	
 }
 
 QPushButton:disabled {
@@ -146,15 +146,16 @@ QLabel {
     background-color: #40414f;
     color: #ececf1;
     border: 1px solid #565869;
+	padding: 1px 4px 1px 4px;
 
 }
 
 QLineEdit {
     background-color: #35363f;  /* Lighter background color */
     color: #ececf1;
-    /*border: 1px solid #4d4d5b;  Thinner border with a different color */
+    border: 1px solid #4d4d5b;  /*Thinner border with a different color */
     border-radius: 5px;
-    padding: 4px;
+    padding: 1px 4px 1px 4px;	
 }
 
 QLineEdit:hover {

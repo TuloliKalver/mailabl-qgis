@@ -103,21 +103,21 @@ border-bottom: 1px solid rgb(131, 142, 162);
 /*nuppu peamised omadused*/
 /*Üldomadused*/
 QPushButton{
-	padding: 1px 8px;
-    border-radius: 6px;
+	padding: 1px 5px;
+	text-align: center;
+	border-radius: 5px;
 	background-color:#40414f;
-	border: 0.5px solid #565869;
+	border: 1px solid #565869;
 }
+
 
 QPushButton:hover{
     background-color: #8e8ea0;
-	padding: 1px 8px;
-    border-radius: 8px;
 	border: 0.5px solid #acacbe;
-    
-	color: rgb(255, 255, 255);
-	padding: 2px 8px;
-    border-radius: 6px;
+	color: #343541;
+	text-align: center;
+	padding: 2px 5px;
+    border-radius: 5px;	
 }
 
 QPushButton:disabled {
@@ -176,29 +176,45 @@ QPushButton:disabled {
 }
 
 /*esialgu jaotamata omadused*/
-QComboBox{
-
-	background-color:#40414f;
-	color:#ececf1;
-	border: 1px solid #565869;
-	border-radius: 3px;
-	padding-left: 5px
+QComboBox {
+    background-color: #40414f; /* Set the background color */
+    color: #ececf1;
+    border: 1px solid #565869;
+    border-radius: 3px;
+    padding-left: 5px;
 }
 
-/*Style the dropdown area*/
-QComboBox::drop-down{
-	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));
-	border: 1px solid #565869;
-	border-radius: 8px;
-	height:16px;
-	width: 16px;
-	subcontrol-origin: padding;
-    subcontrol-position: left
+/* Style the dropdown area */
+QComboBox::drop-down {
+    background-color: #40414f;
+    border: 0px solid #40414f;
+    border-radius: 10px;
+    width: 16px;
+    height: 16px;
+    subcontrol-origin: padding;
+    subcontrol-position: left; /* Center the arrow icon */
 }
 
-QComboBox::on{
+/* Style the arrow inside the dropdown */
+QComboBox::down-arrow {
+    width: 0;
+    height: 0;
+    border-left: 8px solid;
+    border-right: 8px solid;
+    border-top: 12px solid #ececf1; /* Adjust the color to match your design */
+    margin: 10px auto; /* Center the arrow */
+}
+
+QComboBox::on {
     border: 0.5px solid #acacbe;
-}</string>
+}
+
+QComboBox:disabled {
+    background-color: #40414f; /* Set the background color for the disabled state */
+    border: 1px solid #565869; /* Adjust border color for disabled state */
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
    <property name="spacing">
@@ -1208,7 +1224,7 @@ QComboBox::on{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -1435,6 +1451,10 @@ QPushButton:hover{
                               <property name="text">
                                <string>Kinnistutega sidumine*</string>
                               </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/iconoir--map-pin-plus_asukoht.svg</normaloff>icons/iconoir--map-pin-plus_asukoht.svg</iconset>
+                              </property>
                              </widget>
                             </item>
                            </layout>
@@ -1505,8 +1525,8 @@ QPushButton:hover{
                               </property>
                               <property name="iconSize">
                                <size>
-                                <width>18</width>
-                                <height>18</height>
+                                <width>16</width>
+                                <height>16</height>
                                </size>
                               </property>
                              </widget>
@@ -1790,7 +1810,7 @@ QPushButton:hover{
 </string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>5</number>
                </property>
                <widget class="QWidget" name="swAdd_cadastrals">
                 <property name="styleSheet">
@@ -5493,6 +5513,10 @@ QPushButton:hover{
                            <property name="text">
                             <string>Kinnistutega sidumine</string>
                            </property>
+                           <property name="icon">
+                            <iconset>
+                             <normaloff>icons/iconoir--map-pin-plus_asukoht.svg</normaloff>icons/iconoir--map-pin-plus_asukoht.svg</iconset>
+                           </property>
                           </widget>
                          </item>
                         </layout>
@@ -5867,8 +5891,8 @@ p, li { white-space: pre-wrap; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>738</width>
-                  <height>842</height>
+                  <width>741</width>
+                  <height>834</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_159">
@@ -6484,7 +6508,7 @@ p, li { white-space: pre-wrap; }
                              </font>
                             </property>
                             <property name="text">
-                             <string>Veel Määramata</string>
+                             <string>Määramata</string>
                             </property>
                            </widget>
                           </item>
@@ -6876,7 +6900,7 @@ p, li { white-space: pre-wrap; }
                          </layout>
                         </widget>
                        </item>
-                       <item alignment="Qt::AlignLeft">
+                       <item>
                         <widget class="QFrame" name="frame_20">
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
@@ -6928,33 +6952,19 @@ p, li { white-space: pre-wrap; }
                             </property>
                            </widget>
                           </item>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QFrame" name="frame_22">
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QHBoxLayout" name="horizontalLayout_35">
-                          <property name="spacing">
-                           <number>10</number>
-                          </property>
-                          <property name="leftMargin">
-                           <number>15</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
+                          <item>
+                           <spacer name="horizontalSpacer_47">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>40</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
                          </layout>
                         </widget>
                        </item>
@@ -7321,6 +7331,19 @@ p, li { white-space: pre-wrap; }
                                 <string>Määramata</string>
                                </property>
                               </widget>
+                             </item>
+                             <item>
+                              <spacer name="horizontalSpacer_46">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>40</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
                              </item>
                             </layout>
                            </widget>
@@ -8364,8 +8387,8 @@ QPushButton:hover{
                            </property>
                            <property name="iconSize">
                             <size>
-                             <width>18</width>
-                             <height>18</height>
+                             <width>16</width>
+                             <height>16</height>
                             </size>
                            </property>
                           </widget>
@@ -8416,8 +8439,8 @@ QPushButton:hover{
                         </property>
                         <property name="iconSize">
                          <size>
-                          <width>18</width>
-                          <height>18</height>
+                          <width>16</width>
+                          <height>16</height>
                          </size>
                         </property>
                        </widget>
