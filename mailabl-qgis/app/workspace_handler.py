@@ -4,10 +4,9 @@
 
 from qgis.core import QgsProject
 from qgis.utils import iface
-from PyQt5.QtWidgets import QMessageBox, QAbstractItemView
+from PyQt5.QtWidgets import QMessageBox
 
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
-from .ui_controllers import WidgetAnimator
 from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
 from ..Functions.delete_items import Delete_Main_Process
@@ -15,12 +14,11 @@ from ..Functions.Contracts.contractsItems import ContractsMain
 from ..Functions.Easements.EasementsItems import EasementssMain
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..KeelelisedMuutujad.modules import Modules
-from ..KeelelisedMuutujad.messages import Headings
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
  
 pealkiri = Headings()
 
-    
 class WorkSpaceHandler:
     @staticmethod
     def swWorkSpace_Home(self):
@@ -116,14 +114,18 @@ class WorkSpaceHandler:
         types_combo_box = self.cmbeasementTypesCheckable
         prefered_statuses = SettingsDataSaveAndLoad.load_easements_status_ids(self)
         if prefered_statuses == '' or None:
-            QMessageBox.warning(None, Headings().warningSimple, "Jätkamiseks seadista eelistatud staatus")
+            heading = Headings().warningSimple
+            text = "Jätkamiseks seadista eelistatud staatus"
+            QMessageBox.warning(None, heading, text)
             button.blockSignals(False)
             return
         else:
             InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
         prefered_types = SettingsDataSaveAndLoad.load_easements_type_names(self)
         if prefered_types == '' or None:
-            QMessageBox.warning(None, Headings().warningSimple, "Jätkamiseks seadista eelistatud kitsenduste liigid")
+            heading = Headings().warningSimple
+            text = "Jätkamiseks seadista eelistatud kitsenduste liigid"
+            QMessageBox.warning(None, heading, text)
             button.blockSignals(False)
             return
         else:
@@ -131,7 +133,6 @@ class WorkSpaceHandler:
             
         prefered_types_ids = types_combo_box.checkedItemsData()
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
-        #QMessageBox.information(None, "Peagi tulemas", "Hetkel veel nimekirja laadimine puudub")
         EasementssMain.main_asements(self, table, prefered_types_ids, statusValue)
         button.blockSignals(False)
 
@@ -210,7 +211,7 @@ class WorkSpaceHandler:
             layer = QgsProject.instance().mapLayersByName(active_cadastral_layer)[0]
             iface.setActiveLayer(layer)
         else:
-            text =("Midagi läks valesti")
+            text = HoiatusTexts().error
             heading = pealkiri.warningSimple
             QMessageBox.warning(self, heading, text)       
 
@@ -267,7 +268,7 @@ class TabHandler:
             tab_widget.setCurrentIndex(0)
 
         if state is False:
-            print("close")
+            #print("close")
             tab_widget.setTabEnabled(0, False)
             tab_widget.setTabEnabled(1, False)
             tab_widget.setTabEnabled(2, True)

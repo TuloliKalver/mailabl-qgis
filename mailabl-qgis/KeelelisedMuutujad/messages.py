@@ -6,6 +6,7 @@ class Headings:
         self.informationSimple = "Info"
         self.lisan_kinnistuid = "Lisan kinnistuid"
         self.katastrid_laetud = "Katastrid laetud"
+        self.nimekirja_koostamine = "Koostan linnade/külade nimekirja!"
 
 class HoiatusTexts:
     def __init__(self):       

@@ -14,14 +14,10 @@ from PyQt5.QtCore import QDate
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QListWidgetItem
 from ..config.settings import SettingsDataSaveAndLoad
-from ..KeelelisedMuutujad.messages import Headings
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTextsAuto, HoiatusTexts
  
 pealkiri = Headings()
 
-#declare catalouges and links
-#main directory
-#plugin_dir = os.path.dirname(__file__)
-# Get the parent directory of the directory containing the script
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 #Status bar widget folder
@@ -169,8 +165,8 @@ class tableView_functions():
 
         progress_widget.close() 
 
-        print(f"Items without 'Transpordimaa': {count_without_transport}")
-        print(f"Items with 'Transpordimaa': {count_with_transport}")
+        #print(f"Items without 'Transpordimaa': {count_without_transport}")
+        #print(f"Items with 'Transpordimaa': {count_with_transport}")
 
         total = count_with_transport + count_without_transport
 
@@ -183,7 +179,7 @@ class listView_functions():
 
 
     def toggleListSelection(self, list_view, state):
-        print("started toggle selection in view_tools.py line 385")
+        #print("started toggle selection in view_tools.py line 385")
         # state = 2 when checked, 0 when unchecked
         if state == 2:
             list_view.setSelectionMode(QAbstractItemView.MultiSelection)
@@ -267,14 +263,6 @@ class shp_tools:
         return fields
     
     
-    #@staticmethod 
-    #def getLayerFieldItemsBasedonColumn(layer_name: str, desired_columns):
-    #    input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]        
-    #    # Get all field names from the layer
-    #    all_fields = [field.name() for field in input_layer.fields()]
-    3    # Filter out only the desired fields
-    #    desired_fields = [field for field in all_fields if field in desired_columns]
-    #    return desired_fields
     @staticmethod
     def activateLayer_zoomTo(layer):
         #input_layer = QgsProject.instance().mapLayersByName(layer)[0]
@@ -374,7 +362,7 @@ class shp_tools:
         progress_bar = progress_widget.testBar
         progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
         # Set the window title for the progress_widget
-        progress_widget.setWindowTitle("Koostan linnade/külade nimekirja!")
+        progress_widget.setWindowTitle(Headings().nimekirja_koostamine)
         progress_widget.show()
         
         quarter_point = total // 4  # Calculate the quarter point
@@ -418,7 +406,7 @@ class shp_tools:
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
             heading = pealkiri.warningSimple
-            text = (f"Laetavate kinnistute kiht {input_layer_name} on puudu.\nJätkamiseks lae algandmed")
+            text = HoiatusTextsAuto().input_layer_missing(input_layer_name)
             QMessageBox.warning(self, heading,text)
             #print("No items selected")
             return
@@ -443,7 +431,7 @@ class shp_tools:
             layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         except IndexError:
             #print(f"Layer '{input_layer_name}' not found.")
-            text = (f"Laetavate kinnistute kiht {input_layer_name} on puudu. \n Jätkamiseks lae algandmed")
+            text = HoiatusTextsAuto().input_layer_missing(input_layer_name)
             heading = pealkiri.warningSimple
             QMessageBox.warning(None, heading, text)
             #print("No items selected")

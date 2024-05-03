@@ -28,7 +28,7 @@ from PyQt5.QtWidgets import QMessageBox,QDialog
 from qgis.core import QgsProject 
 from .processes.OnFirstLoad.AddSetupLayers import SetupLayers
 from qgis.core import QgsSettings
-
+from .KeelelisedMuutujad.messages import Headings, HoiatusTexts
 # Initialize Qt resources from file resources.py
 from .resources import *
 # Import the code for the dialog
@@ -196,8 +196,8 @@ class Mailabl:
         # Check if there is an active project loaded
         project = QgsProject.instance()
         if project.fileName() == '':
-            text = ("Jätkamiseks ava projekt")
-            heading = "Hoiatus"
+            text = HoiatusTexts().projekt_valimata
+            heading = Headings().warningSimple
             QMessageBox.warning(None, heading, text)
             return
 
