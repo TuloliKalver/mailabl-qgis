@@ -8,7 +8,7 @@ from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
 
 from PyQt5.uic import loadUi
-from ....processes.infomessages.messages import Headings
+from ....processes.infomessages.messages import Headings, InfoTexts
  
 pealkiri = Headings()
 
@@ -20,7 +20,7 @@ timer_instance = Timer(delay_interval=delay_interval, sleep_duration=sleep_durat
 
 class ContractProperties:
     @staticmethod    
-    def update_contract_properties(self, contract_id, widget, project_name):
+    def update_contract_properties(self, contract_id, widget, item_name):
         properties_table = widget.tvProperties
         model_properties = properties_table.model()
         
@@ -86,8 +86,8 @@ class ContractProperties:
             if count % paus_interval == 0:
                 timer_instance.pause()
 
-            text = (f"Lepingule\n{project_name}\nlisatud {total_returned_ids}/{total_ids_Table}")
-            heading = pealkiri.informationSimple
+        text = InfoTexts().properties_successfully_added(item_name, total_returned_ids, total_ids_Table)
+        heading = Headings().informationSimple      
         QMessageBox.information(None, heading, text)
 
 

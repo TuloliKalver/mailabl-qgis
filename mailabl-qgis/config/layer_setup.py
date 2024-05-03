@@ -12,7 +12,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
 # Local Application or Library Imports
-from .mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS, MODULE_EASEMENTS
+from .mylabl_API.modules import Modules
 from .settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from .QGISSettingPaths import LayerSettings, SettingsLoader
 from ..app.ComboBoxTools import ComboBoxTools
@@ -131,7 +131,7 @@ class Setup_ProjectLayers:
         
         widget.show()
         
-        module = MODULE_PROJECTS
+        module = Modules.MODULE_PROJECTS
  
         cmb_layers  = widget.cmbProjects_Layer
         QGIS_items.clear_and_add_layerNames(self, cmb_layers)
@@ -354,7 +354,7 @@ class Setup_Conrtacts:
         
         widget.show()
 
-        module = MODULE_CONTRACTS
+        module = Modules.MODULE_CONTRACTS
         statuses_combo_box = widget.cmbPreferredContractStatuses
         types_combo_box = widget.cbcb_PreferredContractTypes
         # Assuming types_combo_box is an instance of QgsSelectableComboBox
@@ -429,7 +429,7 @@ class SetupEasments:
         
         widget.show()
 
-        module = MODULE_EASEMENTS
+        module = Modules.MODULE_EASEMENTS
         statuses_combo_box = widget.cmbPreferredEasementStatuses
         types_combo_box = widget.cbcb_PreferredEasementTypes
         water_cb = widget.cbWater_Pipes

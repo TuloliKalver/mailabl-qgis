@@ -29,7 +29,7 @@ from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
-from .config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
+from .config.mylabl_API.modules import Modules
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
@@ -1425,8 +1425,8 @@ class ConnectPropertiesModuleButtons:
         button_easements = getattr(self, 'pbEasementsConnectProperties', None)
         # Define lambdas to connect buttons to functions
         button_functions = {
-            button_contracts: lambda: MailablDialog.load_properties_connector(self, MODULE_CONTRACTS,table_contracts, button_contracts),
-            button_projects: lambda: MailablDialog.load_properties_connector(self, MODULE_PROJECTS, table_projects, button_contracts),
+            button_contracts: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_CONTRACTS,table_contracts, button_contracts),
+            button_projects: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_PROJECTS, table_projects, button_contracts),
             button_easements: None
         }
        # Connect buttons to functions

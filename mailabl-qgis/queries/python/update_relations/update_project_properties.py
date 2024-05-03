@@ -19,11 +19,6 @@ delay_interval = 10
 sleep_duration = 2
 timer_instance = Timer(delay_interval=delay_interval, sleep_duration=sleep_duration)
 
-
-
-            
-
-
 class ProjectsProperties:
     @staticmethod    
     def update_projects_properties(self, project_id, widget, project_name):
@@ -44,16 +39,16 @@ class ProjectsProperties:
                 cadastral_nr = item_column_0.text()
                 properties.append(cadastral_nr)
             else:
-                print(f"Row {row}, Column 0: No item")
-
+                #print(f"Row {row}, Column 0: No item")
+                pass
         total_ids_Table = len(properties)
-        print(f"properties {properties}")
+        #print(f"properties {properties}")
         
         returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, properties_list=properties)
         
         total_returned_ids = len(returned_ids)
-        print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")
-        print(returned_ids)
+        #print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")
+        #print(returned_ids)
         
         chunk_size = 25
         count = 0

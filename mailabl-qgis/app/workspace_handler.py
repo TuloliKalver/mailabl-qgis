@@ -11,10 +11,10 @@ from .ui_controllers import WidgetAnimator
 from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
 from ..Functions.delete_items import Delete_Main_Process
-from ..Functions.Contracts.contractsItems import ContractsMain, ContractsQueries_list
+from ..Functions.Contracts.contractsItems import ContractsMain
 from ..Functions.Easements.EasementsItems import EasementssMain
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
-from ..config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS, MODULE_EASEMENTS
+from ..config.mylabl_API.modules import Modules
 from ..processes.infomessages.messages import Headings
 from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
  
@@ -40,7 +40,7 @@ class WorkSpaceHandler:
             model.removeRows(0, model.rowCount())
         self.le_searchProjects.clear()
 
-        module = MODULE_PROJECTS
+        module = Modules.MODULE_PROJECTS
         comboBox = self.cmbProjectStatuses
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
         status_id = SettingsDataSaveAndLoad.load_projects_status_id(self)
@@ -65,7 +65,7 @@ class WorkSpaceHandler:
         model = table.model()
         if model is not None:
             model.removeRows(0, model.rowCount())
-        module = MODULE_CONTRACTS
+        module = Modules.MODULE_CONTRACTS
         combo_box = self.cmbcontractStatuses
         types_combo_box = self.cmbcontractTypes_checkable
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
@@ -111,7 +111,7 @@ class WorkSpaceHandler:
         model = table.model()
         if model is not None:
             model.removeRows(0, model.rowCount())
-        module = MODULE_EASEMENTS
+        module = Modules.MODULE_EASEMENTS
         combo_box = self.cmbeasementStatuses
         types_combo_box = self.cmbeasementTypesCheckable
         prefered_statuses = SettingsDataSaveAndLoad.load_easements_status_ids(self)

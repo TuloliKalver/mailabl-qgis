@@ -3,7 +3,7 @@ from PyQt5.QtCore import QCoreApplication
 from ....queries.python.DataLoading_classes import GraphqlQueriesContracts, GraphqlQueriesEasements
 from ....queries.python.query_tools import requestBuilder
 from ....config.settings import SettingsDataSaveAndLoad
-from ....config.mylabl_API.modules import MODULE_CONTRACTS, MODULE_EASEMENTS
+from ....config.mylabl_API.modules import Modules
 
 class InsertTypesToComboBox:
     def add_elementTypes_to_listview (self, combo_box, preferred_items, module):
@@ -11,9 +11,9 @@ class InsertTypesToComboBox:
         combo_box.clear()
 
         # Populate the combo box with items and associate each item's text with its ID
-        if module == MODULE_CONTRACTS:
+        if module == Modules.MODULE_CONTRACTS:
             types = ContractTypes.contract_types(self)
-        if module == MODULE_EASEMENTS:
+        if module == Modules.MODULE_EASEMENTS:
             types = easementTypes.easement_types(self)
 
         for item_text, item_id in types:

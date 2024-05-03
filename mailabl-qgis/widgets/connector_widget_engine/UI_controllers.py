@@ -4,7 +4,7 @@ from functools import wraps
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
-from ...config.mylabl_API.modules import MODULE_PROJECTS, MODULE_CONTRACTS
+from ...config.mylabl_API.modules import Modules, ModuleTranslation, Languages
 from ...utils.table_utilys import TableExtractor
 from ...queries.python.projects_pandas import TableHeaders
 from ...queries.python.update_relations.update_project_properties import ProjectsProperties
@@ -13,16 +13,7 @@ from ...config.settings import Filepaths, SettingsDataSaveAndLoad, Flags, FilesB
 from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 
-
-
-def disable_button(func):
-    def wrapper(*args, **kwargs):
-        button = args[0]
-        if button is not None:
-            button.setEnabled(False)
-        return func(*args, **kwargs)
-    return wrapper
-
+language = Languages.ESTONIA
 
 class PropertiesConnector(QObject):
     ConnectorWidgetClosed = pyqtSignal()
@@ -42,36 +33,14 @@ class PropertiesConnector(QObject):
         widget.show()
         self.widget = widget
         table_view = widget.tvProperties
-        '''        
-        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        if not isinstance(active_layer, QgsMapLayer):
-            return
-        
-        WidgetTools.load_tool_and_fill_table(self, widget, table_view, active_layer_name)
-        
-
-        if flag:                            
-            if active_layer and active_layer.selectedFeatureCount() > 0:        
-                WidgetTools.load_tool_and_fill_table(self, widget, table_view, active_layer_name)
-                selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
-                active_layer.selectionChanged.connect(selection_monitor)
-                widget.showNormal()
-            else: 
-                selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
-                active_layer.selectionChanged.connect(selection_monitor)
-                widget.showMinimized()  # Assuming widget is defined somewhere 
-
-        '''
-
 
         if module is not None:
-            if module == MODULE_PROJECTS:
-                self.module = MODULE_PROJECTS
-                module_text = "Projekti"
-            if module == MODULE_CONTRACTS:
-                self.module = MODULE_CONTRACTS
-                module_text = "Lepingu"
+            if module == Modules.MODULE_PROJECTS:
+                self.module = Modules.MODULE_PROJECTS
+                module_text = ModuleTranslation.module_name(module, language, plural=False)
+            if module == Modules.MODULE_CONTRACTS:
+                self.module = Modules.MODULE_CONTRACTS
+                module_text = ModuleTranslation.module_name(module, language, plural=False)
 
         selection_monitor = None
         flag = True
@@ -249,10 +218,10 @@ class WidgetLabels:
 class ConnectorFunctions:
 
     def add_properties_to_module(self, widget, module, element_id, element_name):
-        if module == MODULE_PROJECTS:
+        if module == Modules.MODULE_PROJECTS:
             #print(f"started {MODULE_PROJECTS} proerties")
             ProjectsProperties.update_projects_properties(self, element_id, widget, element_name)
-        if module == MODULE_CONTRACTS:
+        if module == Modules.MODULE_CONTRACTS:
             #print(f"started {MODULE_CONTRACTS} proerties")
             ContractProperties.update_contract_properties(self, element_id, widget, element_name)
             pass
