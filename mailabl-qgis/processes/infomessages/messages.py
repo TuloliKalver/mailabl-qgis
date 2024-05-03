@@ -16,7 +16,7 @@ class HoiatusTexts:
         self.omavalitsus_valimata = "Jätkamiseks vali ja kinnita omavalitsus"        
         self.SHPfaili_laadimine = (
                 "Lae õige fail! SHP_KATASTRIÜKSUS.SHP\n"
-                "Uued andmed saad Maa-ametist kasutades Sätete nenüüst valikut 'Maa-ametisse'"
+                "Uued andmed saad Maa-ametist kasutades Seadete menüüst valikut 'Maa-ametisse'"
             )
         self.error = "Midagi läks valesti"        
         self.kinnistuid_ei_leidnud = "Ühtegi kinnistut ei leitud"

@@ -19,24 +19,24 @@ class ModuleTranslation:
         Modules.MODULE_CONTRACTS: {Languages.ESTONIA: "Lepingud", Languages.LATVIA: "Līgumi"},
         Modules.MODULE_PROJECTS: {Languages.ESTONIA: "Projektid", Languages.LATVIA: "Projekti"},
         Modules.MODULE_TASKS: {Languages.ESTONIA: "Ülesanded", Languages.LATVIA: "Uzdevumi"},
-        Modules.MODULE_COORDINATION: {Languages.ESTONIA: "Koordineerimised", Languages.LATVIA: "Koordinācija"},
+        Modules.MODULE_COORDINATION: {Languages.ESTONIA: "Kooskõlastused", Languages.LATVIA: "Koordinācija"},
         Modules.MODULE_LETTER: {Languages.ESTONIA: "Kirjad", Languages.LATVIA: "Vēstules"},
-        Modules.MODULE_SPECIFICATIONS: {Languages.ESTONIA: "Spetsifikatsioonid", Languages.LATVIA: "Specifikācijas"},
-        Modules.MODULE_EASEMENTS: {Languages.ESTONIA: "Teenusõigused", Languages.LATVIA: "Apgrūtinājumi"},
-        Modules.MODULE_ORDINANCES: {Languages.ESTONIA: "Määrused", Languages.LATVIA: "Rīkojumi"},
-        Modules.MODULE_SUBMISSIONS: {Languages.ESTONIA: "Esitused", Languages.LATVIA: "Iesniegumi"}
+        Modules.MODULE_SPECIFICATIONS: {Languages.ESTONIA: "Tingimused", Languages.LATVIA: "Specifikācijas"},
+        Modules.MODULE_EASEMENTS: {Languages.ESTONIA: "Servituudid", Languages.LATVIA: "Apgrūtinājumi"},
+        Modules.MODULE_ORDINANCES: {Languages.ESTONIA: "Käskkirjad", Languages.LATVIA: "Rīkojumi"},
+        Modules.MODULE_SUBMISSIONS: {Languages.ESTONIA: "Avaldused", Languages.LATVIA: "Iesniegumi"}
     }
 
     translations_singular = {
         Modules.MODULE_CONTRACTS: {Languages.ESTONIA: "Lepingu", Languages.LATVIA: "Līgums"},
         Modules.MODULE_PROJECTS: {Languages.ESTONIA: "Projekti", Languages.LATVIA: "Projekts"},
         Modules.MODULE_TASKS: {Languages.ESTONIA: "Ülesande", Languages.LATVIA: "Uzdevums"},
-        Modules.MODULE_COORDINATION: {Languages.ESTONIA: "Koordineerimine", Languages.LATVIA: "Koordinācija"},
+        Modules.MODULE_COORDINATION: {Languages.ESTONIA: "Kooskõlastuse", Languages.LATVIA: "Koordinācija"},
         Modules.MODULE_LETTER: {Languages.ESTONIA: "Kirja", Languages.LATVIA: "Vēstule"},
         Modules.MODULE_SPECIFICATIONS: {Languages.ESTONIA: "Tingimuse", Languages.LATVIA: "Specifikācija"},
         Modules.MODULE_EASEMENTS: {Languages.ESTONIA: "Servituudi", Languages.LATVIA: "Apgrūtinājums"},
         Modules.MODULE_ORDINANCES: {Languages.ESTONIA: "Käskkirja", Languages.LATVIA: "Rīkojums"},
-        Modules.MODULE_SUBMISSIONS: {Languages.ESTONIA: "Esitus", Languages.LATVIA: "Iesniegums"}
+        Modules.MODULE_SUBMISSIONS: {Languages.ESTONIA: "Avalduse", Languages.LATVIA: "Iesniegums"}
     }
 
     @staticmethod
