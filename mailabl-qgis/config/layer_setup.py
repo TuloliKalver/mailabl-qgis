@@ -12,11 +12,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
 # Local Application or Library Imports
-from .mylabl_API.modules import Modules
+from ..KeelelisedMuutujad.modules import Modules
 from .settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from .QGISSettingPaths import LayerSettings, SettingsLoader
 from ..app.ComboBoxTools import ComboBoxTools
-from ..processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
 

@@ -15,7 +15,7 @@ from ...utils.table_utilys import ModelHandler
 from ...utils.delegates.DelegateMainTable import DelegatesForTables
 from ...config.settings import SettingsDataSaveAndLoad, MailablWebModules
 from ...queries.python.MapTools.selector import visibleSelector
-from ...processes.infomessages.messages import Headings, HoiatusTexts
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 
 
 class Constants:

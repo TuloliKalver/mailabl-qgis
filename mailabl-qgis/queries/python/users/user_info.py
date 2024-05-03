@@ -1,4 +1,4 @@
-from ....processes.infomessages.messages import Headings
+from ....KeelelisedMuutujad.messages import Headings
 from ..DataLoading_classes import GraphQLQueryLoader
 from ..query_tools import requestBuilder
 

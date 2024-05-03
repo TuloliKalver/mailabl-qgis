@@ -4,7 +4,7 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
 from ...Functions.tableViewAdjust import ColumnResizer
-from ...processes.infomessages.messages import Headings
+from ...KeelelisedMuutujad.messages import Headings
 
 pealkiri = Headings()
 

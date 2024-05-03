@@ -10,7 +10,7 @@ from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerF
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
 from ....config.settings import  connect_settings_to_layer, Flags
-from ....processes.infomessages.messages import Headings, HoiatusTexts, InfoTexts
+from ....KeelelisedMuutujad.messages import Headings, HoiatusTexts, InfoTexts
  
 pealkiri = Headings()
 

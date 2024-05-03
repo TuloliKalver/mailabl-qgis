@@ -16,7 +16,7 @@ from ...queries.python.DataLoading_classes import GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...queries.python.update_relations.update_project_properties import map_selectors
 from ...config.settings import Filepaths, Flags, SettingsDataSaveAndLoad, FilesByNames
-from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..propertie_layer.properties_layer_data import PropertiesLayerFunctions
 
 pealkiri = Headings()

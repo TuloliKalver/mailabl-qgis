@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QPushButton, QFrame, QMessageBox
 from qgis.core import (QgsProject, QgsVectorLayer)
 from ..config.settings import Flags
 from PyQt5.QtCore import QTimer
-from ..processes.infomessages.messages import Headings
+from ..KeelelisedMuutujad.messages import Headings
  
 pealkiri = Headings()
 

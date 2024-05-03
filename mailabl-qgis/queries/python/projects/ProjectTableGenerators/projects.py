@@ -11,7 +11,7 @@ from .....utils.delegates.DelegateMainTable import DelegatesForTables
 from .....Functions.tableViewAdjust import ColumnResizer
 from .....config.settings import SettingsDataSaveAndLoad, MailablWebModules
 from .....utils.table_utilys import ModelHandler
-from .....processes.infomessages.messages import Headings, HoiatusTexts
+from .....KeelelisedMuutujad.messages import Headings, HoiatusTexts
  
 pealkiri = Headings()
 

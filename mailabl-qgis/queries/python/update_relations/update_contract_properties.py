@@ -8,7 +8,7 @@ from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
 
 from PyQt5.uic import loadUi
-from ....processes.infomessages.messages import Headings, InfoTexts
+from ....KeelelisedMuutujad.messages import Headings, InfoTexts
  
 pealkiri = Headings()
 

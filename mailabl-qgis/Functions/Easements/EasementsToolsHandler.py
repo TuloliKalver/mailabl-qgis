@@ -23,7 +23,7 @@ from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 from ...config.settings import SettingsDataSaveAndLoad
 from ...config.QGISSettingPaths import LayerSettings, SettingsLoader
 from ...config.settings import Filepaths, Flags, SettingsDataSaveAndLoad, FilesByNames
-from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..intersect import Intersect, TempIntersectLayerName
 from ..join_layers import JoinLayers
 

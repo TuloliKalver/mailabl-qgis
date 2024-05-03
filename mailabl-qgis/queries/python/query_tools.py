@@ -3,7 +3,7 @@ from qgis.core import Qgis
 from .access_credentials import load_token
 from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import GraphQLSettings
-from ...processes.infomessages.messages import Headings
+from ...KeelelisedMuutujad.messages import Headings
  
 pealkiri = Headings()
 

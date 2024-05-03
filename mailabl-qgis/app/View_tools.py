@@ -14,7 +14,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QListWidgetItem
 from ..config.settings import SettingsDataSaveAndLoad
-from ..processes.infomessages.messages import Headings
+from ..KeelelisedMuutujad.messages import Headings
  
 pealkiri = Headings()
 

@@ -8,7 +8,7 @@ from pprint import pprint
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
 from ..config.ui_directories import PathLoaderSimple
-from ..processes.infomessages.messages import Headings
+from ..KeelelisedMuutujad.messages import Headings
  
 pealkiri = Headings()
 

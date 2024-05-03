@@ -4,13 +4,13 @@ from functools import wraps
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
-from ...config.mylabl_API.modules import Modules, ModuleTranslation, Languages
+from ...KeelelisedMuutujad.modules import Modules, ModuleTranslation, Languages
 from ...utils.table_utilys import TableExtractor
 from ...queries.python.projects_pandas import TableHeaders
 from ...queries.python.update_relations.update_project_properties import ProjectsProperties
 from ...queries.python.update_relations.update_contract_properties import ContractProperties
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, Flags, FilesByNames
-from ...processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
 
 language = Languages.ESTONIA

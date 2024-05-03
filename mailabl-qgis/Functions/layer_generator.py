@@ -8,7 +8,7 @@ from ..config.settings import connect_settings_to_layer
 from PyQt5.uic import loadUi
 
 from PyQt5.QtCore import QCoreApplication
-from ..processes.infomessages.messages import Headings
+from ..KeelelisedMuutujad.messages import Headings
  
 pealkiri = Headings()
 

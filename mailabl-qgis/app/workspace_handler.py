@@ -14,8 +14,8 @@ from ..Functions.delete_items import Delete_Main_Process
 from ..Functions.Contracts.contractsItems import ContractsMain
 from ..Functions.Easements.EasementsItems import EasementssMain
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
-from ..config.mylabl_API.modules import Modules
-from ..processes.infomessages.messages import Headings
+from ..KeelelisedMuutujad.modules import Modules
+from ..KeelelisedMuutujad.messages import Headings
 from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
  
 pealkiri = Headings()

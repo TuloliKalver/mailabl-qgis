@@ -4,7 +4,7 @@ from PyQt5.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
 from qgis.core import QgsVectorLayer, QgsFeature, QgsSpatialIndex, QgsLayerTreeGroup, QgsGeometry, QgsProject
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
-from ...processes.infomessages.messages import Headings
+from ...KeelelisedMuutujad.messages import Headings
  
 pealkiri = Headings()
 

@@ -9,7 +9,7 @@ from PyQt5.QtCore import QCoreApplication
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import QgsFeatureRequest
-from ...processes.infomessages.messages import Headings
+from ...KeelelisedMuutujad.messages import Headings
  
 pealkiri = Headings()
 

@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QListView, QMessageBox, QTableView
 from ..queries.python.property_data import deleteProperty, MyLablChecker
 from ..Functions.Tools import tableFunctions
 from ..config.settings import SettingsDataSaveAndLoad
-from ..processes.infomessages.messages import Headings
+from ..KeelelisedMuutujad.messages import Headings
  
 pealkiri = Headings()
 

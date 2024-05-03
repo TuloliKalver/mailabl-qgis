@@ -29,7 +29,7 @@ from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
-from .config.mylabl_API.modules import Modules
+from .KeelelisedMuutujad.modules import Modules
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
@@ -50,7 +50,7 @@ from .queries.python.users.user_info import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import InsertStatusToComboBox
-from .processes.infomessages.messages import Headings, HoiatusTexts, EdukuseTexts
+from .KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Easements.EasementsItems import EasementssMain
 from .Functions.Easements.EasementsToolsHandler import EasementTools
