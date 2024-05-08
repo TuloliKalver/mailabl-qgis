@@ -69,6 +69,14 @@ class GraphQLSettings:
     def graphql_endpoint():
         return config.get('graphql_endpoint', '')
 
+class Devuser:
+    def dev_username():
+        return config.get('username', '')
+     
+    def dev_access():
+        return config.get('word', '')
+
+
 class IconsByName:
     def __init__(self):
         self.Mailabl_icon_name = "icon_Mailabl.png"

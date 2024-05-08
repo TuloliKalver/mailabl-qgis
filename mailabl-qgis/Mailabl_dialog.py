@@ -114,12 +114,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Rest of your __init__ method...
         # Call the function to create the necessary layer structure
         
-        Startup.FirstLoad(self)
 
 
     #Creat instances
 
         self.setupUi(self)
+
+        Startup.FirstLoad(self)
+
 
         self.sw_HM.setCurrentIndex(0)
         initial_size = self.UC_Main_Frame.size()

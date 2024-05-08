@@ -4,7 +4,6 @@ plugin_dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 #Status bar widget folder
 widgets_folder_name = "widgets"
-
 UI_multiline_Statusbar = "WStatusBar.ui"
 UI_projects_connector = "Properties_connector.ui"
 

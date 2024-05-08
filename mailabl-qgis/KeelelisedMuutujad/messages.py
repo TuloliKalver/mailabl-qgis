@@ -118,5 +118,6 @@ class EdukuseTexts:
         self.salvestatud = "Kõik on salvestatud"
 
 class Salvestamisel:
+
     def __init__(self):
         self.vali_kausta_asukoht ="Valik asukoht kuhu aluskaardi fail salvestatakse!"
