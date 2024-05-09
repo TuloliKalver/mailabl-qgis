@@ -72,41 +72,51 @@ QWidget{
 
 
 /*esialgu jaotamata omadused*/
-QComboBox{
-
-	background-color:#40414f;
-	color:#ececf1;
-	border: 1px solid #565869;
-	border-radius: 3px;
-	padding-left: 5px
+QComboBox {
+    background-color: #40414f; /* Set the background color */
+    color: #ececf1;
+    border: 1px solid #565869;
+    border-radius: 3px;
+    padding-left: 5px;
 }
 
-/*Style the dropdown area*/
-QComboBox::drop-down{
-	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));
-	border: 1px solid #565869;
-	border-radius: 8px;
-	height:16px;
-	width: 16px;
-	subcontrol-origin: padding;
-    subcontrol-position: left
+/* Style the dropdown area */
+QComboBox::drop-down {
+    background-color: #40414f;
+    border: 0px solid #40414f;
+    border-radius: 10px;
+    width: 16px;
+    height: 16px;
+    subcontrol-origin: padding;
+    subcontrol-position: left; /* Center the arrow icon */
 }
 
-QComboBox::on{
+/* Style the arrow inside the dropdown */
+QComboBox::down-arrow {
 
-  	border: 0.5px solid #acacbe;
+    width: 0;
+    height: 0;
+    border-left: 6px solid #40414f;
+    border-right: 6px solid #40414f;
+    border-top: 8px solid #ececf1; /* Adjust the color to match your design */
+    margin: 8px auto; /* Center the arrow */
 }
 
+QComboBox::on {
+    border: 0.5px solid #acacbe;
+}
 
 QComboBox:disabled {
-    background-color: #303040; /* Adjusted disabled background color */
-    border: 1px solid #707070; /* Adjust border color for disabled state */
+   background-color: #3d3e47;
+ /* Set the background color for the disabled state */
+    border: 1px solid #565869; /* Adjust border color for disabled state */
     color: #8a95a5; /* Adjust text color for disabled state */
 }
 
 
 QCheckBox:disabled {
     color: #8a95a5; /* Adjust text color for disabled state */
+	
 }
 
 
@@ -671,7 +681,7 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_3">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -696,13 +706,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lblDeK">
                     <property name="minimumSize">
                      <size>
-                      <width>100</width>
+                      <width>60</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -715,7 +725,7 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_11">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -767,7 +777,7 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_5">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -792,13 +802,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lblHK">
                     <property name="minimumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -811,7 +821,7 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_8">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -883,11 +893,11 @@ QLineEdit:disabled {
                   <property name="bottomMargin">
                    <number>0</number>
                   </property>
-                  <item alignment="Qt::AlignLeft">
+                  <item>
                    <widget class="QLineEdit" name="lineEdit_2">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -912,13 +922,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lblDeV">
                     <property name="minimumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -927,11 +937,11 @@ QLineEdit:disabled {
                     </property>
                    </widget>
                   </item>
-                  <item alignment="Qt::AlignRight">
+                  <item>
                    <widget class="QLineEdit" name="lineEdit">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -980,7 +990,7 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_7">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -1005,13 +1015,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lblHV">
                     <property name="minimumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -1024,7 +1034,7 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_10">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
@@ -1100,13 +1110,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_4">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -1125,13 +1135,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lblDeSK">
                     <property name="minimumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -1144,18 +1154,18 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_12">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>16777215</height>
                      </size>
                     </property>
                     <property name="text">
-                     <string>m</string>
+                     <string>mm</string>
                     </property>
                     <property name="frame">
                      <bool>true</bool>
@@ -1196,13 +1206,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_6">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -1221,13 +1231,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lblHSK">
                     <property name="minimumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>100</width>
+                      <width>90</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -1240,13 +1250,13 @@ QLineEdit:disabled {
                    <widget class="QLineEdit" name="lineEdit_9">
                     <property name="minimumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>30</width>
+                      <width>40</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -1539,7 +1549,46 @@ QLineEdit:disabled {
               </property>
              </spacer>
             </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame_13">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
+             <widget class="QPushButton" name="pbAddRoad">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Koosta tee ala servituut</string>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignRight">
              <widget class="QPushButton" name="pbKoostaServituut">
               <property name="font">
                <font>
@@ -1732,8 +1781,7 @@ QLineEdit:disabled {
                </font>
               </property>
               <property name="styleSheet">
-               <string notr="true">
-</string>
+               <string notr="true"/>
               </property>
               <property name="text">
                <string>Eelvaade*</string>
@@ -1783,208 +1831,6 @@ QLineEdit:disabled {
              <number>0</number>
             </property>
            </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTabWidget" name="tabWidget">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>200</height>
-            </size>
-           </property>
-           <property name="currentIndex">
-            <number>0</number>
-           </property>
-           <widget class="QWidget" name="taKinnistuLabel">
-            <attribute name="title">
-             <string>Kinnistu Label</string>
-            </attribute>
-            <layout class="QGridLayout" name="gridLayout_9">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_4">
-                 <item>
-                  <widget class="QLabel" name="lnameKataster">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Kataster:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="laKataster">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>TextLabel</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_6">
-                 <item>
-                  <widget class="QLabel" name="label_2">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="text">
-                    <string>Aadress:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="laAadress">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>15</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>TextLabel</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <spacer name="verticalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab">
-            <attribute name="title">
-             <string>Servituut</string>
-            </attribute>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="5" column="1">
-              <widget class="QPushButton" name="pbTesting">
-               <property name="text">
-                <string>?</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" rowspan="5">
-              <widget class="QTableWidget" name="tbServituut">
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-               <property name="selectionBehavior">
-                <enum>QAbstractItemView::SelectRows</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QPushButton" name="pbCountSelectedRows">
-               <property name="text">
-                <string>Valitud ridu</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QPushButton" name="pbMailabl">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Mailabl</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QPushButton" name="pbAddServituutType">
-               <property name="text">
-                <string>Sisesta valik</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QComboBox" name="cmbValik"/>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="tab_2">
-            <attribute name="title">
-             <string>Page</string>
-            </attribute>
-            <widget class="QGraphicsView" name="graphicsView">
-             <property name="geometry">
-              <rect>
-               <x>240</x>
-               <y>10</y>
-               <width>256</width>
-               <height>151</height>
-              </rect>
-             </property>
-            </widget>
-           </widget>
           </widget>
          </item>
          <item>
@@ -2126,8 +1972,7 @@ QLineEdit:disabled {
            </property>
            <property name="text">
             <string>Kuidas tööriista
-kasutada?
-(juhend koostamisel)</string>
+kasutada?</string>
            </property>
            <property name="textFormat">
             <enum>Qt::AutoText</enum>

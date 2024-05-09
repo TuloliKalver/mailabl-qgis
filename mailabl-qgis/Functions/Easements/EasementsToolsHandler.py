@@ -65,12 +65,18 @@ class EasementTools(QObject):
                 clear_buffer_button = self.widget_EasmentTools.pbClearCadastrals
                 properties_table = self.widget_EasmentTools.tvProperties
                 pbGen_easement = self.widget_EasmentTools.pbKoostaServituut
+                
+                ##### Create function if mind is clear!
+                #pbGen_easement.setEnabled(False)
+                #if properties_table has model:
+                #    pbGen_easement = self.widget_EasmentTools.pbKoostaServituut
+                #    pbGen_easement.setEnabled(True)
                 # Connect button click signals
+
 
                 self.connect_button_click_signal()
 
                 self.widget_EasmentTools.show()
-                self.widget_EasmentTools.tabWidget.hide()
                 self.widget_EasmentTools.pbprint.setEnabled(False)
                 # Get the checkboxes and their associated texts and functions
                 self.checkboxes_info = EasementTools.get_checkbox_info(self.widget_EasmentTools)
@@ -83,6 +89,10 @@ class EasementTools(QObject):
                 buffer_dialer = self.widget_EasmentTools.dPuhvriSuurus
                 buffer_dialer.setValue(20)
                 buffer_dialer.setEnabled(False)
+                buffer_label = self.widget_EasmentTools.label
+                buffer_label.setText("Puhver: 2,0m")
+                buffer_label.setEnabled(False)
+                
                 
                 combobox = self.widget_EasmentTools.cmbScale
                 available_scale_factors = [(100, 0), (250, 1), (500, 2), (750, 3), (1000, 4), (5000, 5)]
@@ -195,10 +205,12 @@ class EasementTools(QObject):
         if self.widget_EasmentTools:
             # Connect the button click signal only if the widget exists
             select_button = self.widget_EasmentTools.pbValiKinnistu
+
             if not self.select_tool_connection:
                 self.select_tool_connection = select_button.clicked.connect(
                     lambda: WidgetTools.activate_layer_and_use_selectTool(self, self.widget_EasmentTools)
                 )
+
             
 
     @staticmethod
@@ -364,6 +376,7 @@ class WidgetTools:
     @staticmethod
     def loadselectedProperties(self, widget):
         table_view = widget.tvProperties
+        pbGen_easement = widget.pbKoostaServituut
 
         flag = Flags.active_properties_layer_flag
         flag = True
@@ -391,8 +404,11 @@ class WidgetTools:
 
             buffer_dialer = widget.dPuhvriSuurus
             buffer_dialer.setEnabled(True)
+            pbGen_easement.setEnabled(True)
             buffer_dialer.valueChanged.connect(
                     lambda: WidgetTools.activ_dialer(widget))
+            buffer_label = self.widget_EasmentTools.label
+            buffer_label.setEnabled(True)
                 
         pass
 

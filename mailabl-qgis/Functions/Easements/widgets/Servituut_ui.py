@@ -62,41 +62,51 @@ class Ui_servituutDialogBase(object):
 "\n"
 "\n"
 "/*esialgu jaotamata omadused*/\n"
-"QComboBox{\n"
-"\n"
-"    background-color:#40414f;\n"
-"    color:#ececf1;\n"
+"QComboBox {\n"
+"    background-color: #40414f; /* Set the background color */\n"
+"    color: #ececf1;\n"
 "    border: 1px solid #565869;\n"
 "    border-radius: 3px;\n"
-"    padding-left: 5px\n"
+"    padding-left: 5px;\n"
 "}\n"
 "\n"
-"/*Style the dropdown area*/\n"
-"QComboBox::drop-down{\n"
-"    background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));\n"
-"    border: 1px solid #565869;\n"
-"    border-radius: 8px;\n"
-"    height:16px;\n"
+"/* Style the dropdown area */\n"
+"QComboBox::drop-down {\n"
+"    background-color: #40414f;\n"
+"    border: 0px solid #40414f;\n"
+"    border-radius: 10px;\n"
 "    width: 16px;\n"
+"    height: 16px;\n"
 "    subcontrol-origin: padding;\n"
-"    subcontrol-position: left\n"
+"    subcontrol-position: left; /* Center the arrow icon */\n"
 "}\n"
 "\n"
-"QComboBox::on{\n"
+"/* Style the arrow inside the dropdown */\n"
+"QComboBox::down-arrow {\n"
 "\n"
-"      border: 0.5px solid #acacbe;\n"
+"    width: 0;\n"
+"    height: 0;\n"
+"    border-left: 6px solid #40414f;\n"
+"    border-right: 6px solid #40414f;\n"
+"    border-top: 8px solid #ececf1; /* Adjust the color to match your design */\n"
+"    margin: 8px auto; /* Center the arrow */\n"
 "}\n"
 "\n"
+"QComboBox::on {\n"
+"    border: 0.5px solid #acacbe;\n"
+"}\n"
 "\n"
 "QComboBox:disabled {\n"
-"    background-color: #303040; /* Adjusted disabled background color */\n"
-"    border: 1px solid #707070; /* Adjust border color for disabled state */\n"
+"   background-color: #3d3e47;\n"
+" /* Set the background color for the disabled state */\n"
+"    border: 1px solid #565869; /* Adjust border color for disabled state */\n"
 "    color: #8a95a5; /* Adjust text color for disabled state */\n"
 "}\n"
 "\n"
 "\n"
 "QCheckBox:disabled {\n"
 "    color: #8a95a5; /* Adjust text color for disabled state */\n"
+"    \n"
 "}\n"
 "\n"
 "\n"
@@ -361,19 +371,19 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_10.setSpacing(5)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
         self.lineEdit_3 = QtWidgets.QLineEdit(self.frame_12)
-        self.lineEdit_3.setMinimumSize(QtCore.QSize(30, 0))
+        self.lineEdit_3.setMinimumSize(QtCore.QSize(40, 0))
         self.lineEdit_3.setMaximumSize(QtCore.QSize(30, 16777215))
         self.lineEdit_3.setFrame(True)
         self.lineEdit_3.setReadOnly(True)
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.horizontalLayout_10.addWidget(self.lineEdit_3)
         self.lblDeK = QtWidgets.QLineEdit(self.frame_12)
-        self.lblDeK.setMinimumSize(QtCore.QSize(100, 0))
-        self.lblDeK.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.lblDeK.setMinimumSize(QtCore.QSize(60, 0))
+        self.lblDeK.setMaximumSize(QtCore.QSize(90, 16777215))
         self.lblDeK.setObjectName("lblDeK")
         self.horizontalLayout_10.addWidget(self.lblDeK)
         self.lineEdit_11 = QtWidgets.QLineEdit(self.frame_12)
-        self.lineEdit_11.setMinimumSize(QtCore.QSize(30, 0))
+        self.lineEdit_11.setMinimumSize(QtCore.QSize(40, 0))
         self.lineEdit_11.setMaximumSize(QtCore.QSize(30, 16777215))
         self.lineEdit_11.setFrame(True)
         self.lineEdit_11.setReadOnly(True)
@@ -389,19 +399,19 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_15.setSpacing(5)
         self.horizontalLayout_15.setObjectName("horizontalLayout_15")
         self.lineEdit_5 = QtWidgets.QLineEdit(self.frame_5)
-        self.lineEdit_5.setMinimumSize(QtCore.QSize(30, 0))
+        self.lineEdit_5.setMinimumSize(QtCore.QSize(40, 0))
         self.lineEdit_5.setMaximumSize(QtCore.QSize(30, 16777215))
         self.lineEdit_5.setFrame(True)
         self.lineEdit_5.setReadOnly(True)
         self.lineEdit_5.setObjectName("lineEdit_5")
         self.horizontalLayout_15.addWidget(self.lineEdit_5)
         self.lblHK = QtWidgets.QLineEdit(self.frame_5)
-        self.lblHK.setMinimumSize(QtCore.QSize(100, 0))
-        self.lblHK.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.lblHK.setMinimumSize(QtCore.QSize(90, 0))
+        self.lblHK.setMaximumSize(QtCore.QSize(90, 16777215))
         self.lblHK.setObjectName("lblHK")
         self.horizontalLayout_15.addWidget(self.lblHK)
         self.lineEdit_8 = QtWidgets.QLineEdit(self.frame_5)
-        self.lineEdit_8.setMinimumSize(QtCore.QSize(30, 0))
+        self.lineEdit_8.setMinimumSize(QtCore.QSize(40, 0))
         self.lineEdit_8.setMaximumSize(QtCore.QSize(30, 16777215))
         self.lineEdit_8.setFrame(True)
         self.lineEdit_8.setReadOnly(True)
@@ -424,23 +434,23 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_11.setSpacing(5)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
         self.lineEdit_2 = QtWidgets.QLineEdit(self.frame_7)
-        self.lineEdit_2.setMinimumSize(QtCore.QSize(30, 0))
+        self.lineEdit_2.setMinimumSize(QtCore.QSize(40, 0))
         self.lineEdit_2.setMaximumSize(QtCore.QSize(30, 16777215))
         self.lineEdit_2.setFrame(True)
         self.lineEdit_2.setReadOnly(True)
         self.lineEdit_2.setObjectName("lineEdit_2")
-        self.horizontalLayout_11.addWidget(self.lineEdit_2, 0, QtCore.Qt.AlignLeft)
+        self.horizontalLayout_11.addWidget(self.lineEdit_2)
         self.lblDeV = QtWidgets.QLineEdit(self.frame_7)
-        self.lblDeV.setMinimumSize(QtCore.QSize(100, 0))
-        self.lblDeV.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.lblDeV.setMinimumSize(QtCore.QSize(90, 0))
+        self.lblDeV.setMaximumSize(QtCore.QSize(90, 16777215))
         self.lblDeV.setObjectName("lblDeV")
         self.horizontalLayout_11.addWidget(self.lblDeV)
         self.lineEdit = QtWidgets.QLineEdit(self.frame_7)
-        self.lineEdit.setMinimumSize(QtCore.QSize(30, 0))
+        self.lineEdit.setMinimumSize(QtCore.QSize(40, 0))
         self.lineEdit.setMaximumSize(QtCore.QSize(30, 16777215))
         self.lineEdit.setReadOnly(True)
         self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout_11.addWidget(self.lineEdit, 0, QtCore.Qt.AlignRight)
+        self.horizontalLayout_11.addWidget(self.lineEdit)
         self.verticalLayout_7.addWidget(self.frame_7)
         self.frame_8 = QtWidgets.QFrame(self.groupBox_5)
         self.frame_8.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -451,19 +461,19 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_12.setSpacing(5)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
         self.lineEdit_7 = QtWidgets.QLineEdit(self.frame_8)
-        self.lineEdit_7.setMinimumSize(QtCore.QSize(30, 0))
+        self.lineEdit_7.setMinimumSize(QtCore.QSize(40, 0))
         self.lineEdit_7.setMaximumSize(QtCore.QSize(30, 16777215))
         self.lineEdit_7.setFrame(True)
         self.lineEdit_7.setReadOnly(True)
         self.lineEdit_7.setObjectName("lineEdit_7")
         self.horizontalLayout_12.addWidget(self.lineEdit_7)
         self.lblHV = QtWidgets.QLineEdit(self.frame_8)
-        self.lblHV.setMinimumSize(QtCore.QSize(100, 0))
-        self.lblHV.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.lblHV.setMinimumSize(QtCore.QSize(90, 0))
+        self.lblHV.setMaximumSize(QtCore.QSize(90, 16777215))
         self.lblHV.setObjectName("lblHV")
         self.horizontalLayout_12.addWidget(self.lblHV)
         self.lineEdit_10 = QtWidgets.QLineEdit(self.frame_8)
-        self.lineEdit_10.setMinimumSize(QtCore.QSize(30, 0))
+        self.lineEdit_10.setMinimumSize(QtCore.QSize(40, 0))
         self.lineEdit_10.setMaximumSize(QtCore.QSize(30, 16777215))
         self.lineEdit_10.setFrame(True)
         self.lineEdit_10.setReadOnly(True)
@@ -486,20 +496,20 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_13.setSpacing(5)
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")
         self.lineEdit_4 = QtWidgets.QLineEdit(self.frame_9)
-        self.lineEdit_4.setMinimumSize(QtCore.QSize(30, 0))
-        self.lineEdit_4.setMaximumSize(QtCore.QSize(30, 16777215))
+        self.lineEdit_4.setMinimumSize(QtCore.QSize(40, 0))
+        self.lineEdit_4.setMaximumSize(QtCore.QSize(40, 16777215))
         self.lineEdit_4.setFrame(True)
         self.lineEdit_4.setReadOnly(True)
         self.lineEdit_4.setObjectName("lineEdit_4")
         self.horizontalLayout_13.addWidget(self.lineEdit_4)
         self.lblDeSK = QtWidgets.QLineEdit(self.frame_9)
-        self.lblDeSK.setMinimumSize(QtCore.QSize(100, 0))
-        self.lblDeSK.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.lblDeSK.setMinimumSize(QtCore.QSize(90, 0))
+        self.lblDeSK.setMaximumSize(QtCore.QSize(90, 16777215))
         self.lblDeSK.setObjectName("lblDeSK")
         self.horizontalLayout_13.addWidget(self.lblDeSK)
         self.lineEdit_12 = QtWidgets.QLineEdit(self.frame_9)
-        self.lineEdit_12.setMinimumSize(QtCore.QSize(30, 0))
-        self.lineEdit_12.setMaximumSize(QtCore.QSize(30, 16777215))
+        self.lineEdit_12.setMinimumSize(QtCore.QSize(40, 0))
+        self.lineEdit_12.setMaximumSize(QtCore.QSize(40, 16777215))
         self.lineEdit_12.setFrame(True)
         self.lineEdit_12.setReadOnly(True)
         self.lineEdit_12.setObjectName("lineEdit_12")
@@ -514,20 +524,20 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_14.setSpacing(5)
         self.horizontalLayout_14.setObjectName("horizontalLayout_14")
         self.lineEdit_6 = QtWidgets.QLineEdit(self.frame_10)
-        self.lineEdit_6.setMinimumSize(QtCore.QSize(30, 0))
-        self.lineEdit_6.setMaximumSize(QtCore.QSize(30, 16777215))
+        self.lineEdit_6.setMinimumSize(QtCore.QSize(40, 0))
+        self.lineEdit_6.setMaximumSize(QtCore.QSize(40, 16777215))
         self.lineEdit_6.setFrame(True)
         self.lineEdit_6.setReadOnly(True)
         self.lineEdit_6.setObjectName("lineEdit_6")
         self.horizontalLayout_14.addWidget(self.lineEdit_6)
         self.lblHSK = QtWidgets.QLineEdit(self.frame_10)
-        self.lblHSK.setMinimumSize(QtCore.QSize(100, 0))
-        self.lblHSK.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.lblHSK.setMinimumSize(QtCore.QSize(90, 0))
+        self.lblHSK.setMaximumSize(QtCore.QSize(90, 16777215))
         self.lblHSK.setObjectName("lblHSK")
         self.horizontalLayout_14.addWidget(self.lblHSK)
         self.lineEdit_9 = QtWidgets.QLineEdit(self.frame_10)
-        self.lineEdit_9.setMinimumSize(QtCore.QSize(30, 0))
-        self.lineEdit_9.setMaximumSize(QtCore.QSize(30, 16777215))
+        self.lineEdit_9.setMinimumSize(QtCore.QSize(40, 0))
+        self.lineEdit_9.setMaximumSize(QtCore.QSize(40, 16777215))
         self.lineEdit_9.setFrame(True)
         self.lineEdit_9.setReadOnly(True)
         self.lineEdit_9.setObjectName("lineEdit_9")
@@ -619,7 +629,22 @@ class Ui_servituutDialogBase(object):
         self.verticalLayout_12.setObjectName("verticalLayout_12")
         spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_12.addItem(spacerItem4)
-        self.pbKoostaServituut = QtWidgets.QPushButton(self.frame_2)
+        self.verticalLayout_9.addWidget(self.frame_2, 0, QtCore.Qt.AlignRight)
+        self.frame_13 = QtWidgets.QFrame(self.fMainTools)
+        self.frame_13.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_13.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_13.setObjectName("frame_13")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.frame_13)
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4.setSpacing(5)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.pbAddRoad = QtWidgets.QPushButton(self.frame_13)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pbAddRoad.setFont(font)
+        self.pbAddRoad.setObjectName("pbAddRoad")
+        self.horizontalLayout_4.addWidget(self.pbAddRoad)
+        self.pbKoostaServituut = QtWidgets.QPushButton(self.frame_13)
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -632,8 +657,8 @@ class Ui_servituutDialogBase(object):
         self.pbKoostaServituut.setIcon(icon2)
         self.pbKoostaServituut.setIconSize(QtCore.QSize(25, 25))
         self.pbKoostaServituut.setObjectName("pbKoostaServituut")
-        self.verticalLayout_12.addWidget(self.pbKoostaServituut)
-        self.verticalLayout_9.addWidget(self.frame_2, 0, QtCore.Qt.AlignRight)
+        self.horizontalLayout_4.addWidget(self.pbKoostaServituut, 0, QtCore.Qt.AlignRight)
+        self.verticalLayout_9.addWidget(self.frame_13)
         self.groupBox_7 = QtWidgets.QGroupBox(self.fMainTools)
         self.groupBox_7.setObjectName("groupBox_7")
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.groupBox_7)
@@ -687,8 +712,7 @@ class Ui_servituutDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pbprint.setFont(font)
-        self.pbprint.setStyleSheet("\n"
-"")
+        self.pbprint.setStyleSheet("")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\Functions\\Easements\\widgets\\../../../icons/Icons_hele/printer.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pbprint.setIcon(icon3)
@@ -711,117 +735,8 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_8.setSpacing(10)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.verticalLayout_9.addWidget(self.ActionTools)
-        self.tabWidget = QtWidgets.QTabWidget(self.fMainTools)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
-        self.tabWidget.setSizePolicy(sizePolicy)
-        self.tabWidget.setMinimumSize(QtCore.QSize(0, 200))
-        self.tabWidget.setObjectName("tabWidget")
-        self.taKinnistuLabel = QtWidgets.QWidget()
-        self.taKinnistuLabel.setObjectName("taKinnistuLabel")
-        self.gridLayout_9 = QtWidgets.QGridLayout(self.taKinnistuLabel)
-        self.gridLayout_9.setObjectName("gridLayout_9")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.lnameKataster = QtWidgets.QLabel(self.taKinnistuLabel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lnameKataster.sizePolicy().hasHeightForWidth())
-        self.lnameKataster.setSizePolicy(sizePolicy)
-        self.lnameKataster.setObjectName("lnameKataster")
-        self.horizontalLayout_4.addWidget(self.lnameKataster)
-        self.laKataster = QtWidgets.QLabel(self.taKinnistuLabel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.laKataster.sizePolicy().hasHeightForWidth())
-        self.laKataster.setSizePolicy(sizePolicy)
-        self.laKataster.setMinimumSize(QtCore.QSize(0, 15))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.laKataster.setFont(font)
-        self.laKataster.setObjectName("laKataster")
-        self.horizontalLayout_4.addWidget(self.laKataster)
-        self.verticalLayout_3.addLayout(self.horizontalLayout_4)
-        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.label_2 = QtWidgets.QLabel(self.taKinnistuLabel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
-        self.label_2.setObjectName("label_2")
-        self.horizontalLayout_6.addWidget(self.label_2)
-        self.laAadress = QtWidgets.QLabel(self.taKinnistuLabel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.laAadress.sizePolicy().hasHeightForWidth())
-        self.laAadress.setSizePolicy(sizePolicy)
-        self.laAadress.setMinimumSize(QtCore.QSize(0, 15))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.laAadress.setFont(font)
-        self.laAadress.setObjectName("laAadress")
-        self.horizontalLayout_6.addWidget(self.laAadress)
-        self.verticalLayout_3.addLayout(self.horizontalLayout_6)
         spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem6)
-        self.gridLayout_9.addLayout(self.verticalLayout_3, 0, 0, 1, 1)
-        self.tabWidget.addTab(self.taKinnistuLabel, "")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
-        self.gridLayout_10 = QtWidgets.QGridLayout(self.tab)
-        self.gridLayout_10.setObjectName("gridLayout_10")
-        self.pbTesting = QtWidgets.QPushButton(self.tab)
-        self.pbTesting.setObjectName("pbTesting")
-        self.gridLayout_10.addWidget(self.pbTesting, 5, 1, 1, 1)
-        self.tbServituut = QtWidgets.QTableWidget(self.tab)
-        self.tbServituut.setAlternatingRowColors(True)
-        self.tbServituut.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
-        self.tbServituut.setObjectName("tbServituut")
-        self.tbServituut.setColumnCount(0)
-        self.tbServituut.setRowCount(0)
-        self.gridLayout_10.addWidget(self.tbServituut, 2, 0, 5, 1)
-        self.pbCountSelectedRows = QtWidgets.QPushButton(self.tab)
-        self.pbCountSelectedRows.setObjectName("pbCountSelectedRows")
-        self.gridLayout_10.addWidget(self.pbCountSelectedRows, 6, 1, 1, 1)
-        self.pbMailabl = QtWidgets.QPushButton(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pbMailabl.sizePolicy().hasHeightForWidth())
-        self.pbMailabl.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.pbMailabl.setFont(font)
-        self.pbMailabl.setObjectName("pbMailabl")
-        self.gridLayout_10.addWidget(self.pbMailabl, 2, 1, 1, 1)
-        self.pbAddServituutType = QtWidgets.QPushButton(self.tab)
-        self.pbAddServituutType.setObjectName("pbAddServituutType")
-        self.gridLayout_10.addWidget(self.pbAddServituutType, 4, 1, 1, 1)
-        self.cmbValik = QtWidgets.QComboBox(self.tab)
-        self.cmbValik.setObjectName("cmbValik")
-        self.gridLayout_10.addWidget(self.cmbValik, 3, 1, 1, 1)
-        self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.graphicsView = QtWidgets.QGraphicsView(self.tab_2)
-        self.graphicsView.setGeometry(QtCore.QRect(240, 10, 256, 151))
-        self.graphicsView.setObjectName("graphicsView")
-        self.tabWidget.addTab(self.tab_2, "")
-        self.verticalLayout_9.addWidget(self.tabWidget)
-        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_9.addItem(spacerItem7)
+        self.verticalLayout_9.addItem(spacerItem6)
         self.fButtons = QtWidgets.QFrame(self.fMainTools)
         self.fButtons.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.fButtons.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -830,8 +745,8 @@ class Ui_servituutDialogBase(object):
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_7.setSpacing(10)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        spacerItem8 = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem8)
+        spacerItem7 = QtWidgets.QSpacerItem(411, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem7)
         self.pbCancel = QtWidgets.QPushButton(self.fButtons)
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\Functions\\Easements\\widgets\\../../icons/Icons_hele/x-circle.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -882,7 +797,6 @@ class Ui_servituutDialogBase(object):
         self.verticalLayout_6.addWidget(self.fMain)
 
         self.retranslateUi(servituutDialogBase)
-        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(servituutDialogBase)
 
     def retranslateUi(self, servituutDialogBase):
@@ -912,7 +826,7 @@ class Ui_servituutDialogBase(object):
         self.groupBox_6.setTitle(_translate("servituutDialogBase", "SK (muuda diameeter/sügavus)"))
         self.lineEdit_4.setText(_translate("servituutDialogBase", "Di"))
         self.lblDeSK.setText(_translate("servituutDialogBase", "250"))
-        self.lineEdit_12.setText(_translate("servituutDialogBase", "m"))
+        self.lineEdit_12.setText(_translate("servituutDialogBase", "mm"))
         self.lineEdit_6.setText(_translate("servituutDialogBase", "H"))
         self.lblHSK.setText(_translate("servituutDialogBase", "1,9"))
         self.lineEdit_9.setText(_translate("servituutDialogBase", "m"))
@@ -929,6 +843,7 @@ class Ui_servituutDialogBase(object):
         self.cbSK.setText(_translate("servituutDialogBase", "Torud"))
         self.cbD.setText(_translate("servituutDialogBase", "Drenaaž"))
         self.cbRainPump.setText(_translate("servituutDialogBase", "Pumpla"))
+        self.pbAddRoad.setText(_translate("servituutDialogBase", "Koosta tee ala servituut"))
         self.pbKoostaServituut.setText(_translate("servituutDialogBase", "Koosta skeem"))
         self.groupBox_7.setTitle(_translate("servituutDialogBase", "Trükkimis lehe seadistused"))
         self.groupBox_8.setTitle(_translate("servituutDialogBase", "Trüki lehe nimetus"))
@@ -937,22 +852,10 @@ class Ui_servituutDialogBase(object):
         self.lblMapObject.setText(_translate("servituutDialogBase", "Map 1"))
         self.groupBox_10.setTitle(_translate("servituutDialogBase", "Mõõtkava"))
         self.pbprint.setText(_translate("servituutDialogBase", "Eelvaade*"))
-        self.lnameKataster.setText(_translate("servituutDialogBase", "Kataster:"))
-        self.laKataster.setText(_translate("servituutDialogBase", "TextLabel"))
-        self.label_2.setText(_translate("servituutDialogBase", "Aadress:"))
-        self.laAadress.setText(_translate("servituutDialogBase", "TextLabel"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.taKinnistuLabel), _translate("servituutDialogBase", "Kinnistu Label"))
-        self.pbTesting.setText(_translate("servituutDialogBase", "?"))
-        self.pbCountSelectedRows.setText(_translate("servituutDialogBase", "Valitud ridu"))
-        self.pbMailabl.setText(_translate("servituutDialogBase", "Mailabl"))
-        self.pbAddServituutType.setText(_translate("servituutDialogBase", "Sisesta valik"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("servituutDialogBase", "Servituut"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("servituutDialogBase", "Page"))
         self.pbCancel.setText(_translate("servituutDialogBase", "Tühista"))
         self.pbSave.setText(_translate("servituutDialogBase", "Salvesta"))
         self.label_4.setText(_translate("servituutDialogBase", "Kuidas tööriista\n"
-"kasutada?\n"
-"(juhend koostamisel)"))
+"kasutada?"))
         self.textEdit.setHtml(_translate("servituutDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

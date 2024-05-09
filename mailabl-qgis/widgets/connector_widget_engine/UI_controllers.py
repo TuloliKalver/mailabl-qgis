@@ -142,7 +142,7 @@ class PropertiesConnector(QObject):
         button_functions = {
             button_save: lambda: PropertiesConnector.on_save_button_clicked(self, widget, module, element_id, element_name),
             button_cancel: lambda: PropertiesConnector.on_cancel_button_clicked(self, widget),
-            button_clear_model_data: lambda: PropertiesConnector.clear_table(widget)
+            button_clear_model_data: lambda: PropertiesConnector.clear_table_and_map(widget)
         }
         
        # Connect buttons to functions
@@ -150,10 +150,14 @@ class PropertiesConnector(QObject):
             PropertiesConnector.connect_button(button, function)
         
     @staticmethod
-    def clear_table(widget):
+    def clear_table_and_map(widget):
         model = widget.tvProperties.model()
         if model is not None:
             model.clear()
+        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+        if active_layer:
+            active_layer.removeSelection()
             
     @staticmethod
     def connect_button(button, function):

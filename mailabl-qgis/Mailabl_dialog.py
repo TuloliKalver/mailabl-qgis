@@ -349,7 +349,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         selection_model = table.selectionModel()
         if selection_model.hasSelection():
             self.showMinimized()
-            self.easement_tools.widgetClosed.connect(self.on_easement_widget_closed(button))
+            self.easement_tools.widgetClosed.connect(lambda: self.on_easement_widget_closed(button))
             # Call the load_widget method of the EasementTools instance
             self.easement_tools.load_widget()
         else:

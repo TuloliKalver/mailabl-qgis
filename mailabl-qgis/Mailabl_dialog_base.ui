@@ -197,12 +197,13 @@ QComboBox::drop-down {
 
 /* Style the arrow inside the dropdown */
 QComboBox::down-arrow {
+
     width: 0;
     height: 0;
-    border-left: 8px solid;
-    border-right: 8px solid;
-    border-top: 12px solid #ececf1; /* Adjust the color to match your design */
-    margin: 10px auto; /* Center the arrow */
+    border-left: 6px solid #40414f;
+    border-right: 6px solid #40414f;
+    border-top: 8px solid #ececf1; /* Adjust the color to match your design */
+    margin: 8px auto; /* Center the arrow */
 }
 
 QComboBox::on {
