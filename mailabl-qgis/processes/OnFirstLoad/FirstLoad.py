@@ -1,6 +1,10 @@
 from .CloseUnload import Unload
 from .AddSetupLayers import SetupLayers
 from ...config.settings import Devuser
+from PyQt5.QtWidgets import QMessageBox
+from ...config.settings import SettingsDataSaveAndLoad
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTextsAuto, HoiatusTexts
+
 
 setup_layers = SetupLayers()
 unload_events = Unload ()
@@ -26,4 +30,5 @@ class Startup:
             self.lePassword.setText('')
 
     def closePluginWindow():
+        QMessageBox.information(None, Headings().tubli, HoiatusTexts().korrigeeri_sümbolit)        
         unload_events.closeEvent()

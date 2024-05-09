@@ -321,4 +321,6 @@ class Ui_Dialog(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Juhend koostamisel</p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Oled aktiveerinud kinnistu kihi ning võid alustada kinnistute valimisega. <br />Valikuid saad teha:<br />1. valides ühe kinnistu - iga clik mille ekraanil teed valib uue kinnistu. </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2. hoides all ctrl ja vajutades kinnistutel jääb eelnev vaik alles. </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">3. hoides all vasakut hiire nuppu saad kasutada ruut valikut. Kõik kinnistud mis jäevad ruudu sisse kaasatakse valikusse. <br /><br />Sul on võimalik kasutada ka muid QGIS valiku meetodeid. Kuniks see tööriist on avatud ja valikuid teostatakse kinnistute kihil kaasatakse kinnistud lisatavate kinnistute hulka. </p></body></html>"))
