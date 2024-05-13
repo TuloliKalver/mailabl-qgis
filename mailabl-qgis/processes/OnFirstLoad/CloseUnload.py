@@ -1,4 +1,6 @@
 from ...queries.python.access_credentials import clear_UC_data
+from ...queries.python.DataLoading_classes import GraphQLQueryLoader
+from ...queries.python.query_tools import requestBuilder
 
 
 
@@ -18,3 +20,22 @@ class Unload:
         # Perform cleanup and reset operations here before closing the dialog
         self.handle_dialog_closed()
         event.accept()  # Accept the close event
+
+    def log_out(self):
+
+        #query_loader = GraphQLQueryLoader()
+        #query = query_loader.load_query(query_loader.Projects_statuses)
+        #print(f"query: {query}")
+        # Construct the request payload
+        query =  {"mutation"
+                        :{
+             "logout" :{
+                "status",
+        		"message"
+                      }
+                    }
+                    }
+        variables = {}
+        response = requestBuilder.construct_and_send_request(self, query, variables)
+        print(response)
+        #clear_UC_data()

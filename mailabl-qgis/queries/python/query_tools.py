@@ -53,8 +53,8 @@ class requestBuilder:
 
         # Parse the JSON response
         data = response.json()
-        print("data:")
-        print(data)
+        #print("data:")
+        #print(data)
         # Check if the response is empty
         if not data:
             print(f"Data returned empty - maybe need to check query: {query}")

@@ -6,13 +6,14 @@ from PyQt5.QtCore import QObject, pyqtSignal
 import processing
 
 from qgis.utils import iface
-from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinition
-
+from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinition, QgsMapLayerType
+#from qgis.gui import QgsMapToolLineString
 from qgis.gui import QgsMapToolPan
+
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
+from PyQt5.QtCore import Qt
 from PyQt5 import QtCore
-
 from ...utils.printers import PrintEasement
 from .EasementsItems import queryHandling
 from .resticon import WaterWorks, GetRuledRestriction
@@ -110,6 +111,8 @@ class EasementTools(QObject):
                 pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement(self.widget_EasmentTools))            
                 
                 clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))
+                #self.widget_EasmentTools.pbAddRoad.clicked.connect(lambda: BufferByLine.create_road_easement(self.widget_EasmentTools))
+
                 #style_name = FilesByNames().Easement_style         
                 #buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name))
                 save_button.clicked.connect(lambda: self.on_save_button_clicked(self.checkboxes_info))
@@ -331,8 +334,8 @@ class EasementTools(QObject):
 
     def Buffer_cleanup(self):
         layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)        
-        all_fuffers = TempBufferLayerNames.buffer_layers
-        for temp_layer_name in all_fuffers:
+        all_buffers = TempBufferLayerNames.buffer_layers
+        for temp_layer_name in all_buffers:
             MapCleaners.clear_selection_and_delete_temp_layer(layer_name,temp_layer_name)
         
         layer_name = Union().UnionLayer
@@ -536,13 +539,16 @@ class WidgetTools:
             help.generate_table_from_selected_map_items(table_view, active_layer_name)
             table_view.update()
 
+
+
 class TempBufferLayerNames:
     water_temp_name = 'Ajutine_V'
     sewer_temp_name = 'Ajutine_K'
     prSewer_temp_name = 'Ajutine_KS'
     drainage_temp_name = 'Ajudine_D'
     buffer_layer_name = 'puhver_kinnistu'
-    buffer_layers = [water_temp_name, sewer_temp_name,prSewer_temp_name, drainage_temp_name, buffer_layer_name]
+    spline_layer_name = 'vabajoonis'
+    buffer_layers = [water_temp_name, sewer_temp_name,prSewer_temp_name, drainage_temp_name, buffer_layer_name, spline_layer_name]
     
 class WorkingLayers:
     water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
@@ -897,3 +903,33 @@ class ComboBoxInputs:
             if comboBox.itemData(index) == standard_id:
                 comboBox.setCurrentIndex(index)
                 break
+
+class BufferByLine:
+    def create_road_easement(widget):
+
+        temp_spline_layer = TempBufferLayerNames.spline_layer_name
+
+        group_layer_name = SetupLayers().tools_layer_name
+
+        # Get the group layer or create it if it doesn't exist
+        root = QgsProject.instance().layerTreeRoot()
+        group = root.findGroup(group_layer_name)
+        if group is None:
+            group = root.addGroup(group_layer_name)
+
+
+        layer = QgsProject.instance().mapLayersByName(temp_spline_layer)
+        if layer:
+            layer = layer[0].id()  # Get the first layer if found
+            QgsProject.instance().removeMapLayer(layer)
+        else:
+            layer = QgsProject.instance().addMapLayer()
+            layer.setName(temp_spline_layer)
+            group.addLayer(layer)
+
+        # Get the current map canvas
+        canvas = iface.mapCanvas()
+
+        # Activate the line drawing tool
+        line_tool = QgsMapToolLineString(canvas)
+        canvas.setMapTool(line_tool)

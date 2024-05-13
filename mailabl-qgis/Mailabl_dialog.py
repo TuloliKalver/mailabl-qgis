@@ -19,7 +19,6 @@
 import os
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
-from qgis.utils import iface
 from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
@@ -55,7 +54,7 @@ from .Functions.Easements.EasementsItems import EasementssMain
 from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
-
+from .processes.OnFirstLoad.CloseUnload import Unload
 
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -201,6 +200,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #    pass
         
         self.pbUC_Cancel.clicked.connect(self.remove_UC_data)
+        self.pbLogOut.clicked.connect(self.log_out)
         #self.pbConnectNew.clicked.connect(self.token)
 
 # Opens and handles the sub menu
@@ -339,6 +339,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         pbEasementTools = self.pbEasementsTools
         pbEasementTools.clicked.connect(lambda: self.load_easement_widget(pbEasementTools))
 
+
+    def log_out(self):
+        Unload.log_out(self)
 
     def load_easement_widget(self, button):
         button.setEnabled(False)
