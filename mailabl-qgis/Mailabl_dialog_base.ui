@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1062</width>
+    <width>1125</width>
     <height>1196</height>
    </rect>
   </property>
@@ -9269,7 +9269,7 @@ QPushButton::menu-indicator {
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>5</number>
+               <number>3</number>
               </property>
               <widget class="QWidget" name="w_HM_Avaleht">
                <layout class="QVBoxLayout" name="verticalLayout_6">
