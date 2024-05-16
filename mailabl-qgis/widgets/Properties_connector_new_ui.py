@@ -314,9 +314,7 @@ class Ui_Dialog(object):
         self.pbClear_list.setText(_translate("Dialog", "Alusta valimist uuesti"))
         self.pbCancel.setText(_translate("Dialog", "Tühista"))
         self.pbSave.setText(_translate("Dialog", "Salvesta"))
-        self.label_4.setText(_translate("Dialog", "Kuidas tööriista\n"
-"kasutada?\n"
-"(juhend koostamisel)"))
+        self.label_4.setText(_translate("Dialog", "Kuidas tööriista kasutada?"))
         self.textEdit.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

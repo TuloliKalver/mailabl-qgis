@@ -4676,7 +4676,7 @@ class Ui_MailablDialogBase(object):
 
         self.retranslateUi(MailablDialogBase)
         self.swWorkSpace.setCurrentIndex(1)
-        self.swCadastral_sub_processes.setCurrentIndex(1)
+        self.swCadastral_sub_processes.setCurrentIndex(2)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(3)
