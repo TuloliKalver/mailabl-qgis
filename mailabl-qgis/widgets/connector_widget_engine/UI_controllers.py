@@ -62,7 +62,8 @@ class PropertiesConnector(QObject):
             else: 
                 selection_monitor = lambda: WidgetTools.on_selection_changed(widget)
                 active_layer.selectionChanged.connect(selection_monitor)
-                widget.showMinimized()  
+                widget.showNormal()
+                #widget.showMinimized()  
 
 
         input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module_text)    
