@@ -383,11 +383,6 @@ class ColorHandler:
                     pbExpand.setEnabled(True)
                     pbRefresh.setEnabled(True)
                     pbSyncMailabl.setEnabled(True)
-                    #pbRefresh.blockSignals(False)
-                    #pbSyncMailabl.blockSignals(False)
-                    #pbExpand.setStyleSheet(background_standard_button)
-                    #pbRefresh.setStyleSheet(background_standard_button)
-                    #pbSyncMailabl.setStyleSheet(background_standard_button)                    
                     
                 else:
                     #SHP_layer_not_does have data on_layer.
@@ -399,13 +394,6 @@ class ColorHandler:
                     pbExpand.setEnabled(False)
                     pbRefresh.setEnabled(False)
                     pbSyncMailabl.setEnabled(False)
-                    
-                    #pbExpand.blockSignals(True)
-                    #pbRefresh.blockSignals(True)
-                    #pbSyncMailabl.blockSignals(True)
-                    #pbExpand.setStyleSheet(background_for_not_available)
-                    #pbRefresh.setStyleSheet(background_for_not_available)
-                    #pbSyncMailabl.setStyleSheet(background_for_not_available)
 
                     
             else:
@@ -417,12 +405,6 @@ class ColorHandler:
                 pbExpand.setEnabled(False)
                 pbRefresh.setEnabled(False)
                 pbSyncMailabl.setEnabled(False)
-                #pbExpand.blockSignals(True)
-                #pbRefresh.blockSignals(True)
-                #pbSyncMailabl.blockSignals(True)
-                #pbExpand.setStyleSheet(background_for_not_available)
-                #pbRefresh.setStyleSheet(background_for_not_available)
-                #pbSyncMailabl.setStyleSheet(background_for_not_available)
 
         else:
             Start_update.setStyleSheet(background_red)
@@ -433,12 +415,6 @@ class ColorHandler:
             pbExpand.setEnabled(False)
             pbRefresh.setEnabled(False)
             pbSyncMailabl.setEnabled(False)
-            #pbExpand.blockSignals(True)
-            #pbRefresh.blockSignals(True)
-            #pbSyncMailabl.blockSignals(True)
-            #pbExpand.setStyleSheet(background_for_not_available)
-            #pbRefresh.setStyleSheet(background_for_not_available)
-            #pbSyncMailabl.setStyleSheet(background_for_not_available)
 
 
 class stackedWidgetsSpaces:
