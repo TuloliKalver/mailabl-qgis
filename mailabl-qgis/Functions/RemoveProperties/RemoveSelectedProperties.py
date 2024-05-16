@@ -16,7 +16,7 @@ class DeleteActions:
     
     def delete_selected_items_from_mylabl(self):
         active_cadastral_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        print(active_cadastral_layer_name)
+        #print(active_cadastral_layer_name)
         active_layer = QgsProject.instance().mapLayersByName(active_cadastral_layer_name)[0]
         
         button = self.pbDel_PreConfirm
@@ -42,28 +42,28 @@ class DeleteActions:
             model_streets = table_streets.model()
 
             header_names = ModelHeadersGenerator.generateHeadersFromExistingModel(model_properties)
-            print(f"headers created: {header_names}")
+            #print(f"headers created: {header_names}")
             # Get column names from the model
 
             model = QStandardItemModel()
             model.setHorizontalHeaderLabels(header_names)
             
             TabHandler.tabViewByState(tab_widget, state=False)        
-            print("tabView state")
+            #print("tabView state")
             # Now that the new model is populated, you can set it to your table view
             table_target.setModel(model)
             TableViewadjuster.QTableView_look(table_target)
             # Insert data into the new model
             CombineModels.TableModelCombiner(model_properties,model_streets,model,header_names)
-            print("tables combined")
+            #print("tables combined")
             model_properties.clear()
             model_streets.clear()
-            print("models cleared!")
+            #print("models cleared!")
             properties = DataExtractors.ExtractCadastralNrDataFromModel(model,header_names)
-            print(f"Returned properties {properties}")
+            #print(f"Returned properties {properties}")
             ToBe_deleted_properties, cadasters = PropertiesGeneralQueries.get_properties_MyLabl_idsAndCadastrals(self, properties)
-            print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
-            print(f"To be deleted properties: {len(cadasters)}")
+            #print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
+            #print(f"To be deleted properties: {len(cadasters)}")
             
 
         if len(cadasters) == 0:
