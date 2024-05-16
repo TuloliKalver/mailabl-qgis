@@ -524,9 +524,7 @@ QLineEdit:disabled {
             </font>
            </property>
            <property name="text">
-            <string>Kuidas tööriista
-kasutada?
-(juhend koostamisel)</string>
+            <string>Kuidas tööriista kasutada?</string>
            </property>
            <property name="textFormat">
             <enum>Qt::AutoText</enum>

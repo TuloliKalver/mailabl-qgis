@@ -227,7 +227,7 @@ class WorkSpaceHandler:
     @staticmethod
     def Open_generate_mapLayer_synced_with_Mailabl_first_page(self):
         label = self.CadastralMovesMainLabel
-        heading = "Sünkroniseeri QGIS Mailabli kinnistutega"
+        heading = "Sünkroniseerimine"
         label.setText(heading)
         lblFor_Sync_GreatLayerName = self.leText_For_Sync_GreateLayerName
         background_gray = "background-color: rgb(52, 59, 71)"
