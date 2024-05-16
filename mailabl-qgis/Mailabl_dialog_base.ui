@@ -1096,7 +1096,7 @@ QComboBox:disabled {
                            </size>
                           </property>
                           <property name="text">
-                           <string>Andmete värskendamine</string>
+                           <string>Andmete värskendamine*</string>
                           </property>
                           <property name="icon">
                            <iconset>
@@ -1225,7 +1225,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -9284,7 +9284,7 @@ QPushButton::menu-indicator {
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>1</number>
+               <number>3</number>
               </property>
               <widget class="QWidget" name="w_HM_Avaleht">
                <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -9695,7 +9695,7 @@ p, li { white-space: pre-wrap; }
                          <string notr="true"/>
                         </property>
                         <property name="currentIndex">
-                         <number>2</number>
+                         <number>0</number>
                         </property>
                         <widget class="QWidget" name="w_HM_Toimingud_kinnistutega_Laiendamine">
                          <property name="styleSheet">
@@ -9800,7 +9800,7 @@ font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
                                 <string notr="true"/>
                                </property>
                                <property name="currentIndex">
-                                <number>1</number>
+                                <number>2</number>
                                </property>
                                <widget class="QWidget" name="w_HM_Toimingud_kinnistutega_Laiendamine_Yldine">
                                 <property name="styleSheet">
