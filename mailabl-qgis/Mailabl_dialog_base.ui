@@ -589,7 +589,7 @@ QComboBox:disabled {
             <item>
              <widget class="QPushButton" name="pbMapThemes">
               <property name="text">
-               <string>Teemakaardid</string>
+               <string>Teemakaardid*</string>
               </property>
               <property name="icon">
                <iconset>
@@ -606,7 +606,7 @@ QComboBox:disabled {
             <item>
              <widget class="QPushButton" name="pbAddDrawings">
               <property name="text">
-               <string>Teostusjoonised</string>
+               <string>Teostusjoonised*</string>
               </property>
               <property name="icon">
                <iconset>
