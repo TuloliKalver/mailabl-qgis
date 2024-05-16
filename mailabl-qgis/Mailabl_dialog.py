@@ -217,8 +217,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
+        self.pbMapThemes.setEnabled(False)
         self.pbAddDrawings.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self))
-        
+        self.pbAddDrawings.setEnabled(False)
     
         self.pbSyncMailabl.clicked.connect(lambda: WorkSpaceHandler.Open_generate_mapLayer_synced_with_Mailabl_first_page(self))
     
@@ -374,6 +375,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button_contracts = self.pbContracts_Connect_properties
         button_projects = self.pbProjects_Connect_properties
         button_easements = self.pbEasementsConnectProperties
+        button_easements.setEnabled(False)
         buttons = [button_contracts, button_easements, button_projects]
         for single_button in buttons:
             single_button.setEnabled(False)

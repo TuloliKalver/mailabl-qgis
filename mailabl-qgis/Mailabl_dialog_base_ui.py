@@ -766,7 +766,7 @@ class Ui_MailablDialogBase(object):
         spacerItem2 = QtWidgets.QSpacerItem(625, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_14.addItem(spacerItem2)
         self.pbEasementsTools = QtWidgets.QPushButton(self.fActionButtons)
-        self.pbEasementsTools.setStyleSheet("background-color: rgb(131, 142, 162);")
+        self.pbEasementsTools.setStyleSheet("")
         icon20 = QtGui.QIcon()
         icon20.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/design.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pbEasementsTools.setIcon(icon20)
@@ -4675,11 +4675,11 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(1)
+        self.swWorkSpace.setCurrentIndex(0)
         self.swCadastral_sub_processes.setCurrentIndex(2)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
-        self.sw_HM.setCurrentIndex(3)
+        self.sw_HM.setCurrentIndex(5)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(1)
         self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(3)
@@ -4695,8 +4695,8 @@ class Ui_MailablDialogBase(object):
         self.pbPreContacts.setText(_translate("MailablDialogBase", "Liitumislepingud"))
         self.pbMainContract.setText(_translate("MailablDialogBase", "Teenuslepingud"))
         self.pbeasements.setText(_translate("MailablDialogBase", "Servituudid"))
-        self.pbMapThemes.setText(_translate("MailablDialogBase", "Teemakaardid"))
-        self.pbAddDrawings.setText(_translate("MailablDialogBase", "Teostusjoonised"))
+        self.pbMapThemes.setText(_translate("MailablDialogBase", "Teemakaardid*"))
+        self.pbAddDrawings.setText(_translate("MailablDialogBase", "Teostusjoonised*"))
         self.pbSettings.setToolTip(_translate("MailablDialogBase", "Seaded"))
         self.pbSettings.setText(_translate("MailablDialogBase", "Seaded"))
         self.pbUpdateData.setText(_translate("MailablDialogBase", "Andmete laadimine"))
@@ -4707,12 +4707,12 @@ class Ui_MailablDialogBase(object):
         self.pbRefresh.setText(_translate("MailablDialogBase", "Andmete värskendamine"))
         self.pbRemove.setText(_translate("MailablDialogBase", "Kinnistute eemaldamine"))
         self.pbExpand.setText(_translate("MailablDialogBase", "Kinnistute lisamine"))
-        self.lbleasementPageName.setText(_translate("MailablDialogBase", "Servituudid - ARENDUSES - * märgitud elemendid ei ole kasutatavad"))
+        self.lbleasementPageName.setText(_translate("MailablDialogBase", "Servituudid"))
         self.pbEasementsConnectProperties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine*"))
-        self.leSearcheasements.setText(_translate("MailablDialogBase", "Servituudi numbri järgi otsing"))
+        self.leSearcheasements.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
         self.leSearcheasements.setPlaceholderText(_translate("MailablDialogBase", "Sisesta servituudi number"))
         self.pbSearcheasements.setText(_translate("MailablDialogBase", "Otsi"))
-        self.pbEasementsTools.setText(_translate("MailablDialogBase", "Koosta joonis*"))
+        self.pbEasementsTools.setText(_translate("MailablDialogBase", "Koosta skeem"))
         self.CadastralMovesMainLabel.setText(_translate("MailablDialogBase", "Andmete laadimine"))
         self.label_29.setText(_translate("MailablDialogBase", "Lisamiseks on valmis"))
         self.label_11.setText(_translate("MailablDialogBase", "kinnistut."))
@@ -4802,7 +4802,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Olemasolevate kinnistute uuendamine</span></p></body></html>"))
         self.label_18.setText(_translate("MailablDialogBase", "Lepingud"))
         self.pbContracts_Connect_properties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
-        self.le_searchContracts.setText(_translate("MailablDialogBase", "Lepingu numbri järgi otsing"))
+        self.le_searchContracts.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
         self.le_searchContracts.setPlaceholderText(_translate("MailablDialogBase", " Otsing - lepingu numbri järgi"))
         self.pbSearchContracts.setText(_translate("MailablDialogBase", "Otsi"))
         self.label_20.setText(_translate("MailablDialogBase", "Help"))
@@ -4897,7 +4897,7 @@ class Ui_MailablDialogBase(object):
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p></body></html>"))
         self.lbl_heading_Projects.setText(_translate("MailablDialogBase", "Projektid"))
         self.pbProjects_Connect_properties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
-        self.le_searchProjects.setText(_translate("MailablDialogBase", "Projekti numbri järgi otsing"))
+        self.le_searchProjects.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
         self.le_searchProjects.setPlaceholderText(_translate("MailablDialogBase", " Sisesta projekti number"))
         self.pbSearchProjects.setText(_translate("MailablDialogBase", "Otsi"))
         self.pushButton.setText(_translate("MailablDialogBase", "Zoomitud ala projektid"))
@@ -5107,20 +5107,18 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale muudatuste salvestamist taaskäivita plugin!</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.lb_HM_Servituudid_Pealkiri.setText(_translate("MailablDialogBase", "Servituudid*"))
+        self.lb_HM_Servituudid_Pealkiri.setText(_translate("MailablDialogBase", "Servituudid"))
         self.te_HM_Lepingud_Sisu_2.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Nimekirjas on esmase valikuna </span><span style=\" font-size:9pt; font-weight:600;\">servituudid</span><span style=\" font-size:9pt;\">. </span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituutidel on Mailablis </span><span style=\" font-size:9pt; font-weight:600;\">määratud parameetrid</span><span style=\" font-size:9pt;\"> (staatused, liigid jne).  </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituudid saad vastavalt liikidele ja staatusele </span><span style=\" font-size:9pt; font-weight:600;\">filtreerida ja määrata eelistatav staatus </span><span style=\" font-size:9pt;\">(soovituslikult aktiivne staatus, nt &quot;Sõlmitud&quot; või &quot;Allkirjastamisel&quot;). </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale filtri valikut vajuta värskendamise nuppu!</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Tulpadel on </span><span style=\" font-size:9pt; font-weight:600;\">sortimise võimalus</span><span style=\" font-size:9pt;\">.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Plugina lepingute andmed on </span><span style=\" font-size:9pt; font-weight:600;\">sünkroonis Mailabli servituudi andmetega</span><span style=\" font-size:9pt;\"> (servituudi number, nimetus, staatus jne). Kui soovid midagi muuta või näha servituudi kohta rohkem infot, siis tee seda Mailablis. </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Plugina servituutide andmed on </span><span style=\" font-size:9pt; font-weight:600;\">sünkroonis Mailabli servituudi andmetega</span><span style=\" font-size:9pt;\"> (servituudi number, nimetus, staatus jne). Kui soovid midagi muuta või näha servituudi kohta rohkem infot, siis tee seda Mailablis. </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Pluginas </span><span style=\" font-size:9pt; font-weight:600;\">Mailabli märgile</span><span style=\" font-size:9pt;\"> vajutades jõuad kiiresti Mailablis õigele kandele. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Asukoha ikoonile</span><span style=\" font-size:9pt;\"> vajutades, näed aluskaardil servituudiga seotud kinnistuid. </span></p>\n"
@@ -5128,7 +5126,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Soovitud servituudi leiad ka, kui sisestad</span><span style=\" font-size:9pt; font-weight:600;\"> servituudi täpse numbri otingu väljale</span><span style=\" font-size:9pt;\">  ja vajutad &quot;Otsi&quot; nuppu&quot;.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Nupp &quot;Kinnistutega sidumine&quot;* </span><span style=\" font-size:9pt; font-weight:600; text-decoration: underline;\">tulekul</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Nupp &quot;Kinnistutega sidumine&quot;* (</span><span style=\" font-size:9pt; font-weight:600; text-decoration: underline;\">tulekul)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Seda nuppu vajutades aktiveeritakse eelseadistatud kaardikiht ning valiku tööriist. Vali servituut, millele tahad kinnistuid lisada. Vajuta nupule &quot;Kinnistutega sidumine&quot;. Avaneb aken, milles näed infot juba valitud kinnistute kohta. Tabel on tühi, kui kinnistute valikuid pole veel tehtud. Alusta kaardil kinnistute valimist. </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituudiga juba seotud kinnistuid uuesti valides, süsteem topelt seoseid ei tee.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale kinnistutega sidumist vajuta uute seoste nägemiseks värskendamise nuppu!</span></p>\n"
