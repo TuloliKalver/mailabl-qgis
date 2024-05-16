@@ -21,6 +21,8 @@ class Unload:
         self.handle_dialog_closed()
         event.accept()  # Accept the close event
 
+
+    # logout functionality needs to be developed
     def log_out(self):
 
         #query_loader = GraphQLQueryLoader()
