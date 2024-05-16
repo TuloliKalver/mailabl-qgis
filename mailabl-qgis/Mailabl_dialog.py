@@ -201,6 +201,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbUC_Cancel.clicked.connect(self.remove_UC_data)
         self.pbLogOut.clicked.connect(self.log_out)
+        self.pbLogOut.setVisible(False)
         #self.pbConnectNew.clicked.connect(self.token)
 
 # Opens and handles the sub menu
@@ -335,6 +336,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pushButton.clicked.connect(self.limitedLoad)
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
+        self.helpMenuToggle.setVisible(False) #nupp on peidus kuni funktiooni välja arendamiseni 
 
         pbEasementTools = self.pbEasementsTools
         pbEasementTools.clicked.connect(lambda: self.load_easement_widget(pbEasementTools))
