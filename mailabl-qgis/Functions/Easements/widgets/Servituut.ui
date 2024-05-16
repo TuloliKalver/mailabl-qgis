@@ -216,47 +216,6 @@ QLineEdit:disabled {
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="fHeading">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_13">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QLabel" name="label_5">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>NB! tööriist on eksperimentaalne*</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QFrame" name="fMain">
      <property name="minimumSize">
       <size>
@@ -425,7 +384,7 @@ QLineEdit:disabled {
                   </font>
                  </property>
                  <property name="text">
-                  <string>Valitut servituudi nimi</string>
+                  <string>Servituudi nimi</string>
                  </property>
                 </widget>
                </item>
@@ -1622,7 +1581,7 @@ QLineEdit:disabled {
          <item>
           <widget class="QGroupBox" name="groupBox_7">
            <property name="title">
-            <string>Trükkimis lehe seadistused</string>
+            <string>Trükkimislehe seadistused</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_17">
             <property name="spacing">
