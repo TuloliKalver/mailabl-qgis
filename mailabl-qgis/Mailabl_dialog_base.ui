@@ -1225,7 +1225,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -1811,7 +1811,7 @@ QPushButton:hover{
 </string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>4</number>
                </property>
                <widget class="QWidget" name="swAdd_cadastrals">
                 <property name="styleSheet">
@@ -5258,9 +5258,9 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;      &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;QGIS-is saad kihi aluskaardi omadusi muuta (kihil parem hiireklõps, Omadused ja Sümbolid)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Laadides aluskaardi Mailabl plugina kaudu, on meie poolt soovituslik aluskiht kujundatud. Soovi korral saad kujundust alati muuta.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Laadides aluskaardi Mailabl plugina kaudu, on meie poolt soovituslik aluskiht kujundatud. Soovi korral saad kujundust alati muuta (küsi abi GIS spetsialistilt või pöördu Mailabli poole).&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Peale andmete laadimist saab teostada järgmisi toiminguid:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Peale andmete laadimist saab teostada järgmisi toiminguid:&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;1. Kinnistute lisamine andmebaasidesse&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; (Mailabl, QGIS)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Mailabli esmakasutaja saab luua aluskaardi ja alustada kinnistute lisamist Mailablisse, samuti saab juba Mailablis olevatele kinnistutele lisada uusi - Kinnistute lisamine&lt;/span&gt;&lt;/p&gt;
@@ -9284,7 +9284,7 @@ QPushButton::menu-indicator {
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>5</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="w_HM_Avaleht">
                <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -9695,7 +9695,7 @@ p, li { white-space: pre-wrap; }
                          <string notr="true"/>
                         </property>
                         <property name="currentIndex">
-                         <number>3</number>
+                         <number>2</number>
                         </property>
                         <widget class="QWidget" name="w_HM_Toimingud_kinnistutega_Laiendamine">
                          <property name="styleSheet">
@@ -10821,7 +10821,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Kasutaja seaded&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;(loomisel)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Kasutaja seaded &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;(loomisel)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Näed kasutaja andmeid, millised õigused tal on (millisesse kasutajategruppi või gruppidesse ta kuulub). Samuti on võimalik teha eelistusi avalehe valiku osas.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Valikute tegemiseks vali &amp;quot;mutrivõti&amp;quot; ja alusta seadistamist.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Kinnistute andmete seaded&lt;/span&gt;&lt;/p&gt;
@@ -10838,8 +10838,8 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Valikute tegemiseks vali &amp;quot;mutrivõti&amp;quot; ja alusta seadistamist.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Projekti kausta nimestruktuur&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; - vastavalt sellele, kuidas on kokku lepitud nimestruktuur saad seadistada kopeeritava projekti kausta nimetuse. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Lepingu seaded&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Eelistatud staatus&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;- vali sobiv staatus, milliseid lepinguid soovid esmasel laadimisel näha.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Eelistatud lepingu liigid&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;- vastavalt oma tööiseloomule vali lepingu liigid, mida soovid esmasel laadimisel näha.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Eelistatud staatus &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;- vali sobiv staatus, milliseid lepinguid soovid esmasel laadimisel näha.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Eelistatud lepingu liigid &lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;- vastavalt oma tööiseloomule vali lepingu liigid, mida soovid esmasel laadimisel näha.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Servituutide seaded&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Eelistatud staatus&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; - vali sobiv staatus, milliseid servituute soovid esmasel laadimisel näha.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Eelistatud lepingu liigid&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; - vastavalt oma tööiseloomule vali servituudi liigid, mida soovid emsasel laadimisel näha.&lt;/span&gt;&lt;/p&gt;
