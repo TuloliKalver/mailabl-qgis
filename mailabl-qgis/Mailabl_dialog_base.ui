@@ -1225,7 +1225,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>7</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -1503,7 +1503,7 @@ QPushButton:hover{
                                </font>
                               </property>
                               <property name="text">
-                               <string>Servituudi numbri järgi otsing</string>
+                               <string>Otsing numbri järgi</string>
                               </property>
                               <property name="placeholderText">
                                <string>Sisesta servituudi number</string>
@@ -5565,7 +5565,7 @@ QPushButton:hover{
                             </font>
                            </property>
                            <property name="text">
-                            <string>Lepingu numbri järgi otsing</string>
+                            <string>Otsing numbri järgi</string>
                            </property>
                            <property name="placeholderText">
                             <string> Otsing - lepingu numbri järgi</string>
@@ -8365,7 +8365,7 @@ QPushButton:hover{
                             </font>
                            </property>
                            <property name="text">
-                            <string>Projekti numbri järgi otsing</string>
+                            <string>Otsing numbri järgi</string>
                            </property>
                            <property name="placeholderText">
                             <string> Sisesta projekti number</string>
