@@ -380,12 +380,14 @@ class ColorHandler:
                     pbAdd_SHP_To_Project.setStyleSheet(background_green)
                     pbAdd_SHP_To_Project.setText(Headings().katastrid_laetud)
                     #activate buttons
-                    pbExpand.blockSignals(False)
-                    pbRefresh.blockSignals(False)
-                    pbSyncMailabl.blockSignals(False)
-                    pbExpand.setStyleSheet(background_standard_button)
-                    pbRefresh.setStyleSheet(background_standard_button)
-                    pbSyncMailabl.setStyleSheet(background_standard_button)                    
+                    pbExpand.setEnabled(True)
+                    pbRefresh.setEnabled(True)
+                    pbSyncMailabl.setEnabled(True)
+                    #pbRefresh.blockSignals(False)
+                    #pbSyncMailabl.blockSignals(False)
+                    #pbExpand.setStyleSheet(background_standard_button)
+                    #pbRefresh.setStyleSheet(background_standard_button)
+                    #pbSyncMailabl.setStyleSheet(background_standard_button)                    
                     
                 else:
                     #SHP_layer_not_does have data on_layer.
@@ -394,12 +396,16 @@ class ColorHandler:
                     pbAvaMaaameti_veebikas.setStyleSheet(background_red)
                     pbAdd_SHP_To_Project.setText("Katastrite laadimine")
                     #isolate buttons                    
-                    pbExpand.blockSignals(True)
-                    pbRefresh.blockSignals(True)
-                    pbSyncMailabl.blockSignals(True)
-                    pbExpand.setStyleSheet(background_for_not_available)
-                    pbRefresh.setStyleSheet(background_for_not_available)
-                    pbSyncMailabl.setStyleSheet(background_for_not_available)
+                    pbExpand.setEnabled(False)
+                    pbRefresh.setEnabled(False)
+                    pbSyncMailabl.setEnabled(False)
+                    
+                    #pbExpand.blockSignals(True)
+                    #pbRefresh.blockSignals(True)
+                    #pbSyncMailabl.blockSignals(True)
+                    #pbExpand.setStyleSheet(background_for_not_available)
+                    #pbRefresh.setStyleSheet(background_for_not_available)
+                    #pbSyncMailabl.setStyleSheet(background_for_not_available)
 
                     
             else:
@@ -408,12 +414,15 @@ class ColorHandler:
                 pbAvaMaaameti_veebikas.setStyleSheet(background_red)
                 pbAdd_SHP_To_Project.setText("Katastrite laadimine")
                 #isolate buttons
-                pbExpand.blockSignals(True)
-                pbRefresh.blockSignals(True)
-                pbSyncMailabl.blockSignals(True)
-                pbExpand.setStyleSheet(background_for_not_available)
-                pbRefresh.setStyleSheet(background_for_not_available)
-                pbSyncMailabl.setStyleSheet(background_for_not_available)
+                pbExpand.setEnabled(False)
+                pbRefresh.setEnabled(False)
+                pbSyncMailabl.setEnabled(False)
+                #pbExpand.blockSignals(True)
+                #pbRefresh.blockSignals(True)
+                #pbSyncMailabl.blockSignals(True)
+                #pbExpand.setStyleSheet(background_for_not_available)
+                #pbRefresh.setStyleSheet(background_for_not_available)
+                #pbSyncMailabl.setStyleSheet(background_for_not_available)
 
         else:
             Start_update.setStyleSheet(background_red)
@@ -421,12 +430,15 @@ class ColorHandler:
             pbAvaMaaameti_veebikas.setStyleSheet(background_red)
             pbAdd_SHP_To_Project.setText("Katastrite laadimine")
             #isolate buttons
-            pbExpand.blockSignals(True)
-            pbRefresh.blockSignals(True)
-            pbSyncMailabl.blockSignals(True)
-            pbExpand.setStyleSheet(background_for_not_available)
-            pbRefresh.setStyleSheet(background_for_not_available)
-            pbSyncMailabl.setStyleSheet(background_for_not_available)
+            pbExpand.setEnabled(False)
+            pbRefresh.setEnabled(False)
+            pbSyncMailabl.setEnabled(False)
+            #pbExpand.blockSignals(True)
+            #pbRefresh.blockSignals(True)
+            #pbSyncMailabl.blockSignals(True)
+            #pbExpand.setStyleSheet(background_for_not_available)
+            #pbRefresh.setStyleSheet(background_for_not_available)
+            #pbSyncMailabl.setStyleSheet(background_for_not_available)
 
 
 class stackedWidgetsSpaces:
