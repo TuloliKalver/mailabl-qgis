@@ -1225,7 +1225,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -9284,7 +9284,7 @@ QPushButton::menu-indicator {
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>3</number>
+               <number>8</number>
               </property>
               <widget class="QWidget" name="w_HM_Avaleht">
                <layout class="QVBoxLayout" name="verticalLayout_6">
