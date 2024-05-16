@@ -4,7 +4,8 @@ from qgis.core import (QgsProject, QgsVectorLayer)
 from ..config.settings import Flags
 from PyQt5.QtCore import QTimer
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
- 
+from ..app.workspace_handler import WorkSpaceHandler
+
 pealkiri = Headings()
 
 background_green = "background-color: #607D3B"
@@ -244,6 +245,8 @@ class WidgetAnimator:
 class secondLevelButtonsHandler:
     @staticmethod
     def toggle_Frame_height_DataLoading(self):
+        WorkSpaceHandler.show_help_update(self)
+        self.CadastralMovesMainLabel.setText("Andmete laadimine")
         push_button = self.pbUpdateData
         widget = self.pbUpdateData_SliderFrame
         main_widget = self.pbSettings_SliderFrame
@@ -274,6 +277,8 @@ class secondLevelButtonsHandler:
 
     @staticmethod
     def toggle_Frame_height_Cadaster_functions(self):
+        WorkSpaceHandler.show_help_update(self)
+        self.CadastralMovesMainLabel.setText("Toimingud kinnistutega")
         push_button = self.pbCadasters
         widget = self.pbCadastraActions_SliderFrame
         main_widget = self.pbSettings_SliderFrame

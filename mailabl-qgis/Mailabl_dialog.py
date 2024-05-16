@@ -208,6 +208,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
 #        self.pbCadasters.clicked.connect(self.pb_Cadasters_change_help)
         self.pbCadasters.clicked.connect(lambda: secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self))
+
+        #self.pbUpdateData.clicked.connect(lambda: WorkSpaceHandler.show_help_update(self))
         self.pbUpdateData.clicked.connect(lambda: secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self))
         #self.pbActivateLabelSettings.clicked.connect(self.SaveToLabel)
 
@@ -261,8 +263,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Avab maa-ameti repositooriumi kaardiandmete alla laadimiseks
         self.pbAvaMaaAmet.clicked.connect(lambda: loadWebpage.open_maa_amet_webpage(self))
 
-        # Katastri andmete kontrollimine 
-        self.pbUpdateData.clicked.connect(lambda: WorkSpaceHandler.show_help_update(self))
+
         #self.pbRefresh.clicked.connect(self.check_for_updates)
         
         #Setting workspace buttons and functions

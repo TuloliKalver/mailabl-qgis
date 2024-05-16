@@ -4676,12 +4676,12 @@ class Ui_MailablDialogBase(object):
 
         self.retranslateUi(MailablDialogBase)
         self.swWorkSpace.setCurrentIndex(0)
-        self.swCadastral_sub_processes.setCurrentIndex(2)
+        self.swCadastral_sub_processes.setCurrentIndex(4)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
-        self.sw_HM.setCurrentIndex(5)
-        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(3)
-        self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(1)
+        self.sw_HM.setCurrentIndex(3)
+        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
+        self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
         self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(3)
         self.sw_HM_Andmete_laadimine.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MailablDialogBase)
@@ -4704,7 +4704,7 @@ class Ui_MailablDialogBase(object):
         self.pbAvaMaaAmet.setText(_translate("MailablDialogBase", "Maa-ametisse"))
         self.pbCadasters.setText(_translate("MailablDialogBase", "Toimingud kinnistutega"))
         self.pbSyncMailabl.setText(_translate("MailablDialogBase", "Mailabliga sünkroniseerimine"))
-        self.pbRefresh.setText(_translate("MailablDialogBase", "Andmete värskendamine"))
+        self.pbRefresh.setText(_translate("MailablDialogBase", "Andmete värskendamine*"))
         self.pbRemove.setText(_translate("MailablDialogBase", "Kinnistute eemaldamine"))
         self.pbExpand.setText(_translate("MailablDialogBase", "Kinnistute lisamine"))
         self.lbleasementPageName.setText(_translate("MailablDialogBase", "Servituudid"))
@@ -4786,9 +4786,9 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">      </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">QGIS-is saad kihi aluskaardi omadusi muuta (kihil parem hiireklõps, Omadused ja Sümbolid)</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Laadides aluskaardi Mailabl plugina kaudu, on meie poolt soovituslik aluskiht kujundatud. Soovi korral saad kujundust alati muuta.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Laadides aluskaardi Mailabl plugina kaudu, on meie poolt soovituslik aluskiht kujundatud. Soovi korral saad kujundust alati muuta (küsi abi GIS spetsialistilt või pöördu Mailabli poole).</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Peale andmete laadimist saab teostada järgmisi toiminguid:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">Peale andmete laadimist saab teostada järgmisi toiminguid:</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">1. Kinnistute lisamine andmebaasidesse</span><span style=\" font-size:10pt;\"> (Mailabl, QGIS)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Mailabli esmakasutaja saab luua aluskaardi ja alustada kinnistute lisamist Mailablisse, samuti saab juba Mailablis olevatele kinnistutele lisada uusi - Kinnistute lisamine</span></p>\n"
@@ -5077,7 +5077,7 @@ class Ui_MailablDialogBase(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; text-decoration: underline;\">Kasutaja seaded</span><span style=\" font-size:10pt;\">(loomisel)</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; text-decoration: underline;\">Kasutaja seaded </span><span style=\" font-size:10pt;\">(loomisel)</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Näed kasutaja andmeid, millised õigused tal on (millisesse kasutajategruppi või gruppidesse ta kuulub). Samuti on võimalik teha eelistusi avalehe valiku osas.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Valikute tegemiseks vali &quot;mutrivõti&quot; ja alusta seadistamist.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; text-decoration: underline;\">Kinnistute andmete seaded</span></p>\n"
@@ -5094,8 +5094,8 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Valikute tegemiseks vali &quot;mutrivõti&quot; ja alusta seadistamist.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Projekti kausta nimestruktuur</span><span style=\" font-size:9pt;\"> - vastavalt sellele, kuidas on kokku lepitud nimestruktuur saad seadistada kopeeritava projekti kausta nimetuse. </span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; text-decoration: underline;\">Lepingu seaded</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Eelistatud staatus</span><span style=\" font-size:10pt;\">- vali sobiv staatus, milliseid lepinguid soovid esmasel laadimisel näha.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Eelistatud lepingu liigid</span><span style=\" font-size:10pt;\">- vastavalt oma tööiseloomule vali lepingu liigid, mida soovid esmasel laadimisel näha.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Eelistatud staatus </span><span style=\" font-size:10pt;\">- vali sobiv staatus, milliseid lepinguid soovid esmasel laadimisel näha.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Eelistatud lepingu liigid </span><span style=\" font-size:10pt;\">- vastavalt oma tööiseloomule vali lepingu liigid, mida soovid esmasel laadimisel näha.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; text-decoration: underline;\">Servituutide seaded</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Eelistatud staatus</span><span style=\" font-size:10pt;\"> - vali sobiv staatus, milliseid servituute soovid esmasel laadimisel näha.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Eelistatud lepingu liigid</span><span style=\" font-size:10pt;\"> - vastavalt oma tööiseloomule vali servituudi liigid, mida soovid emsasel laadimisel näha.</span></p>\n"
