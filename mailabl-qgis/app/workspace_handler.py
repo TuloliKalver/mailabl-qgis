@@ -219,6 +219,7 @@ class WorkSpaceHandler:
         self.swCadastral_sub_processes.setCurrentIndex(1)
         self.sw_HM.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(1)
+        self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(0)
         Delete_Main_Process.Delete_process_view_on_load(self)
 
     @staticmethod
