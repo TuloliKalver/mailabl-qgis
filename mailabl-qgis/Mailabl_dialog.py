@@ -1251,9 +1251,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                                 )
             
             #planned help menu changes!
-            self.sw_HM.setCurrentIndex(3)
-            self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-            self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
+            #self.sw_HM.setCurrentIndex(3)
+            #self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
+            #self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
         
     def delete_process_after_state(self):
         lwDel_County_Names = self.lwDelete_County_Names
@@ -1284,9 +1284,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                                 )
             
             #planned help menu changes!
-            self.sw_HM.setCurrentIndex(3)
-            self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-            self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
+            #self.sw_HM.setCurrentIndex(3)
+            #self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
+            #self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
             
     def delete_process_after_city(self):
         lwDel_County_Names = self.lwDelete_County_Names

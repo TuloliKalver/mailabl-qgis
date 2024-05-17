@@ -42,10 +42,24 @@ query easements($first: Int, $after: String, $search: String, $where: QueryEasem
         type {
           name
         }
+        properties(first: $first, after: $after) {
+          pageInfo {
+            hasNextPage
+            endCursor
+            total
+          }
+          edges {
+            node {
+              id
+              cadastralUnitNumber
+            }
+          }
+        }
       }
     }
   }
 }
+
 
 
 

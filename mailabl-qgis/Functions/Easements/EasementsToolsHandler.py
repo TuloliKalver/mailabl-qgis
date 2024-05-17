@@ -213,8 +213,7 @@ class EasementTools(QObject):
                 self.select_tool_connection = select_button.clicked.connect(
                     lambda: WidgetTools.activate_layer_and_use_selectTool(self, self.widget_EasmentTools)
                 )
-
-            
+     
 
     @staticmethod
     def get_checkbox_info(widget):
