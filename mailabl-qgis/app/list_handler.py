@@ -27,6 +27,7 @@ class ExpandProcessListsFunctions:
                 object_county = self.listWidget_county
                 object_county.clear()
                 county_items = shp_tools.create_item_list(input_layer_name, field_county_name)
+                print(county_items)
                 for county in county_items:
                     list_item = QListWidgetItem(county)
                     object_county.addItem(list_item)

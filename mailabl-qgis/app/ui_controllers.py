@@ -372,7 +372,7 @@ class ColorHandler:
             input_layer = input_layers[0]  # Get the first layer from the list
             if isinstance(input_layer, QgsVectorLayer):
                 feature_count = input_layer.featureCount()
-                #print("Feature Count:", feature_count)  # Print the feature count for debugging
+                #print("Feature Count:", feature_count, "on input layer named", input_layer_name)  # Print the feature count for debugging
 
                 if feature_count > 0:
                     Start_update.setStyleSheet(background_green)
