@@ -4675,11 +4675,11 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(0)
+        self.swWorkSpace.setCurrentIndex(1)
         self.swCadastral_sub_processes.setCurrentIndex(4)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
-        self.sw_HM.setCurrentIndex(3)
+        self.sw_HM.setCurrentIndex(8)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
         self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
         self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(3)

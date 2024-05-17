@@ -91,7 +91,7 @@ class ModelHandler:
                 pb_ShowCadasters.setSelectable(True)
                 pb_ShowCadasters.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)        
                 icon_path = Filepaths.get_icon(IconsByName().icon_show_on_map)
-                print(icon_path)
+                #print(icon_path)
                 icon = QIcon(icon_path)
                 pb_ShowCadasters.setIcon(icon)
                 pb_ShowCadasters.setToolTip("Näita kaardil")  # Set tooltip text
