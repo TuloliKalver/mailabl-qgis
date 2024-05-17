@@ -76,7 +76,7 @@ class ProjectsProperties:
                             }
                         }
                         }
-            
+            print(variables)
             requestBuilder.construct_and_send_request(self, query, variables)
             #print(f"Response: {response.status_code}")
             #print(response.text)

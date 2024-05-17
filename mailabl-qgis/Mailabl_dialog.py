@@ -254,7 +254,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         table_projects = self.tblMailabl_projects
         table_contracts = self.ContractView
-        ConnectPropertiesModuleButtons.button_controller(self,table_contracts, table_projects)
+        table_easements = self.tweasementView
+        ConnectPropertiesModuleButtons.button_controller(self,table_contracts, table_projects, table_easements)
 
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
@@ -1424,15 +1425,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 class ConnectPropertiesModuleButtons:
     
-    def button_controller(self, table_contracts, table_projects):
+    def button_controller(self, table_contracts, table_projects, table_easements):
         button_contracts = getattr(self, 'pbContracts_Connect_properties', None)
         button_projects = getattr(self, 'pbProjects_Connect_properties', None)
         button_easements = getattr(self, 'pbEasementsConnectProperties', None)
         # Define lambdas to connect buttons to functions
         button_functions = {
-            button_contracts: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_CONTRACTS,table_contracts, button_contracts),
-            button_projects: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_PROJECTS, table_projects, button_contracts),
-            button_easements: None
+            button_contracts: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_CONTRACTS, table_contracts, button_contracts),
+            button_projects: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_PROJECTS, table_projects, button_projects),
+            button_easements: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_EASEMENTS, table_easements, button_easements),
         }
        # Connect buttons to functions
         for button, function in button_functions.items():

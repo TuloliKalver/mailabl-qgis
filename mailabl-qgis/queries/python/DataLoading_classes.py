@@ -73,6 +73,7 @@ class GraphqlQueriesEasements:
     def __init__(self):
         self.easement_types = 'easements_types.graphql'   
         self.Q_where_easements_type_status = 'easements_type_status.graphql'
+        self.UPDATE_easments_properties = 'update_easements_properties.graphql'
         self.Q_where_easement_related_properties = 'W_easement_id.graphql'
         self.Q_All_easements = 'easements.graphql'
 

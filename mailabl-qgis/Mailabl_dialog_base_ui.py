@@ -4676,13 +4676,13 @@ class Ui_MailablDialogBase(object):
 
         self.retranslateUi(MailablDialogBase)
         self.swWorkSpace.setCurrentIndex(1)
-        self.swCadastral_sub_processes.setCurrentIndex(4)
+        self.swCadastral_sub_processes.setCurrentIndex(0)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
-        self.sw_HM.setCurrentIndex(8)
+        self.sw_HM.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-        self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(2)
-        self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(3)
+        self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(0)
+        self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(0)
         self.sw_HM_Andmete_laadimine.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MailablDialogBase)
 
@@ -4708,7 +4708,7 @@ class Ui_MailablDialogBase(object):
         self.pbRemove.setText(_translate("MailablDialogBase", "Kinnistute eemaldamine"))
         self.pbExpand.setText(_translate("MailablDialogBase", "Kinnistute lisamine"))
         self.lbleasementPageName.setText(_translate("MailablDialogBase", "Servituudid"))
-        self.pbEasementsConnectProperties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine*"))
+        self.pbEasementsConnectProperties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
         self.leSearcheasements.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
         self.leSearcheasements.setPlaceholderText(_translate("MailablDialogBase", "Sisesta servituudi number"))
         self.pbSearcheasements.setText(_translate("MailablDialogBase", "Otsi"))
@@ -4716,8 +4716,9 @@ class Ui_MailablDialogBase(object):
         self.CadastralMovesMainLabel.setText(_translate("MailablDialogBase", "Andmete laadimine"))
         self.label_29.setText(_translate("MailablDialogBase", "Lisamiseks on valmis"))
         self.label_11.setText(_translate("MailablDialogBase", "kinnistut."))
-        self.pbSearch_Add.setText(_translate("MailablDialogBase", "Otsi"))
-        self.pbCooseFromMap_Add.setText(_translate("MailablDialogBase", "Vali kaardilt"))
+        self.leSearch_Add.setText(_translate("MailablDialogBase", "*"))
+        self.pbSearch_Add.setText(_translate("MailablDialogBase", "Otsi*"))
+        self.pbCooseFromMap_Add.setText(_translate("MailablDialogBase", "Vali kaardilt*"))
         self.lblCounty.setText(_translate("MailablDialogBase", "Maakond"))
         self.pbDone_County.setText(_translate("MailablDialogBase", "Kinnita"))
         self.label_12.setText(_translate("MailablDialogBase", "Valida saab ühe maakonna korraga"))
@@ -4738,6 +4739,7 @@ class Ui_MailablDialogBase(object):
         self.pbConfirm_action.setText(_translate("MailablDialogBase", "Kinnita"))
         self.lblDel_Main_txt.setText(_translate("MailablDialogBase", "Eemaldamiseks on valmis"))
         self.lblDel_sub_txt.setText(_translate("MailablDialogBase", "kinnistut."))
+        self.lblDel_Aditiona_txt.setText(_translate("MailablDialogBase", "*"))
         self.lblDel_County.setText(_translate("MailablDialogBase", "Maakond"))
         self.pbDel_County.setText(_translate("MailablDialogBase", "Kinnita"))
         self.lblDel_Count_comment.setText(_translate("MailablDialogBase", "Valida saab ühe maakonna korraga"))
@@ -4963,7 +4965,34 @@ class Ui_MailablDialogBase(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Esmalt näed koondarvu, kui palju kinnistuid on lisamiseks valmis. Iga järgneva valikuga näed enne kinnitamist vastavalt valitud:</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">  1. maakonna kinnistute arvu</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">  2. Omavalitsuse kinnistute arvu</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">  3. Linna/Küla kinnistute arvu</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Kinnistute lisamiseks:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">1. Vali maakond (valida saab ühe maakonna korraga).</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">2. Kinnita maakond (&quot;Kinnita&quot; nupp&quot;)</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Peale valiku kinnitamist näed valitud maakonna kinnistuid aluskaardil.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">3. Oota valitud maakonnaga seotud omavalitsuste nimekirja laadimist.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">4. Vali soovitud omavalitsus. Võimalus on valida üks, mitu või kõik omavalitsused (viimasel &quot;Vali kõik&quot; nupp).</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">5. Kinnita omavalitsus (&quot;Kinnita&quot; nupp&quot;).</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Peale valiku kinnitamist näed valitud omavalitsuse kinnistuid ka aluskaardil. </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">6. Oota valitud omavalitsusega seotud linnade ja külade laadimist</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">7. Vali soovitud linn ja/või küla. Jälle on võimalus valida üks, mitu või kõik valitud omavalitsuse külad või linnad (viimasel &quot;Vali kõik&quot; nupp).</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">8. Kinnita linn ja /või küla (&quot;Kinnita&quot; nupp&quot;).</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Peale kinnitamist näed kinnistute nimekirja tabelina akna alumises osas ja kaardil valitud kinnistutena. </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">9. Kui kõik tabelis olevad kinnistud on lisamiseks vajalikud, siis vali “Kinnita”. </p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nimekirjas olevaid kinnistuid saad valida ka ükshaaval. Tühista “Vali kõik” valik ja alusta kinnistute valimist (kui kinnistud pole kõrvuti ridadel, siis tee seda Ctrl klahvi all hoides). </p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Kinnistute tabelis on kinnistud jaotatud eraldi tulpadesse: Kinnistud, Teed/Tänavad ja Lisatavad kinnistud? (mis see on? Ei ole aktiivne väli)</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Kinnitamisel lisatakse kinnistu Mailabli kinnistute nimekirja. </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Mailablist kinnistute eemaldamiseks kasuta plugina tööriista “Kinnistute eemaldamine”. </p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nupud:</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Otsi* (tulemas) - kinnistu otsing on katastrinumbri põhine</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Vali kaardil* (tulemas) - kinnistuid saad ühe või mitme valikuna valida otse kaardil</p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Laiendamine_Maakond.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -5012,37 +5041,25 @@ class Ui_MailablDialogBase(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Laetud kinnistute tabel</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Mida näed?</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Jagunemine:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. Kinnistud</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">2. Teed/Tänavad</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Mis teha saad?</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Jne</span></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.lb_HM_Toimingud_kinnistutega_Kitsendamine_Pealkiri.setText(_translate("MailablDialogBase", "Kinnistute eemaldamine"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Yldine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Jääb eemaldamise jaoks</p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Maakond.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Maakond</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kirjuta sisu</span></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Omavalitsus.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Omavalitsus</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kirjuta sisu</span></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Linn_Kyla.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

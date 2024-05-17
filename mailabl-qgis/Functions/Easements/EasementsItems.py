@@ -129,9 +129,9 @@ class InputeasmentsToTable:
             newLabel_for_cadastral = ""  # Replace with your actual column labels
             newLabel_documents = ""
             newLabel_Link = ""
-            newLabel_ID = ""
+            #newLabel_ID = ""
             newLabel_CadastralShow = ""
-            eas_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+            #eas_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
             eas_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
             eas_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
             eas_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
@@ -359,7 +359,7 @@ class EasmentsSearch:
 class getEasementsWhere:
     @staticmethod
     def query_easement_related_properties(self, id_value):
-        print(f"id value in query {id_value}")
+        #print(f"id value in query {id_value}")
         #Load the project query using the loader instance
         query_loader = GraphqlQueriesEasements()
         query = query_loader.load_query_for_easements(query_loader.Q_where_easement_related_properties)

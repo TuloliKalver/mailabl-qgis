@@ -5,14 +5,7 @@ import requests
 import webbrowser
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QStyledItemDelegate
-
 from ..config.settings import OpenLink, MailablWebModules
-# Delay import to prevent circular import
-# from ..queries.python.contractsBySingleItem import getContractsWhere
-# from ..queries.python.ContractWhere import getContractsWhere
-# from ..queries.python.projects_pandas import GetProjectsWhere
-# from .item_selector_tools import properties_selectors
-# from .Easements.EasementsItems import getEasementsWhere
 
 class ModuleButtonDelegate(QStyledItemDelegate):
     def __init__(self, id_column_index, parent=None, module=None):
@@ -73,7 +66,7 @@ class SelectByModuleElementsOnMapDelegate(QStyledItemDelegate):
                     values = getEasementsWhere().query_easement_related_properties(self, id_value)
                 else:
                     return False
-                total = len(values)
+                #total = len(values)
                 layer_type = "active"
                 from .item_selector_tools import properties_selectors
                 properties_selectors.show_connected_cadasters(values, layer_type)
