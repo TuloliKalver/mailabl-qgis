@@ -344,6 +344,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         pbEasementTools = self.pbEasementsTools
         pbEasementTools.clicked.connect(lambda: self.load_easement_widget(pbEasementTools))
 
+        self.leSearch_Add.setEnabled(False)
+        self.pbSearch_Add.setEnabled(False)
+        self.pbCooseFromMap_Add.setEnabled(False)
+        self.lblDel_Aditiona_txt.setEnabled(False)
+
+
+
 
     def log_out(self):
         Unload.log_out(self)
