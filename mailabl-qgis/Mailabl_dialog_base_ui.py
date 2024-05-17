@@ -4680,7 +4680,7 @@ class Ui_MailablDialogBase(object):
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(3)
-        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(1)
+        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
         self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(0)
         self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(0)
         self.sw_HM_Andmete_laadimine.setCurrentIndex(0)
@@ -4966,11 +4966,13 @@ class Ui_MailablDialogBase(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Esmalt näed</span><span style=\" font-size:9pt; font-weight:600;\"> koondarvu</span><span style=\" font-size:9pt;\">, kui palju kinnistuid on lisamiseks valmis. Iga järgneva valikuga näed enne kinnitamist vastavalt valitud:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  1. maakonna kinnistute arvu</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  1. Maakonna kinnistute arvu</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  2. Omavalitsuse kinnistute arvu</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  3. Linna/Küla kinnistute arvu</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Kinnistute lisamiseks:</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. </span><span style=\" font-size:9pt; font-weight:600;\">Vali maakond</span><span style=\" font-size:9pt;\"> (valida saab ühe maakonna korraga).</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">2. </span><span style=\" font-size:9pt; font-weight:600;\">Kinnita maakond</span><span style=\" font-size:9pt;\"> (&quot;Kinnita&quot; nupp&quot;)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; text-decoration: underline;\">Peale valiku kinnitamist näed valitud maakonna kinnistuid aluskaardil.</span></p>\n"
@@ -4992,6 +4994,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Mailablist </span><span style=\" font-size:9pt; font-weight:600;\">kinnistute eemaldamiseks</span><span style=\" font-size:9pt;\"> kasuta plugina tööriista </span><span style=\" font-size:9pt; font-weight:600;\">“Kinnistute eemaldamine”</span><span style=\" font-size:9pt;\">. </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Nupud:</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Otsi</span><span style=\" font-size:9pt;\">* (tulemas) - kinnistu otsing on katastrinumbri põhine</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Vali kaardil*</span><span style=\" font-size:9pt;\"> (tulemas) - kinnistuid saad ühe või mitme valikuna valida otse kaardil</span></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Laiendamine_Maakond.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -5049,11 +5052,13 @@ class Ui_MailablDialogBase(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Esmalt näed </span><span style=\" font-size:9pt; font-weight:600;\">koondarvu</span><span style=\" font-size:9pt;\">, kui palju kinnistuid on eemaldamiseks valmis. Iga järgneva valikuga näed enne kinnitamist vastavalt valitud:</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  1. Maakonna kinnistute arvu</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  2. Omavalitsuse kinnistute arvu</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  3. Linna/Küla kinnistute arvu</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Kinnistute eemaldamiseks:</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. </span><span style=\" font-size:9pt; font-weight:600;\">Vali maakond</span><span style=\" font-size:9pt;\"> (valida saab ühe maakonna korraga).</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">2. </span><span style=\" font-size:9pt; font-weight:600;\">Kinnita maakond</span><span style=\" font-size:9pt;\"> (&quot;Kinnita&quot; nupp&quot;)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; text-decoration: underline;\">Peale valiku kinnitamist näed valitud maakonna kinnistuid aluskaardil.</span></p>\n"
@@ -5074,6 +5079,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Mailablisse </span><span style=\" font-size:9pt; font-weight:600;\">kinnistute lisamiseks</span><span style=\" font-size:9pt;\"> kasuta plugina tööriista </span><span style=\" font-size:9pt; font-weight:600;\">“Kinnistute lisamine”</span><span style=\" font-size:9pt;\">. </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Nupud:</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Otsi*</span><span style=\" font-size:9pt;\"> (tulemas) - kinnistu otsing on katastrinumbri põhine</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Vali kaardil*</span><span style=\" font-size:9pt;\"> (tulemas) - kinnistuid saad ühe või mitme valikuna valida otse kaardil</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p></body></html>"))
