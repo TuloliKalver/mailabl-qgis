@@ -1450,7 +1450,7 @@ QPushButton:hover{
                                <string notr="true"/>
                               </property>
                               <property name="text">
-                               <string>Kinnistutega sidumine*</string>
+                               <string>Kinnistutega sidumine</string>
                               </property>
                               <property name="icon">
                                <iconset>
@@ -1811,7 +1811,7 @@ QPushButton:hover{
 </string>
                </property>
                <property name="currentIndex">
-                <number>4</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="swAdd_cadastrals">
                 <property name="styleSheet">
@@ -1993,12 +1993,15 @@ background-color: rgb(52, 59, 71)
                             <property name="styleSheet">
                              <string notr="true"/>
                             </property>
+                            <property name="text">
+                             <string>*</string>
+                            </property>
                            </widget>
                           </item>
                           <item>
                            <widget class="QPushButton" name="pbSearch_Add">
                             <property name="text">
-                             <string>Otsi</string>
+                             <string>Otsi*</string>
                             </property>
                             <property name="icon">
                              <iconset>
@@ -2015,7 +2018,7 @@ background-color: rgb(52, 59, 71)
                           <item>
                            <widget class="QPushButton" name="pbCooseFromMap_Add">
                             <property name="text">
-                             <string>Vali kaardilt</string>
+                             <string>Vali kaardilt*</string>
                             </property>
                             <property name="icon">
                              <iconset>
@@ -3084,6 +3087,9 @@ background-color: rgb(52, 59, 71)
                            <widget class="QLineEdit" name="lblDel_Aditiona_txt">
                             <property name="styleSheet">
                              <string notr="true"/>
+                            </property>
+                            <property name="text">
+                             <string>*</string>
                             </property>
                            </widget>
                           </item>
@@ -9800,7 +9806,7 @@ font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
                                 <string notr="true"/>
                                </property>
                                <property name="currentIndex">
-                                <number>4</number>
+                                <number>0</number>
                                </property>
                                <widget class="QWidget" name="w_HM_Toimingud_kinnistutega_Laiendamine_Yldine">
                                 <property name="styleSheet">
@@ -9862,7 +9868,34 @@ font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Esmalt näed koondarvu, kui palju kinnistuid on lisamiseks valmis. Iga järgneva valikuga näed enne kinnitamist vastavalt valitud:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  1. maakonna kinnistute arvu&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  2. Omavalitsuse kinnistute arvu&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  3. Linna/Küla kinnistute arvu&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Kinnistute lisamiseks:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. Vali maakond (valida saab ühe maakonna korraga).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. Kinnita maakond (&amp;quot;Kinnita&amp;quot; nupp&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Peale valiku kinnitamist näed valitud maakonna kinnistuid aluskaardil.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;3. Oota valitud maakonnaga seotud omavalitsuste nimekirja laadimist.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;4. Vali soovitud omavalitsus. Võimalus on valida üks, mitu või kõik omavalitsused (viimasel &amp;quot;Vali kõik&amp;quot; nupp).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;5. Kinnita omavalitsus (&amp;quot;Kinnita&amp;quot; nupp&amp;quot;).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Peale valiku kinnitamist näed valitud omavalitsuse kinnistuid ka aluskaardil. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;6. Oota valitud omavalitsusega seotud linnade ja külade laadimist&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;7. Vali soovitud linn ja/või küla. Jälle on võimalus valida üks, mitu või kõik valitud omavalitsuse külad või linnad (viimasel &amp;quot;Vali kõik&amp;quot; nupp).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;8. Kinnita linn ja /või küla (&amp;quot;Kinnita&amp;quot; nupp&amp;quot;).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Peale kinnitamist näed kinnistute nimekirja tabelina akna alumises osas ja kaardil valitud kinnistutena. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;9. Kui kõik tabelis olevad kinnistud on lisamiseks vajalikud, siis vali “Kinnita”. &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nimekirjas olevaid kinnistuid saad valida ka ükshaaval. Tühista “Vali kõik” valik ja alusta kinnistute valimist (kui kinnistud pole kõrvuti ridadel, siis tee seda Ctrl klahvi all hoides). &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kinnistute tabelis on kinnistud jaotatud eraldi tulpadesse: Kinnistud, Teed/Tänavad ja Lisatavad kinnistud? (mis see on? Ei ole aktiivne väli)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kinnitamisel lisatakse kinnistu Mailabli kinnistute nimekirja. &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Mailablist kinnistute eemaldamiseks kasuta plugina tööriista “Kinnistute eemaldamine”. &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nupud:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Otsi* (tulemas) - kinnistu otsing on katastrinumbri põhine&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vali kaardil* (tulemas) - kinnistuid saad ühe või mitme valikuna valida otse kaardil&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                       </property>
                                      </widget>
                                     </item>
@@ -10277,7 +10310,7 @@ font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
                                 <string notr="true"/>
                                </property>
                                <property name="currentIndex">
-                                <number>2</number>
+                                <number>0</number>
                                </property>
                                <widget class="QWidget" name="w_HM_Toimingud_kinnistutega_Kitsendamine_Yldine">
                                 <property name="styleSheet">
@@ -10339,7 +10372,7 @@ font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jääb eemaldamise jaoks&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                       </property>
                                      </widget>
                                     </item>
