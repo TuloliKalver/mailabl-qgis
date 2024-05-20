@@ -95,6 +95,7 @@ class FilesByNames:
         self.MaaAmet_temp = "Maa_amet_temp_layer.qml"
         self.Easement_style = "Easement_Properties.qml"
         self.Easement_Water = "Easement_W.qml"
+        self.Easement_Road = "Easement_Road.qml"
         self.Easement_sewage = "Easement_Sew.qml"
         self.Easement_prSewage = "Easement_PrSew.qml"
         self.Easement_Drainage = "Easement_Drainage.qml"

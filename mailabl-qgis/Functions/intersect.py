@@ -5,8 +5,9 @@ class TempIntersectLayerName:
     intersect_water_name = 'Ajutine_intersect_V'
     intersect_sewer_name = 'Ajutine_intersect_K'
     intersect_prSewer_name = 'Ajutine_intersect_KS'
-    intersect_drainage_name = 'Ajudine_intersect_D'
-    intersect_layers = [intersect_water_name, intersect_sewer_name, intersect_prSewer_name, intersect_drainage_name]
+    intersect_drainage_name = 'Ajutine_intersect_D'
+    intesect_road = 'Ajutine_intersect_Tee'
+    intersect_layers = [intersect_water_name, intersect_sewer_name, intersect_prSewer_name, intersect_drainage_name, intesect_road]
 
 
 class Intersect:

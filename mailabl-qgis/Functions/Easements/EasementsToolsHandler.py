@@ -1,14 +1,11 @@
-
-
-
-from PyQt5.QtCore import QObject, pyqtSignal
-
 import processing
-
+from PyQt5.QtCore import QObject, pyqtSignal
 from qgis.utils import iface
-from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinition, QgsMapLayerType
-#from qgis.gui import QgsMapToolLineString
-from qgis.gui import QgsMapToolPan
+from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinition, QgsMapLayerType, QgsVectorLayer
+from qgis.gui import QgsMapToolPan, QgsMapTool
+from qgis.core import QgsLayerTreeLayer
+
+from qgis.PyQt.QtGui import QCursor
 
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
@@ -62,7 +59,6 @@ class EasementTools(QObject):
                 self.widget_EasmentTools = loadUi(ui_file_path)
                 save_button = self.widget_EasmentTools.pbSave
                 cancel_button = self.widget_EasmentTools.pbCancel
-                #buffer_properties_button = self.widget_EasmentTools.pbCreateProperties
                 clear_buffer_button = self.widget_EasmentTools.pbClearCadastrals
                 properties_table = self.widget_EasmentTools.tvProperties
                 pbGen_easement = self.widget_EasmentTools.pbKoostaServituut
@@ -111,7 +107,7 @@ class EasementTools(QObject):
                 pbGen_easement.clicked.connect(lambda: GenerateEasement.generate_easement(self.widget_EasmentTools))            
                 
                 clear_buffer_button.clicked.connect(lambda: MapCleaners.clearPuhver2m(properties_table))
-                #self.widget_EasmentTools.pbAddRoad.clicked.connect(lambda: BufferByLine.create_road_easement(self.widget_EasmentTools))
+                self.widget_EasmentTools.pbAddRoad.clicked.connect(lambda: BufferByLine.create_road_center_line(self.widget_EasmentTools))
 
                 #style_name = FilesByNames().Easement_style         
                 #buffer_properties_button.clicked.connect(lambda: BufferTools.generate_buffer_around_selected_item(self.widget_EasmentTools, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name))
@@ -156,8 +152,7 @@ class EasementTools(QObject):
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
                 active_layer.selectionChanged.disconnect(on_selection_changed_lambda_easements)
-                self.widget_EasmentTools.pbCreateProperties.disconnect(BufferTools.generate_buffer_around_selected_item)
-                self.widget_EasmentTools.dPuhvriSuurus.disconnet(WidgetTools.activ_dialer)
+                #self.widget_EasmentTools.dPuhvriSuurus.disconnet(WidgetTools.activ_dialer)
             Flags.active_properties_layer_flag = False
             self.widget_EasmentTools.pbprint.setEnabled(False)            
             self.widget_EasmentTools.cmbScale.setEnabled(False)
@@ -545,9 +540,10 @@ class TempBufferLayerNames:
     sewer_temp_name = 'Ajutine_K'
     prSewer_temp_name = 'Ajutine_KS'
     drainage_temp_name = 'Ajudine_D'
+    road_temp_name = 'Ajutine_tee_puver'
     buffer_layer_name = 'puhver_kinnistu'
-    spline_layer_name = 'vabajoonis'
-    buffer_layers = [water_temp_name, sewer_temp_name,prSewer_temp_name, drainage_temp_name, buffer_layer_name, spline_layer_name]
+    spline_layer_name = 'tee_telgjoon'
+    buffer_layers = [water_temp_name, sewer_temp_name, prSewer_temp_name, drainage_temp_name, road_temp_name, spline_layer_name, buffer_layer_name]
     
 class WorkingLayers:
     water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)        
@@ -562,7 +558,7 @@ class WorkingLayers:
         return list_of_working_layers    
 
 class BufferTools:    
-    def generate_buffer_around_selected_item(widget, tempp_buffer_layer, layer_name, style_name, checkbox=None, insert_distance = None):
+    def generate_buffer_around_selected_item(widget, tempp_buffer_layer, layer_name, style_name=None, checkbox=None, insert_distance = None):
         #print(f"in generator. tempp_buffer_layer: {tempp_buffer_layer}, layer_name: {layer_name}")
         active_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         
@@ -584,6 +580,12 @@ class BufferTools:
                     puhver = widget.dPuhvriSuurus.value() / 10
                     distance = round(puhver * 2) / 2
 
+                rounded = None
+                if widget.Round_or_Square.isChecked():
+                    rounded = 0  # Set to 0 for rounded
+                else:
+                    rounded = 1  # Set to 0 for square                
+
                 result = processing.run("native:buffer", {
                     'INPUT': QgsProcessingFeatureSourceDefinition(active_layer.source(), True),
                     'DISTANCE': distance,
@@ -591,14 +593,17 @@ class BufferTools:
                     'OUTPUT': 'memory:',
                     'FEATURES': selected_features,
                     'DISSOLVE': False,
-                    'END_CAP_STYLE': 0,
+                    'END_CAP_STYLE': rounded,
                     'JOIN_STYLE': 0,
                     'MITER_LIMIT': 2,
                 })
                 
                 # Load the QGIS layer style
-
-                QGIS_Layer_style = Filepaths().get_style(style_name)
+                if style_name is not None:
+                    QGIS_Layer_style = Filepaths().get_style(style_name)
+                else:
+                    QGIS_Layer_style = None
+                    pass
 
                 # Get the group layer name
                 group_layer_name = SetupLayers().tools_layer_name
@@ -621,10 +626,9 @@ class BufferTools:
                 group.addLayer(buffer_layer)
                 
                 # Apply the layer style
-                buffer_layer.loadNamedStyle(QGIS_Layer_style)
+                if QGIS_Layer_style is not None:
+                    buffer_layer.loadNamedStyle(QGIS_Layer_style)
                 buffer_layer.triggerRepaint()
-
-
 
             else:
                 QMessageBox.information(None, Headings().informationSimple, HoiatusTexts().kihil_kinnistu_valik)
@@ -788,8 +792,8 @@ class GenerateEasement:
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
 
         # Slice the lists to include only the first four items
-        buffer_layers = TempBufferLayerNames.buffer_layers[:4]
-        intersect_layers = TempIntersectLayerName.intersect_layers[:4]
+        buffer_layers = TempBufferLayerNames.buffer_layers[:5]
+        intersect_layers = TempIntersectLayerName.intersect_layers[:5]
         
 
         # Create a dictionary to map buffer layers to intersect layers
@@ -825,8 +829,8 @@ class GenerateEasement:
  
         # Check the number of intersect layers found
         num_intersect_layers = len(intersect_layer_names)
-        #print("num_intersect_layers:")
-        #print(num_intersect_layers)
+        print("num_intersect_layers:")
+        print(num_intersect_layers)
         join_layer_name = "Joined_layer"
         while num_intersect_layers >= 1:
             JoinLayers.join_all_layers(intersect_layer_names, num_intersect_layers, join_layer_name)
@@ -842,6 +846,7 @@ class GenerateEasement:
             else:
                 # print(f"layer '{layer_name}' not found.")
                 pass
+
 
         joined_layers = QgsProject.instance().mapLayers().values()
         joined_layer_names = [layer.name() for layer in joined_layers if layer.name().startswith("Joined_layer")]
@@ -903,11 +908,10 @@ class ComboBoxInputs:
                 comboBox.setCurrentIndex(index)
                 break
 
+
 class BufferByLine:
-    def create_road_easement(widget):
-
+    def create_road_center_line(widget):
         temp_spline_layer = TempBufferLayerNames.spline_layer_name
-
         group_layer_name = SetupLayers().tools_layer_name
 
         # Get the group layer or create it if it doesn't exist
@@ -916,19 +920,63 @@ class BufferByLine:
         if group is None:
             group = root.addGroup(group_layer_name)
 
+        # Check if the temp_spline_layer exists and remove it if it does
+        existing_layers = QgsProject.instance().mapLayersByName(temp_spline_layer)
+        if existing_layers:
+            for layer in existing_layers:
+                QgsProject.instance().removeMapLayer(layer.id())
 
-        layer = QgsProject.instance().mapLayersByName(temp_spline_layer)
-        if layer:
-            layer = layer[0].id()  # Get the first layer if found
-            QgsProject.instance().removeMapLayer(layer)
+        # Create the new temp_spline_layer
+        project_crs = QgsProject.instance().crs().authid()
+        new_layer = QgsVectorLayer(f'LineString?crs={project_crs}', temp_spline_layer, 'memory')
+
+        QgsProject.instance().addMapLayer(new_layer, False)
+        
+        # Move the new layer to the group layer
+        group.insertLayer(0, new_layer)
+
+        iface.setActiveLayer(new_layer)
+        # Activate the temp_spline_layer for editing
+        if new_layer.isValid():
+            new_layer.startEditing()
+
+        # Connect layer signals and store the connection
+        BufferByLine.feature_added_connection = new_layer.featureAdded.connect(
+            lambda fid: BufferByLine.generate_buffer_after_drawing(widget, fid, group)
+        )
+        # Activate the Add Feature tool
+        iface.actionAddFeature().trigger()
+
+    @staticmethod
+    def generate_buffer_after_drawing(widget, fid, group):
+        #print("started generate buffer around line with feature id:", fid)
+        temp_spline_layer = TempBufferLayerNames.spline_layer_name
+        buffer_layer_name = TempBufferLayerNames.road_temp_name
+
+        style_road = FilesByNames().Easement_Road
+
+        # Get the spline layer
+        spline_layer = QgsProject.instance().mapLayersByName(temp_spline_layer)[0]
+        if spline_layer:
+            # Disconnect the signal before committing changes
+            try:
+                spline_layer.featureAdded.disconnect(BufferByLine.feature_added_connection)
+            except TypeError:
+                print("Signal was already disconnected.")
+
+            # Stop editing and save changes
+            if spline_layer.isEditable():
+                spline_layer.commitChanges()
+                print("Editing stopped and changes saved.")
+
+            # Select all features in the layer
+            spline_layer.selectAll()
+            print(f"Selected {spline_layer.selectedFeatureCount()} features.")
+
+            # Generate buffer around the selected item
+            BufferTools.generate_buffer_around_selected_item(widget, buffer_layer_name, temp_spline_layer, style_name=style_road)
+            
+
         else:
-            layer = QgsProject.instance().addMapLayer()
-            layer.setName(temp_spline_layer)
-            group.addLayer(layer)
-
-        # Get the current map canvas
-        canvas = iface.mapCanvas()
-
-        # Activate the line drawing tool
-        line_tool = QgsMapToolLineString(canvas)
-        canvas.setMapTool(line_tool)
+            print("Layer missing")
+            pass
