@@ -8,7 +8,7 @@ class SetupLayers:
         self.new_properties_name = 'Uued kinnistud'  # Name for new properties
         self.changed_properties_name = 'Muutunud andmed'  # Name for changed properties
         self.tools_layer_name = 'Ajutised kihid'
-
+        
     # Function to create the structured layer hierarchy
     def create_mailabl_setup_group_layer(self):
         # Get the root of the layer tree

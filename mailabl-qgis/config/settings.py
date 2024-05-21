@@ -16,6 +16,7 @@ WIDGET_MODULAR_FOLDER = "connector_widget_engine"
 CONFIG_FILE = "config.json"
 FUNCTIONS_FOLDER = "Functions"
 EASEMENTS_FOLDER = "Easements"
+EVEL_FOLDER = "EVEL"
 
 
 # Load configuration
@@ -100,6 +101,7 @@ class FilesByNames:
         self.Easement_prSewage = "Easement_PrSew.qml"
         self.Easement_Drainage = "Easement_Drainage.qml"
         self.easement_unined = "UnionedEasement.qml"
+        self.easement_evelLayer = "Servituut.qml"
         #Need to be separated into diferent classes!
         self.statusbar_widget = "WStatusBar.ui"
         self.layer_setup_ui = "LayerSetup.ui"
@@ -109,6 +111,8 @@ class FilesByNames:
         self.easement_tools_ui = "Servituut.ui"
         self.Setup_ConfigUI = "ProjectSetup.ui"
         self.add_properties_to_module_ui = "Properties_connector_new.ui"
+        self.EVEL_tools_ui = "EVEL.ui"
+
 
 class Filepaths:
     @staticmethod
@@ -122,6 +126,9 @@ class Filepaths:
     @staticmethod
     def get_easements_tools():
         return os.path.join(PLUGIN_DIR_MAIN, FUNCTIONS_FOLDER, EASEMENTS_FOLDER, WIDGETS_FOLDER, FilesByNames().easement_tools_ui)
+    
+    def get_EVEL_tools():
+        return os.path.join(PLUGIN_DIR_MAIN, FUNCTIONS_FOLDER, EVEL_FOLDER, WIDGETS_FOLDER, FilesByNames().EVEL_tools_ui)
 
     @staticmethod
     def get_conf_widget(widget_name):
