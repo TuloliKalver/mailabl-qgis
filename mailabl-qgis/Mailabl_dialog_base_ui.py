@@ -170,7 +170,7 @@ class Ui_MailablDialogBase(object):
 "\n"
 "}\n"
 "\n"
-"/*esialgu jaotamata omadused*/\n"
+"/* General QComboBox styles */\n"
 "QComboBox {\n"
 "    background-color: #40414f; /* Set the background color */\n"
 "    color: #ececf1;\n"
@@ -179,7 +179,7 @@ class Ui_MailablDialogBase(object):
 "    padding-left: 5px;\n"
 "}\n"
 "\n"
-"/* Style the dropdown area */\n"
+"/* Style the dropdown button */\n"
 "QComboBox::drop-down {\n"
 "    background-color: #40414f;\n"
 "    border: 0px solid #40414f;\n"
@@ -190,9 +190,39 @@ class Ui_MailablDialogBase(object):
 "    subcontrol-position: left; /* Center the arrow icon */\n"
 "}\n"
 "\n"
+"/* Style for the list view that shows the items */\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color: #40414f;\n"
+"    border: 1px solid #acacbe;\n"
+"    selection-background-color: #800080; /* Set the color of the selected row to purple */\n"
+"    selection-color: #ececf1; /* Ensure the text color of the selected row is readable */\n"
+"}\n"
+"\n"
+"/* Style for individual items in the list */\n"
+"QComboBox QAbstractItemView::item {\n"
+"    background-color: #40414f;\n"
+"    color: #ececf1; /* Set the text color */\n"
+"}\n"
+"\n"
+"/* Style for the selected item */\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: #800080; /* Set the background color of the selected row to purple */\n"
+"    color: #ececf1; /* Ensure the text color of the selected row is readable */\n"
+"}\n"
+"\n"
+"/* Style for the hovered item */\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"    background-color: #a64ca6; /* Set the background color of the hovered row to a lighter purple */\n"
+"    color: #ececf1; /* Ensure the text color of the hovered row is readable */\n"
+"}\n"
+"\n"
+"/* Style the QComboBox when it is focused */\n"
+"QComboBox:focus {\n"
+"    border: 0.5px solid #acacbe;\n"
+"}\n"
+"\n"
 "/* Style the arrow inside the dropdown */\n"
 "QComboBox::down-arrow {\n"
-"\n"
 "    width: 0;\n"
 "    height: 0;\n"
 "    border-left: 6px solid #40414f;\n"
@@ -201,10 +231,12 @@ class Ui_MailablDialogBase(object):
 "    margin: 8px auto; /* Center the arrow */\n"
 "}\n"
 "\n"
+"/* Style the QComboBox when it is in \"on\" state */\n"
 "QComboBox::on {\n"
 "    border: 0.5px solid #acacbe;\n"
 "}\n"
 "\n"
+"/* Style the QComboBox when it is disabled */\n"
 "QComboBox:disabled {\n"
 "    background-color: #40414f; /* Set the background color for the disabled state */\n"
 "    border: 1px solid #565869; /* Adjust border color for disabled state */\n"
@@ -2412,6 +2444,10 @@ class Ui_MailablDialogBase(object):
         font.setPointSize(10)
         self.cmbcontractStatuses.setFont(font)
         self.cmbcontractStatuses.setObjectName("cmbcontractStatuses")
+        self.cmbcontractStatuses.addItem("")
+        self.cmbcontractStatuses.addItem("")
+        self.cmbcontractStatuses.addItem("")
+        self.cmbcontractStatuses.addItem("")
         self.horizontalLayout_61.addWidget(self.cmbcontractStatuses)
         spacerItem21 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_61.addItem(spacerItem21)
@@ -2503,7 +2539,7 @@ class Ui_MailablDialogBase(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -137, 677, 878))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 677, 878))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_159 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_159.setObjectName("verticalLayout_159")
@@ -4687,7 +4723,7 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(4)
+        self.swWorkSpace.setCurrentIndex(2)
         self.swCadastral_sub_processes.setCurrentIndex(2)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -4819,6 +4855,10 @@ class Ui_MailablDialogBase(object):
         self.le_searchContracts.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
         self.le_searchContracts.setPlaceholderText(_translate("MailablDialogBase", " Otsing - lepingu numbri järgi"))
         self.pbSearchContracts.setText(_translate("MailablDialogBase", "Otsi"))
+        self.cmbcontractStatuses.setItemText(0, _translate("MailablDialogBase", "New Item"))
+        self.cmbcontractStatuses.setItemText(1, _translate("MailablDialogBase", "New Item"))
+        self.cmbcontractStatuses.setItemText(2, _translate("MailablDialogBase", "New Item"))
+        self.cmbcontractStatuses.setItemText(3, _translate("MailablDialogBase", "New Item"))
         self.label_20.setText(_translate("MailablDialogBase", "Help"))
         self.textEdit.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

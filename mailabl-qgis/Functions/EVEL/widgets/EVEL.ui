@@ -368,7 +368,7 @@ QLineEdit:disabled {
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_7">
+                <widget class="QCheckBox" name="cbEasements">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>

@@ -175,7 +175,7 @@ QPushButton:disabled {
 
 }
 
-/*esialgu jaotamata omadused*/
+/* General QComboBox styles */
 QComboBox {
     background-color: #40414f; /* Set the background color */
     color: #ececf1;
@@ -184,7 +184,7 @@ QComboBox {
     padding-left: 5px;
 }
 
-/* Style the dropdown area */
+/* Style the dropdown button */
 QComboBox::drop-down {
     background-color: #40414f;
     border: 0px solid #40414f;
@@ -195,9 +195,39 @@ QComboBox::drop-down {
     subcontrol-position: left; /* Center the arrow icon */
 }
 
+/* Style for the list view that shows the items */
+QComboBox QAbstractItemView {
+    background-color: #40414f;
+    border: 1px solid #acacbe;
+    selection-background-color: #800080; /* Set the color of the selected row to purple */
+    selection-color: #ececf1; /* Ensure the text color of the selected row is readable */
+}
+
+/* Style for individual items in the list */
+QComboBox QAbstractItemView::item {
+    background-color: #40414f;
+    color: #ececf1; /* Set the text color */
+}
+
+/* Style for the selected item */
+QComboBox QAbstractItemView::item:selected {
+    background-color: #800080; /* Set the background color of the selected row to purple */
+    color: #ececf1; /* Ensure the text color of the selected row is readable */
+}
+
+/* Style for the hovered item */
+QComboBox QAbstractItemView::item:hover {
+    background-color: #a64ca6; /* Set the background color of the hovered row to a lighter purple */
+    color: #ececf1; /* Ensure the text color of the hovered row is readable */
+}
+
+/* Style the QComboBox when it is focused */
+QComboBox:focus {
+    border: 0.5px solid #acacbe;
+}
+
 /* Style the arrow inside the dropdown */
 QComboBox::down-arrow {
-
     width: 0;
     height: 0;
     border-left: 6px solid #40414f;
@@ -206,10 +236,12 @@ QComboBox::down-arrow {
     margin: 8px auto; /* Center the arrow */
 }
 
+/* Style the QComboBox when it is in &quot;on&quot; state */
 QComboBox::on {
     border: 0.5px solid #acacbe;
 }
 
+/* Style the QComboBox when it is disabled */
 QComboBox:disabled {
     background-color: #40414f; /* Set the background color for the disabled state */
     border: 1px solid #565869; /* Adjust border color for disabled state */
@@ -1225,7 +1257,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -5658,6 +5690,26 @@ QPushButton:hover{
                           <pointsize>10</pointsize>
                          </font>
                         </property>
+                        <item>
+                         <property name="text">
+                          <string>New Item</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>New Item</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>New Item</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>New Item</string>
+                         </property>
+                        </item>
                        </widget>
                       </item>
                       <item>
@@ -5897,7 +5949,7 @@ p, li { white-space: pre-wrap; }
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>-137</y>
+                  <y>0</y>
                   <width>677</width>
                   <height>878</height>
                  </rect>

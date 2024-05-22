@@ -258,7 +258,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.evel_tools = EVELTools()
 
         ConnectPropertiesModuleButtons.button_controller(self,table_contracts, table_projects, table_easements)
-        ConnectSettingsButtons.button_controller(self)
+        #ConnectSettingsButtons.button_controller(self)
+        self.pbGreateEVEL.setEnabled(False)
+
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
         self.btnUserPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_terms_of_use))

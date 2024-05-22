@@ -3,6 +3,7 @@ from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.uic import loadUi
 from ...config.settings import Filepaths
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
+#from .evel_easements import LayerFunctions
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -19,7 +20,7 @@ class EvelGroupLayers:
     EASEMENT = 'Servituut'
 
     @staticmethod
-    def create_EVEL_group_layer(sub_group_layer_name):
+    def create_EVEL_group_layer(sub_group_layer_name=None):
         from qgis.core import QgsProject
         # Get the main group layer name and sub-group layer name
         main_group_layer_name = EvelGroupLayers.EVEL_MAIN
@@ -32,6 +33,8 @@ class EvelGroupLayers:
         else:
             pass
         # Find or create the sub-group layer within the main group
+        if sub_group_layer_name is None:
+            return
         sub_group = main_group.findGroup(sub_group_layer_name)
         if sub_group is None:
             main_group.addGroup(sub_group_layer_name)
@@ -52,6 +55,16 @@ class EVELTools(QObject):
         cancel_button = self.widget_EVEL.pbCancel
 
         self.widget_EVEL.show()
+        EvelGroupLayers.create_EVEL_group_layer()
+        pushbutton = self.widget_EVEL.pbGenerateLayers
+        checkbox = self.widget_EVEL.cbEasements
+                # Initial state based on the checkbox
+        pushbutton.setEnabled(checkbox.isChecked())
+
+        # Connect checkbox state change to the method
+        checkbox.stateChanged.connect(lambda: EVELTools.update_button_state)
+        
+            
 
         save_button.clicked.connect(lambda:EVELTools().on_save_button_clicked)
         cancel_button.clicked.connect(lambda: EVELTools().on_cancel_button_clicked)
@@ -70,3 +83,8 @@ class EVELTools(QObject):
     def on_cancel_button_clicked(self):
         self.widget_EVEL.reject()
         self.widgetClosed.emit()
+
+    def update_button_state(self):
+        checkbox = self.widget_EVEL.cbEasements
+        pushbutton = self.widget_EVEL.pbGenerateLayers
+        pushbutton.setEnabled(checkbox.isChecked())
