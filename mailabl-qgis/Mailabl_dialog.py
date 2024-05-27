@@ -258,7 +258,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.evel_tools = EVELTools()
 
         ConnectPropertiesModuleButtons.button_controller(self,table_contracts, table_projects, table_easements)
-        #ConnectSettingsButtons.button_controller(self)
+        ConnectSettingsButtons.button_controller(self)
         self.pbGreateEVEL.setEnabled(False)
 
         # Logo ja kodukas
@@ -277,7 +277,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSettings_Setup_Contracts.clicked.connect(lambda: Setup_Conrtacts.load_contract_settings_widget(self))
         self.pbSettingsSetupEasements.clicked.connect(lambda: SetupEasments.load_easements_settings_widget(self))
 
-        
+        self.lblPhotos.setEnabled(False)
+        self.lblPhtosText.setEnabled(False)
         
         
 ###########################################

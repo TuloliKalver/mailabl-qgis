@@ -173,9 +173,9 @@ class projectsTableDecorator:
                 newLabel_for_cadastral = ""  # Replace with your actual column labels
                 newLabel_documents = ""
                 newLabel_Link = ""
-                newLabel_ID = ""
+                #newLabel_ID = ""
                 newLabel_CadastralShow = ""
-                p_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+                #p_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
                 p_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
                 p_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
                 p_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
@@ -264,9 +264,9 @@ class searchProjectsValue:
             newLabel_for_cadastral = ""  # Replace with your actual column labels
             newLabel_documents = ""
             newLabel_Link = ""
-            newLabel_ID = ""
+            #newLabel_ID = ""
             newLabel_CadastralShow = ""
-            p_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
+            #p_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
             p_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
             p_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
             p_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))

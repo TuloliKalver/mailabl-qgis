@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1125</width>
-    <height>1197</height>
+    <height>1142</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1257,7 +1257,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>4</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="styleSheet">
@@ -5949,9 +5949,9 @@ p, li { white-space: pre-wrap; }
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>0</y>
+                  <y>-267</y>
                   <width>677</width>
-                  <height>878</height>
+                  <height>909</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_159">
@@ -5997,7 +5997,8 @@ p, li { white-space: pre-wrap; }
 #lblWaterPipesValue,
 #lblSewerPipesValue,
 #lblPrSewagePipesValue,
-#lblDrainagePipesValue
+#lblDrainagePipesValue,
+#lblPhotos
 {
 
 	background-color:#40414f;
@@ -7214,6 +7215,72 @@ p, li { white-space: pre-wrap; }
                              <string>Määramata</string>
                             </property>
                            </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QFrame" name="frame_22">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QHBoxLayout" name="horizontalLayout_35">
+                          <property name="spacing">
+                           <number>10</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>15</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QLabel" name="lblPhtosText">
+                            <property name="font">
+                             <font>
+                              <pointsize>10</pointsize>
+                              <weight>75</weight>
+                              <bold>true</bold>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Projekti fotod*</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="lblPhotos">
+                            <property name="font">
+                             <font>
+                              <pointsize>10</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Määramata*</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <spacer name="horizontalSpacer_49">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>413</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
                           </item>
                          </layout>
                         </widget>

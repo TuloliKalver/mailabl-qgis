@@ -131,6 +131,8 @@ class Setup_ProjectLayers:
         
         widget.show()
         
+        widget.lblPhtoslabel.setEnabled(False)
+        widget.lePhotos.setEnabled(False)
         module = Modules.MODULE_PROJECTS
  
         cmb_layers  = widget.cmbProjects_Layer

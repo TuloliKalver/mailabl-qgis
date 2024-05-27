@@ -296,74 +296,74 @@ QLineEdit:disabled {
                 <number>5</number>
                </property>
                <item>
-                <widget class="QCheckBox" name="checkBox">
+                <widget class="QCheckBox" name="cbWater">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>Vesi</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_2">
+                <widget class="QCheckBox" name="cbSewage">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>Kanal</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_3">
+                <widget class="QCheckBox" name="cbRainwater">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>Sademevesi</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_4">
+                <widget class="QCheckBox" name="cbPumpstation">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>Pumpla</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_5">
+                <widget class="QCheckBox" name="cbSewTreatment">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>Reoveepuhastid</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_6">
+                <widget class="QCheckBox" name="cbConnectionPoints">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>Liitumispunktid</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
@@ -375,31 +375,31 @@ QLineEdit:disabled {
                   </font>
                  </property>
                  <property name="text">
-                  <string>Servituudid</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_8">
+                <widget class="QCheckBox" name="cbServices">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>Võrgusündmused</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkBox_9">
+                <widget class="QCheckBox" name="cbSNConstant">
                  <property name="font">
                   <font>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
                  <property name="text">
-                  <string>SN-väärtused</string>
+                  <string>keele_muutuja</string>
                  </property>
                 </widget>
                </item>
@@ -458,7 +458,7 @@ QLineEdit:disabled {
                    <number>5</number>
                   </property>
                   <item>
-                   <widget class="QCheckBox" name="checkBox_10">
+                   <widget class="QCheckBox" name="cbGepackage">
                     <property name="font">
                      <font>
                       <pointsize>10</pointsize>
@@ -470,7 +470,7 @@ QLineEdit:disabled {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QCheckBox" name="checkBox_11">
+                   <widget class="QCheckBox" name="cbSQLDatabase">
                     <property name="font">
                      <font>
                       <pointsize>10</pointsize>
@@ -482,7 +482,7 @@ QLineEdit:disabled {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QCheckBox" name="checkBox_12">
+                   <widget class="QCheckBox" name="cbPostgreDatabase">
                     <property name="font">
                      <font>
                       <pointsize>10</pointsize>
@@ -539,7 +539,7 @@ QLineEdit:disabled {
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit_2"/>
+                      <widget class="QLineEdit" name="leDatabaseName"/>
                      </item>
                     </layout>
                    </widget>
@@ -576,13 +576,13 @@ QLineEdit:disabled {
                       </widget>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="lineEdit"/>
+                      <widget class="QLineEdit" name="leLocation"/>
                      </item>
                     </layout>
                    </widget>
                   </item>
                   <item alignment="Qt::AlignRight">
-                   <widget class="QPushButton" name="pushButton_2">
+                   <widget class="QPushButton" name="pbFileLocation">
                     <property name="font">
                      <font>
                       <pointsize>8</pointsize>
@@ -610,7 +610,7 @@ QLineEdit:disabled {
                 </spacer>
                </item>
                <item alignment="Qt::AlignRight">
-                <widget class="QPushButton" name="pushButton">
+                <widget class="QPushButton" name="pbGenerateVrtLayer">
                  <property name="font">
                   <font>
                    <pointsize>8</pointsize>

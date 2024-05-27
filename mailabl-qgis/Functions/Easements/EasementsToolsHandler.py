@@ -292,8 +292,8 @@ class EasementTools(QObject):
                 checkbox.setChecked(False)
 
     @staticmethod
-    def update_checkboxes(checkboxes_info, table):
-        if table:
+    def update_checkboxes(checkboxes_info, table = None):
+        if table is not None:
             model = table.model()
            
 

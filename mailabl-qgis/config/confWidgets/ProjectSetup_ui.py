@@ -246,10 +246,8 @@ class Ui_LayeAdjuster(object):
         self.fSettingsFolders.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.fSettingsFolders.setFrameShadow(QtWidgets.QFrame.Raised)
         self.fSettingsFolders.setObjectName("fSettingsFolders")
-        self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.fSettingsFolders)
-        self.verticalLayout_12.setContentsMargins(0, 0, 0, 5)
-        self.verticalLayout_12.setSpacing(5)
-        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.fSettingsFolders)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.Projekcts_FolderSetup_2 = QtWidgets.QFrame(self.fSettingsFolders)
         self.Projekcts_FolderSetup_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Projekcts_FolderSetup_2.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -270,7 +268,7 @@ class Ui_LayeAdjuster(object):
         self.leProjectsTargetFolder_location.setMinimumSize(QtCore.QSize(500, 0))
         self.leProjectsTargetFolder_location.setObjectName("leProjectsTargetFolder_location")
         self.horizontalLayout_63.addWidget(self.leProjectsTargetFolder_location)
-        self.verticalLayout_12.addWidget(self.Projekcts_FolderSetup_2)
+        self.verticalLayout_2.addWidget(self.Projekcts_FolderSetup_2)
         self.Projekcts_FolderSetup = QtWidgets.QFrame(self.fSettingsFolders)
         self.Projekcts_FolderSetup.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Projekcts_FolderSetup.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -291,7 +289,27 @@ class Ui_LayeAdjuster(object):
         self.leProjectsFolder_location.setMinimumSize(QtCore.QSize(500, 0))
         self.leProjectsFolder_location.setObjectName("leProjectsFolder_location")
         self.horizontalLayout_62.addWidget(self.leProjectsFolder_location)
-        self.verticalLayout_12.addWidget(self.Projekcts_FolderSetup)
+        self.verticalLayout_2.addWidget(self.Projekcts_FolderSetup)
+        self.frame_22 = QtWidgets.QFrame(self.fSettingsFolders)
+        self.frame_22.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_22.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_22.setObjectName("frame_22")
+        self.horizontalLayout_35 = QtWidgets.QHBoxLayout(self.frame_22)
+        self.horizontalLayout_35.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_35.setSpacing(10)
+        self.horizontalLayout_35.setObjectName("horizontalLayout_35")
+        self.lblPhtoslabel = QtWidgets.QLabel(self.frame_22)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.lblPhtoslabel.setFont(font)
+        self.lblPhtoslabel.setObjectName("lblPhtoslabel")
+        self.horizontalLayout_35.addWidget(self.lblPhtoslabel)
+        self.lePhotos = QtWidgets.QLineEdit(self.frame_22)
+        self.lePhotos.setObjectName("lePhotos")
+        self.horizontalLayout_35.addWidget(self.lePhotos)
+        self.verticalLayout_2.addWidget(self.frame_22)
         self.verticalLayout_8.addWidget(self.fSettingsFolders)
         self.fSettingsFolderStucture = QtWidgets.QFrame(self.fMainLeft)
         self.fSettingsFolderStucture.setMinimumSize(QtCore.QSize(0, 100))
@@ -453,6 +471,7 @@ class Ui_LayeAdjuster(object):
         self.lblCurrect_Cadastral.setText(_translate("LayeAdjuster", "Eelistatud staatus"))
         self.lblProjectsTargetFolder.setText(_translate("LayeAdjuster", "Projekti sihtkaus"))
         self.lblProjectsFolder.setText(_translate("LayeAdjuster", "Projekti baaskaust"))
+        self.lblPhtoslabel.setText(_translate("LayeAdjuster", "Projekti fotod*"))
         self.groupBox.setTitle(_translate("LayeAdjuster", "Projekti kausta nime seadistamine"))
         self.cmbNameElements.setPlaceholderText(_translate("LayeAdjuster", "Vali element"))
         self.cmbNameElements.setItemText(0, _translate("LayeAdjuster", "Projekti number"))
@@ -473,8 +492,14 @@ class Ui_LayeAdjuster(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600; text-decoration: underline;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Eelistatud kaardikiht:</span><br />...</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600; text-decoration: underline;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Projekti kaust:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">&quot;Projekti kaust&quot; on omadus, mis võimaldab genereerida kokkulepitud struktuuriga &quot;baas kaust&quot; ja selle sisu ning paigutada see kokkulepitud asukohta, kokkulepitud nime struktuuri genereerimisega.  Vaata täpsemalt &quot;Projekti kausta nime seadistamisest&quot;. Projekti kausta teekond tuleb lisada täis lingina:</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Projekti fotod*:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Lisa kausta nimetus, kus hoiustatakse projektiga seotud fotosid.</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600; text-decoration: underline;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Eelistatud staatus:</span><br />Millise staatusega projekte eelistad lepingu mooduli avamisel?</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; text-decoration: underline;\">Projekti kausta nime seadistamine:</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Nime genereerimisel saab kasutada: Projekti nime, &quot;elementi&quot;, projekti numbrit. </p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">NB! projekti kausta nimedes ei saa kasutada (kuna need ei vasta Windowsi standarditele) järgmisi sümboleid: &quot;&lt;&gt;:&quot;/\\\\|?*.&quot;, </span></p></body></html>"))

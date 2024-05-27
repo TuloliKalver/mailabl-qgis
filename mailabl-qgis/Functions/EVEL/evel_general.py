@@ -56,7 +56,7 @@ class EVELTools(QObject):
 
         self.widget_EVEL.show()
         EvelGroupLayers.create_EVEL_group_layer()
-        pushbutton = self.widget_EVEL.pbGenerateLayers
+        pushbutton = self.widget_EVEL.pbGenerateVrtLayer
         checkbox = self.widget_EVEL.cbEasements
                 # Initial state based on the checkbox
         pushbutton.setEnabled(checkbox.isChecked())
@@ -88,3 +88,51 @@ class EVELTools(QObject):
         checkbox = self.widget_EVEL.cbEasements
         pushbutton = self.widget_EVEL.pbGenerateLayers
         pushbutton.setEnabled(checkbox.isChecked())
+
+
+class EVELCheckboxes:
+    def get_checkbox_info(widget):
+        
+        water_checkbox = getattr(widget, 'cbWater', None)
+        sewage_checkbox = getattr(widget, 'cbSewage', None)
+        rainwater_checkbox = getattr(widget, 'cbRainwater', None)
+        pumpstation_checkbox = getattr(widget, 'cbPumpstation', None)
+        treatment_checkbox = getattr(widget, 'cbSewTreatment', None)
+        connectionpoint_checkbox = getattr(widget, 'cbConnectionPoints', None)
+        easement_checkbox = getattr(widget, 'cbEasements', None)
+        services_checkbox = getattr(widget, 'cbServices', None)
+        snconstant_checkbox = getattr(widget, 'cbSNConstant', None)
+
+        # Define texts for checkboxes
+        checkbox_texts = {
+            water_checkbox: None,
+            sewage_checkbox: None,
+            rainwater_checkbox: None,
+            pumpstation_checkbox: None,
+            treatment_checkbox: None,
+            connectionpoint_checkbox: None,
+            easement_checkbox: None,
+            services_checkbox: None,
+            snconstant_checkbox: None,
+            }
+
+        # Define lambdas to connect checkboxes to functions (to be implemented)
+        checkbox_functions = {
+            water_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, water_checkbox),
+            sewage_checkbox: None,
+            rainwater_checkbox: None,
+            pumpstation_checkbox: None,
+            treatment_checkbox: None,
+            connectionpoint_checkbox: None,
+            easement_checkbox: None,
+            services_checkbox: None,
+            snconstant_checkbox: None,
+        }
+
+        # Create checkboxes_info dictionary
+        checkboxes_info = {}
+        for checkbox, text in checkbox_texts.items():
+            if checkbox:
+                checkboxes_info[checkbox] = (text, checkbox_functions.get(checkbox))
+
+        return checkboxes_info

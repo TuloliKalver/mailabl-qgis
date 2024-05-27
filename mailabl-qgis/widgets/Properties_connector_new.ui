@@ -61,37 +61,7 @@ QWidget{
 
 
 /*esialgu jaotamata omadused*/
-QComboBox{
 
-	background-color:#40414f;
-	color:#ececf1;
-	border: 1px solid #565869;
-	border-radius: 3px;
-	padding-left: 5px
-}
-
-/*Style the dropdown area*/
-QComboBox::drop-down{
-	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));
-	border: 1px solid #565869;
-	border-radius: 8px;
-	height:16px;
-	width: 16px;
-	subcontrol-origin: padding;
-    subcontrol-position: left
-}
-
-QComboBox::on{
-
-  	border: 0.5px solid #acacbe;
-}
-
-
-QComboBox:disabled {
-    background-color: #303040; /* Adjusted disabled background color */
-    border: 1px solid #707070; /* Adjust border color for disabled state */
-    color: #8a95a5; /* Adjust text color for disabled state */
-}
 
 
 QCheckBox:disabled {
@@ -173,6 +143,80 @@ QLineEdit:disabled {
     color: #8a95a5; /* Adjust text color for disabled state */
 }
 
+
+
+/* General QComboBox styles */
+QComboBox {
+    background-color: #40414f; /* Set the background color */
+    color: #ececf1;
+    border: 1px solid #565869;
+    border-radius: 3px;
+    padding-left: 5px;
+}
+
+/* Style the dropdown button */
+QComboBox::drop-down {
+    background-color: #40414f;
+    border: 0px solid #40414f;
+    border-radius: 10px;
+    width: 16px;
+    height: 16px;
+    subcontrol-origin: padding;
+    subcontrol-position: left; /* Center the arrow icon */
+}
+
+/* Style for the list view that shows the items */
+QComboBox QAbstractItemView {
+    background-color: #40414f;
+    border: 1px solid #acacbe;
+    selection-background-color: #800080; /* Set the color of the selected row to purple */
+    selection-color: #ececf1; /* Ensure the text color of the selected row is readable */
+}
+
+/* Style for individual items in the list */
+QComboBox QAbstractItemView::item {
+    background-color: #40414f;
+    color: #ececf1; /* Set the text color */
+}
+
+/* Style for the selected item */
+QComboBox QAbstractItemView::item:selected {
+    background-color: #800080; /* Set the background color of the selected row to purple */
+    color: #ececf1; /* Ensure the text color of the selected row is readable */
+}
+
+/* Style for the hovered item */
+QComboBox QAbstractItemView::item:hover {
+    background-color: #a64ca6; /* Set the background color of the hovered row to a lighter purple */
+    color: #ececf1; /* Ensure the text color of the hovered row is readable */
+}
+
+/* Style the QComboBox when it is focused */
+QComboBox:focus {
+    border: 0.5px solid #acacbe;
+}
+
+/* Style the arrow inside the dropdown */
+QComboBox::down-arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid #40414f;
+    border-right: 6px solid #40414f;
+    border-top: 8px solid #ececf1; /* Adjust the color to match your design */
+    margin: 8px auto; /* Center the arrow */
+}
+
+/* Style the QComboBox when it is in &quot;on&quot; state */
+QComboBox::on {
+    border: 0.5px solid #acacbe;
+}
+
+/* Style the QComboBox when it is disabled */
+QComboBox:disabled {
+    background-color: #40414f; /* Set the background color for the disabled state */
+    border: 1px solid #565869; /* Adjust border color for disabled state */
+    color: #8a95a5; /* Adjust text color for disabled state */
+}
 
 </string>
   </property>
