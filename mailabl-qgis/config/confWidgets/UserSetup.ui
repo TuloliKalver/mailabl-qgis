@@ -153,48 +153,6 @@ QLineEdit {
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="f_Label">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-       <widget class="QLabel" name="lbl_Heading">
-        <property name="font">
-         <font>
-          <family>Tahoma</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>NB! Seadistus arendamisel!!!</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QFrame" name="fContent">
      <property name="minimumSize">
       <size>
@@ -216,7 +174,7 @@ QLineEdit {
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>20</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
@@ -300,7 +258,7 @@ QLineEdit {
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="lblCurrect_Cadastral_2">
+                <widget class="QLabel" name="lblUser_preferences">
                  <property name="font">
                   <font>
                    <family>Tahoma</family>
@@ -313,7 +271,7 @@ QLineEdit {
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="cmbUserLayers_2">
+                <widget class="QComboBox" name="cmbUserMain">
                  <property name="baseSize">
                   <size>
                    <width>0</width>
@@ -354,47 +312,6 @@ QLineEdit {
                    <string/>
                   </property>
                  </item>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="f_Main_4">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <property name="spacing">
-                <number>10</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label_5">
-                 <property name="text">
-                  <string>Avalehe eelistused:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Tulekul</string>
-                 </property>
                 </widget>
                </item>
               </layout>
@@ -454,7 +371,7 @@ QLineEdit {
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pbDel_Project_Settings">
+             <widget class="QPushButton" name="pbCancel">
               <property name="text">
                <string>Tühista</string>
               </property>
@@ -471,7 +388,7 @@ QLineEdit {
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pbSave_Projects_Settings">
+             <widget class="QPushButton" name="pbSave">
               <property name="font">
                <font>
                 <family>Tahoma</family>

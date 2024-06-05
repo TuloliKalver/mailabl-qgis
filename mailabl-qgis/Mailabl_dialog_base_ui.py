@@ -403,6 +403,9 @@ class Ui_MailablDialogBase(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
         self.verticalLayout_7.addWidget(self.line)
+        self.pbtest = QtWidgets.QPushButton(self.leftMenuSubMain)
+        self.pbtest.setObjectName("pbtest")
+        self.verticalLayout_7.addWidget(self.pbtest)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_7.addItem(spacerItem)
         self.LeftFooter_frame = QtWidgets.QFrame(self.leftMenuSubMain)
@@ -2539,7 +2542,7 @@ class Ui_MailablDialogBase(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -267, 677, 909))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 677, 906))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_159 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_159.setObjectName("verticalLayout_159")
@@ -2578,7 +2581,8 @@ class Ui_MailablDialogBase(object):
 "#lblSewerPipesValue,\n"
 "#lblPrSewagePipesValue,\n"
 "#lblDrainagePipesValue,\n"
-"#lblPhotos\n"
+"#lblPhotos,\n"
+"#lblSettings_preferedHomePage\n"
 "{\n"
 "\n"
 "    background-color:#40414f;\n"
@@ -2746,12 +2750,9 @@ class Ui_MailablDialogBase(object):
         self.label_27.setFont(font)
         self.label_27.setObjectName("label_27")
         self.horizontalLayout_36.addWidget(self.label_27)
-        self.label_28 = QtWidgets.QLabel(self.frame_4)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.label_28.setFont(font)
-        self.label_28.setObjectName("label_28")
-        self.horizontalLayout_36.addWidget(self.label_28)
+        self.lblSettings_preferedHomePage = QtWidgets.QLabel(self.frame_4)
+        self.lblSettings_preferedHomePage.setObjectName("lblSettings_preferedHomePage")
+        self.horizontalLayout_36.addWidget(self.lblSettings_preferedHomePage)
         spacerItem26 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_36.addItem(spacerItem26)
         self.verticalLayout_45.addWidget(self.frame_4)
@@ -4771,6 +4772,7 @@ class Ui_MailablDialogBase(object):
         self.pbeasements.setText(_translate("MailablDialogBase", "Servituudid"))
         self.pbMapThemes.setText(_translate("MailablDialogBase", "Teemakaardid*"))
         self.pbAddDrawings.setText(_translate("MailablDialogBase", "Teostusjoonised*"))
+        self.pbtest.setText(_translate("MailablDialogBase", "test"))
         self.pbSettings.setToolTip(_translate("MailablDialogBase", "Seaded"))
         self.pbSettings.setText(_translate("MailablDialogBase", "Seaded"))
         self.pbUpdateData.setText(_translate("MailablDialogBase", "Andmete laadimine"))
@@ -4781,12 +4783,14 @@ class Ui_MailablDialogBase(object):
         self.pbRefresh.setText(_translate("MailablDialogBase", "Andmete värskendamine*"))
         self.pbRemove.setText(_translate("MailablDialogBase", "Kinnistute eemaldamine"))
         self.pbExpand.setText(_translate("MailablDialogBase", "Kinnistute lisamine"))
+        self.Servituudid.setAccessibleName(_translate("MailablDialogBase", "Servituudid"))
         self.lbleasementPageName.setText(_translate("MailablDialogBase", "Servituudid"))
         self.pbEasementsConnectProperties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
         self.leSearcheasements.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
         self.leSearcheasements.setPlaceholderText(_translate("MailablDialogBase", "Sisesta servituudi number"))
         self.pbSearcheasements.setText(_translate("MailablDialogBase", "Otsi"))
         self.pbEasementsTools.setText(_translate("MailablDialogBase", "Koosta skeem"))
+        self.Cadastralmoves.setAccessibleName(_translate("MailablDialogBase", "Tomingud kinnistutega"))
         self.CadastralMovesMainLabel.setText(_translate("MailablDialogBase", "Andmete laadimine"))
         self.label_29.setText(_translate("MailablDialogBase", "Lisamiseks on valmis"))
         self.label_11.setText(_translate("MailablDialogBase", "kinnistut."))
@@ -4876,6 +4880,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">4. Andmete värskendamine</span><span style=\" font-size:10pt;\"> (täiendamisel)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Olemasolevate kinnistute uuendamine</span></p></body></html>"))
+        self.Lepingud.setAccessibleName(_translate("MailablDialogBase", "Lepingud"))
         self.label_18.setText(_translate("MailablDialogBase", "Lepingud"))
         self.pbContracts_Connect_properties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
         self.le_searchContracts.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
@@ -4885,6 +4890,7 @@ class Ui_MailablDialogBase(object):
         self.cmbcontractStatuses.setItemText(1, _translate("MailablDialogBase", "New Item"))
         self.cmbcontractStatuses.setItemText(2, _translate("MailablDialogBase", "New Item"))
         self.cmbcontractStatuses.setItemText(3, _translate("MailablDialogBase", "New Item"))
+        self.Help.setAccessibleName(_translate("MailablDialogBase", "None"))
         self.label_20.setText(_translate("MailablDialogBase", "Help"))
         self.textEdit.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -4901,6 +4907,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Selleks, et plugin saaks töötada, tuleb alguses importida Maa-ameti SHP-fail.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p></body></html>"))
         self.label_21.setText(_translate("MailablDialogBase", "FOOTER"))
+        self.settings.setAccessibleName(_translate("MailablDialogBase", "Seaded"))
         self.label_15.setText(_translate("MailablDialogBase", "Seaded"))
         self.label_23.setText(_translate("MailablDialogBase", "NB! Tärniga tähistatud elemendid ei ole veel püsivalt seadistatavad"))
         self.lblHEadingUserData.setText(_translate("MailablDialogBase", "Kasutaja seaded"))
@@ -4911,8 +4918,8 @@ class Ui_MailablDialogBase(object):
         self.lbNuserName.setText(_translate("MailablDialogBase", "Eesnimi"))
         self.lbNUserRoles.setText(_translate("MailablDialogBase", "Rollid Mailablis:"))
         self.lblUserRoles.setText(_translate("MailablDialogBase", "rollid"))
-        self.label_27.setText(_translate("MailablDialogBase", "Minu eelistatud avaleht:*"))
-        self.label_28.setText(_translate("MailablDialogBase", "Tulekul"))
+        self.label_27.setText(_translate("MailablDialogBase", "Minu eelistatud avaleht:"))
+        self.lblSettings_preferedHomePage.setText(_translate("MailablDialogBase", "Määramata"))
         self.label_30.setText(_translate("MailablDialogBase", "Kinnistute andmete seaded"))
         self.label_16.setText(_translate("MailablDialogBase", "Andmekiht, millelt imporditakse uued andmed:"))
         self.lblSHPNewItems.setText(_translate("MailablDialogBase", "Määramata"))
@@ -4954,6 +4961,7 @@ class Ui_MailablDialogBase(object):
         self.lblPrainagePipes.setText(_translate("MailablDialogBase", "Drenaažitorud"))
         self.lblDrainagePipesValue.setText(_translate("MailablDialogBase", "Määramata"))
         self.pbGreateEVEL.setText(_translate("MailablDialogBase", "EVEL"))
+        self.Homepage.setAccessibleName(_translate("MailablDialogBase", "Avaleht"))
         self.label_10.setText(_translate("MailablDialogBase", "Avaleht"))
         self.teWelcomeContent.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -4978,6 +4986,8 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">NB! Jälgi infoaknaid ja selgitusi akna paremas osas (avatavad/suletavad), mis annavad infot vajalike tegevuste kohta või on hoiatava informatsiooniga.  </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\"><br /></span><span style=\" font-size:12pt; text-decoration: underline;\">NB! Tegemist on Mailabli beeta versiooniga, mis ei ole lõplik toode ja mille arendus sõltub olulisel määral kasutajate tagasisidest!</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;\"><br /></p></body></html>"))
+        self.page.setAccessibleName(_translate("MailablDialogBase", "None"))
+        self.projects.setAccessibleName(_translate("MailablDialogBase", "Projektid"))
         self.lbl_heading_Projects.setText(_translate("MailablDialogBase", "Projektid"))
         self.pbProjects_Connect_properties.setText(_translate("MailablDialogBase", "Kinnistutega sidumine"))
         self.le_searchProjects.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
@@ -4985,6 +4995,7 @@ class Ui_MailablDialogBase(object):
         self.pbSearchProjects.setText(_translate("MailablDialogBase", "Otsi"))
         self.pushButton.setText(_translate("MailablDialogBase", "Zoomitud ala projektid"))
         self.pbGenProjectFolder.setText(_translate("MailablDialogBase", "Projekti kausta genereerimine"))
+        self.RemoveProperties.setAccessibleName(_translate("MailablDialogBase", "None"))
         self.label_26.setText(_translate("MailablDialogBase", "Projekti ID"))
         self.label_32.setText(_translate("MailablDialogBase", "Uus nimetus"))
         self.pbShowOnMap.setText(_translate("MailablDialogBase", "Näita kaardil"))

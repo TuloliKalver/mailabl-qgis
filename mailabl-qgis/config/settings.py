@@ -108,6 +108,7 @@ class FilesByNames:
         self.projects_setup_ui = "ProjectSetup.ui"
         self.contracts_setup_ui = "ContractsSetup.ui"
         self.easements_setup_ui = "EasementsSetup.ui"
+        self.user_setup_ui = "UserSetup.ui"
         self.easement_tools_ui = "Servituut.ui"
         self.Setup_ConfigUI = "ProjectSetup.ui"
         self.add_properties_to_module_ui = "Properties_connector_new.ui"
@@ -282,6 +283,23 @@ class SettingsDataSaveAndLoad:
         USER_ROLES = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_roles}"
         return USER_ROLES
 
+    def user_prefered_startpage_name (self):
+        user_pr_page_name = 'labels/user_preferred_homepage'
+        USER_PREFERRED_PAGE_NAME = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_pr_page_name}"
+        return USER_PREFERRED_PAGE_NAME
+
+    def user_prefered_startpage_index (self):
+        user_pr_page_index = 'labels/user_preferred_homepage_index'
+        USER_PREFERRED_PAGE_INDEX = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_pr_page_index}"
+        return USER_PREFERRED_PAGE_INDEX
+
+    def target_cadastral (self):
+        self.setup_label_cadastral_current = 'labels/cadastralCurrent'
+        TARGET_CADASTRAL = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
+        return TARGET_CADASTRAL
+
+
+
     def save_SHP_layer_setting(self,label,layer):
         settings = QgsSettings()
         #save setup target
@@ -324,7 +342,14 @@ class SettingsDataSaveAndLoad:
         settings.setValue(user_name_address, user_name)
         settings.setValue(user_lastname_address, user_lastname)
         settings.setValue(user_roles_address, roles)
-        
+
+
+    def save_user_prefered_startpage(self, user_page_index, user_page_name):
+        settings = QgsSettings()
+        user_page_name_setting = SettingsDataSaveAndLoad.user_prefered_startpage_name(self)
+        user_page_index_setting = SettingsDataSaveAndLoad.user_prefered_startpage_index(self)
+        settings.setValue(user_page_index_setting, user_page_index)
+        settings.setValue(user_page_name_setting, user_page_name)
 
     def save_FolderValues(self, lblProjectsFolder_location, lblProjectsTargetFolder_location, copy_folder, target_folder):
         settings = QgsSettings()
@@ -453,7 +478,18 @@ class SettingsDataSaveAndLoad:
         user_roles = SettingsDataSaveAndLoad.user_roles(self)
         settings = QgsSettings()
         return settings.value(user_roles, '', type=str)
+    
+    def load_user_prefered_startpage_index(self):
+        prefered_startpage_index = SettingsDataSaveAndLoad.user_prefered_startpage_index(self)
+        settings = QgsSettings()
+        return settings.value(prefered_startpage_index, '', type=str)
+        
 
+    def load_user_prefered_startpage_name(self):
+        prefered_startpage_name = SettingsDataSaveAndLoad.user_prefered_startpage_name(self)
+        settings = QgsSettings()
+        return settings.value(prefered_startpage_name, '', type=str)
+    
 
     def load_target_cadastral_name(self):
         settings_address = SettingsDataSaveAndLoad.target_cadastral(self)

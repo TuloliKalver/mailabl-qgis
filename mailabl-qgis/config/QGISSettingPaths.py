@@ -36,6 +36,7 @@ class UserSettings:
     USER_NAME = 'labels/user_name'
     USER_LASTNAME = 'labels/user_lastname'
     USER_ROLES = 'labels/user_roles'
+    USER_PREFERRED_PAGE = 'labels/user_preferred_homepage'
 
 class SettingsLoader:
     def __init__(self):

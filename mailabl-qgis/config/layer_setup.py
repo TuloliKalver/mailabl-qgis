@@ -14,11 +14,12 @@ from PyQt5.uic import loadUi
 # Local Application or Library Imports
 from ..KeelelisedMuutujad.modules import Modules
 from .settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
-from .QGISSettingPaths import LayerSettings, SettingsLoader
+from .QGISSettingPaths import LayerSettings, SettingsLoader, UserSettings
 from ..app.ComboBoxTools import ComboBoxTools
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
+from ..config.mainwidget import WidgetInfo
 
 
 pealkiri = Headings()
@@ -522,6 +523,63 @@ class SetupEasments:
         # Additional logic if needed
         print("saved")
 
+        widget.accept()  # Close the dialog
+
+
+    def on_cancel_button_clicked(self, widget):
+        # Handle logic when the cancel button is clicked
+
+        text = sisu.kasutaja_peatas_protsessi
+        heading = pealkiri.warningSimple
+        QMessageBox.information(widget, heading, text)
+        widget.reject()  # Close the dialog       
+
+class SetupUsers:
+    def load_user_settings_widget(self):
+        
+        ui_file_path = Filepaths.get_conf_widget(FilesByNames().user_setup_ui)
+        #print(f"path: {ui_file_path}")
+        # Load the UI from the specified .ui file
+        widget = loadUi(ui_file_path)
+        save_button = widget.pbSave
+        cancel_button = widget.pbCancel
+        combobox = widget.cmbUserMain
+
+        stackedwidget = self.swWorkSpace
+
+        items = WidgetInfo.get_stacked_widget_info(stackedwidget)
+        #print(f"items: {items}")
+        id = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)
+        WidgetInfo.create_visible_name_dropdown(items, combobox, id)
+
+
+        widget.show()
+
+        
+        prefered_homepage = SettingsLoader.get_setting(UserSettings.USER_PREFERRED_PAGE)
+        print(f"Load surer page: {prefered_homepage}")     
+        
+        # Connect signals to functions
+        save_button.clicked.connect(lambda: SetupUsers.on_save_button_clicked(self, widget, combobox))
+        cancel_button.clicked.connect(lambda: SetupUsers.on_cancel_button_clicked(self, widget))
+
+    def on_save_button_clicked(self, widget, combobox):
+
+        page_name = InsertStatusToComboBox.get_selected_status_name(combobox)
+        selected_index = WidgetInfo.get_selected_index(combobox)
+        
+        SettingsDataSaveAndLoad.save_user_prefered_startpage(self,selected_index, page_name)
+        print(f"Nimetus: {page_name}")
+        print(f"selected_index: {selected_index}")
+        label = self.lblSettings_preferedHomePage
+
+        label.setText(page_name)
+        
+        text = edu.salvestatud
+        heading = pealkiri.tubli
+        QMessageBox.information(widget, heading, text)
+        # Additional logic if needed
+        print("saved")
         widget.accept()  # Close the dialog
 
 

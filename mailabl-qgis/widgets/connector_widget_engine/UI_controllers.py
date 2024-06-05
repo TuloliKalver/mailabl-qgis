@@ -233,3 +233,4 @@ class ConnectorFunctions:
         if module == Modules.MODULE_EASEMENTS:
             from ...queries.python.update_relations.update_easements_properties import EasementProperties
             EasementProperties.update_easements_properties(self, element_id, widget, element_name)
+

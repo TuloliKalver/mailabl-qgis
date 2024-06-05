@@ -660,6 +660,13 @@ QComboBox:disabled {
              </widget>
             </item>
             <item>
+             <widget class="QPushButton" name="pbtest">
+              <property name="text">
+               <string>test</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -1260,6 +1267,9 @@ QComboBox:disabled {
             <number>4</number>
            </property>
            <widget class="QWidget" name="Servituudid">
+            <property name="accessibleName">
+             <string>Servituudid</string>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1757,6 +1767,9 @@ QPushButton:hover{
             </layout>
            </widget>
            <widget class="QWidget" name="Cadastralmoves">
+            <property name="accessibleName">
+             <string>Tomingud kinnistutega</string>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
               <widget class="QWidget" name="CadastralPageName" native="true">
@@ -5352,6 +5365,9 @@ p, li { white-space: pre-wrap; }
             </layout>
            </widget>
            <widget class="QWidget" name="Lepingud">
+            <property name="accessibleName">
+             <string>Lepingud</string>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_39">
              <property name="spacing">
               <number>0</number>
@@ -5782,6 +5798,9 @@ QPushButton:hover{
             </layout>
            </widget>
            <widget class="QWidget" name="Help">
+            <property name="accessibleName">
+             <string>None</string>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_40">
              <property name="spacing">
               <number>0</number>
@@ -5906,6 +5925,9 @@ p, li { white-space: pre-wrap; }
             </layout>
            </widget>
            <widget class="QWidget" name="settings">
+            <property name="accessibleName">
+             <string>Seaded</string>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <item>
               <widget class="QWidget" name="SettingsPageName" native="true">
@@ -5949,9 +5971,9 @@ p, li { white-space: pre-wrap; }
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>-267</y>
+                  <y>0</y>
                   <width>677</width>
-                  <height>909</height>
+                  <height>906</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_159">
@@ -5998,7 +6020,8 @@ p, li { white-space: pre-wrap; }
 #lblSewerPipesValue,
 #lblPrSewagePipesValue,
 #lblDrainagePipesValue,
-#lblPhotos
+#lblPhotos,
+#lblSettings_preferedHomePage
 {
 
 	background-color:#40414f;
@@ -6388,19 +6411,14 @@ p, li { white-space: pre-wrap; }
                              </font>
                             </property>
                             <property name="text">
-                             <string>Minu eelistatud avaleht:*</string>
+                             <string>Minu eelistatud avaleht:</string>
                             </property>
                            </widget>
                           </item>
                           <item>
-                           <widget class="QLabel" name="label_28">
-                            <property name="font">
-                             <font>
-                              <pointsize>10</pointsize>
-                             </font>
-                            </property>
+                           <widget class="QLabel" name="lblSettings_preferedHomePage">
                             <property name="text">
-                             <string>Tulekul</string>
+                             <string>Määramata</string>
                             </property>
                            </widget>
                           </item>
@@ -8191,6 +8209,9 @@ p, li { white-space: pre-wrap; }
             </layout>
            </widget>
            <widget class="QWidget" name="Homepage">
+            <property name="accessibleName">
+             <string>Avaleht</string>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <property name="spacing">
               <number>0</number>
@@ -8299,8 +8320,15 @@ p, li { white-space: pre-wrap; }
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="page"/>
+           <widget class="QWidget" name="page">
+            <property name="accessibleName">
+             <string>None</string>
+            </property>
+           </widget>
            <widget class="QWidget" name="projects">
+            <property name="accessibleName">
+             <string>Projektid</string>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -8724,6 +8752,9 @@ QPushButton:hover{
             </layout>
            </widget>
            <widget class="QWidget" name="RemoveProperties">
+            <property name="accessibleName">
+             <string>None</string>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_88">
              <item>
               <widget class="QFrame" name="Prygikast">

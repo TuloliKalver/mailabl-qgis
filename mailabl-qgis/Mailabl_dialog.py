@@ -23,10 +23,11 @@ from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
-from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup_Conrtacts, SetupEasments
+from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup_Conrtacts, SetupEasments, SetupUsers
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
+from .config.mainwidget import WidgetInfo
 from .KeelelisedMuutujad.modules import Modules
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
@@ -276,6 +277,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSettings_Setup_Projects.clicked.connect(lambda: Setup_ProjectLayers.load_project_settings_widget(self))
         self.pbSettings_Setup_Contracts.clicked.connect(lambda: Setup_Conrtacts.load_contract_settings_widget(self))
         self.pbSettingsSetupEasements.clicked.connect(lambda: SetupEasments.load_easements_settings_widget(self))
+        self.pbUserSettings.clicked.connect(lambda: SetupUsers.load_user_settings_widget(self))
 
         self.lblPhotos.setEnabled(False)
         self.lblPhtosText.setEnabled(False)
@@ -354,8 +356,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbCooseFromMap_Add.setEnabled(False)
         self.lblDel_Aditiona_txt.setEnabled(False)
 
+        #self.pbtest.clicked.connect(self.test_StackedWidget)
 
+    #def test_StackedWidget(self):
 
+    #    print (items)
 
     def log_out(self):
         Unload.log_out(self)
@@ -379,6 +384,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.showNormal()
             button.setEnabled(True)
             return
+
+    
 
     def on_easement_widget_closed(self, button):
         button.setEnabled(True)
@@ -1085,8 +1092,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.pbConfirm_action.show()
 
-    def on_load(self, frames):    
-        self.swWorkSpace.setCurrentIndex(5)
+    def on_load(self, frames):
+
         FrameHandler.hide_multiple_frames(self, frames )
         path = PathLoaderSimple.metadata()
         version_nr = Version.get_plugin_version(path)
@@ -1112,6 +1119,28 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if access_token_results == "success":
             self.UC_Main_Frame.setVisible(False)
             FrameHandler.show_multiple_frames(self, frames)
+            index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)
+            
+            # Convert index to integer, handling potential exceptions
+            index_int = int(index)
+
+            # Get the mapped functions dictionary from WidgetInfo
+            mapped_functions = WidgetInfo.mapped_indexes_functions(self)
+            print(f"mapped_functions:  {mapped_functions}")
+            # Check if mapped_functions is not None before iterating
+            if mapped_functions is not None and index_int in mapped_functions:
+                function = mapped_functions.get(index_int)
+                if function:
+                    function()
+                else:
+                    # Handle the case where the mapped function is None
+                    print(f"No function mapped for index {index_int}. Setting default to page 5.")
+                    self.swWorkSpace.setCurrentIndex(5)
+            else:
+                # Handle the case where index is not a valid page index (e.g., set a default)
+                print(f"Invalid page index: {index_int} or mapped_functions is None. Setting default to page 5.")
+                self.swWorkSpace.setCurrentIndex(5)
+
             self.resize(1150, 700)
             path = PathLoaderSimple.metadata()
             version_nr = Version.get_plugin_version(path)
@@ -1400,6 +1429,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblPreferredEasementsTypes_value = self.lblPreferredEasementsTypes_value
         PreferredEasementsTypes_values = SettingsDataSaveAndLoad.load_easements_type_names(self)
         lblPreferredEasementsTypes_value.setText(PreferredEasementsTypes_values)
+        prefered_homepage_name_value = SettingsDataSaveAndLoad.load_user_prefered_startpage_name(self)
+        if prefered_homepage_name_value == "":
+            self.lblSettings_preferedHomePage.setText("Määramata")
+        else:
+            self.lblSettings_preferedHomePage.setText(prefered_homepage_name_value)
         
         water_layer_name = SettingsLoader.get_setting( LayerSettings.WATER_LAYER)
         sewer_layer_name = SettingsLoader.get_setting( LayerSettings.SEWER_LAYER)
@@ -1410,7 +1444,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.lblSewerPipesValue.setText(sewer_layer_name)
         self.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)
         self.lblDrainagePipesValue.setText(drainage_layer_name)
-
 
         SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
                                                         lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
