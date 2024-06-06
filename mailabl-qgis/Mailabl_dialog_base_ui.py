@@ -4750,7 +4750,7 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(4)
+        self.swWorkSpace.setCurrentIndex(1)
         self.swCadastral_sub_processes.setCurrentIndex(2)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -4790,7 +4790,7 @@ class Ui_MailablDialogBase(object):
         self.leSearcheasements.setPlaceholderText(_translate("MailablDialogBase", "Sisesta servituudi number"))
         self.pbSearcheasements.setText(_translate("MailablDialogBase", "Otsi"))
         self.pbEasementsTools.setText(_translate("MailablDialogBase", "Koosta skeem"))
-        self.Cadastralmoves.setAccessibleName(_translate("MailablDialogBase", "Tomingud kinnistutega"))
+        self.Cadastralmoves.setAccessibleName(_translate("MailablDialogBase", "None"))
         self.CadastralMovesMainLabel.setText(_translate("MailablDialogBase", "Andmete laadimine"))
         self.label_29.setText(_translate("MailablDialogBase", "Lisamiseks on valmis"))
         self.label_11.setText(_translate("MailablDialogBase", "kinnistut."))
@@ -4907,7 +4907,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Selleks, et plugin saaks töötada, tuleb alguses importida Maa-ameti SHP-fail.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p></body></html>"))
         self.label_21.setText(_translate("MailablDialogBase", "FOOTER"))
-        self.settings.setAccessibleName(_translate("MailablDialogBase", "Seaded"))
+        self.settings.setAccessibleName(_translate("MailablDialogBase", "None"))
         self.label_15.setText(_translate("MailablDialogBase", "Seaded"))
         self.label_23.setText(_translate("MailablDialogBase", "NB! Tärniga tähistatud elemendid ei ole veel püsivalt seadistatavad"))
         self.lblHEadingUserData.setText(_translate("MailablDialogBase", "Kasutaja seaded"))

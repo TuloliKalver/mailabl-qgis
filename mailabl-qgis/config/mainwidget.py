@@ -32,13 +32,12 @@ class WidgetInfo:
     def create_visible_name_dropdown(stacked_widget_info, comboBox, index_id):
         comboBox.clear()
 
-         
-
         for info in stacked_widget_info:
             visible_name = info.get('accessibleName', "")
             page_index = info.get ('page_index', "")
             if visible_name== "None":  # Check if accessible_name exists and is not empty
                 pass
+        
             else:
                 comboBox.addItem(visible_name)
                 comboBox.setItemData(comboBox.count()-1, page_index)
@@ -62,9 +61,17 @@ class WidgetInfo:
             return selected_id
         return None
     
-    @staticmethod
     def mapped_indexes_functions(self):
-        index_functions = {
+        """
+        Maps indexes to their corresponding functions.
+        
+        Args:
+            self: Reference to the current instance.
+        
+        Returns:
+            dict: A dictionary mapping indexes to functions.
+        """
+        return {
             0: lambda: WorkSpaceHandler.swWorkSpace_easements_frontpage(self),
             1: None,
             2: lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self),
@@ -74,5 +81,4 @@ class WidgetInfo:
             6: None,
             7: lambda: WorkSpaceHandler.swWorkspace_Projects(self),
             8: None
-        } 
-        return index_functions
+        }

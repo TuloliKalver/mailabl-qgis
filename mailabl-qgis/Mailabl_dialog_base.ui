@@ -1264,7 +1264,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="accessibleName">
@@ -1768,7 +1768,7 @@ QPushButton:hover{
            </widget>
            <widget class="QWidget" name="Cadastralmoves">
             <property name="accessibleName">
-             <string>Tomingud kinnistutega</string>
+             <string>None</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
@@ -5926,7 +5926,7 @@ p, li { white-space: pre-wrap; }
            </widget>
            <widget class="QWidget" name="settings">
             <property name="accessibleName">
-             <string>Seaded</string>
+             <string>None</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <item>
