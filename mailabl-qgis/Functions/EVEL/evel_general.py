@@ -1,44 +1,13 @@
 from PyQt5.QtCore import QObject, pyqtSignal
-
 from PyQt5.uic import loadUi
 from ...config.settings import Filepaths
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
-#from .evel_easements import LayerFunctions
+from .evel_common import EvelGroupLayers, EVEL_Creator
+from .evel_easements import LayerFunctions
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
 edu = EdukuseTexts()
-
-
-class EvelLayerNames:
-    EASEMENT = "evel_Servituut"
-    WATER = "evel_Vesi"
-    SEWAGE = "evel_Kanal"
-
-class EvelGroupLayers:
-    EVEL_MAIN = 'EVEL_Mudel'
-    EASEMENT = 'Servituut'
-
-    @staticmethod
-    def create_EVEL_group_layer(sub_group_layer_name=None):
-        from qgis.core import QgsProject
-        # Get the main group layer name and sub-group layer name
-        main_group_layer_name = EvelGroupLayers.EVEL_MAIN
-        # Get the root of the layer tree
-        root = QgsProject.instance().layerTreeRoot()
-        # Find or create the main group layer and insert it at the top
-        main_group = root.findGroup(main_group_layer_name)
-        if main_group is None:
-            main_group = root.insertGroup(0, main_group_layer_name)
-        else:
-            pass
-        # Find or create the sub-group layer within the main group
-        if sub_group_layer_name is None:
-            return
-        sub_group = main_group.findGroup(sub_group_layer_name)
-        if sub_group is None:
-            main_group.addGroup(sub_group_layer_name)
-
 
 class EVELTools(QObject):
     widgetClosed = pyqtSignal()
@@ -56,19 +25,19 @@ class EVELTools(QObject):
 
         self.widget_EVEL.show()
         EvelGroupLayers.create_EVEL_group_layer()
+        EVELCheckboxes.get_checkbox_info(self.widget_EVEL)
         pushbutton = self.widget_EVEL.pbGenerateVrtLayer
         checkbox = self.widget_EVEL.cbEasements
-                # Initial state based on the checkbox
+
+        # Initial state based on the checkbox
         pushbutton.setEnabled(checkbox.isChecked())
 
         # Connect checkbox state change to the method
-        checkbox.stateChanged.connect(lambda: EVELTools.update_button_state)
-        
-            
+        #checkbox.stateChanged.connect(lambda: EVELTools.update_button_state)
 
-        save_button.clicked.connect(lambda:EVELTools().on_save_button_clicked)
+        save_button.clicked.connect(lambda: EVELTools().on_save_button_clicked)
         cancel_button.clicked.connect(lambda: EVELTools().on_cancel_button_clicked)
-        
+
         # Connect closeEvent method to handle window close event
         self.widget_EVEL.closeEvent = self.closeEvent
 
@@ -79,20 +48,13 @@ class EVELTools(QObject):
     def on_save_button_clicked(self):
         self.widget_EVEL.accept()
         self.widgetClosed.emit()
-            
+
     def on_cancel_button_clicked(self):
         self.widget_EVEL.reject()
         self.widgetClosed.emit()
 
-    def update_button_state(self):
-        checkbox = self.widget_EVEL.cbEasements
-        pushbutton = self.widget_EVEL.pbGenerateLayers
-        pushbutton.setEnabled(checkbox.isChecked())
-
-
 class EVELCheckboxes:
     def get_checkbox_info(widget):
-        
         water_checkbox = getattr(widget, 'cbWater', None)
         sewage_checkbox = getattr(widget, 'cbSewage', None)
         rainwater_checkbox = getattr(widget, 'cbRainwater', None)
@@ -105,27 +67,33 @@ class EVELCheckboxes:
 
         # Define texts for checkboxes
         checkbox_texts = {
-            water_checkbox: None,
-            sewage_checkbox: None,
-            rainwater_checkbox: None,
-            pumpstation_checkbox: None,
-            treatment_checkbox: None,
-            connectionpoint_checkbox: None,
-            easement_checkbox: None,
-            services_checkbox: None,
-            snconstant_checkbox: None,
-            }
+            water_checkbox: "Vesi",
+            sewage_checkbox: "Reoveekanal",
+            rainwater_checkbox: "Sademevesi",
+            pumpstation_checkbox: "Reoveepumpla",
+            treatment_checkbox: "Reoveepuhasti",
+            connectionpoint_checkbox: "Liitumispunktid",
+            easement_checkbox: "Servtuudid",
+            services_checkbox: "Töökäsud",
+            snconstant_checkbox: "SN_CONSTANT",
+        }
+
+        from ...config.settings import FilesByNames
+        easment_style_name = FilesByNames().easement_evelLayer
+        from .evel_common import EvelGroupLayers, EvelLayerNames
+
+
 
         # Define lambdas to connect checkboxes to functions (to be implemented)
         checkbox_functions = {
-            water_checkbox: lambda: cbMapSelectors.selectWater_pipes(widget, water_checkbox),
+            water_checkbox: None,  # lambda: widget.cbMapSelectors.selectWater_pipes(widget, water_checkbox),
             sewage_checkbox: None,
             rainwater_checkbox: None,
             pumpstation_checkbox: None,
             treatment_checkbox: None,
             connectionpoint_checkbox: None,
-            easement_checkbox: None,
-            services_checkbox: None,
+            easement_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(easement_checkbox,EvelGroupLayers.EASEMENT ,EvelLayerNames().EASEMENT, easment_style_name),
+            services_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(services_checkbox,EvelGroupLayers.SERVICES ,EvelLayerNames().SERVICES, easment_style_name),
             snconstant_checkbox: None,
         }
 
@@ -134,5 +102,16 @@ class EVELCheckboxes:
         for checkbox, text in checkbox_texts.items():
             if checkbox:
                 checkboxes_info[checkbox] = (text, checkbox_functions.get(checkbox))
-
+        EVELCheckboxes.update_checkboxes(checkboxes_info)
         return checkboxes_info
+
+    @staticmethod
+    def update_checkboxes(checkboxes_info):
+        for checkbox, (text, connect_function) in checkboxes_info.items():
+            if checkbox:
+                checkbox.setText(text)
+                if connect_function is None:
+                    checkbox.setEnabled(False)
+                else:
+                    checkbox.setEnabled(True)
+                    checkbox.clicked.connect(connect_function)

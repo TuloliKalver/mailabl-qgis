@@ -1475,7 +1475,6 @@ class ConnectPropertiesModuleButtons:
         button_projects = getattr(self, 'pbProjects_Connect_properties', None)
         button_easements = getattr(self, 'pbEasementsConnectProperties', None)
         # Define lambdas to connect buttons to functions
-        from.Functions.EVEL.evel_easements import LayerFunctions
         button_functions = {
             button_contracts: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_CONTRACTS, table_contracts, button_contracts),
             button_projects: lambda: MailablDialog.load_properties_connector(self, Modules.MODULE_PROJECTS, table_projects, button_projects),
@@ -1488,25 +1487,24 @@ class ConnectPropertiesModuleButtons:
        # Populate the buttons list
         buttons = [button_contracts, button_easements, button_projects]
 
-
         return buttons
     
 class ConnectSettingsButtons:
-
     def button_controller(self):
         button_greate_EVEL = getattr(self, 'pbGreateEVEL', None)
+        test_button = getattr(self, 'pbtest', None)
         # Define lambdas to connect buttons to functions
 
         button_functions = {
             button_greate_EVEL: lambda: EVELTools.load_widget(self),
-            
+            test_button: lambda: EVELTools.load_widget(self),
         }
        # Connect buttons to functions
         for button, function in button_functions.items():
             PropertiesConnector.connect_button(button, function)
         
        # Populate the buttons list
-        buttons = [button_greate_EVEL]
+        buttons = [button_greate_EVEL, test_button]
 
 
         return buttons
