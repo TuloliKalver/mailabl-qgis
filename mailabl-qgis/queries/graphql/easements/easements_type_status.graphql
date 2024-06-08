@@ -1,4 +1,11 @@
-query easements($first: Int, $after: String, $search: String, $where: QueryEasementsWhereWhereConditions, $orderBy: [QueryEasementsOrderByOrderByClause!], $trashed: Trashed) {
+query easements(
+  $first: Int
+  $after: String
+  $search: String
+  $where: QueryEasementsWhereWhereConditions
+  $orderBy: [QueryEasementsOrderByOrderByClause!]
+  $trashed: Trashed
+) {
   easements(
     first: $first
     after: $after
@@ -20,11 +27,11 @@ query easements($first: Int, $after: String, $search: String, $where: QueryEasem
         name
         notarialNumber
         filesPath
-        creator{
-            id
-            displayName
-          }
-        managers {
+        creator {
+          id
+          displayName
+        }
+        members {
           edges {
             node {
               id
@@ -59,7 +66,3 @@ query easements($first: Int, $after: String, $search: String, $where: QueryEasem
     }
   }
 }
-
-
-
-

@@ -144,10 +144,10 @@ class Properties:
             creator_item = QStandardItem(str(property_node.get("creator", {}).get("displayName", "N/A")) if property_node.get("creator") else QStandardItem("N/A"))
             created_item = QStandardItem(str(property_node.get("createdAt", "")))
 
-        # Extract manager information
-            managers = property_node.get("managers", {}).get("edges", [])
-            manager_names = [manager["node"]["displayName"] for manager in managers]
-            manager_item = QStandardItem(", ".join(manager_names)) if manager_names else QStandardItem("N/A")
+        # Extract member information
+            members = property_node.get("members", {}).get("edges", [])
+            member_names = [member["node"]["displayName"] for member in members]
+            member_item = QStandardItem(", ".join(member_names)) if member_names else QStandardItem("N/A")
 
         # Extract contact information
             contacts = property_node.get("contacts", {}).get("edges", [])
@@ -168,7 +168,7 @@ class Properties:
             # Convert the list of strings to a list of QStandardItems
             property_items = [id_item, 
                             x_item, 
-                            manager_item,
+                            member_item,
                             address_item, 
                             size_item, 
                             creator_item, 
