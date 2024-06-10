@@ -3,11 +3,9 @@ from qgis.core import (
     QgsVectorLayer,
     QgsFields,
     QgsField,
-    QgsFeature,
-    QgsGeometry,
-    QgsPointXY,
+    QgsLayerTreeGroup,
+    QgsLayerTreeLayer
 )
-from qgis.PyQt.QtCore import QVariant
 from ..layer_generator import GroupActions
 
 
@@ -68,25 +66,76 @@ class EVEL_Creator:
         if checkbox.isChecked():
             EvelGroupLayers.create_EVEL_group_layer(sub_group_layer_name=group_name)
             
-            from .evel_easements import LayerFunctions
+            
+
+            from .LayerVariables.evel_easements import LayerFunctions
             field_definitions = LayerFunctions.easment_fields()
             # Get the project's CRS
             project_crs = QgsProject.instance().crs()
-
             # Create the layer with the specified fields
             layer = EVEL_Creator.create_layer_with_fields(layer_name, project_crs, field_definitions)
-
             # Check if a layer with the same name already exists
-            existing_layers = QgsProject.instance().mapLayersByName(layer_name)
-            if existing_layers:
-                # Remove the existing layer before continuing
-                QgsProject.instance().removeMapLayer(existing_layers[0])
-
+            EVEL_Creator.remove_layer_by_name(layer_name)
             GroupActions.add_layer_to_group(layer, group_name, style_name=style_name)
         else:
-            # Checkbox is unchecked, remove the easement layer if it exists
-            existing_layers = QgsProject.instance().mapLayersByName(layer_name)
-            if existing_layers:
-                QgsProject.instance().removeMapLayer(existing_layers[0])
+            EVEL_Creator.remove_layer_by_name(layer_name)
+            EVEL_Creator.remove_empty_group_by_name(group_name)
 
 
+    @staticmethod
+    def remove_layer_by_name(layer_name):
+        # Checkbox is unchecked, remove the easement layer if it exists
+        existing_layers = QgsProject.instance().mapLayersByName(layer_name)
+        if existing_layers:
+            QgsProject.instance().removeMapLayer(existing_layers[0])
+
+
+    @staticmethod
+    def remove_empty_group_by_name(group_name):
+        root = QgsProject.instance().layerTreeRoot()
+        group = EVEL_Creator.find_group_by_name(root, group_name)
+        if group and not group.findLayers():
+            parent = group.parent()
+            parent.removeChildNode(group)
+
+    @staticmethod
+    def find_group_by_name(node, name):
+        for child in node.children():
+            if isinstance(child, QgsLayerTreeGroup) and child.name() == name:
+                return child
+            elif isinstance(child, QgsLayerTreeGroup):
+                result = EVEL_Creator.find_group_by_name(child, name)
+                if result:
+                    return result
+        return None
+
+
+class EVELCancel:
+    @staticmethod
+    def remove_group_and_contents(group_name):
+        root = QgsProject.instance().layerTreeRoot()
+        group = EVELCancel.find_group_by_name(root, group_name)
+        if group:
+            EVELCancel.remove_all_children(group)
+            parent = group.parent()
+            parent.removeChildNode(group)
+
+    @staticmethod
+    def remove_all_children(group):
+        for child in group.children():
+            if isinstance(child, QgsLayerTreeLayer):
+                QgsProject.instance().removeMapLayer(child.layerId())
+            elif isinstance(child, QgsLayerTreeGroup):
+                EVELCancel.remove_all_children(child)
+                group.removeChildNode(child)
+
+    @staticmethod
+    def find_group_by_name(node, name):
+        for child in node.children():
+            if isinstance(child, QgsLayerTreeGroup) and child.name() == name:
+                return child
+            elif isinstance(child, QgsLayerTreeGroup):
+                result = EVELCancel.find_group_by_name(child, name)
+                if result:
+                    return result
+        return None

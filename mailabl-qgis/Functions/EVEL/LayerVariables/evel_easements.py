@@ -29,7 +29,7 @@ class EasementAliases:
     alias_description = "Kaetud tehnovõrgud (Kirjeldus (Vesi, Kanal))"
     alias_contract_date = "Sõlmimise kp"
     alias_perimeter = "Ümbermõõt (m)"
-    alias_area_size = "Geomeetria"
+    alias_area_size = "Pindala"
     alias_geom = "Geomeetria"
     alias_creator = "Sisestaja"
     alias_creation_date = "Sisestamise kp"
@@ -37,7 +37,6 @@ class EasementAliases:
     alias_update_date = "Muutmise kpMuutmise kp"
 
 class LayerFunctions:
-
 
     def easment_fields():
         # Define the field definitions for EVEL easements

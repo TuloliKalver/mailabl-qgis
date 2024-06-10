@@ -2,8 +2,9 @@ from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.uic import loadUi
 from ...config.settings import Filepaths
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
-from .evel_common import EvelGroupLayers, EVEL_Creator
-from .evel_easements import LayerFunctions
+from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames
+from .evel_common import EvelGroupLayers, EVEL_Creator, EVELCancel
+from .LayerVariables.evel_easements import LayerFunctions
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -19,15 +20,15 @@ class EVELTools(QObject):
     def load_widget(self):
         ui_file_path = Filepaths.get_EVEL_tools()
         print(f"File path {ui_file_path}")
-        self.widget_EVEL = loadUi(ui_file_path)  # Use self.widget_EVEL here
-        save_button = self.widget_EVEL.pbSave
-        cancel_button = self.widget_EVEL.pbCancel
+        widget_EVEL = loadUi(ui_file_path)  # Use self.widget_EVEL here
+        save_button = widget_EVEL.pbSave
+        cancel_button = widget_EVEL.pbCancel
 
-        self.widget_EVEL.show()
+        widget_EVEL.show()
         EvelGroupLayers.create_EVEL_group_layer()
-        EVELCheckboxes.get_checkbox_info(self.widget_EVEL)
-        pushbutton = self.widget_EVEL.pbGenerateVrtLayer
-        checkbox = self.widget_EVEL.cbEasements
+        EVELCheckboxes.get_checkbox_info(widget_EVEL)
+        pushbutton = widget_EVEL.pbGenerateVrtLayer
+        checkbox = widget_EVEL.cbEasements
 
         # Initial state based on the checkbox
         pushbutton.setEnabled(checkbox.isChecked())
@@ -35,23 +36,26 @@ class EVELTools(QObject):
         # Connect checkbox state change to the method
         #checkbox.stateChanged.connect(lambda: EVELTools.update_button_state)
 
-        save_button.clicked.connect(lambda: EVELTools().on_save_button_clicked)
-        cancel_button.clicked.connect(lambda: EVELTools().on_cancel_button_clicked)
+        save_button.clicked.connect(lambda: EVELTools.on_save_button_clicked(self, widget_EVEL))
+        cancel_button.clicked.connect(lambda: EVELTools.on_cancel_button_clicked(self, widget_EVEL))
 
         # Connect closeEvent method to handle window close event
-        self.widget_EVEL.closeEvent = self.closeEvent
+        widget_EVEL.closeEvent = self.closeEvent
 
     def closeEvent(self, event):
+        group_layer = EvelGroupLayersNames.EVEL_MAIN
+        EVELCancel.remove_group_and_contents(group_layer)
         event.accept()  # Allow the window to close
-        self.widgetClosed.emit()
-
-    def on_save_button_clicked(self):
-        self.widget_EVEL.accept()
-        self.widgetClosed.emit()
-
-    def on_cancel_button_clicked(self):
-        self.widget_EVEL.reject()
-        self.widgetClosed.emit()
+        
+    def on_save_button_clicked(self, widget_EVEL):
+        widget_EVEL.accept()
+        
+    def on_cancel_button_clicked(self, widget_EVEL):
+        print("cancel button clicked")
+        group_layer = EvelGroupLayersNames.EVEL_MAIN
+        EVELCancel.remove_group_and_contents(group_layer)
+        widget_EVEL.reject()
+        
 
 class EVELCheckboxes:
     def get_checkbox_info(widget):
@@ -65,17 +69,19 @@ class EVELCheckboxes:
         services_checkbox = getattr(widget, 'cbServices', None)
         snconstant_checkbox = getattr(widget, 'cbSNConstant', None)
 
+        from ...KeelelisedMuutujad.EVEL_lang_module import UICheckboxes
         # Define texts for checkboxes
+
         checkbox_texts = {
-            water_checkbox: "Vesi",
-            sewage_checkbox: "Reoveekanal",
-            rainwater_checkbox: "Sademevesi",
-            pumpstation_checkbox: "Reoveepumpla",
-            treatment_checkbox: "Reoveepuhasti",
-            connectionpoint_checkbox: "Liitumispunktid",
-            easement_checkbox: "Servtuudid",
-            services_checkbox: "Töökäsud",
-            snconstant_checkbox: "SN_CONSTANT",
+            water_checkbox: UICheckboxes.water_checkbox,
+            sewage_checkbox: UICheckboxes.sewage_checkbox,
+            rainwater_checkbox: UICheckboxes.rainwater_checkbox,
+            pumpstation_checkbox: UICheckboxes.pumpstation_checkbox,
+            treatment_checkbox: UICheckboxes.treatment_checkbox,
+            connectionpoint_checkbox: UICheckboxes.connectionpoint_checkbox,
+            easement_checkbox: UICheckboxes.easement_checkbox,
+            services_checkbox: UICheckboxes.services_checkbox,
+            snconstant_checkbox: UICheckboxes.snconstant_checkbox,
         }
 
         from ...config.settings import FilesByNames

@@ -356,11 +356,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbCooseFromMap_Add.setEnabled(False)
         self.lblDel_Aditiona_txt.setEnabled(False)
 
-        #self.pbtest.clicked.connect(self.test_StackedWidget)
+        
 
-    #def test_StackedWidget(self):
-
-    #    print (items)
 
     def log_out(self):
         Unload.log_out(self)
