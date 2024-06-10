@@ -197,8 +197,8 @@ class queryHandling:
             node = project_data.get("node", {})
             properties = node.get("properties", {}).get("edges", [])
             propertie_cadastralNr = [property["node"]["cadastralUnitNumber"] for property in properties] 
-            managers = node.get("managers",{}).get("edges",[])
-            manager_name = [creator["node"]["displayName"] for creator in managers]
+            members = node.get("members",{}).get("edges",[])
+            member_name = [creator["node"]["displayName"] for creator in members]
             #print(f"creator_name: {creator_name}")
             row_data = {
                     header_number: node.get("number", "") or "",
@@ -213,7 +213,7 @@ class queryHandling:
                     header_webLinkButton: "",
                     header_file_path: "",
                     header_Documents: node.get("filesPath","") if ("filePath") else "Dokumendid puuduvad",
-                    header_creator: ",".join(manager_name) if manager_name else ""
+                    header_creator: ",".join(member_name) if member_name else ""
                 }
             #print(f"row_data: '{row_data}'")
             
