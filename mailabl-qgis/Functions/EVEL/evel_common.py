@@ -7,8 +7,9 @@ from qgis.core import (
     QgsLayerTreeLayer
 )
 from ..layer_generator import GroupActions
-from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames, EvelLayerNames
+from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames, EvelLayerNames, UICheckboxes, CheckBoxMappings
 from ...config.settings import FilesByNames
+from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 
 class EvelGroupLayers:
     EVEL_MAIN = 'EVEL_Mudel'
@@ -54,10 +55,18 @@ class EVEL_Creator:
         return layer
 
     @staticmethod
+
     def generate_EVEL_model_layer(checkbox):
-        group_name = EvelGroupLayersNames.__dict__.get(checkbox.objectName())
-        layer_name = EvelLayerNames.__dict__.get(checkbox.objectName())
-        style_name = CheckboxStyles.get_style_filename(checkbox.objectName())  # Corrected method name
+        checkbox_name = UICheckboxes.get_checkbox_display_name(checkbox.objectName())
+        group_name = CheckBoxMappings.get_group_name(checkbox.objectName())
+        layer_name = CheckBoxMappings.get_layer_name(checkbox.objectName())
+        style_name = CheckBoxMappings.get_style_filename(checkbox.objectName())
+
+             # Insert print statements to debug the variables
+        print(f"Checkbox Name: {checkbox_name}")
+        print(f"Group Name: {group_name}")
+        print(f"Layer Name: {layer_name}")
+        print(f"Style Name: {style_name}")
 
         if checkbox.isChecked():
             EVEL_Creator.generate_EVEL_group_layer_and_model_layer(group_name, layer_name, style_name)
@@ -70,13 +79,20 @@ class EVEL_Creator:
         # Check if the group layer exists, if not, create it
         project = QgsProject.instance()
         root = project.layerTreeRoot()
-        main_group = root.findGroup(EvelGroupLayers.EVEL_MAIN)
-        if main_group is None:
-            main_group = root.insertGroup(0, EvelGroupLayers.EVEL_MAIN)
+    # Use the provided setup_layer_name variable to find or create the "Settings" group
+        setup_layer_name = SetupLayers().mailabl_main_group_name
+        settings_group = EVELGroupGenerator.get_or_create_group(root, setup_layer_name)
         
+        # Ensure "EVEL_MAIN" group exists under "Settings", if not, create it
+        main_group = settings_group.findGroup(EvelGroupLayers.EVEL_MAIN)
+        if main_group is None:
+            main_group = settings_group.addGroup(EvelGroupLayers.EVEL_MAIN)
+        
+        # Find or create the group named by group_name under "EVEL_MAIN" group
         group_layer = main_group.findGroup(group_name)
         if group_layer is None:
             group_layer = main_group.addGroup(group_name)
+
 
         # Create the model layer within the group layer
         project_crs = project.crs()
@@ -114,6 +130,15 @@ class EVEL_Creator:
                 if result:
                     return result
         return None
+
+class EVELGroupGenerator:
+    # Function to get or create a group by name
+    def get_or_create_group(parent, group_name):
+        group = parent.findGroup(group_name)
+        if group is None:
+            group = parent.addGroup(group_name)
+        return group
+
 
 class EVELCancel:
     @staticmethod

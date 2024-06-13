@@ -130,31 +130,32 @@ class EVELCheckboxes:
         checkbox_functions = {
             water_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(water_checkbox),
             sewage_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(sewage_checkbox),
-            rainwater_checkbox: None, 
-            pumpstation_checkbox: None,
-            treatment_checkbox: None,
-            connectionpoint_checkbox: None,
+            rainwater_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(rainwater_checkbox),
+            pumpstation_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(pumpstation_checkbox),
+            treatment_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(treatment_checkbox),
+            connectionpoint_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(connectionpoint_checkbox),
             easement_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(easement_checkbox),
             services_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(services_checkbox),
-            snconstant_checkbox: None,
+            snconstant_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(snconstant_checkbox),
             # New checkboxes
-            device_checkbox: None,  # new
-            contract_checkbox: None,  # new
-            customer_checkbox: None,  # new
-            external_doc_checkbox: None,  # new
-            apartment_checkbox: None,  # new
-            flow_meter_checkbox: None,  # new
-            demarcation_point_checkbox: None,  # new
-            fire_plug_checkbox: None,  # new
-            manhole_checkbox: None,  # new
-            pressure_station_checkbox: None,  # new
-            valve_checkbox: None,  # new
-            tank_checkbox: None,  # new
-            properties_checkbox: None,  # new
-            program_checkbox: None,  # new
-            operation_checkbox: None,  # new
-            error_checkbox: None,  # new
+            device_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(device_checkbox),
+            contract_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(contract_checkbox),
+            customer_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(customer_checkbox),
+            external_doc_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(external_doc_checkbox),
+            apartment_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(apartment_checkbox),
+            flow_meter_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(flow_meter_checkbox),
+            demarcation_point_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(demarcation_point_checkbox),
+            fire_plug_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(fire_plug_checkbox),
+            manhole_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(manhole_checkbox),
+            pressure_station_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(pressure_station_checkbox),
+            valve_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(valve_checkbox),
+            tank_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(tank_checkbox),
+            properties_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(properties_checkbox),
+            program_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(program_checkbox),
+            operation_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(operation_checkbox),
+            error_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(error_checkbox),
         }
+
 
         # Create checkboxes_info dictionary
         checkboxes_info = {}
