@@ -1,10 +1,14 @@
 from PyQt5.QtCore import QObject, pyqtSignal
+from qgis.core import QgsProject, QgsLayerTreeGroup
+from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 from PyQt5.uic import loadUi
 from ...config.settings import Filepaths
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
-from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames
+from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames, EvelSubGroupLayersNames, FileNames
 from .evel_common import EvelGroupLayers, EVEL_Creator, EVELCancel
 from .LayerVariables.evel_easements import LayerFunctions
+
+
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -25,7 +29,8 @@ class EVELTools(QObject):
         cancel_button = widget_EVEL.pbCancel
 
         widget_EVEL.show()
-        EvelGroupLayers.create_EVEL_group_layer()
+
+        #EVELGroupGenerator.create_evel_group_layer()
         EVELCheckboxes.get_checkbox_info(widget_EVEL)
         pushbutton = widget_EVEL.pbGenerateVrtLayer
         checkbox = widget_EVEL.cbEasements
@@ -68,10 +73,25 @@ class EVELCheckboxes:
         easement_checkbox = getattr(widget, 'cbEasements', None)
         services_checkbox = getattr(widget, 'cbServices', None)
         snconstant_checkbox = getattr(widget, 'cbSNConstant', None)
+        device_checkbox = getattr(widget, 'cbDevice', None)  # new
+        contract_checkbox = getattr(widget, 'cbContract', None)  # new                
+        customer_checkbox = getattr(widget, 'cbCustomer', None)  # new
+        external_doc_checkbox = getattr(widget, 'cbExternalDoc', None)  # new
+        apartment_checkbox = getattr(widget, 'cbApartment', None)  # new
+        flow_meter_checkbox = getattr(widget, 'cbFlowMeter', None)  # new
+        demarcation_point_checkbox = getattr(widget, 'cbDemarcationPoint', None)  # new
+        fire_plug_checkbox = getattr(widget, 'cbFirePlug', None)  # new
+        manhole_checkbox = getattr(widget, 'cbManhole', None)  # new
+        pressure_station_checkbox = getattr(widget, 'cbPressureStation', None)  # new
+        valve_checkbox = getattr(widget, 'cbValve', None)  # new
+        properties_checkbox = getattr(widget, 'cbProperties', None)  # new
+        tank_checkbox = getattr(widget, 'cbTank', None)  # new
+        program_checkbox = getattr(widget, 'cbProgram', None)  # new
+        operation_checkbox = getattr(widget, 'cbOperation', None)  # new
+        error_checkbox = getattr(widget, 'cbError', None)  # new
 
         from ...KeelelisedMuutujad.EVEL_lang_module import UICheckboxes
         # Define texts for checkboxes
-
         checkbox_texts = {
             water_checkbox: UICheckboxes.water_checkbox,
             sewage_checkbox: UICheckboxes.sewage_checkbox,
@@ -82,25 +102,58 @@ class EVELCheckboxes:
             easement_checkbox: UICheckboxes.easement_checkbox,
             services_checkbox: UICheckboxes.services_checkbox,
             snconstant_checkbox: UICheckboxes.snconstant_checkbox,
+            # New checkboxes
+            device_checkbox: UICheckboxes.device_checkbox,  # new
+            contract_checkbox: UICheckboxes.contract_checkbox,  # new
+            customer_checkbox: UICheckboxes.customer_checkbox,  # new
+            external_doc_checkbox: UICheckboxes.external_doc_checkbox,  # new
+            apartment_checkbox: UICheckboxes.apartment_checkbox,  # new
+            flow_meter_checkbox: UICheckboxes.flow_meter_checkbox,  # new
+            demarcation_point_checkbox: UICheckboxes.demarcation_point_checkbox,  # new
+            fire_plug_checkbox: UICheckboxes.fire_plug_checkbox,  # new
+            manhole_checkbox: UICheckboxes.manhole_checkbox,  # new
+            pressure_station_checkbox: UICheckboxes.pressure_station_checkbox,  # new
+            valve_checkbox: UICheckboxes.valve_checkbox,  # new
+            tank_checkbox: UICheckboxes.tank_checkbox,  # new
+            properties_checkbox: UICheckboxes.properties_checkbox,  # new
+            program_checkbox: UICheckboxes.program_checkbox,  # new
+            operation_checkbox: UICheckboxes.operation_checkbox,  # new
+            error_checkbox: UICheckboxes.error_checkbox,  # new
         }
 
         from ...config.settings import FilesByNames
         easment_style_name = FilesByNames().easement_evelLayer
-        from .evel_common import EvelGroupLayers, EvelLayerNames
 
-
+        from ...KeelelisedMuutujad.EVEL_lang_module import EvelLayerNames, EvelGroupLayersNames
 
         # Define lambdas to connect checkboxes to functions (to be implemented)
         checkbox_functions = {
-            water_checkbox: None,  # lambda: widget.cbMapSelectors.selectWater_pipes(widget, water_checkbox),
-            sewage_checkbox: None,
-            rainwater_checkbox: None,
+            water_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(water_checkbox),
+            sewage_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(sewage_checkbox),
+            rainwater_checkbox: None, 
             pumpstation_checkbox: None,
             treatment_checkbox: None,
             connectionpoint_checkbox: None,
-            easement_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(easement_checkbox,EvelGroupLayers.EASEMENT ,EvelLayerNames().EASEMENT, easment_style_name),
-            services_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(services_checkbox,EvelGroupLayers.SERVICES ,EvelLayerNames().SERVICES, easment_style_name),
+            easement_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(easement_checkbox),
+            services_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(services_checkbox),
             snconstant_checkbox: None,
+            # New checkboxes
+            device_checkbox: None,  # new
+            contract_checkbox: None,  # new
+            customer_checkbox: None,  # new
+            external_doc_checkbox: None,  # new
+            apartment_checkbox: None,  # new
+            flow_meter_checkbox: None,  # new
+            demarcation_point_checkbox: None,  # new
+            fire_plug_checkbox: None,  # new
+            manhole_checkbox: None,  # new
+            pressure_station_checkbox: None,  # new
+            valve_checkbox: None,  # new
+            tank_checkbox: None,  # new
+            properties_checkbox: None,  # new
+            program_checkbox: None,  # new
+            operation_checkbox: None,  # new
+            error_checkbox: None,  # new
         }
 
         # Create checkboxes_info dictionary
@@ -121,3 +174,74 @@ class EVELCheckboxes:
                 else:
                     checkbox.setEnabled(True)
                     checkbox.clicked.connect(connect_function)
+
+    
+class EVELGroupGenerator:
+    # Function to get or create a group by name
+    def get_or_create_group(parent, group_name):
+        group = parent.findGroup(group_name)
+        if group is None:
+            group = parent.addGroup(group_name)
+        return group
+
+    # Function to create the EVEL group layer inside the setup layer
+    def create_evel_group_layer():
+        # Create the setup layer group
+        # Initialize the QGIS project instance
+        project = QgsProject.instance()
+        root = project.layerTreeRoot()
+        setup_layer_name = SetupLayers().mailabl_main_group_name
+
+        setup_layer_group = EVELGroupGenerator.get_or_create_group(root, setup_layer_name)
+
+        # Create the main group within the setup layer group
+        main_group = EVELGroupGenerator.get_or_create_group(setup_layer_group, EvelGroupLayersNames.EVEL_MAIN)
+
+        # Create dictionaries to store main and subgroups
+        main_group_dict = {}
+        sub_group_dict = {}
+
+
+        # Create main group layers inside the main group (setup_layer)
+        for group_name in EvelGroupLayersNames.__dict__.values():
+            print(f"group_name: {group_name}")
+            if isinstance(group_name, str) and group_name != EvelGroupLayersNames.EVEL_MAIN:
+                group = EVELGroupGenerator.get_or_create_group(main_group, group_name)
+                main_group_dict[group_name] = group
+
+        # Create subgroups within main groups
+        for key, sub_group_name in EvelSubGroupLayersNames.__dict__.items():
+            if not key.startswith("__") and not callable(sub_group_name):
+                for main_group_name, main_group in main_group_dict.items():
+                    sub_group = EVELGroupGenerator.get_or_create_group(main_group, sub_group_name)
+                    sub_group_dict[sub_group_name] = sub_group
+
+        # A helper function to add layers to the appropriate group or subgroup
+        def add_layer_to_group(layer_name, group):
+            # Assuming layers are already loaded in the project
+            layers = project.mapLayersByName(layer_name)
+            if layers:
+                layer = layers[0]
+                group.addLayer(layer)
+
+        filenames = FileNames.filenames
+        
+
+        # Add layers to respective groups and subgroups
+        for filename in filenames:
+            matched = False
+            for main_group_name, main_group in main_group_dict.items():
+                if main_group_name.lower() in filename:
+                    add_layer_to_group(filename, main_group)
+                    matched = True
+                    break
+            if not matched:
+                for sub_group_name, sub_group in sub_group_dict.items():
+                    if sub_group_name.lower() in filename:
+                        add_layer_to_group(filename, sub_group)
+                        matched = True
+                        break
+            if not matched:
+                print(f"Layer {filename} did not match any group and was not added.")
+
+        print("Layers have been organized into their respective groups and subgroups.")
