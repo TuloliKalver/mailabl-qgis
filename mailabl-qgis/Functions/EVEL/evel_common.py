@@ -170,39 +170,3 @@ class EVELCancel:
                     return result
         return None
 
-
-class CheckboxStyles:
-    # Define QML style filenames for each checkbox based on their objectName()
-    STYLES = {
-        'cbWater': "water_evelLayer.qml",
-        'cbSewage': "sewage_evelLayer.qml",
-        'cbRainwater': "rainwater_evelLayer.qml",
-        'cbPumpstation': "pumpstation_evelLayer.qml",
-        'cbSewTreatment': "sew_treatment_evelLayer.qml",
-        'cbConnectionPoints': "connection_points_evelLayer.qml",
-        'cbEasements': "easements_evelLayer.qml",
-        'cbServices': "services_evelLayer.qml",
-        'cbSNConstant': "sn_constant_evelLayer.qml",
-        # Add new checkboxes here with their corresponding .qml style filenames
-        'cbDevice': "device_evelLayer.qml",
-        'cbContract': "contract_evelLayer.qml",
-        'cbCustomer': "customer_evelLayer.qml",
-        'cbExternalDoc': "external_doc_evelLayer.qml",
-        'cbApartment': "apartment_evelLayer.qml",
-        'cbFlowMeter': "flow_meter_evelLayer.qml",
-        'cbDemarcationPoint': "demarcation_point_evelLayer.qml",
-        'cbFirePlug': "fire_plug_evelLayer.qml",
-        'cbManhole': "manhole_evelLayer.qml",
-        'cbPressureStation': "pressure_station_evelLayer.qml",
-        'cbValve': "valve_evelLayer.qml",
-        'cbTank': "tank_evelLayer.qml",
-        'cbProperties': "properties_evelLayer.qml",
-        'cbProgram': "program_evelLayer.qml",
-        'cbOperation': "operation_evelLayer.qml",
-        'cbError': "error_evelLayer.qml",
-    }
-
-    @staticmethod
-    def get_style_filename(checkbox_name):
-        # Return the QML style filename based on the checkbox name
-        return CheckboxStyles.STYLES.get(checkbox_name, None)
