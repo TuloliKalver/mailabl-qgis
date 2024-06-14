@@ -1,21 +1,21 @@
-class EVEL_ElekterSide:
+class ElekterSide:
     kaablid = "Kaablid.qml"
     rajatised = "Rajatised.qml"
 
 class Hylsid:
-    hülsid = "Hülsid.qml"
+    hylsid = "Hylsid.qml"
 
 class Kanalisatsioon:
-    kanalikaevud_mahajaetud = "Kanalikaevud_mahajaetud.qml"
+    kanalikaevudMahajaetud = "Kanalikaevud_mahajaetud.qml"
     kanalikaevud = "Kanalikaevud.qml"
-    kanalisatsiooni_siibrid = "Kanalisatsiooni_siibrid.qml"
+    kanalisatsiooniSiibrid = "Kanalisatsiooni_siibrid.qml"
     kanalisatsiooniehitised = "Kanalisatsiooniehitised.qml"
-    kanalisatsioonitorud_1_2000 = "Kanalisatsioonitorud_1_2000.qml"
+    kanalisatsioonitorud12000 = "Kanalisatsioonitorud_1_2000.qml"
     kanalisatsioonitorud = "Kanalisatsioonitorud.qml"
-    liitmikud_kanal = "Liitmikud_kanal.qml"
-    mahajäetud_kan_torud = "Mahajäetud_kan_torud.qml"
+    liitmikudKanal = "Liitmikud_kanal.qml"
+    mahajaetudKanTorud = "Mahajaetud_kan_torud.qml"
     pumplad = "Pumplad.qml"
-    sõlmed = "Sõlmed.qml"
+    solmed = "Solmed.qml"
     spetsiaalkaevud = "Spetsiaalkaevud.qml"
 
 class Kliendid:
@@ -32,23 +32,24 @@ class Servituudid:
 class Teostusjoonis:
     teostusjoonis = "Teostusjoonis.qml"
 
-class Veevõrk:
-    hüdrandid = "Hüdrandid.qml"
+class Veevork:
+    hydrandid = "Hydrandid.qml"
     liitmikud = "Liitmikud.qml"
-    mahajäetud_veetorud = "Mahajäetud_veetorud.qml"
+    mahajaetudVeeTorud = "Mahajaetud_veetorud.qml"
     puurkaevud = "Puurkaevud.qml"
     sulgeseadmed = "Sulgeseadmed.qml"
-    veekaevud_mahajäetud = "Veekaevud_mahajäetud.qml"
+    veekaevudMahajaetud = "Veekaevud_mahajaetud.qml"
     veekaevud = "Veekaevud.qml"
-    veetöötlusjaamad = "Veetöötlusjaamad.qml"
+    veetootlusjaamad = "Veetootlusjaamad.qml"
     veetornid = "Veetornid.qml"
-    veetorud_1_2000 = Veetorud_1_2000.qml
+    veetorud12000 = "Veetorud_1_2000.qml"
     veetorud = "Veetorud.qml"
-    veevõrgupumplad = "Veevõrgupumplad.qml"
+    veevorgupumplad = "Veevorgupumplad.qml"
 
-class Võrgusündmused_Autod:
+class VorgusundmusedAutod:
     autod = "Autod.qml"
-    avarii_ja_hooldustööd = "Avarii_ja_hooldustööd.qml"
+    avariiJaHooldustoöd = "Avarii_ja_hooldustööd.qml"
+
     
 
 
