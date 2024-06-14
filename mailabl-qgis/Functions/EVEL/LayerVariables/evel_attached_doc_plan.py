@@ -18,7 +18,7 @@ class AttachedDocPlanAliases:
 
 class LayerFunctions:
 
-    def attached_doc_plan_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_PLAN
         field_definitions = [
             (AttachedDocPlanFields.field_id, QVariant.Int, True),

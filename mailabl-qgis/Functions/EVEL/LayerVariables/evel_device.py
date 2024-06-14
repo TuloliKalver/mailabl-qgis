@@ -40,7 +40,7 @@ class DeviceAliases:
 
 class LayerFunctions:
 
-    def device_fields():
+    def fields():
         # Define the field definitions for DEVICE
         field_definitions = [
             (DeviceFields.field_id, QVariant.Int, True),

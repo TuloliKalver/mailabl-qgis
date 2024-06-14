@@ -12,7 +12,7 @@ class ApartmentDataAliases:
 
 class LayerFunctions:
 
-    def apartment_data_fields():
+    def fields():
         # Define the field definitions for APARTMENT_DATA
         field_definitions = [
             (ApartmentDataFields.field_id, QVariant.Int, True),

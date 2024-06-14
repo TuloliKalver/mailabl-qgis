@@ -24,7 +24,7 @@ class ContractAliases:
 
 class LayerFunctions:
 
-    def contract_fields():
+    def fields():
         # Define the field definitions for CONTRACT
         field_definitions = [
             (ContractFields.field_id, QVariant.Int, True),

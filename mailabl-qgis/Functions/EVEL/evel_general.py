@@ -5,7 +5,7 @@ from PyQt5.uic import loadUi
 from ...config.settings import Filepaths
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames, EvelSubGroupLayersNames, FileNames
-from .evel_common import EvelGroupLayers, EVEL_Creator, EVELCancel
+from .evel_common import  EVEL_Creator, EVELCancel
 from .LayerVariables.evel_easements import LayerFunctions
 
 

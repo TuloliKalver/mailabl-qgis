@@ -18,7 +18,7 @@ class AttachedDocSNConsumerPointAliases:
 
 class LayerFunctions:
 
-    def attached_doc_sn_consumer_point_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_SN_CONSUMER_POINT
         field_definitions = [
             (AttachedDocSNConsumerPointFields.field_id, QVariant.Int, True),

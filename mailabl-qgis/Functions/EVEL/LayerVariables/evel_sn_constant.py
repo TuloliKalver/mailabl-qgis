@@ -18,9 +18,9 @@ class SNConstantAliases:
     alias_description = "Kirjeldus"
     alias_orderno = "Järjekorra nr"
 
-class SNConstantFunctions:
+class LayerFunctions:
 
-    def sn_constant_fields():
+    def fields():
         # Define the field definitions for SN_CONSTANT
         field_definitions = [
             (SNConstantFields.field_id, QVariant.Int, True),

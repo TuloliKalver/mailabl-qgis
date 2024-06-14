@@ -128,58 +128,58 @@ class EvelSubGroupLayerNamesForProperties:
 
 class FileNames:
     # List of filenames
-    EVEL_ATTACHED_DOC_CUSTOMER = "evel_attached_doc_customer_name.py"
-    EVEL_APARTMENT_DATA = "evel_apartment_data_name.py"
-    EVEL_ATTACHED_DOC_LAND_PREM_AREA = "evel_attached_doc_land_prem_area_name.py"
-    EVEL_ATTACHED_DOC_PLAN = "evel_attached_doc_plan_name.py"
-    EVEL_ATTACHED_DOC_SN_CONSUMER_POINT = "evel_attached_doc_sn_consumer_point_name.py"
-    EVEL_ATTACHED_DOC_SN_ERROR_REPORT = "evel_attached_doc_sn_error_report_name.py"
-    EVEL_ATTACHED_DOC_SN_SEWER_DUCT = "evel_attached_doc_sn_sewer_duct_name.py"
-    EVEL_ATTACHED_DOC_SN_SEWER_NODE = "evel_attached_doc_sn_sewer_node_name.py"
-    EVEL_ATTACHED_DOC_SN_WATER_DUCT = "evel_attached_doc_sn_water_duct_name.py"
-    EVEL_ATTACHED_DOC_SN_WATER_NODE = "evel_attached_doc_sn_water_node_name.py"
-    EVEL_SN_SEWER_DUCT = "evel_sn_sewer_duct_name.py"
-    EVEL_CONSUMER_POINT = "evel_consumer_point_name.py"
-    EVEL_DEVICE = "evel_device_name.py"
-    EVEL_DEMARCATION_POINT = "evel_demarcation_point_name.py"
-    EVEL_CUSTOMER_CONSUMERPOINT = "evel_customer_consumerpoint_name.py"
-    EVEL_CUSTOMER = "evel_customer_name.py"
-    EVEL_CONTRACT = "evel_contract_name.py"
-    EVEL_EXTERNAL_DOC = "evel_external_doc_name.py"
-    EVEL_EXTERNAL_DOC_TYPE = "evel_external_doc_type_name.py"
-    EVEL_FLOW_METER = "evel_flow_meter_name.py"
-    EVEL_SN_CONSTANT = "evel_sn_constant_name.py"
-    EVEL_SN_FIRE_PLUG = "evel_sn_fire_plug_name.py"
-    EVEL_SN_OPERATION = "evel_sn_operation_name.py"
-    EVEL_SN_SEWER_BRANCH = "evel_sn_sewer_branch_name.py"
-    EVEL_SN_SEWER_DUCT_ERROR = "evel_sn_sewer_duct_error_name.py"
-    EVEL_SN_SEWER_DUCT_PROGRAM = "evel_sn_sewer_duct_program_name.py"
-    EVEL_SN_SEWER_MANHOLE = "evel_sn_sewer_manhole_name.py"
-    EVEL_SN_SEWER_NODE = "evel_sn_sewer_node_name.py"
-    EVEL_SN_SEWER_NODE_ERROR = "evel_sn_sewer_node_error_name.py"
-    EVEL_SN_SEWER_NODE_PROGRAM = "evel_sn_sewer_node_program_name.py"
-    EVEL_SN_SEWER_OTHER_NODE = "evel_sn_sewer_other_node_name.py"
-    EVEL_SN_SEWER_PUMP = "evel_sn_sewer_pump_name.py"
-    EVEL_SN_SEWER_PUMPING_STATION = "evel_sn_sewer_pumping_station_name.py"
-    EVEL_SN_SEWER_VALVE = "evel_sn_sewer_valve_name.py"
-    EVEL_SN_SEWER_VALVE_STATE_LOG = "evel_sn_sewer_valve_state_log_name.py"
-    EVEL_SN_WATER_BRANCH = "evel_sn_water_branch_name.py"
-    EVEL_SN_WATER_DUCT = "evel_sn_water_duct_name.py"
-    EVEL_SN_WATER_DUCT_ERROR = "evel_sn_water_duct_error_name.py"
-    EVEL_SN_WATER_DUCT_PROGRAM = "evel_sn_water_duct_program_name.py"
-    EVEL_SN_WATER_MANHOLE = "evel_sn_water_manhole_name.py"
-    EVEL_SN_WATER_NODE = "evel_sn_water_node_name.py"
-    EVEL_SN_WATER_NODE_ERROR = "evel_sn_water_node_error_name.py"
-    EVEL_SN_WATER_NODE_PROGRAM = "evel_sn_water_node_program_name.py"
-    EVEL_SN_WATER_OTHER_NODE = "evel_sn_water_other_node_name.py"
-    EVEL_SN_WATER_PRESSURE_STATION = "evel_sn_water_pressure_station_name.py"
-    EVEL_SN_WATER_PUMP = "evel_sn_water_pump_name.py"
-    EVEL_SN_WATER_PUMPING_STATION = "evel_sn_water_pumping_station_name.py"
-    EVEL_SN_WATER_TANK = "evel_sn_water_tank_name.py"
-    EVEL_SN_WATER_VALVE = "evel_sn_water_valve_name.py"
-    EVEL_SN_WATER_VALVE_STATE_LOG = "evel_sn_water_valve_state_log_name.py"
-    EVEL_BUILDING_AREA = "evel_building_area_name.py"
-    EVEL_SN_OPERATION = "evel_sn_operation_name.py"
+    EVEL_ATTACHED_DOC_CUSTOMER = "evel_attached_doc_customer.py"
+    EVEL_APARTMENT_DATA = "evel_apartment_data.py"
+    EVEL_ATTACHED_DOC_LAND_PREM_AREA = "evel_attached_doc_land_prem_area.py"
+    EVEL_ATTACHED_DOC_PLAN = "evel_attached_doc_plan.py"
+    EVEL_ATTACHED_DOC_SN_CONSUMER_POINT = "evel_attached_doc_sn_consumer_point.py"
+    EVEL_ATTACHED_DOC_SN_ERROR_REPORT = "evel_attached_doc_sn_error_report.py"
+    EVEL_ATTACHED_DOC_SN_SEWER_DUCT = "evel_attached_doc_sn_sewer_duct.py"
+    EVEL_ATTACHED_DOC_SN_SEWER_NODE = "evel_attached_doc_sn_sewer_node.py"
+    EVEL_ATTACHED_DOC_SN_WATER_DUCT = "evel_attached_doc_sn_water_duct.py"
+    EVEL_ATTACHED_DOC_SN_WATER_NODE = "evel_attached_doc_sn_water_node.py"
+    EVEL_SN_SEWER_DUCT = "evel_sn_sewer_duct.py"
+    EVEL_CONSUMER_POINT = "evel_consumer_point.py"
+    EVEL_DEVICE = "evel_device.py"
+    EVEL_DEMARCATION_POINT = "evel_demarcation_point.py"
+    EVEL_CUSTOMER_CONSUMERPOINT = "evel_customer_consumerpoint.py"
+    EVEL_CUSTOMER = "evel_customer.py"
+    EVEL_CONTRACT = "evel_contract.py"
+    EVEL_EXTERNAL_DOC = "evel_external_doc.py"
+    EVEL_EXTERNAL_DOC_TYPE = "evel_external_doc_type.py"
+    EVEL_FLOW_METER = "evel_flow_meter.py"
+    EVEL_SN_CONSTANT = "evel_sn_constant.py"
+    EVEL_SN_FIRE_PLUG = "evel_sn_fire_plug.py"
+    EVEL_SN_OPERATION = "evel_sn_operation.py"
+    EVEL_SN_SEWER_BRANCH = "evel_sn_sewer_branch.py"
+    EVEL_SN_SEWER_DUCT_ERROR = "evel_sn_sewer_duct_error.py"
+    EVEL_SN_SEWER_DUCT_PROGRAM = "evel_sn_sewer_duct_program.py"
+    EVEL_SN_SEWER_MANHOLE = "evel_sn_sewer_manhole.py"
+    EVEL_SN_SEWER_NODE = "evel_sn_sewer_node.py"
+    EVEL_SN_SEWER_NODE_ERROR = "evel_sn_sewer_node_error.py"
+    EVEL_SN_SEWER_NODE_PROGRAM = "evel_sn_sewer_node_program.py"
+    EVEL_SN_SEWER_OTHER_NODE = "evel_sn_sewer_other_node.py"
+    EVEL_SN_SEWER_PUMP = "evel_sn_sewer_pump.py"
+    EVEL_SN_SEWER_PUMPING_STATION = "evel_sn_sewer_pumping_station.py"
+    EVEL_SN_SEWER_VALVE = "evel_sn_sewer_valve.py"
+    EVEL_SN_SEWER_VALVE_STATE_LOG = "evel_sn_sewer_valve_state_log.py"
+    EVEL_SN_WATER_BRANCH = "evel_sn_water_branch.py"
+    EVEL_SN_WATER_DUCT = "evel_sn_water_duct.py"
+    EVEL_SN_WATER_DUCT_ERROR = "evel_sn_water_duct_error.py"
+    EVEL_SN_WATER_DUCT_PROGRAM = "evel_sn_water_duct_program.py"
+    EVEL_SN_WATER_MANHOLE = "evel_sn_water_manhole.py"
+    EVEL_SN_WATER_NODE = "evel_sn_water_node.py"
+    EVEL_SN_WATER_NODE_ERROR = "evel_sn_water_node_error.py"
+    EVEL_SN_WATER_NODE_PROGRAM = "evel_sn_water_node_program.py"
+    EVEL_SN_WATER_OTHER_NODE = "evel_sn_water_other_node.py"
+    EVEL_SN_WATER_PRESSURE_STATION = "evel_sn_water_pressure_station.py"
+    EVEL_SN_WATER_PUMP = "evel_sn_water_pump.py"
+    EVEL_SN_WATER_PUMPING_STATION = "evel_sn_water_pumping_station.py"
+    EVEL_SN_WATER_TANK = "evel_sn_water_tank.py"
+    EVEL_SN_WATER_VALVE = "evel_sn_water_valve.py"
+    EVEL_SN_WATER_VALVE_STATE_LOG = "evel_sn_water_valve_state_log.py"
+    EVEL_BUILDING_AREA = "evel_building_area.py"
+    EVEL_SN_OPERATION = "evel_sn_operation.py"
 
 class CheckBoxMappings:
     MAPPINGS = {
@@ -335,6 +335,14 @@ class CheckBoxMappings:
         },
     }
 
+
+    @staticmethod
+    def get_file_name(checkbox_name):
+        mappings = CheckBoxMappings.get_mappings(checkbox_name)
+        return mappings.get('file', None)
+
+
+
     @staticmethod
     def get_mappings(checkbox_name):
         return CheckBoxMappings.MAPPINGS.get(checkbox_name, {})
@@ -354,7 +362,3 @@ class CheckBoxMappings:
         mappings = CheckBoxMappings.get_mappings(checkbox_name)
         return mappings.get('layer_name', None)
 
-    @staticmethod
-    def get_file_name(checkbox_name):
-        mappings = CheckBoxMappings.get_mappings(checkbox_name)
-        return mappings.get('file', None)

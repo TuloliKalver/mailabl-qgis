@@ -51,7 +51,7 @@ class BuildingAreaAliases:
 class BuildingAreaFunctions:
 
     @staticmethod
-    def building_area_fields():
+    def fields():
         field_definitions = [
             (BuildingAreaFields.field_id, QVariant.Int, True),
             (BuildingAreaFields.field_network_id, QVariant.Int, False),

@@ -20,7 +20,7 @@ class AttachedDocSNErrorReportAliases:
 
 class LayerFunctions:
 
-    def attached_doc_sn_error_report_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_SN_ERROR_REPORT
         field_definitions = [
             (AttachedDocSNErrorReportFields.field_id, QVariant.Int, True),

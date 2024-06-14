@@ -18,7 +18,7 @@ class AttachedDocSNWaterDuctAliases:
 
 class LayerFunctions:
 
-    def attached_doc_sn_water_duct_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_SN_WATER_DUCT
         field_definitions = [
             (AttachedDocSNWaterDuctFields.field_id, QVariant.Int, True),

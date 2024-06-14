@@ -46,7 +46,7 @@ class CustomerAliases:
 
 class LayerFunctions:
 
-    def customer_fields():
+    def fields():
         # Define the field definitions for CUSTOMER
         field_definitions = [
             (CustomerFields.field_id, QVariant.Int, True),

@@ -12,9 +12,9 @@ class SNSewerDuctErrorAliases:
     alias_duct_id = "Seos toruga"
     alias_error_id = "Seos veateatega"
 
-class SNSewerDuctErrorFunctions:
+class LayerFunctions:
 
-    def sn_sewer_duct_error_fields():
+    def fields():
         # Define the field definitions for SN_SEWER_DUCT_ERROR
         field_definitions = [
             (SNSewerDuctErrorFields.field_id, QVariant.Int, True),

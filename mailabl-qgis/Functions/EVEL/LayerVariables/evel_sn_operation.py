@@ -32,9 +32,9 @@ class SNOperationAliases:
     alias_creator = "Sisestaja"
     alias_creation_date = "Sisestamise kp"
 
-class SNOperationFunctions:
+class LayerFunctions:
 
-    def sn_operation_fields():
+    def fields():
         # Define the field definitions for SN_OPERATION
         field_definitions = [
             (SNOperationFields.field_mslinlk, QVariant.Int, True),

@@ -20,7 +20,7 @@ class AttachedDocSNSewerDuctAliases:
 
 class LayerFunctions:
 
-    def attached_doc_sn_sewer_duct_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_SN_SEWER_DUCT
         field_definitions = [
             (AttachedDocSNSewerDuctFields.field_id, QVariant.Int, True),

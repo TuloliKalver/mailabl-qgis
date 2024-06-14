@@ -22,9 +22,9 @@ class SNSewerBranchAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNSewerBranchFunctions:
+class LayerFunctions:
 
-    def sn_sewer_branch_fields():
+    def fields():
         # Define the field definitions for SN_SEWER_BRANCH
         field_definitions = [
             (SNSewerBranchFields.field_id, QVariant.Int, True),

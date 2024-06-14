@@ -18,7 +18,7 @@ class AttachedDocLandPremAreaAliases:
 
 class LayerFunctions:
 
-    def attached_doc_land_prem_area_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_LAND_PREM_AREA
         field_definitions = [
             (AttachedDocLandPremAreaFields.field_id, QVariant.Int, True),

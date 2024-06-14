@@ -54,7 +54,7 @@ class FlowMeterAliases:
 
 class LayerFunctions:
 
-    def flow_meter_fields():
+    def fields():
         # Define the field definitions for FLOW_METER
         field_definitions = [
             (FlowMeterFields.field_id, QVariant.Int, True),

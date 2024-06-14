@@ -1,3 +1,7 @@
+import importlib
+import sys
+import os
+
 from qgis.core import (
     QgsProject,
     QgsVectorLayer,
@@ -11,27 +15,7 @@ from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames, EvelLay
 from ...config.settings import FilesByNames
 from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 
-class EvelGroupLayers:
-    EVEL_MAIN = 'EVEL_Mudel'
-    EASEMENT = 'Servituut'
-    SERVICES = 'Töökäsud'
 
-    @staticmethod
-    def create_EVEL_group_layer(sub_group_layer_name=None):
-        # Get the main group layer name and sub-group layer name
-        main_group_layer_name = EvelGroupLayers.EVEL_MAIN
-        # Get the root of the layer tree
-        root = QgsProject.instance().layerTreeRoot()
-        # Find or create the main group layer and insert it at the top
-        main_group = root.findGroup(main_group_layer_name)
-        if main_group is None:
-            main_group = root.insertGroup(0, main_group_layer_name)
-        # Find or create the sub-group layer within the main group
-        if sub_group_layer_name is None:
-            return
-        sub_group = main_group.findGroup(sub_group_layer_name)
-        if sub_group is None:
-            main_group.addGroup(sub_group_layer_name)
 
 class EVEL_Creator:
     @staticmethod
@@ -60,22 +44,24 @@ class EVEL_Creator:
         checkbox_name = UICheckboxes.get_checkbox_display_name(checkbox.objectName())
         group_name = CheckBoxMappings.get_group_name(checkbox.objectName())
         layer_name = CheckBoxMappings.get_layer_name(checkbox.objectName())
+        layer_variables_filename = CheckBoxMappings.get_file_name(checkbox.objectName())
         style_name = CheckBoxMappings.get_style_filename(checkbox.objectName())
 
              # Insert print statements to debug the variables
         print(f"Checkbox Name: {checkbox_name}")
         print(f"Group Name: {group_name}")
         print(f"Layer Name: {layer_name}")
-        print(f"Style Name: {style_name}")
+        print(f"layer_variables_filename: {layer_variables_filename}")
+        print(f"Style Name: {layer_variables_filename}")
 
         if checkbox.isChecked():
-            EVEL_Creator.generate_EVEL_group_layer_and_model_layer(group_name, layer_name, style_name)
+            EVEL_Creator.generate_EVEL_group_layer_and_model_layer(group_name, layer_name,  layer_variables_filename, style_name,)
         else:
             EVEL_Creator.remove_layer_by_name(layer_name)
             EVEL_Creator.remove_empty_group_by_name(group_name)
             
     @staticmethod
-    def generate_EVEL_group_layer_and_model_layer(group_name, layer_name, style_name):
+    def generate_EVEL_group_layer_and_model_layer(group_name, layer_name,  file_name, style_name=None,):
         # Check if the group layer exists, if not, create it
         project = QgsProject.instance()
         root = project.layerTreeRoot()
@@ -84,9 +70,9 @@ class EVEL_Creator:
         settings_group = EVELGroupGenerator.get_or_create_group(root, setup_layer_name)
         
         # Ensure "EVEL_MAIN" group exists under "Settings", if not, create it
-        main_group = settings_group.findGroup(EvelGroupLayers.EVEL_MAIN)
+        main_group = settings_group.findGroup(EvelGroupLayersNames.EVEL_MAIN)
         if main_group is None:
-            main_group = settings_group.addGroup(EvelGroupLayers.EVEL_MAIN)
+            main_group = settings_group.addGroup(EvelGroupLayersNames.EVEL_MAIN)
         
         # Find or create the group named by group_name under "EVEL_MAIN" group
         group_layer = main_group.findGroup(group_name)
@@ -96,7 +82,8 @@ class EVEL_Creator:
 
         # Create the model layer within the group layer
         project_crs = project.crs()
-        field_definitions = []  # Define your fields here or pass as a parameter
+
+        field_definitions = EVEL_Creator.get_field_definitions(file_name)  # Define your fields here or pass as a parameter
         layer = EVEL_Creator.create_layer_with_fields(layer_name, project_crs, field_definitions)
         
         # Check if a layer with the same name already exists
@@ -130,6 +117,35 @@ class EVEL_Creator:
                 if result:
                     return result
         return None
+
+
+    @staticmethod
+    def get_field_definitions(file_name):
+        # Remove .py extension if present
+        if file_name.endswith('.py'):
+            file_name = file_name[:-3]
+
+
+        # Add the LayerVariables directory to sys.path
+        current_directory = os.path.dirname(__file__)
+        layer_variables_directory = os.path.join(current_directory, 'LayerVariables')
+        if layer_variables_directory not in sys.path:
+            sys.path.insert(0, layer_variables_directory)
+
+        # Construct the module path
+        module_path = file_name
+        
+        # Import the module dynamically
+        module = importlib.import_module(module_path)
+        
+        # Access the LayerFunctions class and call the fields method
+        field_definitions = module.LayerFunctions.fields()
+        
+        return field_definitions
+        
+    
+
+
 
 class EVELGroupGenerator:
     # Function to get or create a group by name

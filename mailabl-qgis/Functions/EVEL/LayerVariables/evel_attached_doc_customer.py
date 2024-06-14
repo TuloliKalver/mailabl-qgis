@@ -18,7 +18,7 @@ class AttachedDocCustomerAliases:
 
 class LayerFunctions:
 
-    def attached_doc_customer_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_CUSTOMER
         field_definitions = [
             (AttachedDocCustomerFields.field_id, QVariant.Int, True),

@@ -20,7 +20,7 @@ class AttachedDocSNSewerNodeAliases:
 
 class LayerFunctions:
 
-    def attached_doc_sn_sewer_node_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_SN_SEWER_NODE
         field_definitions = [
             (AttachedDocSNSewerNodeFields.field_id, QVariant.Int, True),

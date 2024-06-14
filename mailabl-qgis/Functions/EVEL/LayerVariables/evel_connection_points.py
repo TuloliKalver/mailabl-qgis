@@ -16,7 +16,7 @@ class ConsumerPointAliases:
 
 class ConnectionPointsLayerFunctions:
 
-    def consumer_point_fields():
+    def fields():
         # Define the field definitions for CUSTOMER_CONSUMERPOINT
         field_definitions = [
             (ConsumerPointFields.field_id, QVariant.Int, None),

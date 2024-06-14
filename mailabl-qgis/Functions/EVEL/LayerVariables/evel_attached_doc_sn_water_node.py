@@ -18,7 +18,7 @@ class AttachedDocSNWaterNodeAliases:
 
 class LayerFunctions:
 
-    def attached_doc_sn_water_node_fields():
+    def fields():
         # Define the field definitions for ATTACHED_DOC_SN_WATER_NODE
         field_definitions = [
             (AttachedDocSNWaterNodeFields.field_id, QVariant.Int, True),

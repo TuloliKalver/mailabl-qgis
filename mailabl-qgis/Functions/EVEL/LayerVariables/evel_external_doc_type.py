@@ -22,7 +22,7 @@ class ExternalDocTypeAliases:
 
 class LayerFunctions:
 
-    def external_doc_type_fields():
+    def fields():
         # Define the field definitions for EXTERNAL_DOC_TYPE
         field_definitions = [
             (ExternalDocTypeFields.field_id, QVariant.Int, True),

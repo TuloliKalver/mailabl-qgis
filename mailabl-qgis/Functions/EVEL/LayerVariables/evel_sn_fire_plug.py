@@ -38,9 +38,9 @@ class SNFirePlugAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNFirePlugFunctions:
+class LayerFunctions:
 
-    def sn_fire_plug_fields():
+    def fields():
         # Define the field definitions for SN_FIRE_PLUG
         field_definitions = [
             (SNFirePlugFields.field_id, QVariant.Int, True),

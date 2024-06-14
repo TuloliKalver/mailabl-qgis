@@ -38,7 +38,7 @@ class EasementAliases:
 
 class LayerFunctions:
 
-    def easment_fields():
+    def fields():
         # Define the field definitions for EVEL easements
         field_definitions = [
                 (EasemensFields.field_id, QVariant.Int, None),

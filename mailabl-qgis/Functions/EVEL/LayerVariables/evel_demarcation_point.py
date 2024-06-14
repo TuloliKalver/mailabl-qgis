@@ -31,7 +31,7 @@ class DemarcationPointAliases:
 
 class DemarcationLayerFunctions:
 
-    def demarcation_point_fields():
+    def fields():
         # Define the field definitions for DEMARCATION_POINT
         field_definitions = [
             (DemarcationPointFields.field_id, QVariant.Int, None),
