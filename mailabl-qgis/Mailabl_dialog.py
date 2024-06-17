@@ -57,7 +57,7 @@ from .Functions.Folders.folders import copy_and_rename_folder
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
 from.Functions.EVEL.evel_general import EVELTools
-
+from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'Mailabl_dialog_base.ui'))
@@ -97,9 +97,9 @@ f_delete = DeletingProcesses()
 #set parameters
 
 input_layer_name = load.load_SHP_inputLayer_name()
-county_nimi_field = 'MK_NIMI'
-state_nimi_field = 'OV_NIMI'
-city_nimi_field = "AY_NIMI"
+county_nimi_field = Katastriyksus.mk_nimi #'MK_NIMI'
+state_nimi_field = Katastriyksus.ov_nimi #'OV_NIMI'
+city_nimi_field = Katastriyksus.ay_nimi #"AY_NIMI"
 
 ################################################################################################################
 
