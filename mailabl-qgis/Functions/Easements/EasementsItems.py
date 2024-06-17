@@ -237,7 +237,7 @@ class queryHandling:
 
 class EasmentsSearch:    
     def query_easements_by_type_status_elements(self, type_values, statuses):
-        print(f"type_values: '{type_values}'")
+        #print(f"type_values: '{type_values}'")
         #print(statuses)
         # Load the project query using the loader instance
         query_loader = GraphqlQueriesEasements()

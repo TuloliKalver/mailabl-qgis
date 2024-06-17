@@ -52,7 +52,7 @@ class EVEL_Creator:
         print(f"Group Name: {group_name}")
         print(f"Layer Name: {layer_name}")
         print(f"layer_variables_filename: {layer_variables_filename}")
-        print(f"Style Name: {layer_variables_filename}")
+        print(f"Style Name: {style_name}")
 
         if checkbox.isChecked():
             EVEL_Creator.generate_EVEL_group_layer_and_model_layer(group_name, layer_name,  layer_variables_filename, style_name,)
@@ -124,7 +124,6 @@ class EVEL_Creator:
         # Remove .py extension if present
         if file_name.endswith('.py'):
             file_name = file_name[:-3]
-
 
         # Add the LayerVariables directory to sys.path
         current_directory = os.path.dirname(__file__)

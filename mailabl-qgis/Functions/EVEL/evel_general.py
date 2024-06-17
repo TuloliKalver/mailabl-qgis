@@ -121,11 +121,8 @@ class EVELCheckboxes:
             error_checkbox: UICheckboxes.error_checkbox,  # new
         }
 
-        from ...config.settings import FilesByNames
-        easment_style_name = FilesByNames().easement_evelLayer
 
-        from ...KeelelisedMuutujad.EVEL_lang_module import EvelLayerNames, EvelGroupLayersNames
-
+        from .LayerVariables.evel_sn_constant import SnPublicFunctions
         # Define lambdas to connect checkboxes to functions (to be implemented)
         checkbox_functions = {
             water_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(water_checkbox),
@@ -136,7 +133,8 @@ class EVELCheckboxes:
             connectionpoint_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(connectionpoint_checkbox),
             easement_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(easement_checkbox),
             services_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(services_checkbox),
-            snconstant_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(snconstant_checkbox),
+            
+            snconstant_checkbox: lambda: SnPublicFunctions.generate_SN_layer(snconstant_checkbox), #lambda: EVEL_Creator.generate_EVEL_model_layer(snconstant_checkbox),
             # New checkboxes
             device_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(device_checkbox),
             contract_checkbox: lambda: EVEL_Creator.generate_EVEL_model_layer(contract_checkbox),

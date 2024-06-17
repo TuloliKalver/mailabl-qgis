@@ -138,6 +138,7 @@ class FileNames:
     EVEL_ATTACHED_DOC_SN_SEWER_NODE = "evel_attached_doc_sn_sewer_node.py"
     EVEL_ATTACHED_DOC_SN_WATER_DUCT = "evel_attached_doc_sn_water_duct.py"
     EVEL_ATTACHED_DOC_SN_WATER_NODE = "evel_attached_doc_sn_water_node.py"
+    LAND_PERM_AREA = "land_perm_area.py"
     EVEL_SN_SEWER_DUCT = "evel_sn_sewer_duct.py"
     EVEL_CONSUMER_POINT = "evel_consumer_point.py"
     EVEL_DEVICE = "evel_device.py"
@@ -182,154 +183,159 @@ class FileNames:
     EVEL_SN_OPERATION = "evel_sn_operation.py"
 
 class CheckBoxMappings:
+    from ..Functions.EVEL.QGIS_styles.EvelStyles import (
+        ElekterSide, Hylsid, Kanalisatsioon, Kliendid, Rennid,
+        Servituudid, Teostusjoonis, Veevork, VorgusundmusedAutod
+    )
+
     MAPPINGS = {
         'cbWater': {
             'group': EvelGroupLayersNames.WATER,
-            'style': "water_evelLayer.qml",
+            'style': Veevork.veetorud,
             'layer_name': EvelLayerNames.WATER,
             'file': FileNames.EVEL_SN_WATER_DUCT
         },
         'cbSewage': {
             'group': EvelGroupLayersNames.SEWER,
-            'style': "sewage_evelLayer.qml",
+            'style': Kanalisatsioon.kanalisatsioonitorud,
             'layer_name': EvelLayerNames.SEWAGE,
             'file': FileNames.EVEL_SN_SEWER_DUCT
         },
         'cbRainwater': {
             'group': EvelGroupLayersNames.SEWER,
-            'style': "rainwater_evelLayer.qml",
+            'style': Kanalisatsioon.kanalisatsioonitorud,
             'layer_name': EvelLayerNames.RAINWATER,
             'file': FileNames.EVEL_SN_SEWER_DUCT
         },
         'cbPumpstation': {
             'group': EvelGroupLayersNames.PUMPING_STATION,
-            'style': "pumpstation_evelLayer.qml",
-            'layer_name': EvelLayerNames.PUMPING_STATION,
+            'style': Kanalisatsioon.pumplad,
+            'layer_name': None, # vaja genereerida
             'file': FileNames.EVEL_SN_SEWER_PUMP
         },
         'cbSewTreatment': {
             'group': EvelGroupLayersNames.SEWER,
-            'style': "sew_treatment_evelLayer.qml",
+            'style': Kanalisatsioon.pumplad,
             'layer_name': EvelLayerNames.SEWAGE_TREATMENT,
             'file': FileNames.EVEL_SN_SEWER_PUMPING_STATION
         },
         'cbConnectionPoints': {
             'group': EvelGroupLayersNames.EVEL_GENERAL,
-            'style': "connection_points_evelLayer.qml",
+            'style': Kliendid.liitumispunktid,
             'layer_name': EvelLayerNames.CONSUMER_POINT,
             'file': FileNames.EVEL_CONSUMER_POINT
         },
         'cbEasements': {
             'group': EvelGroupLayersNames.EASEMENT,
-            'style': "easements_evelLayer.qml",
+            'style': Servituudid.servituudid,
             'layer_name': EvelLayerNames.EASEMENT,
-            'file': FileNames.EVEL_ATTACHED_DOC_LAND_PREM_AREA
+            'file': FileNames.LAND_PERM_AREA
         },
         'cbServices': {
             'group': EvelGroupLayersNames.SERVICES,
-            'style': "services_evelLayer.qml",
+            'style': None,
             'layer_name': EvelLayerNames.SERVICES,
             'file': FileNames.EVEL_SN_OPERATION
         },
         'cbSNConstant': {
             'group': EvelGroupLayersNames.EVEL_GENERAL,
-            'style': "sn_constant_evelLayer.qml",
+            'style': None,
             'layer_name': EvelLayerNames.SN_CONSTANT,
             'file': FileNames.EVEL_SN_CONSTANT
         },
         'cbDevice': {
             'group': EvelGroupLayersNames.EVEL_GENERAL,
-            'style': "device_evelLayer.qml",
+            'style': None,
             'layer_name': EvelLayerNames.DEVICE,
             'file': FileNames.EVEL_DEVICE
         },
         'cbContract': {
-            'group': EvelGroupLayersNames.SERVICES,
-            'style': "contract_evelLayer.qml",
+            'group': EvelGroupLayersNames.PROPERTIES,
+            'style': None,
             'layer_name': EvelLayerNames.CONTRACT,
             'file': FileNames.EVEL_CONTRACT
         },
         'cbCustomer': {
-            'group': EvelGroupLayersNames.SERVICES,
-            'style': "customer_evelLayer.qml",
+            'group': EvelGroupLayersNames.CUSTOMER,
+            'style': None,
             'layer_name': EvelLayerNames.CUSTOMER,
             'file': FileNames.EVEL_CUSTOMER
         },
         'cbExternalDoc': {
             'group': EvelGroupLayersNames.SERVICES,
-            'style': "external_doc_evelLayer.qml",
+            'style': None,
             'layer_name': EvelLayerNames.EXTERNAL_DOC,
             'file': FileNames.EVEL_EXTERNAL_DOC
         },
         'cbApartment': {
-            'group': EvelGroupLayersNames.SERVICES,
-            'style': "apartment_evelLayer.qml",
+            'group': EvelGroupLayersNames.PROPERTIES,
+            'style': None,
             'layer_name': EvelLayerNames.APARTMENT,
             'file': FileNames.EVEL_APARTMENT_DATA
         },
         'cbFlowMeter': {
             'group': EvelGroupLayersNames.FLOW_METER,
-            'style': "flow_meter_evelLayer.qml",
+            'style': Kliendid.arvestid,
             'layer_name': EvelLayerNames.FLOW_METER,
             'file': FileNames.EVEL_FLOW_METER
         },
         'cbDemarcationPoint': {
             'group': EvelGroupLayersNames.DEMARCATION_POINT,
-            'style': "demarcation_point_evelLayer.qml",
+            'style': Kliendid.liitumispunktid,
             'layer_name': EvelLayerNames.DEMARCATION_POINT,
             'file': FileNames.EVEL_DEMARCATION_POINT
         },
         'cbFirePlug': {
             'group': EvelGroupLayersNames.FIRE_PLUG,
-            'style': "fire_plug_evelLayer.qml",
+            'style': Veevork.hydrandid,
             'layer_name': EvelLayerNames.FIRE_PLUG,
             'file': FileNames.EVEL_SN_FIRE_PLUG
         },
         'cbManhole': {
             'group': EvelGroupLayersNames.MANHOLE,
-            'style': "manhole_evelLayer.qml",
+            'style': Kanalisatsioon.kanalikaevud,
             'layer_name': EvelLayerNames.MANHOLE,
             'file': FileNames.EVEL_SN_SEWER_MANHOLE
         },
         'cbPressureStation': {
             'group': EvelGroupLayersNames.PRESSURE_STATION,
-            'style': "pressure_station_evelLayer.qml",
+            'style': Veevork.veetootlusjaamad,
             'layer_name': EvelLayerNames.PRESSURE_STATION,
             'file': FileNames.EVEL_SN_WATER_PRESSURE_STATION
         },
         'cbValve': {
             'group': EvelGroupLayersNames.VALVE,
-            'style': "valve_evelLayer.qml",
+            'style': Kanalisatsioon.solmed,
             'layer_name': EvelLayerNames.VALVE,
             'file': FileNames.EVEL_SN_SEWER_VALVE
         },
         'cbTank': {
             'group': EvelGroupLayersNames.TANK,
-            'style': "tank_evelLayer.qml",
+            'style': Veevork.veetornid,
             'layer_name': EvelLayerNames.TANK,
             'file': FileNames.EVEL_SN_WATER_TANK
         },
         'cbProperties': {
             'group': EvelGroupLayersNames.PROPERTIES,
-            'style': "properties_evelLayer.qml",
+            'style': None,
             'layer_name': EvelLayerNames.PROPERTIES,
             'file': FileNames.EVEL_BUILDING_AREA
         },
         'cbProgram': {
             'group': EvelGroupLayersNames.PROGRAM,
-            'style': "program_evelLayer.qml",
+            'style': None,
             'layer_name': EvelLayerNames.PROGRAM,
             'file': FileNames.EVEL_SN_SEWER_DUCT_PROGRAM
         },
         'cbOperation': {
             'group': EvelGroupLayersNames.SERVICES,
-            'style': "operation_evelLayer.qml",
+            'style': VorgusundmusedAutod.avariiJaHooldustoöd,
             'layer_name': EvelLayerNames.OPERATION,
             'file': FileNames.EVEL_SN_OPERATION
         },
         'cbError': {
             'group': EvelGroupLayersNames.SERVICES,
-            'style': "error_evelLayer.qml",
+            'style': VorgusundmusedAutod.avariiJaHooldustoöd,
             'layer_name': EvelLayerNames.ERROR,
             'file': FileNames.EVEL_SN_SEWER_NODE_ERROR
         },

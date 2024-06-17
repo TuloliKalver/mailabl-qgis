@@ -284,6 +284,7 @@ class GroupActions:
         # Load the QGIS layer style
         if style_name is not None:
             style = Filepaths().get_style(style_name)
+            print(f"style: {style} for style_name: {style_name}")
         else:
             style = None
             pass

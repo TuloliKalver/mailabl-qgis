@@ -122,7 +122,23 @@ class Filepaths:
 
     @staticmethod
     def get_style(style_name):
-        return os.path.join(PLUGIN_DIR_MAIN, QGIS_STYLES_FOLDER, style_name)
+        style_path = os.path.join(PLUGIN_DIR_MAIN, FUNCTIONS_FOLDER, EVEL_FOLDER, QGIS_STYLES_FOLDER)
+        
+        # Check for style_name directly in the main QGIS_STYLES_FOLDER
+        file_path = os.path.join(style_path, style_name)
+        if os.path.exists(file_path):
+            return file_path
+        
+        # If style_name is not found directly, search in subdirectories
+        for dirpath, dirnames, filenames in os.walk(style_path):
+            for dirname in dirnames:
+                subdir_path = os.path.join(dirpath, dirname)
+                file_path = os.path.join(subdir_path, style_name)
+                if os.path.exists(file_path):
+                    return file_path
+        
+        # Return None if style_name is not found in QGIS_STYLES_FOLDER or its subfolders
+        return None
 
     @staticmethod
     def get_easements_tools():

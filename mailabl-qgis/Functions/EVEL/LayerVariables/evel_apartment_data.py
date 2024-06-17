@@ -12,6 +12,7 @@ class ApartmentDataAliases:
 
 class LayerFunctions:
 
+    
     def fields():
         # Define the field definitions for APARTMENT_DATA
         field_definitions = [

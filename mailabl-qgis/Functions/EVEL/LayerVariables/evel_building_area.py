@@ -48,7 +48,7 @@ class BuildingAreaAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class BuildingAreaFunctions:
+class LayerFunctions:
 
     @staticmethod
     def fields():
@@ -78,7 +78,7 @@ class BuildingAreaFunctions:
         ]
         return field_definitions
 
-class BuildingAreaKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():
