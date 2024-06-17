@@ -18,10 +18,10 @@ class SNWaterValveStateLogAliases:
     alias_changed_by = "Muutja"
     alias_change_date = "Muutmise kp"
 
-class SNWaterValveStateLogFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_valve_state_log_fields():
+    def fields():
         field_definitions = [
             (SNWaterValveStateLogFields.field_id, QVariant.Int, True),
             (SNWaterValveStateLogFields.field_node_id, QVariant.Int, False),
@@ -33,7 +33,7 @@ class SNWaterValveStateLogFunctions:
         ]
         return field_definitions
 
-class SNWaterValveStateLogKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

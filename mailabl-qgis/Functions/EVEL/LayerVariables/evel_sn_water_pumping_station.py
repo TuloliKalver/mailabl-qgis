@@ -46,10 +46,10 @@ class SNWaterPumpingStationAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNWaterPumpingStationFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_pumping_station_fields():
+    def fields():
         field_definitions = [
             (SNWaterPumpingStationFields.field_id, QVariant.Int, True),
             (SNWaterPumpingStationFields.field_node_id, QVariant.Int, False),
@@ -75,7 +75,7 @@ class SNWaterPumpingStationFunctions:
         ]
         return field_definitions
 
-class SNWaterPumpingStationKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

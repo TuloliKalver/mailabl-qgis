@@ -20,9 +20,10 @@ class SNSewerValveStateLogAliases:
     alias_changed_by = "Muutja"
     alias_change_date = "Muutmise kp"
 
-class SNSewerValveStateLogFunctions:
-
-    def sn_sewer_valve_state_log_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_VALVE_STATE_LOG
         field_definitions = [
             (SNSewerValveStateLogFields.field_id, QVariant.Int, True),
@@ -35,8 +36,9 @@ class SNSewerValveStateLogFunctions:
         ]
         return field_definitions
 
-class SNSewerValveStateLogKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_VALVE_STATE_LOG
         primary_key = ("PK_SN_SEWER_VALVE_STATE_LOG", [SNSewerValveStateLogFields.field_id])

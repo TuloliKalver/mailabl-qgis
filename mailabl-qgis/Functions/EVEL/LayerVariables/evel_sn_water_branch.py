@@ -22,9 +22,10 @@ class SNWaterBranchAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNWaterBranchFunctions:
-
-    def sn_water_branch_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_WATER_BRANCH
         field_definitions = [
             (SNWaterBranchFields.field_id, QVariant.Int, True),
@@ -38,8 +39,9 @@ class SNWaterBranchFunctions:
         ]
         return field_definitions
 
-class SNWaterBranchKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_WATER_BRANCH
         primary_key = ("PK_SN_WATER_BRANCH", [SNWaterBranchFields.field_id])

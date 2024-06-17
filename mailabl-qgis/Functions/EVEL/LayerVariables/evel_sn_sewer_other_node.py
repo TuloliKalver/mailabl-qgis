@@ -22,9 +22,10 @@ class SNSewerOtherNodeAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNSewerOtherNodeFunctions:
-
-    def sn_sewer_other_node_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_OTHER_NODE
         field_definitions = [
             (SNSewerOtherNodeFields.field_id, QVariant.Int, True),
@@ -38,8 +39,9 @@ class SNSewerOtherNodeFunctions:
         ]
         return field_definitions
 
-class SNSewerOtherNodeKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_OTHER_NODE
         primary_key = ("PK_SN_SOTHER_NODE", [SNSewerOtherNodeFields.field_id])

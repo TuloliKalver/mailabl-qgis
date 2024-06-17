@@ -45,7 +45,8 @@ class CustomerAliases:
     alias_identification = "Isiku ärireg kood"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for CUSTOMER
         field_definitions = [
@@ -72,7 +73,8 @@ class LayerFunctions:
         return field_definitions
 
 class KeyDefinitions:
-    
+
+    @staticmethod
     def primary_key():
         # Define the primary key for CUSTOMER
         primary_key = ("PK_CUSTOMER", [CustomerFields.field_id])

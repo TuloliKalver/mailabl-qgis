@@ -74,10 +74,10 @@ class SNWaterNodeAliases:
     alias_update_date = "Muutmise kp"
     alias_node_friction_loss = "Kohtsurvekadu"
 
-class SNWaterNodeFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_node_fields():
+    def fields():
         # Defineeri välja määratlused SN_WATER_NODE jaoks
         field_definitions = [
             (SNWaterNodeFields.field_mslk, QVariant.Int, True),
@@ -117,7 +117,7 @@ class SNWaterNodeFunctions:
         ]
         return field_definitions
 
-class SNWaterNodeKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

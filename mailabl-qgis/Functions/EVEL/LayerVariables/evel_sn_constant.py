@@ -19,7 +19,8 @@ class SNConstantAliases:
     alias_orderno = "Järjekorra nr"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for SN_CONSTANT
         field_definitions = [
@@ -32,8 +33,9 @@ class LayerFunctions:
         ]
         return field_definitions
 
-class SNConstantKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_CONSTANT
         primary_key = ("PK_SN_CONSTANT", [SNConstantFields.field_id])

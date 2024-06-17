@@ -38,11 +38,12 @@ class SNSewerManholeAliases:
     alias_creator = "Sisestaja"
     alias_creator_date = "Sisestamise kp"
     alias_updated_by = "Muutja"
-    alias_update_date = "Muutmise kp"
+    alias_update_date = "Muutmise kp" 
 
-class SNSewerManholeFunctions:
-
-    def sn_sewer_manhole_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_MANHOLE
         field_definitions = [
             (SNSewerManholeFields.field_id, QVariant.Int, True),
@@ -65,8 +66,9 @@ class SNSewerManholeFunctions:
         ]
         return field_definitions
 
-class SNSewerManholeKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_MANHOLE
         primary_key = ("PK_SN_SEWER_MANHOLE", [SNSewerManholeFields.field_id])
@@ -82,4 +84,4 @@ class SNSewerManholeKeyDefinitions:
             ("FK_SN_SMANHOLE_DIAMETER_ID", SNSewerManholeFields.field_diameter_id, "evel.SN_CONSTANT(ID)"),
             ("FK_SN_SMANHOLE_DIAMETER_TYPE_ID", SNSewerManholeFields.field_diameter_type_id, "evel.SN_CONSTANT(ID)"),
             ("FK_SN_SMANHOLE_MATERIAL_ID", SNSewerManholeFields.field_material_id, "evel.SN_CONSTANT(ID)"),
-            ("FK_SN_SMANHOLE_LID_TYPE_ID", SNSew
+            ]

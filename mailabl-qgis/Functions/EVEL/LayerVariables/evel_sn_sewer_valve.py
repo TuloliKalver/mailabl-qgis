@@ -30,9 +30,10 @@ class SNSewerValveAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNSewerValveFunctions:
-
-    def sn_sewer_valve_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_VALVE
         field_definitions = [
             (SNSewerValveFields.field_id, QVariant.Int, True),
@@ -50,8 +51,9 @@ class SNSewerValveFunctions:
         ]
         return field_definitions
 
-class SNSewerValveKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_VALVE
         primary_key = ("PK_SN_SEWER_VALVE", [SNSewerValveFields.field_id])

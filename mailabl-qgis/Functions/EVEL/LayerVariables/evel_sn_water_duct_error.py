@@ -12,10 +12,10 @@ class SNWaterDuctErrorAliases:
     alias_duct_id = "Seos toruga"
     alias_error_id = "Seos veateatega"
 
-class SNWaterDuctErrorFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_duct_error_fields():
+    def fields():
         # Define the field definitions for SN_WATER_DUCT_ERROR
         field_definitions = [
             (SNWaterDuctErrorFields.field_id, QVariant.Int, True),
@@ -24,7 +24,7 @@ class SNWaterDuctErrorFunctions:
         ]
         return field_definitions
 
-class SNWaterDuctErrorKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

@@ -32,10 +32,10 @@ class SNWaterPumpAliases:
     alias_pipe_fitting = "Ühendus toruga (tollides)"
     alias_remarks = "Märkused"
 
-class SNWaterPumpFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_pump_fields():
+    def fields():
         # Defineeri välja määratlused SN_WATER_PUMP jaoks
         field_definitions = [
             (SNWaterPumpFields.field_id, QVariant.Int, True),
@@ -54,7 +54,7 @@ class SNWaterPumpFunctions:
         ]
         return field_definitions
 
-class SNWaterPumpKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

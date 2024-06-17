@@ -17,7 +17,8 @@ class AttachedDocSNWaterDuctAliases:
     alias_added_date = "Sisestamise kp"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for ATTACHED_DOC_SN_WATER_DUCT
         field_definitions = [
@@ -30,7 +31,8 @@ class LayerFunctions:
         return field_definitions
 
 class KeyDefinitions:
-    
+
+    @staticmethod
     def primary_key():
         # Define the primary key for ATTACHED_DOC_SN_WATER_DUCT
         primary_key = ("PK_SN_ATT_DOC_SN_WDUCT", [AttachedDocSNWaterDuctFields.field_id])

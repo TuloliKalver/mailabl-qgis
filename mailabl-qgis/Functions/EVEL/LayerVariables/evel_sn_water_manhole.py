@@ -46,10 +46,10 @@ class SNWaterManholeAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kuupäev"
 
-class SNWaterManholeFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_manhole_fields():
+    def fields():
         # Defineeri välja määratlused SN_WATER_MANHOLE jaoks
         field_definitions = [
             (SNWaterManholeFields.field_id, QVariant.Int, True),
@@ -75,7 +75,7 @@ class SNWaterManholeFunctions:
         ]
         return field_definitions
 
-class SNWaterManholeKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

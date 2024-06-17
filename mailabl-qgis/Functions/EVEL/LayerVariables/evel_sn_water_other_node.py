@@ -22,10 +22,10 @@ class SNWaterOtherNodeAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNWaterOtherNodeFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_other_node_fields():
+    def fields():
         # Defineeri välja määratlused SN_WATER_OTHER_NODE jaoks
         field_definitions = [
             (SNWaterOtherNodeFields.field_id, QVariant.Int, True),
@@ -39,7 +39,7 @@ class SNWaterOtherNodeFunctions:
         ]
         return field_definitions
 
-class SNWaterOtherNodeKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

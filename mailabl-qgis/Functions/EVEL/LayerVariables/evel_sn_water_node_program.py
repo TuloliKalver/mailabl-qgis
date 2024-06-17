@@ -24,10 +24,10 @@ class SNWaterNodeProgramAliases:
     alias_signed_by = "Teostaja"
     alias_signed_date = "Teostamise kp"
 
-class SNWaterNodeProgramFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_node_program_fields():
+    def fields():
         # Defineeri välja määratlused SN_WATER_NODE_PROGRAM jaoks
         field_definitions = [
             (SNWaterNodeProgramFields.field_id, QVariant.Int, True),
@@ -42,7 +42,7 @@ class SNWaterNodeProgramFunctions:
         ]
         return field_definitions
 
-class SNWaterNodeProgramKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

@@ -15,7 +15,8 @@ class CustomerConsumerPointAliases:
     alias_customer_role = "Kliendi ja tarbimispunkti suhe"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for CUSTOMER_CONSUMERPOINT
         field_definitions = [
@@ -27,7 +28,8 @@ class LayerFunctions:
         return field_definitions
 
 class KeyDefinitions:
-    
+
+    @staticmethod
     def primary_key():
         # Define the primary key for CUSTOMER_CONSUMERPOINT
         primary_key = ("PK_CUSTOMER_CONSUMERPOINT_ID", [CustomerConsumerPointFields.field_id])

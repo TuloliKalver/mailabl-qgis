@@ -23,7 +23,8 @@ class SNSewerBranchAliases:
     alias_update_date = "Muutmise kp"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for SN_SEWER_BRANCH
         field_definitions = [
@@ -38,8 +39,9 @@ class LayerFunctions:
         ]
         return field_definitions
 
-class SNSewerBranchKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_BRANCH
         primary_key = ("PK_SN_SEWER_BRANCH", [SNSewerBranchFields.field_id])

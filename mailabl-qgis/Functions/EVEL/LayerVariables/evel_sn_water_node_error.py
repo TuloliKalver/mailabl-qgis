@@ -12,10 +12,10 @@ class SNWaterNodeErrorAliases:
     alias_node_id = "Seos sõlmega"
     alias_error_id = "Seos veateatega"
 
-class SNWaterNodeErrorFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_node_error_fields():
+    def fields():
         # Defineeri välja määratlused SN_WATER_NODE_ERROR jaoks
         field_definitions = [
             (SNWaterNodeErrorFields.field_id, QVariant.Int, True),
@@ -24,7 +24,7 @@ class SNWaterNodeErrorFunctions:
         ]
         return field_definitions
 
-class SNWaterNodeErrorKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

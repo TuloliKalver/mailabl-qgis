@@ -30,10 +30,10 @@ class SNWaterValveAliases:
     alias_updated_by = "Uuendaja"
     alias_update_date = "Uuendamise kp"
 
-class SNWaterValveFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_valve_fields():
+    def fields():
         field_definitions = [
             (SNWaterValveFields.field_id, QVariant.Int, True),
             (SNWaterValveFields.field_node_id, QVariant.Int, False),
@@ -51,7 +51,7 @@ class SNWaterValveFunctions:
         ]
         return field_definitions
 
-class SNWaterValveKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

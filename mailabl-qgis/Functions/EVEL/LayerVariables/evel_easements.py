@@ -37,7 +37,8 @@ class EasementAliases:
     alias_update_date = "Muutmise kpMuutmise kp"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for EVEL easements
         field_definitions = [

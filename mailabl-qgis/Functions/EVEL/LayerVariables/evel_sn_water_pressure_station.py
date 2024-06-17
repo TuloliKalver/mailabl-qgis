@@ -28,10 +28,10 @@ class SNWaterPressureStationAliases:
     alias_hydrophore = "Hüdrofoori olemasolu"
     alias_hydrophore_capacity = "Hüdrofoori maht (m3)"
 
-class SNWaterPressureStationFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_pressure_station_fields():
+    def fields():
         # Defineeri välja määratlused SN_WATER_PRESSURE_STATION jaoks
         field_definitions = [
             (SNWaterPressureStationFields.field_id, QVariant.Int, True),
@@ -48,7 +48,7 @@ class SNWaterPressureStationFunctions:
         ]
         return field_definitions
 
-class SNWaterPressureStationKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

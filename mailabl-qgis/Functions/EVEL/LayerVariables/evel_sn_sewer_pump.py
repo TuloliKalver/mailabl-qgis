@@ -38,9 +38,10 @@ class SNSewerPumpAliases:
     alias_engine_voltage = "Mootori nimipinge (V)"
     alias_remarks = "Märkused"
 
-class SNSewerPumpFunctions:
-
-    def sn_sewer_pump_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_PUMP
         field_definitions = [
             (SNSewerPumpFields.field_id, QVariant.Int, True),
@@ -62,8 +63,9 @@ class SNSewerPumpFunctions:
         ]
         return field_definitions
 
-class SNSewerPumpKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_PUMP
         primary_key = ("PK_SN_SEWER_PUMP", [SNSewerPumpFields.field_id])
