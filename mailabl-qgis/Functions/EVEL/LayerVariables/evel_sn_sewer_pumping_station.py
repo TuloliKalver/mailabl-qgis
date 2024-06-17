@@ -40,9 +40,10 @@ class SNSewerPumpingStationAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNSewerPumpingStationFunctions:
-
-    def sn_sewer_pumping_station_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_PUMPING_STATION
         field_definitions = [
             (SNSewerPumpingStationFields.field_id, QVariant.Int, True),
@@ -65,8 +66,9 @@ class SNSewerPumpingStationFunctions:
         ]
         return field_definitions
 
-class SNSewerPumpingStationKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_PUMPING_STATION
         primary_key = ("PK_SN_PUMPING_STATION", [SNSewerPumpingStationFields.field_id])

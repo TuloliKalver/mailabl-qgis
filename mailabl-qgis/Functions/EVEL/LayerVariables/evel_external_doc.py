@@ -31,7 +31,8 @@ class ExternalDocAliases:
     alias_update_date = "Muutmise kp"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for EXTERNAL_DOC
         field_definitions = [
@@ -51,7 +52,8 @@ class LayerFunctions:
         return field_definitions
 
 class KeyDefinitions:
-    
+
+    @staticmethod
     def primary_key():
         # Define the primary key for EXTERNAL_DOC
         primary_key = ("PK_EXTERNAL_DOC", [ExternalDocFields.field_id])

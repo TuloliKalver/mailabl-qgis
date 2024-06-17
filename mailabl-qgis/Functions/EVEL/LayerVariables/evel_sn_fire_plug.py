@@ -39,7 +39,8 @@ class SNFirePlugAliases:
     alias_update_date = "Muutmise kp"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for SN_FIRE_PLUG
         field_definitions = [
@@ -62,8 +63,9 @@ class LayerFunctions:
         ]
         return field_definitions
 
-class SNFirePlugKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_FIRE_PLUG
         primary_key = ("PK_SN_FIRE_PLUG", [SNFirePlugFields.field_id])

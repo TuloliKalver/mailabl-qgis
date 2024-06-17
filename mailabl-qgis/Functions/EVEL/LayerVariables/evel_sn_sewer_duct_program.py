@@ -24,9 +24,10 @@ class SNSewerDuctPrograAliases:
     alias_signed_by = "Teostaja"
     alias_signed_date = "Teostamise kp"
 
-class SNSewerDuctPrograFunctions:
-
-    def sn_sewer_duct_progra_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_DUCT_PROGRA
         field_definitions = [
             (SNSewerDuctPrograFields.field_id, QVariant.Int, True),
@@ -41,8 +42,9 @@ class SNSewerDuctPrograFunctions:
         ]
         return field_definitions
 
-class SNSewerDuctPrograKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_DUCT_PROGRA
         primary_key = ("PK_SN_SEWER_DUCT_PROGRAM", [SNSewerDuctPrograFields.field_id])

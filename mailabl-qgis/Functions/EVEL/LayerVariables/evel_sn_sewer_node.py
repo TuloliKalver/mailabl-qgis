@@ -74,9 +74,10 @@ class SNSewerNodeAliases:
     alias_eic_code = "EIC kood"
     alias_pressure = "Surve"
 
-class SNSewerNodeFunctions:
-
-    def sn_sewer_node_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_NODE
         field_definitions = [
             (SNSewerNodeFields.field_mslk, QVariant.Int, True),
@@ -116,8 +117,9 @@ class SNSewerNodeFunctions:
         ]
         return field_definitions
 
-class SNSewerNodeKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_NODE
         primary_key = ("PK_SN_SEWER_NODE_MSLINK", [SNSewerNodeFields.field_mslk])

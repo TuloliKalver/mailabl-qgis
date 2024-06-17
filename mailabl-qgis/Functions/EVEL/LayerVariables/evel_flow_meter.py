@@ -53,7 +53,8 @@ class FlowMeterAliases:
     alias_remotely_readable = "Kaugloetav"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for FLOW_METER
         field_definitions = [
@@ -84,7 +85,8 @@ class LayerFunctions:
         return field_definitions
 
 class KeyDefinitions:
-    
+
+    @staticmethod
     def primary_key():
         # Define the primary key for FLOW_METER
         primary_key = ("PK_FLOW_METER", [FlowMeterFields.field_id])

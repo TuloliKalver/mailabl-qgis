@@ -24,9 +24,10 @@ class SNSewerNodeProgramAliases:
     alias_signed_by = "Teostaja"
     alias_signed_date = "Teostamise kp"
 
-class SNSewerNodeProgramFunctions:
-
-    def sn_sewer_node_program_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_NODE_PROGRAM
         field_definitions = [
             (SNSewerNodeProgramFields.field_id, QVariant.Int, True),
@@ -41,8 +42,9 @@ class SNSewerNodeProgramFunctions:
         ]
         return field_definitions
 
-class SNSewerNodeProgramKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_NODE_PROGRAM
         primary_key = ("PK_SN_SEWER_NODE_PROGRAM", [SNSewerNodeProgramFields.field_id])

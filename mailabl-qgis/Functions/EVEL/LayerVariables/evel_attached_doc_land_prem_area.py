@@ -17,7 +17,8 @@ class AttachedDocLandPremAreaAliases:
     alias_added_date = "Sisestamise kp"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for ATTACHED_DOC_LAND_PREM_AREA
         field_definitions = [
@@ -30,7 +31,8 @@ class LayerFunctions:
         return field_definitions
 
 class KeyDefinitions:
-    
+
+    @staticmethod
     def primary_key():
         # Define the primary key for ATTACHED_DOC_LAND_PREM_AREA
         primary_key = ("PK_SN_ATT_DOC_LAND_PREM_AREA_ID", [AttachedDocLandPremAreaFields.field_id])

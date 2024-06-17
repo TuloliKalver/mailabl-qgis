@@ -13,7 +13,8 @@ class SNSewerDuctErrorAliases:
     alias_error_id = "Seos veateatega"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for SN_SEWER_DUCT_ERROR
         field_definitions = [
@@ -23,8 +24,9 @@ class LayerFunctions:
         ]
         return field_definitions
 
-class SNSewerDuctErrorKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_DUCT_ERROR
         primary_key = ("PK_SN_SEWER_DUCT_ERROR", [SNSewerDuctErrorFields.field_id])

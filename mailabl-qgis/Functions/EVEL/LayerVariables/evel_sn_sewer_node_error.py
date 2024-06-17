@@ -12,9 +12,10 @@ class SNSewerNodeErrorAliases:
     alias_node_id = "Seos sõlmega"
     alias_error_id = "Seos veateatega"
 
-class SNSewerNodeErrorFunctions:
-
-    def sn_sewer_node_error_fields():
+class LayerFunctions:
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_NODE_ERROR
         field_definitions = [
             (SNSewerNodeErrorFields.field_id, QVariant.Int, True),
@@ -23,8 +24,9 @@ class SNSewerNodeErrorFunctions:
         ]
         return field_definitions
 
-class SNSewerNodeErrorKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_NODE_ERROR
         primary_key = ("PK_SN_SEWER_NODE_ERROR", [SNSewerNodeErrorFields.field_id])

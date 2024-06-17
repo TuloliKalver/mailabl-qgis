@@ -11,10 +11,13 @@ class ConsumerPointAliases:
     # Define aliases as variables
     alias_id = "Primary Key"
     alias_cp_id = "Consumer Point ID"
-    alias_customer_id = "Customer ID"
+    alias_customer_id = "Customer ID"class LayerFunctions:
+    
+    @staticmethod
+    def fields():
     alias_customer_role = "Customer Role"
 
-class ConnectionPointsLayerFunctions:
+class LayerFunctions:
 
     def fields():
         # Define the field definitions for CUSTOMER_CONSUMERPOINT

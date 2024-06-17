@@ -33,7 +33,8 @@ class SNOperationAliases:
     alias_creation_date = "Sisestamise kp"
 
 class LayerFunctions:
-
+    
+    @staticmethod
     def fields():
         # Define the field definitions for SN_OPERATION
         field_definitions = [
@@ -53,8 +54,9 @@ class LayerFunctions:
         ]
         return field_definitions
 
-class SNOperationKeyDefinitions:
-    
+class KeyDefinitions:
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_OPERATION
         primary_key = ("PK_SN_OPERATION", [SNOperationFields.field_mslinlk])

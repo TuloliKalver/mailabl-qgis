@@ -29,8 +29,9 @@ class DemarcationPointAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kuupäev"
 
-class DemarcationLayerFunctions:
-
+class LayerFunctions:
+    
+    @staticmethod
     def fields():
         # Define the field definitions for DEMARCATION_POINT
         field_definitions = [

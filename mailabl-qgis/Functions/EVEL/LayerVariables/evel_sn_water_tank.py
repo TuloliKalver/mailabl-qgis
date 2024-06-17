@@ -28,10 +28,10 @@ class SNWaterTankAliases:
     alias_updated_by = "Muutja"
     alias_update_date = "Muutmise kp"
 
-class SNWaterTankFunctions:
-
+class LayerFunctions:
+    
     @staticmethod
-    def sn_water_tank_fields():
+    def fields():
         field_definitions = [
             (SNWaterTankFields.field_id, QVariant.Int, True),
             (SNWaterTankFields.field_node_id, QVariant.Int, False),
@@ -48,7 +48,7 @@ class SNWaterTankFunctions:
         ]
         return field_definitions
 
-class SNWaterTankKeyDefinitions:
+class KeyDefinitions:
 
     @staticmethod
     def primary_key():

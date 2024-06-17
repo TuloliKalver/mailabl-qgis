@@ -11,8 +11,8 @@ class ApartmentDataAliases:
     alias_adr_id = "Aadress id"
 
 class LayerFunctions:
-
     
+    @staticmethod
     def fields():
         # Define the field definitions for APARTMENT_DATA
         field_definitions = [
@@ -22,7 +22,8 @@ class LayerFunctions:
         return field_definitions
 
 class KeyDefinitions:
-    
+
+    @staticmethod
     def primary_key():
         # Define the primary key for APARTMENT_DATA
         primary_key = ("PK_ADDRESS_ID", [ApartmentDataFields.field_id])

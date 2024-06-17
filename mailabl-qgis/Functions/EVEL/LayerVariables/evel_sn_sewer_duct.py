@@ -87,8 +87,9 @@ class SewerDuctAliases:
     alias_update_date = "Muutmise kp"
 
 class LayerFunctions:
-
-    def sewer_duct_fields():
+    
+    @staticmethod
+    def fields():
         # Define the field definitions for SN_SEWER_DUCT
         field_definitions = [
             (SewerDuctFields.field_mslk, QVariant.Int, True),
@@ -135,7 +136,8 @@ class LayerFunctions:
         return field_definitions
 
 class KeyDefinitions:
-    
+
+    @staticmethod
     def primary_key():
         # Define the primary key for SN_SEWER_DUCT
         primary_key = ("PK_SN_SEWER_DUCT", [SewerDuctFields.field_mslk])

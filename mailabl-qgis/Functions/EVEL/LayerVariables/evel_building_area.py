@@ -49,7 +49,7 @@ class BuildingAreaAliases:
     alias_update_date = "Muutmise kp"
 
 class LayerFunctions:
-
+    
     @staticmethod
     def fields():
         field_definitions = [
