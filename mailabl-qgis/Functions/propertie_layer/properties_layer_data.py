@@ -5,12 +5,31 @@ from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
 from ...Functions.tableViewAdjust import ColumnResizer
 from ...KeelelisedMuutujad.messages import Headings
+from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 pealkiri = Headings()
 
 paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
 
-tunnus_AND_address = ['TUNNUS', 'MK_NIMI', 'OV_NIMI', 'AY_NIMI', 'L_AADRESS']
+
+cadastral_unit_number_column = Katastriyksus.tunnus #"TUNNUS"
+immovable_number_column = Katastriyksus.hkood #"HKOOD"
+county_column = Katastriyksus.mk_nimi #"MK_NIMI"
+state_column = Katastriyksus. ov_nimi #"OV_NIMI"
+city_column = Katastriyksus.ay_nimi #"AY_NIMI"
+street_column = Katastriyksus.l_aadress #"L_AADRESS"
+firstRegistrationDate_column = Katastriyksus.registr #"REGISTR"
+lastUpdated_column = Katastriyksus.muudet #"MUUDET"
+size_column = Katastriyksus.pindala #"PINDALA"
+
+
+tunnus_AND_address = [
+    cadastral_unit_number_column, #'TUNNUS', 
+    county_column, #'MK_NIMI', 
+    state_column, #'OV_NIMI', 
+    city_column,#'AY_NIMI', 
+    street_column, #'L_AADRESS'
+    ]
 
 
 class PropertiesLayerFunctions:
@@ -67,8 +86,7 @@ class PropertiesLayerFunctions:
         row = 0  # Initialize row index
         main_row = 0
         for feature in features:
-            # Concatenate 'MK_NIMI', 'OV_NIMI', 'AY_NIMI', 'L_AADRESS' into a single 'Address' column
-            address_value = f"{feature['MK_NIMI']} {feature['OV_NIMI']} {feature['AY_NIMI']} {feature['L_AADRESS']}"
+            address_value = f"{feature[county_column]} {feature[state_column]} {feature[city_column]} {feature[street_column]}"
 
             # Add data to the model
             for idx, field in enumerate(fields):
@@ -125,8 +143,7 @@ class TableGenerator:
 
         # Populate the model with data
         for feature in features:
-            # Concatenate 'MK_NIMI', 'OV_NIMI', 'AY_NIMI', 'L_AADRESS' into a single 'Address' column
-            address_value = f"{feature['MK_NIMI']} {feature['OV_NIMI']} {feature['AY_NIMI']} {feature['L_AADRESS']}"
+            address_value = f"{feature[county_column]} {feature[state_column]} {feature[city_column]} {feature[street_column]}"
 
             # Add data to the model
             for idx, field in enumerate(fields):

@@ -9,7 +9,8 @@ class ExpandProcessListsFunctions:
     
     @staticmethod
     def get_county_list(self):      
-        field_county_name = 'MK_NIMI'
+        from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+        field_county_name = Katastriyksus.mk_nimi #'MK_NIMI'
         expression = ""
         input_layer_name = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
         layers = QgsProject.instance().mapLayersByName(input_layer_name)
