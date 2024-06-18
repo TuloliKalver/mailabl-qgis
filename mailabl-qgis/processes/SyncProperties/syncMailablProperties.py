@@ -1,7 +1,7 @@
 import time
 from PyQt5.QtCore import QObject, pyqtSignal
-from qgis.core import QgsApplication, QgsTask, QgsMessageLog
-from qgis.core import QgsProject, QgsVectorLayer, QgsFeature, edit
+
+from qgis.core import QgsProject, QgsFeature, edit, QgsTask
 from ...queries.python.property_data import WhereProperties
 from PyQt5.QtCore import QCoreApplication, QTimer
 from PyQt5.QtWidgets import QListWidgetItem
@@ -234,7 +234,7 @@ class PropertiesBaseMap:
 
         print("Step 7: copy memory layer to the file designated file!")
         group_layer_name = 'Uued kinnistud'
-        QTimer.singleShot(500, lambda: LayerCopier.StartSaving_virtual_Layer(self, memory_layer_name, future_layer_name_text, group_layer_name))
+        QTimer.singleShot(500, lambda: LayerCopier.StartSaving_virtual_Layer(memory_layer_name, future_layer_name_text, group_layer_name))
 
 
         lblSync_General.setText(f" kaardikiht on koostatud. Laetud on:")

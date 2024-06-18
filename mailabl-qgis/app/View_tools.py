@@ -138,9 +138,9 @@ class tableView_functions():
         row = 0
         count_without_transport = 0
         count_with_transport = 0
-
+        from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
         for feature in features:
-            siht1_value = feature.attribute('SIHT1')
+            siht1_value = feature.attribute(Katastriyksus.siht1)
             row_items = [QStandardItem(feature.attribute(field).toString("yyyy-MM-dd") if isinstance(feature.attribute(field), QDate) else str(feature.attribute(field))) for field in fields]
 
             if 'Transpordimaa' not in siht1_value:
@@ -296,7 +296,7 @@ class shp_tools:
     def create_item_list(input_layer, field):
         #print(f"input layer {input_layer}")
         input_layer = QgsProject.instance().mapLayersByName(input_layer)[0]
-        # Hangi atribuutide unikaalsed väärtused tulbast "MK_NIMI"
+        # Hangi atribuutide unikaalsed väärtused tulbast "field"
         unique_values = input_layer.uniqueValues(input_layer.fields().lookupField(field))
         sorted_values = sorted(unique_values)
         #print(f"sorted_values: {sorted_values}")

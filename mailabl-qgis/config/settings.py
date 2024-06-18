@@ -109,6 +109,7 @@ class FilesByNames:
         self.contracts_setup_ui = "ContractsSetup.ui"
         self.easements_setup_ui = "EasementsSetup.ui"
         self.user_setup_ui = "UserSetup.ui"
+        self.layer_compiler = "layer_compiler.ui"
         self.easement_tools_ui = "Servituut.ui"
         self.Setup_ConfigUI = "ProjectSetup.ui"
         self.add_properties_to_module_ui = "Properties_connector_new.ui"
@@ -119,9 +120,10 @@ class Filepaths:
     @staticmethod
     def get_icon(icon_name):
         return os.path.join(PLUGIN_DIR_MAIN, ICONS_FOLDER, icon_name)
-
+   
+    '''
     @staticmethod
-    def get_style(style_name):
+    def get_style_evel(style_name):
         style_path = os.path.join(PLUGIN_DIR_MAIN, FUNCTIONS_FOLDER, EVEL_FOLDER, QGIS_STYLES_FOLDER)
         
         # Check for style_name directly in the main QGIS_STYLES_FOLDER
@@ -139,6 +141,12 @@ class Filepaths:
         
         # Return None if style_name is not found in QGIS_STYLES_FOLDER or its subfolders
         return None
+    '''
+
+    @staticmethod
+    def get_style(style_name):
+        return os.path.join(PLUGIN_DIR_MAIN, QGIS_STYLES_FOLDER, style_name)
+
 
     @staticmethod
     def get_easements_tools():

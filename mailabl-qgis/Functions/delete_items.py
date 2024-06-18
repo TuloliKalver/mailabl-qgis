@@ -7,6 +7,7 @@ from ..queries.python.property_data import deleteProperty, MyLablChecker
 from ..Functions.Tools import tableFunctions
 from ..config.settings import SettingsDataSaveAndLoad
 from ..KeelelisedMuutujad.messages import Headings
+from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
  
 pealkiri = Headings()
 
@@ -339,7 +340,7 @@ class delete_frames():
 class DeletingProcesses:
 
     def get_county_list_delete(self):#, county_field, lw_county, lbl): 
-        county_field = "MK_NIMI"
+        county_field = Katastriyksus.mk_nimi #"MK_NIMI"
         lw_county = self.lwDelete_County_Names 
         lbl = self.lblDel_Amount     
         layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()

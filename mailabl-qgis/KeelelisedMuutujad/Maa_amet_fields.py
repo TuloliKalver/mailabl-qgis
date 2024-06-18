@@ -21,14 +21,14 @@ class Katastriyksus:
     ouemaa = "ouemaa"          # Õuemaa kõlvik
     muumaa = "muumaa"          # Muu maa kõlvik
     kinnistu = "kinnistu"      # Kinnistu registriosa number
-    #muutpohjus = "muutpohjus"  # Katatastriüksuse viimane muudatus
-    omvorm = "omvorm"          # Katastriüksuse omandivorm
+    #muutpohjus = "muutpohjus"  # Katatastriüksuse viimane muudatus   new
+    omvorm = "omvorm"          # Katastriüksuse omandivorm  
     maks_hind = "maks_hind"    # Maatüki maksustamishind
     marked = "marked"          # Katastriüksuse märked
-    #ads_oid = "ads_oid"        # ADS objekti identifikaator, identifitseerib objekti läbi versioonide.
-    #adob_id = "adob_id"        # Aadressiobjekti versiooni unikaalne identifikaator (unikaalne üle kõikide objektide kõikide versioonide).
-    #oiguslik_alus = "oiguslik_alus"  # Katastriüksuse viimase muudatuse õiguslik alus
-    #eksport = "eksport"        # Andmete väljavõtte kuupäev
+    #ads_oid = "ads_oid"        # ADS objekti identifikaator, identifitseerib objekti läbi versioonide. new
+    #adob_id = "adob_id"        # Aadressiobjekti versiooni unikaalne identifikaator (unikaalne üle kõikide objektide kõikide versioonide).   new
+    #oiguslik_alus = "oiguslik_alus"  # Katastriüksuse viimase muudatuse õiguslik alus  new
+    #eksport = "eksport"        # Andmete väljavõtte kuupäev  new
 
 class OldKatastriyksus:
     tunnus = "TUNNUS"                            # Katastriüksuse tunnus
@@ -46,18 +46,18 @@ class OldKatastriyksus:
     so_prts2 = "SO_PRTS2"                        # 2. sihtostarbe protsent
     so_prts3 = "SO_PRTS3"                        # 3. sihtostarbe protsent
     pindala = "PINDALA"                          # Katastriüksuse pindala
-    #Ruumikuju_pindala = "RUUMPIND"              # Katastriüksuse ruumikuju pindala
-    #Registreeritud_yhik = "REG_YHIK"            # Pindala registreerimise ühik
+    #Ruumikuju_pindala = "RUUMPIND"              # Katastriüksuse ruumikuju pindala  new
+    #Registreeritud_yhik = "REG_YHIK"            # Pindala registreerimise ühik  new
     haritav = "HARITAV"                          # Haritava maa kõlvik
     rohumaa = "ROHUMAA"                          # Loodusliku rohumaa kõlvik
     mets = "METS"                                # Metsamaa kõlvik
     ouemaa = "OUEMAA"                            # Õuemaa kõlvik
     muumaa = "MUUMAA"                            # Muu maa kõlvik
     kinnistu = "KINNISTU"                        # Kinnistu registriosa number
-    #Moodustatud = "MOODUST"                     # Maamõõtmise kuupäev
-    #Moodistaja = "MOOTJA"                       # Maamõõtja nimetus
-    #Moodustamisviis = "MOOTVIIS"                # Moodustamisviis
-    #Registreerimisviis = "OMVIIS"               # Katastriüksuse registreerimise viis
+    #Moodustatud = "MOODUST"                     # Maamõõtmise kuupäev   new
+    #Moodistaja = "MOOTJA"                       # Maamõõtja nimetus   new
+    #Moodustamisviis = "MOOTVIIS"                # Moodustamisviis   new
+    #Registreerimisviis = "OMVIIS"               # Katastriüksuse registreerimise viis   new
     omvorm = "OMVORM"                            # Katastriüksuse omandivorm
     maks_hind = "MAKS_HIND"                      # Maa-ameti arvutatud maaüksuse maksustamishind €
     marked = "MARKETEKST"                        # Katastriüksuse märked

@@ -355,9 +355,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSearch_Add.setEnabled(False)
         self.pbCooseFromMap_Add.setEnabled(False)
         self.lblDel_Aditiona_txt.setEnabled(False)
+        self.pbCompiler.clicked.connect(self.start_compielre)
+    
+
+    def start_compielre(self):
+        from .processes.SyncProperties.CompyleOldPropertyModel import LayerCompilerSetup
+        print("button clicked")
+        LayerCompilerSetup.load_layer_compiler_widget(self)
 
         
-
 
     def log_out(self):
         Unload.log_out(self)

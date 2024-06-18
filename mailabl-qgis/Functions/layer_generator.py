@@ -111,10 +111,12 @@ class LayerCopier():
                         QgsProject.instance().removeMapLayer(layer_id)
                         print(HoiatusTextsAuto.deleted_output_file_sucess(memory_layer_name))
                 
-                style_name = FilesByNames().MaaAmet_import
-                QGIS_Layer_style = Filepaths().get_style(style_name)
+                
+
                 
                 updated_layer = QgsProject.instance().mapLayersByName(new_layer_name)[0]
+                
+                QGIS_Layer_style = Filepaths().get_style(FilesByNames().MaaAmet_import)
                 updated_layer.loadNamedStyle(QGIS_Layer_style)
                 updated_layer.triggerRepaint()
                 text = HoiatusTextsAuto.layer_indexing(new_layer_name)

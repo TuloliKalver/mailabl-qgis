@@ -62,7 +62,7 @@ class ComboBoxMapTools:
         print("item list from selectable_combobox.py")
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
 
-    # Hangi atribuutide unikaalsed väärtused tulbast "MK_NIMI"
+    # Hangi atribuutide unikaalsed väärtused tulbast "field"
         unique_values = input_layer.uniqueValues(input_layer.fields().lookupField(field))
         sorted_values = sorted(unique_values)
         print(f"sorted_values: {sorted_values}")

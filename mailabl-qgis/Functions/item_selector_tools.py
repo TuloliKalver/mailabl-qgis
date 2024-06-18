@@ -6,7 +6,7 @@ from qgis.core import QgsProcessingFeatureSourceDefinition, QgsProject, QgsFeatu
 
 from PyQt5.QtCore import QCoreApplication
 from ..config.settings import SettingsDataSaveAndLoad, connect_settings_to_layer
-
+from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 #Provides tools to select elements from map or from tables and show on map
 
 active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -154,7 +154,7 @@ class properties_selectors:
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         layer.removeSelection()
         QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(True)
-        county_name_field = 'MK_NIMI'
+        county_name_field = Katastriyksus.mk_nimi #'MK_NIMI'
         #county_restriction = "', '".join(selected_county_item_text)
         expression = f"{county_name_field} IN ('{selected_county_item_text}')"
         print(f"Expression: {expression}")

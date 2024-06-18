@@ -1,6 +1,6 @@
 from .checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .ui_controllers import WidgetAnimator, FrameHandler
-
+from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 
 comboboxes =ComboBoxFunctions
@@ -10,13 +10,11 @@ tools_shp = ComboBoxMapTools
 # muutujate määramine koodi ühtlustamieseks
     # maa-ameti andmed
 
-input_layer_name2 = 'SHP_KATASTRIYKSUS'
-mk_nimi_field = 'MK_NIMI'
-ov_nimi_field = 'OV_NIMI'
-ay_nimi_field = "AY_NIMI"
-# klienid kihtide määratlus
-siht_kataster = "Test_põhi"
-control_virtual_layer_name = "Muudetavad kinnistud"
+mk_nimi_field = Katastriyksus.mk_nimi #'MK_NIMI'
+ov_nimi_field = Katastriyksus.ov_nimi #'OV_NIMI'
+ay_nimi_field = Katastriyksus.ay_nimi #"AY_NIMI"
+
+
 
 
 class RemoveProcess:
