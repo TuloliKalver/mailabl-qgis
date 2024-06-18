@@ -1,7 +1,7 @@
 from qgis.PyQt.QtCore import QVariant
 
 class SNSewerManholeFields:
-    # Define field names as variables
+    # Defineeri välja nimed muutujatena
     field_id = "ID"
     field_node_id = "NODE_ID"
     field_type_id = "TYPE_ID"
@@ -21,7 +21,7 @@ class SNSewerManholeFields:
     field_update_date = "UPDATE_DATE"
 
 class SNSewerManholeAliases:
-    # Define aliases as variables
+    # Defineeri aliasid muutujatena
     alias_id = "Primaarvõti"
     alias_node_id = "Viide Sõlmele"
     alias_type_id = "Kaevu liik"
@@ -36,15 +36,15 @@ class SNSewerManholeAliases:
     alias_lid_capacity_id = "Kaane kandevõime"
     alias_access_duct_diam = "Tõusutoru läbimõõt (mm)"
     alias_creator = "Sisestaja"
-    alias_creator_date = "Sisestamise kp"
+    alias_creator_date = "Sisestamise kuupäev"
     alias_updated_by = "Muutja"
-    alias_update_date = "Muutmise kp" 
+    alias_update_date = "Muutmise kuupäev"
 
 class LayerFunctions:
     
     @staticmethod
     def fields():
-        # Define the field definitions for SN_SEWER_MANHOLE
+        # Defineeri välja määratlused evel.SN_SEWER_MANHOLE jaoks
         field_definitions = [
             (SNSewerManholeFields.field_id, QVariant.Int, True),
             (SNSewerManholeFields.field_node_id, QVariant.Int, False),
@@ -59,9 +59,9 @@ class LayerFunctions:
             (SNSewerManholeFields.field_lid_diameter_id, QVariant.Int, False),
             (SNSewerManholeFields.field_lid_capacity_id, QVariant.Int, False),
             (SNSewerManholeFields.field_access_duct_diam, QVariant.Int, False),
-            (SNSewerManholeFields.field_creator, QVariant.String, 30),
+            (SNSewerManholeFields.field_creator, QVariant.String, False),
             (SNSewerManholeFields.field_creator_date, QVariant.DateTime, False),
-            (SNSewerManholeFields.field_updated_by, QVariant.String, 30),
+            (SNSewerManholeFields.field_updated_by, QVariant.String, False),
             (SNSewerManholeFields.field_update_date, QVariant.DateTime, False)
         ]
         return field_definitions
@@ -70,12 +70,13 @@ class KeyDefinitions:
 
     @staticmethod
     def primary_key():
-        # Define the primary key for SN_SEWER_MANHOLE
+        # Defineeri primaarvõti evel.SN_SEWER_MANHOLE jaoks
         primary_key = ("PK_SN_SEWER_MANHOLE", [SNSewerManholeFields.field_id])
         return primary_key
     
+    @staticmethod
     def foreign_keys():
-        # Define the foreign keys for SN_SEWER_MANHOLE
+        # Defineeri võõrvõtmed evel.SN_SEWER_MANHOLE jaoks
         foreign_keys = [
             ("FK_SN_SEWER_MANHOLE_NODE_ID", SNSewerManholeFields.field_node_id, "evel.SN_SEWER_NODE(MSLINK)"),
             ("FK_SN_SMANHOLE_TYPE_ID", SNSewerManholeFields.field_type_id, "evel.SN_CONSTANT(ID)"),
@@ -84,4 +85,9 @@ class KeyDefinitions:
             ("FK_SN_SMANHOLE_DIAMETER_ID", SNSewerManholeFields.field_diameter_id, "evel.SN_CONSTANT(ID)"),
             ("FK_SN_SMANHOLE_DIAMETER_TYPE_ID", SNSewerManholeFields.field_diameter_type_id, "evel.SN_CONSTANT(ID)"),
             ("FK_SN_SMANHOLE_MATERIAL_ID", SNSewerManholeFields.field_material_id, "evel.SN_CONSTANT(ID)"),
-            ]
+            ("FK_SN_SMANHOLE_LID_TYPE_ID", SNSewerManholeFields.field_lid_type_id, "evel.SN_CONSTANT(ID)"),
+            ("FK_SN_SMANHOLE_LID_SHAPE_ID", SNSewerManholeFields.field_lid_shape_id, "evel.SN_CONSTANT(ID)"),
+            ("FK_SN_SMANHOLE_FIRMNESS_CLASS_ID", SNSewerManholeFields.field_firmness_class_id, "evel.SN_CONSTANT(ID)"),
+            ("FK_SN_SMANHOLE_LID_DIAMETER_ID", SNSewerManholeFields.field_lid_diameter_id, "evel.SN_CONSTANT(ID)")
+        ]
+        return foreign_keys
