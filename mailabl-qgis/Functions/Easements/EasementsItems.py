@@ -54,10 +54,10 @@ class EasementssMain:
             heading = Headings().warningSimple
             QMessageBox.warning(None, heading, text)
 
-    def easmenets_by_number(self, table, search_values):
+    def easemenets_by_number(self, search_values, table ):
         result = queryHandling.easments_search(self, search_values)
         if result is not None:
-            InputeasmentsToTable.input_data_to_table(self,result, table)
+            InputeasmentsToTable.input_data_to_table(self, result, table)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
             heading = Headings().warningSimple

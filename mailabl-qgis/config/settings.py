@@ -121,6 +121,7 @@ class Filepaths:
     def get_icon(icon_name):
         return os.path.join(PLUGIN_DIR_MAIN, ICONS_FOLDER, icon_name)
    
+   #arrange this method for EVEL model!!!
     '''
     @staticmethod
     def get_style_evel(style_name):

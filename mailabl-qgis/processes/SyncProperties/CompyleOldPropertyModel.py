@@ -1,14 +1,13 @@
 from qgis.core import QgsProject, QgsLayerTree, QgsLayerTreeGroup, QgsLayerTreeLayer, QgsFeature, edit
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, QComboBox, QPushButton, QMessageBox
+from PyQt5.QtWidgets import QMessageBox
 from qgis.core import QgsProject
 from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import connect_settings_to_layer
 from ...config.settings import Filepaths, FilesByNames
-from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, OldKatastriyksus
+from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, OldKatastriyksus, KatasterMappings
 from PyQt5.uic import loadUi
 
 class LayerCompiler:
-
     def find_layer_by_name(name, root=None):
         """
         Recursively searches for a layer by name in the layer tree.
@@ -57,34 +56,6 @@ class LayerCompiler:
             print("Process stopped by user.")
             return
 
-        # Field mapping between OldKatastriyksus and Katastriyksus
-        field_mapping = {
-            OldKatastriyksus.tunnus: Katastriyksus.tunnus,
-            OldKatastriyksus.hkood: Katastriyksus.hkood,
-            OldKatastriyksus.mk_nimi: Katastriyksus.mk_nimi,
-            OldKatastriyksus.ov_nimi: Katastriyksus.ov_nimi,
-            OldKatastriyksus.ay_nimi: Katastriyksus.ay_nimi,
-            OldKatastriyksus.l_aadress: Katastriyksus.l_aadress,
-            OldKatastriyksus.registr: Katastriyksus.registr,
-            OldKatastriyksus.muudet: Katastriyksus.muudet,
-            OldKatastriyksus.siht1: Katastriyksus.siht1,
-            OldKatastriyksus.siht2: Katastriyksus.siht2,
-            OldKatastriyksus.siht3: Katastriyksus.siht3,
-            OldKatastriyksus.so_prts1: Katastriyksus.so_prts1,
-            OldKatastriyksus.so_prts2: Katastriyksus.so_prts2,
-            OldKatastriyksus.so_prts3: Katastriyksus.so_prts3,
-            OldKatastriyksus.pindala: Katastriyksus.pindala,
-            OldKatastriyksus.haritav: Katastriyksus.haritav,
-            OldKatastriyksus.rohumaa: Katastriyksus.rohumaa,
-            OldKatastriyksus.mets: Katastriyksus.mets,
-            OldKatastriyksus.ouemaa: Katastriyksus.ouemaa,
-            OldKatastriyksus.muumaa: Katastriyksus.muumaa,
-            OldKatastriyksus.kinnistu: Katastriyksus.kinnistu,
-            OldKatastriyksus.omvorm: Katastriyksus.omvorm,
-            OldKatastriyksus.maks_hind: Katastriyksus.maks_hind,
-            OldKatastriyksus.marked: Katastriyksus.marked
-        }
-
         # Message box to confirm proceeding to add missing features
         msg_box.setText("Field mapping prepared. Do you want to proceed with adding missing features?")
         retval = msg_box.exec_()
@@ -114,6 +85,8 @@ class LayerCompiler:
                 if tunnus_index is not None and combined_attributes[tunnus_index][1] not in new_layer_tunnus_values:
                     # Create a new feature for the new layer
                     new_feature = QgsFeature(new_layer.fields())
+
+                    field_mapping = KatasterMappings.field_mapping
 
                     # Map attributes from old layer to new layer using field mapping
                     for old_field, new_field in field_mapping.items():
@@ -152,7 +125,6 @@ class LayerCompilerSetup():
         # Show the widget
         widget.show()
 
-
         # Access the comboboxes and button
         self.old_layer_combo = widget.oldLayerComboBox
         self.new_layer_combo = widget.newLayerComboBox
@@ -181,7 +153,7 @@ class LayerCompilerSetup():
         new_layer_name = widget.newLayerComboBox.currentText()
 
         # Show a message box to confirm the selection
-        reply = QMessageBox.question(None, 'Confirmation', 
+        reply  = QMessageBox.question(None, 'Confirmation', 
                                      f'Are you sure you want to compile layers?\nOld Layer: {old_layer_name}\nNew Layer: {new_layer_name}', 
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 

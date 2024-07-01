@@ -135,7 +135,7 @@ class ContractsMain:
             heading = Headings().warningSimple
             print(f"{heading}, {text}")
 
-    def search_contracts (self, table, query):
+    def search_contracts (self, query, table):
 
         result = ContractsSearch.contracts_search_results(self, query)
 

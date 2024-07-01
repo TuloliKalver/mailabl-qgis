@@ -225,7 +225,6 @@ class EVELGroupGenerator:
 
         filenames = FileNames.filenames
         
-
         # Add layers to respective groups and subgroups
         for filename in filenames:
             matched = False

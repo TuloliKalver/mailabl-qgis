@@ -34,7 +34,7 @@ from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
-from .Functions.SearchEngines import searchGeneral, searchProjectsValue
+from .Functions.SearchEngines import searchGeneral,ModularSearchEngine
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
 from .Functions.Tools import tableFunctions
 from .Functions.AddProperties.AddNonduplicateItems import AddProperties
@@ -46,7 +46,7 @@ from .queries.python.access_credentials import  (clear_UC_data,
                                                 get_access_token, print_result,
                                                 save_user_name)
 from .queries.python.users.user_info import UserSettings
-from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator
+from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator, searchProjectsValue
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import InsertStatusToComboBox
 from .KeelelisedMuutujad.messages import Headings, HoiatusTexts,HoiatusTextsAuto, EdukuseTexts
@@ -173,7 +173,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
     #setup login dialog and hide frames to block functionality!
         self.on_load(startup_frames)
-        #self.startLayerListener()
         
         object_listView_Add_State = self.listWidget_State
         object_listView_Add_State.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
@@ -248,8 +247,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbRefresh_tblMailabl_projects.clicked.connect(self.update_tblMailabl_projects)
         
         
-        self.pbShowOnMap.clicked.connect(self.show_projects_on_map_with_cadastral_connection)
-      
+        
 
         self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
 
@@ -303,9 +301,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         #self.pbDelete_items_getCounty.clicked.connect(self.get_Mailabl_existing_counties)
         
-        self.pbSearchProjects.clicked.connect(self.searchProjects)
-        self.pbSearchContracts.clicked.connect(self.searchContracts)
-        self.pbSearcheasements.clicked.connect(self.searchEasements)
+
+        self.search_engine = ModularSearchEngine()
+        self.pbSearchProjects.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_PROJECTS))
+        self.pbSearchContracts.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_CONTRACTS))
+        self.pbSearcheasements.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_EASEMENTS))
+
         
     #Adding and removing        
         self.pbSearch_Add.clicked.connect(lambda: searchGeneral.search_cadastral_items_by_values(self))
@@ -363,8 +364,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         print("button clicked")
         LayerCompilerSetup.load_layer_compiler_widget(self)
 
-        
-
     def log_out(self):
         Unload.log_out(self)
 
@@ -387,13 +386,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.showNormal()
             button.setEnabled(True)
             return
-
     
-
     def on_easement_widget_closed(self, button):
         button.setEnabled(True)
         self.showNormal()
-
 
     def load_properties_connector(self, module, table, button):
         button_contracts = self.pbContracts_Connect_properties
@@ -435,7 +431,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #print("Closed properties loader window")
         self.showNormal()
 
-
     def generate_project_folder(self):
         self.pbGenProjectFolder.blockSignals(True)
         table = self.tblMailabl_projects
@@ -452,59 +447,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbGenProjectFolder.blockSignals(False)
 
 ########################################################################
-    def searchProjects(self):
-        lineEdit = self.le_searchProjects
-        table = self.tblMailabl_projects
-        search_items = lineEdit.displayText()
-        item = search_items.strip()
-        if item == '' or None:
-            # Frame the label with red border
-            lineEdit.setStyleSheet("border: 1px solid #D32F2F;")
-            # Display warning message
-            QMessageBox.warning(self, pealkiri.warningSimple, sisu.otsing_puudu)
-            return
-        else: 
-            lineEdit.setStyleSheet("border: None")
-            searchProjectsValue.load_Mailabl_projects_by_number(item, table)
-
-
-    def searchContracts(self):
-        lineEdit = self.le_searchContracts
-        table = self.ContractView
-        search_items = lineEdit.displayText()
-        item = search_items.strip()
-        if item == '' or None:
-            # Frame the label with red border
-            lineEdit.setStyleSheet("border: 1px solid #D32F2F;")
-            # Display warning message
-            QMessageBox.warning(self, pealkiri.warningSimple, sisu.otsing_puudu)
-            return
-        else: 
-            lineEdit.setStyleSheet("border: None")
-            ContractsMain.search_contracts(self, table, search_items)
-        
-
-    def searchEasements(self):
-        lineEdit = self.leSearcheasements
-        table = self.tweasementView
-        search_items = lineEdit.displayText()
-        item = search_items.strip()
-        if item == '' or None:
-            # Frame the label with red border
-            lineEdit.setStyleSheet("border: 1px solid #D32F2F;")
-            # Display warning message
-            QMessageBox.warning(self, pealkiri.warningSimple, sisu.otsing_puudu)
-            return
-        else: 
-            lineEdit.setStyleSheet("border: None")
-            EasementssMain.easmenets_by_number(self, table, search_items)
-        
+    def universalSearchWrapper(self, module_name):        
+        self.search_engine.universalSearch(self, module_name)
 
     def limitedLoad(self):
         table = self.tblMailabl_projects
         projectsTableDecorator.load_Mailabl_projects_list_with_zoomed_map_elements(table)
         
-
     def handleSidebar_help(self):
         button1 = self.pbMailabl        
         help_menu = self.helpMenu
@@ -521,8 +470,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         length = len(button1.text())
         alter_containers.toggle_right_menu(self, length, buttons, original_texts, new_texts, help_menu, container, container_width)
  
-
-
     def handleSidebar_leftButtons(self):
         button1 = self.pbSettings
         button2 = self.pbExpand
@@ -609,8 +556,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #Chose a random button to measure text lenght
         length = len(button18.text())
         alter_containers.toggle_left_menu(self, length, buttons, original_texts, new_texts, left_menu, container, container_width)
-
-
 
     def StartImportProcess(self):
         AddProperties.check_for_duplicates_and_add_only_matches(self)
@@ -717,39 +662,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
     #Functions in Development
 
-    def startLayerListener(self):
-        print("started layer listener")
-        input_layer_name = load.load_SHP_inputLayer_name()
-
-        # Check if the layer with the specified name exists
-        map_layers = QgsProject.instance().mapLayersByName(input_layer_name)
-        if not map_layers:
-            # Layer not found, do nothing and return
-            return
-
-        layer = map_layers[0]
-        layer.selectionChanged.connect(lambda: self.activate_item_selection_from_layer(input_layer_name))
-    
-    def activate_item_selection_from_layer(self,layer_name):
-        print("activated item selector")
-        #print("started")
-        self.cbChooseAllAdd_properties.setChecked(False)
-        self.cbChooseAllAdd__street_properties.setChecked(False)
-        
-        model_without_transport, model_with_transport, total = table_functions.generate_table_from_selected_map_items_with_roads(layer_name)
-        self.tblvResults_Confirm.setModel(model_without_transport)
-        self.tblvResults_streets_Confirm.setModel(model_with_transport)
-        self.pbConfirm_action.show()
-        self.cbChooseAllAdd_properties.show()
-        self.cbChooseAllAdd__street_properties.show()
-        #self.cbChooseAllAdd__street_properties.setChecked(True)
-        self.cbChooseAllAdd_properties.setChecked(True)
-        self.cbChooseAllAdd__street_properties.setChecked(True)
-        model_without_transport.clear() 
-        model_with_transport.clear()
-
-    
-    
     def manualy_choose_properties_to_Add(self):
 
         input_layer_name = load.load_SHP_inputLayer_name()
@@ -780,8 +692,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.cbChooseAllAdd_properties.setChecked(True)
         self.cbChooseAllAdd__street_properties.setChecked(True)
         
-
-
     def get_state_list(self):
         self.sw_HM.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
@@ -860,7 +770,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbDone_State.show()
         self.cbChooseAll_States.show()
         
-
     def get_city_list(self):
         self.sw_HM.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
@@ -1109,8 +1018,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblVersion.setText(f"v.{version_nr}")
         #print(f"version_nr: '{version_nr}'")
 
-    
-        
     #creditentials handling
     def remove_UC_data(self):
         clear_UC_data()
@@ -1204,13 +1111,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #shp_input = load.load_SHP_inputLayer_name()        
         ColorHandler.changeButtonColor(self, self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)                                
 
-    def show_projects_on_map_with_cadastral_connection(self):
-        #def show_connected_cadasters(values, layer_type):
-        layer_type = "active"
-        cadasters = CadasterSelector.projects_return_cadasters(self,table = self.tblProjects) 
-        properties_selectors.show_connected_cadasters(self, layer_type=layer_type, values=cadasters)
-        cadasters.clear()
-        
     def generate_virtual_mapLayer_synced_with_Mailabl(self):
         # Create an instance of YourClas
         lblFor_Sync_GreatLayerName = self.leText_For_Sync_GreateLayerName

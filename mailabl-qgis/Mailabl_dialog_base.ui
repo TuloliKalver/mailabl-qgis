@@ -674,13 +674,6 @@ QComboBox:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pbCompiler">
-              <property name="text">
-               <string>Compiler test</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <spacer name="verticalSpacer_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -1278,7 +1271,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>4</number>
+            <number>8</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="accessibleName">
@@ -5220,6 +5213,16 @@ p, li { white-space: pre-wrap; }
                      </spacer>
                     </item>
                     <item>
+                     <widget class="Line" name="line_2">
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QFrame" name="Sync_Main_Selected_Data_Overview">
                       <property name="maximumSize">
                        <size>
@@ -5233,9 +5236,52 @@ p, li { white-space: pre-wrap; }
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_151">
+                      <layout class="QHBoxLayout" name="horizontalLayout_69">
+                       <property name="spacing">
+                        <number>5</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
                        <item>
-                        <widget class="QTableView" name="tbl_Sync_properties"/>
+                        <spacer name="horizontalSpacer_50">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_3">
+                         <property name="font">
+                          <font>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Vanalt mudeli kihilt uue mudeli kihile andmete ületoomine:</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="pbCompiler">
+                         <property name="font">
+                          <font>
+                           <pointsize>10</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>Alusta</string>
+                         </property>
+                        </widget>
                        </item>
                       </layout>
                      </widget>
@@ -5282,6 +5328,11 @@ p, li { white-space: pre-wrap; }
                     </item>
                     <item>
                      <widget class="QPushButton" name="pbSync_Cancel">
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
                       <property name="text">
                        <string>Tühista toiming</string>
                       </property>
@@ -8787,40 +8838,6 @@ QPushButton:hover{
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(131, 142, 162);
 color: rgb(44, 49, 60);</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_26">
-                  <property name="text">
-                   <string>Projekti ID</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_32">
-                  <property name="text">
-                   <string>Uus nimetus</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pbShowOnMap">
-                  <property name="font">
-                   <font>
-                    <pointsize>10</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Näita kaardil</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lePrID">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(131, 142, 162);
-color: rgb(31, 35, 42);</string>
                   </property>
                  </widget>
                 </item>

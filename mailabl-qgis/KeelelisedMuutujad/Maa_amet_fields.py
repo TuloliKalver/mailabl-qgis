@@ -62,3 +62,31 @@ class OldKatastriyksus:
     maks_hind = "MAKS_HIND"                      # Maa-ameti arvutatud maaüksuse maksustamishind €
     marked = "MARKETEKST"                        # Katastriüksuse märked
 
+class KatasterMappings:
+    # Field mapping between OldKatastriyksus and Katastriyksus
+    field_mapping = {
+        OldKatastriyksus.tunnus: Katastriyksus.tunnus,
+        OldKatastriyksus.hkood: Katastriyksus.hkood,
+        OldKatastriyksus.mk_nimi: Katastriyksus.mk_nimi,
+        OldKatastriyksus.ov_nimi: Katastriyksus.ov_nimi,
+        OldKatastriyksus.ay_nimi: Katastriyksus.ay_nimi,
+        OldKatastriyksus.l_aadress: Katastriyksus.l_aadress,
+        OldKatastriyksus.registr: Katastriyksus.registr,
+        OldKatastriyksus.muudet: Katastriyksus.muudet,
+        OldKatastriyksus.siht1: Katastriyksus.siht1,
+        OldKatastriyksus.siht2: Katastriyksus.siht2,
+        OldKatastriyksus.siht3: Katastriyksus.siht3,
+        OldKatastriyksus.so_prts1: Katastriyksus.so_prts1,
+        OldKatastriyksus.so_prts2: Katastriyksus.so_prts2,
+        OldKatastriyksus.so_prts3: Katastriyksus.so_prts3,
+        OldKatastriyksus.pindala: Katastriyksus.pindala,
+        OldKatastriyksus.haritav: Katastriyksus.haritav,
+        OldKatastriyksus.rohumaa: Katastriyksus.rohumaa,
+        OldKatastriyksus.mets: Katastriyksus.mets,
+        OldKatastriyksus.ouemaa: Katastriyksus.ouemaa,
+        OldKatastriyksus.muumaa: Katastriyksus.muumaa,
+        OldKatastriyksus.kinnistu: Katastriyksus.kinnistu,
+        OldKatastriyksus.omvorm: Katastriyksus.omvorm,
+        OldKatastriyksus.maks_hind: Katastriyksus.maks_hind,
+        OldKatastriyksus.marked: Katastriyksus.marked
+    }
