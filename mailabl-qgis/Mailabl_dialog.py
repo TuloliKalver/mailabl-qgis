@@ -54,10 +54,13 @@ from .Functions.Contracts.contractsItems import ContractsMain
 from .Functions.Easements.EasementsItems import EasementssMain
 from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
+from .Functions.EVEL.evel_general import EVELTools
+from .Functions.HomeTree.BuildTree import MyTreeHome
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
-from.Functions.EVEL.evel_general import EVELTools
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+
+
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'Mailabl_dialog_base.ui'))
@@ -357,7 +360,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbCooseFromMap_Add.setEnabled(False)
         self.lblDel_Aditiona_txt.setEnabled(False)
         self.pbCompiler.clicked.connect(self.start_compielre)
-    
+
+        self.pushButton_2.clicked.connect(self.propertie_overview)
+
+    def propertie_overview(self):
+        workspace = self.swWorkSpace
+        treeWidget = self.treeWidget
+        MyTreeHome.update_tree_with_modules(workspace, treeWidget)
 
     def start_compielre(self):
         from .processes.SyncProperties.CompyleOldPropertyModel import LayerCompilerSetup

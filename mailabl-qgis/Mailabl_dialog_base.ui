@@ -1271,7 +1271,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>8</number>
+            <number>6</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="accessibleName">
@@ -8389,6 +8389,51 @@ p, li { white-space: pre-wrap; }
             <property name="accessibleName">
              <string>None</string>
             </property>
+            <layout class="QVBoxLayout" name="verticalLayout_160">
+             <item>
+              <widget class="QFrame" name="frame_29">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_151">
+                <item>
+                 <widget class="QFrame" name="frame_34">
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_80">
+                   <item>
+                    <widget class="QLabel" name="label_5">
+                     <property name="text">
+                      <string>Otsi kinnistut</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTreeWidget" name="treeWidget">
+                  <column>
+                   <property name="text">
+                    <string notr="true">1</string>
+                   </property>
+                  </column>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
            </widget>
            <widget class="QWidget" name="projects">
             <property name="accessibleName">
@@ -8833,14 +8878,6 @@ QPushButton:hover{
                 <enum>QFrame::Raised</enum>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_166">
-                <item>
-                 <widget class="QLineEdit" name="lePrNewName">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(131, 142, 162);
-color: rgb(44, 49, 60);</string>
-                  </property>
-                 </widget>
-                </item>
                 <item>
                  <widget class="QFrame" name="frame_32">
                   <property name="frameShape">
