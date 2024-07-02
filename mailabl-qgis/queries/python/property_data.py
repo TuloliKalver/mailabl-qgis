@@ -26,7 +26,6 @@ widgets_path = os.path.join(plugin_dir, process_folder, importProcess_folder, wi
 
 
 class Properties:
-
     def get_property_CSC(self):
         query_loader = Graphql_properties()
         query = GraphQLQueryLoader.load_query_properties(self,query_loader.Q_Property_CSC)

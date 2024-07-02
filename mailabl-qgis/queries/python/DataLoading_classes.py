@@ -32,6 +32,7 @@ class Graphql_properties:
         #Where type
 
         self.W_properties_number = 'id_number.graphql'
+        self.w_properties_general_search = 'properties_general_search.graphql'
         self.W_properties_Address_County = 'ADDRESS_County.graphql'
         self.W_properties_Address_State = 'ADDRESS_State.graphql'
         self.W_properties_Address_City = 'ADDRESS_City.graphql'

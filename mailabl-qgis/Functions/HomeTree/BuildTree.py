@@ -1,7 +1,7 @@
 import subprocess
 import webbrowser  # For opening links in browser
 from PyQt5.QtWidgets import QTreeWidgetItem
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QColor, QBrush
 from PyQt5.QtCore import Qt
 from ...KeelelisedMuutujad.modules import Modules
 from ...config.settings import Filepaths, IconsByName
@@ -29,7 +29,7 @@ class MyTreeHome:
 
         treeWidget.clear()  # Clear existing items (optional)
         treeWidget.setHeaderLabel("Seotud tulemusi")
-        treeWidget.setHeaderLabels(["Nr", "Name", "Link_text", "Link", "Dok_text", "Dok"])
+        treeWidget.setHeaderLabels(["Nr", "Nimetus", "Link_text", "", "Dok_text", ""])
 
         for module_name in (getattr(Modules, attr) for attr in dir(Modules)
                             if not attr.startswith("_") and not callable(getattr(Modules, attr))):
@@ -37,6 +37,7 @@ class MyTreeHome:
             if child_data:  # Only add module if data is returned
                 root_item = QTreeWidgetItem(treeWidget)
                 root_item.setText(0, module_name)
+
 
                 for child in child_data:
                     child_item = QTreeWidgetItem(root_item)
@@ -104,3 +105,7 @@ class MyTreeHome:
             dok_path = item.text(4)
             print(f"dok_path: {dok_path}")
             subprocess.Popen(['explorer', dok_path.replace('/', '\\')], shell=True)
+
+
+
+    
