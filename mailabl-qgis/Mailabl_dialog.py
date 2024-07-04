@@ -17,9 +17,13 @@
 
 """
 import os
+from PyQt5.QtCore import QTimer
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
+from PyQt5.QtWidgets import QShortcut
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox
+from PyQt5.QtCore import Qt
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
@@ -50,14 +54,14 @@ from .queries.python.projects.ProjectTableGenerators.projects import Projects, p
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import InsertStatusToComboBox
 from .KeelelisedMuutujad.messages import Headings, HoiatusTexts,HoiatusTextsAuto, EdukuseTexts
-from .Functions.Contracts.contractsItems import ContractsMain
-from .Functions.Easements.EasementsItems import EasementssMain
 from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
 from .Functions.EVEL.evel_general import EVELTools
 from .Functions.HomeTree.BuildTree import MyTreeHome
+from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
+
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 
@@ -122,7 +126,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     #Creat instances
 
         self.setupUi(self)
-
+        self.setup_timer()
         Startup.FirstLoad(self)
 
 
@@ -363,10 +367,57 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pushButton_2.clicked.connect(self.propertie_overview)
 
-    def propertie_overview(self):
-        workspace = self.swWorkSpace
+
+        # Connect the button signal to the method
+        self.pbSelecPrpertiesOveral.clicked.connect(self.start_feature_info_tool)
+        self.pbDisconnect.clicked.connect(self.stop_feature_info_tool)
+        self.pbDisconnect.setEnabled(False)
+
+    def setup_timer(self):
+        self.timer = QTimer()
+        self.timer.setInterval(10000)  # 10 seconds timeout
+        self.timer.timeout.connect(self.stop_feature_info_tool_timed)
+
+    def start_feature_info_tool(self):
+        self.pbSelecPrpertiesOveral.setEnabled(False)
+        label = self.isSelectedCadaster
+        global feature_tool  # Use global variable to keep reference
         treeWidget = self.treeWidget
-        MyTreeHome.update_tree_with_modules(workspace, treeWidget)
+        feature_tool = FeatureInfoTool(label, lambda: self.reset_timer,treeWidget=treeWidget )
+        self.pbDisconnect.setEnabled(True)
+        self.timer.start()
+
+    def stop_feature_info_tool(self):
+        global feature_tool  # Use global variable to keep reference
+        if feature_tool:
+            feature_tool.disconnect_signal()
+            print("disconnecting with button")
+            self.pbDisconnect.setEnabled(False)
+            self.pbSelecPrpertiesOveral.setEnabled(True)
+        self.timer.stop()
+
+
+    def stop_feature_info_tool_timed(self):
+        global feature_tool  # Use global variable to keep reference
+        if feature_tool:
+            feature_tool.disconnect_signal_timed()
+            print("disconnecting with timer")
+            self.pbDisconnect.setEnabled(False)
+            self.pbSelecPrpertiesOveral.setEnabled(True)
+        self.timer.stop()
+
+    def reset_timer(self):
+        self.timer.start()
+
+
+    def propertie_overview(self):
+        #flag = None
+        #Flags.active_properties_layer_flag = flag
+        #print (f"Flag is set to : {Flags.active_properties_layer_flag}")
+        workspace = self.swWorkSpace
+        workspace.setCurrentIndex(6)
+        #treeWidget = self.treeWidget
+        #MyTreeHome.update_tree_with_modules(treeWidget)
 
     def start_compielre(self):
         from .processes.SyncProperties.CompyleOldPropertyModel import LayerCompilerSetup

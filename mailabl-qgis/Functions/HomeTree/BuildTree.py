@@ -1,7 +1,7 @@
 import subprocess
 import webbrowser  # For opening links in browser
 from PyQt5.QtWidgets import QTreeWidgetItem
-from PyQt5.QtGui import QIcon, QColor, QBrush
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from ...KeelelisedMuutujad.modules import Modules
 from ...config.settings import Filepaths, IconsByName
@@ -24,8 +24,8 @@ class MyTreeHome:
         return module_data.get(module_name, [])  # Return empty list if no data for the module
 
 
-    def update_tree_with_modules(workspace, treeWidget):
-        workspace.setCurrentIndex(6)
+    def update_tree_with_modules(treeWidget):
+        
 
         treeWidget.clear()  # Clear existing items (optional)
         treeWidget.setHeaderLabel("Seotud tulemusi")
@@ -105,6 +105,8 @@ class MyTreeHome:
             dok_path = item.text(4)
             print(f"dok_path: {dok_path}")
             subprocess.Popen(['explorer', dok_path.replace('/', '\\')], shell=True)
+
+
 
 
 
