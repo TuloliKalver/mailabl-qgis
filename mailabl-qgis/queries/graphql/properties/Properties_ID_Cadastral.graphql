@@ -23,3 +23,4 @@ query properties($first: Int, $after: String) {
         }
     }
 }
+

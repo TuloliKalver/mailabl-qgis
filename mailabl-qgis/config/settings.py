@@ -2,6 +2,7 @@ import os
 import json
 from PyQt5.uic import loadUi
 from qgis.core import QgsSettings
+from ..KeelelisedMuutujad.modules import Modules
 
 PLUGIN_DIR = os.path.dirname(__file__)
 PLUGIN_DIR_MAIN = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -49,14 +50,39 @@ class OpenLink:
         print
         return f"{OpenLink().main}{module}"
 
-
 class MailablWebModules:
     def __init__(self):
         self.projects = '/projects/'
         self.contracts = '/contracts/'
         self.easements = '/easements/'
+        self.tasks = '/tasks/'
+        self.letters = '/letters/'
+        self.coordinations = '/coordinations/'
+        self.ordinances = '/ordinances/'
+        self.submissions = '/submissions/'
+        self.properties = '/properties/'
 
 
+    def get_web_link(self, module_name):
+        
+        web_links_by_module = {
+            Modules.MODULE_PROJECTS: self.projects,
+            Modules.MODULE_CONTRACTS: self.contracts,
+            Modules.MODULE_EASEMENTS: self.easements,
+            Modules.MODULE_TASKS: self.tasks,
+            Modules.MODULE_LETTER: self.letters,
+            Modules.MODULE_COORDINATION: self.coordinations,  # Corrected typo
+            Modules.MODULE_ORDINANCES: self.ordinances,
+            Modules.MODULE_SUBMISSIONS: self.submissions,
+            Modules.MODULE_PROPRETIES: self.properties
+        }
+
+        if module_name not in web_links_by_module:
+            raise ValueError(f"Invalid module name: {module_name}")
+
+        return web_links_by_module[module_name]
+    
+    
     @staticmethod
     def weblink_privacy():
         return OpenLink().privacy

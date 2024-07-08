@@ -9,6 +9,7 @@ class Modules:
     MODULE_EASEMENTS = "easements"
     MODULE_ORDINANCES = "ordinances"
     MODULE_SUBMISSIONS = "submissions"
+    MODULE_PROPRETIES = "properties"
 
 class Languages:
     ESTONIA = "Eesti"

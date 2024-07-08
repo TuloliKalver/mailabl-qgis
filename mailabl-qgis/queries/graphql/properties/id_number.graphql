@@ -27,5 +27,3 @@ query properties($first: Int, $after: String, $search: String, $where: QueryProp
                 }
             }
         }
-
-

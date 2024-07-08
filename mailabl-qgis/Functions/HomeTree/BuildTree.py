@@ -1,66 +1,160 @@
 import subprocess
 import webbrowser  # For opening links in browser
+import requests
+from qgis.core import QgsSettings
+from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QTreeWidgetItem
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon, QBrush
+from PyQt5.QtCore import Qt, QCoreApplication
+from PyQt5.QtGui import QColor
+from ...Functions.tableViewAdjust import Colors
 from ...KeelelisedMuutujad.modules import Modules
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler
+from ...queries.python.query_tools import requestBuilder
+from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_properties
+from ...queries.python.responses import handleResponse
+from .query_cordinator import PropertiesConnectedElementsQueries
+from ...config.settings import MailablWebModules, OpenLink
+from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
+
+
+paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
+
 
 class MyTreeHome:
-    def fetch_module_data(module_name):
-        # Sample data structure (replace with actual data source)
-        module_data = {
-            Modules.MODULE_CONTRACTS: [
-                {"nr": 1, "name": "Sample Contract 1", "link": "https://kohevpesa.mailabl.io/tasks/42", "dok": r"C:/Users/Kalver/Desktop/GIS/Arendus"},
-                {"nr": 2, "name": "Sample Contract 2", "link": "https://kohevpesa.mailabl.io/tasks/42", "dok": r"C:/Users/Kalver/Desktop/Konfidentsiaalsusleping Kalver Tammik.asice"},
-            ],
-            Modules.MODULE_PROJECTS: [
-                {"nr": 1, "name": "Sample Project 1", "link": "https://kohevpesa.mailabl.io/tasks/42", "dok": r"C:/Users/Kalver/Desktop/Konfidentsiaalsusleping Kalver Tammik.pdf"},
-                {"nr": 2, "name": "Sample Project 2", "link": "https://kohevpesa.mailabl.io/tasks/42", "dok": r"C:/Users/Kalver/Desktop/kalver (Töö) - Chrome.lnk"},
-            ],
-        }
-        # Simulate data availability based on module_name
-        return module_data.get(module_name, [])  # Return empty list if no data for the module
+    header_id = 'ID'
+    header_number = 'Number'
+    header_name = 'Nimetus'
+    header_deadline = 'Tähtaeg'
+    header_color = 'Color'
+    header_creator = 'Looja'
+    header_property_number = 'Kataster'
+    header_properties_icon ='propertiesIcon'
+    header_parent_id = 'Parent_id'
+    header_webLinkButton = 'web_link_button'
+    header_Documents = 'Dokumendid'
+    header_file_path = "file_path_button"
+    header_statuses = 'Staatus'
 
-
-    def update_tree_with_modules(treeWidget):
-        
+    def update_tree_with_modules(treeWidget, item):
+        print(f"item: {item}")
 
         treeWidget.clear()  # Clear existing items (optional)
         treeWidget.setHeaderLabel("Seotud tulemusi")
-        treeWidget.setHeaderLabels(["Nr", "Nimetus", "Link_text", "", "Dok_text", ""])
+        treeWidget.setHeaderLabels([MyTreeHome.header_number, MyTreeHome.header_name, MyTreeHome.header_id, "", MyTreeHome.header_file_path, "", MyTreeHome.header_statuses])
+            # Initialize child_data to combine results from all modules
 
-        for module_name in (getattr(Modules, attr) for attr in dir(Modules)
-                            if not attr.startswith("_") and not callable(getattr(Modules, attr))):
-            child_data = MyTreeHome.fetch_module_data(module_name)
-            if child_data:  # Only add module if data is returned
+        
+        widget = paths.UI_multiline_Statusbar
+        widget_path = paths.get_widgets_path(widget)
+        progress_widget = loadUi(widget_path)
+        progress_bar = progress_widget.testBar
+        progress_widget.setWindowTitle("Kontrollin andmeid")
+        progress_widget.show()
+        
+        # Get the module attributes
+        module_attrs = [attr for attr in dir(Modules) if not attr.startswith("_") and not callable(getattr(Modules, attr))]
+        total = len(module_attrs)
+
+        # Set the maximum value of the progress bar
+        progress_bar.setMaximum(total)
+
+        print(f"item for property id: {item}")
+        #query_loader = Graphql_properties()
+        
+        #end_cursor_id = None  # Initialize end_cursor before the loop
+        first = 1
+        after = None
+        # Extract the single item from the list and convert to string
+        item_str = str(item[0]) if isinstance(item, list) and len(item) == 1 else str(item)
+        
+        variables_id =  {
+            "first": first,
+            "after": after,
+            "search": item_str
+        }
+
+        query_id = Graphql_properties().load_query_for_properties_WHERE(Graphql_properties().W_properties_number_improwed)
+
+        response_id = requestBuilder().construct_and_send_request(None,query_id, variables_id)
+        #print(f"response {response}")
+        #start do use data
+        if response_id.status_code == 200:
+            data_id = handleResponse.response_properties_data_edges(response_id)
+            print(f"returned data: {data_id}")
+                # Extract the id value from the returned data
+            if data_id and 'node' in data_id[0]:
+                property_id = data_id[0]['node'].get('id')
+                print(f"Extracted id: {property_id}")
+                StoreValues().save_propertyID(property_id)
+            else:
+                print("No valid data found to extract id")
+
+        # Continue with your function implementation
+
+        child_data = {}
+        for index, module_name in enumerate((getattr(Modules, attr) for attr in module_attrs), start=1):
+            # Update the progress bar
+            progress_bar.setValue(index) 
+            property_id_str = str(property_id)
+            module_data = PropertiesConnectedElementsQueries().fetch_module_data(module_name, property_id_str)
+            #print(f"module_data: {module_data}")
+            # Check if module_data is not empty before updating child_data
+            if module_data:
+                for data_list in module_data:
+                    for item in data_list:
+                        node_data = item.get('node')
+                        if node_data:
+                            typename = node_data['__typename']
+                            if typename not in child_data:
+                                child_data[typename] = []
+                                # Remove the last character from typename
+                            child_data[typename].append(node_data)
+            QCoreApplication.processEvents()
+
+        #print(f"child_data: {child_data}")
+        # Close the progress widget after the loop ends
+        progress_widget.close()
+
+        if child_data:  # Only add module if data is returned
+            for typename, items in child_data.items():  # Iterate over child_data correctly
                 root_item = QTreeWidgetItem(treeWidget)
-                root_item.setText(0, module_name)
-
-
-                for child in child_data:
+                root_item.setText(0, typename)
+                for child in items:  # Iterate over each item in the list
                     child_item = QTreeWidgetItem(root_item)
-                    child_item.setText(0, str(child["nr"]))
+                    child_item.setText(0, str(child["number"]))
                     child_item.setText(1, child["name"])
-                    child_item.setText(2, child["link"])  # Store the link in column 2
-                    child_item.setText(4, child["dok"])
+                    child_item.setText(2, child["id"])  # Store the link in column 2
+                    # Assuming 'dok' is a key that may or may not exist in each child dictionary
+                    child_item.setText(4, child.get("dok", ""))  # Use .get() to avoid KeyError
+                    # Display statuses in a format that makes sense for your application
+                    status = child["status"]
+                    status_name = status['name']
+                    status_id = status['color'] 
 
-                      # Hide columns 2 and 4 after setting text
-                    treeWidget.hideColumn(2)
-                    treeWidget.hideColumn(4)
-                    
+                    child_item.setText(6,status_name)  # Assuming 6 is the index of the column to display statuses
+
+                    # Store the module information in the item's data
+                    child_item.setData(3, Qt.UserRole, typename)
                     # Set clickable icon for the link (replace with your icon logic)
-                    
+
+                    #MyTreeHome.set_status_color(child_item, 6, status_id)
                     MyTreeHome.set_clickable_webIcon(child_item, 3)  # Column 2 for link
                     MyTreeHome.set_clickable_folderIcon(child_item, 5)
-
+        # Hide the second column (index 1)
+        treeWidget.setColumnHidden(2, True)
+        treeWidget.setColumnHidden(4, True)
+        
         # Connect the treeWidget's itemClicked signal to a handler
-        treeWidget.itemClicked.connect(MyTreeHome.handle_icon_clicked_single)
+        treeWidget.itemClicked.connect(MyTreeHome.open_in_web_brauser)
         treeWidget.itemClicked.connect(MyTreeHome.handle_dok_clicked)
-        treeWidget.setColumnWidth(3, 10)
-        treeWidget.setColumnWidth(5, 10)
-        treeWidget.setColumnWidth(1, 250)
+
+        treeWidget.setColumnWidth(0, 150)
+        treeWidget.setColumnWidth(1, 400)
+        treeWidget.setColumnWidth(3, 15)
+        treeWidget.setColumnWidth(5, 15)
+
         # Expand all items to make sure they are visible
         treeWidget.expandAll()
 
@@ -76,29 +170,29 @@ class MyTreeHome:
         # Make the entire item clickable, not just the icon (optional)
         tree_item.setFlags(tree_item.flags() | Qt.ItemIsSelectable)
         
-
+    def open_in_web_brauser(item, column):
+        if column == 3:  # Check for link column
+            module = item.data(column, Qt.UserRole)  # Retrieve the stored module information
+            if module:
+                # Convert to lowercase and add "s" (handle potential None value)
+                module = module.lower() + 's'
+            #print(f"Module in column head: {module}")
+            link_id = item.text(2)
+            web_module = MailablWebModules().get_web_link(module)
+            #print(f"web_module: {web_module}")
+            web_link = OpenLink.weblink_by_module(web_module)
+            #print(f"web_link: {web_link}")
+            link = f"{web_link}{link_id}"
+            response = requests.get(link, verify=False)
+            webbrowser.open(response.url)
 
     def set_clickable_folderIcon(tree_item, column):
         dokLink = tree_item.text(4)
         icon_path = iconHandler.set_document_icon_based_on_item(dokLink)
         icon = QIcon(icon_path)
-
         tree_item.setIcon(column, icon)
         # Make the entire item clickable, not just the icon (optional)
         tree_item.setFlags(tree_item.flags() | Qt.ItemIsSelectable)
-
-    def handle_icon_clicked_single(item, column):
-        if column == 3:  # Check for link column
-            link_url = item.text(2)  # Extract link URL from data (column 2)
-            webbrowser.open(link_url)  # Open link in browser
-
-    def handle_icon_clicked(item, column):
-        if column in (3, 5):  # Check for both link columns (2 and 3)
-            if column == 3:
-                link_url = item.text(2)  # Extract link URL from column 2
-            else:
-                link_url = item.text(4)  # Extract link URL from column 3 (assuming column 3)
-            webbrowser.open(link_url)  # Open link in browser
 
     def handle_dok_clicked(item, column):
         if column == 5:
@@ -106,8 +200,34 @@ class MyTreeHome:
             print(f"dok_path: {dok_path}")
             subprocess.Popen(['explorer', dok_path.replace('/', '\\')], shell=True)
 
+    def open_property():
+        link_id = StoreValues().return_prperties_id()
+        module = Modules.MODULE_PROPRETIES
+        web_module = MailablWebModules().get_web_link(module)
+        print(f"web_module: {web_module}")
+        web_link = OpenLink.weblink_by_module(web_module)
+        print(f"web_link: {web_link}")
+        link = f"{web_link}{link_id}"
+        response = requests.get(link, verify=False)
+        webbrowser.open(response.url)
 
+class StoreValues:
+    def __init__(self) -> None:
+        self.propertyID_location = 'MailablProperty_id/stores_id'
 
-
-
+    def return_prperties_id(self):
+        settings_address = self.propertyID_location
+        settings = QgsSettings()
+        value = settings.value(settings_address, '', type=str)
+        return value
     
+    
+    def load_propertieID_from_memory (self):
+        value = self.propertyID_location
+        return value
+    
+    def save_propertyID(self, input_value):
+        settings = QgsSettings()
+        target_settings_address = self.propertyID_location
+        settings.setValue(target_settings_address, input_value)
+

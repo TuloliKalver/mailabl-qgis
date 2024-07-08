@@ -1,11 +1,9 @@
 import processing
 from PyQt5.QtCore import QObject, pyqtSignal
 from qgis.utils import iface
-from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinition, QgsMapLayerType, QgsVectorLayer
-from qgis.gui import QgsMapToolPan, QgsMapTool
-from qgis.core import QgsLayerTreeLayer
+from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinition, QgsVectorLayer
+from qgis.gui import QgsMapToolPan
 
-from qgis.PyQt.QtGui import QCursor
 
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi

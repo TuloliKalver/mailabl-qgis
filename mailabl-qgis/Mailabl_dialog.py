@@ -248,14 +248,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     # workspace page ID 5 = Homepage
         self.pbHome.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Home(self))
 
-        
         # workspace page ID 7 = Projects
         self.pbProjects.clicked.connect(lambda: WorkSpaceHandler.swWorkspace_Projects(self))
         self.pbRefresh_tblMailabl_projects.clicked.connect(self.update_tblMailabl_projects)
         
-        
-        
-
         self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
 
         table_projects = self.tblMailabl_projects
@@ -372,6 +368,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSelecPrpertiesOveral.clicked.connect(self.start_feature_info_tool)
         self.pbDisconnect.clicked.connect(self.stop_feature_info_tool)
         self.pbDisconnect.setEnabled(False)
+        self.pbOpenProperty.clicked.connect(self.open_properties_item_in_mylabl)
+
+    def open_properties_item_in_mylabl(self):
+        MyTreeHome.open_property()
+    
+    def load_propertieID_from_memory (self):
+        value = self.propertyID_location
+        return value
 
     def setup_timer(self):
         self.timer = QTimer()
@@ -383,7 +387,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         label = self.isSelectedCadaster
         global feature_tool  # Use global variable to keep reference
         treeWidget = self.treeWidget
-        feature_tool = FeatureInfoTool(label, lambda: self.reset_timer,treeWidget=treeWidget )
+        
+        feature_tool = FeatureInfoTool(label, lambda: self.reset_timer,treeWidget=treeWidget)
         self.pbDisconnect.setEnabled(True)
         self.timer.start()
 
@@ -1096,7 +1101,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
             # Get the mapped functions dictionary from WidgetInfo
             mapped_functions = WidgetInfo.mapped_indexes_functions(self)
-            print(f"mapped_functions:  {mapped_functions}")
+            #print(f"mapped_functions:  {mapped_functions}")
             # Check if mapped_functions is not None before iterating
             if mapped_functions is not None and index_int in mapped_functions:
                 function = mapped_functions.get(index_int)

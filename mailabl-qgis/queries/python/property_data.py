@@ -532,7 +532,6 @@ class WhereProperties:
         # If the request fails after 10 attempts, return default values or handle the failure accordingly
         return [], False, "", "", ""
 
-
 class deleteProperty:
     def delete_single_item(self, item):
         query_loader = Graphql_properties()
@@ -548,9 +547,6 @@ class deleteProperty:
             print(f"Failed to delete property with ID {item}. Status Code: {response.status_code}")
             raise ValueError(f"GraphQL request failed. Status Code: {response.status_code}")
         
-
-
-
     @staticmethod
     def delete_multiple_items(self, item_list):
         total = len(item_list)
@@ -749,9 +745,6 @@ class MyLablChecker:
         progress_bar.close()
         print(f"final data = {final_data}")
         return final_data
-
-
-
 
     def clean_import_data_from_duplicates(self, data, confirmation_list, total):
         #print(f"Data in 'clean_import_data_from_duplicates': {data}")

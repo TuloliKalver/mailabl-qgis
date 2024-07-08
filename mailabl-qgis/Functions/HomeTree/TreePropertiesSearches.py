@@ -1,6 +1,7 @@
 from ...config.settings import  SettingsDataSaveAndLoad
 from PyQt5.QtWidgets import QMessageBox
 from .BuildTree import MyTreeHome
+from .BuildViewTree import MyTreeHomeView
 
 from qgis.core import QgsProject, QgsVectorLayer
 from qgis.utils import iface
@@ -13,6 +14,8 @@ class FeatureInfoTool:
         self.reset_timer_callback = reset_timer_callback
         
         self.treewidget = treeWidget
+        
+
         self.setup_layer()
 
     def setup_layer(self):
@@ -63,7 +66,9 @@ class FeatureInfoTool:
                 # Update the label only if tunnus_str is not empty
                 if tunnus_str != "":
                     self.label.setText(f"Valitud kataster: {tunnus_str}")
-                    MyTreeHome.update_tree_with_modules( self.treewidget)
+                    MyTreeHome.update_tree_with_modules( self.treewidget, tunnus_data)
+                    # This is possible if cell coloring can be implemented
+                    #MyTreeHomeView.update_tree_with_modules( self.treeView, tunnus_data)
                 else:
                     self.label.setText("Oih midgai läks valesti")
                 
@@ -72,7 +77,7 @@ class FeatureInfoTool:
                 self.label.setText("Oih midgai läks valesti")
                 print("Oih midgai läks valesti")
                 return []
-        
+
 
     def disconnect_signal(self):
         if self.layer:

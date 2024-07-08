@@ -115,8 +115,6 @@ class PropertiesLayerFunctions:
             #print(f"row item: {row_items}")
 
         progress_widget.close() 
-        
-
 
 class TableGenerator:
     @staticmethod

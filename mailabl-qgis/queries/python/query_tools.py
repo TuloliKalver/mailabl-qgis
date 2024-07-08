@@ -43,7 +43,7 @@ class requestBuilder:
         except requests.Timeout:
             print("Request timed out.")
             return None
-        #response = requests.post(graphql_url, headers=headers, json=payload)
+        response = requests.post(graphql_url, headers=headers, json=payload)
         #print("response")
         #print(response)
         # Check for empty response

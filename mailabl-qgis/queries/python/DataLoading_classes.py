@@ -32,7 +32,7 @@ class Graphql_properties:
         #Where type
 
         self.W_properties_number = 'id_number.graphql'
-        self.w_properties_general_search = 'properties_general_search.graphql'
+        self.W_properties_number_improwed = 'id_number.graphql'
         self.W_properties_Address_County = 'ADDRESS_County.graphql'
         self.W_properties_Address_State = 'ADDRESS_State.graphql'
         self.W_properties_Address_City = 'ADDRESS_City.graphql'
@@ -51,6 +51,13 @@ class Graphql_properties:
     def load_query_for_properties_WHERE(self, query_file_name):
         path = GraphQLQueryLoader()
         graphql_path = os.path.join(path.plugin_dir, path.properties_WHERE_folder, query_file_name)
+        with open(graphql_path, 'r') as file:
+            return file.read()
+        
+    def load_query_properties_connected_elements(self, query_file_name):
+        path = GraphQLQueryLoader()
+        graphql_path = os.path.join(path.plugin_dir, path.properties_connections, query_file_name)
+        #print(f"graphql path: {graphql_path}")
         with open(graphql_path, 'r') as file:
             return file.read()
 
@@ -97,6 +104,7 @@ class GraphQLQueryLoader:
         self.graphql_folder = 'queries/graphql'
         self.properties_folder = 'queries/graphql/properties'
         self.properties_WHERE_folder = 'queries/graphql/properties/WHERE'
+        self.properties_connections = 'queries/graphql/properties/Connected_data'
         self.projects_folder = 'queries/graphql/projects'
         self.contracts_folder ='queries/graphql/contracts'
         self.user_folder ='queries/graphql/user'
