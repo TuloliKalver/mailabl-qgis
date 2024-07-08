@@ -28,9 +28,9 @@ query property($id: ID!, $first: Int, $after: String, $orderBy: [PropertyContrac
           type {
             name
           }
+          filesPath
         }
       }
     }
   }
 }
-

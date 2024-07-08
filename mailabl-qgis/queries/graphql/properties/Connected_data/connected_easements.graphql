@@ -32,6 +32,7 @@ query property($id: ID!, $first: Int, $after: String, $orderBy: [PropertyEasemen
           type {
             name
           }
+          filesPath
         }
       }
     }

@@ -11,6 +11,8 @@ class Modules:
     MODULE_SUBMISSIONS = "submissions"
     MODULE_PROPRETIES = "properties"
 
+
+
 class Languages:
     ESTONIA = "Eesti"
     LATVIA = "Latviesu"

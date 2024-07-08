@@ -8,7 +8,7 @@ from PyQt5.QtGui import QIcon, QBrush
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QColor
 from ...Functions.tableViewAdjust import Colors
-from ...KeelelisedMuutujad.modules import Modules
+from ...KeelelisedMuutujad.modules import Modules, Languages, ModuleTranslation
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler
 from ...queries.python.query_tools import requestBuilder
@@ -39,6 +39,7 @@ class MyTreeHome:
 
     def update_tree_with_modules(treeWidget, item):
         print(f"item: {item}")
+        langage = Languages.ESTONIA
 
         treeWidget.clear()  # Clear existing items (optional)
         treeWidget.setHeaderLabel("Seotud tulemusi")
@@ -116,22 +117,41 @@ class MyTreeHome:
         #print(f"child_data: {child_data}")
         # Close the progress widget after the loop ends
         progress_widget.close()
-
+        #print(f"child data: {child_data}")
         if child_data:  # Only add module if data is returned
             for typename, items in child_data.items():  # Iterate over child_data correctly
                 root_item = QTreeWidgetItem(treeWidget)
-                root_item.setText(0, typename)
+                
+                print(f"type_name")
+                # Convert to lowercase and add "s" (handle potential None value)
+                module = typename.lower() + 's'
+                # Store the module information in the item's data
+                root_item.setData(0, Qt.UserRole, module)
+
+                moduel_str = ModuleTranslation.module_name(module, langage)
+                root_item.setText(0, moduel_str)
+
                 for child in items:  # Iterate over each item in the list
                     child_item = QTreeWidgetItem(root_item)
-                    child_item.setText(0, str(child["number"]))
-                    child_item.setText(1, child["name"])
+                    child_item.setText(1, child.get("name",""))
                     child_item.setText(2, child["id"])  # Store the link in column 2
                     # Assuming 'dok' is a key that may or may not exist in each child dictionary
-                    child_item.setText(4, child.get("dok", ""))  # Use .get() to avoid KeyError
+                    #print(f"typename: {typename}")
+                    if module == Modules.MODULE_TASKS:
+                        child_item.setText(0, "")
+                        child_item.setText(4, "")
+                        child_item.setText(1, child.get("title",""))
+                    else:
+                        child_item.setText(1, child.get("name",""))
+                        child_item.setText(0, str(child["number"]))
+                        path = child.get("filesPath", "")
+                        #print(f"insert path: {path}")
+                        child_item.setData(5, Qt.UserRole, path )  # Use .get() to avoid KeyError
+                    
                     # Display statuses in a format that makes sense for your application
                     status = child["status"]
                     status_name = status['name']
-                    status_id = status['color'] 
+                    #status_id = status['color'] 
 
                     child_item.setText(6,status_name)  # Assuming 6 is the index of the column to display statuses
 
@@ -187,17 +207,20 @@ class MyTreeHome:
             webbrowser.open(response.url)
 
     def set_clickable_folderIcon(tree_item, column):
-        dokLink = tree_item.text(4)
-        icon_path = iconHandler.set_document_icon_based_on_item(dokLink)
-        icon = QIcon(icon_path)
-        tree_item.setIcon(column, icon)
-        # Make the entire item clickable, not just the icon (optional)
-        tree_item.setFlags(tree_item.flags() | Qt.ItemIsSelectable)
+        dok_path = tree_item.data(column, Qt.UserRole)  # Retrieve the stored module informatio
+        if dok_path:
+            icon_path = iconHandler.set_document_icon_based_on_item(dok_path)
+            icon = QIcon(icon_path)
+            tree_item.setIcon(column, icon)
+            # Make the entire item clickable, not just the icon (optional)
+            tree_item.setFlags(tree_item.flags() | Qt.ItemIsSelectable)
+        else:
+            pass
 
     def handle_dok_clicked(item, column):
         if column == 5:
-            dok_path = item.text(4)
-            print(f"dok_path: {dok_path}")
+            dok_path = item.data(column, Qt.UserRole)  # Retrieve the stored module information
+            #print(f"dok_path: {dok_path}")
             subprocess.Popen(['explorer', dok_path.replace('/', '\\')], shell=True)
 
     def open_property():

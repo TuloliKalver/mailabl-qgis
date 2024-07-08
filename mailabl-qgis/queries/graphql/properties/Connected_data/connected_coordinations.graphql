@@ -39,6 +39,8 @@ query property($id: ID!, $first: Int, $after: String, $orderBy: [PropertyCoordin
           terms
           jobNumber
           externalCode
+          filesPath
+
         }
       }
     }
