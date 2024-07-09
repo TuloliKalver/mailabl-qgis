@@ -20,10 +20,8 @@ import os
 from PyQt5.QtCore import QTimer
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
-from PyQt5.QtWidgets import QShortcut
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox
-from PyQt5.QtCore import Qt
+
+from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox, QVBoxLayout
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
@@ -61,7 +59,7 @@ from .Functions.HomeTree.BuildTree import MyTreeHome
 from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
-
+from .utils.ToggleSwitch import ToggleSwitch
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 
@@ -361,7 +359,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.lblDel_Aditiona_txt.setEnabled(False)
         self.pbCompiler.clicked.connect(self.start_compielre)
 
-        self.pushButton_2.clicked.connect(self.propertie_overview)
+        #self.pushButton_2.clicked.connect(self.propertie_overview)
 
 
         # Connect the button signal to the method
@@ -369,6 +367,25 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbDisconnect.clicked.connect(self.stop_feature_info_tool)
         self.pbDisconnect.setEnabled(False)
         self.pbOpenProperty.clicked.connect(self.open_properties_item_in_mylabl)
+
+        frame = self.fToggleHolder
+        layout = QVBoxLayout(frame)  # Create a layout for the frame
+        togglebutton = ToggleSwitch()
+        layout.addWidget(togglebutton)
+        frame.setLayout(layout)
+
+
+        # Connect the toggled signal
+        togglebutton.toggled.connect(self.handle_toggle)
+
+    def handle_toggle(self, state):
+        if state:
+            self.ToggleStatus.setText("Olen üldjuhendiga tuttav")
+            self.teWelcomeContent.setVisible(True)
+        else:
+            self.ToggleStatus.setText("Nita kirjelduset")
+            self.teWelcomeContent.setVisible(False)
+        print(f"Toggle switch is {'ON' if state else 'OFF'}")
 
     def open_properties_item_in_mylabl(self):
         MyTreeHome.open_property()
@@ -414,15 +431,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def reset_timer(self):
         self.timer.start()
 
-
-    def propertie_overview(self):
-        #flag = None
-        #Flags.active_properties_layer_flag = flag
-        #print (f"Flag is set to : {Flags.active_properties_layer_flag}")
-        workspace = self.swWorkSpace
-        workspace.setCurrentIndex(6)
-        #treeWidget = self.treeWidget
-        #MyTreeHome.update_tree_with_modules(treeWidget)
 
     def start_compielre(self):
         from .processes.SyncProperties.CompyleOldPropertyModel import LayerCompilerSetup
@@ -1111,10 +1119,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                     # Handle the case where the mapped function is None
                     print(f"No function mapped for index {index_int}. Setting default to page 5.")
                     self.swWorkSpace.setCurrentIndex(5)
+                    self.sw_HM.setCurrentIndex(0)
             else:
                 # Handle the case where index is not a valid page index (e.g., set a default)
                 print(f"Invalid page index: {index_int} or mapped_functions is None. Setting default to page 5.")
                 self.swWorkSpace.setCurrentIndex(5)
+                self.sw_HM.setCurrentIndex(0)
 
             self.resize(1150, 700)
             path = PathLoaderSimple.metadata()

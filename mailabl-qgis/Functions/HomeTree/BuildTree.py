@@ -21,7 +21,6 @@ from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_S
 
 paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
 
-
 class MyTreeHome:
     header_id = 'ID'
     header_number = 'Number'
@@ -37,8 +36,9 @@ class MyTreeHome:
     header_file_path = "file_path_button"
     header_statuses = 'Staatus'
 
+    @staticmethod
     def update_tree_with_modules(treeWidget, item):
-        print(f"item: {item}")
+        #print(f"item: {item}")
         langage = Languages.ESTONIA
 
         treeWidget.clear()  # Clear existing items (optional)
@@ -61,7 +61,7 @@ class MyTreeHome:
         # Set the maximum value of the progress bar
         progress_bar.setMaximum(total)
 
-        print(f"item for property id: {item}")
+        #print(f"item for property id: {item}")
         #query_loader = Graphql_properties()
         
         #end_cursor_id = None  # Initialize end_cursor before the loop
@@ -83,11 +83,11 @@ class MyTreeHome:
         #start do use data
         if response_id.status_code == 200:
             data_id = handleResponse.response_properties_data_edges(response_id)
-            print(f"returned data: {data_id}")
+            #print(f"returned data: {data_id}")
                 # Extract the id value from the returned data
             if data_id and 'node' in data_id[0]:
                 property_id = data_id[0]['node'].get('id')
-                print(f"Extracted id: {property_id}")
+                #print(f"Extracted id: {property_id}")
                 StoreValues().save_propertyID(property_id)
             else:
                 print("No valid data found to extract id")
@@ -122,7 +122,7 @@ class MyTreeHome:
             for typename, items in child_data.items():  # Iterate over child_data correctly
                 root_item = QTreeWidgetItem(treeWidget)
                 
-                print(f"type_name")
+                #print(f"type_name")
                 # Convert to lowercase and add "s" (handle potential None value)
                 module = typename.lower() + 's'
                 # Store the module information in the item's data
@@ -133,7 +133,6 @@ class MyTreeHome:
 
                 for child in items:  # Iterate over each item in the list
                     child_item = QTreeWidgetItem(root_item)
-                    child_item.setText(1, child.get("name",""))
                     child_item.setText(2, child["id"])  # Store the link in column 2
                     # Assuming 'dok' is a key that may or may not exist in each child dictionary
                     #print(f"typename: {typename}")
@@ -227,9 +226,9 @@ class MyTreeHome:
         link_id = StoreValues().return_prperties_id()
         module = Modules.MODULE_PROPRETIES
         web_module = MailablWebModules().get_web_link(module)
-        print(f"web_module: {web_module}")
+        #print(f"web_module: {web_module}")
         web_link = OpenLink.weblink_by_module(web_module)
-        print(f"web_link: {web_link}")
+        #print(f"web_link: {web_link}")
         link = f"{web_link}{link_id}"
         response = requests.get(link, verify=False)
         webbrowser.open(response.url)

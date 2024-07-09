@@ -2,8 +2,7 @@ from .CloseUnload import Unload
 from .AddSetupLayers import SetupLayers
 from ...config.settings import Devuser
 from PyQt5.QtWidgets import QMessageBox
-from ...config.settings import SettingsDataSaveAndLoad
-from ...KeelelisedMuutujad.messages import Headings, HoiatusTextsAuto, HoiatusTexts
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 
 
 setup_layers = SetupLayers()

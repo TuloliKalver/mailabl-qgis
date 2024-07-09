@@ -333,7 +333,8 @@ class FrameHandler:
         self.hide_frame("frame1") 
         self.hide_frame("frame2") 
         self.hide_frame("frame4")
-        self.hide_frame("frame5")   
+        self.hide_frame("frame5")
+
     def password_correct(self):
         self.show_frame("frame1")
         self.show_frame("frame2")
