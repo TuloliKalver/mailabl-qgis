@@ -2567,7 +2567,7 @@ class Ui_MailablDialogBase(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 740, 1035))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 677, 932))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_159 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_159.setObjectName("verticalLayout_159")
@@ -2640,8 +2640,6 @@ class Ui_MailablDialogBase(object):
         self.qwSU_Mailabl_Users.setStyleSheet("")
         self.qwSU_Mailabl_Users.setObjectName("qwSU_Mailabl_Users")
         self.verticalLayout_45 = QtWidgets.QVBoxLayout(self.qwSU_Mailabl_Users)
-        self.verticalLayout_45.setContentsMargins(5, 5, 5, 5)
-        self.verticalLayout_45.setSpacing(8)
         self.verticalLayout_45.setObjectName("verticalLayout_45")
         self.frame_25 = QtWidgets.QFrame(self.qwSU_Mailabl_Users)
         self.frame_25.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -2781,6 +2779,30 @@ class Ui_MailablDialogBase(object):
         spacerItem27 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_36.addItem(spacerItem27)
         self.verticalLayout_45.addWidget(self.frame_4)
+        self.frame_29 = QtWidgets.QFrame(self.qwSU_Mailabl_Users)
+        self.frame_29.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_29.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_29.setObjectName("frame_29")
+        self.horizontalLayout_80 = QtWidgets.QHBoxLayout(self.frame_29)
+        self.horizontalLayout_80.setContentsMargins(15, 0, 0, 0)
+        self.horizontalLayout_80.setSpacing(10)
+        self.horizontalLayout_80.setObjectName("horizontalLayout_80")
+        self.label_28 = QtWidgets.QLabel(self.frame_29)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_28.setFont(font)
+        self.label_28.setObjectName("label_28")
+        self.horizontalLayout_80.addWidget(self.label_28)
+        self.freopenToggle = QtWidgets.QFrame(self.frame_29)
+        self.freopenToggle.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.freopenToggle.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.freopenToggle.setObjectName("freopenToggle")
+        self.horizontalLayout_80.addWidget(self.freopenToggle)
+        spacerItem28 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_80.addItem(spacerItem28)
+        self.verticalLayout_45.addWidget(self.frame_29)
         self.verticalLayout_161.addWidget(self.qwSU_Mailabl_Users)
         self.qwSU_Layers = QtWidgets.QWidget(self.SettingsPageMainFrame)
         self.qwSU_Layers.setStyleSheet("")
@@ -2807,8 +2829,8 @@ class Ui_MailablDialogBase(object):
         self.label_30.setFont(font)
         self.label_30.setObjectName("label_30")
         self.horizontalLayout_19.addWidget(self.label_30)
-        spacerItem28 = QtWidgets.QSpacerItem(494, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_19.addItem(spacerItem28)
+        spacerItem29 = QtWidgets.QSpacerItem(494, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_19.addItem(spacerItem29)
         self.pbLayerSettings = QtWidgets.QPushButton(self.frame_26)
         self.pbLayerSettings.setText("")
         self.pbLayerSettings.setIcon(icon9)
@@ -2841,8 +2863,8 @@ class Ui_MailablDialogBase(object):
         self.lblSHPNewItems.setFont(font)
         self.lblSHPNewItems.setObjectName("lblSHPNewItems")
         self.horizontalLayout_15.addWidget(self.lblSHPNewItems)
-        spacerItem29 = QtWidgets.QSpacerItem(309, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_15.addItem(spacerItem29)
+        spacerItem30 = QtWidgets.QSpacerItem(309, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_15.addItem(spacerItem30)
         self.verticalLayout_2.addWidget(self.frame_14)
         self.frame_15 = QtWidgets.QFrame(self.qwSU_Layers)
         self.frame_15.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -2868,8 +2890,8 @@ class Ui_MailablDialogBase(object):
         self.lblcurrent_main_layer_label.setFont(font)
         self.lblcurrent_main_layer_label.setObjectName("lblcurrent_main_layer_label")
         self.horizontalLayout_29.addWidget(self.lblcurrent_main_layer_label)
-        spacerItem30 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_29.addItem(spacerItem30)
+        spacerItem31 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_29.addItem(spacerItem31)
         self.verticalLayout_2.addWidget(self.frame_15)
         self.frame_16 = QtWidgets.QFrame(self.qwSU_Layers)
         self.frame_16.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -2895,8 +2917,8 @@ class Ui_MailablDialogBase(object):
         self.lblnewCadastrals_input_layer_label.setFont(font)
         self.lblnewCadastrals_input_layer_label.setObjectName("lblnewCadastrals_input_layer_label")
         self.horizontalLayout_2.addWidget(self.lblnewCadastrals_input_layer_label)
-        spacerItem31 = QtWidgets.QSpacerItem(304, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem31)
+        spacerItem32 = QtWidgets.QSpacerItem(304, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem32)
         self.verticalLayout_2.addWidget(self.frame_16)
         self.verticalLayout_161.addWidget(self.qwSU_Layers)
         self.qwSU_Mailabl_Projects = QtWidgets.QWidget(self.SettingsPageMainFrame)
@@ -2924,8 +2946,8 @@ class Ui_MailablDialogBase(object):
         self.label_31.setFont(font)
         self.label_31.setObjectName("label_31")
         self.horizontalLayout_20.addWidget(self.label_31)
-        spacerItem32 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_20.addItem(spacerItem32)
+        spacerItem33 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_20.addItem(spacerItem33)
         self.pbSettings_Setup_Projects = QtWidgets.QPushButton(self.frame_27)
         self.pbSettings_Setup_Projects.setText("")
         self.pbSettings_Setup_Projects.setIcon(icon9)
@@ -2958,8 +2980,8 @@ class Ui_MailablDialogBase(object):
         self.lblLayerProjects_Properties.setFont(font)
         self.lblLayerProjects_Properties.setObjectName("lblLayerProjects_Properties")
         self.horizontalLayout_33.addWidget(self.lblLayerProjects_Properties)
-        spacerItem33 = QtWidgets.QSpacerItem(309, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_33.addItem(spacerItem33)
+        spacerItem34 = QtWidgets.QSpacerItem(309, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_33.addItem(spacerItem34)
         self.verticalLayout_46.addWidget(self.frame_19)
         self.frame_21 = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
         self.frame_21.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -2985,8 +3007,8 @@ class Ui_MailablDialogBase(object):
         self.lblLayerProjects_Vector.setFont(font)
         self.lblLayerProjects_Vector.setObjectName("lblLayerProjects_Vector")
         self.horizontalLayout_34.addWidget(self.lblLayerProjects_Vector)
-        spacerItem34 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_34.addItem(spacerItem34)
+        spacerItem35 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_34.addItem(spacerItem35)
         self.verticalLayout_46.addWidget(self.frame_21)
         self.frame_20 = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
         self.frame_20.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3012,8 +3034,8 @@ class Ui_MailablDialogBase(object):
         self.lbl_preferred_project_status.setFont(font)
         self.lbl_preferred_project_status.setObjectName("lbl_preferred_project_status")
         self.horizontalLayout_56.addWidget(self.lbl_preferred_project_status)
-        spacerItem35 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_56.addItem(spacerItem35)
+        spacerItem36 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_56.addItem(spacerItem36)
         self.verticalLayout_46.addWidget(self.frame_20)
         self.Projekcts_FolderSetup = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
         self.Projekcts_FolderSetup.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3039,8 +3061,8 @@ class Ui_MailablDialogBase(object):
         self.lblProjectsFolder_location.setFont(font)
         self.lblProjectsFolder_location.setObjectName("lblProjectsFolder_location")
         self.horizontalLayout_62.addWidget(self.lblProjectsFolder_location)
-        spacerItem36 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_62.addItem(spacerItem36)
+        spacerItem37 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_62.addItem(spacerItem37)
         self.verticalLayout_46.addWidget(self.Projekcts_FolderSetup)
         self.Projekcts_FolderSetup_2 = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
         self.Projekcts_FolderSetup_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3066,8 +3088,8 @@ class Ui_MailablDialogBase(object):
         self.lblProjectsTargetFolder_location.setFont(font)
         self.lblProjectsTargetFolder_location.setObjectName("lblProjectsTargetFolder_location")
         self.horizontalLayout_63.addWidget(self.lblProjectsTargetFolder_location)
-        spacerItem37 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_63.addItem(spacerItem37)
+        spacerItem38 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_63.addItem(spacerItem38)
         self.verticalLayout_46.addWidget(self.Projekcts_FolderSetup_2)
         self.frame_31 = QtWidgets.QFrame(self.qwSU_Mailabl_Projects)
         self.frame_31.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3116,8 +3138,8 @@ class Ui_MailablDialogBase(object):
         self.lblPhotos.setFont(font)
         self.lblPhotos.setObjectName("lblPhotos")
         self.horizontalLayout_35.addWidget(self.lblPhotos)
-        spacerItem38 = QtWidgets.QSpacerItem(413, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_35.addItem(spacerItem38)
+        spacerItem39 = QtWidgets.QSpacerItem(413, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_35.addItem(spacerItem39)
         self.verticalLayout_46.addWidget(self.frame_22)
         self.verticalLayout_161.addWidget(self.qwSU_Mailabl_Projects)
         self.qwSU_Mailabl_Contracts_Main = QtWidgets.QFrame(self.SettingsPageMainFrame)
@@ -3153,8 +3175,8 @@ class Ui_MailablDialogBase(object):
         self.label_34.setFont(font)
         self.label_34.setObjectName("label_34")
         self.horizontalLayout_64.addWidget(self.label_34)
-        spacerItem39 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_64.addItem(spacerItem39)
+        spacerItem40 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_64.addItem(spacerItem40)
         self.pbSettings_Setup_Contracts = QtWidgets.QPushButton(self.frame_30)
         self.pbSettings_Setup_Contracts.setText("")
         self.pbSettings_Setup_Contracts.setIcon(icon9)
@@ -3186,8 +3208,8 @@ class Ui_MailablDialogBase(object):
         self.lbl_preferred_contract_status.setFont(font)
         self.lbl_preferred_contract_status.setObjectName("lbl_preferred_contract_status")
         self.horizontalLayout_67.addWidget(self.lbl_preferred_contract_status, 0, QtCore.Qt.AlignLeft)
-        spacerItem40 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_67.addItem(spacerItem40)
+        spacerItem41 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_67.addItem(spacerItem41)
         self.verticalLayout_51.addWidget(self.frame_33)
         self.Contract_TypeFrame = QtWidgets.QFrame(self.qwSU_Mailabl_Contracts)
         self.Contract_TypeFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3215,8 +3237,8 @@ class Ui_MailablDialogBase(object):
         self.lblPreferredContractsTypes_value.setFont(font)
         self.lblPreferredContractsTypes_value.setObjectName("lblPreferredContractsTypes_value")
         self.horizontalLayout_70.addWidget(self.lblPreferredContractsTypes_value)
-        spacerItem41 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_70.addItem(spacerItem41)
+        spacerItem42 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_70.addItem(spacerItem42)
         self.verticalLayout_51.addWidget(self.Contract_TypeFrame)
         self.verticalLayout_158.addWidget(self.qwSU_Mailabl_Contracts)
         self.verticalLayout_161.addWidget(self.qwSU_Mailabl_Contracts_Main)
@@ -3252,8 +3274,8 @@ class Ui_MailablDialogBase(object):
         self.label_35.setFont(font)
         self.label_35.setObjectName("label_35")
         self.horizontalLayout_66.addWidget(self.label_35)
-        spacerItem42 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_66.addItem(spacerItem42)
+        spacerItem43 = QtWidgets.QSpacerItem(567, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_66.addItem(spacerItem43)
         self.pbSettingsSetupEasements = QtWidgets.QPushButton(self.frame_35)
         self.pbSettingsSetupEasements.setText("")
         self.pbSettingsSetupEasements.setIcon(icon9)
@@ -3285,8 +3307,8 @@ class Ui_MailablDialogBase(object):
         self.lblPreferredEasementsStatus.setFont(font)
         self.lblPreferredEasementsStatus.setObjectName("lblPreferredEasementsStatus")
         self.horizontalLayout_68.addWidget(self.lblPreferredEasementsStatus)
-        spacerItem43 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_68.addItem(spacerItem43)
+        spacerItem44 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_68.addItem(spacerItem44)
         self.verticalLayout_122.addWidget(self.frame_36)
         self.fEasementsType = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fEasementsType.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3314,8 +3336,8 @@ class Ui_MailablDialogBase(object):
         self.lblPreferredEasementsTypes_value.setFont(font)
         self.lblPreferredEasementsTypes_value.setObjectName("lblPreferredEasementsTypes_value")
         self.horizontalLayout_71.addWidget(self.lblPreferredEasementsTypes_value)
-        spacerItem44 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_71.addItem(spacerItem44)
+        spacerItem45 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_71.addItem(spacerItem45)
         self.verticalLayout_122.addWidget(self.fEasementsType)
         self.fWaterLayer = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fWaterLayer.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3343,8 +3365,8 @@ class Ui_MailablDialogBase(object):
         self.lblWaterPipesValue.setFont(font)
         self.lblWaterPipesValue.setObjectName("lblWaterPipesValue")
         self.horizontalLayout_76.addWidget(self.lblWaterPipesValue)
-        spacerItem45 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_76.addItem(spacerItem45)
+        spacerItem46 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_76.addItem(spacerItem46)
         self.verticalLayout_122.addWidget(self.fWaterLayer)
         self.fSewerLayer = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fSewerLayer.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3372,8 +3394,8 @@ class Ui_MailablDialogBase(object):
         self.lblSewerPipesValue.setFont(font)
         self.lblSewerPipesValue.setObjectName("lblSewerPipesValue")
         self.horizontalLayout_79.addWidget(self.lblSewerPipesValue)
-        spacerItem46 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_79.addItem(spacerItem46)
+        spacerItem47 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_79.addItem(spacerItem47)
         self.verticalLayout_122.addWidget(self.fSewerLayer)
         self.fPrSewerLayer = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fPrSewerLayer.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3401,8 +3423,8 @@ class Ui_MailablDialogBase(object):
         self.lblPrSewagePipesValue.setFont(font)
         self.lblPrSewagePipesValue.setObjectName("lblPrSewagePipesValue")
         self.horizontalLayout_78.addWidget(self.lblPrSewagePipesValue)
-        spacerItem47 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_78.addItem(spacerItem47)
+        spacerItem48 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_78.addItem(spacerItem48)
         self.verticalLayout_122.addWidget(self.fPrSewerLayer)
         self.fDrainageLayer = QtWidgets.QFrame(self.qwSU_Mailabl_Easements)
         self.fDrainageLayer.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -3430,8 +3452,8 @@ class Ui_MailablDialogBase(object):
         self.lblDrainagePipesValue.setFont(font)
         self.lblDrainagePipesValue.setObjectName("lblDrainagePipesValue")
         self.horizontalLayout_77.addWidget(self.lblDrainagePipesValue)
-        spacerItem48 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_77.addItem(spacerItem48)
+        spacerItem49 = QtWidgets.QSpacerItem(370, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_77.addItem(spacerItem49)
         self.verticalLayout_122.addWidget(self.fDrainageLayer)
         self.verticalLayout_139.addWidget(self.qwSU_Mailabl_Easements)
         self.frame = QtWidgets.QFrame(self.qwSU_Mailabl_Easements_Main)
@@ -3440,8 +3462,8 @@ class Ui_MailablDialogBase(object):
         self.frame.setObjectName("frame")
         self.horizontalLayout_23 = QtWidgets.QHBoxLayout(self.frame)
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
-        spacerItem49 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_23.addItem(spacerItem49)
+        spacerItem50 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_23.addItem(spacerItem50)
         self.pbGreateEVEL = QtWidgets.QPushButton(self.frame)
         self.pbGreateEVEL.setObjectName("pbGreateEVEL")
         self.horizontalLayout_23.addWidget(self.pbGreateEVEL)
@@ -3491,8 +3513,8 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_82.setContentsMargins(0, 0, -1, 0)
         self.horizontalLayout_82.setSpacing(10)
         self.horizontalLayout_82.setObjectName("horizontalLayout_82")
-        spacerItem50 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_82.addItem(spacerItem50)
+        spacerItem51 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_82.addItem(spacerItem51)
         self.ToggleStatus = QtWidgets.QLabel(self.frame_38)
         self.ToggleStatus.setObjectName("ToggleStatus")
         self.horizontalLayout_82.addWidget(self.ToggleStatus)
@@ -3568,8 +3590,8 @@ class Ui_MailablDialogBase(object):
         self.pbOpenProperty.setIcon(icon24)
         self.pbOpenProperty.setObjectName("pbOpenProperty")
         self.horizontalLayout_84.addWidget(self.pbOpenProperty)
-        spacerItem51 = QtWidgets.QSpacerItem(529, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_84.addItem(spacerItem51)
+        spacerItem52 = QtWidgets.QSpacerItem(529, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_84.addItem(spacerItem52)
         self.verticalLayout_168.addWidget(self.frame_41)
         self.treeWidget = QtWidgets.QTreeWidget(self.frame_39)
         font = QtGui.QFont()
@@ -3581,8 +3603,8 @@ class Ui_MailablDialogBase(object):
         self.treeWidget.headerItem().setText(0, "1")
         self.treeWidget.header().setMinimumSectionSize(20)
         self.verticalLayout_168.addWidget(self.treeWidget)
-        spacerItem52 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_168.addItem(spacerItem52)
+        spacerItem53 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_168.addItem(spacerItem53)
         self.verticalLayout_160.addWidget(self.frame_39)
         self.swWorkSpace.addWidget(self.page)
         self.projects = QtWidgets.QWidget()
@@ -3716,8 +3738,8 @@ class Ui_MailablDialogBase(object):
         self.cmbProjectStatuses.setFont(font)
         self.cmbProjectStatuses.setObjectName("cmbProjectStatuses")
         self.horizontalLayout_21.addWidget(self.cmbProjectStatuses)
-        spacerItem53 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_21.addItem(spacerItem53)
+        spacerItem54 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_21.addItem(spacerItem54)
         self.pbRefresh_tblMailabl_projects = QtWidgets.QPushButton(self.frProjects_Checkbox_holder)
         self.pbRefresh_tblMailabl_projects.setText("")
         self.pbRefresh_tblMailabl_projects.setIcon(icon15)
@@ -3737,8 +3759,8 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_10.setContentsMargins(0, 0, 10, 0)
         self.horizontalLayout_10.setSpacing(10)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
-        spacerItem54 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem54)
+        spacerItem55 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem55)
         self.pbGenProjectFolder = QtWidgets.QPushButton(self.frame_28)
         icon26 = QtGui.QIcon()
         icon26.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/Icons_hele/folder-plus.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -3795,8 +3817,8 @@ class Ui_MailablDialogBase(object):
         self.label_17.setStyleSheet("background-color: rgb(131, 142, 162);")
         self.label_17.setObjectName("label_17")
         self.verticalLayout_165.addWidget(self.label_17)
-        spacerItem55 = QtWidgets.QSpacerItem(20, 1207, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_165.addItem(spacerItem55)
+        spacerItem56 = QtWidgets.QSpacerItem(20, 1207, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_165.addItem(spacerItem56)
         self.verticalLayout_166.addWidget(self.frame_32)
         self.verticalLayout_88.addWidget(self.Prygikast)
         self.swWorkSpace.addWidget(self.RemoveProperties)
@@ -3902,8 +3924,8 @@ class Ui_MailablDialogBase(object):
         self.pbUC_Save.setObjectName("pbUC_Save")
         self.horizontalLayout_24.addWidget(self.pbUC_Save, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.verticalLayout_25.addWidget(self.UC_Buttton_Frame)
-        spacerItem56 = QtWidgets.QSpacerItem(20, 116, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_25.addItem(spacerItem56)
+        spacerItem57 = QtWidgets.QSpacerItem(20, 116, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_25.addItem(spacerItem57)
         self.pbUC_Cancel = QtWidgets.QPushButton(self.UC_Main_Frame)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -3952,8 +3974,8 @@ class Ui_MailablDialogBase(object):
         self.btnPrivacyPolicy = QtWidgets.QPushButton(self.frAgreements)
         self.btnPrivacyPolicy.setObjectName("btnPrivacyPolicy")
         self.horizontalLayout_57.addWidget(self.btnPrivacyPolicy)
-        spacerItem57 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_57.addItem(spacerItem57)
+        spacerItem58 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_57.addItem(spacerItem58)
         self.lbVersionNumber = QtWidgets.QLabel(self.frAgreements)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -4845,7 +4867,7 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(5)
+        self.swWorkSpace.setCurrentIndex(4)
         self.swCadastral_sub_processes.setCurrentIndex(2)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -4933,7 +4955,7 @@ class Ui_MailablDialogBase(object):
         self.textEdit_2.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; text-decoration: underline;\">Aluskaart koostatakse Mailablis olevate kinnistute andmebaasi põhjal.</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; text-decoration: underline;\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">Mailablisse esitatakse päring andmete kohta. Kinnistud leitakse katastriüksus SHP_KATASTRIYKSUS kihilt ja imporditakse uuele loodavale kinnistute aluskaardi kihile, mida kasutaja saab kasutada aluskaardina oma toimingutes.</span></p>\n"
@@ -4959,7 +4981,7 @@ class Ui_MailablDialogBase(object):
         self.textEdit_3.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Kinnistute andmed on oluline osa Mailabl plugina korralikust toimimisest.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">      </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">QGIS-is saad kihi aluskaardi omadusi muuta (kihil parem hiireklõps, Omadused ja Sümbolid)</span></p>\n"
@@ -4993,8 +5015,8 @@ class Ui_MailablDialogBase(object):
         self.textEdit.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;\"><br /></p>\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Aluskihi struktuur peab vastama Maa-ameti katastri struktuurile.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p>\n"
@@ -5018,6 +5040,7 @@ class Ui_MailablDialogBase(object):
         self.lblUserRoles.setText(_translate("MailablDialogBase", "rollid"))
         self.label_27.setText(_translate("MailablDialogBase", "Minu eelistatud avaleht:"))
         self.lblSettings_preferedHomePage.setText(_translate("MailablDialogBase", "Määramata"))
+        self.label_28.setText(_translate("MailablDialogBase", "Näita sisselogimisel tutvustavat avalehte:"))
         self.label_30.setText(_translate("MailablDialogBase", "Kinnistute andmete seaded"))
         self.label_16.setText(_translate("MailablDialogBase", "Andmekiht, millelt imporditakse uued andmed:"))
         self.lblSHPNewItems.setText(_translate("MailablDialogBase", "Määramata"))
@@ -5119,13 +5142,13 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Avaleht_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.lb_HM_LepingudPealkiri.setText(_translate("MailablDialogBase", "Lepingud"))
         self.te_HM_Lepingud_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Nimekirjas on esmase valikuna </span><span style=\" font-size:9pt; font-weight:600;\">pealepingud</span><span style=\" font-size:9pt;\"> (lepingu lisade ja seotud lepingute filtreerimise võimalus loomisel). </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Lepingutel on Mailablis </span><span style=\" font-size:9pt; font-weight:600;\">määratud parameetrid</span><span style=\" font-size:9pt;\"> (staatused, liigid jne).  </span></p>\n"
@@ -5155,7 +5178,7 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Toimingud_kinnistutega_Laiendamine_Yldine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Esmalt näed</span><span style=\" font-size:9pt; font-weight:600;\"> koondarvu</span><span style=\" font-size:9pt;\">, kui palju kinnistuid on lisamiseks valmis. Iga järgneva valikuga näed enne kinnitamist vastavalt valitud:</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  1. Maakonna kinnistute arvu</span></p>\n"
@@ -5191,7 +5214,7 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Toimingud_kinnistutega_Laiendamine_Maakond.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Maakond</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. Vali maakond (valida saab ühe maakonna korraga).</span></p>\n"
@@ -5200,13 +5223,13 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">2. Kinnita maakond (</span><span style=\" font-size:9pt; font-weight:600;\">&quot;Kinnita&quot;</span><span style=\" font-size:9pt;\"> nupp&quot;)</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">3. Oota omavalitsuste nimekirja laadimist.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.te_Laiente_HM_Toimingud_kinnistutega_Laiendamine_Omavalitsus.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Omavalitsus</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">1. Vali valitud maakonna omavalitsuste nimekirjast soovitud omavalitsus. Võimalus on valida üks, mitu või kõik omavalitsused (viimasel </span><span style=\" font-size:9pt; font-weight:600;\">&quot;Vali kõik&quot;</span><span style=\" font-size:9pt;\"> nupp).</span></p>\n"
@@ -5215,12 +5238,12 @@ class Ui_MailablDialogBase(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">NB! Peale valiku kinnitamist näed valitud omavalitsuse piire ka aluskaardil ja saad kinnistu või kinnistute valikuid seal teha (nupp &quot;Vali kaardilt&quot;). Kaardil valituid kinnistuid näed plugina akna alumises tabelis. </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; color:#ff0000;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Laiendamine_Linn_Kyla.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Linn/Küla</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Kui jätkad tabelis kinnistute valimist, siis:</span></p>\n"
@@ -5235,13 +5258,13 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Toimingud_kinnistutega_Laiendamine_LaetudKinnistud.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.lb_HM_Toimingud_kinnistutega_Kitsendamine_Pealkiri.setText(_translate("MailablDialogBase", "Kinnistute eemaldamine"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Yldine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Esmalt näed </span><span style=\" font-size:9pt; font-weight:600;\">koondarvu</span><span style=\" font-size:9pt;\">, kui palju kinnistuid on eemaldamiseks valmis. Iga järgneva valikuga näed enne kinnitamist vastavalt valitud:</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">  1. Maakonna kinnistute arvu</span></p>\n"
@@ -5277,30 +5300,30 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Maakond.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Maakond</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Omavalitsus.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Omavalitsus</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Kitsendamine_Linn_Kyla.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.te_HM_Toimingud_kinnistutega_Yldine_kirjeldus.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.lb_HM_Toimingud_kinnistutega_Aluskaardi_koostamine_Pealkiri.setText(_translate("MailablDialogBase", "Sünkroniseerimine"))
         self.te_HM_Toimingud_kinnistutega_Aluskaardi_koostamine_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Toiminguga saad luua oma GIS projekti ja Mailablis olevate kinnistutega sünkroonis aluskaardi.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Toiming on vajalik kui:</span></p>\n"
@@ -5319,7 +5342,7 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Satted_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; text-decoration: underline;\">Kasutaja seaded </span><span style=\" font-size:10pt;\">(loomisel)</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Näed kasutaja andmeid, millised õigused tal on (millisesse kasutajategruppi või gruppidesse ta kuulub). Samuti on võimalik teha eelistusi avalehe valiku osas.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Valikute tegemiseks vali &quot;mutrivõti&quot; ja alusta seadistamist.</span></p>\n"
@@ -5348,13 +5371,13 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600;\">Drenaažitorud - </span><span style=\" font-size:9pt;\">kaardikiht, millel asuvad veevärgile kuuluvad või kliendile kitsendusi põhjustavad drenaažitorud.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale muudatuste salvestamist taaskäivita plugin!</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\"><br /></span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:7.8pt;\"><br /></span></p></body></html>"))
         self.lb_HM_Servituudid_Pealkiri.setText(_translate("MailablDialogBase", "Servituudid"))
         self.te_HM_Lepingud_Sisu_2.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituutidel on Mailablis </span><span style=\" font-size:9pt; font-weight:600;\">määratud parameetrid</span><span style=\" font-size:9pt;\"> (staatused, liigid jne).  </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Servituudid saad vastavalt liikidele ja staatusele </span><span style=\" font-size:9pt; font-weight:600;\">filtreerida ja määrata eelistatav staatus </span><span style=\" font-size:9pt;\">(soovituslikult aktiivne staatus, nt &quot;Sõlmitud&quot; või &quot;Allkirjastamisel&quot;). </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale filtri valikut vajuta värskendamise nuppu!</span></p>\n"
@@ -5381,25 +5404,25 @@ class Ui_MailablDialogBase(object):
         self.te_HM_Andmete_laadimine_Yldine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.te_HM_Andmete_laadimine_Algandmete_laadimine.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p></body></html>"))
         self.te_HM_Andmete_laadimine_MaaAmetisse.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>"))
         self.lb_HM_Projektid_Pealkiri.setText(_translate("MailablDialogBase", "Projektid"))
         self.te_HM_Projektid_Sisu.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Nimekirjas on esmase valikuna</span><span style=\" font-size:9pt; font-weight:600;\"> peaprojektid</span><span style=\" font-size:9pt;\"> (alamprojektide filtreerimise võimalus loomisel). Projektid on avalikud (st ei ole privaatsed). </span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projektidel on Mailablis </span><span style=\" font-size:9pt; font-weight:600;\">määratud parameetrid </span><span style=\" font-size:9pt;\">(staatused, nimetused, numbrid jne). </span></p>\n"
@@ -5423,7 +5446,7 @@ class Ui_MailablDialogBase(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Projektiga juba seotud kinnistuid uuesti valides süsteem topelt seoseid ei tee.</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic; text-decoration: underline;\">NB! Peale kinnistutega sidumist vajuta uute seoste nägemiseks värskendamise nuppu.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;\"><br /></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"><br /></span></p></body></html>"))
         self.pbLogOut.setText(_translate("MailablDialogBase", "Logi välja"))
 from qgscheckablecombobox import QgsCheckableComboBox
