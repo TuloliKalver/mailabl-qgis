@@ -600,7 +600,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                             button11: "Lepingud",
                             button12: "Teenuslepingud",
                             button13: "Liitumislepingud",
-                            button14: "Avaleht",
+                            button14: "Kinnistud",
                             button15: "Teemakaardid",
                             button16: "Projektid",
                             button17: "Servituudid",
