@@ -150,7 +150,6 @@ class MyTreeHome:
                     # Display statuses in a format that makes sense for your application
                     status = child["status"]
                     status_name = status['name']
-                    #status_id = status['color'] 
 
                     child_item.setText(6,status_name)  # Assuming 6 is the index of the column to display statuses
 

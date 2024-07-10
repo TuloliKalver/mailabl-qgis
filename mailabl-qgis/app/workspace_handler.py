@@ -23,13 +23,13 @@ class WorkSpaceHandler:
     @staticmethod
     def swWorkSpace_Home(self):
         #print("started 'swWorkspace_Home'")
-        self.swWorkSpace.setCurrentIndex(6)
+        self.swWorkSpace.setCurrentIndex(5)
         self.sw_HM.setCurrentIndex(0)
 
     @staticmethod
     def swWorkSpace_Properties(self):
         #print("started 'swWorkspace_Home'")
-        self.swWorkSpace.setCurrentIndex(5)
+        self.swWorkSpace.setCurrentIndex(6)
         self.sw_HM.setCurrentIndex(0)
 
     @staticmethod    

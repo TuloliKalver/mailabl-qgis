@@ -57,10 +57,10 @@ class SettingsLoader:
 
     def get_setting(setting_name):
         # Check if the setting exists
-        print(f"setting name: {setting_name}")
+        #print(f"setting name: {setting_name}")
         if setting_name:
             setting_address = MAIN_PATH + setting_name
-            print(f"Setting addrss: {setting_address}")
+            #print(f"Setting addrss: {setting_address}")
             settings = QgsSettings()
             value = settings.value(setting_address, '', type=str)
             return value

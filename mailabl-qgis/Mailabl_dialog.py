@@ -59,7 +59,7 @@ from .Functions.HomeTree.BuildTree import MyTreeHome
 from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
-from .utils.ToggleSwitch import ToggleSwitch
+from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 
@@ -244,7 +244,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSettings_AddShapeFile.clicked.connect(self.load_cadastrals) #pbLisaShpFail
         
     # workspace page ID 5 = Homepage
-        self.pbHome.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Home(self))
+        self.pbHome.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Properties(self))
 
         # workspace page ID 7 = Projects
         self.pbProjects.clicked.connect(lambda: WorkSpaceHandler.swWorkspace_Projects(self))
@@ -370,21 +370,43 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         frame = self.fToggleHolder
         layout = QVBoxLayout(frame)  # Create a layout for the frame
-        togglebutton = ToggleSwitch()
-        layout.addWidget(togglebutton)
+        self.togglebutton = ToggleSwitch()
+        layout.addWidget(self.togglebutton)
         frame.setLayout(layout)
-
-
+        
         # Connect the toggled signal
-        togglebutton.toggled.connect(self.handle_toggle)
+        self.togglebutton.toggled.connect(self.handle_toggle)
 
     def handle_toggle(self, state):
-        if state:
+        
+        toggle_value = StoreValues_Toggle().get_toggle_status()
+        print(f"toggle_value before clicked: {toggle_value}")
+        if toggle_value:
+            print("started False toggle setup")
             self.ToggleStatus.setText("Olen üldjuhendiga tuttav")
             self.teWelcomeContent.setVisible(True)
+            #frame = self.fToggleHolder
+            #layout = QVBoxLayout(frame)  # Create a layout for the frame
+            #self.togglebutton = ToggleSwitch()
+            #layout.addWidget(self.togglebutton)
+            #frame.setLayout(layout)
+            #self.togglebutton.setChecked(False)
+            #WorkSpaceHandler().swWorkSpace_Home(self)
+            print("started 'swWorkspace_home'")
+            #StoreValues_Toggle().set_toggle_status(toggle_value)
+            # Connect the toggle button's toggled signal to save its status
         else:
+            print("started True toggle setup")
             self.ToggleStatus.setText("Nita kirjelduset")
-            self.teWelcomeContent.setVisible(False)
+            #self.teWelcomeContent.setVisible(False)
+            #WorkSpaceHandler().swWorkSpace_Properties(self)
+            print("started 'swWorkspace_Proerties'")
+            #frame = self.freopenToggle
+            #layout = QVBoxLayout(frame)  # Create a layout for the frame
+            #layout.addWidget(self.togglebutton)
+            #self.togglebutton.setChecked(True)
+            #frame.setLayout(layout)
+            #StoreValues_Toggle.set_toggle_status(toggle_value)
         print(f"Toggle switch is {'ON' if state else 'OFF'}")
 
     def open_properties_item_in_mylabl(self):
