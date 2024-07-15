@@ -1,5 +1,3 @@
-from PyQt5.QtWidgets import QScrollArea, QWidget, QScrollBar, QVBoxLayout, QPushButton, QApplication
-from PyQt5.QtCore import Qt
 
 
 
@@ -33,5 +31,6 @@ class CheckBoxes:
                 else:
                     checkbox.setText(f"{current_text}* ({text}m)")
                     checkbox.setEnabled(False)
+
 
 

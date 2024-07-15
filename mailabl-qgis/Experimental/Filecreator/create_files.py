@@ -1,12 +1,6 @@
 #use this line to create multiple files in same folder
 
-#self.pushButton_2.clicked.connect(self.filer)
 
-#    def filer(self):
-#        from .Functions.EVEL.LayerVariables.create_files import creator
-
-#        filenames = creator.filenames
-#        creator.create_files(filenames)
 
 
 import os

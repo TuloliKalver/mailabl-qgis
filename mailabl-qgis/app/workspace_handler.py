@@ -1,7 +1,7 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=relative-beyond-top-level
 # pylint: disable=no-name-in-module
-
+from PyQt5.QtCore import QObject
 from qgis.core import QgsProject
 from qgis.utils import iface
 from PyQt5.QtWidgets import QMessageBox
@@ -16,25 +16,42 @@ from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..KeelelisedMuutujad.modules import Modules
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
+
  
 pealkiri = Headings()
 
+class MyClassWithIndexes():
+    def __init__(self):
+        self.cadastralmoves = 1
+        self.easements = 0
+        self.contracts = 2
+        self.help = 3
+        self.settings = 4
+        self.homepage = 5
+        self.proerties = 6
+        self.projects = 7
+        self.removeproperties = 8
+
+    def swWorkSpace(self, index):
+        # This is a placeholder method to demonstrate how you might use the MyClassWithIndexes().
+        print(f"Switching to workspace index: {index}")
+        # Implement your actual workspace switching logic here
+
 class WorkSpaceHandler:
-    @staticmethod
+    
     def swWorkSpace_Home(self):
-        #print("started 'swWorkspace_Home'")
-        self.swWorkSpace.setCurrentIndex(5)
+        #ToggleHandler.handle_toggle(state)
+        print("started 'swWorkspace_Home'")
+        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().homepage)
         self.sw_HM.setCurrentIndex(0)
 
-    @staticmethod
     def swWorkSpace_Properties(self):
-        #print("started 'swWorkspace_Home'")
-        self.swWorkSpace.setCurrentIndex(6)
+        print("started 'swWorkspace_Properties'")
+        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().proerties)
         self.sw_HM.setCurrentIndex(0)
 
-    @staticmethod    
     def swWorkspace_Projects(self):
-        self.swWorkSpace.setCurrentIndex(7)
+        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().projects)
         self.sw_HM.setCurrentIndex(8) 
         button = self.pbProjects
         button.blockSignals(True)
@@ -55,7 +72,6 @@ class WorkSpaceHandler:
         Projects.load_mailabl_projects_list(table, statusValue)
         button.blockSignals(False)
     
-    @staticmethod
     def swWorkSpace_Contracts_FrontPage(self):
         push_button = self.pbContracts
         refresh_button = self.pbRefresh_tblMailabl_contracts
@@ -64,7 +80,7 @@ class WorkSpaceHandler:
         #widget = self.pbContracts_SliderFrame
         #WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
         self.sw_HM.setCurrentIndex(1)
-        self.swWorkSpace.setCurrentIndex(2)
+        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().contracts)
         table = self.ContractView
         model = table.model()
         if model is not None:
@@ -87,7 +103,6 @@ class WorkSpaceHandler:
         push_button.blockSignals(False)
         refresh_button.blockSignals(False)
 
-
     def contracts_reload(self):
         refresh_button = self.pbRefresh_tblMailabl_contracts
         refresh_button.blockSignals(True)
@@ -102,13 +117,10 @@ class WorkSpaceHandler:
         ContractsMain.main_contracts(self, table, selected_types_ids, statusValue)
         refresh_button.blockSignals(False)
 
-
-    
-    @staticmethod
     def swWorkSpace_easements_frontpage(self):
         button = self.pbeasements
         button.blockSignals(True)
-        self.swWorkSpace.setCurrentIndex(0)
+        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().easements)
         self.sw_HM.setCurrentIndex(5)
         table = self.tweasementView
         # Assuming 'table' is your QTableView object
@@ -145,7 +157,7 @@ class WorkSpaceHandler:
     def easements_reload(self):
         button = self.pbeasements
         button.blockSignals(True)
-        self.swWorkSpace.setCurrentIndex(0)
+        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().easements)
         self.sw_HM.setCurrentIndex(5)
         table = self.tweasementView
         # Assuming 'table' is your QTableView object
@@ -159,7 +171,6 @@ class WorkSpaceHandler:
         EasementssMain.main_asements(self, table, selected_types_ids, statusValue)
         button.blockSignals(False)
         
-
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
         self.swWorkSpace.setCurrentIndex(6)
@@ -277,4 +288,26 @@ class TabHandler:
             tab_widget.setTabEnabled(1, False)
             tab_widget.setTabEnabled(2, True)
             tab_widget.setCurrentIndex(2)
+
+class ToggleHandler(QObject):
+    def __init__(self, main_window):
+        super().__init__()
+        self.main = main_window
         
+
+    def handle_toggle(self, state):
+        if state:
+            print("started False toggle setup")
+            self.main.ToggleStatus.setText("Olen üldjuhendiga tuttav")
+            self.main.teWelcomeContent.setVisible(True)
+            self.main.setLayout(self.main.layout1)
+            WorkSpaceHandler().swWorkSpace_Home(self.main)
+            print("started 'swWorkspace_home'")
+        else:
+            print("started True toggle setup")
+            self.main.ToggleStatus.setText("Nita kirjelduset")
+            self.main.teWelcomeContent.setVisible(False)
+            self.main.setLayout(self.main.layout2)
+            WorkSpaceHandler().swWorkSpace_Properties(self.main, state)
+            print("started 'swWorkspace_Proerties'")
+        print(f"Toggle switch is {'ON' if state else 'OFF'}")

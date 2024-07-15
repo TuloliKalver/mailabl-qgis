@@ -6,7 +6,7 @@ from ..Functions.tableViewAdjust import Colors
 
 
 class ToggleSwitch(QAbstractButton):
-    def __init__(self, parent=None):
+    def __init__(self, label ,parent=None):
         super().__init__(parent)
         self._offset = 0  # Initialize _offset early in the constructor
         self.setCheckable(True)
@@ -21,6 +21,8 @@ class ToggleSwitch(QAbstractButton):
         self._on_color = QColor(*Colors.hex_to_rgb(color_red))        
         self._off_color = QColor("#848484")
         self.setFont(QFont("Arial", 8, QFont.Bold))
+        self.label = label
+
 
     @pyqtProperty(float)
     def offset(self):
@@ -62,6 +64,7 @@ class ToggleSwitch(QAbstractButton):
         painter.setPen(Qt.white)
         if self.isChecked():
             painter.drawText(self._rect.left() + 9, self._rect.center().y() + 4, "Peida")
+            self.label.setText("Ära kuva seda lehte tulevikus. Uuesti vaatamiseks minge seadete lehele.")
         else:
             painter.drawText(self._rect.left() + 23, self._rect.center().y() + 4, "Näita")
 

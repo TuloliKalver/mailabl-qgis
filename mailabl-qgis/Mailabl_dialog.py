@@ -17,13 +17,13 @@
 
 """
 import os
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, Qt
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
 
 from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox, QVBoxLayout
 from .app.web import loadWebpage, WebLinks
-from .app.workspace_handler import WorkSpaceHandler, TabHandler
+from .app.workspace_handler import WorkSpaceHandler, TabHandler, ToggleHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup_Conrtacts, SetupEasments, SetupUsers
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
@@ -56,12 +56,13 @@ from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
 from .Functions.EVEL.evel_general import EVELTools
 from .Functions.HomeTree.BuildTree import MyTreeHome
-from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool
+from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool, FeatureInfoToolSearch
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
 from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-
+from .utils.window_manager import WindowManager, WindowManagerMinMax
+from .Functions.Searchpropertyfromlayer import SearchProperties
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -106,6 +107,7 @@ county_nimi_field = Katastriyksus.mk_nimi #'MK_NIMI'
 state_nimi_field = Katastriyksus.ov_nimi #'OV_NIMI'
 city_nimi_field = Katastriyksus.ay_nimi #"AY_NIMI"
 
+
 ################################################################################################################
 
 class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
@@ -124,8 +126,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     #Creat instances
 
         self.setupUi(self)
+       # Set always on top flag
+
+
         self.setup_timer()
         Startup.FirstLoad(self)
+
+        # Initialize WindowManager with this window
+        self.window_manager = WindowManager(self)
 
 
         self.sw_HM.setCurrentIndex(0)
@@ -359,8 +367,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.lblDel_Aditiona_txt.setEnabled(False)
         self.pbCompiler.clicked.connect(self.start_compielre)
 
-        #self.pushButton_2.clicked.connect(self.propertie_overview)
-
 
         # Connect the button signal to the method
         self.pbSelecPrpertiesOveral.clicked.connect(self.start_feature_info_tool)
@@ -368,46 +374,69 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbDisconnect.setEnabled(False)
         self.pbOpenProperty.clicked.connect(self.open_properties_item_in_mylabl)
 
-        frame = self.fToggleHolder
-        layout = QVBoxLayout(frame)  # Create a layout for the frame
-        self.togglebutton = ToggleSwitch()
-        layout.addWidget(self.togglebutton)
-        frame.setLayout(layout)
+
+        self.pbCadastralSearch.clicked.connect(self.start_propertie_search)
+
+        self.main_window_toggle_option()
+
+    def start_propertie_search(self):
+        engine = SearchProperties()
+        label = self.isSelectedCadaster
+        feature_id = engine.search_for_item(label=label)
+        self.pbSelecPrpertiesOveral.setEnabled(False)
+        label = self.isSelectedCadaster
+        address = self.lblAddress_value 
+        purpose = self.lblPurpose_value 
+        area = self.lblArea_value  
+        created_at = self.CreatedAt_value  
+        updated_at = self.UpdatedAt_value  
+        treeWidget = self.treeWidget
+        lblRegistryNr = self.RegistryNr_value
+        lblCadastralNr = self.CadasterNr_value
+        FeatureInfoToolSearch
         
+        .for_search_results()
+
+    def main_window_toggle_option(self):
+        label_for_toggle = self.ToggleStatus
+        self.togglebutton = ToggleSwitch(label_for_toggle)
+        self.toggle_value = StoreValues_Toggle().get_toggle_status()
+        print(f"toggle_value before clicked: {self.toggle_value}")
+
+        self.frame1 = self.fToggleHolder
+        self.frame2 = self.freopenToggle
+        self.layout1 = QVBoxLayout(self.frame1)
+        self.layout2 = QVBoxLayout(self.frame2)
+
+        # Initially add the toggle button to frame1's layout
+        self.layout1.addWidget(self.togglebutton)
+        toggle_value_on_load = StoreValues_Toggle().get_toggle_status()
+        print(f"toggle_value before clicked: {toggle_value_on_load}")
+        self.handle_toggle(toggle_value_on_load)
         # Connect the toggled signal
         self.togglebutton.toggled.connect(self.handle_toggle)
 
+
     def handle_toggle(self, state):
-        
-        toggle_value = StoreValues_Toggle().get_toggle_status()
-        print(f"toggle_value before clicked: {toggle_value}")
-        if toggle_value:
-            print("started False toggle setup")
-            self.ToggleStatus.setText("Olen üldjuhendiga tuttav")
-            self.teWelcomeContent.setVisible(True)
-            #frame = self.fToggleHolder
-            #layout = QVBoxLayout(frame)  # Create a layout for the frame
-            #self.togglebutton = ToggleSwitch()
-            #layout.addWidget(self.togglebutton)
-            #frame.setLayout(layout)
-            #self.togglebutton.setChecked(False)
-            #WorkSpaceHandler().swWorkSpace_Home(self)
-            print("started 'swWorkspace_home'")
-            #StoreValues_Toggle().set_toggle_status(toggle_value)
-            # Connect the toggle button's toggled signal to save its status
+        if state:
+            #print("started False toggle setup")
+            self.ToggleStatus.setText("Järgmisel laadimisel ära enam seda juhendit näita")
+            self.layout2.removeWidget(self.togglebutton)
+            self.togglebutton.setParent(self.frame1)
+            self.layout1.addWidget(self.togglebutton)
+            self.set_start_page_based_on_toggle_and_preferred_settings()
+            #print("started 'swWorkspace_home'")
         else:
-            print("started True toggle setup")
-            self.ToggleStatus.setText("Nita kirjelduset")
-            #self.teWelcomeContent.setVisible(False)
-            #WorkSpaceHandler().swWorkSpace_Properties(self)
-            print("started 'swWorkspace_Proerties'")
-            #frame = self.freopenToggle
-            #layout = QVBoxLayout(frame)  # Create a layout for the frame
-            #layout.addWidget(self.togglebutton)
-            #self.togglebutton.setChecked(True)
-            #frame.setLayout(layout)
-            #StoreValues_Toggle.set_toggle_status(toggle_value)
-        print(f"Toggle switch is {'ON' if state else 'OFF'}")
+            #print("started True toggle setup")
+            self.ToggleStatus.setText("Näita kirjeldust")
+            self.layout1.removeWidget(self.togglebutton)
+            self.togglebutton.setParent(self.frame2)
+            self.layout2.addWidget(self.togglebutton)
+            WorkSpaceHandler.swWorkSpace_Properties(self)
+            #print("started 'swWorkspace_Proerties'")
+        #print(f"Toggle switch is {'ON' if state else 'OFF'}")
+
+
 
     def open_properties_item_in_mylabl(self):
         MyTreeHome.open_property()
@@ -421,13 +450,36 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.timer.setInterval(10000)  # 10 seconds timeout
         self.timer.timeout.connect(self.stop_feature_info_tool_timed)
 
-    def start_feature_info_tool(self):
+    def start_feature_info_tool(self):        
         self.pbSelecPrpertiesOveral.setEnabled(False)
         label = self.isSelectedCadaster
-        global feature_tool  # Use global variable to keep reference
+        address = self.lblAddress_value 
+        purpose = self.lblPurpose_value 
+        area = self.lblArea_value  
+        created_at = self.CreatedAt_value  
+        updated_at = self.UpdatedAt_value  
         treeWidget = self.treeWidget
+        lblRegistryNr = self.RegistryNr_value
+        lblCadastralNr = self.CadasterNr_value
+        global feature_tool  # Use global variable to keep reference
         
-        feature_tool = FeatureInfoTool(label, lambda: self.reset_timer,treeWidget=treeWidget)
+        # Initialize WindowManager with this window
+        #self.window_manager = WindowManager(self)
+        self.window_manager_minmax = WindowManagerMinMax(self)
+        self.window_manager_minmax.minimize_window()
+        feature_tool = FeatureInfoTool(
+            label=label,
+            lblCadastralNr=lblCadastralNr,
+            lblRegistry= lblRegistryNr,
+            address=address,
+            purpose=purpose,
+            area=area,
+            created_at=created_at,
+            updated_at=updated_at,
+            treeWidget=treeWidget,
+            reset_timer=lambda: self.reset_timer(),
+            main_window = self
+        )
         self.pbDisconnect.setEnabled(True)
         self.timer.start()
 
@@ -1124,29 +1176,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if access_token_results == "success":
             self.UC_Main_Frame.setVisible(False)
             FrameHandler.show_multiple_frames(self, frames)
-            index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)
-            
-            # Convert index to integer, handling potential exceptions
-            index_int = int(index)
-
-            # Get the mapped functions dictionary from WidgetInfo
-            mapped_functions = WidgetInfo.mapped_indexes_functions(self)
-            #print(f"mapped_functions:  {mapped_functions}")
-            # Check if mapped_functions is not None before iterating
-            if mapped_functions is not None and index_int in mapped_functions:
-                function = mapped_functions.get(index_int)
-                if function:
-                    function()
-                else:
-                    # Handle the case where the mapped function is None
-                    print(f"No function mapped for index {index_int}. Setting default to page 5.")
-                    self.swWorkSpace.setCurrentIndex(5)
-                    self.sw_HM.setCurrentIndex(0)
-            else:
-                # Handle the case where index is not a valid page index (e.g., set a default)
-                print(f"Invalid page index: {index_int} or mapped_functions is None. Setting default to page 5.")
-                self.swWorkSpace.setCurrentIndex(5)
-                self.sw_HM.setCurrentIndex(0)
+            self.set_start_page_based_on_toggle_and_preferred_settings()
 
             self.resize(1150, 700)
             path = PathLoaderSimple.metadata()
@@ -1170,6 +1200,32 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             # Handle the error condition
             # ... your code to handle the error
             print(access_token_results)
+
+    def set_start_page_based_on_toggle_and_preferred_settings(self):
+        index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)            
+        # Convert index to integer, handling potential exceptions
+        index_int = int(index)
+
+        toggle_value = StoreValues_Toggle().get_toggle_status()
+            # Get the mapped functions dictionary from WidgetInfo
+        mapped_functions = WidgetInfo.mapped_indexes_functions(self, state=toggle_value)
+            #print(f"mapped_functions:  {mapped_functions}")
+            # Check if mapped_functions is not None before iterating
+        if mapped_functions is not None and index_int in mapped_functions:
+            function = mapped_functions.get(index_int)
+            if function:
+                    #print(f"mapped index function: {function}")
+                function()
+            else:
+                    # Handle the case where the mapped function is None
+                print(f"No function mapped for index {index_int}. Setting default to page 5.")
+                self.swWorkSpace.setCurrentIndex(5)
+                self.sw_HM.setCurrentIndex(0)
+        else:
+                # Handle the case where index is not a valid page index (e.g., set a default)
+            print(f"Invalid page index: {index_int} or mapped_functions is None. Setting default to page 5.")
+            self.swWorkSpace.setCurrentIndex(5)
+            self.sw_HM.setCurrentIndex(0)
 
     def print_UC_data(self):
         print_result(self)    

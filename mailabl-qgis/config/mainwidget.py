@@ -61,7 +61,7 @@ class WidgetInfo:
             return selected_id
         return None
     
-    def mapped_indexes_functions(self):
+    def mapped_indexes_functions(self, state):
         """
         Maps indexes to their corresponding functions.
         
@@ -71,13 +71,21 @@ class WidgetInfo:
         Returns:
             dict: A dictionary mapping indexes to functions.
         """
+        print(f"using mapped index for index")
+        if state:
+            print(f"state is True for home setting")
+            my_function = lambda: WorkSpaceHandler.swWorkSpace_Home(self) 
+        else:
+            print(f"state is False for home setting")
+            my_function = lambda: WorkSpaceHandler.swWorkSpace_Properties(self)
+
         return {
             0: lambda: WorkSpaceHandler.swWorkSpace_easements_frontpage(self),
             1: None,
             2: lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self),
             3: None,
             4: None,
-            5: lambda: WorkSpaceHandler.swWorkSpace_Home(self),
+            5: my_function,
             6: None,
             7: lambda: WorkSpaceHandler.swWorkspace_Projects(self),
             8: None
