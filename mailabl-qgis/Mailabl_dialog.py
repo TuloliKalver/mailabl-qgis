@@ -382,17 +382,27 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def start_propertie_search(self):
         engine = SearchProperties()
         label = self.isSelectedCadaster
-        feature_id = engine.search_for_item(label=label)
-        self.pbSelecPrpertiesOveral.setEnabled(False)
-        label = self.isSelectedCadaster
-        address = self.lblAddress_value 
-        purpose = self.lblPurpose_value 
-        area = self.lblArea_value  
-        created_at = self.CreatedAt_value  
-        updated_at = self.UpdatedAt_value  
+        engine.search_for_item(label=label)
+        address = self.lblAddress_value
+        purpose = self.lblPurpose_value
+        area = self.lblArea_value
+        created_at = self.CreatedAt_value
+        updated_at = self.UpdatedAt_value
         treeWidget = self.treeWidget
         lblRegistryNr = self.RegistryNr_value
         lblCadastralNr = self.CadasterNr_value
+        tool_feature = FeatureInfoToolSearch(
+            lblCadastralNr=lblCadastralNr,
+            lblRegistry= lblRegistryNr,
+            address=address,
+            purpose=purpose,
+            area=area,
+            created_at=created_at,
+            updated_at=updated_at,
+            treeWidget=treeWidget
+        )
+
+        tool_feature.for_search_results()
         
 
     def main_window_toggle_option(self):

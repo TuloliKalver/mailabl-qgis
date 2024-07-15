@@ -20,7 +20,10 @@ class SearchProperties:
 
         iface.setActiveLayer(self.layer)
         self.add_search_field()
-    
+
+        return self.layer
+
+
     def add_search_field(self):
         # Initialize Katastriyksus instance
         katastriyksus = OldKatastriyksus()
@@ -81,7 +84,6 @@ class SearchProperties:
 
         # Perform the search
         request = QgsFeatureRequest(search_expression)
-        
         features = list(self.layer.getFeatures(request))
         
         if not features:
@@ -105,7 +107,7 @@ class SearchProperties:
         iface.mapCanvas().zoomToSelected(self.layer)
         
         print(f"Found with tunnus: {tunnus_value}")
-        return tunnus_value
+        return tunnus_value, feature
     
     def select_from_multiple_features(self, features, label_text):
         items = [f"{feature['search_field']}" for feature in features]

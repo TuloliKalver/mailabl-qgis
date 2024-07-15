@@ -51,6 +51,7 @@ class FeatureInfoTool:
         self.layer.selectionChanged.connect(self.on_selection_changed)
 
     def on_selection_changed(self, selected, deselected, clearAndSelect):
+        print(f"selected: {selected}")
         selected_features = [self.layer.getFeature(fid) for fid in selected]
 
         # Check if more than one feature is selected
@@ -234,8 +235,7 @@ class FeatureInfoTool:
 
 
 class FeatureInfoToolSearch:
-    def __init__(self, label, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget):
-        self.label = label
+    def __init__(self, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget):
         self.lblRegistry = lblRegistry
         self.lblCadastralNr = lblCadastralNr
         self.lbladdress = address 
@@ -244,10 +244,22 @@ class FeatureInfoToolSearch:
         self.lblcreated_at = created_at
         self.lblupdated_at = updated_at
         self.lbltreewidget = treeWidget
+        self.katastriyksus = OldKatastriyksus()
 
-
-    def for_search_results(self, selected_features, layer):
+    def for_search_results(self):
         
+        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
+        print(f"Layer: {layer}")
+
+
+        # Get the selected feature IDs from the layer
+        selected = layer.selectedFeatureIds()
+
+
+        # Ensure the feature IDs are integers
+        selected_features = [layer.getFeature(int(fid)) for fid in selected]
+
         # Initialize Katastriyksus instance
         katastriyksus = OldKatastriyksus()
         
@@ -288,7 +300,8 @@ class FeatureInfoToolSearch:
         
         if feature_data:
             # Extract values into variables
-            tunnus_value = FeatureInfoTool().set_values_to_labels(feature_data)
+
+            tunnus_value = self.set_values_to_labels(feature_data)
 
             MyTreeHome.update_tree_with_modules(self.lbltreewidget, tunnus_value)
             # This is possible if cell coloring can be implemented
@@ -297,3 +310,87 @@ class FeatureInfoToolSearch:
 
         return tunnus_value
 
+
+    def set_values_to_labels(self, feature_data):
+        tunnus_value = self.set_address(feature_data)
+        self.set_purpose(feature_data)
+        self.set_dates(feature_data)
+
+        area_value = feature_data.get(self.katastriyksus.pindala,'')
+        self.lblarea.setText(f"{area_value}")
+        return tunnus_value
+
+    def set_dates(self, feature_data):
+        created_at_value = feature_data.get(self.katastriyksus.registr, '')
+        updated_at_value = feature_data.get(self.katastriyksus.muudet, '')
+
+        created_at_str = self.date_to_string(created_at_value)
+        updated_at_str = self.date_to_string(updated_at_value)
+        self.lblcreated_at.setText(created_at_str)
+        self.lblupdated_at.setText(updated_at_str)
+
+    def set_purpose(self, feature_data):
+        purpose1_value = feature_data.get(self.katastriyksus.siht1, '')
+        #print(f"purpose1_value: {purpose1_value}")
+        purpose2_value = feature_data.get(self.katastriyksus.siht2, '')
+        #print(f"purpose2_value: {purpose2_value}")
+        purpose3_value = feature_data.get(self.katastriyksus.siht3, '')
+        #print(f"purpose3_value: {purpose3_value}")
+        percentage1_value = feature_data.get(self.katastriyksus.so_prts1, '') 
+        percentage2_value = feature_data.get(self.katastriyksus.so_prts2, '')
+        percentage3_value = feature_data.get(self.katastriyksus.so_prts3, '') 
+        self.add_purposes(purpose1_value, purpose2_value, purpose3_value, percentage1_value, percentage2_value, percentage3_value)
+
+    def set_address(self, feature_data):
+        tunnus_value = feature_data.get(self.katastriyksus.tunnus, '')
+        address_value = feature_data.get(self.katastriyksus.l_aadress, '')
+        address_value1 = feature_data.get(self.katastriyksus.mk_nimi, '')
+        address_value2 = feature_data.get(self.katastriyksus.ov_nimi, '')
+        address_value3 = feature_data.get(self.katastriyksus.ay_nimi, '')
+        regNr_Value = feature_data.get(self.katastriyksus.kinnistu, '')
+        self.lbladdress.setText(f"{address_value}, {address_value2}, {address_value1}, {address_value3}")
+        self.lblCadastralNr.setText(tunnus_value)
+        if regNr_Value == "NULL":
+            self.lblRegistry.setText("Andmed puuduvad")
+        else:
+            self.lblRegistry.setText(regNr_Value)
+        #self.label.setText(f"Valitud kinnistu: {tunnus_value}")
+        return tunnus_value
+
+    def add_purposes(self, purpose1_value, purpose2_value, purpose3_value, percentage1_value, percentage2_value, percentage3_value):
+        
+        if purpose1_value !="NULL":
+            purpose1 = (f"{purpose1_value} {percentage1_value}%")
+        else:
+            purpose1 = ""
+        if purpose2_value !="NULL":
+            purpose2 = (f", {purpose2_value} {percentage2_value}%")
+        else:
+            purpose2 = ""
+        if purpose3_value !="NULL":
+            purpose3 = (f", {purpose3_value} {percentage3_value}%")
+        else:
+            purpose3 = ""
+        self.lblpurpose.setText(f"{purpose1}{purpose2}{purpose3}")
+
+    def date_to_string(self, date_item):
+        #print(f"date_item: {date_item}")
+        #print(f"type of date_item: {type(date_item)}")
+
+        if isinstance(date_item, str):
+            match = re.search(r'QDate\((\d+), (\d+), (\d+)\)', date_item)
+            if match:
+                year, month, day = match.groups()
+                original_date = QDate(int(year), int(month), int(day))
+                if original_date.isValid():
+                    formatted_date = original_date.toString("dd.MM.yyyy")
+                    #print(f"Formatted date: {formatted_date}")
+                    return formatted_date
+                else:
+                    print("Invalid QDate extracted from string")
+            else:
+                print("No valid QDate pattern found in the string")
+        else:
+            print("date_item is not a valid QDate string")
+        
+        return ""

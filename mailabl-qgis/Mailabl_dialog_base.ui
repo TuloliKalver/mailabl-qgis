@@ -8723,7 +8723,7 @@ p, li { white-space: pre-wrap; }
                             </font>
                            </property>
                            <property name="text">
-                            <string>Kataster</string>
+                            <string>Kataster:</string>
                            </property>
                           </widget>
                          </item>
@@ -8764,7 +8764,7 @@ p, li { white-space: pre-wrap; }
                          <item>
                           <widget class="QLabel" name="RegistriNr">
                            <property name="text">
-                            <string>Kinnistu registriosa number</string>
+                            <string>Kinnistu registriosa number:</string>
                            </property>
                           </widget>
                          </item>
