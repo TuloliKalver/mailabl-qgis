@@ -393,9 +393,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         treeWidget = self.treeWidget
         lblRegistryNr = self.RegistryNr_value
         lblCadastralNr = self.CadasterNr_value
-        FeatureInfoToolSearch
         
-        .for_search_results()
 
     def main_window_toggle_option(self):
         label_for_toggle = self.ToggleStatus
