@@ -156,8 +156,10 @@ class FeatureInfoTool:
         regNr_Value = feature_data.get(self.katastriyksus.kinnistu, '')
         self.lbladdress.setText(f"{address_value}, {address_value2}, {address_value1}, {address_value3}")
         self.lblCadastralNr.setText(tunnus_value)
-        self.lblRegistry.setText(regNr_Value)
-        #self.label.setText(f"Valitud kinnistu: {tunnus_value}")
+        if regNr_Value == "NULL":
+            self.lblRegistry.setText("Andmed puuduvad")
+        else:
+            self.lblRegistry.setText(regNr_Value)        #self.label.setText(f"Valitud kinnistu: {tunnus_value}")
         return tunnus_value
 
     def add_purposes(self, purpose1_value, purpose2_value, purpose3_value, percentage1_value, percentage2_value, percentage3_value):
