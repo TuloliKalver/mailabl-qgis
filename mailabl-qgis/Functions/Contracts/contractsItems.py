@@ -213,13 +213,12 @@ class ContractsMain:
                 table.setSortingEnabled(True)
                 # Trigger a refresh of the view to reflect the changes
                 table.update()  # Refresh the view
+        else:            
+            text = HoiatusTexts().ostingu_tulemused_puuduvad
+            heading = Headings().warningSimple
+            print(f"{heading}, {text}")
+            QMessageBox.information(None, heading, text)
 
-            else:            
-                text = HoiatusTexts().ostingu_tulemused_puuduvad
-                heading = Headings().warningSimple
-                print(f"{heading}, {text}")
-                QMessageBox.information(None, heading, text)
-    
 class queryHandling:
     def __init__(self):
         self.header_id = header_id

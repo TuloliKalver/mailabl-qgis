@@ -128,34 +128,36 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
        # Set always on top flag
 
 
-        self.setup_timer()
-        Startup.FirstLoad(self)
-
         # Initialize WindowManager with this window
         self.window_manager = WindowManager(self)
 
         # Initialize ReturnPressedManager
         self.return_pressed_manager = ReturnPressedManager(self)
-        
-
-        
+                
         startup_frames = [self.leftMenuContainer, self.rightMenuContainer, self.frAgreements,self.swWorkSpace]
         # Setup connections for existing QLineEdit widgets
         label_callbacks = {
             'isSelectedCadaster': self.start_propertie_search,
-            'lePassword': lambda: self.save_user_data(startup_frames),
-            'leUsername': self.activate_line_edit,
             'le_searchContracts': lambda: self.universalSearchWrapper(Modules.MODULE_CONTRACTS),
             'le_searchProjects': lambda: self.universalSearchWrapper(Modules.MODULE_PROJECTS),
             'leSearcheasements': lambda: self.universalSearchWrapper(Modules.MODULE_EASEMENTS),
             'leText_For_Sync_GreateLayerName': self.generate_virtual_mapLayer_synced_with_Mailabl
         }
 
-        self.return_pressed_manager.setup_connections(label_callbacks)
+        label_callbacks_user = {
+            'lePassword': lambda: self.save_user_data(startup_frames),
+            'leUsername': self.activate_line_edit,
+        }
+        self.return_pressed_manager.setup_connections(label_callbacks, label_callbacks_user)
 
         # Initialize custom event filter and set button focus policy
         self.custom_event_filter = BlockButtonsToPreferLabelEventFilter(self)
         self.custom_event_filter.set_button_focus_policy()
+
+
+        self.setup_timer()
+        Startup.FirstLoad(self)
+
 
         # Install event filter on the main window
         self.installEventFilter(self.custom_event_filter)

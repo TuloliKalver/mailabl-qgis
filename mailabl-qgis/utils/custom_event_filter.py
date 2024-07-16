@@ -21,13 +21,20 @@ class BlockButtonsToPreferLabelEventFilter(QObject):
 class ReturnPressedManager:
     def __init__(self, parent: QWidget):
         self.parent = parent
-
-    def setup_connections(self, label_callbacks):
+        
+    def setup_connections(self, label_callbacks, label_callbacks_user):
         for label_name, callback in label_callbacks.items():
             label = self.parent.findChild(QLineEdit, label_name)
             if label:
                 label.returnPressed.connect(callback)
-    
+                label.clear()
+                label.setCursorPosition(0)
+        for label_name_user, callback_user in label_callbacks_user.items():
+            label_user = self.parent.findChild(QLineEdit, label_name_user)
+            if label_user:
+                label_user.returnPressed.connect(callback_user)
+                
+
     def on_label_return_pressed(self):
         # Identify which label sent the signal
         sender = self.parent.sender()
