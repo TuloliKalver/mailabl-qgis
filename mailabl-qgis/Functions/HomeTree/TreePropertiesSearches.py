@@ -237,6 +237,9 @@ class FeatureInfoTool:
 
 
 class FeatureInfoToolSearch:
+    def __init__(self, window):
+        self.window = window
+
     def __init__(self, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget):
         self.lblRegistry = lblRegistry
         self.lblCadastralNr = lblCadastralNr

@@ -36,7 +36,7 @@ class ModelHandler:
                     status_item.setBackground(background_color)
                     status_item.setForeground(foreground_color)
                     status_item.setTextAlignment(Qt.AlignCenter)
-                    
+        
         return status_column_index, color_column_index
                                         
     @staticmethod

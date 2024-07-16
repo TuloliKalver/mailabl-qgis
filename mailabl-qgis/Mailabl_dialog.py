@@ -17,11 +17,11 @@
 
 """
 import os
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtCore import QTimer, Qt,  QEvent
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
+from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox, QVBoxLayout, QPushButton
 
-from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox, QVBoxLayout
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler, ToggleHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
@@ -62,6 +62,7 @@ from .processes.OnFirstLoad.CloseUnload import Unload
 from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from .utils.window_manager import WindowManager, WindowManagerMinMax
+from .utils.custom_event_filter import BlockButtonsToPreferLabelEventFilter, ReturnPressedManager
 from .Functions.Searchpropertyfromlayer import SearchProperties
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
@@ -121,8 +122,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Rest of your __init__ method...
         # Call the function to create the necessary layer structure
         
-
-
     #Creat instances
 
         self.setupUi(self)
@@ -134,6 +133,32 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         # Initialize WindowManager with this window
         self.window_manager = WindowManager(self)
+
+        # Initialize ReturnPressedManager
+        self.return_pressed_manager = ReturnPressedManager(self)
+        
+
+        
+        startup_frames = [self.leftMenuContainer, self.rightMenuContainer, self.frAgreements,self.swWorkSpace]
+        # Setup connections for existing QLineEdit widgets
+        label_callbacks = {
+            'isSelectedCadaster': self.start_propertie_search,
+            'lePassword': lambda: self.save_user_data(startup_frames),
+            'leUsername': self.activate_line_edit,
+            'le_searchContracts': lambda: self.universalSearchWrapper(Modules.MODULE_CONTRACTS),
+            'le_searchProjects': lambda: self.universalSearchWrapper(Modules.MODULE_PROJECTS),
+            'leSearcheasements': lambda: self.universalSearchWrapper(Modules.MODULE_EASEMENTS),
+            'leText_For_Sync_GreateLayerName': self.generate_virtual_mapLayer_synced_with_Mailabl
+        }
+
+        self.return_pressed_manager.setup_connections(label_callbacks)
+
+        # Initialize custom event filter and set button focus policy
+        self.custom_event_filter = BlockButtonsToPreferLabelEventFilter(self)
+        self.custom_event_filter.set_button_focus_policy()
+
+        # Install event filter on the main window
+        self.installEventFilter(self.custom_event_filter)
 
 
         self.sw_HM.setCurrentIndex(0)
@@ -182,8 +207,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     
         self.set_layer_settings_labels()
         
-        startup_frames = [self.leftMenuContainer, self.rightMenuContainer, self.frAgreements,self.swWorkSpace]
-        
     #setup login dialog and hide frames to block functionality!
         self.on_load(startup_frames)
         
@@ -206,7 +229,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     #Confirm password entering
         self.pbUC_Save.clicked.connect(lambda: self.save_user_data(startup_frames))
-        
+
+        # Set focus policy for all buttons
+
         #if self.lePassword.hasFocus():
         #    self.lePassword.returnPressed.connect(lambda: self.save_user_data(startup_frames))
         #else:
@@ -311,7 +336,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.pbDelete_items_getCounty.clicked.connect(self.get_Mailabl_existing_counties)
         
 
-        self.search_engine = ModularSearchEngine()
         self.pbSearchProjects.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_PROJECTS))
         self.pbSearchContracts.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_CONTRACTS))
         self.pbSearcheasements.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_EASEMENTS))
@@ -374,10 +398,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbDisconnect.setEnabled(False)
         self.pbOpenProperty.clicked.connect(self.open_properties_item_in_mylabl)
 
-
         self.pbCadastralSearch.clicked.connect(self.start_propertie_search)
 
-        self.main_window_toggle_option()
+
+    def on_label_return_pressed(self):
+        # Identify which label sent the signal
+        sender = self.sender()
+        if isinstance(sender, QLineEdit):
+            self.start_propertie_search()
+
 
     def start_propertie_search(self):
         engine = SearchProperties()
@@ -403,6 +432,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         )
 
         tool_feature.for_search_results()
+
+        self.main_window_toggle_option()
         
 
     def main_window_toggle_option(self):
@@ -602,8 +633,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbGenProjectFolder.blockSignals(False)
 
 ########################################################################
-    def universalSearchWrapper(self, module_name):        
-        self.search_engine.universalSearch(self, module_name)
+    def universalSearchWrapper(self, module_name): 
+        search_engine = ModularSearchEngine()       
+        search_engine.universalSearch(self, module_name)
 
     def limitedLoad(self):
         table = self.tblMailabl_projects
@@ -1176,6 +1208,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     #creditentials handling
     def remove_UC_data(self):
         clear_UC_data()
+
+    def activate_line_edit(self):
+        # Activate the QLineEdit for user input
+        lePassword = self.lePassword
+        lePassword.setFocus()
+        lePassword.setCursorPosition(0)  # Set cursor position at the beginning
 
     def save_user_data(self, frames):
         username = save_user_name(self)

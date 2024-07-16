@@ -69,9 +69,8 @@ class SearchProperties:
     def search_for_item(self, label):
         self.setup_layer()
     
-
-        # Get the label text value
-        label_text = label.text() if hasattr(label, 'text') else str(label)
+        # Get the label text value and convert it to lowercase
+        label_text = label.text().lower() if hasattr(label, 'text') else str(label).lower()
 
         # Create the search expression
         search_expression = QgsExpression(f"\"search_field\" LIKE '%{label_text}%'")
@@ -105,7 +104,7 @@ class SearchProperties:
         
         # Zoom to the selected feature
         iface.mapCanvas().zoomToSelected(self.layer)
-        
+                
         print(f"Found with tunnus: {tunnus_value}")
         return tunnus_value, feature
     

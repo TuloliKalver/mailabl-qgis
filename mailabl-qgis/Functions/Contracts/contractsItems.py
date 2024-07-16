@@ -136,8 +136,8 @@ class ContractsMain:
             print(f"{heading}, {text}")
 
     def search_contracts (self, query, table):
-
         result = ContractsSearch.contracts_search_results(self, query)
+        print (f"contract search results : {result}")
 
         if result is not None:
             con_model, header_labels = result
@@ -169,94 +169,6 @@ class ContractsMain:
                 # Call build_mailabl_link_button method
                 webButton_Column_index = ModelHandler.build_mailabl_link_button(con_model, row_index, header_labels)
 
-            module = MailablWebModules().contracts
-            DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
-
-            table.setModel(con_model)
-            # Set the row height to 20 pixels
-            table.verticalHeader().setDefaultSectionSize(20)
-                
-            # Define the columns to hide
-            columns_to_hide = [color_column_index, dokAddress_column_index, ]
-            # Hide the specified columns
-            for column_index in columns_to_hide:
-                table.hideColumn(column_index)
-
-            resizes = ColumnResizer(table)
-            columns_to_resize = [number_column_index, date_column_index, responsible_column_index, status_column_index]
-            for column_index in columns_to_resize:
-                resizes.resizeColumnByIndex(table, column_index)
-                
-            columns_width_icons = [ID_column_index, name_column_index, cadastral_column_index,
-                                webButton_Column_index, dokButton_column_index, 
-                                cadastralButton_Column_index]
-            column_widths = [0,250,0,10,10,10]
-            resizes.setColumnWidths(table, columns_width_icons, column_widths)
-            # Hide certain column labels
-            newLabel_for_cadastral = ""  # Replace with your actual column labels
-            newLabel_documents = ""
-            newLabel_Link = ""
-            #newLabel_ID = ""
-            newLabel_CadastralShow = ""
-            #con_model.setHorizontalHeaderItem(ID_column_index, QStandardItem(newLabel_ID))
-            con_model.setHorizontalHeaderItem(cadastral_column_index, QStandardItem(newLabel_for_cadastral))
-            con_model.setHorizontalHeaderItem(dokButton_column_index, QStandardItem(newLabel_documents))
-            con_model.setHorizontalHeaderItem(webButton_Column_index, QStandardItem(newLabel_Link))
-            con_model.setHorizontalHeaderItem(cadastralButton_Column_index, QStandardItem(newLabel_CadastralShow))
-            table.verticalHeader().setVisible(False)
-            # Set selection behavior to select entire rows
-            table.setSelectionBehavior(QTableView.SelectRows)
-            # Set selection mode to single selection
-            table.setSelectionMode(QTableView.SingleSelection)
-
-            # Set sorting behavior
-            table.setSortingEnabled(True)
-            # Trigger a refresh of the view to reflect the changes
-            table.update()  # Refresh the view
-
-        else:            
-            text = HoiatusTexts().ostingu_tulemused_puuduvad
-            heading = Headings().warningSimple
-            print(f"{heading}, {text}")
-    
-    def load_contracts_list_with_zoomed_map_elements(self, table):
-
-        layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        selected_features = visibleSelector.get_visible_features(layer_name)
-        if len(selected_features) < 500:
-
-            result = ContractsSearch.query_contracts_for_zoomed_elements(self, selected_features)
-
-            if result is not None:
-                con_model, header_labels = result
-
-                table_headers = queryHandling()
-                
-                number_column_index = header_labels.index(table_headers.header_number)
-                name_column_index = header_labels.index(table_headers.header_name)
-                #LP_ID_column_index = header_labels.index(table_headers.header_parent_id)
-                responsible_column_index = header_labels.index(table_headers.header_responsible)        
-                ID_column_index = header_labels.index(table_headers.header_id)
-
-                for row_index in range(con_model.rowCount()):
-                    con_model.item(row_index, ID_column_index)
-
-                    number_item =  con_model.item(row_index, number_column_index)
-                    responsible_item = con_model.item(row_index,responsible_column_index)   
-                    
-                    number_item.setTextAlignment(Qt.AlignCenter)  
-                    responsible_item.setTextAlignment(Qt.AlignCenter)
-
-                    date_column_index = ModelHandler.format_date_item(con_model, row_index, header_labels)
-
-                    status_column_index, color_column_index = ModelHandler.set_status_item_colors_from_model(con_model, row_index, header_labels)
-                    # Call format_cadastral_item method
-                    cadastral_column_index, cadastralButton_Column_index = ModelHandler.format_cadastral_item(con_model, row_index, header_labels)
-                    # Call format_dok_item method
-                    dokAddress_column_index, dokButton_column_index = ModelHandler.format_dok_item(con_model, row_index, header_labels)
-                    # Call build_mailabl_link_button method
-                    webButton_Column_index = ModelHandler.build_mailabl_link_button(con_model, row_index, header_labels)
-
                 module = MailablWebModules().contracts
                 DelegatesForTables.setup_delegates_by_module(table, header_labels, module)
 
@@ -265,7 +177,7 @@ class ContractsMain:
                 table.verticalHeader().setDefaultSectionSize(20)
                     
                 # Define the columns to hide
-                columns_to_hide = [color_column_index, dokAddress_column_index, ]
+                columns_to_hide = [color_column_index, dokAddress_column_index]
                 # Hide the specified columns
                 for column_index in columns_to_hide:
                     table.hideColumn(column_index)
@@ -306,7 +218,8 @@ class ContractsMain:
                 text = HoiatusTexts().ostingu_tulemused_puuduvad
                 heading = Headings().warningSimple
                 print(f"{heading}, {text}")
-
+                QMessageBox.information(None, heading, text)
+    
 class queryHandling:
     def __init__(self):
         self.header_id = header_id
@@ -450,7 +363,6 @@ class ContractsSearch:
     def contracts_search_results(self, contract_number):
         # Set header labels
         header_labels = [header_id, header_number, header_name, header_deadline, header_responsible, header_color, header_property_number, header_properties_icon,header_webLinkButton, header_Documents, header_file_path,  header_statuses]
-       
        
         data = ContractsSearch.query_contracts_by_number(self, contract_number)
         df_data = []
