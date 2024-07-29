@@ -4,6 +4,7 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QTableWidgetItem
 
 from ..Functions.Tools import tableFunctions, propertyUsages
+from ..Functions.Searchpropertyfromlayer import SearchProperties
 from ..queries.python.property_data import add_properties
 from ..config.settings import SettingsDataSaveAndLoad
 
@@ -82,7 +83,7 @@ class Add_Properties_final:
             property_id = add_properties.add_single_property_item(self, each_data)
             #print(f"property_id in 'input item to Mailabl loop {property_id}")
             intended_usages = propertyUsages.extract_intendedUse_data(self, index, table)
-            #print(f"intended_usages in 'input item to Mailabl loop {intended_usages}")
+            print(f"intended_usages in 'input item to Mailabl loop {intended_usages}")
             
             #for intended_use in intended_usages:   
             #print(f"fintended use: {intended_use}")  

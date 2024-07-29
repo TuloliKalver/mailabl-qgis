@@ -27,7 +27,7 @@ class properties_selectors:
         selected_feature_ids = []
         #printt(f"selected feature ids before  {selected_feature_ids}")
         for feature in layer.getFeatures():
-            if feature["TUNNUS"] in values:
+            if feature[Katastriyksus.tunnus] in values:
                 selected_feature_ids.append(feature.id())
         #print(f"selected_features_ids: {selected_feature_ids}")
         layer.selectByIds(selected_feature_ids)
@@ -50,7 +50,7 @@ class properties_selectors:
         selected_feature_ids = []
         #print(f"selected feature ids before  {selected_feature_ids}")
         for feature in layer.getFeatures():
-            if feature["TUNNUS"] in values:
+            if feature[Katastriyksus.tunnus] in values:
                 selected_feature_ids.append(feature.id())
         print(f"selected_features_ids: {selected_feature_ids}")
         layer.selectByIds(selected_feature_ids)
@@ -73,7 +73,7 @@ class properties_selectors:
         selected_feature_ids = []
         #print(f"selected feature ids before  {selected_feature_ids}")
         for feature in input_layer.getFeatures():
-            if feature["TUNNUS"] in values:
+            if feature[Katastriyksus.tunnus] in values:
                 selected_feature_ids.append(feature.id())
         #print(f"selected_features_ids: {selected_feature_ids}")
         input_layer.selectByIds(selected_feature_ids)
@@ -124,7 +124,7 @@ class properties_selectors:
         #start_time = time.time()  # Start the timer
         for feature in layer.getFeatures():
             #print(f"feature in get features in 'For_Base_layer_show_connected_cadasters' {feature}")
-            if feature["TUNNUS"] in values:
+            if feature[Katastriyksus.tunnus] in values:
                 selected_feature_ids.append(feature.id())
                 QCoreApplication.processEvents()
         #end_time = time.time()  # End the timer
@@ -177,7 +177,7 @@ class properties_selectors:
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         layer.removeSelection()
         QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(True)
-        state_name_field = 'OV_NIMI'
+        state_name_field = Katastriyksus.ov_nimi
         #county_restriction = "', '".join(selected_county_item_text)
         expression = f"{state_name_field} IN ('{selected_state_item_text}')"
         print(f"Expression: {expression}")

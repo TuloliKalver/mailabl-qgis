@@ -11,7 +11,7 @@ from ...utils.window_manager import WindowManager, WindowManagerMinMax
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, OldKatastriyksus
 
 class FeatureInfoTool:
-    def __init__(self, label, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget, reset_timer, main_window):
+    def __init__(self, label, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget, reset_timer, main_window, pbOProperty):
         self.layer = None
         self.label = label
         self.lblRegistry = lblRegistry
@@ -27,7 +27,8 @@ class FeatureInfoTool:
         self.window_manager = WindowManager(self.main_window)
         self.window_manager_minMax = WindowManagerMinMax(self.main_window)
         self.setup_layer()
-        self.katastriyksus = OldKatastriyksus()
+        self.katastriyksus = Katastriyksus()
+        self.pbOProperty = pbOProperty
 
     
 
@@ -64,7 +65,7 @@ class FeatureInfoTool:
         
         else:    
             # Initialize Katastriyksus instance
-            katastriyksus = OldKatastriyksus()
+            katastriyksus = Katastriyksus()
             
             # Define a list of field names
             field_names = [
@@ -92,14 +93,14 @@ class FeatureInfoTool:
             for field_name in field_names:
                 field_index = FeatureInfoTool.find_field_index(self.layer, field_name)
                 field_indices[field_name] = field_index
-                print(f"Index for {field_name}: {field_index}")
+                #print(f"Index for {field_name}: {field_index}")
 
             # Extract and print the data from selected features
             feature_data = {}
             for field_name, field_index in field_indices.items():
                 feature_data[field_name] = [str(feature.attribute(field_index)) for feature in selected_features]
                 feature_data[field_name] = ", ".join(feature_data[field_name])
-                print(f"{field_name} data of selected features: {feature_data[field_name]}")
+                #print(f"{field_name} data of selected features: {feature_data[field_name]}")
             
             if feature_data:
                 # Extract values into variables
@@ -115,6 +116,7 @@ class FeatureInfoTool:
                 self.label.setText("Oih midgai läks valesti")
             QCoreApplication.processEvents()
 
+            self.pbOProperty.setEnabled(True)        
             return tunnus_value
 
     def set_values_to_labels(self, feature_data):
@@ -124,6 +126,8 @@ class FeatureInfoTool:
 
         area_value = feature_data.get(self.katastriyksus.pindala,'')
         self.lblarea.setText(f"{area_value}")
+        QCoreApplication.processEvents()
+
         return tunnus_value
 
     def set_dates(self, feature_data):
@@ -237,10 +241,11 @@ class FeatureInfoTool:
 
 
 class FeatureInfoToolSearch:
-    def __init__(self, window):
-        self.window = window
+#    def __init__(self, window):
+#        self.window = window
 
-    def __init__(self, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget):
+    def __init__(self, window, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget, property_button):
+        self.window = window
         self.lblRegistry = lblRegistry
         self.lblCadastralNr = lblCadastralNr
         self.lbladdress = address 
@@ -249,7 +254,8 @@ class FeatureInfoToolSearch:
         self.lblcreated_at = created_at
         self.lblupdated_at = updated_at
         self.lbltreewidget = treeWidget
-        self.katastriyksus = OldKatastriyksus()
+        self.katastriyksus = Katastriyksus()
+        self.property_button = property_button
 
     def for_search_results(self):
         
@@ -266,7 +272,7 @@ class FeatureInfoToolSearch:
         selected_features = [layer.getFeature(int(fid)) for fid in selected]
 
         # Initialize Katastriyksus instance
-        katastriyksus = OldKatastriyksus()
+        katastriyksus = Katastriyksus()
         
         # Define a list of field names
         field_names = [
@@ -312,7 +318,7 @@ class FeatureInfoToolSearch:
             # This is possible if cell coloring can be implemented
             
         QCoreApplication.processEvents()
-
+        self.property_button.setEnabled(True)
         return tunnus_value
 
 

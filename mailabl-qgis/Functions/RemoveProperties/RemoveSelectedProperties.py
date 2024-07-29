@@ -10,6 +10,7 @@ from ..delete_items import Delete_finalProcess, Delete_Main_Process
 from ...queries.python.property_data import PropertiesGeneralQueries, deleteProperty
 from ...config.settings import SettingsDataSaveAndLoad
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 pealkiri = Headings()
 class DeleteActions:
@@ -24,7 +25,7 @@ class DeleteActions:
         table_streets = self.tbl_Delete_streets
         table_target = self.tblvAllDeletable
         tab_widget = self.tabW_Delete_list
-        field = "TUNNUS"
+        field = Katastriyksus.tunnus
         
         data = tableFunctions.RemoveNonSelectedRowsFromTable(self, table_properties)
         data2 = tableFunctions.RemoveNonSelectedRowsFromTable(self, table_streets)
@@ -60,10 +61,10 @@ class DeleteActions:
             model_streets.clear()
             #print("models cleared!")
             properties = DataExtractors.ExtractCadastralNrDataFromModel(model,header_names)
-            #print(f"Returned properties {properties}")
+            print(f"Returned properties {properties}")
             ToBe_deleted_properties, cadasters = PropertiesGeneralQueries.get_properties_MyLabl_idsAndCadastrals(self, properties)
-            #print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
-            #print(f"To be deleted properties: {len(cadasters)}")
+            print(f"To be deleted properties: {len(ToBe_deleted_properties)}")
+            print(f"To be deleted properties: {len(cadasters)}")
             
 
         if len(cadasters) == 0:

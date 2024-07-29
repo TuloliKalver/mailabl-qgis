@@ -60,7 +60,7 @@ from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool, FeatureI
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
 from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
-from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, RemapPropertiesLayer
 from .utils.window_manager import WindowManager, WindowManagerMinMax
 from .utils.custom_event_filter import BlockButtonsToPreferLabelEventFilter, ReturnPressedManager
 from .Functions.Searchpropertyfromlayer import SearchProperties
@@ -154,10 +154,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.custom_event_filter = BlockButtonsToPreferLabelEventFilter(self)
         self.custom_event_filter.set_button_focus_policy()
 
-
         self.setup_timer()
         Startup.FirstLoad(self)
-
 
         # Install event filter on the main window
         self.installEventFilter(self.custom_event_filter)
@@ -402,6 +400,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pbCadastralSearch.clicked.connect(self.start_propertie_search)
 
+        self.main_window_toggle_option()
+        self.pbOpenProperty.setEnabled(False)
+        self.pbtest.setVisible(False)
 
     def on_label_return_pressed(self):
         # Identify which label sent the signal
@@ -413,30 +414,34 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def start_propertie_search(self):
         engine = SearchProperties()
         label = self.isSelectedCadaster
-        engine.search_for_item(label=label)
-        address = self.lblAddress_value
-        purpose = self.lblPurpose_value
-        area = self.lblArea_value
-        created_at = self.CreatedAt_value
-        updated_at = self.UpdatedAt_value
-        treeWidget = self.treeWidget
-        lblRegistryNr = self.RegistryNr_value
-        lblCadastralNr = self.CadasterNr_value
-        tool_feature = FeatureInfoToolSearch(
-            lblCadastralNr=lblCadastralNr,
-            lblRegistry= lblRegistryNr,
-            address=address,
-            purpose=purpose,
-            area=area,
-            created_at=created_at,
-            updated_at=updated_at,
-            treeWidget=treeWidget
-        )
+        result = engine.search_for_item(label=label)
+        if result is None:
+            return
+        else:
+            address = self.lblAddress_value
+            purpose = self.lblPurpose_value
+            area = self.lblArea_value
+            created_at = self.CreatedAt_value
+            updated_at = self.UpdatedAt_value
+            treeWidget = self.treeWidget
+            lblRegistryNr = self.RegistryNr_value
+            lblCadastralNr = self.CadasterNr_value
+            open_cadastral_button = self.pbOpenProperty
+            tool_feature = FeatureInfoToolSearch(
+                window=self,
+                lblCadastralNr=lblCadastralNr,
+                lblRegistry= lblRegistryNr,
+                address=address,
+                purpose=purpose,
+                area=area,
+                created_at=created_at,
+                updated_at=updated_at,
+                treeWidget=treeWidget,
+                property_button=open_cadastral_button
+            )
 
-        tool_feature.for_search_results()
+            tool_feature.for_search_results()
 
-        self.main_window_toggle_option()
-        
 
     def main_window_toggle_option(self):
         label_for_toggle = self.ToggleStatus
@@ -502,6 +507,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         treeWidget = self.treeWidget
         lblRegistryNr = self.RegistryNr_value
         lblCadastralNr = self.CadasterNr_value
+        pbOProperty = self.pbOpenProperty
         global feature_tool  # Use global variable to keep reference
         
         # Initialize WindowManager with this window
@@ -519,7 +525,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             updated_at=updated_at,
             treeWidget=treeWidget,
             reset_timer=lambda: self.reset_timer(),
-            main_window = self
+            main_window = self,
+            pbOProperty= pbOProperty
         )
         self.pbDisconnect.setEnabled(True)
         self.timer.start()
@@ -1596,19 +1603,21 @@ class ConnectPropertiesModuleButtons:
 class ConnectSettingsButtons:
     def button_controller(self):
         button_greate_EVEL = getattr(self, 'pbGreateEVEL', None)
-        test_button = getattr(self, 'pbtest', None)
+        #test_button = getattr(self, 'pbtest', None)
+        update_dataframe = getattr(self, 'pbUpdateToNewDataframe',None)
         # Define lambdas to connect buttons to functions
 
         button_functions = {
             button_greate_EVEL: lambda: EVELTools.load_widget(self),
-            test_button: lambda: EVELTools.load_widget(self),
+            #test_button: lambda: EVELTools.load_widget(self),
+            update_dataframe: lambda: RemapPropertiesLayer().update_attribute_table()
         }
        # Connect buttons to functions
         for button, function in button_functions.items():
             PropertiesConnector.connect_button(button, function)
         
        # Populate the buttons list
-        buttons = [button_greate_EVEL, test_button]
+        buttons = [button_greate_EVEL] #, test_button]
 
 
         return buttons

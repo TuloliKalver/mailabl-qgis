@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
-
+from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 class CombineModels:
     @staticmethod
@@ -64,7 +64,7 @@ class DataExtractors:
     def ExtractCadastralNrDataFromModel(model: QStandardItemModel, header_data: list) -> list:
         units = []
         # Define column names
-        cadastral_column_name = "TUNNUS"
+        cadastral_column_name = Katastriyksus.tunnus
         # Get the column indexes based on column names
         cadastral_number_index = header_data.index(cadastral_column_name) if cadastral_column_name in header_data else -1
         # Retrieve property data from the selected row's columns
@@ -85,7 +85,7 @@ class DataExtractors:
     
     @staticmethod
     def CadasterMatcher(cadastral_unit: str ,model: QStandardItemModel, header_data: list) ->None:
-        cadastral_column_name = "TUNNUS"
+        cadastral_column_name = Katastriyksus.tunnus
         # Get the column indexes based on column names
         cadastral_number_index = header_data.index(cadastral_column_name) if cadastral_column_name in header_data else -1
         #if cadastral_number_index == -1:

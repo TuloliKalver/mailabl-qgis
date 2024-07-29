@@ -1,12 +1,15 @@
 import os
 
 from qgis.core import QgsVectorLayer, QgsProject, QgsCoordinateReferenceSystem, QgsVectorFileWriter, QgsFeature
+from qgis.core import QgsFeature, QgsExpression, QgsExpressionContext, QgsExpressionContextUtils
+
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
 from ..config.settings import Filepaths, FilesByNames, connect_settings_to_layer
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
- 
+from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+
 pealkiri = Headings()
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -250,7 +253,6 @@ class LayerCopier():
             # Create a new feature for the target layer
             #print(f"Loop {loop}")
             new_feature = QgsFeature(target_layer.fields())
-
             # Set data for each field from the source feature to the target feature
             for field in target_layer.fields():
                 field_name = field.name()
@@ -261,9 +263,38 @@ class LayerCopier():
             # Set geometry for the target feature
             new_feature.setGeometry(source_feature.geometry())
 
+            # Evaluate and set the 'search_field' value
+            context = QgsExpressionContext()
+            context.appendScopes(QgsExpressionContextUtils.globalProjectLayerScopes(target_layer))
+            context.setFeature(new_feature)
+
+
+            katastriyksus = Katastriyksus()
+
+            self.search_field = 'search_field'
+            # Define a list of field names
+            field_names = [
+                katastriyksus.tunnus,
+                katastriyksus.l_aadress,
+                katastriyksus.ay_nimi,
+                katastriyksus.ov_nimi,
+                katastriyksus.mk_nimi,
+            ]
+
+            # Assuming 'field_names' is a list of field names to concatenate for the search field
+            virtual_field_expression = " || ' ' || ".join([f"lower({name})" for name in field_names])
+            expression = QgsExpression(virtual_field_expression)
+
+
+            if not expression.hasParserError():
+                value = expression.evaluate(context)
+                # Update the "search_field" attribute
+                new_feature[self.search_field] = value
+            else:
+                print(f"Error parsing expression: {expression.parserErrorString()}")
+
             # Add the new feature to the target layer
             target_layer.addFeature(new_feature)
-
             count +=1
             progress_bar.setValue(count)
             QCoreApplication.processEvents()

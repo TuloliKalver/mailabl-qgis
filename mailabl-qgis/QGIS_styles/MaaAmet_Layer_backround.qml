@@ -68,7 +68,7 @@
     <rotation/>
     <sizescale/>
     <orderby>
-      <orderByClause asc="1" nullsFirst="0">"TUNNUS"</orderByClause>
+      <orderByClause asc="1" nullsFirst="0">"tunnus"</orderByClause>
     </orderby>
   </renderer-v2>
   <selection mode="Default">
@@ -109,7 +109,7 @@
   </selection>
   <labeling type="simple">
     <settings calloutType="simple">
-      <text-style fontLetterSpacing="0" fontUnderline="0" fieldName="TUNNUS" namedStyle="Regular" fontSize="10" fontWordSpacing="0" multilineHeightUnit="Percentage" blendMode="0" legendString="Aa" forcedBold="0" textOpacity="0.90000000000000002" capitalization="0" fontWeight="50" fontSizeUnit="Point" forcedItalic="0" fontItalic="0" textOrientation="horizontal" textColor="0,0,0,255" previewBkgrdColor="255,255,255,255" fontFamily="Arial" multilineHeight="1" useSubstitutions="0" fontStrikeout="0" fontKerning="1" allowHtml="0" isExpression="0" fontSizeMapUnitScale="3x:0,0,0,0,0,0">
+      <text-style fontLetterSpacing="0" fontUnderline="0" fieldName="tunnus" namedStyle="Regular" fontSize="10" fontWordSpacing="0" multilineHeightUnit="Percentage" blendMode="0" legendString="Aa" forcedBold="0" textOpacity="0.90000000000000002" capitalization="0" fontWeight="50" fontSizeUnit="Point" forcedItalic="0" fontItalic="0" textOrientation="horizontal" textColor="0,0,0,255" previewBkgrdColor="255,255,255,255" fontFamily="Arial" multilineHeight="1" useSubstitutions="0" fontStrikeout="0" fontKerning="1" allowHtml="0" isExpression="0" fontSizeMapUnitScale="3x:0,0,0,0,0,0">
         <families/>
         <text-buffer bufferSizeUnits="MM" bufferNoFill="1" bufferOpacity="1" bufferBlendMode="0" bufferJoinStyle="128" bufferSize="1" bufferSizeMapUnitScale="3x:0,0,0,0,0,0" bufferDraw="0" bufferColor="250,250,250,255"/>
         <text-mask maskOpacity="1" maskSizeUnits="MM" maskSizeMapUnitScale="3x:0,0,0,0,0,0" maskJoinStyle="128" maskSize="0" maskEnabled="0" maskType="0" maskedSymbolLayers=""/>

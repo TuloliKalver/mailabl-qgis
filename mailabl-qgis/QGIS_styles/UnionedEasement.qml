@@ -106,7 +106,7 @@
     <rotation/>
     <sizescale/>
     <orderby>
-      <orderByClause nullsFirst="0" asc="1">"TUNNUS"</orderByClause>
+      <orderByClause nullsFirst="0" asc="1">"tunnus"</orderByClause>
     </orderby>
   </renderer-v2>
   <selection mode="Default">

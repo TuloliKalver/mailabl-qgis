@@ -649,7 +649,7 @@ class add_properties:
             if response.status_code != 200:
                 raise Exception("GraphQL request failed")
             # Get the ID of the deleted property
-            added_input = response.json()#["data"]["deleteProperty"]["id"]
+            added_input = response.json()
             print(f"inserted item {added_input}")
 
     @staticmethod

@@ -1,5 +1,12 @@
+from qgis.utils import iface
+from qgis.core import QgsVectorLayer, QgsProject, QgsField
+from PyQt5.QtCore import QVariant
+from PyQt5.QtWidgets import QMessageBox
+from ..config.settings import SettingsDataSaveAndLoad
+
+
 class Katastriyksus:
-    #fid = "fid"                # Baasis olev id
+    #fid = "fid"               # Baasis olev id
     tunnus = "tunnus"          # Katastriüksuse tunnus
     hkood = "hkood"            # Asustusüksuse kood
     mk_nimi = "mk_nimi"        # Maakonna nimetus
@@ -21,14 +28,15 @@ class Katastriyksus:
     ouemaa = "ouemaa"          # Õuemaa kõlvik
     muumaa = "muumaa"          # Muu maa kõlvik
     kinnistu = "kinnistu"      # Kinnistu registriosa number
-    #muutpohjus = "muutpohjus"  # Katatastriüksuse viimane muudatus   new
+    #muutpohjus = "muutpohjus" # Katatastriüksuse viimane muudatus   new
     omvorm = "omvorm"          # Katastriüksuse omandivorm  
     maks_hind = "maks_hind"    # Maatüki maksustamishind
     marked = "marked"          # Katastriüksuse märked
     #ads_oid = "ads_oid"        # ADS objekti identifikaator, identifitseerib objekti läbi versioonide. new
     #adob_id = "adob_id"        # Aadressiobjekti versiooni unikaalne identifikaator (unikaalne üle kõikide objektide kõikide versioonide).   new
     #oiguslik_alus = "oiguslik_alus"  # Katastriüksuse viimase muudatuse õiguslik alus  new
-    #eksport = "eksport"        # Andmete väljavõtte kuupäev  new
+    eksport = "eksport"        # Andmete väljavõtte kuupäev
+
 
 class OldKatastriyksus:
     tunnus = "TUNNUS"                            # Katastriüksuse tunnus
@@ -60,7 +68,8 @@ class OldKatastriyksus:
     #Registreerimisviis = "OMVIIS"               # Katastriüksuse registreerimise viis   new
     omvorm = "OMVORM"                            # Katastriüksuse omandivorm
     maks_hind = "MAKS_HIND"                      # Maa-ameti arvutatud maaüksuse maksustamishind €
-    marked = "MARKETEKST"                        # Katastriüksuse märked
+    marked = "MARKETEKST"
+    eksport = "EKSPORT"                        # Katastriüksuse märked
 
 class KatasterMappings:
     # Field mapping between OldKatastriyksus and Katastriyksus
@@ -88,5 +97,123 @@ class KatasterMappings:
         OldKatastriyksus.kinnistu: Katastriyksus.kinnistu,
         OldKatastriyksus.omvorm: Katastriyksus.omvorm,
         OldKatastriyksus.maks_hind: Katastriyksus.maks_hind,
-        OldKatastriyksus.marked: Katastriyksus.marked
+        OldKatastriyksus.marked: Katastriyksus.marked,
+        OldKatastriyksus.eksport: Katastriyksus.eksport
     }
+
+
+
+class RemapPropertiesLayer:
+    def __init__(self):
+        self.active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        self.layer = self.get_layer_by_name(self.active_layer_name)
+        self.field_mapping = KatasterMappings.field_mapping
+
+    def get_layer_by_name(self, layer_name):
+        layer = QgsProject.instance().mapLayersByName(layer_name)
+        if not layer:
+            raise ValueError(f"No layer found with the name {layer_name}")
+        return layer[0]
+
+    def validate_layer(self):
+        if not isinstance(self.layer, QgsVectorLayer):
+            raise ValueError("Expected a QgsVectorLayer object.")
+
+    def update_attribute_table(self):
+        self.validate_layer()
+        iface.setActiveLayer(self.layer)
+        
+        self.layer.startEditing()
+        layer_fields = self.layer.fields()
+        temp_field_mapping = self.rename_fields_temporarily(layer_fields)
+        self.rename_fields_to_final(layer_fields, temp_field_mapping)
+        
+        if self.layer.commitChanges():
+            #print("Stage I committed successfully.")
+            pass
+        else:
+            self.show_message("Viga", "Veeru nimede uuendamisel tekkis viga.")
+            #print("Error committing changes.")
+            return
+        
+        self.remove_temp_suffix()
+        self.add_missing_fields()
+
+
+    def rename_fields_temporarily(self, layer_fields):
+        temp_field_mapping = {}
+        for old_field, new_field in self.field_mapping.items():
+            if layer_fields.indexFromName(old_field) != -1:
+                temp_name = new_field + '_temp'
+                idx = layer_fields.indexFromName(old_field)
+                self.layer.renameAttribute(idx, temp_name)
+                temp_field_mapping[temp_name] = new_field
+                #print(f"Temporarily renamed field {old_field} to {temp_name}")
+        return temp_field_mapping
+
+    def rename_fields_to_final(self, layer_fields, temp_field_mapping):
+        for temp_name, new_field in temp_field_mapping.items():
+            if layer_fields.indexFromName(temp_name) != -1:
+                idx = layer_fields.indexFromName(temp_name)
+                self.layer.renameAttribute(idx, new_field)
+                #print(f"Renamed field {temp_name} to {new_field}")
+
+    def add_missing_fields(self):
+        self.layer.startEditing()
+
+        new_fields = {
+            "muutpohjus": ("muutpohjus", QVariant.String, 200, "Katatastriüksuse viimane muudatus"),
+            "ads_oid": ("ads_oid", QVariant.String, 200, "ADS objekti identifikaator, identifitseerib objekti läbi versioonide."),
+            "adob_id": ("adob_id", QVariant.Int, 0, "Aadressiobjekti versiooni unikaalne identifikaator (unikaalne üle kõikide objektide kõikide versioonide)."),
+            "oiguslik_alus": ("oiguslik_alus", QVariant.String, 1000, "Katastriüksuse viimase muudatuse õiguslik alus"),
+                    }
+
+        for field_name, (field_alias, field_type, field_length, field_comment) in new_fields.items():
+#            if layer_fields.indexFromName(field_name) == -1:
+            new_field = QgsField(field_name, field_type, "", field_length)
+            self.layer.addAttribute(new_field)
+
+        if self.layer.commitChanges():
+            self.show_message("Info","Väljad edukalt uuendatud")
+            #print("Stage I committed successfully.")
+            pass
+        else:
+            self.show_message("Viga", "Veergude lisamisel tekkis viga.")
+            #print("Error committing changes.")
+            return
+
+
+
+
+    def remove_temp_suffix(self):
+        self.validate_layer()
+
+        self.layer.startEditing()
+        #print("Layer editing started.")
+
+        layer_fields = self.layer.fields()
+        #print(f"Current Fields: {layer_fields.names()}")
+
+        for field in layer_fields:
+            if '_temp' in field.name():
+                new_name = field.name().replace('_temp', '')
+                idx = layer_fields.indexFromName(field.name())
+                self.layer.renameAttribute(idx, new_name)
+                #print(f"Renamed field {field.name()} to {new_name}")
+
+        if self.layer.commitChanges():
+            #print("Changes committed successfully.")
+            pass
+        else:
+            #print("Error committing changes.")
+            self.layer.rollBack()
+
+        #print("Finished cleaning up temporary field names.")
+
+    @staticmethod
+    def show_message(title, message):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.exec_()

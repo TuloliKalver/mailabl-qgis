@@ -1,13 +1,10 @@
-import re
-from PyQt5.QtCore import QDate, QCoreApplication, QTimer
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QInputDialog
+from PyQt5.QtWidgets import QMessageBox, QInputDialog
 from qgis.core import (QgsProject, QgsVectorLayer, QgsExpression, QgsExpressionContext, 
                        QgsExpressionContextUtils, QgsField, QgsFeatureRequest, QgsFeature)
 from qgis.PyQt.QtCore import QVariant
 from qgis.utils import iface
 from ..config.settings import SettingsDataSaveAndLoad
-from ..utils.window_manager import WindowManager, WindowManagerMinMax
-from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, OldKatastriyksus
+from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 class SearchProperties:
 
@@ -26,7 +23,7 @@ class SearchProperties:
 
     def add_search_field(self):
         # Initialize Katastriyksus instance
-        katastriyksus = OldKatastriyksus()
+        katastriyksus = Katastriyksus()
 
         self.search_field = 'search_field'
         # Define a list of field names

@@ -142,7 +142,10 @@ class MyTreeHome:
                         child_item.setText(1, child.get("title",""))
                     else:
                         child_item.setText(1, child.get("name",""))
-                        child_item.setText(0, str(child["number"]))
+                        number = child.get("number", "")  # Get the number, default to empty string
+                        if number == None:
+                            number = ""
+                        child_item.setText(0, str(number))
                         path = child.get("filesPath", "")
                         #print(f"insert path: {path}")
                         child_item.setData(5, Qt.UserRole, path )  # Use .get() to avoid KeyError
@@ -175,6 +178,8 @@ class MyTreeHome:
 
         # Expand all items to make sure they are visible
         treeWidget.expandAll()
+        QCoreApplication.processEvents()
+
 
     def set_clickable_webIcon(tree_item, column):
         # Replace with your logic to get the icon path based on link type or preference

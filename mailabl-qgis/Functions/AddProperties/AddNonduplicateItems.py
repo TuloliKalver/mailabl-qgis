@@ -13,7 +13,8 @@ from PyQt5.QtWidgets import QAbstractItemView
 from ...Functions.add_items import Add_Properties_final
 from ...Functions.layer_generator import LayerCopier
 from ...KeelelisedMuutujad.messages import Headings
- 
+from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus 
+
 pealkiri = Headings()
 
 table_data = tableFunctions
@@ -26,7 +27,9 @@ class AddProperties:
     def check_for_duplicates_and_add_only_matches(self):
         # Load necessary layers and prepare setup
         active_cadastral_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        print(f"active layer: {active_cadastral_layer_name}")
         input_layer_name = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
+        print(f"shp layer: {input_layer_name}")
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         active_layer = QgsProject.instance().mapLayersByName(active_cadastral_layer_name)[0]
 
@@ -66,11 +69,10 @@ class AddProperties:
             model_streets.clear()
 
             properties = DataExtractors.ExtractCadastralNrDataFromModel(model,header_names)
-            
             TabHandler.tabViewByState(tab_widget, state=False)
             
-            #print(f" values: {properties}") 
-            #print(f"Returned properties: {len(properties)}")
+            print(f"Selected properties in table {properties}")
+            print(f"Returned properties: {len(properties)}")
         
             ToBe_imported_properties = checker.process_data_in_batches_with_progress(properties)
             #print(f"To be imported properties: {len(ToBe_imported_properties)}")
@@ -99,7 +101,7 @@ class AddProperties:
             
                 properties_final = DataExtractors.ExtractCadastralNrDataFromModel(model_final, header_names) 
                 #print(f"Final values: {properties_final}")
-                field = "TUNNUS"
+                field = Katastriyksus.tunnus #"TUNNUS"
                 MapSelector.set_MapItemsByItemList_WithZoom(input_layer, properties_final, field)
                 QCoreApplication.processEvents()
                 

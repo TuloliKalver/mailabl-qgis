@@ -183,7 +183,7 @@ class tableFunctions:
                 header_data.append(header_item.text())
 
         # Define column names
-        cadastral_unit_number_column = Katastriyksus.tunnus #"TUNNUS"
+        cadastral_unit_number_column = Katastriyksus.tunnus 
         immovable_number_column = Katastriyksus.hkood #"HKOOD"
         county_column = Katastriyksus.mk_nimi #"MK_NIMI"
         state_column = Katastriyksus. ov_nimi #"OV_NIMI"
@@ -192,7 +192,7 @@ class tableFunctions:
         firstRegistrationDate_column = Katastriyksus.registr #"REGISTR"
         lastUpdated_column = Katastriyksus.muudet #"MUUDET"
         size_column = Katastriyksus.pindala #"PINDALA"
-        #unit_column = #"REG_YHIK"  uues andmestikus alates 03.06.2024 ei ole enam kasutuses 
+        unit_column = None#"REG_YHIK"  uues andmestikus alates 03.06.2024 ei ole enam kasutuses 
 
 
         # Get the column indexes based on column names
@@ -205,7 +205,7 @@ class tableFunctions:
         firstRegistrationDate_index = header_data.index(firstRegistrationDate_column) if firstRegistrationDate_column in header_data else -1
         lastUpdated_index = header_data.index(lastUpdated_column) if lastUpdated_column in header_data else -1
         size_index = header_data.index(size_column) if size_column in header_data else -1
-        #unit_index = header_data.index(unit_column) if unit_column in header_data else -1
+        unit_index = header_data.index(unit_column) if unit_column in header_data else -1
 
         # Retrieve property data from the selected row's columns
         street_input = table.model().data(table.model().index(index.row(), street_index))
@@ -218,9 +218,9 @@ class tableFunctions:
         firstRegistrationDate = table.model().data(table.model().index(index.row(), firstRegistrationDate_index))               
         lastUpdated = table.model().data(table.model().index(index.row(), lastUpdated_index)) 
         size_raw = table.model().data(table.model().index(index.row(), size_index))
-        #unit_raw = table.model().data(table.model().index(index.row(), unit_index))
+        unit_raw = table.model().data(table.model().index(index.row(), unit_index))
         #unit = AreaUnit.convert_to_area_unit(unit_raw)        
-        size = AreaUnit.process_size_and_unit(size_raw, unit_raw)
+        size, unit = AreaUnit.process_size_and_unit(size_raw, unit_raw)
         # Extract house number from street_data
         house_number = street_data.get('house', '')
 
@@ -241,10 +241,10 @@ class tableFunctions:
                 "state": state,
                 "county": county
                 },    
-            #"area": {
-            #    "size": size,
-            #    "unit": unit
-            #}
+            "area": {
+                "size": size,
+                "unit": unit
+            }
         }
         
 
@@ -274,7 +274,7 @@ class tableFunctions:
                 QCoreApplication.processEvents()
 
         # Define column names
-        cadastral_unit_number_column = Katastriyksus.tunnus #"TUNNUS"
+        cadastral_unit_number_column = Katastriyksus.tunnus 
         # Get the column indexes based on column names
         cadastral_unit_number_index = header_data.index(cadastral_unit_number_column) if cadastral_unit_number_column in header_data else -1
         #cadastral_unit_number_index = 0
@@ -369,15 +369,18 @@ class AreaUnit:
             return "Invalid Size"
 
         if unit_raw == "H":
-            value = size / 1000  # Divide size by 1000 if unit is "M"
+            value = size / 1000  # Divide size by 1000 if unit is "H"
         elif unit_raw == "M":
             value = size
+        elif unit_raw is None:
+            value = size
+            unit_raw = AreaUnit.M
         else:
             # Handle invalid unit_raw values
             return "Invalid Unit"
 
-        # Convert the result to text before returning
-        return str(value)
+        return str(value), unit_raw
+
     
 class propertyUsages:
     def extract_intendedUse_data(self, index, table):
@@ -394,9 +397,14 @@ class propertyUsages:
         # Create the required list of dictionaries for GraphQL query
         input_data = []
         num_siht_items = 3
+        siht_field = Katastriyksus.siht1 #siht1
+        prts_field = Katastriyksus.so_prts1 #so_prts1
+        siht_base = siht_field[:-1]
+        prts_base = prts_field[:-1]
+
         for i in range(1, num_siht_items + 1):
-            siht_name = f"SIHT{i}"
-            so_prts_name = f"SO_PRTS{i}"
+            siht_name = f"{siht_base}{i}"
+            so_prts_name = f"{prts_base}{i}"
 
             siht_index = header_data.index(siht_name) if siht_name in header_data else -1
             so_prts_index = header_data.index(so_prts_name) if so_prts_name in header_data else -1

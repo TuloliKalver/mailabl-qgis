@@ -68,7 +68,7 @@
     <rotation/>
     <sizescale/>
     <orderby>
-      <orderByClause asc="1" nullsFirst="0">"TUNNUS"</orderByClause>
+      <orderByClause asc="1" nullsFirst="0">"tunnus"</orderByClause>
     </orderby>
   </renderer-v2>
   <blendMode>0</blendMode>

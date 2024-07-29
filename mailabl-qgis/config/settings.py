@@ -356,7 +356,7 @@ class SettingsDataSaveAndLoad:
         #save setup target
         value = layer
         target_settings_address = SettingsDataSaveAndLoad.SHP_import_layer(self)
-        settings.setValue(target_settings_address,value)
+        settings.setValue(target_settings_address, value)
         label.setText(value)
     
     def save_target_cadastral(self, input_value, target_value):

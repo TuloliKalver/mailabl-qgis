@@ -12,7 +12,7 @@ pealkiri = Headings()
 paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
 
 
-cadastral_unit_number_column = Katastriyksus.tunnus #"TUNNUS"
+cadastral_unit_number_column = Katastriyksus.tunnus 
 immovable_number_column = Katastriyksus.hkood #"HKOOD"
 county_column = Katastriyksus.mk_nimi #"MK_NIMI"
 state_column = Katastriyksus. ov_nimi #"OV_NIMI"
