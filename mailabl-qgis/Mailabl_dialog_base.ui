@@ -9109,8 +9109,8 @@ QTreeWidget::item:hover {
 /* Header styling */
 QHeaderView::section {
     color: #ffffff;  /* Text color for header */
-    background-color: rgb(52, 59, 71);  /* Background color for header */
-    border: 1px solid #444444;  /* Optional: border color for header sections */
+    background-color: rgb(40, 45, 55);  /* Slightly darker background color for header */
+    border: 0.5px solid rgb(60, 65, 75);  /* Border color for header sections matching the overall theme */
 }
 </string>
                   </property>

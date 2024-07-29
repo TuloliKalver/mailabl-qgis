@@ -3783,8 +3783,8 @@ class Ui_MailablDialogBase(object):
 "/* Header styling */\n"
 "QHeaderView::section {\n"
 "    color: #ffffff;  /* Text color for header */\n"
-"    background-color: rgb(52, 59, 71);  /* Background color for header */\n"
-"    border: 1px solid #444444;  /* Optional: border color for header sections */\n"
+"    background-color: rgb(40, 45, 55);  /* Slightly darker background color for header */\n"
+"    border: 0.5px solid rgb(60, 65, 75);  /* Border color for header sections matching the overall theme */\n"
 "}\n"
 "")
         self.treeWidget.setAlternatingRowColors(False)
