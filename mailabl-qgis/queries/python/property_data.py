@@ -915,6 +915,7 @@ class PropertiesGeneralQueries:
         return fetched_items, cadasters
 
     def get_properties_MyLabl_ids(self, properties_list):
+        print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
         
         query_loader = Graphql_properties()
@@ -948,7 +949,7 @@ class PropertiesGeneralQueries:
             }
 
             response = requestBuilder.construct_and_send_request(self, query, variables)
-
+            
             if response.status_code == 200:
                 returned_id = handleResponse.response_properties_data_ids(response)
                 #cadaster = handleResponse.response_properties_cadastral_numbers(response)
