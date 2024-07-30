@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>servituutDialogBase</class>
  <widget class="QDialog" name="servituutDialogBase">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -219,7 +222,63 @@ QComboBox:disabled {
     color: #8a95a5; /* Adjust text color for disabled state */
 }
 
-</string>
+
+/* General QCheckBox styles */
+QCheckBox {
+    color: #ececf1; /* Text color */
+    spacing: 5px; /* Space between checkbox and text */
+}
+
+/* Style the indicator (checkbox) */
+QCheckBox::indicator {
+    width: 12px;
+    height: 12px;
+    background-color: #40414f; /* Background color for unchecked state */
+    border: 1px solid #565869; /* Border for unchecked state */
+    border-radius: 3px;
+}
+
+/* Style the indicator when checked */
+QCheckBox::indicator:checked {
+    background-color: rgba(70, 70, 85, 0.5); /* Semi-transparent gray background color for checked state */
+    border: 1px solid #acacbe;
+    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+}
+
+/* Style the indicator when unchecked */
+QCheckBox::indicator:unchecked {
+    background-color: #40414f; /* Background color for unchecked state */
+    border: 1px solid #565869; /* Border for unchecked state */
+}
+
+/* Style the indicator when hovered */
+QCheckBox::indicator:hover {
+    background-color: #565869;
+}
+
+/* Style the indicator when disabled */
+QCheckBox::indicator:disabled {
+    background-color: #30303a; /* Darker background color for disabled state */
+    border: 1px solid #40414f; /* Darker border for disabled state */
+}
+
+/* Style the indicator when checked and disabled */
+QCheckBox::indicator:checked:disabled {
+    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray background color for checked and disabled state */
+    border: 1px solid #40414f;
+    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+    opacity: 0.5; /* Make the icon appear disabled */
+}
+
+/* Style the checkbox text when disabled */
+QCheckBox:disabled {
+    color: #6a6a75; /* Darker text color for disabled state */
+}
+
+
+QGroupBox{
+	color:#c5c5d2;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <property name="spacing">
@@ -1398,11 +1457,14 @@ QComboBox:disabled {
                </property>
                <item>
                 <widget class="QCheckBox" name="cbV">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>Torud</string>
                  </property>
                  <property name="checked">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>

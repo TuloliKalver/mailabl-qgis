@@ -14,6 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_servituutDialogBase(object):
     def setupUi(self, servituutDialogBase):
         servituutDialogBase.setObjectName("servituutDialogBase")
+        servituutDialogBase.setEnabled(True)
         servituutDialogBase.resize(900, 750)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -209,7 +210,63 @@ class Ui_servituutDialogBase(object):
 "    color: #8a95a5; /* Adjust text color for disabled state */\n"
 "}\n"
 "\n"
-"")
+"\n"
+"/* General QCheckBox styles */\n"
+"QCheckBox {\n"
+"    color: #ececf1; /* Text color */\n"
+"    spacing: 5px; /* Space between checkbox and text */\n"
+"}\n"
+"\n"
+"/* Style the indicator (checkbox) */\n"
+"QCheckBox::indicator {\n"
+"    width: 12px;\n"
+"    height: 12px;\n"
+"    background-color: #40414f; /* Background color for unchecked state */\n"
+"    border: 1px solid #565869; /* Border for unchecked state */\n"
+"    border-radius: 3px;\n"
+"}\n"
+"\n"
+"/* Style the indicator when checked */\n"
+"QCheckBox::indicator:checked {\n"
+"    background-color: rgba(70, 70, 85, 0.5); /* Semi-transparent gray background color for checked state */\n"
+"    border: 1px solid #acacbe;\n"
+"    image: url(\":/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg\"); /* Using QGIS built-in icon */\n"
+"}\n"
+"\n"
+"/* Style the indicator when unchecked */\n"
+"QCheckBox::indicator:unchecked {\n"
+"    background-color: #40414f; /* Background color for unchecked state */\n"
+"    border: 1px solid #565869; /* Border for unchecked state */\n"
+"}\n"
+"\n"
+"/* Style the indicator when hovered */\n"
+"QCheckBox::indicator:hover {\n"
+"    background-color: #565869;\n"
+"}\n"
+"\n"
+"/* Style the indicator when disabled */\n"
+"QCheckBox::indicator:disabled {\n"
+"    background-color: #30303a; /* Darker background color for disabled state */\n"
+"    border: 1px solid #40414f; /* Darker border for disabled state */\n"
+"}\n"
+"\n"
+"/* Style the indicator when checked and disabled */\n"
+"QCheckBox::indicator:checked:disabled {\n"
+"    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray background color for checked and disabled state */\n"
+"    border: 1px solid #40414f;\n"
+"    image: url(\":/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg\"); /* Using QGIS built-in icon */\n"
+"    opacity: 0.5; /* Make the icon appear disabled */\n"
+"}\n"
+"\n"
+"/* Style the checkbox text when disabled */\n"
+"QCheckBox:disabled {\n"
+"    color: #6a6a75; /* Darker text color for disabled state */\n"
+"}\n"
+"\n"
+"\n"
+"QGroupBox{\n"
+"    color:#c5c5d2;\n"
+"}")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(servituutDialogBase)
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_6.setSpacing(0)
@@ -595,7 +652,8 @@ class Ui_servituutDialogBase(object):
         self.verticalLayout_2.setSpacing(5)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.cbV = QtWidgets.QCheckBox(self.groupBox)
-        self.cbV.setChecked(False)
+        self.cbV.setEnabled(False)
+        self.cbV.setChecked(True)
         self.cbV.setObjectName("cbV")
         self.verticalLayout_2.addWidget(self.cbV)
         self.cbWaterStation = QtWidgets.QCheckBox(self.groupBox)

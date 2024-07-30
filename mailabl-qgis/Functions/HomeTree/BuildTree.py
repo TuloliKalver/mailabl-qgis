@@ -2,6 +2,7 @@ import subprocess
 import webbrowser  # For opening links in browser
 import requests
 from qgis.core import QgsSettings
+from PyQt5 import QtCore
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QTreeWidgetItem
 from PyQt5.QtGui import QIcon, QBrush
@@ -122,6 +123,9 @@ class MyTreeHome:
             for typename, items in child_data.items():  # Iterate over child_data correctly
                 root_item = QTreeWidgetItem(treeWidget)
                 
+                # Set custom property for main item
+                root_item.setData(0, QtCore.Qt.UserRole, "main_item")
+
                 #print(f"type_name")
                 # Convert to lowercase and add "s" (handle potential None value)
                 module = typename.lower() + 's'
@@ -176,9 +180,12 @@ class MyTreeHome:
         treeWidget.setColumnWidth(3, 15)
         treeWidget.setColumnWidth(5, 15)
 
+
+
         # Expand all items to make sure they are visible
         treeWidget.expandAll()
         QCoreApplication.processEvents()
+
 
 
     def set_clickable_webIcon(tree_item, column):

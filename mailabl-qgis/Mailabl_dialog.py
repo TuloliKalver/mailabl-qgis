@@ -402,7 +402,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.main_window_toggle_option()
         self.pbOpenProperty.setEnabled(False)
-        self.pbtest.setVisible(False)
+        self.pbtest.setVisible(True)
 
     def on_label_return_pressed(self):
         # Identify which label sent the signal

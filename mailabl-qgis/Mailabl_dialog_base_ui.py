@@ -242,7 +242,62 @@ class Ui_MailablDialogBase(object):
 "    border: 1px solid #565869; /* Adjust border color for disabled state */\n"
 "    color: #8a95a5; /* Adjust text color for disabled state */\n"
 "}\n"
-"")
+"\n"
+"/* General QCheckBox styles */\n"
+"QCheckBox {\n"
+"    color: #ececf1; /* Text color */\n"
+"    spacing: 5px; /* Space between checkbox and text */\n"
+"}\n"
+"\n"
+"/* Style the indicator (checkbox) */\n"
+"QCheckBox::indicator {\n"
+"    width: 12px;\n"
+"    height: 12px;\n"
+"    background-color: #40414f; /* Background color for unchecked state */\n"
+"    border: 1px solid #565869; /* Border for unchecked state */\n"
+"    border-radius: 3px;\n"
+"}\n"
+"\n"
+"/* Style the indicator when checked */\n"
+"QCheckBox::indicator:checked {\n"
+"    background-color: rgba(70, 70, 85, 0.5); /* Semi-transparent gray background color for checked state */\n"
+"    border: 1px solid #acacbe;\n"
+"    image: url(\":/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg\"); /* Using QGIS built-in icon */\n"
+"}\n"
+"\n"
+"/* Style the indicator when unchecked */\n"
+"QCheckBox::indicator:unchecked {\n"
+"    background-color: #40414f; /* Background color for unchecked state */\n"
+"    border: 1px solid #565869; /* Border for unchecked state */\n"
+"}\n"
+"\n"
+"/* Style the indicator when hovered */\n"
+"QCheckBox::indicator:hover {\n"
+"    background-color: #565869;\n"
+"}\n"
+"\n"
+"/* Style the indicator when disabled */\n"
+"QCheckBox::indicator:disabled {\n"
+"    background-color: #30303a; /* Darker background color for disabled state */\n"
+"    border: 1px solid #40414f; /* Darker border for disabled state */\n"
+"}\n"
+"\n"
+"/* Style the indicator when checked and disabled */\n"
+"QCheckBox::indicator:checked:disabled {\n"
+"    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray background color for checked and disabled state */\n"
+"    border: 1px solid #40414f;\n"
+"    image: url(\":/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg\"); /* Using QGIS built-in icon */\n"
+"    opacity: 0.5; /* Make the icon appear disabled */\n"
+"}\n"
+"\n"
+"/* Style the checkbox text when disabled */\n"
+"QCheckBox:disabled {\n"
+"    color: #6a6a75; /* Darker text color for disabled state */\n"
+"}\n"
+"\n"
+"QGroupBox{\n"
+"    color: #ececf1;\n"
+"}")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout(MailablDialogBase)
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_6.setSpacing(0)
@@ -2476,10 +2531,6 @@ class Ui_MailablDialogBase(object):
         font.setPointSize(10)
         self.cmbcontractStatuses.setFont(font)
         self.cmbcontractStatuses.setObjectName("cmbcontractStatuses")
-        self.cmbcontractStatuses.addItem("")
-        self.cmbcontractStatuses.addItem("")
-        self.cmbcontractStatuses.addItem("")
-        self.cmbcontractStatuses.addItem("")
         self.horizontalLayout_61.addWidget(self.cmbcontractStatuses)
         spacerItem22 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_61.addItem(spacerItem22)
@@ -3784,8 +3835,9 @@ class Ui_MailablDialogBase(object):
 "QHeaderView::section {\n"
 "    color: #ffffff;  /* Text color for header */\n"
 "    background-color: rgb(40, 45, 55);  /* Slightly darker background color for header */\n"
-"    border: 0.5px solid rgb(60, 65, 75);  /* Border color for header sections matching the overall theme */\n"
+"    border: 1px solid rgb(60, 65, 75);  /* Border color for header sections matching the overall theme */\n"
 "}\n"
+"\n"
 "")
         self.treeWidget.setAlternatingRowColors(False)
         self.treeWidget.setObjectName("treeWidget")
@@ -5053,7 +5105,7 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(6)
+        self.swWorkSpace.setCurrentIndex(2)
         self.swCadastral_sub_processes.setCurrentIndex(1)
         self.tabWidget_Propertie_list.setCurrentIndex(1)
         self.tabW_Delete_list.setCurrentIndex(0)
@@ -5199,10 +5251,6 @@ class Ui_MailablDialogBase(object):
         self.le_searchContracts.setText(_translate("MailablDialogBase", "Otsing numbri järgi"))
         self.le_searchContracts.setPlaceholderText(_translate("MailablDialogBase", " Otsing - lepingu numbri järgi"))
         self.pbSearchContracts.setText(_translate("MailablDialogBase", "Otsi"))
-        self.cmbcontractStatuses.setItemText(0, _translate("MailablDialogBase", "New Item"))
-        self.cmbcontractStatuses.setItemText(1, _translate("MailablDialogBase", "New Item"))
-        self.cmbcontractStatuses.setItemText(2, _translate("MailablDialogBase", "New Item"))
-        self.cmbcontractStatuses.setItemText(3, _translate("MailablDialogBase", "New Item"))
         self.Help.setAccessibleName(_translate("MailablDialogBase", "None"))
         self.label_20.setText(_translate("MailablDialogBase", "Help"))
         self.textEdit.setHtml(_translate("MailablDialogBase", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

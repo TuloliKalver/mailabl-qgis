@@ -247,7 +247,62 @@ QComboBox:disabled {
     border: 1px solid #565869; /* Adjust border color for disabled state */
     color: #8a95a5; /* Adjust text color for disabled state */
 }
-</string>
+
+/* General QCheckBox styles */
+QCheckBox {
+    color: #ececf1; /* Text color */
+    spacing: 5px; /* Space between checkbox and text */
+}
+
+/* Style the indicator (checkbox) */
+QCheckBox::indicator {
+    width: 12px;
+    height: 12px;
+    background-color: #40414f; /* Background color for unchecked state */
+    border: 1px solid #565869; /* Border for unchecked state */
+    border-radius: 3px;
+}
+
+/* Style the indicator when checked */
+QCheckBox::indicator:checked {
+    background-color: rgba(70, 70, 85, 0.5); /* Semi-transparent gray background color for checked state */
+    border: 1px solid #acacbe;
+    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+}
+
+/* Style the indicator when unchecked */
+QCheckBox::indicator:unchecked {
+    background-color: #40414f; /* Background color for unchecked state */
+    border: 1px solid #565869; /* Border for unchecked state */
+}
+
+/* Style the indicator when hovered */
+QCheckBox::indicator:hover {
+    background-color: #565869;
+}
+
+/* Style the indicator when disabled */
+QCheckBox::indicator:disabled {
+    background-color: #30303a; /* Darker background color for disabled state */
+    border: 1px solid #40414f; /* Darker border for disabled state */
+}
+
+/* Style the indicator when checked and disabled */
+QCheckBox::indicator:checked:disabled {
+    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray background color for checked and disabled state */
+    border: 1px solid #40414f;
+    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+    opacity: 0.5; /* Make the icon appear disabled */
+}
+
+/* Style the checkbox text when disabled */
+QCheckBox:disabled {
+    color: #6a6a75; /* Darker text color for disabled state */
+}
+
+QGroupBox{
+	color: #ececf1;
+}</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
    <property name="spacing">
@@ -1281,7 +1336,7 @@ QComboBox:disabled {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>6</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="accessibleName">
@@ -5788,26 +5843,6 @@ QPushButton:hover{
                           <pointsize>10</pointsize>
                          </font>
                         </property>
-                        <item>
-                         <property name="text">
-                          <string>New Item</string>
-                         </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>New Item</string>
-                         </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>New Item</string>
-                         </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>New Item</string>
-                         </property>
-                        </item>
                        </widget>
                       </item>
                       <item>
@@ -9110,8 +9145,9 @@ QTreeWidget::item:hover {
 QHeaderView::section {
     color: #ffffff;  /* Text color for header */
     background-color: rgb(40, 45, 55);  /* Slightly darker background color for header */
-    border: 0.5px solid rgb(60, 65, 75);  /* Border color for header sections matching the overall theme */
+    border: 1px solid rgb(60, 65, 75);  /* Border color for header sections matching the overall theme */
 }
+
 </string>
                   </property>
                   <property name="alternatingRowColors">
