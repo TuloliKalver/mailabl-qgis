@@ -171,7 +171,6 @@ class tableFunctions:
 
     
     def extract_property_data(self, index, table):
-        
         # Assuming table is a QTableView and has a QStandardItemModel set
         model = table.model()
 
@@ -224,8 +223,6 @@ class tableFunctions:
         # Extract house number from street_data
         house_number = street_data.get('house', '')
 
-
-
         # Create the required dictionary for GraphQL query
         input_data = {
             "immovableNumber": immovable_number,
@@ -247,7 +244,6 @@ class tableFunctions:
             }
         }
         
-
         # Convert the dictionary to a JSON string with special characters preserved        
         encoded_input_data = json.dumps(input_data, default=tableFunctions.custom_encoder, ensure_ascii=False)
         # Print the JSON-like string

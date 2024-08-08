@@ -44,8 +44,8 @@ class requestBuilder:
             print("Request timed out.")
             return None
         response = requests.post(graphql_url, headers=headers, json=payload)
-        print("response")
-        print(response)
+        #print("response")
+        #print(response)
         # Check for empty response
         if not response.content:
             print(f"Empty response received for query: {query}")

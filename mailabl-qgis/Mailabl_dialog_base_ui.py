@@ -297,7 +297,62 @@ class Ui_MailablDialogBase(object):
 "\n"
 "QGroupBox{\n"
 "    color: #ececf1;\n"
-"}")
+"}\n"
+"\n"
+"/* Style tab Widget */\n"
+"QTabWidget {\n"
+"    background-color: transparent; /* Keep the background of the tab widget transparent */\n"
+"    border: none; /* Remove any default borders */\n"
+"}\n"
+"\n"
+"/* Style the tab bar (where the tabs are displayed) */\n"
+"QTabBar {\n"
+"    background-color: #202123; /* Match the background color of your containers */\n"
+"    border-bottom: 1px solid #565869; /* Border color to separate the tabs from the content area */\n"
+"}\n"
+"\n"
+"/* Style for individual tabs */\n"
+"QTabBar::tab {\n"
+"    background-color: #343541; /* Background color of unselected tabs */\n"
+"    color: #ececf1; /* Text color for unselected tabs */\n"
+"    border: 1px solid #565869; /* Border for unselected tabs */\n"
+"    border-bottom: none; /* Remove the bottom border to avoid overlap with the content area */\n"
+"    padding: 6px 12px; /* Add some padding for a better appearance */\n"
+"    border-top-left-radius: 3px; /* Rounded top corners */\n"
+"    border-top-right-radius: 3px; /* Rounded top corners */\n"
+"}\n"
+"\n"
+"/* Style for the selected tab */\n"
+"QTabBar::tab:selected {\n"
+"    background-color: #50515f; /* Background color for the selected tab */\n"
+"    color: #ececf1; /* Text color for the selected tab */\n"
+"    border: 1px solid #acacbe; /* Lighter border for the selected tab */\n"
+"    border-bottom: 1px solid #202123; /* Match the background color of the tab pane to create a seamless look */\n"
+"    padding: 7px 12px; /* Slightly adjust padding for selected tab */\n"
+"}\n"
+"\n"
+"/* Style for the hovered tab */\n"
+"QTabBar::tab:hover {\n"
+"    background-color: #8e8ea0; /* Background color when hovering over a tab */\n"
+"    color: #343541; /* Text color for the hovered tab */\n"
+"    border: 1px solid #acacbe; /* Lighter border on hover */\n"
+"}\n"
+"\n"
+"/* Style for disabled tabs */\n"
+"QTabBar::tab:disabled {\n"
+"    background-color: #30303a; /* Darker background for disabled tabs */\n"
+"    color: #6a6a75; /* Muted text color for disabled tabs */\n"
+"    border: 1px solid #565869; /* Border color for disabled tabs */\n"
+"}\n"
+"\n"
+"/* Adjustments to the tab pane (content area below the tabs) */\n"
+"QTabWidget::pane {\n"
+"    border: 1px solid #565869; /* Border around the content area */\n"
+"    background-color: #202123; /* Match the background of the content area to other containers */\n"
+"    border-radius: 3px; /* Rounded corners for the content area */\n"
+"    margin-top: -1px; /* Overlap with the tab bar to create a seamless transition */\n"
+"}\n"
+"")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout(MailablDialogBase)
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_6.setSpacing(0)
@@ -1119,8 +1174,53 @@ class Ui_MailablDialogBase(object):
         self.verticalLayout_28.addWidget(self.label_12)
         self.verticalLayout_53.addWidget(self.frame_10)
         self.listWidget_county = QtWidgets.QListWidget(self.Frame_Selector_County)
-        self.listWidget_county.setStyleSheet("")
+        self.listWidget_county.setStyleSheet("/* Adjust QListWidget style */\n"
+"QListWidget {\n"
+"    background-color: #343541; /* Match the background color with the container style */\n"
+"    color: #ececf1; /* Text color */\n"
+"    border: 1px solid #565869; /* Border to match other widgets */\n"
+"    border-radius: 3px; /* Rounded corners */\n"
+"    padding: 3px; /* Add padding to the list */\n"
+"}\n"
+"\n"
+"/* Style for individual items in the QListWidget */\n"
+"QListWidget::item {\n"
+"    background-color: #40414f; /* Background color for unselected items */\n"
+"    color: #ececf1; /* Text color for unselected items */\n"
+"    padding: 3px; /* Padding around list items */\n"
+"    border-radius: 1.5px; /* Slight rounding of the item edges */\n"
+"}\n"
+"\n"
+"/* Style for selected items */\n"
+"QListWidget::item:selected {\n"
+"    background-color: #50515f; /* Slightly lighter background color for selected items */\n"
+"    color: #ececf1; /* Text color for selected items */\n"
+"    border: 1px solid #acacbe; /* Lighter border for the selected item */\n"
+"}\n"
+"\n"
+"/* Style for hovered items */\n"
+"QListWidget::item:hover {\n"
+"    background-color: #8e8ea0; /* Lighter background color when hovering */\n"
+"    color: #343541; /* Text color on hover to contrast the lighter background */\n"
+"}\n"
+"\n"
+"/* Style for disabled items */\n"
+"QListWidget::item:disabled {\n"
+"    background-color: #30303a; /* Darker background for disabled items */\n"
+"    color: #6a6a75; /* Muted text color for disabled items */\n"
+"}\n"
+"")
         self.listWidget_county.setObjectName("listWidget_county")
+        item = QtWidgets.QListWidgetItem()
+        self.listWidget_county.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.listWidget_county.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.listWidget_county.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.listWidget_county.addItem(item)
+        item = QtWidgets.QListWidgetItem()
+        self.listWidget_county.addItem(item)
         self.verticalLayout_53.addWidget(self.listWidget_county)
         self.horizontalLayout_13.addWidget(self.Frame_Selector_County)
         self.Frame_Selector_State = QtWidgets.QFrame(self.Frame_Selector_MainFrame)
@@ -1245,10 +1345,7 @@ class Ui_MailablDialogBase(object):
         self.tabWidget_Propertie_list = QtWidgets.QTabWidget(self.Preview_frame)
         self.tabWidget_Propertie_list.setObjectName("tabWidget_Propertie_list")
         self.tabKinnistud = QtWidgets.QWidget()
-        self.tabKinnistud.setStyleSheet("#tabKinnistud\n"
-"{\n"
-"    background-color: transparent\n"
-"}")
+        self.tabKinnistud.setStyleSheet("")
         self.tabKinnistud.setObjectName("tabKinnistud")
         self.verticalLayout_29 = QtWidgets.QVBoxLayout(self.tabKinnistud)
         self.verticalLayout_29.setObjectName("verticalLayout_29")
@@ -1287,6 +1384,108 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
         self.tblvResults_Confirm = QtWidgets.QTableView(self.frame_12)
+        self.tblvResults_Confirm.setStyleSheet("/* Enable and style alternating row colors */\n"
+"QTableView {\n"
+"    background-color: #343541; /* Default row background */\n"
+"    alternate-background-color: #40414f; /* Background color for alternating rows */\n"
+"    color: #ececf1; /* Default text color */\n"
+"    border: 1px solid #565869; /* Border to match other widgets */\n"
+"    border-radius: 5px; /* Rounded corners */\n"
+"    gridline-color: #565869; /* Gridline color */\n"
+"    selection-background-color: #50515f; /* Background color for selected cells */\n"
+"    selection-color: #ececf1; /* Text color for selected cells */\n"
+"}\n"
+"\n"
+"/* Adjust header style */\n"
+"QHeaderView::section {\n"
+"    background-color: #40414f; /* Background color for the header */\n"
+"    color: #ececf1; /* Text color in the header */\n"
+"    border: 0.5px solid #565869; /* Hairline border around the header sections */\n"
+"    padding: 2px 4px; /* Compact padding */\n"
+"    border-radius: 2px; /* Slightly less rounding of the header section edges */\n"
+"    font-size: 11px; /* Further reduced font size */\n"
+"}\n"
+"\n"
+"\n"
+"/* Style for hovered rows */\n"
+"QTableView::item:hover {\n"
+"    background-color: #8e8ea0; /* Lighter background color when hovering over a row */\n"
+"    color: #343541; /* Text color on hover to contrast the lighter background */\n"
+"}\n"
+"\n"
+"/* Style for selected rows */\n"
+"QTableView::item:selected {\n"
+"    background-color: #50515f; /* Slightly lighter background color for selected rows */\n"
+"    color: #ececf1; /* Text color for selected rows */\n"
+"}\n"
+"\n"
+"/* Style for alternating rows */\n"
+"QTableView::item {\n"
+"    background-color: #343541; /* Default row background */\n"
+"    color: #ececf1; /* Default text color */\n"
+"}\n"
+"\n"
+"/* Adjust vertical scroll bar style */\n"
+"QScrollBar:vertical {\n"
+"    background-color: #343541; /* Match scrollbar background with the table */\n"
+"    width: 12px; /* Narrower scrollbar */\n"
+"    margin: 22px 0 22px 0; /* Leave space for the top and bottom arrows */\n"
+"    border: 1px solid #565869; /* Border for the scrollbar */\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"    background-color: #40414f; /* Color for the scrollbar handle */\n"
+"    min-height: 20px;\n"
+"    border-radius: 5px; /* Rounded scrollbar handle */\n"
+"    border: 1px solid #565869; /* Border around the scrollbar handle */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
+"    background-color: #40414f; /* Background for the arrows */\n"
+"    border: 1px solid #565869; /* Border for the arrows */\n"
+"    height: 15px;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover {\n"
+"    background-color: #8e8ea0; /* Lighter background on hover */\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"    background: none;\n"
+"}\n"
+"\n"
+"/* Adjust horizontal scroll bar style */\n"
+"QScrollBar:horizontal {\n"
+"    background-color: #343541; /* Match scrollbar background with the table */\n"
+"    height: 12px; /* Narrower scrollbar */\n"
+"    margin: 0 22px 0 22px; /* Leave space for the left and right arrows */\n"
+"    border: 1px solid #565869; /* Border for the scrollbar */\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"    background-color: #40414f; /* Color for the scrollbar handle */\n"
+"    min-width: 20px;\n"
+"    border-radius: 5px; /* Rounded scrollbar handle */\n"
+"    border: 1px solid #565869; /* Border around the scrollbar handle */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {\n"
+"    background-color: #40414f; /* Background for the arrows */\n"
+"    border: 1px solid #565869; /* Border for the arrows */\n"
+"    width: 15px;\n"
+"    subcontrol-origin: margin;\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {\n"
+"    background-color: #8e8ea0; /* Lighter background on hover */\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"    background: none;\n"
+"}\n"
+"")
+        self.tblvResults_Confirm.setAlternatingRowColors(True)
         self.tblvResults_Confirm.setObjectName("tblvResults_Confirm")
         self.horizontalLayout_11.addWidget(self.tblvResults_Confirm)
         self.verticalLayout_30.addWidget(self.frame_12)
@@ -1345,6 +1544,7 @@ class Ui_MailablDialogBase(object):
         self.verticalLayout_143 = QtWidgets.QVBoxLayout(self.tab)
         self.verticalLayout_143.setObjectName("verticalLayout_143")
         self.tblNew = QtWidgets.QTableView(self.tab)
+        self.tblNew.setStyleSheet("")
         self.tblNew.setObjectName("tblNew")
         self.verticalLayout_143.addWidget(self.tblNew)
         self.tabWidget_Propertie_list.addTab(self.tab, "")
@@ -3841,6 +4041,7 @@ class Ui_MailablDialogBase(object):
 "")
         self.treeWidget.setAlternatingRowColors(False)
         self.treeWidget.setObjectName("treeWidget")
+        self.treeWidget.headerItem().setText(0, "1")
         self.treeWidget.header().setMinimumSectionSize(20)
         self.verticalLayout_168.addWidget(self.treeWidget)
         self.verticalLayout_160.addWidget(self.frame_39)
@@ -5105,9 +5306,9 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(2)
-        self.swCadastral_sub_processes.setCurrentIndex(1)
-        self.tabWidget_Propertie_list.setCurrentIndex(1)
+        self.swWorkSpace.setCurrentIndex(1)
+        self.swCadastral_sub_processes.setCurrentIndex(0)
+        self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(0)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
@@ -5156,6 +5357,19 @@ class Ui_MailablDialogBase(object):
         self.lblCounty.setText(_translate("MailablDialogBase", "Maakond"))
         self.pbDone_County.setText(_translate("MailablDialogBase", "Kinnita"))
         self.label_12.setText(_translate("MailablDialogBase", "Valida saab ühe maakonna korraga"))
+        __sortingEnabled = self.listWidget_county.isSortingEnabled()
+        self.listWidget_county.setSortingEnabled(False)
+        item = self.listWidget_county.item(0)
+        item.setText(_translate("MailablDialogBase", "New Item"))
+        item = self.listWidget_county.item(1)
+        item.setText(_translate("MailablDialogBase", "New Item"))
+        item = self.listWidget_county.item(2)
+        item.setText(_translate("MailablDialogBase", "New Item"))
+        item = self.listWidget_county.item(3)
+        item.setText(_translate("MailablDialogBase", "New Item"))
+        item = self.listWidget_county.item(4)
+        item.setText(_translate("MailablDialogBase", "New Item"))
+        self.listWidget_county.setSortingEnabled(__sortingEnabled)
         self.lblState.setText(_translate("MailablDialogBase", "Omavalitsus"))
         self.pbDone_State.setText(_translate("MailablDialogBase", "Kinnita"))
         self.cbChooseAll_States.setText(_translate("MailablDialogBase", "Vali kõik"))

@@ -4,7 +4,8 @@
 import os
 from collections import deque
 from qgis.utils import iface
-from qgis.core import QgsProject, edit
+from qgis.core import QgsProject, edit, QgsFeatureRequest
+
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMessageBox
@@ -15,7 +16,9 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QListWidgetItem
 from ..config.settings import SettingsDataSaveAndLoad
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTextsAuto, HoiatusTexts
- 
+from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+        
+
 pealkiri = Headings()
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -138,12 +141,14 @@ class tableView_functions():
         row = 0
         count_without_transport = 0
         count_with_transport = 0
-        from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+        from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, Puprpouse
+
         for feature in features:
             siht1_value = feature.attribute(Katastriyksus.siht1)
             row_items = [QStandardItem(feature.attribute(field).toString("yyyy-MM-dd") if isinstance(feature.attribute(field), QDate) else str(feature.attribute(field))) for field in fields]
 
-            if 'Transpordimaa' not in siht1_value:
+            restriction = Puprpouse.transport
+            if restriction not in siht1_value:
                 model_without_transport.appendRow(row_items)
                 count_without_transport += 1
             else: 
@@ -186,7 +191,111 @@ class listView_functions():
             list_view.selectAll()
         else:
             list_view.selectionModel().clearSelection()
-            
+
+    def onSelectionChangeReturnChanges(self, selected, deselected, table):
+        # Get the model from the QTableView
+        model = table.model()
+        
+        # Find the column index for the header "tunnus"
+        column = -1
+        for col in range(model.columnCount()):
+            header = model.headerData(col, Qt.Horizontal)
+            if header == Katastriyksus.tunnus:
+                column = col
+                break
+        
+        # Check if the column index was found
+        if column == -1:
+            print("Column 'tunnus' not found")
+            return None
+
+        # Helper function to gather data from the indexes
+        def gather_data(selection):
+            data = []
+            for index in selection.indexes():
+                # Ensure the index is in the correct column
+                if index.column() == column:
+                    number = index.data()
+                    data.append(number)
+            return data
+
+        # Gather data from selected and deselected items
+        selected_data = gather_data(selected)
+        deselected_data = gather_data(deselected)
+
+        print("selected_data:")
+        print(selected_data)
+        print("deselected_data:")
+        print(deselected_data)
+
+
+    def getAllSelectedRowsData(self, table1, table2):
+        # Get the model from the QTableView
+        input_layer_name = SettingsDataSaveAndLoad().load_SHP_inputLayer_name()
+        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
+        model1 = table1.model()
+        model2 = table2.model()
+        
+        field_name = Katastriyksus.tunnus
+
+        # Find the column index for the header "tunnus" in both tables
+        column1 = self.getColumnIndex(model1, field_name)
+        column2 = self.getColumnIndex(model2, field_name)
+        
+        # Check if the column index was found in both tables
+        if column1 == -1:
+            print("Column 'tunnus' not found in table1")
+            return None
+        if column2 == -1:
+            print("Column 'tunnus' not found in table2")
+            return None
+
+        # Collect all selected rows' "tunnus" values from both tables
+        tunnus_values1 = self.getSelectedRowsValues(table1, model1, column1)
+        tunnus_values2 = self.getSelectedRowsValues(table2, model2, column2)
+
+        # Combine the values from both tables
+        combined_tunnus_values = set(tunnus_values1 + tunnus_values2)
+        
+        print("All selected 'tunnus' values from both tables:")
+        print(combined_tunnus_values)
+        
+        # Select features on the layer based on the combined field values
+        if layer:
+            # Construct the expression with correctly formatted quotes
+            tunnus_values_str = ",".join(f"'{v}'" for v in combined_tunnus_values)
+            expression = f'"{field_name}" IN ({tunnus_values_str})'
+            print("Combined Expression:")
+            print(expression)
+            features = layer.getFeatures(QgsFeatureRequest().setFilterExpression(expression))
+            feature_ids = [feature.id() for feature in features]
+            layer.selectByIds(feature_ids)
+            #print(f"Layer '{input_layer_name}' selected features with expression: {expression}")
+        else:
+            print(f"Layer '{input_layer_name}' not found")
+    
+    def getColumnIndex(self, model, field_name):
+        """Helper method to find the column index for a given field name"""
+        for col in range(model.columnCount()):
+            header = model.headerData(col, Qt.Horizontal)
+            if header == field_name:
+                return col
+        return -1
+
+    def getSelectedRowsValues(self, table, model, column):
+        """Helper method to get selected rows' values for a given column"""
+        selection_model = table.selectionModel()
+        selected_rows = selection_model.selectedRows()
+        
+        tunnus_values = []
+        for row_index in selected_rows:
+            # Get the model index for the column in the selected row
+            index = model.index(row_index.row(), column)
+            tunnus_value = index.data()
+            tunnus_values.append(tunnus_value)
+        
+        return tunnus_values
+
 
     def insert_values_to_listView_object(self, object, data):
         #object_name = object.objectName() - if testing or printing is needed

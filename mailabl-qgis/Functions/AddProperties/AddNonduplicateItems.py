@@ -1,6 +1,6 @@
-from qgis.core import QgsProject
 
-from PyQt5.QtWidgets import  QMessageBox
+from PyQt5.QtWidgets import QMessageBox
+from qgis.core import QgsProject
 from PyQt5.QtCore import QCoreApplication
 from ...app.View_tools import MapSelector
 from ..Tools import tableFunctions
@@ -13,7 +13,10 @@ from PyQt5.QtWidgets import QAbstractItemView
 from ...Functions.add_items import Add_Properties_final
 from ...Functions.layer_generator import LayerCopier
 from ...KeelelisedMuutujad.messages import Headings
-from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus 
+from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ...config.settings import SettingsDataSaveAndLoad
+from .AddProperties_dev import AddProperties_dev
+
 
 pealkiri = Headings()
 
@@ -26,35 +29,31 @@ class AddProperties:
     @staticmethod
     def check_for_duplicates_and_add_only_matches(self):
         # Load necessary layers and prepare setup
-        active_cadastral_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        print(f"active layer: {active_cadastral_layer_name}")
-        input_layer_name = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
-        print(f"shp layer: {input_layer_name}")
-        input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        active_layer = QgsProject.instance().mapLayersByName(active_cadastral_layer_name)[0]
+        #print(f"shp layer: {input_layer_name}")
+        #print(f"shp layer: {input_layer_name}")
 
         button = self.pbConfirm_action
         table_properties = self.tblvResults_Confirm
         table_streets = self.tblvResults_streets_Confirm
         table_target = self.tblNew
-
         tab_widget = self.tabWidget_Propertie_list
         
-        data = table_data.RemoveNonSelectedRowsFromTable(self, table_properties)
-        data2 = table_data.RemoveNonSelectedRowsFromTable(self, table_streets)
-        if len(data) == 0 and len(data2) == 0:
+        data_properties = table_data.RemoveNonSelectedRowsFromTable(self, table_properties)
+        print(f"data_properties: {data_properties}")
+        data_streets = table_data.RemoveNonSelectedRowsFromTable(self, table_streets)
+        print(f"data_streets: {data_streets}")
+
+
+        if len(data_properties) == 0 and len(data_streets) == 0:
             text = ("Vali importimiseks vähemalt üks kinnistu")
             heading = pealkiri.warningSimple
             QMessageBox.warning(self,heading,text)
             return
         else:
             button.blockSignals(True)
-            
-            # Assuming table_properties and table_streets are QStandardItemModel objects
             model_properties = table_properties.model()
             model_streets = table_streets.model()
             
-
             header_names = ModelHeadersGenerator.generateHeadersFromExistingModel(model_properties)
             # Get column names from the model
 
@@ -71,12 +70,13 @@ class AddProperties:
             properties = DataExtractors.ExtractCadastralNrDataFromModel(model,header_names)
             TabHandler.tabViewByState(tab_widget, state=False)
             
-            print(f"Selected properties in table {properties}")
-            print(f"Returned properties: {len(properties)}")
+            #print(f"Selected properties in table {properties}")
+            #print(f"Returned properties: {len(properties)}")
         
             ToBe_imported_properties = checker.process_data_in_batches_with_progress(properties)
             #print(f"To be imported properties: {len(ToBe_imported_properties)}")
-            
+            active_layer_name,input_layer_name = AddProperties_dev.load_import_and_activ_layers(self)
+
             if len(ToBe_imported_properties) == 0:
                 text = ("Kõik valitud kinnistud on juba Mailablis")
                 heading = pealkiri.informationSimple
@@ -102,16 +102,21 @@ class AddProperties:
                 properties_final = DataExtractors.ExtractCadastralNrDataFromModel(model_final, header_names) 
                 #print(f"Final values: {properties_final}")
                 field = Katastriyksus.tunnus #"TUNNUS"
+
+                input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
+
                 MapSelector.set_MapItemsByItemList_WithZoom(input_layer, properties_final, field)
                 QCoreApplication.processEvents()
-                
+                    
                 Add_Properties_final.insert_selected_items_to_Mailabl(self, table_target, input_layer_name)
-                LayerCopier.append_data(self, input_layer_name, active_cadastral_layer_name)
+                LayerCopier.append_data(self, input_layer_name, active_layer_name)
                 model_properties.clear()
                 model_streets.clear()
                 model_final.clear()
                 text = "Andmed on laetud ja kaardikihile kantud"
                 heading = pealkiri.tubli
                 QMessageBox.information(self, heading, text)
-                button.blockSignals(False)
-        
+            
+        button.blockSignals(False)
+
+

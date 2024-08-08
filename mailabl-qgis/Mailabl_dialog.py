@@ -20,8 +20,8 @@ import os
 from PyQt5.QtCore import QTimer, Qt,  QEvent
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
-from PyQt5.QtWidgets import  QLineEdit, QListView, QTableView, QAbstractItemView, QMessageBox, QVBoxLayout, QPushButton
-
+from PyQt5.QtWidgets import  QLineEdit, QListView, QAbstractItemView, QMessageBox, QVBoxLayout, QPushButton
+from PyQt5.QtGui import QStandardItemModel
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler, ToggleHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
@@ -39,7 +39,7 @@ from .Functions.item_selector_tools import CadasterSelector, properties_selector
 from .Functions.SearchEngines import searchGeneral,ModularSearchEngine
 from .Functions.delete_items import DeletingProcesses, delete_buttons, delete_listViews, delete_tables, delete_checkboxes, Delete_Main_Process
 from .Functions.Tools import tableFunctions
-from .Functions.AddProperties.AddNonduplicateItems import AddProperties
+from .Functions.AddProperties.AddProperties_dev import AddProperties_dev
 from .Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 from .processes.ImportProcesses.Import_shp_file import SHPLayerLoader
 from .processes.OnFirstLoad.FirstLoad import Startup
@@ -57,13 +57,14 @@ from .Functions.Folders.folders import copy_and_rename_folder
 from .Functions.EVEL.evel_general import EVELTools
 from .Functions.HomeTree.BuildTree import MyTreeHome
 from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool, FeatureInfoToolSearch
+from .Functions.Searchpropertyfromlayer import SearchProperties
+from .Functions.AddProperties.AddProcessPrepareTables import AddProcessPrepareTables
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
 from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, RemapPropertiesLayer
 from .utils.window_manager import WindowManager, WindowManagerMinMax
 from .utils.custom_event_filter import BlockButtonsToPreferLabelEventFilter, ReturnPressedManager
-from .Functions.Searchpropertyfromlayer import SearchProperties
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -130,6 +131,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         # Initialize WindowManager with this window
         self.window_manager = WindowManager(self)
+
+        self.AddProcessPrepareTables = AddProcessPrepareTables(self)
 
         # Initialize ReturnPressedManager
         self.return_pressed_manager = ReturnPressedManager(self)
@@ -321,7 +324,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.listWidget_county.itemClicked.connect(self.get_state_list)
         self.pbDone_County.clicked.connect(self.get_state_list)
         self.pbDone_State.clicked.connect(self.get_city_list)
-        self.pbDoneCity.clicked.connect(self.prepare_properties_list_and_Add_to_table_updated_with_selecting_items)
+        self.pbDoneCity.clicked.connect(self.AddProcessPrepareTables.prepare_properties_list_and_Add_to_table_updated_with_selecting_items)
 
 
         self.pbDel_County.clicked.connect(self.delete_process_after_county)
@@ -351,8 +354,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.cbChooseAllAdd__street_properties.stateChanged.connect(lambda state, view_state=object_tableView_Add_Street_list: list_functions.toggleListSelection(view_state, state))
         self.cbOnPropertiesTab_Include_streets.stateChanged.connect(lambda state, view_state=object_tableView_Add_Street_list: list_functions.toggleListSelection(view_state, state))
 
-        self.tblvResults_Confirm.setSelectionBehavior(QAbstractItemView.SelectRows)
+
         self.tblvResults_streets_Confirm.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.tblvResults_Confirm.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.tblvResults_Confirm.setSelectionMode(QAbstractItemView.MultiSelection)
+        # Set an empty model initially if necessary
+        self.tblvResults_Confirm.setModel(QStandardItemModel(self.tblvResults_Confirm))
+        
+
+
 
 #TODO - Delete - remove line of code
     #update selections in deleting proccess
@@ -364,6 +374,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         tbl_Delete_properties.setSelectionBehavior(QAbstractItemView.SelectRows)
         tbl_Delete_streets.setSelectionBehavior(QAbstractItemView.SelectRows)
+
+
 
         
         #self.pbCooseFromMap_Add.clicked.connect(self.manualy_choose_properties_to_Add)
@@ -754,7 +766,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         alter_containers.toggle_left_menu(self, length, buttons, original_texts, new_texts, left_menu, container, container_width)
 
     def StartImportProcess(self):
-        AddProperties.check_for_duplicates_and_add_only_matches(self)
+        AddProperties_dev.check_for_duplicates_and_add_only_matches(self)
 
     def update_step_2 (self):
         layer_name = load.load_SHP_inputLayer_name()
@@ -857,36 +869,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         shp_class.county_map_simplifier(self, county_nimi_field, input_layer_name, viewItem_county, viewItem_state, viewItem_city)
         
     #Functions in Development
-
-    def manualy_choose_properties_to_Add(self):
-
-        input_layer_name = load.load_SHP_inputLayer_name()
-        #print(f"shp_input_layer_name {layer_name}")
-        input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        input_layer.blockSignals(True)
-        input_layer.removeSelection()
-        input_layer.blockSignals(False)
-        self.tabWidget_Propertie_list.show()
-        self.tabWidget_Propertie_list.setCurrentIndex(0) 
-        #PropertieLayerFunctions.generate_table_from_selected_map_items_simple(self,table_view, layer_name)
-    #TODO solve proble
-        select_from_aLayer.activate_layer_and_use_selectTool(input_layer_name)
-        #table = self.tblvResults_Confirm
-        model_without_transport, model_with_transport = table_functions.generate_table_from_selected_map_items_with_roads(input_layer_name)
-
-        # Block the signal temporarily
-        self.cbChooseAllAdd_properties.blockSignals(True)
-        self.cbChooseAllAdd__street_properties.blockSignals(True)
-
-        self.tblvResults_streets_Confirm.setModel(model_with_transport)
-        self.tblvResults_Confirm.setModel(model_without_transport)
-        
-        # Unblock the signal after setting the models
-        self.cbChooseAllAdd_properties.blockSignals(False)
-        self.cbChooseAllAdd__street_properties.blockSignals(False)
-        
-        self.cbChooseAllAdd_properties.setChecked(True)
-        self.cbChooseAllAdd__street_properties.setChecked(True)
         
     def get_state_list(self):
         self.sw_HM.setCurrentIndex(3)
@@ -1075,130 +1057,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.pbDoneCity.show()
             self.cbChooseAll_Cities.show()
 
-#Loads only properties that are not "streets or roads"
-    def prepare_properties_list_and_Add_to_table_updated_with_selecting_items(self):
-        #TODO setup help lists add help class and call function for each buttons
-        self.sw_HM.setCurrentIndex(3)
-        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-        self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(3)
-        
-        #Start real function
-        tab_widget = self.tabWidget_Propertie_list  
-        TabHandler.tabViewByState(tab_widget,state=True)
-        layer_name = load.load_SHP_inputLayer_name()
-        #print(f"shp_input_layer_name {layer_name}")
-        layer = QgsProject.instance().mapLayersByName(layer_name)[0]
-        #TODO rethink signal blocking!
-        layer.blockSignals(True)
-        # Deselect all selected items on the map
-        layer.removeSelection()
-        layer.blockSignals(False)
 
-        #Create lists to store itemas
-        hide_buttons = []
-        list_views = []
-        
-        checkboxes = [
-                        self.cbChooseAllAdd_properties, 
-                        self.cbChooseAllAdd__street_properties,
-                        ]
-        object_tables = [self.tblvResults_streets_Confirm,
-                        self.tblvResults_Confirm]
-        #clear to proper stage = hide and clear tables, buttons and checkboxes
-        list_functions.unload_and_hide_connectedItems(list_views, 
-                                            object_tables,
-                                            hide_buttons,
-                                            checkboxes)
-
-        self.cbChooseAllAdd_properties.blockSignals(True)
-        self.cbChooseAllAdd__street_properties.blockSignals(True)
-
-        viewItem_county = self.listWidget_county
-        viewItem_state = self.listWidget_State
-        viewItem_city = self.listWidget_City
-        # When calling functions in other classes, pass object names as strings
-        item_county = viewItem_county.currentItem()
-        item_state = viewItem_state.selectedItems()
-        item_city = viewItem_city.selectedItems()
-
-        county_restriction = item_county.text() if item_county is not None else ""
-        state_restrictions = "', '".join([item.text() for item in item_state]) if item_state else ""
-        #print(f"Selected items state: {state_restrictions}")
-        city_restrictions = "', '".join([item.text() for item in item_city]) if item_city else ""
-        #print(f"Selected items city: {city_restrictions}")
-        self.tabWidget_Propertie_list.setCurrentIndex(0)
-        self.tabWidget_Propertie_list.show()
-        self.cbChooseAllAdd_properties.show()
-        self.cbOnPropertiesTab_Include_streets.show()
-        self.cbChooseAllAdd__street_properties.show()
-        
-        #Clean code in universal map simplifier because it creates only expression 
-        expression = shp_tools.universal_map_simplifier(
-                            input_layer_name,
-                            county_nimi_field, 
-                            state_nimi_field,
-                            city_nimi_field,
-                            county_restriction, 
-                            state_restrictions, 
-                            city_restrictions
-                            )
-        # Disable signals for the layer        
-        
-        
-        layer.setSubsetString(expression)
-        layer.triggerRepaint()
-        layer.updateExtents()
-        layer.blockSignals(True)
-        layer.selectAll()        
-        model_without_transport, model_with_transport, total = table_functions.generate_table_from_selected_map_items_with_roads(layer_name)
-        
-        # Block the signal temporarily
-
-        table_view_1 = self.tblvResults_streets_Confirm
-        table_view_2 = self.tblvResults_Confirm
-        self.lblCount.setText(str(total))
-        
-        table_view_1.setModel(model_with_transport)
-        table_view_2.setModel(model_without_transport)
-        #TODO if function sets to work 
-        #TableViewadjuster.QTableView_look(table_view_1)
-        #TableViewadjuster.QTableView_look(table_view_2)
-        custom_row_height = 20  # Adjust this value as needed
-        for row in range(model_with_transport.rowCount()):
-            table_view_1.setRowHeight(row, custom_row_height) 
-            table_view_2.setRowHeight(row, custom_row_height) 
-        
-        table_view_1.setSortingEnabled(True)
-        table_view_2.setSortingEnabled(True)
-        
-        # Hide the vertical header (row numbers)
-        table_view_1.verticalHeader().setVisible(False)
-        table_view_2.verticalHeader().setVisible(False)
-        
-        # Optional: Hide grid lines
-        table_view_1.setShowGrid(False)
-        table_view_2.setShowGrid(False)
-        
-        # Automatically resize columns to fit content
-        table_view_1.resizeColumnsToContents()
-        table_view_2.resizeColumnsToContents()
-        
-        # Block editing for all cells
-        table_view_1.setEditTriggers(QTableView.NoEditTriggers)
-        table_view_2.setEditTriggers(QTableView.NoEditTriggers)
-        
-        # Unblock the signal after setting the models
-        self.cbChooseAllAdd_properties.blockSignals(False)
-        self.cbChooseAllAdd__street_properties.blockSignals(False)
-    
-        # MArk checkboxes
-        self.cbChooseAllAdd_properties.setChecked(True)
-        self.cbOnPropertiesTab_Include_streets.setChecked(True)
-
-        # Disable signals for the layer
-        layer.blockSignals(False)
-        
-        self.pbConfirm_action.show()
 
     def on_load(self, frames):
 
@@ -1621,4 +1480,3 @@ class ConnectSettingsButtons:
 
 
         return buttons
-    

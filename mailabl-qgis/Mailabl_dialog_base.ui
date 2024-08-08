@@ -302,7 +302,62 @@ QCheckBox:disabled {
 
 QGroupBox{
 	color: #ececf1;
-}</string>
+}
+
+/* Style tab Widget */
+QTabWidget {
+    background-color: transparent; /* Keep the background of the tab widget transparent */
+    border: none; /* Remove any default borders */
+}
+
+/* Style the tab bar (where the tabs are displayed) */
+QTabBar {
+    background-color: #202123; /* Match the background color of your containers */
+    border-bottom: 1px solid #565869; /* Border color to separate the tabs from the content area */
+}
+
+/* Style for individual tabs */
+QTabBar::tab {
+    background-color: #343541; /* Background color of unselected tabs */
+    color: #ececf1; /* Text color for unselected tabs */
+    border: 1px solid #565869; /* Border for unselected tabs */
+    border-bottom: none; /* Remove the bottom border to avoid overlap with the content area */
+    padding: 6px 12px; /* Add some padding for a better appearance */
+    border-top-left-radius: 3px; /* Rounded top corners */
+    border-top-right-radius: 3px; /* Rounded top corners */
+}
+
+/* Style for the selected tab */
+QTabBar::tab:selected {
+    background-color: #50515f; /* Background color for the selected tab */
+    color: #ececf1; /* Text color for the selected tab */
+    border: 1px solid #acacbe; /* Lighter border for the selected tab */
+    border-bottom: 1px solid #202123; /* Match the background color of the tab pane to create a seamless look */
+    padding: 7px 12px; /* Slightly adjust padding for selected tab */
+}
+
+/* Style for the hovered tab */
+QTabBar::tab:hover {
+    background-color: #8e8ea0; /* Background color when hovering over a tab */
+    color: #343541; /* Text color for the hovered tab */
+    border: 1px solid #acacbe; /* Lighter border on hover */
+}
+
+/* Style for disabled tabs */
+QTabBar::tab:disabled {
+    background-color: #30303a; /* Darker background for disabled tabs */
+    color: #6a6a75; /* Muted text color for disabled tabs */
+    border: 1px solid #565869; /* Border color for disabled tabs */
+}
+
+/* Adjustments to the tab pane (content area below the tabs) */
+QTabWidget::pane {
+    border: 1px solid #565869; /* Border around the content area */
+    background-color: #202123; /* Match the background of the content area to other containers */
+    border-radius: 3px; /* Rounded corners for the content area */
+    margin-top: -1px; /* Overlap with the tab bar to create a seamless transition */
+}
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
    <property name="spacing">
@@ -1336,7 +1391,7 @@ QGroupBox{
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="accessibleName">
@@ -1928,7 +1983,7 @@ QPushButton:hover{
 </string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="swAdd_cadastrals">
                 <property name="styleSheet">
@@ -2326,8 +2381,68 @@ background-color: rgb(52, 59, 71)
                              <item>
                               <widget class="QListWidget" name="listWidget_county">
                                <property name="styleSheet">
-                                <string notr="true"/>
+                                <string notr="true">/* Adjust QListWidget style */
+QListWidget {
+    background-color: #343541; /* Match the background color with the container style */
+    color: #ececf1; /* Text color */
+    border: 1px solid #565869; /* Border to match other widgets */
+    border-radius: 3px; /* Rounded corners */
+    padding: 3px; /* Add padding to the list */
+}
+
+/* Style for individual items in the QListWidget */
+QListWidget::item {
+    background-color: #40414f; /* Background color for unselected items */
+    color: #ececf1; /* Text color for unselected items */
+    padding: 3px; /* Padding around list items */
+    border-radius: 1.5px; /* Slight rounding of the item edges */
+}
+
+/* Style for selected items */
+QListWidget::item:selected {
+    background-color: #50515f; /* Slightly lighter background color for selected items */
+    color: #ececf1; /* Text color for selected items */
+    border: 1px solid #acacbe; /* Lighter border for the selected item */
+}
+
+/* Style for hovered items */
+QListWidget::item:hover {
+    background-color: #8e8ea0; /* Lighter background color when hovering */
+    color: #343541; /* Text color on hover to contrast the lighter background */
+}
+
+/* Style for disabled items */
+QListWidget::item:disabled {
+    background-color: #30303a; /* Darker background for disabled items */
+    color: #6a6a75; /* Muted text color for disabled items */
+}
+</string>
                                </property>
+                               <item>
+                                <property name="text">
+                                 <string>New Item</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>New Item</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>New Item</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>New Item</string>
+                                </property>
+                               </item>
+                               <item>
+                                <property name="text">
+                                 <string>New Item</string>
+                                </property>
+                               </item>
                               </widget>
                              </item>
                             </layout>
@@ -2671,14 +2786,11 @@ background-color: rgb(52, 59, 71)
                        <item>
                         <widget class="QTabWidget" name="tabWidget_Propertie_list">
                          <property name="currentIndex">
-                          <number>1</number>
+                          <number>0</number>
                          </property>
                          <widget class="QWidget" name="tabKinnistud">
                           <property name="styleSheet">
-                           <string notr="true">#tabKinnistud
-{
-	background-color: transparent
-}</string>
+                           <string notr="true"/>
                           </property>
                           <attribute name="title">
                            <string>Kinnistud</string>
@@ -2793,7 +2905,114 @@ background-color: rgb(52, 59, 71)
                                   <number>0</number>
                                  </property>
                                  <item>
-                                  <widget class="QTableView" name="tblvResults_Confirm"/>
+                                  <widget class="QTableView" name="tblvResults_Confirm">
+                                   <property name="styleSheet">
+                                    <string notr="true">/* Enable and style alternating row colors */
+QTableView {
+    background-color: #343541; /* Default row background */
+    alternate-background-color: #40414f; /* Background color for alternating rows */
+    color: #ececf1; /* Default text color */
+    border: 1px solid #565869; /* Border to match other widgets */
+    border-radius: 5px; /* Rounded corners */
+    gridline-color: #565869; /* Gridline color */
+    selection-background-color: #50515f; /* Background color for selected cells */
+    selection-color: #ececf1; /* Text color for selected cells */
+}
+
+/* Adjust header style */
+QHeaderView::section {
+    background-color: #40414f; /* Background color for the header */
+    color: #ececf1; /* Text color in the header */
+    border: 0.5px solid #565869; /* Hairline border around the header sections */
+    padding: 2px 4px; /* Compact padding */
+    border-radius: 2px; /* Slightly less rounding of the header section edges */
+    font-size: 11px; /* Further reduced font size */
+}
+
+
+/* Style for hovered rows */
+QTableView::item:hover {
+    background-color: #8e8ea0; /* Lighter background color when hovering over a row */
+    color: #343541; /* Text color on hover to contrast the lighter background */
+}
+
+/* Style for selected rows */
+QTableView::item:selected {
+    background-color: #50515f; /* Slightly lighter background color for selected rows */
+    color: #ececf1; /* Text color for selected rows */
+}
+
+/* Style for alternating rows */
+QTableView::item {
+    background-color: #343541; /* Default row background */
+    color: #ececf1; /* Default text color */
+}
+
+/* Adjust vertical scroll bar style */
+QScrollBar:vertical {
+    background-color: #343541; /* Match scrollbar background with the table */
+    width: 12px; /* Narrower scrollbar */
+    margin: 22px 0 22px 0; /* Leave space for the top and bottom arrows */
+    border: 1px solid #565869; /* Border for the scrollbar */
+}
+
+QScrollBar::handle:vertical {
+    background-color: #40414f; /* Color for the scrollbar handle */
+    min-height: 20px;
+    border-radius: 5px; /* Rounded scrollbar handle */
+    border: 1px solid #565869; /* Border around the scrollbar handle */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background-color: #40414f; /* Background for the arrows */
+    border: 1px solid #565869; /* Border for the arrows */
+    height: 15px;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover {
+    background-color: #8e8ea0; /* Lighter background on hover */
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* Adjust horizontal scroll bar style */
+QScrollBar:horizontal {
+    background-color: #343541; /* Match scrollbar background with the table */
+    height: 12px; /* Narrower scrollbar */
+    margin: 0 22px 0 22px; /* Leave space for the left and right arrows */
+    border: 1px solid #565869; /* Border for the scrollbar */
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #40414f; /* Color for the scrollbar handle */
+    min-width: 20px;
+    border-radius: 5px; /* Rounded scrollbar handle */
+    border: 1px solid #565869; /* Border around the scrollbar handle */
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    background-color: #40414f; /* Background for the arrows */
+    border: 1px solid #565869; /* Border for the arrows */
+    width: 15px;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {
+    background-color: #8e8ea0; /* Lighter background on hover */
+}
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none;
+}
+</string>
+                                   </property>
+                                   <property name="alternatingRowColors">
+                                    <bool>true</bool>
+                                   </property>
+                                  </widget>
                                  </item>
                                 </layout>
                                </widget>
@@ -2947,7 +3166,11 @@ background-color: rgb(52, 59, 71)
                           </attribute>
                           <layout class="QVBoxLayout" name="verticalLayout_143">
                            <item>
-                            <widget class="QTableView" name="tblNew"/>
+                            <widget class="QTableView" name="tblNew">
+                             <property name="styleSheet">
+                              <string notr="true"/>
+                             </property>
+                            </widget>
                            </item>
                           </layout>
                          </widget>
@@ -9156,6 +9379,11 @@ QHeaderView::section {
                   <attribute name="headerMinimumSectionSize">
                    <number>20</number>
                   </attribute>
+                  <column>
+                   <property name="text">
+                    <string notr="true">1</string>
+                   </property>
+                  </column>
                  </widget>
                 </item>
                </layout>

@@ -834,7 +834,6 @@ class MyLablChecker:
             #print("missing item")
             #print(missing_items)
             return missing_items
-        
         else:
             print(f"Error: {response.status_code}")
             return None
@@ -850,6 +849,8 @@ class MyLablChecker:
         # Find items that are not returned
         missing_items = [item for item in item_list if item not in returned_items]
         return missing_items
+    
+
 
 class PropertiesGeneralQueries:
     def get_properties_MyLabl_idsAndCadastrals(self, properties_list):
@@ -949,7 +950,7 @@ class PropertiesGeneralQueries:
             }
 
             response = requestBuilder.construct_and_send_request(self, query, variables)
-            
+
             if response.status_code == 200:
                 returned_id = handleResponse.response_properties_data_ids(response)
                 #cadaster = handleResponse.response_properties_cadastral_numbers(response)

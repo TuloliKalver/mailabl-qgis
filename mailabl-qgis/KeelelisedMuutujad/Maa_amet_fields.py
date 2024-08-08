@@ -37,6 +37,9 @@ class Katastriyksus:
     #oiguslik_alus = "oiguslik_alus"  # Katastriüksuse viimase muudatuse õiguslik alus  new
     eksport = "eksport"        # Andmete väljavõtte kuupäev
 
+class Puprpouse:
+    transport = "TRANSPORDIMAA"
+
 
 class OldKatastriyksus:
     tunnus = "TUNNUS"                            # Katastriüksuse tunnus
