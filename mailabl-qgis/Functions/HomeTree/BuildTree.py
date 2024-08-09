@@ -176,9 +176,9 @@ class MyTreeHome:
         treeWidget.itemClicked.connect(MyTreeHome.handle_dok_clicked)
 
         treeWidget.setColumnWidth(0, 150)
-        treeWidget.setColumnWidth(1, 400)
-        treeWidget.setColumnWidth(3, 15)
-        treeWidget.setColumnWidth(5, 15)
+        treeWidget.setColumnWidth(1, 350)
+        treeWidget.setColumnWidth(3, 30)
+        treeWidget.setColumnWidth(5, 30)
 
 
 

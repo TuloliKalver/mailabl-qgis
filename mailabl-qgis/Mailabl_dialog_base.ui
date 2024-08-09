@@ -54,6 +54,7 @@
 	color: #c5c5d2;
 }
 
+/*Line Edit styling*/
 QLineEdit {
     background-color: #35363f;  /* Lighter background color */
     color: #ececf1;
@@ -75,7 +76,6 @@ QLineEdit {
 
 
 /*konteinerite peamised omadused*/
-
 #centerMenuSubContainer{
     background-color: #272c35;
 }
@@ -177,18 +177,18 @@ QPushButton:disabled {
 
 /* General QComboBox styles */
 QComboBox {
-    background-color: #40414f; /* Set the background color */
-    color: #ececf1;
-    border: 1px solid #565869;
-    border-radius: 3px;
-    padding-left: 5px;
+    background-color: #2e2f38; /* Match the dark gray background of QTableView */
+    color: #d1d1e0; /* Light gray text color to match QTableView */
+    border: 1px solid #4d4d4d; /* Same border color as QTableView */
+    border-radius: 5px; /* Matching rounded corners */
+    padding-left: 5px; /* Keep padding for alignment */
 }
 
 /* Style the dropdown button */
 QComboBox::drop-down {
-    background-color: #40414f;
-    border: 0px solid #40414f;
-    border-radius: 10px;
+    background-color: #2e2f38; /* Match the background color */
+    border: 1px solid #4d4d4d; /* Match the border color */
+    border-radius: 3px; /* Maintain rounding consistency */
     width: 16px;
     height: 16px;
     subcontrol-origin: padding;
@@ -197,101 +197,101 @@ QComboBox::drop-down {
 
 /* Style for the list view that shows the items */
 QComboBox QAbstractItemView {
-    background-color: #40414f;
-    border: 1px solid #acacbe;
-    selection-background-color: #800080; /* Set the color of the selected row to purple */
-    selection-color: #ececf1; /* Ensure the text color of the selected row is readable */
+    background-color: #2e2f38; /* Match the dark gray background */
+    border: 1px solid #4d4d4d; /* Same border as QTableView */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(46, 47, 56, 10), /* Match the lighter gray in QTableView selection */
+        stop: 1 rgba(210, 72, 72, 50)  /* Match the darker red in QTableView selection */
+    );
+    selection-color: #ececf1; /* Ensure readable text color for selected items */
 }
 
 /* Style for individual items in the list */
 QComboBox QAbstractItemView::item {
-    background-color: #40414f;
-    color: #ececf1; /* Set the text color */
+    background-color: #2e2f38; /* Match the background color of non-selected items */
+    color: #d1d1e0; /* Light gray text color */
 }
 
 /* Style for the selected item */
 QComboBox QAbstractItemView::item:selected {
-    background-color: #800080; /* Set the background color of the selected row to purple */
-    color: #ececf1; /* Ensure the text color of the selected row is readable */
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(46, 47, 56, 10), /* Lighter gray with higher transparency */
+        stop: 1 rgba(210, 72, 72, 50) /* Darker red with lower transparency */
+    ); /* Gradient background for selected items */
+    color: #ececf1; /* Ensure readable text color */
 }
 
 /* Style for the hovered item */
 QComboBox QAbstractItemView::item:hover {
-    background-color: #a64ca6; /* Set the background color of the hovered row to a lighter purple */
-    color: #ececf1; /* Ensure the text color of the hovered row is readable */
+    background-color: #4e4f5b; /* Medium gray for hovered items, similar to QTableView */
+    color: #ececf1; /* Maintain contrast */
 }
 
 /* Style the QComboBox when it is focused */
 QComboBox:focus {
-    border: 0.5px solid #acacbe;
+    border: 0.5px solid #acacbe; /* Slightly lighter border on focus */
 }
 
 /* Style the arrow inside the dropdown */
 QComboBox::down-arrow {
     width: 0;
     height: 0;
-    border-left: 6px solid #40414f;
-    border-right: 6px solid #40414f;
-    border-top: 8px solid #ececf1; /* Adjust the color to match your design */
+    border-left: 6px solid #2e2f38; /* Match the QComboBox background */
+    border-right: 6px solid #2e2f38; /* Match the QComboBox background */
+    border-top: 8px solid #d1d1e0; /* Use light gray for the arrow to match text color */
     margin: 8px auto; /* Center the arrow */
 }
 
-/* Style the QComboBox when it is in &quot;on&quot; state */
-QComboBox::on {
-    border: 0.5px solid #acacbe;
-}
 
-/* Style the QComboBox when it is disabled */
-QComboBox:disabled {
-    background-color: #40414f; /* Set the background color for the disabled state */
-    border: 1px solid #565869; /* Adjust border color for disabled state */
-    color: #8a95a5; /* Adjust text color for disabled state */
-}
+
 
 /* General QCheckBox styles */
 QCheckBox {
-    color: #ececf1; /* Text color */
+    color: #d1d1e0; /* Light gray text color */
     spacing: 5px; /* Space between checkbox and text */
 }
 
 /* Style the indicator (checkbox) */
 QCheckBox::indicator {
-    width: 12px;
-    height: 12px;
-    background-color: #40414f; /* Background color for unchecked state */
-    border: 1px solid #565869; /* Border for unchecked state */
-    border-radius: 3px;
+    width: 12px; /* Width of the checkbox */
+    height: 12px; /* Height of the checkbox */
+    background-color: #3a3b46; /* Darker gray for unchecked state */
+    border: 1px solid #565869; /* Border color for unchecked state */
+    border-radius: 2px; /* Slightly rounded corners */
 }
 
 /* Style the indicator when checked */
 QCheckBox::indicator:checked {
-    background-color: rgba(70, 70, 85, 0.5); /* Semi-transparent gray background color for checked state */
-    border: 1px solid #acacbe;
-    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+    background-color: #4a4b59; /* Slightly darker gray for checked state */
+    border: 1px solid #4d4d4d; /* Border color matching the theme */
+    border-radius: 2px; /* Slightly rounded corners */
+    image: url(:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg); /* Using provided SVG icon URL */
 }
 
 /* Style the indicator when unchecked */
 QCheckBox::indicator:unchecked {
-    background-color: #40414f; /* Background color for unchecked state */
-    border: 1px solid #565869; /* Border for unchecked state */
+    background-color: #3a3b46; /* Darker gray for unchecked state */
+    border: 1px solid #565869; /* Border color for unchecked state */
 }
 
 /* Style the indicator when hovered */
 QCheckBox::indicator:hover {
-    background-color: #565869;
+    background-color: #4e4f5b; /* Medium gray when hovering */
 }
 
 /* Style the indicator when disabled */
 QCheckBox::indicator:disabled {
     background-color: #30303a; /* Darker background color for disabled state */
-    border: 1px solid #40414f; /* Darker border for disabled state */
+    border: 1px solid #4d4d4d; /* Darker border for disabled state */
 }
 
 /* Style the indicator when checked and disabled */
 QCheckBox::indicator:checked:disabled {
-    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray background color for checked and disabled state */
-    border: 1px solid #40414f;
-    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray for checked and disabled state */
+    border: 1px solid #4d4d4d; /* Border color matching the theme */
+    image: url(:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg); /* Using provided SVG icon URL */
     opacity: 0.5; /* Make the icon appear disabled */
 }
 
@@ -300,32 +300,11 @@ QCheckBox:disabled {
     color: #6a6a75; /* Darker text color for disabled state */
 }
 
+
 QGroupBox{
 	color: #ececf1;
 }
 
-/* Style tab Widget */
-QTabWidget {
-    background-color: transparent; /* Keep the background of the tab widget transparent */
-    border: none; /* Remove any default borders */
-}
-
-/* Style the tab bar (where the tabs are displayed) */
-QTabBar {
-    background-color: #202123; /* Match the background color of your containers */
-    border-bottom: 1px solid #565869; /* Border color to separate the tabs from the content area */
-}
-
-/* Style for individual tabs */
-QTabBar::tab {
-    background-color: #343541; /* Background color of unselected tabs */
-    color: #ececf1; /* Text color for unselected tabs */
-    border: 1px solid #565869; /* Border for unselected tabs */
-    border-bottom: none; /* Remove the bottom border to avoid overlap with the content area */
-    padding: 6px 12px; /* Add some padding for a better appearance */
-    border-top-left-radius: 3px; /* Rounded top corners */
-    border-top-right-radius: 3px; /* Rounded top corners */
-}
 
 /* Style for the selected tab */
 QTabBar::tab:selected {
@@ -356,6 +335,240 @@ QTabWidget::pane {
     background-color: #202123; /* Match the background of the content area to other containers */
     border-radius: 3px; /* Rounded corners for the content area */
     margin-top: -1px; /* Overlap with the tab bar to create a seamless transition */
+}
+
+/* General QScrollBar style within QTableView */
+QScrollBar:vertical, QScrollBar:horizontal {
+    background-color: transparent; /* Ensure the scrollbar background is transparent */
+}
+
+/* Vertical scroll bar groove (track) */
+QScrollBar::groove:vertical {
+    border: 1px solid #4d4d4d; /* Dark border around the groove */
+    width: 8px; /* Width of the groove */
+    background: #333; /* Darker gray for the groove background */
+    border-radius: 3px; /* Adjusted to be less than half of 8px */
+}
+
+/* Horizontal scroll bar groove (track) */
+QScrollBar::groove:horizontal {
+    border: 1px solid #4d4d4d; /* Dark border around the groove */
+    height: 8px; /* Height of the groove */
+    background: #333; /* Darker gray for the groove background */
+    border-radius: 3px; /* Adjusted to be less than half of 8px */
+}
+
+/* Vertical scroll bar handle (thumb) */
+QScrollBar::handle:vertical {
+    background: #b5b5b5; /* Lighter gray for the handle */
+    border: 1px solid #707070; /* Slightly darker border for the handle */
+    width: 16px; /* Width of the handle */
+    border-radius: 6px; /* Adjusted to be less than half of 16px for a rounded effect */
+}
+
+/* Horizontal scroll bar handle (thumb) */
+QScrollBar::handle:horizontal {
+    background: #b5b5b5; /* Lighter gray for the handle */
+    border: 1px solid #707070; /* Slightly darker border for the handle */
+    height: 16px; /* Height of the handle */
+    border-radius: 6px; /* Adjusted to be less than half of 16px for a rounded effect */
+}
+
+/* Handle when hovered (both vertical and horizontal) */
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+    background: #d8d8d8; /* Lighter gray when hovered */
+}
+
+/* Handle when pressed (both vertical and horizontal) */
+QScrollBar::handle:vertical:pressed, QScrollBar::handle:horizontal:pressed {
+    background: #999; /* Darker gray when pressed */
+}
+
+/* Slider groove when focused (both vertical and horizontal) */
+QScrollBar::groove:vertical:focus, QScrollBar::groove:horizontal:focus {
+    background: #444; /* Slightly brighter when focused */
+}
+
+/* Scrollbar arrows (both vertical and horizontal) */
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    background: #40414f; /* Background for the arrows */
+    border: 1px solid #565869; /* Border for the arrows */
+    border-radius: 2px; /* Adjusted to be less than half of 4px */
+}
+
+/* Arrows on hover */
+QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover,
+QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {
+    background: #8e8ea0; /* Lighter background on hover */
+}
+
+/* Style for the scroll bar pages (scroll bar track) */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical,
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none; /* No background for the pages */
+}
+
+/* Adjust QListWidget style */
+QListWidget {
+    background-color: #2e2f38; /* Dark gray background to match the new theme */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 3px; /* Rounded corners */
+    padding: 3px; /* Add padding to the list */
+}
+
+/* Style for individual items in the QListWidget */
+QListWidget::item {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(60, 62, 73, 0.2), stop: 1 rgba(42, 42, 51, 0.35)); /* Gradient for non-selected items */
+    color: #d1d1e0; /* Light gray text color for unselected items */
+    padding: 3px; /* Padding around list items */
+    border-radius: 1.5px; /* Slight rounding of the item edges */
+}
+
+/* Style for selected items in QListWidget */
+QListWidget::item:selected {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(210, 72, 72, 0.05), stop: 1 rgba(210, 72, 72, 0.25)); /* Gradient for selected items */
+    color: #ececf1; /* Lighter text color for selected items */
+    border: 1px solid #707070; /* Lighter border for the selected item */
+}
+
+/* Style for hovered items in QListWidget */
+QListWidget::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering */
+    color: #ececf1; /* Text color on hover to maintain contrast */
+}
+
+/* Style for disabled items in QListWidget */
+QListWidget::item:disabled {
+    background-color: #30303a; /* Darker background for disabled items */
+    color: #6a6a75; /* Muted gray text color for disabled items */
+}
+
+/* General QLineEdit styles */
+QLineEdit {
+    background-color: #35363f; /* Lighter background color */
+    color: #ececf1; /* Light gray text color */
+    border: 1px solid #4d4d5b; /* Thinner border with a different color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 4px; /* Padding inside the line edit */
+    /* Remove top and side borders */
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+/* Style for the line edit when focused */
+QLineEdit:focus {
+    border: 1px solid #6a6a75; /* Highlight border color when focused */
+    background-color: #35363f; /* Keep the background color consistent when focused */
+}
+
+/* Style for the placeholder text */
+QLineEdit::placeholder {
+    color: #6a6a75; /* Lighter gray color for placeholder text */
+}
+
+/* Style for the line edit when disabled */
+QLineEdit:disabled {
+    background-color: #30303a; /* Darker background color for disabled state */
+    color: #6a6a75; /* Muted gray text color for disabled state */
+    border: 1px solid #4d4d4d; /* Same border color as normal state */
+}
+
+/* Style for the line edit when read-only */
+QLineEdit[readOnly=&quot;true&quot;] {
+    background-color: #35363f; /* Same as normal background */
+    color: #ececf1; /* Same as normal text color */
+    border: 1px solid #4d4d5b; /* Same as normal border */
+    border-style: dashed; /* Dashed border style for read-only state */
+}
+
+/* Style for the line edit when active */
+QLineEdit:active {
+    border: 1px solid #6a6a75; /* Highlight border color when active */
+}
+
+/* Style for the line edit when hovered */
+QLineEdit:hover {
+    background-color: #3d3e47; /* Slightly darker background color on hover */
+}
+
+/* Style for the line edit when error state (optional) */
+QLineEdit:invalid {
+    border: 1px solid #d20000; /* Red border for invalid input */
+}
+
+/* Style for the line edit when modified (optional) */
+QLineEdit:modified {
+    border: 1px solid #d1d1e0; /* Border color indicating modification */
+}
+
+/* General QTableView adjustments */
+QTableView {
+    background-color: #2e2f38; /* Dark gray for all rows */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 5px; /* Rounded corners */
+    gridline-color: #565869; /* Gridline color */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient for selected cells */
+    selection-color: #ececf1; /* Lighter text color for selected cells */
+}
+
+/* Adjust header style */
+QHeaderView::section {
+    background-color: #35353f; /* Darker gray background for the header */
+    color: #d1d1e0; /* Light gray text color in the header */
+    border-top: 0.5px solid #323232; /* Slightly darker border on top */
+    border-left: 0.5px solid #323232; /* Slightly darker border on left */
+    border-right: 0.5px solid #323232; /* Slightly darker border on right */
+    border-bottom: 1px solid #4d4d4d; /* Lighter bottom border to separate data from headers */
+    padding: 1px 3px; /* Slightly reduced padding */
+    border-top-left-radius: 2px; /* Retain rounding on the top-left corner */
+    border-top-right-radius: 2px; /* Retain rounding on the top-right corner */
+    border-bottom-left-radius: 0px; /* No rounding on the bottom-left corner */
+    border-bottom-right-radius: 0px; /* No rounding on the bottom-right corner */
+    font-size: 11px; /* Reduced font size */
+}
+
+/* Style for hovered rows */
+QTableView::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering over a row */
+    color: #ececf1; /* Text color on hover for better contrast */
+}
+
+/* Style for selected rows */
+QTableView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient background color for selected rows */
+    color: #ececf1; /* Light gray text color for selected rows */
+}
+
+/* Style for all rows (non-selected) */
+QTableView::item {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Gradient background color for non-selected rows */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+/* Ensure deselected rows return to their original state */
+QTableView::item:!selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Reset to the default background color */
+    color: #d1d1e0; /* Reset to the default text color */
 }
 </string>
   </property>
@@ -1391,7 +1604,7 @@ QTabWidget::pane {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>6</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="accessibleName">
@@ -1744,6 +1957,9 @@ QPushButton:hover{
                              <pointsize>10</pointsize>
                             </font>
                            </property>
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
                           </widget>
                          </item>
                          <item>
@@ -1818,7 +2034,7 @@ QPushButton:hover{
                       <item>
                        <widget class="QTableView" name="tweasementView">
                         <property name="styleSheet">
-                         <string notr="true">background-color: rgb(52, 59, 71);</string>
+                         <string notr="true"/>
                         </property>
                        </widget>
                       </item>
@@ -1897,6 +2113,9 @@ QPushButton:hover{
             <property name="accessibleName">
              <string>None</string>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
               <widget class="QWidget" name="CadastralPageName" native="true">
@@ -1919,9 +2138,9 @@ QPushButton:hover{
              <item>
               <widget class="QStackedWidget" name="swCadastral_sub_processes">
                <property name="styleSheet">
-                <string notr="true">*{
-background-color: transparent
-}
+                <string notr="true">
+
+
 
 QPushButton{
 	padding: 1px 8px;
@@ -1942,6 +2161,12 @@ QPushButton:hover{
     border-radius: 6px;
 }
 
+
+
+
+
+
+
 #FrDel_County_Heading,
 #FrDel_State_Heading,
 #FrDel_City_Heading,
@@ -1960,6 +2185,8 @@ QPushButton:hover{
         border: 1px solid #2c313c;
         border-radius: 3px;
     }
+
+
 
 #lblDel_County,
 #lblDel_State,
@@ -1980,10 +2207,11 @@ QPushButton:hover{
   border-bottom: 1px solid rgb(255, 255, 255); /* Replace #000 with the desired color */
 }
 
+
 </string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="swAdd_cadastrals">
                 <property name="styleSheet">
@@ -2011,41 +2239,7 @@ QPushButton:hover{
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">*
-{
-background-color: transparent
-}
-
-QPushButton{
-	padding: 1px 8px;
-    border-radius: 6px;
-	background-color:#40414f;
-	border: 0.5px solid #565869;
-}
-
-
-QPushButton:hover{
-    background-color: #8e8ea0;
-	padding: 1px 8px;
-    border-radius: 8px;
-	border: 0.5px solid #acacbe;
-    
-	color: rgb(255, 255, 255);
-	padding: 2px 8px;
-    border-radius: 6px;
-}
-
-QListWidget{
-background-color: rgb(52, 59, 71)
-}
-/***
-QTableView{
-background-color: rgb(52, 59, 71)
-}
-***/
-QLineEdit{
-background-color: rgb(52, 59, 71)
-}</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -2172,6 +2366,79 @@ background-color: rgb(52, 59, 71)
                           </item>
                           <item>
                            <widget class="QPushButton" name="pbSearch_Add">
+                            <property name="styleSheet">
+                             <string notr="true">/* General QPushButton styles */
+QPushButton {
+    padding: 1px 5px; /* Padding inside the button */
+    text-align: center; /* Center text alignment */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #40414f; /* Dark gray background color */
+    border: 1px solid #565869; /* Border color */
+    color: #ececf1; /* Light gray text color */
+    font-size: 14px; /* Font size */
+    font-family: Arial, sans-serif; /* Font family */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Style for QPushButton when hovered */
+QPushButton:hover {
+    background-color: #8e8ea0; /* Lighter gray background color on hover */
+    border: 0.5px solid #acacbe; /* Lighter border color on hover */
+    color: #343541; /* Darker text color on hover */
+    padding: 2px 5px; /* Adjust padding slightly on hover */
+    border-radius: 5px; /* Maintain rounded corners */
+}
+
+/* Style for QPushButton when pressed */
+QPushButton:pressed {
+    background-color: #2e2f38; /* Darker background color when pressed */
+    border: 1px solid #4d4d5b; /* Border color when pressed */
+    padding-top: 1px; /* Slightly adjust padding to simulate pressed effect */
+    padding-bottom: 1px; /* Slightly adjust padding to simulate pressed effect */
+    padding-left: 5px; /* Maintain padding on the left */
+    padding-right: 5px; /* Maintain padding on the right */
+}
+
+/* Style for QPushButton when disabled */
+QPushButton:disabled {
+    background-color: #303040; /* Darker background color for disabled state */
+    border: 1px solid #707070; /* Border color for disabled state */
+    color: #8a95a5; /* Muted text color for disabled state */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+}
+
+/* Style for QPushButton when focused */
+QPushButton:focus {
+    outline: none; /* Remove the default focus outline */
+    border: 1px solid #6a6a75; /* Highlight border color when focused */
+}
+
+/* Style for QPushButton with default role (default button) */
+QPushButton:default {
+    border: 1px solid #6a6a75; /* Highlight border color for default button */
+    background-color: #4a4b59; /* Slightly lighter background color for default button */
+}
+
+/* Style for QPushButton with a flat appearance */
+QPushButton:flat {
+    border: none; /* Remove border */
+    background-color: transparent; /* Transparent background */
+    color: #ececf1; /* Light gray text color */
+}
+
+/* Style for QPushButton with an icon */
+QPushButton::icon {
+    padding: 4px; /* Padding around the icon */
+    margin-right: 6px; /* Space between icon and text */
+}
+
+/* Style for QPushButton with checkable feature */
+QPushButton:checked {
+    background-color: #4a4b59; /* Darker gray background when checked */
+    border: 1px solid #6a6a75; /* Border color when checked */
+}
+</string>
+                            </property>
                             <property name="text">
                              <string>Otsi*</string>
                             </property>
@@ -2352,6 +2619,9 @@ background-color: rgb(52, 59, 71)
                                    </item>
                                    <item alignment="Qt::AlignRight">
                                     <widget class="QPushButton" name="pbDone_County">
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
                                      <property name="text">
                                       <string>Kinnita</string>
                                      </property>
@@ -2381,42 +2651,7 @@ background-color: rgb(52, 59, 71)
                              <item>
                               <widget class="QListWidget" name="listWidget_county">
                                <property name="styleSheet">
-                                <string notr="true">/* Adjust QListWidget style */
-QListWidget {
-    background-color: #343541; /* Match the background color with the container style */
-    color: #ececf1; /* Text color */
-    border: 1px solid #565869; /* Border to match other widgets */
-    border-radius: 3px; /* Rounded corners */
-    padding: 3px; /* Add padding to the list */
-}
-
-/* Style for individual items in the QListWidget */
-QListWidget::item {
-    background-color: #40414f; /* Background color for unselected items */
-    color: #ececf1; /* Text color for unselected items */
-    padding: 3px; /* Padding around list items */
-    border-radius: 1.5px; /* Slight rounding of the item edges */
-}
-
-/* Style for selected items */
-QListWidget::item:selected {
-    background-color: #50515f; /* Slightly lighter background color for selected items */
-    color: #ececf1; /* Text color for selected items */
-    border: 1px solid #acacbe; /* Lighter border for the selected item */
-}
-
-/* Style for hovered items */
-QListWidget::item:hover {
-    background-color: #8e8ea0; /* Lighter background color when hovering */
-    color: #343541; /* Text color on hover to contrast the lighter background */
-}
-
-/* Style for disabled items */
-QListWidget::item:disabled {
-    background-color: #30303a; /* Darker background for disabled items */
-    color: #6a6a75; /* Muted text color for disabled items */
-}
-</string>
+                                <string notr="true"/>
                                </property>
                                <item>
                                 <property name="text">
@@ -2785,6 +3020,45 @@ QListWidget::item:disabled {
                        </property>
                        <item>
                         <widget class="QTabWidget" name="tabWidget_Propertie_list">
+                         <property name="styleSheet">
+                          <string notr="true">/* Style tab Widget */
+QTabWidget {
+    background-color: transparent; /* Keep the background of the tab widget transparent */
+    border: none; /* Remove any default borders */
+}
+
+/* Style the tab bar (where the tabs are displayed) */
+QTabBar {
+    background-color: #2e2f38; /* Dark gray to match the table view */
+    border-bottom: 1px solid #4d4d4d; /* Border to separate the tabs from the content area */
+}
+
+/* Style for individual tabs */
+QTabBar::tab {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(60, 62, 73, 0.2), stop: 1 rgba(42, 42, 51, 0.35)); /* Gradient for unselected tabs */
+    color: #d1d1e0; /* Light gray text color for unselected tabs */
+    border: 1px solid #4d4d4d; /* Border color matching the table view */
+    border-bottom: none; /* Remove the bottom border to avoid overlap with the content area */
+    padding: 3px 8px; /* Reduced padding for a more compact look */
+    border-top-left-radius: 2px; /* Slightly rounded top corners */
+    border-top-right-radius: 2px; /* Slightly rounded top corners */
+    margin-right: 1px; /* Small space between tabs */
+}
+
+/* Style for selected tabs */
+QTabBar::tab:selected {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(210, 72, 72, 0.05), stop: 1 rgba(210, 72, 72, 0.25)); /* Gradient for selected tabs */
+    color: #ececf1; /* Lighter text color for selected tabs */
+    border-bottom: 1px solid #2e2f38; /* Match the background color of the content area */
+}
+
+/* Style for hovered tabs */
+QTabBar::tab:hover {
+    background-color: #4e4f5b; /* Medium gray when hovering over a tab */
+    color: #ececf1; /* Keep the text color consistent on hover */
+}
+</string>
+                         </property>
                          <property name="currentIndex">
                           <number>0</number>
                          </property>
@@ -2846,6 +3120,61 @@ QListWidget::item:disabled {
                                  </property>
                                  <item>
                                   <widget class="QCheckBox" name="cbChooseAllAdd_properties">
+                                   <property name="styleSheet">
+                                    <string notr="true">/* General QCheckBox styles */
+QCheckBox {
+    color: #d1d1e0; /* Light gray text color */
+    spacing: 5px; /* Space between checkbox and text */
+}
+
+/* Style the indicator (checkbox) */
+QCheckBox::indicator {
+    width: 12px; /* Width of the checkbox */
+    height: 12px; /* Height of the checkbox */
+    background-color: #3a3b46; /* Darker gray for unchecked state */
+    border: 1px solid #565869; /* Border color for unchecked state */
+    border-radius: 2px; /* Slightly rounded corners */
+}
+
+/* Style the indicator when checked */
+QCheckBox::indicator:checked {
+    background-color: #4a4b59; /* Slightly darker gray for checked state */
+    border: 1px solid #4d4d4d; /* Border color matching the theme */
+    border-radius: 2px; /* Slightly rounded corners */
+    image: url(:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg); /* Using provided SVG icon URL */
+}
+
+/* Style the indicator when unchecked */
+QCheckBox::indicator:unchecked {
+    background-color: #3a3b46; /* Darker gray for unchecked state */
+    border: 1px solid #565869; /* Border color for unchecked state */
+}
+
+/* Style the indicator when hovered */
+QCheckBox::indicator:hover {
+    background-color: #4e4f5b; /* Medium gray when hovering */
+}
+
+/* Style the indicator when disabled */
+QCheckBox::indicator:disabled {
+    background-color: #30303a; /* Darker background color for disabled state */
+    border: 1px solid #4d4d4d; /* Darker border for disabled state */
+}
+
+/* Style the indicator when checked and disabled */
+QCheckBox::indicator:checked:disabled {
+    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray for checked and disabled state */
+    border: 1px solid #4d4d4d; /* Border color matching the theme */
+    image: url(:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg); /* Using provided SVG icon URL */
+    opacity: 0.5; /* Make the icon appear disabled */
+}
+
+/* Style the checkbox text when disabled */
+QCheckBox:disabled {
+    color: #6a6a75; /* Darker text color for disabled state */
+}
+</string>
+                                   </property>
                                    <property name="text">
                                     <string>Vali kõik</string>
                                    </property>
@@ -2907,110 +3236,10 @@ QListWidget::item:disabled {
                                  <item>
                                   <widget class="QTableView" name="tblvResults_Confirm">
                                    <property name="styleSheet">
-                                    <string notr="true">/* Enable and style alternating row colors */
-QTableView {
-    background-color: #343541; /* Default row background */
-    alternate-background-color: #40414f; /* Background color for alternating rows */
-    color: #ececf1; /* Default text color */
-    border: 1px solid #565869; /* Border to match other widgets */
-    border-radius: 5px; /* Rounded corners */
-    gridline-color: #565869; /* Gridline color */
-    selection-background-color: #50515f; /* Background color for selected cells */
-    selection-color: #ececf1; /* Text color for selected cells */
-}
-
-/* Adjust header style */
-QHeaderView::section {
-    background-color: #40414f; /* Background color for the header */
-    color: #ececf1; /* Text color in the header */
-    border: 0.5px solid #565869; /* Hairline border around the header sections */
-    padding: 2px 4px; /* Compact padding */
-    border-radius: 2px; /* Slightly less rounding of the header section edges */
-    font-size: 11px; /* Further reduced font size */
-}
-
-
-/* Style for hovered rows */
-QTableView::item:hover {
-    background-color: #8e8ea0; /* Lighter background color when hovering over a row */
-    color: #343541; /* Text color on hover to contrast the lighter background */
-}
-
-/* Style for selected rows */
-QTableView::item:selected {
-    background-color: #50515f; /* Slightly lighter background color for selected rows */
-    color: #ececf1; /* Text color for selected rows */
-}
-
-/* Style for alternating rows */
-QTableView::item {
-    background-color: #343541; /* Default row background */
-    color: #ececf1; /* Default text color */
-}
-
-/* Adjust vertical scroll bar style */
-QScrollBar:vertical {
-    background-color: #343541; /* Match scrollbar background with the table */
-    width: 12px; /* Narrower scrollbar */
-    margin: 22px 0 22px 0; /* Leave space for the top and bottom arrows */
-    border: 1px solid #565869; /* Border for the scrollbar */
-}
-
-QScrollBar::handle:vertical {
-    background-color: #40414f; /* Color for the scrollbar handle */
-    min-height: 20px;
-    border-radius: 5px; /* Rounded scrollbar handle */
-    border: 1px solid #565869; /* Border around the scrollbar handle */
-}
-
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
-    background-color: #40414f; /* Background for the arrows */
-    border: 1px solid #565869; /* Border for the arrows */
-    height: 15px;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover {
-    background-color: #8e8ea0; /* Lighter background on hover */
-}
-
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    background: none;
-}
-
-/* Adjust horizontal scroll bar style */
-QScrollBar:horizontal {
-    background-color: #343541; /* Match scrollbar background with the table */
-    height: 12px; /* Narrower scrollbar */
-    margin: 0 22px 0 22px; /* Leave space for the left and right arrows */
-    border: 1px solid #565869; /* Border for the scrollbar */
-}
-
-QScrollBar::handle:horizontal {
-    background-color: #40414f; /* Color for the scrollbar handle */
-    min-width: 20px;
-    border-radius: 5px; /* Rounded scrollbar handle */
-    border: 1px solid #565869; /* Border around the scrollbar handle */
-}
-
-QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
-    background-color: #40414f; /* Background for the arrows */
-    border: 1px solid #565869; /* Border for the arrows */
-    width: 15px;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {
-    background-color: #8e8ea0; /* Lighter background on hover */
-}
-
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-    background: none;
-}
-</string>
+                                    <string notr="true"/>
                                    </property>
                                    <property name="alternatingRowColors">
-                                    <bool>true</bool>
+                                    <bool>false</bool>
                                    </property>
                                   </widget>
                                  </item>
@@ -3106,7 +3335,77 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
                                </widget>
                               </item>
                               <item>
-                               <widget class="QTableView" name="tblvResults_streets_Confirm"/>
+                               <widget class="QTableView" name="tblvResults_streets_Confirm">
+                                <property name="styleSheet">
+                                 <string notr="true">/* General QTableView adjustments */
+QTableView {
+    background-color: #2e2f38; /* Dark gray for all rows */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 5px; /* Rounded corners */
+    gridline-color: #565869; /* Gridline color */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient for selected cells */
+    selection-color: #ececf1; /* Lighter text color for selected cells */
+}
+
+/* Adjust header style */
+QHeaderView::section {
+    background-color: #35353f; /* Darker gray background for the header */
+    color: #d1d1e0; /* Light gray text color in the header */
+    border-top: 0.5px solid #323232; /* Slightly darker border on top */
+    border-left: 0.5px solid #323232; /* Slightly darker border on left */
+    border-right: 0.5px solid #323232; /* Slightly darker border on right */
+    border-bottom: 1px solid #4d4d4d; /* Lighter bottom border to separate data from headers */
+    padding: 1px 3px; /* Slightly reduced padding */
+    border-top-left-radius: 2px; /* Retain rounding on the top-left corner */
+    border-top-right-radius: 2px; /* Retain rounding on the top-right corner */
+    border-bottom-left-radius: 0px; /* No rounding on the bottom-left corner */
+    border-bottom-right-radius: 0px; /* No rounding on the bottom-right corner */
+    font-size: 11px; /* Reduced font size */
+}
+
+/* Style for hovered rows */
+QTableView::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering over a row */
+    color: #ececf1; /* Text color on hover for better contrast */
+}
+
+/* Style for selected rows */
+QTableView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient background color for selected rows */
+    color: #ececf1; /* Light gray text color for selected rows */
+}
+
+/* Style for all rows (non-selected) */
+QTableView::item {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Gradient background color for non-selected rows */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+/* Ensure deselected rows return to their original state */
+QTableView::item:!selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Reset to the default background color */
+    color: #d1d1e0; /* Reset to the default text color */
+}
+</string>
+                                </property>
+                               </widget>
                               </item>
                               <item>
                                <widget class="QFrame" name="frame_13">
@@ -3168,7 +3467,73 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
                            <item>
                             <widget class="QTableView" name="tblNew">
                              <property name="styleSheet">
-                              <string notr="true"/>
+                              <string notr="true">/* General QTableView adjustments */
+QTableView {
+    background-color: #2e2f38; /* Dark gray for all rows */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 5px; /* Rounded corners */
+    gridline-color: #565869; /* Gridline color */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient for selected cells */
+    selection-color: #ececf1; /* Lighter text color for selected cells */
+}
+
+/* Adjust header style */
+QHeaderView::section {
+    background-color: #35353f; /* Darker gray background for the header */
+    color: #d1d1e0; /* Light gray text color in the header */
+    border-top: 0.5px solid #323232; /* Slightly darker border on top */
+    border-left: 0.5px solid #323232; /* Slightly darker border on left */
+    border-right: 0.5px solid #323232; /* Slightly darker border on right */
+    border-bottom: 1px solid #4d4d4d; /* Lighter bottom border to separate data from headers */
+    padding: 1px 3px; /* Slightly reduced padding */
+    border-top-left-radius: 2px; /* Retain rounding on the top-left corner */
+    border-top-right-radius: 2px; /* Retain rounding on the top-right corner */
+    border-bottom-left-radius: 0px; /* No rounding on the bottom-left corner */
+    border-bottom-right-radius: 0px; /* No rounding on the bottom-right corner */
+    font-size: 11px; /* Reduced font size */
+}
+
+/* Style for hovered rows */
+QTableView::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering over a row */
+    color: #ececf1; /* Text color on hover for better contrast */
+}
+
+/* Style for selected rows */
+QTableView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient background color for selected rows */
+    color: #ececf1; /* Light gray text color for selected rows */
+}
+
+/* Style for all rows (non-selected) */
+QTableView::item {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Gradient background color for non-selected rows */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+/* Ensure deselected rows return to their original state */
+QTableView::item:!selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Reset to the default background color */
+    color: #d1d1e0; /* Reset to the default text color */
+}
+</string>
                              </property>
                             </widget>
                            </item>
@@ -3243,10 +3608,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
                </widget>
                <widget class="QWidget" name="swRemove_cadastrals">
                 <property name="styleSheet">
-                 <string notr="true">QgsCheckableCombobox{
-
-background-color: rgb(52, 59, 71)
-}</string>
+                 <string notr="true"/>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_15">
                  <property name="spacing">
@@ -3267,14 +3629,7 @@ background-color: rgb(52, 59, 71)
                  <item>
                   <widget class="QWidget" name="wdDel_Cadastrals_Main" native="true">
                    <property name="styleSheet">
-                    <string notr="true">*
-{
-	background-color:transparent;
-}
-#QProgressBar
-{
-	color: rgb(255, 255, 255);
-}
+                    <string notr="true">
 
 QPushButton{
 	padding: 1px 8px;
@@ -3295,26 +3650,7 @@ QPushButton:hover{
     border-radius: 6px;
 }
 
-QgsCheckableComboBox{
-
-background-color: rgb(52, 59, 71)
-}
-
-QComboBox{
-
-background-color: rgb(52, 59, 71)
-}
-QListWidget{
-background-color: rgb(52, 59, 71)
-}
-/***
-QTableView{
-background-color: rgb(52, 59, 71)
-}
-***/
-QLineEdit{
-background-color: rgb(52, 59, 71)
-}</string>
+</string>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_21">
                     <property name="leftMargin">
@@ -3927,6 +4263,45 @@ background-color: rgb(52, 59, 71)
                     </item>
                     <item>
                      <widget class="QFrame" name="frDel_Main_Selected_Data_Overview">
+                      <property name="styleSheet">
+                       <string notr="true">/* Style tab Widget */
+QTabWidget {
+    background-color: transparent; /* Keep the background of the tab widget transparent */
+    border: none; /* Remove any default borders */
+}
+
+/* Style the tab bar (where the tabs are displayed) */
+QTabBar {
+    background-color: #2e2f38; /* Dark gray to match the table view */
+    border-bottom: 1px solid #4d4d4d; /* Border to separate the tabs from the content area */
+}
+
+/* Style for individual tabs */
+QTabBar::tab {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(60, 62, 73, 0.2), stop: 1 rgba(42, 42, 51, 0.35)); /* Gradient for unselected tabs */
+    color: #d1d1e0; /* Light gray text color for unselected tabs */
+    border: 1px solid #4d4d4d; /* Border color matching the table view */
+    border-bottom: none; /* Remove the bottom border to avoid overlap with the content area */
+    padding: 3px 8px; /* Reduced padding for a more compact look */
+    border-top-left-radius: 2px; /* Slightly rounded top corners */
+    border-top-right-radius: 2px; /* Slightly rounded top corners */
+    margin-right: 1px; /* Small space between tabs */
+}
+
+/* Style for selected tabs */
+QTabBar::tab:selected {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(210, 72, 72, 0.05), stop: 1 rgba(210, 72, 72, 0.25)); /* Gradient for selected tabs */
+    color: #ececf1; /* Lighter text color for selected tabs */
+    border-bottom: 1px solid #2e2f38; /* Match the background color of the content area */
+}
+
+/* Style for hovered tabs */
+QTabBar::tab:hover {
+    background-color: #4e4f5b; /* Medium gray when hovering over a tab */
+    color: #ececf1; /* Keep the text color consistent on hover */
+}
+</string>
+                      </property>
                       <property name="frameShape">
                        <enum>QFrame::StyledPanel</enum>
                       </property>
@@ -4022,7 +4397,11 @@ background-color: rgb(52, 59, 71)
                             </widget>
                            </item>
                            <item>
-                            <widget class="QTableView" name="tbl_Delete_properties"/>
+                            <widget class="QTableView" name="tbl_Delete_properties">
+                             <property name="styleSheet">
+                              <string notr="true"/>
+                             </property>
+                            </widget>
                            </item>
                           </layout>
                          </widget>
@@ -4079,7 +4458,77 @@ background-color: rgb(52, 59, 71)
                             </widget>
                            </item>
                            <item>
-                            <widget class="QTableView" name="tbl_Delete_streets"/>
+                            <widget class="QTableView" name="tbl_Delete_streets">
+                             <property name="styleSheet">
+                              <string notr="true">/* General QTableView adjustments */
+QTableView {
+    background-color: #2e2f38; /* Dark gray for all rows */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 5px; /* Rounded corners */
+    gridline-color: #565869; /* Gridline color */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient for selected cells */
+    selection-color: #ececf1; /* Lighter text color for selected cells */
+}
+
+/* Adjust header style */
+QHeaderView::section {
+    background-color: #35353f; /* Darker gray background for the header */
+    color: #d1d1e0; /* Light gray text color in the header */
+    border-top: 0.5px solid #323232; /* Slightly darker border on top */
+    border-left: 0.5px solid #323232; /* Slightly darker border on left */
+    border-right: 0.5px solid #323232; /* Slightly darker border on right */
+    border-bottom: 1px solid #4d4d4d; /* Lighter bottom border to separate data from headers */
+    padding: 1px 3px; /* Slightly reduced padding */
+    border-top-left-radius: 2px; /* Retain rounding on the top-left corner */
+    border-top-right-radius: 2px; /* Retain rounding on the top-right corner */
+    border-bottom-left-radius: 0px; /* No rounding on the bottom-left corner */
+    border-bottom-right-radius: 0px; /* No rounding on the bottom-right corner */
+    font-size: 11px; /* Reduced font size */
+}
+
+/* Style for hovered rows */
+QTableView::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering over a row */
+    color: #ececf1; /* Text color on hover for better contrast */
+}
+
+/* Style for selected rows */
+QTableView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient background color for selected rows */
+    color: #ececf1; /* Light gray text color for selected rows */
+}
+
+/* Style for all rows (non-selected) */
+QTableView::item {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Gradient background color for non-selected rows */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+/* Ensure deselected rows return to their original state */
+QTableView::item:!selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Reset to the default background color */
+    color: #d1d1e0; /* Reset to the default text color */
+}
+</string>
+                             </property>
+                            </widget>
                            </item>
                           </layout>
                          </widget>
@@ -4089,7 +4538,77 @@ background-color: rgb(52, 59, 71)
                           </attribute>
                           <layout class="QVBoxLayout" name="verticalLayout_144">
                            <item>
-                            <widget class="QTableView" name="tblvAllDeletable"/>
+                            <widget class="QTableView" name="tblvAllDeletable">
+                             <property name="styleSheet">
+                              <string notr="true">/* General QTableView adjustments */
+QTableView {
+    background-color: #2e2f38; /* Dark gray for all rows */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 5px; /* Rounded corners */
+    gridline-color: #565869; /* Gridline color */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient for selected cells */
+    selection-color: #ececf1; /* Lighter text color for selected cells */
+}
+
+/* Adjust header style */
+QHeaderView::section {
+    background-color: #35353f; /* Darker gray background for the header */
+    color: #d1d1e0; /* Light gray text color in the header */
+    border-top: 0.5px solid #323232; /* Slightly darker border on top */
+    border-left: 0.5px solid #323232; /* Slightly darker border on left */
+    border-right: 0.5px solid #323232; /* Slightly darker border on right */
+    border-bottom: 1px solid #4d4d4d; /* Lighter bottom border to separate data from headers */
+    padding: 1px 3px; /* Slightly reduced padding */
+    border-top-left-radius: 2px; /* Retain rounding on the top-left corner */
+    border-top-right-radius: 2px; /* Retain rounding on the top-right corner */
+    border-bottom-left-radius: 0px; /* No rounding on the bottom-left corner */
+    border-bottom-right-radius: 0px; /* No rounding on the bottom-right corner */
+    font-size: 11px; /* Reduced font size */
+}
+
+/* Style for hovered rows */
+QTableView::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering over a row */
+    color: #ececf1; /* Text color on hover for better contrast */
+}
+
+/* Style for selected rows */
+QTableView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient background color for selected rows */
+    color: #ececf1; /* Light gray text color for selected rows */
+}
+
+/* Style for all rows (non-selected) */
+QTableView::item {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Gradient background color for non-selected rows */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+/* Ensure deselected rows return to their original state */
+QTableView::item:!selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Reset to the default background color */
+    color: #d1d1e0; /* Reset to the default text color */
+}
+</string>
+                             </property>
+                            </widget>
                            </item>
                           </layout>
                          </widget>
@@ -4145,22 +4664,9 @@ background-color: rgb(52, 59, 71)
                </widget>
                <widget class="QWidget" name="Sync_Cadastrals">
                 <property name="styleSheet">
-                 <string notr="true">QLineEdit{
-background-color: rgb(52, 59, 71)
-}
-
+                 <string notr="true">
 #lblSync_General_aditional{
 background-color: rgb(52, 59, 71)
-}
-
-*
-{
-	background-color:transparent;
-}
-
-#QProgressBar
-{
-	color: rgb(255, 255, 255);
 }
 
 QPushButton{
@@ -4180,19 +4686,7 @@ QPushButton:hover{
     border-radius: 6px;
 }
 
-QgsCheckableComboBox{
-background-color: rgb(52, 59, 71)
-}
-
-QComboBox{
-background-color: rgb(52, 59, 71)
-}
-QListWidget{
-background-color: rgb(52, 59, 71)
-}
-QLineEdit{
-background-color: rgb(52, 59, 71)
-}</string>
+</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_16">
                  <item alignment="Qt::AlignTop">
@@ -6125,7 +6619,7 @@ QPushButton:hover{
                    <item>
                     <widget class="QTableView" name="ContractView">
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(52, 59, 71);</string>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
@@ -9347,28 +9841,93 @@ p, li { white-space: pre-wrap; }
                    <bool>false</bool>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QTreeWidget {
-    color: #ffffff;  /* Text color */
-    background-color: rgb(52, 59, 71);  /* Background color */
+                   <string notr="true">/* General QTreeWidget styling */
+QTreeWidget {
+    color: #ececf1;  /* Text color */
+    background-color: #2e2f38;  /* Dark gray background color */
+    border: 1px solid #4d4d4d;  /* Border color */
+    border-radius: 5px;  /* Rounded corners */
 }
 
+/* Style for individual items */
 QTreeWidget::item {
-    color: #ffffff;  /* Text color for items */
+    color: #ececf1;  /* Text color for items */
+    background-color: #2e2f38;  /* Same as background to avoid contrast */
+    border-bottom: 1px solid #4d4d4d;  /* Bottom border to separate items */
+    padding: 5px;  /* Add some padding for readability */
 }
 
+/* Style for selected items */
 QTreeWidget::item:selected {
-    background-color: #555555;  /* Background color for selected items */
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(46, 47, 56, 10), /* Lighter gray with higher transparency */
+        stop: 1 rgba(210, 72, 72, 50) /* Darker red with lower transparency */
+    );  /* Gradient background color for selected items */
+    color: #ececf1;  /* Text color for selected items */
 }
 
+/* Style for hovered items */
 QTreeWidget::item:hover {
-    background-color: #444444;  /* Background color for hovered items */
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 10), /* Lighter gray with higher transparency */
+        stop: 1 rgba(255, 102, 0, 30) /* Darker orange with lower transparency */
+    ); /* Gradient background color for hovered items */
+    color: #ffffff; /* Brighter text color for hovered items */
 }
 
 /* Header styling */
 QHeaderView::section {
-    color: #ffffff;  /* Text color for header */
-    background-color: rgb(40, 45, 55);  /* Slightly darker background color for header */
-    border: 1px solid rgb(60, 65, 75);  /* Border color for header sections matching the overall theme */
+    background-color: #35353f;  /* Darker gray background for the header */
+    color: #d1d1e0;  /* Light gray text color in the header */
+    border-top: 0.5px solid #323232;  /* Slightly darker border on top */
+    border-left: 0.5px solid #323232;  /* Slightly darker border on left */
+    border-right: 0.5px solid #323232;  /* Slightly darker border on right */
+    border-bottom: 1px solid #4d4d4d;  /* Lighter bottom border to separate data from headers */
+    padding: 1px 3px;  /* Slightly reduced padding */
+    border-top-left-radius: 2px;  /* Rounded corners on the top-left */
+    border-top-right-radius: 2px;  /* Rounded corners on the top-right */
+    border-bottom-left-radius: 0px;  /* No rounding on the bottom-left */
+    border-bottom-right-radius: 0px;  /* No rounding on the bottom-right */
+    font-size: 11px;  /* Reduced font size */
+}
+
+/* Adjust the tree branch icons */
+QTreeView::branch:open:has-children {
+    image: url(&quot;:/images/themes/default/mIconExpandSmall.svg&quot;);  /* Custom icon for open branches */
+}
+
+QTreeView::branch:closed:has-children {
+    image: url(&quot;:/images/themes/default/mIconCollapseSmall.svg&quot;);  /* Custom icon for closed branches */
+}
+
+/* Customize scroll bars within the QTreeWidget */
+QTreeWidget QScrollBar:vertical {
+    background: #2e2f38;  /* Background of the scrollbar */
+    width: 12px;  /* Width of the scrollbar */
+    margin: 0px;  /* No margin around the scrollbar */
+    border-radius: 5px;
+}
+
+QTreeWidget QScrollBar::handle:vertical {
+    background: #565869;  /* Scrollbar handle color */
+    min-height: 20px;  /* Minimum height for the handle */
+    border-radius: 5px;
+}
+
+QTreeWidget QScrollBar::add-line:vertical, QTreeWidget QScrollBar::sub-line:vertical {
+    background: #2e2f38;  /* Buttons on the scrollbar */
+    height: 0px;  /* Remove the arrow buttons */
+}
+
+QTreeWidget QScrollBar::handle:vertical:hover {
+    background: #d24848;  /* Change color on hover for scrollbar handle */
+}
+
+/* Customize the tree's root and child items */
+QTreeView::branch {
+    background-color: transparent;  /* Transparent background to avoid overlap */
 }
 
 </string>
@@ -9379,11 +9938,6 @@ QHeaderView::section {
                   <attribute name="headerMinimumSectionSize">
                    <number>20</number>
                   </attribute>
-                  <column>
-                   <property name="text">
-                    <string notr="true">1</string>
-                   </property>
-                  </column>
                  </widget>
                 </item>
                </layout>
@@ -9748,7 +10302,7 @@ QPushButton:hover{
                    <item>
                     <widget class="QTableView" name="tblMailabl_projects">
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(52, 59, 71);</string>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>

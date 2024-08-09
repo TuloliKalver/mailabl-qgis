@@ -1031,7 +1031,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 heading = Headings().warningSimple
                 QMessageBox.warning(self, heading, text)
                 #print("No items selected")
-                pass
+                return
 
             item_count_before = shp_tools.count_items_in_layer(input_layer_name)    
             city_list = shp_tools().create_item_list_with_MultyWhere(item_count_before, items_name_state, input_layer_name, state_nimi_field, city_nimi_field)
