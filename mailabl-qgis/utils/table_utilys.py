@@ -2,7 +2,7 @@
 # pylint: disable=relative-beyond-top-level
 # pylint: disable=no-name-in-module
 from datetime import datetime
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QVariant,Qt
 from PyQt5.QtGui import QColor, QBrush, QIcon, QStandardItem
 from ..queries.python.projects_pandas import TableHeaders
 from ..Functions.tableViewAdjust import Colors
@@ -17,28 +17,47 @@ class ModelHandler:
         Sets the background and foreground colors of a QTableWidgetItem based on a color column in the model.
         
         Args:
-            item (QTableWidgetItem): The item to set colors for.
-            model (QStandardItemModel): The model containing the data.
+            p_model (QStandardItemModel): The model containing the data.
             row_index (int): The index of the row in the model.
-            color_column_index (int): The index of the column containing color information.
-    """
+            headers (list): The list of headers that includes status and color columns.
+        """
+        # Get the column indices for the status and color columns
         status_column_index = headers.index(table_headers.header_statuses)
         color_column_index = headers.index(table_headers.header_color)
+        
+        # Retrieve the status item from the model
         status_item = p_model.item(row_index, status_column_index)
+        
         if status_item:
+            # Clear previous styles to avoid conflicts
+            status_item.setData(QVariant(), Qt.BackgroundRole)
+            status_item.setData(QVariant(), Qt.ForegroundRole)
+            
+            # Retrieve the color item from the model
             color_item = p_model.item(row_index, color_column_index)
             if color_item:
                 color_code = color_item.text()
                 if color_code:
+                    # Convert hex color code to RGB
                     rgb_color = Colors.hex_to_rgb(color_code)
+                    print(f"rgb_color: {rgb_color}")
+                    
+                    # Create a QColor object with the RGB values
                     background_color = QColor(*rgb_color)
-                    foreground_color = QColor(Qt.black)  # Set foreground color to black
+                    
+                    # Apply the new background color to the status item
                     status_item.setBackground(background_color)
-                    status_item.setForeground(foreground_color)
+                    status_item.setForeground(background_color)
+                    
+                    # Optionally set the text alignment and foreground color
                     status_item.setTextAlignment(Qt.AlignCenter)
-        
+                    # status_item.setForeground(QColor(Qt.black))  # Uncomment to set foreground color
+
         return status_column_index, color_column_index
-                                        
+
+
+
+ 
     @staticmethod
     def format_date_item(p_model, row_index, headers):
         """

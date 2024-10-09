@@ -414,7 +414,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.main_window_toggle_option()
         self.pbOpenProperty.setEnabled(False)
-        self.pbtest.setVisible(True)
+        self.pbtest.setVisible(False)
 
     def on_label_return_pressed(self):
         # Identify which label sent the signal
@@ -424,7 +424,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
     def start_propertie_search(self):
-        engine = SearchProperties()
+        engine = SearchProperties(self)
         label = self.isSelectedCadaster
         result = engine.search_for_item(label=label)
         if result is None:
@@ -1462,13 +1462,13 @@ class ConnectPropertiesModuleButtons:
 class ConnectSettingsButtons:
     def button_controller(self):
         button_greate_EVEL = getattr(self, 'pbGreateEVEL', None)
-        #test_button = getattr(self, 'pbtest', None)
+        test_button = getattr(self, 'pbtest', None)
         update_dataframe = getattr(self, 'pbUpdateToNewDataframe',None)
         # Define lambdas to connect buttons to functions
 
         button_functions = {
             button_greate_EVEL: lambda: EVELTools.load_widget(self),
-            #test_button: lambda: EVELTools.load_widget(self),
+            test_button: lambda: EVELTools.load_widget(self),
             update_dataframe: lambda: RemapPropertiesLayer().update_attribute_table()
         }
        # Connect buttons to functions

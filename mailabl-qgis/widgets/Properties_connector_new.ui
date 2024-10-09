@@ -218,6 +218,145 @@ QComboBox:disabled {
     color: #8a95a5; /* Adjust text color for disabled state */
 }
 
+
+/* General QTableView adjustments */
+QTableView {
+    background-color: #2e2f38; /* Dark gray for all rows */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 5px; /* Rounded corners */
+    gridline-color: #565869; /* Gridline color */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient for selected cells */
+    selection-color: #ececf1; /* Lighter text color for selected cells */
+}
+
+/* Adjust header style */
+QHeaderView::section {
+    background-color: #35353f; /* Darker gray background for the header */
+    color: #d1d1e0; /* Light gray text color in the header */
+    border-top: 0.5px solid #323232; /* Slightly darker border on top */
+    border-left: 0.5px solid #323232; /* Slightly darker border on left */
+    border-right: 0.5px solid #323232; /* Slightly darker border on right */
+    border-bottom: 1px solid #4d4d4d; /* Lighter bottom border to separate data from headers */
+    padding: 1px 3px; /* Slightly reduced padding */
+    border-top-left-radius: 2px; /* Retain rounding on the top-left corner */
+    border-top-right-radius: 2px; /* Retain rounding on the top-right corner */
+    border-bottom-left-radius: 0px; /* No rounding on the bottom-left corner */
+    border-bottom-right-radius: 0px; /* No rounding on the bottom-right corner */
+    font-size: 11px; /* Reduced font size */
+}
+
+/* Style for hovered rows */
+QTableView::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering over a row */
+    color: #ececf1; /* Text color on hover for better contrast */
+}
+
+/* Style for selected rows */
+QTableView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient background color for selected rows */
+    color: #ececf1; /* Light gray text color for selected rows */
+}
+
+/* Style for all rows (non-selected) */
+QTableView::item {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Gradient background color for non-selected rows */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+/* Ensure deselected rows return to their original state */
+QTableView::item:!selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Reset to the default background color */
+    color: #d1d1e0; /* Reset to the default text color */
+}
+
+/* General QScrollBar style within QTableView */
+QScrollBar:vertical, QScrollBar:horizontal {
+    background-color: transparent; /* Ensure the scrollbar background is transparent */
+}
+
+/* Vertical scroll bar groove (track) */
+QScrollBar::groove:vertical {
+    border: 1px solid #4d4d4d; /* Dark border around the groove */
+    width: 8px; /* Width of the groove */
+    background: #333; /* Darker gray for the groove background */
+    border-radius: 3px; /* Adjusted to be less than half of 8px */
+}
+
+/* Horizontal scroll bar groove (track) */
+QScrollBar::groove:horizontal {
+    border: 1px solid #4d4d4d; /* Dark border around the groove */
+    height: 8px; /* Height of the groove */
+    background: #333; /* Darker gray for the groove background */
+    border-radius: 3px; /* Adjusted to be less than half of 8px */
+}
+
+/* Vertical scroll bar handle (thumb) */
+QScrollBar::handle:vertical {
+    background: #b5b5b5; /* Lighter gray for the handle */
+    border: 1px solid #707070; /* Slightly darker border for the handle */
+    width: 16px; /* Width of the handle */
+    border-radius: 6px; /* Adjusted to be less than half of 16px for a rounded effect */
+}
+
+/* Horizontal scroll bar handle (thumb) */
+QScrollBar::handle:horizontal {
+    background: #b5b5b5; /* Lighter gray for the handle */
+    border: 1px solid #707070; /* Slightly darker border for the handle */
+    height: 16px; /* Height of the handle */
+    border-radius: 6px; /* Adjusted to be less than half of 16px for a rounded effect */
+}
+
+/* Handle when hovered (both vertical and horizontal) */
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+    background: #d8d8d8; /* Lighter gray when hovered */
+}
+
+/* Handle when pressed (both vertical and horizontal) */
+QScrollBar::handle:vertical:pressed, QScrollBar::handle:horizontal:pressed {
+    background: #999; /* Darker gray when pressed */
+}
+
+/* Slider groove when focused (both vertical and horizontal) */
+QScrollBar::groove:vertical:focus, QScrollBar::groove:horizontal:focus {
+    background: #444; /* Slightly brighter when focused */
+}
+
+/* Scrollbar arrows (both vertical and horizontal) */
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    background: #40414f; /* Background for the arrows */
+    border: 1px solid #565869; /* Border for the arrows */
+    border-radius: 2px; /* Adjusted to be less than half of 4px */
+}
+
+/* Arrows on hover */
+QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover,
+QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {
+    background: #8e8ea0; /* Lighter background on hover */
+}
+
+/* Style for the scroll bar pages (scroll bar track) */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical,
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none; /* No background for the pages */
+}
 </string>
   </property>
   <property name="modal">

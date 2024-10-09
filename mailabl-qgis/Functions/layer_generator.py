@@ -136,13 +136,13 @@ class LayerCopier():
                 QMessageBox.information(None, heading, text)
 
     @staticmethod
-    def copy_virtual_layer_for_properties(new_layer_name):
+    def copy_virtual_layer_for_properties(new_layer_name, group_name):
         # Get the group layer or create it if it doesn't exist
         root = QgsProject.instance().layerTreeRoot()
-        group_layer_name = 'Uued kinnistud'
-        group = root.findGroup(group_layer_name)
+        
+        group = root.findGroup(group_name)
         if group is None:
-            group = root.addGroup(group_layer_name)
+            group = root.addGroup(group_name)
         memory_layer_name = f"{new_layer_name}-memory"
         if QgsProject.instance().mapLayersByName(memory_layer_name):
             memory_layer = QgsProject.instance().mapLayersByName(memory_layer_name)

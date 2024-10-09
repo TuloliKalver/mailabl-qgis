@@ -43,26 +43,14 @@
 }
 
 
-#leInfo,#leSelectedProperties {
-    border: None;
-    background-color: #272c35;
-    color: #c5c5d2;
-    padding-left: 10px; /* Adjust the left padding as needed */
-    padding-right: 0px; /* Adjust the right padding as needed */
-    padding-top: 0px; /* Adjust the top padding as needed */
-    padding-bottom: 0px; /* Adjust the bottom padding as needed */
-}
 
-
-#fHeader, #fHelpMenu, 
-#fSettingsFolders, #fSettingsFolderStucture,
-#fSettingsMain 
-{
-   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */
-    border-radius: 5px;
-	border-top: none;
-    border-left: none;
-    border-right: none;
+*{
+	border: transparent;
+	background-color: transparent;
+    background: transparent;
+	padding: 0;
+	margin: 0;
+	color: #c5c5d2;
 }
 
 
@@ -72,59 +60,7 @@ QWidget{
 }
 
 
-/*esialgu jaotamata omadused*/
-
-
-QAbstractItemView {
-	background-color:#40414f;
-	color:#ececf1;
-	border: 1px solid #565869;
-	border-radius: 4px;
-	padding-left: 5px
-}
-
-
-QPushButton{
-	padding: 2px 8px;
-	text-align: center;
-	border-radius: 6px;
-	background-color:#40414f;
-	border: 1px solid #565869;
-}
-
-
-QPushButton:hover{
-    background-color: #8e8ea0;
-	border: 0.5px solid #acacbe;
-	color: #343541;
-	text-align: center;	
-	padding: 2px 8px;
-    border-radius: 6px;	
-}
-
-QPushButton:disabled {
-    background-color: #303040; /* Adjusted disabled background color */
-    border: 1px solid #707070; /* Adjust border color for disabled state */
-    color: #8a95a5; /* Adjust text color for disabled state */
-}
-
-QLabel {
-    background-color: #40414f;
-    color: #ececf1;
-    border: 1px solid #565869;
-    border-radius: 3px;
-    padding: 3px;
-}
-
-#label_12,
-#label_11
- {
-    background-color: #40414f;
-    color: #ececf1;
-    border: 1px solid #565869;
-
-}
-
+/*Line Edit styling*/
 QLineEdit {
     background-color: #35363f;  /* Lighter background color */
     color: #ececf1;
@@ -144,129 +80,278 @@ QLineEdit {
     border-right: none;
 }
 
-QLineEdit:disabled {
+
+/*konteinerite peamised omadused*/
+#centerMenuSubContainer{
+    background-color: #272c35;
+}
+
+#swWorkSpace{
+    background-color: #202123;
+}
+#Sevituudid{
+    background-color: #343b47;
+}
+
+#leftMenuContainer{
+    background-color: #202123 ;
+}
+
+#rightMenuContainer{
+    background-color: #272c35;
+}
+
+#SetupLayers, #SetupLayers_2, #SetupUserData {
+border: none;
+border-bottom: 1px solid rgb(131, 142, 162);
+}
+
+/*nuppu peamised omadused*/
+/*Üldomadused*/
+QPushButton{
+	padding: 1px 5px;
+	text-align: center;
+	border-radius: 5px;
+	background-color:#40414f;
+	border: 1px solid #565869;
+}
+
+
+QPushButton:hover{
+    background-color: #8e8ea0;
+	border: 0.5px solid #acacbe;
+	color: #343541;
+	text-align: center;
+	padding: 2px 5px;
+    border-radius: 5px;	
+}
+
+QPushButton:disabled {
+    background-color: #303040; /* Adjusted disabled background color */
+    border: 1px solid #707070; /* Adjust border color for disabled state */
     color: #8a95a5; /* Adjust text color for disabled state */
 }
 
 
-/* General QComboBox styles */
+#UC_Main_Frame QPushButton,#pbChoose_Properties_for_Projects{
+	padding: 1px 8px;
+    border-radiusr: 6px;
+}
+
+#UC_Main_Frame QPushButton:hover{
+
+	padding: 1px 8px;
+    border-radius: 6px;
+}
+
+
+#wOl_Settings QPushButton{
+	padding: 1px 8px;
+    border-radius: 6px;
+}
+
+#wOl_Settings QPushButton:hover{
+	padding: 1px 8px;
+    border-radius: 6px;
+}
+
+#rightMenuContainer QPushButton{
+	text-align: right;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+    
+}
+
+#rightMenuContainer QPushButton:hover{
+    text-align: right;
+    border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;  
+}
+
+
+#leftMenuContainer QPushButton{
+	text-align: left;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;	
+}
+#leftMenuContainer QPushButton:hover{
+    text-align: left;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+
+}
+
+
+
+
+/* Combined Style for QComboBox to Ensure Consistency */
+
+/* Base style for QComboBox */
 QComboBox {
-    background-color: #40414f; /* Set the background color */
-    color: #ececf1;
-    border: 1px solid #565869;
-    border-radius: 3px;
-    padding-left: 5px;
+    border: 1px solid #565869; /* Using --gray-600 */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #343541; /* Using --gray-800 */
+    color: #ececf1; /* Using --gray-100 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
 }
 
-/* Style the dropdown button */
-QComboBox::drop-down {
-    background-color: #40414f;
-    border: 0px solid #40414f;
-    border-radius: 10px;
-    width: 16px;
-    height: 16px;
-    subcontrol-origin: padding;
-    subcontrol-position: left; /* Center the arrow icon */
-}
-
-/* Style for the list view that shows the items */
-QComboBox QAbstractItemView {
-    background-color: #40414f;
-    border: 1px solid #acacbe;
-    selection-background-color: #800080; /* Set the color of the selected row to purple */
-    selection-color: #ececf1; /* Ensure the text color of the selected row is readable */
-}
-
-/* Style for individual items in the list */
-QComboBox QAbstractItemView::item {
-    background-color: #40414f;
-    color: #ececf1; /* Set the text color */
-}
-
-/* Style for the selected item */
-QComboBox QAbstractItemView::item:selected {
-    background-color: #800080; /* Set the background color of the selected row to purple */
-    color: #ececf1; /* Ensure the text color of the selected row is readable */
-}
-
-/* Style for the hovered item */
-QComboBox QAbstractItemView::item:hover {
-    background-color: #a64ca6; /* Set the background color of the hovered row to a lighter purple */
-    color: #ececf1; /* Ensure the text color of the hovered row is readable */
-}
-
-/* Style the QComboBox when it is focused */
-QComboBox:focus {
-    border: 0.5px solid #acacbe;
-}
-
-/* Style the arrow inside the dropdown */
-QComboBox::down-arrow {
-    width: 0;
-    height: 0;
-    border-left: 6px solid #40414f;
-    border-right: 6px solid #40414f;
-    border-top: 8px solid #ececf1; /* Adjust the color to match your design */
-    margin: 8px auto; /* Center the arrow */
-}
-
-/* Style the QComboBox when it is in &quot;on&quot; state */
-QComboBox::on {
-    border: 0.5px solid #acacbe;
-}
-
-/* Style the QComboBox when it is disabled */
+/* Disabled state */
 QComboBox:disabled {
-    background-color: #40414f; /* Set the background color for the disabled state */
-    border: 1px solid #565869; /* Adjust border color for disabled state */
-    color: #8a95a5; /* Adjust text color for disabled state */
+    background-color: #c5c5d2; /* Using --gray-300 */
+    color: #8e8ea0; /* Using --gray-500 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
 }
+
+/* Hover state */
+QComboBox:hover {
+    border: 1px solid #acacbe; /* Using --gray-400 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Focus state */
+QComboBox:focus {
+    border: 1px solid #acacbe; /* Kept original lime green color */
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Dropdown button */
+QComboBox::drop-down {
+    subcontrol-position: center right;
+    border-radius: 3px; /* Rounded corners */
+    /*width: 24px;*/
+    borde: 0.5px solid #acacbe; /* Kept original lime green color */
+    background-color: #343541; /* Using --gray-800 */
+}
+
+/* Dropdown arrow */
+QComboBox::down-arrow {
+    image: url(':/qt-project.org/styles/macstyle/images/toolbar-ext.png'); /* Default arrow image */
+    height: 16px;
+    width: 16px;
+}
+
+QComboBox::down-arrow:on,
+QComboBox::down-arrow:hover,
+QComboBox::down-arrow:focus {
+    image: url(':/qt-project.org/styles/macstyle/images/toolbar-ext.png'); /* Arrow image on hover, focus */
+}
+
+/* QAbstractItemView (dropdown list) */
+QComboBox QAbstractItemView {
+    background-color: #343541; /* Using --gray-900 */
+    border: 1px solid #4d4d4d; /* Similar to gray-600 */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */
+        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */
+    );
+    selection-color: #ececf1; /* Using --gray-100 */
+    color: #ececf1;
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Selected item in list */
+QComboBox QAbstractItemView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */
+        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */
+    );
+    color: #ececf1; /* Using --gray-100 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Hover over item in list */
+QComboBox QAbstractItemView::item:hover {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */
+        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */
+    );
+    color: #ececf1; /* Using --gray-100 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Handle the padding of items in the list view */
+QComboBox QAbstractItemView::item {
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Ensure keyboard navigation shows selection */
+QComboBox::item:selected:!hover {
+    background-color: qlineargradient(
+        spread: pad, 
+        x1: 0, y1: 0, 
+        x2: 0, y2: 1, 
+        stop: 0.259887 rgba(50, 50, 50, 202), 
+        stop: 1 rgba(180, 180, 180, 255)
+    ); 
+    color: #ececf1; /* White text color for keyboard selection */
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Checked state of the checkbox */
+QComboBox::indicator:checked {
+    background-color: #565869; /* Kept original lime green color */
+    image: url(':/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg'); /* Path to your checked image */
+    width: 10px;  /* Adjusted width to fit within the border */
+    height: 10px; /* Adjusted height to fit within the border */
+}
+
+/* Unchecked state can have a background color */
+QComboBox::indicator:unchecked {
+    background-color: #565869; /* Using --gray-600 */
+}
+
+
+
 
 
 /* General QCheckBox styles */
 QCheckBox {
-    color: #ececf1; /* Text color */
+    color: #d1d1e0; /* Light gray text color */
     spacing: 5px; /* Space between checkbox and text */
 }
 
 /* Style the indicator (checkbox) */
 QCheckBox::indicator {
-    width: 12px;
-    height: 12px;
-    background-color: #40414f; /* Background color for unchecked state */
-    border: 1px solid #565869; /* Border for unchecked state */
-    border-radius: 3px;
+    width: 12px; /* Width of the checkbox */
+    height: 12px; /* Height of the checkbox */
+    background-color: #3a3b46; /* Darker gray for unchecked state */
+    border: 1px solid #565869; /* Border color for unchecked state */
+    border-radius: 2px; /* Slightly rounded corners */
 }
 
 /* Style the indicator when checked */
 QCheckBox::indicator:checked {
-    background-color: rgba(70, 70, 85, 0.5); /* Semi-transparent gray background color for checked state */
-    border: 1px solid #acacbe;
-    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+    background-color: #4a4b59; /* Slightly darker gray for checked state */
+    border: 1px solid #4d4d4d; /* Border color matching the theme */
+    border-radius: 2px; /* Slightly rounded corners */
+    image: url(:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg); /* Using provided SVG icon URL */
 }
 
 /* Style the indicator when unchecked */
 QCheckBox::indicator:unchecked {
-    background-color: #40414f; /* Background color for unchecked state */
-    border: 1px solid #565869; /* Border for unchecked state */
+    background-color: #3a3b46; /* Darker gray for unchecked state */
+    border: 1px solid #565869; /* Border color for unchecked state */
 }
 
 /* Style the indicator when hovered */
 QCheckBox::indicator:hover {
-    background-color: #565869;
+    background-color: #4e4f5b; /* Medium gray when hovering */
 }
 
 /* Style the indicator when disabled */
 QCheckBox::indicator:disabled {
     background-color: #30303a; /* Darker background color for disabled state */
-    border: 1px solid #40414f; /* Darker border for disabled state */
+    border: 1px solid #4d4d4d; /* Darker border for disabled state */
 }
 
 /* Style the indicator when checked and disabled */
 QCheckBox::indicator:checked:disabled {
-    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray background color for checked and disabled state */
-    border: 1px solid #40414f;
-    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray for checked and disabled state */
+    border: 1px solid #4d4d4d; /* Border color matching the theme */
+    image: url(:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg); /* Using provided SVG icon URL */
     opacity: 0.5; /* Make the icon appear disabled */
 }
 
@@ -277,8 +362,363 @@ QCheckBox:disabled {
 
 
 QGroupBox{
-	color:#c5c5d2;
-}</string>
+	color: #ececf1;
+}
+
+
+/* Style for the selected tab */
+QTabBar::tab:selected {
+    background-color: #50515f; /* Background color for the selected tab */
+    color: #ececf1; /* Text color for the selected tab */
+    border: 1px solid #acacbe; /* Lighter border for the selected tab */
+    border-bottom: 1px solid #202123; /* Match the background color of the tab pane to create a seamless look */
+    padding: 7px 12px; /* Slightly adjust padding for selected tab */
+}
+
+/* Style for the hovered tab */
+QTabBar::tab:hover {
+    background-color: #8e8ea0; /* Background color when hovering over a tab */
+    color: #343541; /* Text color for the hovered tab */
+    border: 1px solid #acacbe; /* Lighter border on hover */
+}
+
+/* Style for disabled tabs */
+QTabBar::tab:disabled {
+    background-color: #30303a; /* Darker background for disabled tabs */
+    color: #6a6a75; /* Muted text color for disabled tabs */
+    border: 1px solid #565869; /* Border color for disabled tabs */
+}
+
+/* Adjustments to the tab pane (content area below the tabs) */
+QTabWidget::pane {
+    border: 1px solid #565869; /* Border around the content area */
+    background-color: #202123; /* Match the background of the content area to other containers */
+    border-radius: 3px; /* Rounded corners for the content area */
+    margin-top: -1px; /* Overlap with the tab bar to create a seamless transition */
+}
+
+/* General QScrollBar style within QTableView */
+QScrollBar:vertical, QScrollBar:horizontal {
+    background-color: transparent; /* Ensure the scrollbar background is transparent */
+}
+
+/* Vertical scroll bar groove (track) */
+QScrollBar::groove:vertical {
+    border: 1px solid #4d4d4d; /* Dark border around the groove */
+    width: 8px; /* Width of the groove */
+    background: #333; /* Darker gray for the groove background */
+    border-radius: 3px; /* Adjusted to be less than half of 8px */
+}
+
+/* Horizontal scroll bar groove (track) */
+QScrollBar::groove:horizontal {
+    border: 1px solid #4d4d4d; /* Dark border around the groove */
+    height: 8px; /* Height of the groove */
+    background: #333; /* Darker gray for the groove background */
+    border-radius: 3px; /* Adjusted to be less than half of 8px */
+}
+
+/* Vertical scroll bar handle (thumb) */
+QScrollBar::handle:vertical {
+    background: #b5b5b5; /* Lighter gray for the handle */
+    border: 1px solid #707070; /* Slightly darker border for the handle */
+    width: 16px; /* Width of the handle */
+    border-radius: 6px; /* Adjusted to be less than half of 16px for a rounded effect */
+}
+
+/* Horizontal scroll bar handle (thumb) */
+QScrollBar::handle:horizontal {
+    background: #b5b5b5; /* Lighter gray for the handle */
+    border: 1px solid #707070; /* Slightly darker border for the handle */
+    height: 16px; /* Height of the handle */
+    border-radius: 6px; /* Adjusted to be less than half of 16px for a rounded effect */
+}
+
+/* Handle when hovered (both vertical and horizontal) */
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+    background: #d8d8d8; /* Lighter gray when hovered */
+}
+
+/* Handle when pressed (both vertical and horizontal) */
+QScrollBar::handle:vertical:pressed, QScrollBar::handle:horizontal:pressed {
+    background: #999; /* Darker gray when pressed */
+}
+
+/* Slider groove when focused (both vertical and horizontal) */
+QScrollBar::groove:vertical:focus, QScrollBar::groove:horizontal:focus {
+    background: #444; /* Slightly brighter when focused */
+}
+
+/* Scrollbar arrows (both vertical and horizontal) */
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    background: #40414f; /* Background for the arrows */
+    border: 1px solid #565869; /* Border for the arrows */
+    border-radius: 2px; /* Adjusted to be less than half of 4px */
+}
+
+/* Arrows on hover */
+QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover,
+QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {
+    background: #8e8ea0; /* Lighter background on hover */
+}
+
+/* Style for the scroll bar pages (scroll bar track) */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical,
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none; /* No background for the pages */
+}
+
+/* Adjust QListWidget style */
+QListWidget {
+    background-color: #2e2f38; /* Dark gray background to match the new theme */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 3px; /* Rounded corners */
+    padding: 3px; /* Add padding to the list */
+}
+
+/* Style for individual items in the QListWidget */
+QListWidget::item {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(60, 62, 73, 0.2), stop: 1 rgba(42, 42, 51, 0.35)); /* Gradient for non-selected items */
+    color: #d1d1e0; /* Light gray text color for unselected items */
+    padding: 3px; /* Padding around list items */
+    border-radius: 1.5px; /* Slight rounding of the item edges */
+}
+
+/* Style for selected items in QListWidget */
+QListWidget::item:selected {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(210, 72, 72, 0.05), stop: 1 rgba(210, 72, 72, 0.25)); /* Gradient for selected items */
+    color: #ececf1; /* Lighter text color for selected items */
+    border: 1px solid #707070; /* Lighter border for the selected item */
+}
+
+/* Style for hovered items in QListWidget */
+QListWidget::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering */
+    color: #ececf1; /* Text color on hover to maintain contrast */
+}
+
+/* Style for disabled items in QListWidget */
+QListWidget::item:disabled {
+    background-color: #30303a; /* Darker background for disabled items */
+    color: #6a6a75; /* Muted gray text color for disabled items */
+}
+
+/* General QLineEdit styles */
+QLineEdit {
+    background-color: #35363f; /* Lighter background color */
+    color: #ececf1; /* Light gray text color */
+    border: 1px solid #4d4d5b; /* Thinner border with a different color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 4px; /* Padding inside the line edit */
+    /* Remove top and side borders */
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+/* Style for the line edit when focused */
+QLineEdit:focus {
+    border: 1px solid #6a6a75; /* Highlight border color when focused */
+    background-color: #35363f; /* Keep the background color consistent when focused */
+}
+
+/* Style for the placeholder text */
+QLineEdit::placeholder {
+    color: #6a6a75; /* Lighter gray color for placeholder text */
+}
+
+/* Style for the line edit when disabled */
+QLineEdit:disabled {
+    background-color: #30303a; /* Darker background color for disabled state */
+    color: #6a6a75; /* Muted gray text color for disabled state */
+    border: 1px solid #4d4d4d; /* Same border color as normal state */
+}
+
+/* Style for the line edit when read-only */
+QLineEdit[readOnly=&quot;true&quot;] {
+    background-color: #35363f; /* Same as normal background */
+    color: #ececf1; /* Same as normal text color */
+    border: 1px solid #4d4d5b; /* Same as normal border */
+    border-style: dashed; /* Dashed border style for read-only state */
+}
+
+/* Style for the line edit when active */
+QLineEdit:active {
+    border: 1px solid #6a6a75; /* Highlight border color when active */
+}
+
+/* Style for the line edit when hovered */
+QLineEdit:hover {
+    background-color: #3d3e47; /* Slightly darker background color on hover */
+}
+
+/* Style for the line edit when error state (optional) */
+QLineEdit:invalid {
+    border: 1px solid #d20000; /* Red border for invalid input */
+}
+
+/* Style for the line edit when modified (optional) */
+QLineEdit:modified {
+    border: 1px solid #d1d1e0; /* Border color indicating modification */
+}
+
+
+/* General QTableView adjustments */
+QTableView {
+    background-color: #2e2f38; /* Dark gray for all rows */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
+    border-radius: 5px; /* Rounded corners */
+    gridline-color: #565869; /* Gridline color */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient for selected cells */
+    selection-color: #ececf1; /* Lighter text color for selected cells */
+}
+
+/* Adjust header style */
+QHeaderView::section {
+    background-color: #35353f; /* Darker gray background for the header */
+    color: #d1d1e0; /* Light gray text color in the header */
+    border-top: 0.5px solid #323232; /* Slightly darker border on top */
+    border-left: 0.5px solid #323232; /* Slightly darker border on left */
+    border-right: 0.5px solid #323232; /* Slightly darker border on right */
+    border-bottom: 1px solid #4d4d4d; /* Lighter bottom border to separate data from headers */
+    padding: 1px 3px; /* Slightly reduced padding */
+    border-top-left-radius: 2px; /* Retain rounding on the top-left corner */
+    border-top-right-radius: 2px; /* Retain rounding on the top-right corner */
+    border-bottom-left-radius: 0px; /* No rounding on the bottom-left corner */
+    border-bottom-right-radius: 0px; /* No rounding on the bottom-right corner */
+    font-size: 11px; /* Reduced font size */
+}
+
+/* Style for hovered rows */
+QTableView::item:hover {
+    background-color: #4e4f5b; /* Medium gray background color when hovering over a row */
+    color: #ececf1; /* Text color on hover for better contrast */
+}
+
+/* Style for selected rows */
+QTableView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
+        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
+    ); /* Gradient background color for selected rows */
+    color: #ececf1; /* Light gray text color for selected rows */
+}
+
+/* Style for all rows (non-selected) */
+QTableView::item {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Gradient background color for non-selected rows */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+/* Ensure deselected rows return to their original state */
+QTableView::item:!selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
+        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
+    ); /* Reset to the default background color */
+    color: #d1d1e0; /* Reset to the default text color */
+}
+
+
+/* General style for QProgressBar */
+QProgressBar {
+    background-color: #2e2f38; /* Dark gray background matching the table */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border matching the table border */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center the text inside the progress bar */
+    padding: 2px; /* Padding for better spacing */
+}
+
+/* Style for the progress chunk */
+QProgressBar::chunk {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 #d14848, /* Start with darker red matching the selection color */
+        stop: 1 #e57373  /* End with a slightly lighter red */
+    ); /* Gradient effect for the progress bar */
+    border-radius: 3px; /* Slight rounding of the progress chunk */
+}
+
+/* Style for the indeterminate progress bar (if used) */
+QProgressBar[minimum=&quot;0&quot;][maximum=&quot;0&quot;] {
+    background-color: #2e2f38; /* Dark gray background matching the table */
+    border: 1px solid #4d4d4d; /* Border matching the table border */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+QProgressBar[minimum=&quot;0&quot;][maximum=&quot;0&quot;]::chunk {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 #d14848, /* Start with darker red */
+        stop: 1 #e57373  /* End with a slightly lighter red */
+    ); /* Moving gradient for the indeterminate progress bar */
+}
+
+/* General QGroupBox Styling */
+QGroupBox {
+    color: #ececf1; /* Light gray text color for the group box title */
+    background-color: #272c35; /* Dark background to match the surrounding theme */
+    border: 1px solid #565869; /* Border color to distinguish the group box */
+    border-radius: 5px; /* Rounded corners for a smoother look */
+    margin-top: 10px; /* Space above the group box title */
+    padding: 10px; /* Padding inside the group box to space out contents */
+}
+
+/* Title of the QGroupBox */
+QGroupBox::title {
+    subcontrol-origin: margin; /* Align the title relative to the group box's margin */
+    subcontrol-position: top left; /* Position the title at the top left */
+    padding-left: 5px; /* Add padding to the left of the title */
+    padding-right: 5px; /* Add padding to the right of the title */
+    background-color: #343b47; /* Background for the title to make it stand out */
+    color: #ececf1; /* Text color for the title */
+    border-radius: 3px; /* Slightly round the corners of the title background */
+    font-weight: bold; /* Make the title text bold */
+}
+
+/* QGroupBox when hovered */
+QGroupBox:hover {
+    border: 1px solid #8e8ea0; /* Lighter border color on hover */
+}
+
+/* QGroupBox when focused */
+QGroupBox:focus {
+    border: 1px solid #acacbe; /* Even lighter border color when focused */
+    box-shadow: 0 0 5px 1px #8e8ea0; /* Add a subtle shadow to indicate focus */
+}
+
+/* Disabled QGroupBox */
+QGroupBox:disabled {
+    color: #6a6a75; /* Darker gray text color when disabled */
+    background-color: #30303a; /* Slightly darker background for disabled state */
+    border: 1px solid #4d4d4d; /* Darker border color for disabled state */
+}
+
+QGroupBox::title:disabled {
+    color: #6a6a75; /* Darker title text color when disabled */
+    background-color: #3a3b46; /* Darker title background color for disabled state */
+}
+
+/* Content inside the QGroupBox */
+QGroupBox QWidget {
+    background-color: #2e2f38; /* Match background of content to group box */
+    color: #d1d1e0; /* Light gray text color for contents */
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <property name="spacing">
@@ -1458,13 +1898,13 @@ QGroupBox{
                <item>
                 <widget class="QCheckBox" name="cbV">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
                   <string>Torud</string>
                  </property>
                  <property name="checked">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>

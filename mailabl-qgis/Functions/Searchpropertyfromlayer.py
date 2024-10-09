@@ -1,5 +1,5 @@
 import re
-from PyQt5.QtWidgets import QMessageBox, QInputDialog
+from PyQt5.QtWidgets import QMessageBox, QInputDialog, QWidget
 from qgis.core import (QgsProject, QgsVectorLayer, QgsExpression, QgsExpressionContext, 
                        QgsExpressionContextUtils, QgsField, QgsFeatureRequest, QgsFeature)
 from qgis.PyQt.QtCore import QVariant
@@ -8,6 +8,9 @@ from ..config.settings import SettingsDataSaveAndLoad
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 class SearchProperties:
+    def __init__(self, parent: QWidget):
+        self.parent = parent
+
 
     def setup_layer(self):
         active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -181,7 +184,7 @@ class SearchProperties:
     
     def select_from_multiple_features(self, features, label_text):
         items = [f"{feature['search_field']}" for feature in features]
-        item, ok = QInputDialog.getItem(None, "Vali nimekirjast", f"Otsingule '{label_text}'leiti mitu vastust:", items, 0, False)
+        item, ok = QInputDialog.getItem(self.parent, "Vali nimekirjast", f"Otsingule '{label_text}' leiti mitu vastust:", items, 0, False)
 
         if ok and item:
             selected_index = items.index(item)

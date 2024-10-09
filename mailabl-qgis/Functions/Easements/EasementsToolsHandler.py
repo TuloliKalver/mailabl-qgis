@@ -15,7 +15,7 @@ from .resticon import WaterWorks, GetRuledRestriction
 from ..Union import Union
 from ..propertie_layer.properties_layer_data import PropertiesLayerFunctions
 from ..item_selector_tools import UseQGISNative
-from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
+from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers, MailablGroupLayers
 from ...config.settings import SettingsDataSaveAndLoad
 from ...config.QGISSettingPaths import LayerSettings, SettingsLoader
 from ...config.settings import Filepaths, Flags, SettingsDataSaveAndLoad, FilesByNames
@@ -604,7 +604,7 @@ class BufferTools:
                     pass
 
                 # Get the group layer name
-                group_layer_name = SetupLayers().tools_layer_name
+                group_layer_name = MailablGroupLayers().TEMP_GRPUP_NAME
 
                 # Get the group layer or create it if it doesn't exist
                 root = QgsProject.instance().layerTreeRoot()
@@ -910,8 +910,8 @@ class ComboBoxInputs:
 class BufferByLine:
     def create_road_center_line(widget):
         temp_spline_layer = TempBufferLayerNames.spline_layer_name
-        group_layer_name = SetupLayers().tools_layer_name
-
+        group_layer_name = MailablGroupLayers().TEMP_GRPUP_NAME
+        
         # Get the group layer or create it if it doesn't exist
         root = QgsProject.instance().layerTreeRoot()
         group = root.findGroup(group_layer_name)

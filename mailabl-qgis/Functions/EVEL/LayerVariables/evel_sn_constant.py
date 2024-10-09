@@ -136,7 +136,7 @@ class EVEL_SnCreator:
         project = QgsProject.instance()
         root = project.layerTreeRoot()
         from ....processes.OnFirstLoad.AddSetupLayers import SetupLayers
-        setup_layer_name = SetupLayers().mailabl_main_group_name
+        setup_layer_name = SetupLayers().main_group
 
         settings_group = root.findGroup(setup_layer_name)
         if settings_group is None:

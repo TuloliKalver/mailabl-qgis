@@ -12,7 +12,8 @@ from ...config.settings import connect_settings_to_layer
 from ...app.View_tools import shp_tools
 from...Functions.layer_generator import LayerCopier
 from ...KeelelisedMuutujad.messages import Headings
- 
+from ...KeelelisedMuutujad.Mailabl_features import MailablGroupLayers
+
 pealkiri = Headings()
 
 class MapView(QObject):
@@ -135,7 +136,8 @@ class PropertiesBaseMap:
         
         layer_creator = True
         if layer_creator:
-            memory_layer_name = LayerCopier.copy_virtual_layer_for_properties(future_layer_name_text)
+            group_layer_name = MailablGroupLayers.NEW_PROPERTIES_NAME #'Uued kinnistud'
+            memory_layer_name = LayerCopier.copy_virtual_layer_for_properties(future_layer_name_text, group_name=group_layer_name)
             layer_creator = False
             print(f"Created memory_layer_name at 'start': {memory_layer_name}")
         

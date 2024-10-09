@@ -66,7 +66,7 @@ class EVEL_Creator:
         project = QgsProject.instance()
         root = project.layerTreeRoot()
     # Use the provided setup_layer_name variable to find or create the "Settings" group
-        setup_layer_name = SetupLayers().mailabl_main_group_name
+        setup_layer_name = SetupLayers().main_group
         settings_group = EVELGroupGenerator.get_or_create_group(root, setup_layer_name)
         
         # Ensure "EVEL_MAIN" group exists under "Settings", if not, create it

@@ -77,7 +77,8 @@ QLineEdit {
 
 /*konteinerite peamised omadused*/
 #centerMenuSubContainer{
-    background-color: #272c35;
+    /*background-color: #272c35;*/
+	background-color:#202123
 }
 
 #swWorkSpace{
@@ -175,74 +176,128 @@ QPushButton:disabled {
 
 }
 
-/* General QComboBox styles */
+
+
+
+/* Combined Style for QComboBox to Ensure Consistency */
+
+/* Base style for QComboBox */
 QComboBox {
-    background-color: #2e2f38; /* Match the dark gray background of QTableView */
-    color: #d1d1e0; /* Light gray text color to match QTableView */
-    border: 1px solid #4d4d4d; /* Same border color as QTableView */
-    border-radius: 5px; /* Matching rounded corners */
-    padding-left: 5px; /* Keep padding for alignment */
+    border: 1px solid #565869; /* Using --gray-600 */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #343541; /* Using --gray-800 */
+    color: #ececf1; /* Using --gray-100 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
 }
 
-/* Style the dropdown button */
+/* Disabled state */
+QComboBox:disabled {
+    background-color: #c5c5d2; /* Using --gray-300 */
+    color: #8e8ea0; /* Using --gray-500 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Hover state */
+QComboBox:hover {
+    border: 1px solid #acacbe; /* Using --gray-400 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Focus state */
+QComboBox:focus {
+    border: 1px solid #acacbe; /* Kept original lime green color */
+    padding-left: 2px; /* Move text 2 pixels to the right */
+}
+
+/* Dropdown button */
 QComboBox::drop-down {
-    background-color: #2e2f38; /* Match the background color */
-    border: 1px solid #4d4d4d; /* Match the border color */
-    border-radius: 3px; /* Maintain rounding consistency */
-    width: 16px;
+    subcontrol-position: center right;
+    border-radius: 3px; /* Rounded corners */
+    /*width: 24px;*/
+    borde: 0.5px solid #acacbe; /* Kept original lime green color */
+    background-color: #343541; /* Using --gray-800 */
+}
+
+/* Dropdown arrow */
+QComboBox::down-arrow {
+    image: url(':/qt-project.org/styles/macstyle/images/toolbar-ext.png'); /* Default arrow image */
     height: 16px;
-    subcontrol-origin: padding;
-    subcontrol-position: left; /* Center the arrow icon */
+    width: 16px;
 }
 
-/* Style for the list view that shows the items */
+QComboBox::down-arrow:on,
+QComboBox::down-arrow:hover,
+QComboBox::down-arrow:focus {
+    image: url(':/qt-project.org/styles/macstyle/images/toolbar-ext.png'); /* Arrow image on hover, focus */
+}
+
+/* QAbstractItemView (dropdown list) */
 QComboBox QAbstractItemView {
-    background-color: #2e2f38; /* Match the dark gray background */
-    border: 1px solid #4d4d4d; /* Same border as QTableView */
+    background-color: #343541; /* Using --gray-900 */
+    border: 1px solid #4d4d4d; /* Similar to gray-600 */
     selection-background-color: qlineargradient(
-        x1: 0, y1: 0, x2: 0, y2: 1,
-        stop: 0 rgba(46, 47, 56, 10), /* Match the lighter gray in QTableView selection */
-        stop: 1 rgba(210, 72, 72, 50)  /* Match the darker red in QTableView selection */
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */
+        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */
     );
-    selection-color: #ececf1; /* Ensure readable text color for selected items */
+    selection-color: #ececf1; /* Using --gray-100 */
+    color: #ececf1;
+    padding-left: 2px; /* Move text 2 pixels to the right */
 }
 
-/* Style for individual items in the list */
-QComboBox QAbstractItemView::item {
-    background-color: #2e2f38; /* Match the background color of non-selected items */
-    color: #d1d1e0; /* Light gray text color */
-}
-
-/* Style for the selected item */
+/* Selected item in list */
 QComboBox QAbstractItemView::item:selected {
     background-color: qlineargradient(
-        x1: 0, y1: 0, x2: 0, y2: 1,
-        stop: 0 rgba(46, 47, 56, 10), /* Lighter gray with higher transparency */
-        stop: 1 rgba(210, 72, 72, 50) /* Darker red with lower transparency */
-    ); /* Gradient background for selected items */
-    color: #ececf1; /* Ensure readable text color */
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */
+        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */
+    );
+    color: #ececf1; /* Using --gray-100 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
 }
 
-/* Style for the hovered item */
+/* Hover over item in list */
 QComboBox QAbstractItemView::item:hover {
-    background-color: #4e4f5b; /* Medium gray for hovered items, similar to QTableView */
-    color: #ececf1; /* Maintain contrast */
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */
+        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */
+    );
+    color: #ececf1; /* Using --gray-100 */
+    padding-left: 2px; /* Move text 2 pixels to the right */
 }
 
-/* Style the QComboBox when it is focused */
-QComboBox:focus {
-    border: 0.5px solid #acacbe; /* Slightly lighter border on focus */
+/* Handle the padding of items in the list view */
+QComboBox QAbstractItemView::item {
+    padding-left: 2px; /* Move text 2 pixels to the right */
 }
 
-/* Style the arrow inside the dropdown */
-QComboBox::down-arrow {
-    width: 0;
-    height: 0;
-    border-left: 6px solid #2e2f38; /* Match the QComboBox background */
-    border-right: 6px solid #2e2f38; /* Match the QComboBox background */
-    border-top: 8px solid #d1d1e0; /* Use light gray for the arrow to match text color */
-    margin: 8px auto; /* Center the arrow */
+/* Ensure keyboard navigation shows selection */
+QComboBox::item:selected:!hover {
+    background-color: qlineargradient(
+        spread: pad, 
+        x1: 0, y1: 0, 
+        x2: 0, y2: 1, 
+        stop: 0.259887 rgba(50, 50, 50, 202), 
+        stop: 1 rgba(180, 180, 180, 255)
+    ); 
+    color: #ececf1; /* White text color for keyboard selection */
+    padding-left: 2px; /* Move text 2 pixels to the right */
 }
+
+/* Checked state of the checkbox */
+QComboBox::indicator:checked {
+    background-color: #565869; /* Kept original lime green color */
+    image: url(':/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg'); /* Path to your checked image */
+    width: 10px;  /* Adjusted width to fit within the border */
+    height: 10px; /* Adjusted height to fit within the border */
+}
+
+/* Unchecked state can have a background color */
+QComboBox::indicator:unchecked {
+    background-color: #565869; /* Using --gray-600 */
+}
+
 
 
 
@@ -504,6 +559,7 @@ QLineEdit:modified {
     border: 1px solid #d1d1e0; /* Border color indicating modification */
 }
 
+
 /* General QTableView adjustments */
 QTableView {
     background-color: #2e2f38; /* Dark gray for all rows */
@@ -570,7 +626,42 @@ QTableView::item:!selected {
     ); /* Reset to the default background color */
     color: #d1d1e0; /* Reset to the default text color */
 }
-</string>
+
+
+/* General style for QProgressBar */
+QProgressBar {
+    background-color: #2e2f38; /* Dark gray background matching the table */
+    color: #d1d1e0; /* Light gray text color */
+    border: 1px solid #4d4d4d; /* Border matching the table border */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center the text inside the progress bar */
+    padding: 2px; /* Padding for better spacing */
+}
+
+/* Style for the progress chunk */
+QProgressBar::chunk {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 #d14848, /* Start with darker red matching the selection color */
+        stop: 1 #e57373  /* End with a slightly lighter red */
+    ); /* Gradient effect for the progress bar */
+    border-radius: 3px; /* Slight rounding of the progress chunk */
+}
+
+/* Style for the indeterminate progress bar (if used) */
+QProgressBar[minimum=&quot;0&quot;][maximum=&quot;0&quot;] {
+    background-color: #2e2f38; /* Dark gray background matching the table */
+    border: 1px solid #4d4d4d; /* Border matching the table border */
+    color: #d1d1e0; /* Light gray text color */
+}
+
+QProgressBar[minimum=&quot;0&quot;][maximum=&quot;0&quot;]::chunk {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 #d14848, /* Start with darker red */
+        stop: 1 #e57373  /* End with a slightly lighter red */
+    ); /* Moving gradient for the indeterminate progress bar */
+}</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
    <property name="spacing">
@@ -1604,7 +1695,7 @@ QTableView::item:!selected {
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>6</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="Servituudid">
             <property name="accessibleName">
@@ -2211,7 +2302,7 @@ QPushButton:hover{
 </string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="swAdd_cadastrals">
                 <property name="styleSheet">
@@ -9799,22 +9890,6 @@ p, li { white-space: pre-wrap; }
                     <number>6</number>
                    </property>
                    <item>
-                    <widget class="QPushButton" name="pbOpenProperty">
-                     <property name="font">
-                      <font>
-                       <pointsize>10</pointsize>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string>Ava kinnistu Mailablis</string>
-                     </property>
-                     <property name="icon">
-                      <iconset>
-                       <normaloff>icons/icon_Mailabl.png</normaloff>icons/icon_Mailabl.png</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
                     <spacer name="horizontalSpacer_53">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -9826,6 +9901,25 @@ p, li { white-space: pre-wrap; }
                       </size>
                      </property>
                     </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pbOpenProperty">
+                     <property name="font">
+                      <font>
+                       <pointsize>10</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                     <property name="text">
+                      <string>Ava kinnistu Mailablis</string>
+                     </property>
+                     <property name="icon">
+                      <iconset>
+                       <normaloff>icons/icon_Mailabl.png</normaloff>icons/icon_Mailabl.png</iconset>
+                     </property>
+                    </widget>
                    </item>
                   </layout>
                  </widget>
@@ -9938,6 +10032,11 @@ QTreeView::branch {
                   <attribute name="headerMinimumSectionSize">
                    <number>20</number>
                   </attribute>
+                  <column>
+                   <property name="text">
+                    <string notr="true">1</string>
+                   </property>
+                  </column>
                  </widget>
                 </item>
                </layout>
@@ -10264,6 +10363,29 @@ QPushButton:hover{
                           <pointsize>10</pointsize>
                          </font>
                         </property>
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>New Item</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>New Item</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>New Item</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>New Item</string>
+                         </property>
+                        </item>
                        </widget>
                       </item>
                       <item>

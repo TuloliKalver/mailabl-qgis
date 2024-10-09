@@ -72,7 +72,8 @@ class Ui_MailablDialogBase(object):
 "\n"
 "/*konteinerite peamised omadused*/\n"
 "#centerMenuSubContainer{\n"
-"    background-color: #272c35;\n"
+"    /*background-color: #272c35;*/\n"
+"    background-color:#202123\n"
 "}\n"
 "\n"
 "#swWorkSpace{\n"
@@ -170,74 +171,128 @@ class Ui_MailablDialogBase(object):
 "\n"
 "}\n"
 "\n"
-"/* General QComboBox styles */\n"
+"\n"
+"\n"
+"\n"
+"/* Combined Style for QComboBox to Ensure Consistency */\n"
+"\n"
+"/* Base style for QComboBox */\n"
 "QComboBox {\n"
-"    background-color: #2e2f38; /* Match the dark gray background of QTableView */\n"
-"    color: #d1d1e0; /* Light gray text color to match QTableView */\n"
-"    border: 1px solid #4d4d4d; /* Same border color as QTableView */\n"
-"    border-radius: 5px; /* Matching rounded corners */\n"
-"    padding-left: 5px; /* Keep padding for alignment */\n"
+"    border: 1px solid #565869; /* Using --gray-600 */\n"
+"    border-radius: 5px; /* Rounded corners */\n"
+"    background-color: #343541; /* Using --gray-800 */\n"
+"    color: #ececf1; /* Using --gray-100 */\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
 "}\n"
 "\n"
-"/* Style the dropdown button */\n"
+"/* Disabled state */\n"
+"QComboBox:disabled {\n"
+"    background-color: #c5c5d2; /* Using --gray-300 */\n"
+"    color: #8e8ea0; /* Using --gray-500 */\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
+"}\n"
+"\n"
+"/* Hover state */\n"
+"QComboBox:hover {\n"
+"    border: 1px solid #acacbe; /* Using --gray-400 */\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
+"}\n"
+"\n"
+"/* Focus state */\n"
+"QComboBox:focus {\n"
+"    border: 1px solid #acacbe; /* Kept original lime green color */\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
+"}\n"
+"\n"
+"/* Dropdown button */\n"
 "QComboBox::drop-down {\n"
-"    background-color: #2e2f38; /* Match the background color */\n"
-"    border: 1px solid #4d4d4d; /* Match the border color */\n"
-"    border-radius: 3px; /* Maintain rounding consistency */\n"
-"    width: 16px;\n"
+"    subcontrol-position: center right;\n"
+"    border-radius: 3px; /* Rounded corners */\n"
+"    /*width: 24px;*/\n"
+"    borde: 0.5px solid #acacbe; /* Kept original lime green color */\n"
+"    background-color: #343541; /* Using --gray-800 */\n"
+"}\n"
+"\n"
+"/* Dropdown arrow */\n"
+"QComboBox::down-arrow {\n"
+"    image: url(\':/qt-project.org/styles/macstyle/images/toolbar-ext.png\'); /* Default arrow image */\n"
 "    height: 16px;\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: left; /* Center the arrow icon */\n"
+"    width: 16px;\n"
 "}\n"
 "\n"
-"/* Style for the list view that shows the items */\n"
+"QComboBox::down-arrow:on,\n"
+"QComboBox::down-arrow:hover,\n"
+"QComboBox::down-arrow:focus {\n"
+"    image: url(\':/qt-project.org/styles/macstyle/images/toolbar-ext.png\'); /* Arrow image on hover, focus */\n"
+"}\n"
+"\n"
+"/* QAbstractItemView (dropdown list) */\n"
 "QComboBox QAbstractItemView {\n"
-"    background-color: #2e2f38; /* Match the dark gray background */\n"
-"    border: 1px solid #4d4d4d; /* Same border as QTableView */\n"
+"    background-color: #343541; /* Using --gray-900 */\n"
+"    border: 1px solid #4d4d4d; /* Similar to gray-600 */\n"
 "    selection-background-color: qlineargradient(\n"
-"        x1: 0, y1: 0, x2: 0, y2: 1,\n"
-"        stop: 0 rgba(46, 47, 56, 10), /* Match the lighter gray in QTableView selection */\n"
-"        stop: 1 rgba(210, 72, 72, 50)  /* Match the darker red in QTableView selection */\n"
+"        x1: 0, y1: 0, x2: 1, y2: 0,\n"
+"        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */\n"
+"        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */\n"
 "    );\n"
-"    selection-color: #ececf1; /* Ensure readable text color for selected items */\n"
+"    selection-color: #ececf1; /* Using --gray-100 */\n"
+"    color: #ececf1;\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
 "}\n"
 "\n"
-"/* Style for individual items in the list */\n"
-"QComboBox QAbstractItemView::item {\n"
-"    background-color: #2e2f38; /* Match the background color of non-selected items */\n"
-"    color: #d1d1e0; /* Light gray text color */\n"
-"}\n"
-"\n"
-"/* Style for the selected item */\n"
+"/* Selected item in list */\n"
 "QComboBox QAbstractItemView::item:selected {\n"
 "    background-color: qlineargradient(\n"
-"        x1: 0, y1: 0, x2: 0, y2: 1,\n"
-"        stop: 0 rgba(46, 47, 56, 10), /* Lighter gray with higher transparency */\n"
-"        stop: 1 rgba(210, 72, 72, 50) /* Darker red with lower transparency */\n"
-"    ); /* Gradient background for selected items */\n"
-"    color: #ececf1; /* Ensure readable text color */\n"
+"        x1: 0, y1: 0, x2: 1, y2: 0,\n"
+"        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */\n"
+"        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */\n"
+"    );\n"
+"    color: #ececf1; /* Using --gray-100 */\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
 "}\n"
 "\n"
-"/* Style for the hovered item */\n"
+"/* Hover over item in list */\n"
 "QComboBox QAbstractItemView::item:hover {\n"
-"    background-color: #4e4f5b; /* Medium gray for hovered items, similar to QTableView */\n"
-"    color: #ececf1; /* Maintain contrast */\n"
+"    background-color: qlineargradient(\n"
+"        x1: 0, y1: 0, x2: 1, y2: 0,\n"
+"        stop: 0 rgba(50, 50, 50, 255), /* Dark gray */\n"
+"        stop: 1 rgba(100, 100, 100, 255) /* Lighter gray */\n"
+"    );\n"
+"    color: #ececf1; /* Using --gray-100 */\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
 "}\n"
 "\n"
-"/* Style the QComboBox when it is focused */\n"
-"QComboBox:focus {\n"
-"    border: 0.5px solid #acacbe; /* Slightly lighter border on focus */\n"
+"/* Handle the padding of items in the list view */\n"
+"QComboBox QAbstractItemView::item {\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
 "}\n"
 "\n"
-"/* Style the arrow inside the dropdown */\n"
-"QComboBox::down-arrow {\n"
-"    width: 0;\n"
-"    height: 0;\n"
-"    border-left: 6px solid #2e2f38; /* Match the QComboBox background */\n"
-"    border-right: 6px solid #2e2f38; /* Match the QComboBox background */\n"
-"    border-top: 8px solid #d1d1e0; /* Use light gray for the arrow to match text color */\n"
-"    margin: 8px auto; /* Center the arrow */\n"
+"/* Ensure keyboard navigation shows selection */\n"
+"QComboBox::item:selected:!hover {\n"
+"    background-color: qlineargradient(\n"
+"        spread: pad, \n"
+"        x1: 0, y1: 0, \n"
+"        x2: 0, y2: 1, \n"
+"        stop: 0.259887 rgba(50, 50, 50, 202), \n"
+"        stop: 1 rgba(180, 180, 180, 255)\n"
+"    ); \n"
+"    color: #ececf1; /* White text color for keyboard selection */\n"
+"    padding-left: 2px; /* Move text 2 pixels to the right */\n"
 "}\n"
+"\n"
+"/* Checked state of the checkbox */\n"
+"QComboBox::indicator:checked {\n"
+"    background-color: #565869; /* Kept original lime green color */\n"
+"    image: url(\':/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg\'); /* Path to your checked image */\n"
+"    width: 10px;  /* Adjusted width to fit within the border */\n"
+"    height: 10px; /* Adjusted height to fit within the border */\n"
+"}\n"
+"\n"
+"/* Unchecked state can have a background color */\n"
+"QComboBox::indicator:unchecked {\n"
+"    background-color: #565869; /* Using --gray-600 */\n"
+"}\n"
+"\n"
 "\n"
 "\n"
 "\n"
@@ -499,6 +554,7 @@ class Ui_MailablDialogBase(object):
 "    border: 1px solid #d1d1e0; /* Border color indicating modification */\n"
 "}\n"
 "\n"
+"\n"
 "/* General QTableView adjustments */\n"
 "QTableView {\n"
 "    background-color: #2e2f38; /* Dark gray for all rows */\n"
@@ -565,7 +621,42 @@ class Ui_MailablDialogBase(object):
 "    ); /* Reset to the default background color */\n"
 "    color: #d1d1e0; /* Reset to the default text color */\n"
 "}\n"
-"")
+"\n"
+"\n"
+"/* General style for QProgressBar */\n"
+"QProgressBar {\n"
+"    background-color: #2e2f38; /* Dark gray background matching the table */\n"
+"    color: #d1d1e0; /* Light gray text color */\n"
+"    border: 1px solid #4d4d4d; /* Border matching the table border */\n"
+"    border-radius: 5px; /* Rounded corners */\n"
+"    text-align: center; /* Center the text inside the progress bar */\n"
+"    padding: 2px; /* Padding for better spacing */\n"
+"}\n"
+"\n"
+"/* Style for the progress chunk */\n"
+"QProgressBar::chunk {\n"
+"    background-color: qlineargradient(\n"
+"        x1: 0, y1: 0, x2: 1, y2: 0,\n"
+"        stop: 0 #d14848, /* Start with darker red matching the selection color */\n"
+"        stop: 1 #e57373  /* End with a slightly lighter red */\n"
+"    ); /* Gradient effect for the progress bar */\n"
+"    border-radius: 3px; /* Slight rounding of the progress chunk */\n"
+"}\n"
+"\n"
+"/* Style for the indeterminate progress bar (if used) */\n"
+"QProgressBar[minimum=\"0\"][maximum=\"0\"] {\n"
+"    background-color: #2e2f38; /* Dark gray background matching the table */\n"
+"    border: 1px solid #4d4d4d; /* Border matching the table border */\n"
+"    color: #d1d1e0; /* Light gray text color */\n"
+"}\n"
+"\n"
+"QProgressBar[minimum=\"0\"][maximum=\"0\"]::chunk {\n"
+"    background-color: qlineargradient(\n"
+"        x1: 0, y1: 0, x2: 1, y2: 0,\n"
+"        stop: 0 #d14848, /* Start with darker red */\n"
+"        stop: 1 #e57373  /* End with a slightly lighter red */\n"
+"    ); /* Moving gradient for the indeterminate progress bar */\n"
+"}")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout(MailablDialogBase)
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_6.setSpacing(0)
@@ -4465,17 +4556,18 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_84.setContentsMargins(0, 0, 0, 6)
         self.horizontalLayout_84.setSpacing(0)
         self.horizontalLayout_84.setObjectName("horizontalLayout_84")
+        spacerItem52 = QtWidgets.QSpacerItem(529, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_84.addItem(spacerItem52)
         self.pbOpenProperty = QtWidgets.QPushButton(self.fOpenPropertyButton)
         font = QtGui.QFont()
         font.setPointSize(10)
         self.pbOpenProperty.setFont(font)
+        self.pbOpenProperty.setStyleSheet("")
         icon25 = QtGui.QIcon()
         icon25.addPixmap(QtGui.QPixmap("c:\\Users\\Kalver\\Desktop\\Plugins\\mailabl-qgis\\mailabl-qgis\\icons/icon_Mailabl.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pbOpenProperty.setIcon(icon25)
         self.pbOpenProperty.setObjectName("pbOpenProperty")
         self.horizontalLayout_84.addWidget(self.pbOpenProperty)
-        spacerItem52 = QtWidgets.QSpacerItem(529, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_84.addItem(spacerItem52)
         self.verticalLayout_168.addWidget(self.fOpenPropertyButton)
         self.treeWidget = QtWidgets.QTreeWidget(self.frame_39)
         font = QtGui.QFont()
@@ -4574,6 +4666,7 @@ class Ui_MailablDialogBase(object):
 "")
         self.treeWidget.setAlternatingRowColors(False)
         self.treeWidget.setObjectName("treeWidget")
+        self.treeWidget.headerItem().setText(0, "1")
         self.treeWidget.header().setMinimumSectionSize(20)
         self.verticalLayout_168.addWidget(self.treeWidget)
         self.verticalLayout_160.addWidget(self.frame_39)
@@ -4707,7 +4800,12 @@ class Ui_MailablDialogBase(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.cmbProjectStatuses.setFont(font)
+        self.cmbProjectStatuses.setStyleSheet("")
         self.cmbProjectStatuses.setObjectName("cmbProjectStatuses")
+        self.cmbProjectStatuses.addItem("")
+        self.cmbProjectStatuses.addItem("")
+        self.cmbProjectStatuses.addItem("")
+        self.cmbProjectStatuses.addItem("")
         self.horizontalLayout_21.addWidget(self.cmbProjectStatuses)
         spacerItem53 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_21.addItem(spacerItem53)
@@ -5838,8 +5936,8 @@ class Ui_MailablDialogBase(object):
         self.horizontalLayout_6.addWidget(self.rightMenuContainer)
 
         self.retranslateUi(MailablDialogBase)
-        self.swWorkSpace.setCurrentIndex(6)
-        self.swCadastral_sub_processes.setCurrentIndex(1)
+        self.swWorkSpace.setCurrentIndex(1)
+        self.swCadastral_sub_processes.setCurrentIndex(2)
         self.tabWidget_Propertie_list.setCurrentIndex(0)
         self.tabW_Delete_list.setCurrentIndex(0)
         self.sw_HM.setCurrentIndex(0)
@@ -6121,6 +6219,10 @@ class Ui_MailablDialogBase(object):
         self.le_searchProjects.setPlaceholderText(_translate("MailablDialogBase", " Sisesta projekti number"))
         self.pbSearchProjects.setText(_translate("MailablDialogBase", "Otsi"))
         self.pushButton.setText(_translate("MailablDialogBase", "Zoomitud ala projektid"))
+        self.cmbProjectStatuses.setItemText(0, _translate("MailablDialogBase", "New Item"))
+        self.cmbProjectStatuses.setItemText(1, _translate("MailablDialogBase", "New Item"))
+        self.cmbProjectStatuses.setItemText(2, _translate("MailablDialogBase", "New Item"))
+        self.cmbProjectStatuses.setItemText(3, _translate("MailablDialogBase", "New Item"))
         self.pbGenProjectFolder.setText(_translate("MailablDialogBase", "Projekti kausta genereerimine"))
         self.RemoveProperties.setAccessibleName(_translate("MailablDialogBase", "None"))
         self.label_7.setText(_translate("MailablDialogBase", "Värv 1: #1f232a "))

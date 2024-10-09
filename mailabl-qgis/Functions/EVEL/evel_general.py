@@ -189,7 +189,7 @@ class EVELGroupGenerator:
         # Initialize the QGIS project instance
         project = QgsProject.instance()
         root = project.layerTreeRoot()
-        setup_layer_name = SetupLayers().mailabl_main_group_name
+        setup_layer_name = SetupLayers().main_group
 
         setup_layer_group = EVELGroupGenerator.get_or_create_group(root, setup_layer_name)
 
