@@ -6,7 +6,7 @@ import requests
 from PyQt5.QtGui import QColor, QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QItemDelegate
 from PyQt5.QtCore import Qt
-from ...Functions.tableViewAdjust import Colors
+from ...utils.table_view_utils import Colors
 from ...KeelelisedMuutujad.modules import Modules
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler

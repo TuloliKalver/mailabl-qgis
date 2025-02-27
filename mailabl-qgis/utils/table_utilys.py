@@ -5,7 +5,7 @@ from datetime import datetime
 from PyQt5.QtCore import QVariant,Qt
 from PyQt5.QtGui import QColor, QBrush, QIcon, QStandardItem
 from ..queries.python.projects_pandas import TableHeaders
-from ..Functions.tableViewAdjust import Colors
+from .table_view_utils import Colors
 from ..config.iconHandler import iconHandler
 from ..config.settings import Filepaths, IconsByName
 table_headers = TableHeaders()
@@ -40,7 +40,7 @@ class ModelHandler:
                 if color_code:
                     # Convert hex color code to RGB
                     rgb_color = Colors.hex_to_rgb(color_code)
-                    print(f"rgb_color: {rgb_color}")
+                    #print(f"rgb_color: {rgb_color}")
                     
                     # Create a QColor object with the RGB values
                     background_color = QColor(*rgb_color)

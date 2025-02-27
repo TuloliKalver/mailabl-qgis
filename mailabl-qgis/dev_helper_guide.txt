@@ -1,0 +1,189 @@
+Mailabl Plugin Development Helper Guide
+
+====================
+
+Introduction
+
+Purpose of this file
+How it helps streamline development and communication
+
+====================
+
+General Guidelines
+
+How to structure new functions and modules
+Naming conventions
+Common coding practices such as error handling and logging
+
+====================
+
+Modules Overview
+
+Module Name: graphql_connector.py
+Purpose: Handles GraphQL queries to interact with Mailabl API. This module is particularly useful for retrieving project, property, and contract data directly from the Mailabl API, allowing seamless data integration into QGIS. It is commonly used in scenarios where dynamic data fetching and filtering are needed, such as loading project-specific layers, syncing updated property information, or querying user-related permissions and statuses.
+Key Functions:
+execute_query(query, variables)
+Description: Sends a GraphQL query with specified variables
+Parameters: query (str) - GraphQL query, variables (dict) - variables for the query
+Returns: JSON response from the Mailabl API
+
+Module Name: ui_controllers.py
+Purpose: General UI controls within the plugin. This module requires PyQt5 for managing UI components and is compatible with QGIS version 3.34 and above.
+Key Functions:
+load_ui_component(component_name)
+Description: Loads a specified UI component
+Parameters: component_name (str) - name of the component to load
+Returns: Loaded UI component
+
+Module Name: tableViewAdjust.py
+Purpose: Styles and edits tables and table views across the plugin
+Key Functions:
+adjust_table_view(table)
+Description: Applies consistent styling to QTableView elements
+Parameters: table (QTableView) - the table to style
+Returns: None
+
+Module Name: button_connector.py
+Purpose: Manages button interactions and event handling within the Mailabl plugin UI. This module simplifies the process of connecting buttons to their respective functions, ensuring consistent behavior across the plugin.
+Key Functions:
+connect_button(button, function)
+Description: Links a UI button to a specified function, enabling interaction.
+Parameters: button (QPushButton) - the button to connect, function (callable) - the function to execute on click.
+Returns: None
+
+Use Cases: This module is useful when adding new UI components that require button interactions, such as submitting forms, triggering map selections, or toggling layer visibility in QGIS.
+
+Module Name: signal_utils.py
+Purpose: Provides utility functions to manage PyQt signal-slot connections efficiently within the Mailabl plugin. This module ensures consistent signal handling across different UI components and reduces repetitive code.
+Key Functions:
+connect_signal(sender, signal, receiver)
+Description: Connects a signal from a sender object to a receiver function.
+Parameters: sender (QObject) - the object emitting the signal, signal (str) - the name of the signal, receiver (callable) - the function that handles the signal.
+Returns: None
+
+disconnect_signal(sender, signal, receiver)
+Description: Disconnects a previously connected signal from the sender to the receiver.
+Parameters: sender (QObject) - the object emitting the signal, signal (str) - the name of the signal, receiver (callable) - the function that handles the signal.
+Returns: None
+
+Use Cases: This module is useful when you need to manage multiple dynamic connections, such as updating map layers based on user interactions, or synchronizing form fields with data model changes.
+
+====================
+
+Function Examples
+
+Example: Using execute_query in graphql_connector.py
+
+query = """
+query GetProjects {
+projects {
+id
+name
+}
+}
+"""
+
+try:
+response = graphql_connector.execute_query(query, {})
+if 'errors' in response:
+print(f"GraphQL Errors: {response['errors']}")
+else:
+projects = response.get('data', {}).get('projects', [])
+for project in projects:
+print(f"Project ID: {project['id']}, Name: {project['name']}")
+except Exception as e:
+print(f"An error occurred: {e}")
+
+Example: Loading a UI component in ui_controllers.py
+
+component = ui_controllers.load_ui_component('Properties_connector_new.ui')
+component.show()
+
+Example: Connecting a button in button_connector.py
+
+from PyQt5.QtWidgets import QPushButton
+from app import button_connector
+
+submit_button = QPushButton('Submit')
+
+def submit_action():
+print('Button clicked! Performing action...')
+
+button_connector.connect_button(submit_button, submit_action)
+
+Example: Connecting a signal in signal_utils.py
+
+from PyQt5.QtCore import QObject, pyqtSignal
+from app import signal_utils
+
+class ExampleSender(QObject):
+example_signal = pyqtSignal()
+
+sender = ExampleSender()
+
+def handle_signal():
+print('Signal received and handled.')
+
+signal_utils.connect_signal(sender, 'example_signal', handle_signal)
+sender.example_signal.emit()
+
+====================
+
+QGIS Integration
+
+How to connect Mailabl data with QGIS:
+
+Use graphql_connector.py to fetch data from the Mailabl API.
+
+Map the fetched data using QGIS vector layers.
+
+Utilize ui_controllers.py for managing UI interactions within QGIS.
+
+UI components using QT5:
+
+Properties_connector_new.ui for property data display
+
+ContractsSetup.ui for managing contract-related data
+
+LayerSetup.ui for setting up QGIS layers
+
+====================
+
+Troubleshooting Tips
+
+Common issues and solutions:
+
+API Connection Errors - Check your API credentials in access_credentials.py
+
+UI Component Not Loading - Ensure the correct path is provided in ui_directories.py
+
+Data Not Displaying on Map - Verify the layer setup in layer_setup.py
+
+Performance optimization tips:
+
+Use pagination in GraphQL queries to handle large datasets efficiently.
+
+Limit the fields requested in queries to reduce payload size.
+
+Cache frequently accessed data locally to minimize API calls.
+
+Utilize QGIS's built-in rendering and layer simplification tools to improve map performance when displaying large data sets.
+
+Optimize database queries in database.py to ensure quick data retrieval.
+
+Debugging strategies:
+
+Use print statements or logging module from utils/logging.py to trace function execution
+
+Check the QGIS logs for plugin-specific errors
+
+====================
+
+Additional Resources
+
+Links to QGIS documentation: https://docs.qgis.org/3.34/en/docs/index.html
+QGIS Tutorials: https://docs.qgis.org/3.34/en/docs/training_manual/index.html
+Mailabl API docs: https://mailabl.dev/docs
+
+====================
+

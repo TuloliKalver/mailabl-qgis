@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QTreeWidgetItem
 from PyQt5.QtGui import QIcon, QBrush
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QColor
-from ...Functions.tableViewAdjust import Colors
+from ...utils.table_view_utils import Colors
 from ...KeelelisedMuutujad.modules import Modules, Languages, ModuleTranslation
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler

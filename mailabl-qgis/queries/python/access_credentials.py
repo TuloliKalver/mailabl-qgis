@@ -64,10 +64,8 @@ def load_token():
 
 # Obtain and save the access token using user credentials
 def get_access_token(self):
-    # Replace with your actual username and password
     username = get_user_name()
     password = get_user_password()
-
 
     # Construct GraphQL mutation for authentication
     graphql_mutation = f'''
@@ -99,18 +97,18 @@ def get_access_token(self):
         if "accessToken" in response_data.get("data", {}).get("login", {}):
             access_token = response_data["data"]["login"]["accessToken"]
             save_access_token(access_token)  # Save the token
-            #print(access_token)
-            return "success"
+            return True  # Authentication success
         else:
-            text = ("Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli")
+            text = "Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli"
             heading = pealkiri.warningSimple
             QMessageBox.warning(self, heading, text)
-            return "error"
+            return False  # Authentication failure
     else:
-        text = ("Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti")
+        text = "Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti"
         heading = pealkiri.warningSimple
-        QMessageBox.warning(self, heading, text )
-        return "error"
+        QMessageBox.warning(self, heading, text)
+        return False  # Network or other error
+
 
 # Save the obtained access token to QgsSettings
 def save_access_token(token):

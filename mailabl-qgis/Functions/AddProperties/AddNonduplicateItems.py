@@ -1,3 +1,5 @@
+#AddNonDuplicateItems.py
+
 
 from PyQt5.QtWidgets import QMessageBox
 from qgis.core import QgsProject
@@ -118,5 +120,3 @@ class AddProperties:
                 QMessageBox.information(self, heading, text)
             
         button.blockSignals(False)
-
-

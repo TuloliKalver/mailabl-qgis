@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QTableView, QMessageBox
 from ...MapTools.selector import visibleSelector
 from ...projects_pandas import ProjectsWithPandas_2, ProjectsWithPandas_3, TableHeaders
 from .....utils.delegates.DelegateMainTable import DelegatesForTables
-from .....Functions.tableViewAdjust import ColumnResizer
+from .....utils.table_view_utils import ColumnResizer
 from .....config.settings import SettingsDataSaveAndLoad, MailablWebModules
 from .....utils.table_utilys import ModelHandler
 from .....KeelelisedMuutujad.messages import Headings, HoiatusTexts

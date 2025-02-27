@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QMessageBox
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
-from ..Functions.delete_items import Delete_Main_Process
+from ..Functions.DeletProcessUIActions import DeletProcessUIActions
 from ..Functions.Contracts.contractsItems import ContractsMain
 from ..Functions.Easements.EasementsItems import EasementssMain
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
@@ -237,7 +237,7 @@ class WorkSpaceHandler:
         self.sw_HM.setCurrentIndex(3)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(1)
         self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(0)
-        Delete_Main_Process.Delete_process_view_on_load(self)
+        DeletProcessUIActions.Delete_process_view_on_load(self)
 
     @staticmethod
     def Open_generate_mapLayer_synced_with_Mailabl_first_page(self):

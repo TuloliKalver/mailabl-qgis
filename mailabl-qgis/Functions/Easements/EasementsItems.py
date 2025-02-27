@@ -7,7 +7,7 @@ import pandas as pd
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QTableView, QMessageBox
-from ..tableViewAdjust import ColumnResizer
+from ...utils.table_view_utils import ColumnResizer
 from ...queries.python.DataLoading_classes import GraphqlQueriesEasements
 from ...queries.python.query_tools import requestBuilder
 from ...utils.table_utilys import ModelHandler

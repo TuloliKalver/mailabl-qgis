@@ -1,12 +1,12 @@
-from qgis.core import QgsProject
+from qgis.core import QgsProject, edit
 from PyQt5.QtGui import QStandardItemModel
 from PyQt5.QtWidgets import  QMessageBox, QAbstractItemView
 from PyQt5.QtCore import QCoreApplication
 from ...app.View_tools import MapSelector, TableViewadjuster
-from ...app.workspace_handler import TabHandler
+#from ...app.workspace_handler import TabHandler
 from ..Tools import tableFunctions
 from ..QstandardModelTools.QStandardModelHandler import ModelHeadersGenerator, CombineModels, DataExtractors
-from ..delete_items import Delete_finalProcess, Delete_Main_Process
+from ..DeletProcessUIActions import DeletProcessUIActions #Delete_finalProcess, 
 from ...queries.python.property_data import PropertiesGeneralQueries, deleteProperty
 from ...config.settings import SettingsDataSaveAndLoad
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
@@ -99,6 +99,31 @@ class DeleteActions:
             text = (f"Valitud kinnitsud eemaldati edukalt Mailablist ja kihilt:\n{active_cadastral_layer_name}")
             heading = pealkiri.informationSimple
             QMessageBox.information(self, heading, text)
-            Delete_Main_Process.Delete_process_view_on_load(self)
+            DeletProcessUIActions.Delete_process_view_on_load(self)
 
             button.blockSignals(False)
+
+
+class Delete_finalProcess:
+    def clear_layer_from_deleted_items(self, layer):
+        print(f"layer_name in 'delete from map': {layer}")
+        # Get the input layer by name
+        input_layer = QgsProject.instance().mapLayersByName(layer)[0]
+
+        # Check if there is a selection on the input layer
+        if input_layer.selectedFeatureCount() > 0:
+            # Get the selected feature IDs
+            selected_feature_ids = [feature.id() for feature in input_layer.selectedFeatures()]
+
+            # Start editing on the input layer
+            with edit(input_layer):
+                # Delete the selected features from the input layer
+                input_layer.deleteFeatures(selected_feature_ids)
+
+            # Commit changes to the input layer
+            input_layer.commitChanges()
+            input_layer.triggerRepaint()  # Refresh the map canvas
+            input_layer.updateExtents()
+
+        else:
+            print("No features selected on the input layer.")

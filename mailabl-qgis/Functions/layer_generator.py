@@ -1,3 +1,5 @@
+#layer_generator.py
+
 import os
 
 from qgis.core import QgsVectorLayer, QgsProject, QgsCoordinateReferenceSystem, QgsVectorFileWriter, QgsFeature

@@ -3,7 +3,7 @@ from qgis.core import QgsProject
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
-from ...Functions.tableViewAdjust import ColumnResizer
+from ...utils.table_view_utils import ColumnResizer
 from ...KeelelisedMuutujad.messages import Headings
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 

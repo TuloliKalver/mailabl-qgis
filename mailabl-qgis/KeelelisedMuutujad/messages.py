@@ -11,7 +11,8 @@ class Headings:
 class HoiatusTexts:
     def __init__(self):       
         self.puudulik_kinnistute_seadistus = "Kontrolli kinnistute seadistusi"
-        self.juurdepaas_ei = "Juurdepääsuluba ei leitud"        
+        self.juurdepaas_ei = "Juurdepääsuluba ei leitud"
+        self.kasutaja_oigused_puuduvad = "Kasutajal puuduvad vastavad õigused. \nPöördu oma ettevõtte administraatori poole"
         self.linn_kyla_valimata = "Jätkamiseks vali ja kinnita linn või küla"
         self.maakond_valimata = "Jätkamiseks vali ja kinnita maakond"
         self.omavalitsus_valimata = "Jätkamiseks vali ja kinnita omavalitsus"        
@@ -19,6 +20,7 @@ class HoiatusTexts:
                 "Laadi õige fail! SHP_KATASTRIÜKSUS.SHP\n"
                 "Uued andmed saad Maa-ametist kasutades Seadete menüüst valikut 'Maa-ametisse'"
             )
+        self.vigane_voti = "Viga andmeühendusel.\nProovi hiljem uuesti!"
         self.error = "Midagi läks valesti"        
         self.kinnistuid_ei_leidnud = "Ühtegi kinnistut ei leitud"
         self.andmed_valimata = "Andmeid ei ole valitud"

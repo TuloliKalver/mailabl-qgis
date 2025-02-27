@@ -17,7 +17,8 @@ from PyQt5.QtWidgets import QListWidgetItem
 from ..config.settings import SettingsDataSaveAndLoad
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTextsAuto, HoiatusTexts
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-        
+
+from ..utils.progres_bar_operations import run_with_progress, ProgressBarHandler       
 
 pealkiri = Headings()
 
@@ -298,13 +299,15 @@ class listView_functions():
 
 
     def insert_values_to_listView_object(self, object, data):
-        #object_name = object.objectName() - if testing or printing is needed
+        """
+        Helper function to insert values into a list view and update the widget.
+        """
         object.clear()
         for feature in data:
             list_item = QListWidgetItem(feature)
             object.addItem(list_item)
             QCoreApplication.processEvents()
-            
+            object.update() 
 
         
 #Develope later for unversal use
@@ -462,7 +465,46 @@ class shp_tools:
         return sorted_values
 
 
-    def create_item_list_with_MultyWhere(self, total, restrictions, input_layer_name, where_field, field):
+    def create_item_list_with_MultyWhere(self, restrictions, layer_name, where_field, field):
+        progress_handler = ProgressBarHandler()
+        input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
+        total = input_layer.featureCount()  # Automatically get the total number of features
+        #print(f"Total features in layer '{layer_name}': {total}")
+
+        filtered_values = []
+        row = 0
+
+        quarter_point = total // 4
+        halfway_point = total // 2
+        three_quarter_point = total * 3 // 4
+
+        for feature in input_layer.getFeatures():
+            #print(f"Processing feature ID: {feature.id()}, {where_field}: {feature[where_field]}, {field}: {feature[field]}")
+
+            if feature[where_field] in restrictions:
+                filtered_values.append(feature[field])
+                #print(f"Feature added: {feature[field]}")
+
+            row += 1
+            progress_handler.increment_progress(row)
+
+            # Update progress labels
+            if row == quarter_point:
+                progress_handler.progress_widget.label_2.setText("Uhh kui palju tööd:")
+                progress_handler.progress_widget.label_3.setText("Olen juba veerandi läbinud")
+            elif row == halfway_point:
+                progress_handler.progress_widget.label_3.setText("Ära noki nina!")
+            elif row == three_quarter_point:
+                progress_handler.progress_widget.label_3.setText("Sain nimekirja kokku.")
+
+        #print(f"Filtered values before sorting: {filtered_values}")
+        # Return the sorted unique values
+        sorted_filtered_values = sorted(set(filtered_values))
+        #print(f"Sorted unique values: {sorted_filtered_values}")
+        return sorted_filtered_values
+
+
+    def create_item_list_with_MultyWhere_old(self, total, restrictions, input_layer_name, where_field, field):
         # Get the input layer by name from the QgsProject
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         
@@ -507,7 +549,9 @@ class shp_tools:
         sorted_values = sorted(unique_values)
         #print(f"sorted_values: {sorted_values}")
         return sorted_values
-    
+
+
+
     
     def county_map_simplifier(self, county_nimi_field, input_layer_name, viewItem_county,viewItem_state, viewItem_city):
         try:
@@ -685,4 +729,49 @@ class MapSelector:
         QCoreApplication.processEvents()
     
 
-    
+class LayerProcessor:
+    def process_layer_with_progress(self, layer_name, filter_function, process_function=None, progress_messages=None):
+        """
+        A universal function to process layers with progress updates.
+
+        Parameters:
+        - layer_name: The name of the layer to process.
+        - filter_function: A function defining the filtering condition (returns True/False).
+        - process_function: (Optional) A function to process each filtered feature.
+        - progress_messages: (Optional) A dictionary for customizing progress messages at different stages.
+
+        Returns:
+        - The processed and filtered unique data.
+        """
+
+        # Default progress messages
+        default_progress_messages = {
+            'quarter': "Uhh kui palju tööd:",
+            'halfway': "Olen juba veerandi läbinud",
+            'three_quarters': "Ära noki nina!"
+        }
+        progress_messages = progress_messages or default_progress_messages
+
+        def task(progress_handler):
+            input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
+            processed_data = []
+            
+            for feature in input_layer.getFeatures():
+                if filter_function(feature):
+                    if process_function:
+                        processed_data.append(process_function(feature))
+                    else:
+                        processed_data.append(feature)
+                progress_handler.increment_progress(1)
+
+            #print(f"Processed data before filtering unique values: {processed_data}")
+
+            # Filter for unique values and sort
+            unique_sorted_data = sorted(set(processed_data))
+            #print(f"Unique sorted data: {unique_sorted_data}")
+
+            return unique_sorted_data  # Return unique sorted values
+
+        result = run_with_progress(task_function=task, window_title="Processing")
+        #print(f"Final result from process_layer_with_progress: {result}")
+        return result or []
