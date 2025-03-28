@@ -7,7 +7,8 @@
 import re
 from qgis.core import QgsMapLayer, QgsProject
 from PyQt5.QtWidgets import QMessageBox, QFrame
-from PyQt5.QtGui import QIcon, QColor
+from PyQt5.QtWidgets import  QListView
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
@@ -96,8 +97,7 @@ class QGIS_items:
     def clear_and_add_layerNames_selected(self, combo_box, layer_name):
         combo_box.clear()
         layer_names = QGIS_items.get_sorted_layer_names(self)
-        combo_box.addItems(layer_names)
-        
+        combo_box.addItems(layer_names)   
         # Set the current text of the combo box to the layer name if it exists
         if layer_name:
             combo_box.setCurrentText(layer_name)
@@ -145,7 +145,7 @@ class Setup_ProjectLayers:
         if status_id is None or '':
             InsertStatusToComboBox.add_statuses_to_listview(self, combo_box, module)
         else:
-           InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, status_id)
+           InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, combo_box, module, status_id)
 
         copy_folder_path = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
         if copy_folder_path:
@@ -172,7 +172,6 @@ class Setup_ProjectLayers:
                         done_icon_path = ":/qt-project.org/styles/commonstyle/images/standardbutton-apply-16.png"
                         icon = QIcon(done_icon_path)
                         item.setIcon(icon)
-
 
             # Check if all items are disabled
             all_disabled = all(not combo_box_name.model().item(i).isEnabled() for i in range(combo_box_name.count()))
@@ -366,7 +365,7 @@ class Setup_Conrtacts:
         if status_id is None or '':
             InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module)
         else:
-            InsertStatusToComboBox.add_statuses_to_listview_set_status(self, statuses_combo_box, module, status_id)
+            InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, statuses_combo_box, module, status_id)
 
         #InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module )
         preferred_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)
@@ -457,7 +456,7 @@ class SetupEasments:
         if status_id is None or '':
             InsertStatusToComboBox.add_statuses_to_listview(self, statuses_combo_box, module)
         else:
-            InsertStatusToComboBox.add_statuses_to_listview_set_status(self, statuses_combo_box, module, status_id)
+            InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, statuses_combo_box, module, status_id)
 
         preferred_types = SettingsDataSaveAndLoad.load_easements_type_names(self)
         

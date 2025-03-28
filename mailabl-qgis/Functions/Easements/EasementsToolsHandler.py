@@ -10,10 +10,10 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore
 from ...utils.printers import PrintEasement
-from .EasementsItems import queryHandling
+from .Easements import queryHandling
 from .resticon import WaterWorks, GetRuledRestriction
 from ..Union import Union
-from ..propertie_layer.properties_layer_data import PropertiesLayerFunctions
+from ..propertie_layer.InsertPropertiesToMailabl import PropertiesLayerFunctions
 from ..item_selector_tools import UseQGISNative
 from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers, MailablGroupLayers
 from ...config.settings import SettingsDataSaveAndLoad
@@ -516,20 +516,6 @@ class WidgetTools:
 
             return number
 
-    @staticmethod
-    def generate_table(self, widget):
-        active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
-        if not isinstance(active_layer, QgsMapLayer):
-            return
-
-        iface.setActiveLayer(active_layer)
-
-        if active_layer and active_layer.selectedFeatureCount() > 0:
-            table_view = widget.tvProperties
-            help = PropertiesLayerFunctions()
-            help.generate_table_from_selected_map_items(table_view, active_layer_name)
-            table_view.update()
 
 
 

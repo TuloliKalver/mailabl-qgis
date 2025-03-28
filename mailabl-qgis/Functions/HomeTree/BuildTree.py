@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QTreeWidgetItem
 from PyQt5.QtGui import QIcon, QBrush
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QColor
-from ...utils.table_view_utils import Colors
+from ...utils.ColorUtils import ColorUtils
 from ...KeelelisedMuutujad.modules import Modules, Languages, ModuleTranslation
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler
@@ -152,7 +152,7 @@ class MyTreeHome:
                         child_item.setText(0, str(number))
                         path = child.get("filesPath", "")
                         #print(f"insert path: {path}")
-                        child_item.setData(5, Qt.UserRole, path )  # Use .get() to avoid KeyError
+                        child_item.setData(5, Qt.UserRole, path)
                     
                     # Display statuses in a format that makes sense for your application
                     status = child["status"]
@@ -164,8 +164,7 @@ class MyTreeHome:
                     child_item.setData(3, Qt.UserRole, typename)
                     # Set clickable icon for the link (replace with your icon logic)
 
-                    #MyTreeHome.set_status_color(child_item, 6, status_id)
-                    MyTreeHome.set_clickable_webIcon(child_item, 3)  # Column 2 for link
+                    MyTreeHome.set_clickable_webIcon(child_item, 3) 
                     MyTreeHome.set_clickable_folderIcon(child_item, 5)
         # Hide the second column (index 1)
         treeWidget.setColumnHidden(2, True)
@@ -254,7 +253,7 @@ class StoreValues:
         value = settings.value(settings_address, '', type=str)
         return value
     
-    
+
     def load_propertieID_from_memory (self):
         value = self.propertyID_location
         return value

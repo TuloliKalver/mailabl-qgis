@@ -1,14 +1,18 @@
 from qgis.utils import iface
 from qgis.core import QgsMapLayer, QgsProject
+from PyQt5.QtWidgets import QFrame
+from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
-from ...KeelelisedMuutujad.modules import Modules, ModuleTranslation, Languages
-from ...utils.table_utilys import TableExtractor
+from ...utils.TableUtilys.TableHelpers import TableExtractor
+from ...Functions.propertie_layer.InsertPropertiesToMailabl import PropertiesLayerFunctions
 from ...queries.python.projects_pandas import TableHeaders
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, Flags, FilesByNames
-from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts, LabelsTexts
-from ...Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
+from ...KeelelisedMuutujad.messages import LabelsTexts
+from ...KeelelisedMuutujad.modules import Modules, ModuleTranslation, Languages
+from ...KeelelisedMuutujad.messages import InfoTexts, Headings
+
 
 language = Languages.ESTONIA
 
@@ -23,11 +27,35 @@ class PropertiesConnector(QObject):
         self.module = None
 
     def load_propertiesconnector_widget_ui(self, module):
+        if self.widget is not None:
+            try:
+                self.widget.close()  # Triggers closeEvent and cleanup
+            except Exception:
+                pass
+        self.widget = None
+
         global selection_monitor
         widget_file = FilesByNames().add_properties_to_module_ui
         ui_file_path = Filepaths.get_widget(widget_file)
+        print(f"UI file path: {ui_file_path}")
         widget = loadUi(ui_file_path)
+        
+        widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
+        widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
+        widget.setAttribute(Qt.WA_TranslucentBackground)
+        widget.setAttribute(Qt.WA_DeleteOnClose)
+
+
+
+        drag_frame = widget.findChild(QFrame, "dragFrame")  # if it's a QFrame
+        if drag_frame is not None:
+            drag_frame.mousePressEvent = self.start_drag
+            drag_frame.mouseMoveEvent = self.do_drag
+        else:
+            print("⚠️ dragFrame not found in UI.")
+
         widget.show()
+
         self.widget = widget
         table_view = widget.tvProperties
 
@@ -69,15 +97,14 @@ class PropertiesConnector(QObject):
 
         input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module_text)    
         name_column_index = input_headers.index(module_headers.header_name)
-        element_name = TableExtractor.value_from_selected_row_by_column(self.table, name_column_index)
+        element_name = TableExtractor._value_from_selected_row_by_column(self.table, name_column_index)
 
         id_column_index = input_headers.index(module_headers.header_id)
-        element_id = TableExtractor.value_from_selected_row_by_column(self.table, id_column_index)
+        element_id = TableExtractor._value_from_selected_row_by_column(self.table, id_column_index)
         
         PropertiesConnector.button_controller(self, widget, module, element_id, element_name)
                                              
         widget.closeEvent = self.closeEvent
-
     def closeEvent(self, event):
         try:
             iface.actionPan().trigger()  # Trigger pan tool
@@ -100,20 +127,40 @@ class PropertiesConnector(QObject):
             self.widget.close()
         event.accept()  # Allow the window to close
         self.ConnectorWidgetClosed.emit()
-                
+
+    def start_drag(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPos = event.globalPos() - self.widget.frameGeometry().topLeft()
+            event.accept()
+    def do_drag(self, event):
+        if event.buttons() & Qt.LeftButton:
+            self.widget.move(event.globalPos() - self.dragPos)
+            event.accept()
+
     def on_cancel_button_clicked(self, widget):
         if widget is not None:
             self.unset_widget_actions(widget)
             widget.accept()
             self.ConnectorWidgetClosed.emit()
-
     def on_save_button_clicked(self, widget, module, element_id, element_name):
-
-        ConnectorFunctions.add_properties_to_module(self, widget, module, element_id, element_name)
-        if widget is not None:
-            self.unset_widget_actions(widget)
-            widget.accept()
-            self.ConnectorWidgetClosed.emit()
+        result = ConnectorFunctions.add_properties_to_module(self, widget, module, element_id, element_name)
+        if result:
+            if widget is not None:
+                self.unset_widget_actions(widget)
+                widget.accept()
+                self.ConnectorWidgetClosed.emit()
+                total_returned_ids, total_ids_Table = result
+                text = InfoTexts().properties_successfully_added(element_name, total_returned_ids, total_ids_Table)
+                heading = Headings().informationSimple      
+                QMessageBox.information(None, heading, text)
+        else:
+            if widget is not None:
+                self.unset_widget_actions(widget)
+                widget.accept()
+                self.ConnectorWidgetClosed.emit()
+                text = InfoTexts().error_adding_properties(element_name)
+                heading = Headings().informationSimple
+                QMessageBox.warning(None, heading, text)
 
     def unset_widget_actions(self, widget):
         iface.actionPan().trigger()
@@ -131,10 +178,7 @@ class PropertiesConnector(QObject):
             selection_monitor = None
         flag = False
         Flags.active_properties_layer_flag = flag
-        #PropertiesConnector.clear_table(widget)
-        #print(f"Selection monitor after close: {selection_monitor}")
         
-
     def button_controller(self, widget, module, element_id, element_name):
         button_save = getattr(widget, 'pbSave', None)
         button_cancel = getattr(widget, 'pbCancel', None)
@@ -170,7 +214,6 @@ class PropertiesConnector(QObject):
             # Disable button if no function assigned
             button.setEnabled(False)
 
-
 class WidgetTools:
     def load_tool_and_fill_table(self, widget, table_view, active_layer_name):        
         active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
@@ -194,8 +237,10 @@ class WidgetTools:
                 help = PropertiesLayerFunctions()
                 help.generate_table_from_selected_map_items(table_view, active_layer_name)
                 table_view.update()
-                widget.showNormal()
-
+                widget.showNormal()                        # Restore from minimized
+                widget.raise_()                            # Bring it above sibling widgets
+                widget.activateWindow()                    # Request focus
+                widget.setWindowState(widget.windowState() & ~Qt.WindowMinimized | Qt.WindowActive)
 
 class WidgetLabels:
     def widget_label_elements(widget, table, module_text):
@@ -203,14 +248,14 @@ class WidgetLabels:
         line_element_number = widget.leElementNumber
         line_element_name = widget.leElementName
 
-        input_headers = TableExtractor.table_header_extractor(table)
+        input_headers = TableExtractor._table_header_extractor(table)
         module_headers = TableHeaders()
         
         name_colum_index = input_headers.index(module_headers.header_name)
         number_column_index = input_headers.index(module_headers.header_number)
 
-        object_number = TableExtractor.value_from_selected_row_by_column(table, number_column_index)
-        object_name = TableExtractor.value_from_selected_row_by_column(table, name_colum_index)
+        object_number = TableExtractor._value_from_selected_row_by_column(table, number_column_index)
+        object_name = TableExtractor._value_from_selected_row_by_column(table, name_colum_index)
 
         line_element_name.setText(object_name)
         line_element_number.setText(object_number)
@@ -223,14 +268,14 @@ class WidgetLabels:
 class ConnectorFunctions:
     def add_properties_to_module(self, widget, module, element_id, element_name):
         if module == Modules.MODULE_PROJECTS:
-            #print(f"started {MODULE_PROJECTS} proerties")
             from ...queries.python.update_relations.update_project_properties import ProjectsProperties
-            ProjectsProperties.update_projects_properties(self, element_id, widget, element_name)
+            result = ProjectsProperties.update_projects_properties(self, element_id, widget)
+            return result
         if module == Modules.MODULE_CONTRACTS:
-            #print(f"started {MODULE_CONTRACTS} proerties")
             from ...queries.python.update_relations.update_contract_properties import ContractProperties
-            ContractProperties.update_contract_properties(self, element_id, widget, element_name)
+            result = ContractProperties.update_contract_properties(self, element_id, widget)
+            return result
         if module == Modules.MODULE_EASEMENTS:
             from ...queries.python.update_relations.update_easements_properties import EasementProperties
-            EasementProperties.update_easements_properties(self, element_id, widget, element_name)
-
+            result = EasementProperties.update_easements_properties(self, element_id, widget, element_name)
+            return result

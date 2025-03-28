@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import  QMessageBox, QWidget
 from ..DataLoading_classes import GraphQLQueryLoader
 from ..property_data import PropertiesGeneralQueries
 from ..query_tools import requestBuilder
-from ....Functions.propertie_layer.properties_layer_data import PropertiesLayerFunctions
+from ....Functions.propertie_layer.InsertPropertiesToMailabl import PropertiesLayerFunctions
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
 from ....config.settings import  connect_settings_to_layer, Flags
@@ -21,7 +21,7 @@ timer_instance = Timer(delay_interval=delay_interval, sleep_duration=sleep_durat
 
 class ProjectsProperties:
     @staticmethod    
-    def update_projects_properties(self, project_id, widget, project_name):
+    def update_projects_properties(self, project_id, widget):
         properties_table = widget.tvProperties
         model_properties = properties_table.model()
         properties = []
@@ -39,17 +39,12 @@ class ProjectsProperties:
                 cadastral_nr = item_column_0.text()
                 properties.append(cadastral_nr)
             else:
-                #print(f"Row {row}, Column 0: No item")
-                pass
+                return False 
+
         total_ids_Table = len(properties)
-        #print(f"properties {properties}")
-        
+        #print(f"properties {properties}")        
         returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, properties_list=properties)
-        
-        total_returned_ids = len(returned_ids)
-        #print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")
-        #print(returned_ids)
-        
+        total_returned_ids = len(returned_ids)        
         chunk_size = 25
         count = 0
         paus_interval = 25  # Set the interval for the sleep timer
@@ -63,7 +58,6 @@ class ProjectsProperties:
 
         for i in range(0, total_returned_ids, chunk_size):
             chunk = returned_ids[i:i+chunk_size]
-            
             query_loader = GraphQLQueryLoader() 
             query = query_loader.load_query_for_projects(query_loader.UPDATE_project_properties)
             
@@ -76,10 +70,9 @@ class ProjectsProperties:
                             }
                         }
                         }
-            print(variables)
+            #print(variables)
             requestBuilder.construct_and_send_request(self, query, variables)
-            #print(f"Response: {response.status_code}")
-            #print(response.text)
+
             count += paus_interval
             progress_bar.setValue(count)
             QCoreApplication.processEvents()
@@ -87,6 +80,6 @@ class ProjectsProperties:
             if count % paus_interval == 0:
                 timer_instance.pause()
 
-        text = InfoTexts().properties_successfully_added(project_name, total_returned_ids, total_ids_Table)
-        heading = Headings().informationSimple      
-        QMessageBox.information(None, heading, text)
+        progress_widget.close()
+        return total_returned_ids, total_ids_Table
+    

@@ -70,8 +70,8 @@ class GraphqlQueriesContracts:
         self.UPDATE_contract_properties = 'update_contract_properties.graphql'     
         self.contracts_types = 'contract_types.graphql'   
         self.Q_where_contracts_type_status = 'contracts_type_status.graphql'
-
-    def load_query_for_contracts(self,query_file_name):
+    @staticmethod
+    def load_query_for_contracts(query_file_name):
         path = GraphQLQueryLoader()
         graphql_path = os.path.join(path.plugin_dir, path.contracts_folder, query_file_name)
         with open(graphql_path, 'r') as file:

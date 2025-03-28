@@ -7,7 +7,7 @@ from ..utils.UIDeleteFrames import UIDeleteFrames
 from ..utils.UIDeleteListViews import UIDeleteListViews
 from ..Functions.delete_items import DeletingProcesses
 from ..utils.UIDeleteCheckboxes import UIDeleteCheckboxes
-from ..utils.table_view_utils import TableDataInserter
+from ..utils.TableUtilys.TableHelpers import TableDataInserter
 #from ..Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from PyQt5.QtWidgets import QMessageBox

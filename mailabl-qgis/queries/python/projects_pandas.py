@@ -14,7 +14,10 @@ from .query_tools import requestBuilder
 from ...config.ui_directories import PathLoaderSimple
 from .MapTools.selector import visibleSelector
 from ...KeelelisedMuutujad.messages import Headings
- 
+from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
+from ...utils.DataExtractors.DataExtractors import DataExtractor
+from ...utils.ProgressHelper import ProgressHelper
+
 pealkiri = Headings()
 
 HEADER_ID = 'ID'
@@ -57,10 +60,9 @@ class Constants:
     items_for_page_medium = 25
     items_for_page_large = 50
     sleepPackage = items_for_page_medium
-    
     desired_total_items = None
     
-class GetProjectsWhere:
+class ProjectsQueries:
     def query_projects_related_properties(self, id_value):
         #print(f"id value in query {id_value}")
         query_loader = Graphql_project()
@@ -74,6 +76,7 @@ class GetProjectsWhere:
         
         while (desired_total_items is None or total_fetched < desired_total_items):
             # Construct variables for the GraphQL query
+            print(f"id_value in query {id_value}")
             variables = {
                     "propertiesFirst": Constants.items_for_page_large,
                     "propertiesAfter": end_cursor if end_cursor else None,
@@ -115,7 +118,7 @@ class GetProjectsWhere:
         # Return only the desired number of items
         return properties_items
 
-class ProjectsWithPandas:    
+    @staticmethod
     def query_active_main_projects_by_status(self, statuses):
         widgets_path = PathLoaderSimple.widget_statusBar_path(self)
         progress_widget = loadUi(widgets_path)
@@ -179,7 +182,8 @@ class ProjectsWithPandas:
 
         return fetched_items[:desired_total_items]
 
-    def QueryProjects_by_number(self, project_number):
+    @staticmethod    
+    def query_projects_by_number(self, project_number):
         widgets_path = PathLoaderSimple.widget_statusBar_path(self)
         progress_widget = loadUi(widgets_path)
         progress_bar = progress_widget.testBar
@@ -234,88 +238,44 @@ class ProjectsWithPandas:
         
         return fetched_items[:desired_total_items]            
 
-class ProjectsWithPandas_2:
-
-    def table_view_from_active_projects_statuses(self, status_value):
-        # Set header labels
-        header_labels = [HEADER_ID, HEADER_NUMBER,
-                            HEADER_NAME, HEADER_DEADLINE,
-                            HEADER_COLOR, HEADER_RESPONSIBLE,
-                            HEADER_PROPERTY_NUMBER, HEADER_PROPERTIES_ICON,
-                            HEADER_PROJECTS_PARENT_ID, HEADER_WEB_LINK_BUTTON,
-                            HEADER_DOCUMENTS, HEADER_FILE_PATH,
-                            HEADER_STATUS]
-        #print(f" header_webLinkButton: {header_webLinkButton}")
-        #print(f"header_labels: {header_labels}")
-        # Get projects status types that are active
-        model = QStandardItemModel()
-        model.setHorizontalHeaderLabels(header_labels)
-
-        #print("statuses")
-        #print(statuses)
-        data = ProjectsWithPandas.query_active_main_projects_by_status(self, status_value)
+class ProjectModelBuilders:
+    @staticmethod
+    def _model_for_projects_by_statuses(self, status_value, language):
         
-        if data is None or '':
-            heading = Headings().warningSimple
-            text = "Vastava staatusega projekti ei leitud"
-            QMessageBox.information(None, heading, text)
-        # Build a pandas DataFrame
-        else:
-            df_data = []
-            for project_data in data:
-                node = project_data.get("node", {})
-                properties = node.get("properties", {}).get("edges", [])
-                properties_page_info = node.get("properties",{}).get('pageInfo',{})          
-                propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
-                responsibles = node.get("responsible",{}).get("edges",[])
-                resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
-                row_data = {
-                    HEADER_ID: node.get("id", "") or "",
-                    HEADER_NUMBER: node.get("number", "") or "",
-                    HEADER_NAME: node.get("name", "") or "",
-                    HEADER_DEADLINE: node.get("dueAt", "") or "",
-                    HEADER_STATUS: node.get("status", {}).get("name", "") if node.get("status") else "",
-                    HEADER_COLOR: node.get("status", {}).get("color", "") if node.get("status") else "",
-                    HEADER_PROPERTY_NUMBER: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
-                    HEADER_ID: node.get("id", ""),
-                    HEADER_PROJECTS_PARENT_ID: node.get("parentID", ""),
-                    HEADER_WEB_LINK_BUTTON: "",
-                    HEADER_DOCUMENTS: node.get("filesPath","")or "",
-                    HEADER_FILE_PATH: "",
-                    HEADER_RESPONSIBLE: ",".join(resposnisble_name) if resposnisble_name else "",
-                    HEADER_PROPERTIES_ICON: ""
-                    }
-                df_data.append(row_data)
-            
-            QCoreApplication.processEvents()
-            df = pd.DataFrame(df_data)
-            # Create a QStandardItemModel and set header labels
+        data = ProjectsQueries.query_active_main_projects_by_status(self, status_value)
+        
+        headers = HeaderKeys.ALL_HEADER_KEYS
+        display_headers = TableHeaders_new(language)
+        df_data = []
+        for item in data:
+            node = item.get("node", {})
+            df_data.append(DataExtractor.extract_row_data_from_node(node, language=language))
 
-            # Populate QStandardItemModel with data from the pandas DataFrame
-            for row_index, row_data in df.iterrows():
-                data_items = [QStandardItem(str(row_data[label])) for label in header_labels]
-                model.appendRow(data_items)
-            
-            return model, header_labels
-
-
-    def Create_Project_tableView_for_search(self, project_number):
-        # Set header labels
-        header_labels = [HEADER_ID, HEADER_NUMBER, 
-                            HEADER_NAME, HEADER_DEADLINE,
-                            HEADER_COLOR, HEADER_RESPONSIBLE,
-                            HEADER_PROPERTY_NUMBER, HEADER_PROPERTIES_ICON,
-                            HEADER_PROJECTS_PARENT_ID, HEADER_WEB_LINK_BUTTON, 
-                            HEADER_DOCUMENTS, HEADER_FILE_PATH, 
-                            HEADER_STATUS]
-        model = QStandardItemModel()
-        model.setHorizontalHeaderLabels(header_labels)        
-        #unique_projects = set()
-        all_projects = []
-        all_projects = ProjectsWithPandas.QueryProjects_by_number(self, project_number)
-        # Append all project dictionaries to the list
         QCoreApplication.processEvents()
-        total_projects = len(all_projects)
+        df = pd.DataFrame(df_data)
+
+        # Create model and set localized headers
+        model = QStandardItemModel()
+        localized_labels = [display_headers.get(key) for key in headers]
+        model.setHorizontalHeaderLabels(localized_labels)
+
+        # Populate model
+        for _, row_data in df.iterrows():
+            data_items = [
+                QStandardItem(str(row_data[label])) 
+                for label in headers 
+                if label in row_data
+            ]
+            model.appendRow(data_items)
+
+        return model        
+
+    @staticmethod
+    def _model_for_projects_search_results(self, project_number, language):
+        # Set header labels
+        data = ProjectsQueries.query_projects_by_number(self, project_number)
+        # Append all project dictionaries to the list
+        total_projects = len(data)
         if  total_projects == 0:
             text = "Antud numbriga projekti ei leitud"
             heading = pealkiri.informationSimple
@@ -323,86 +283,79 @@ class ProjectsWithPandas_2:
             return None
 
         else:
-            # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
-            print(f"total len of all projects: '{len(all_projects)}'")
+            headers = HeaderKeys.ALL_HEADER_KEYS
+            display_headers = TableHeaders_new(language)
 
-            # Build a pandas DataFrame
+
             df_data = []
-            for item in all_projects:
+            for item in data:
                 node = item.get("node", {})
-                properties = node.get("properties", {}).get("edges", [])
-                propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
-                responsibles = node.get("responsible",{}).get("edges",[])
-                resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
-                row_data = {
-                    HEADER_ID: node.get("id", "") or "",
-                    HEADER_NUMBER: node.get("number", "") or "",
-                    HEADER_NAME: node.get("name", "") or "",
-                    HEADER_DEADLINE: node.get("dueAt", "") or "",
-                    HEADER_STATUS: node.get("status", {}).get("name", "") if node.get("status") else "",
-                    HEADER_COLOR: node.get("status", {}).get("color", "") if node.get("status") else "",
-                    HEADER_PROPERTY_NUMBER: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
-                    HEADER_ID: node.get("id", ""),
-                    HEADER_PROJECTS_PARENT_ID: node.get("parentID", ""),
-                    HEADER_WEB_LINK_BUTTON: "",
-                    HEADER_DOCUMENTS: node.get("filesPath","")or "",
-                    HEADER_FILE_PATH: "",
-                    HEADER_RESPONSIBLE: ",".join(resposnisble_name) if resposnisble_name else "",
-                    HEADER_PROPERTIES_ICON: ""
-                    }
-                df_data.append(row_data)
-            
-                QCoreApplication.processEvents()
-                df = pd.DataFrame(df_data)
-            # Create a QStandardItemModel and set header labels
+                df_data.append(DataExtractor.extract_row_data_from_node(node, language=language))
 
-            # Populate QStandardItemModel with data from the pandas DataFrame
-            for row_index, row_data in df.iterrows():
-                data_items = [QStandardItem(str(row_data[label])) for label in header_labels]
+            QCoreApplication.processEvents()
+            df = pd.DataFrame(df_data)
+
+            # Create model and set localized headers
+            model = QStandardItemModel()
+            localized_labels = [display_headers.get(key) for key in headers]
+            model.setHorizontalHeaderLabels(localized_labels)
+
+            # Populate model
+            for _, row_data in df.iterrows():
+                data_items = [
+                    QStandardItem(str(row_data[label])) 
+                    for label in headers 
+                    if label in row_data
+                ]
                 model.appendRow(data_items)
-            
-            return model, header_labels
 
-class ProjectsWithPandas_3:
+            return model             # Populate QStandardItemModel with data from the pandas DataFrame
 
-    #@staticmethod
-    def Create_Project_tableView_for_zoom(self, selected_features):
-        # Set header labels
-        header_labels = [HEADER_ID, HEADER_NUMBER,
-                            HEADER_NAME, HEADER_DEADLINE,
-                            HEADER_COLOR, HEADER_RESPONSIBLE,
-                            HEADER_PROPERTY_NUMBER, HEADER_PROPERTIES_ICON,
-                            HEADER_PROJECTS_PARENT_ID, HEADER_WEB_LINK_BUTTON,
-                            HEADER_DOCUMENTS, HEADER_FILE_PATH,
-                            HEADER_STATUS]
-        model = QStandardItemModel()
-        model.setHorizontalHeaderLabels(header_labels)
-
-        #print(f"selected features: '{selected_features}' total:'{len(selected_features)}'")
+    @staticmethod
+    def _model_for_projects_zoomed_map_properties(self, selected_features, language):
         
+        #//TODO: add loading bar and if needed can roll back to old version 
         # Splitting the list into sublists with a maximum of 4 items each
-        sublists = [selected_features[i:i+Constants.items_for_page_medium] for i in range(0, len(selected_features), Constants.items_for_page_medium)]
+        #sublists = [selected_features[i:i+Constants.items_for_page_medium] for i in range(0, len(selected_features), Constants.items_for_page_medium)]
         
+        
+        #print(f"selected features len: '{len(selected_features)}'")
+        # Define the maximum number of items per sublist
+        ProgressHelper.update_progress(value=0, maximum=len(selected_features)+1)
+        MAX_ITEMS_PER_SET = 15
+
+        sublists = [selected_features[i:i + MAX_ITEMS_PER_SET] 
+                    for i in range(0, len(selected_features), MAX_ITEMS_PER_SET)]
+
         #unique_projects = set()
         all_projects = []
-
-        count = 0
-        
+        ProgressHelper.update_progress(value=5)
+        idx = 0
+        ProgressHelper
         for feature in sublists:
             #print(f"feature: '{feature}'")
             projects_data = visibleSelector.get_projects_list_connected_with_view_properties(self, feature)
             #print(f"project_data: {projects_data}")
         
             all_projects.extend(projects_data)  # Append all project dictionaries to the list
-            count += Constants.items_for_page_medium
-            print(f"count: {count}")
+            idx += Constants.items_for_page_medium
+            print(f"count: {idx}")
             # Sleep to avoid hitting server too frequently
-            if count % Constants.sleepPackage == 0:
-                import time
-                time.sleep(Constants.sleep_duration)
-                print("sleepy sleepy")
-            QCoreApplication.processEvents()
+            ProgressHelper.update_progress(value=0)
+            if idx % Constants.sleepPackage == 0:
+                ProgressHelper.update_progressbar_by_current_index(current_index=idx)
+                QCoreApplication.processEvents()
+                # Ensure progress bar reaches 100% at the end
+            ProgressHelper.update_progress(value=0)
+                
+                #import time
+                #time.sleep(Constants.sleep_duration)
+                #print("sleepy sleepy")
+                #QCoreApplication.processEvents()
         total_projects = len(all_projects)
+        #from pprint import pprint	
+        #pprint(f"data: {all_projects}")
+
         if  total_projects == 0:
             text = "Piirkonnas puuduvad teadaolevad projektid"
             heading = pealkiri.informationSimple
@@ -413,41 +366,26 @@ class ProjectsWithPandas_3:
             # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
             data = {project['id']: project for project in all_projects}.values()
             #print(f"total len of all projects: '{len(all_projects)}'")
-            print(f"data: {data}")
 
-            # Build a pandas DataFrame
-            df_data = []
-            for node in data:
-                #node = data.get("node", {})
-                properties = node.get("properties", {}).get("edges", [])
-                propertie_cadastralNr = [propertie["node"]["cadastralUnitNumber"] for propertie in properties]
-                responsibles = node.get("responsible",{}).get("edges",[])
-                resposnisble_name = [responsible["node"]["displayName"] for responsible in responsibles]
-                row_data = {
-                    HEADER_ID: node.get("id", "") or "",
-                    HEADER_NUMBER: node.get("number", "") or "",
-                    HEADER_NAME: node.get("name", "") or "",
-                    HEADER_DEADLINE: node.get("dueAt", "") or "",
-                    HEADER_STATUS: node.get("status", {}).get("name", "") if node.get("status") else "",
-                    HEADER_COLOR: node.get("status", {}).get("color", "") if node.get("status") else "",
-                    HEADER_PROPERTY_NUMBER: ", ".join(propertie_cadastralNr) if propertie_cadastralNr else "",
-                    HEADER_ID: node.get("id", ""),
-                    HEADER_PROJECTS_PARENT_ID: node.get("parentID", ""),
-                    HEADER_WEB_LINK_BUTTON: "",
-                    HEADER_DOCUMENTS: node.get("filesPath","")or "",
-                    HEADER_FILE_PATH: "",
-                    HEADER_RESPONSIBLE: ",".join(resposnisble_name) if resposnisble_name else "",
-                    HEADER_PROPERTIES_ICON: ""
-                    }    
-                df_data.append(row_data)
             
+            headers = HeaderKeys.ALL_HEADER_KEYS
+            display_headers = TableHeaders_new(language)
+            df_data = []
+            for project_data in data:
+                # we can equal data to node because we have edges as nodes here
+                node = project_data #seams that we are gettin edges as nodes here
+                df_data.append(DataExtractor.extract_row_data_from_node(node, language=language))
+
                 QCoreApplication.processEvents()
                 df = pd.DataFrame(df_data)
-            # Create a QStandardItemModel and set header labels
+
+                model = QStandardItemModel()
+                localized_labels = [display_headers.get(key) for key in headers]
+                model.setHorizontalHeaderLabels(localized_labels)
 
             # Populate QStandardItemModel with data from the pandas DataFrame
             for row_index, row_data in df.iterrows():
-                data_items = [QStandardItem(str(row_data[label])) for label in header_labels]
+                data_items = [QStandardItem(str(row_data[label])) for label in headers]
                 model.appendRow(data_items)
             
-            return model, header_labels
+            return model

@@ -16,18 +16,18 @@ query contracts($first: Int, $after: String, $propertiesFirst: Int, $propertiesA
     }
     edges{
       node{
-          id,
-          number,
-          name,
-          dueAt,
-          isSubcontract,
+          id
+          number
+          name
+          dueAt
+          isSubcontract
           filesPath
           status{
-              name, 
+              name 
               color
               }
-          createdAt,
-          updatedAt,
+          createdAt
+          updatedAt
           deletedAt
           responsible {
               edges {

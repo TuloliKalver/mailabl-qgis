@@ -88,6 +88,6 @@ class EasementProperties:
                 if count % paus_interval == 0:
                     timer_instance.pause()
 
-        text = InfoTexts().properties_successfully_added(item_name, total_returned_ids, total_ids_Table)
-        heading = Headings().informationSimple
-        QMessageBox.information(None, heading, text)
+        progress_widget.close()
+        return total_returned_ids, total_ids_Table
+    

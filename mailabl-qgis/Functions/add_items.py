@@ -2,9 +2,7 @@ import os
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QTableWidgetItem
-
 from ..Functions.Tools import tableFunctions, propertyUsages
-from ..Functions.Searchpropertyfromlayer import SearchProperties
 from ..queries.python.property_data import add_properties
 from ..config.settings import SettingsDataSaveAndLoad
 
@@ -14,7 +12,6 @@ plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 widgets_folder = "widgets" 
 #widgets_path = os.path.join(plugin_dir,widgets_folder, "WStatusBar.ui")
 widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui"))
-
 
 load = SettingsDataSaveAndLoad()
 
@@ -83,10 +80,8 @@ class Add_Properties_final:
             property_id = add_properties.add_single_property_item(self, each_data)
             #print(f"property_id in 'input item to Mailabl loop {property_id}")
             intended_usages = propertyUsages.extract_intendedUse_data(self, index, table)
-            print(f"intended_usages in 'input item to Mailabl loop {intended_usages}")
+            #print(f"intended_usages in 'input item to Mailabl loop {intended_usages}")
             
-            #for intended_use in intended_usages:   
-            #print(f"fintended use: {intended_use}")  
             add_properties.add_additional_property_data(self, property_id, intended_usages)
             
             count += 1

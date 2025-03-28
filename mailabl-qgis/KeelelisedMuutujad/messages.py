@@ -12,7 +12,7 @@ class HoiatusTexts:
     def __init__(self):       
         self.puudulik_kinnistute_seadistus = "Kontrolli kinnistute seadistusi"
         self.juurdepaas_ei = "Juurdepääsuluba ei leitud"
-        self.kasutaja_oigused_puuduvad = "Kasutajal puuduvad vastavad õigused. \nPöördu oma ettevõtte administraatori poole"
+        self.kasutaja_oigused_puuduvad = "Õigused puuduvad." "\n" "Loe täpsemalt: " "\n" "abikesksust"
         self.linn_kyla_valimata = "Jätkamiseks vali ja kinnita linn või küla"
         self.maakond_valimata = "Jätkamiseks vali ja kinnita maakond"
         self.omavalitsus_valimata = "Jätkamiseks vali ja kinnita omavalitsus"        
@@ -105,11 +105,13 @@ class InfoTexts:
             end_text = "1 kinnistu"
         else:
             end_text = f"{total_returned_ids}/{total_ids_table} kinnistut"
-        text = f"Projektile  <b>{project_name}</b> \nlisatud {end_text}!"
+        text = f"Projektile  <b>{project_name}</b> \n lisatud {end_text}!"
         return text
 
-
-
+    @staticmethod
+    def error_adding_properties(element_name):
+        text = f"<b>{element_name}</b>\n kinnistute salvestamine ebaõnnestus"
+        return text
 class KriitilisedTexts:
     def __init__(self):
         self.error = "Midagi läks valesti.\nPöördu admini poole"

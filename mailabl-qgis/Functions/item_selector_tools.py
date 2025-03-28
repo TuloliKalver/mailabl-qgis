@@ -13,7 +13,7 @@ active_layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
         
 class properties_selectors:
     @staticmethod
-    def show_connected_cadasters(values, layer_type):
+    def show_connected_properties_on_map(values, layer_type):
         if layer_type == "active":
             layer_name =  connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
         #    print(f"layer_name if active = {layer_name}")
@@ -35,28 +35,6 @@ class properties_selectors:
         iface.mapCanvas().zoomToSelected(layer)
         iface.mapCanvas().refresh()
         
-    @staticmethod
-    def show_connected_cadasters_for_sync_process(values, layer_type):
-        print(f"values in 'show_connected_cadasters_for_sync_process': {values}")
-        if layer_type == "active":
-            layer_name =  connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
-        #    print(f"layer_name if active = {layer_name}")
-        if layer_type == "import":
-            layer_name = connect_settings_to_layer.Import_Layer_name()
-        #    print(f"layer_name if import = {layer_name}")
-        layer = QgsProject.instance().mapLayersByName(layer_name)[0]
-        QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(True)
-        layer.removeSelection()
-        selected_feature_ids = []
-        #print(f"selected feature ids before  {selected_feature_ids}")
-        for feature in layer.getFeatures():
-            if feature[Katastriyksus.tunnus] in values:
-                selected_feature_ids.append(feature.id())
-        print(f"selected_features_ids: {selected_feature_ids}")
-        layer.selectByIds(selected_feature_ids)
-        QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setCustomProperty("selectedFeatures", selected_feature_ids)
-        #iface.mapCanvas().zoomToSelected(layer)
-        iface.mapCanvas().refresh()
         
     @staticmethod
     def show_AND_copy_connected_cadasters_for_sync_process_dev(values, memory_layer_name):

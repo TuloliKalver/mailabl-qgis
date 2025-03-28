@@ -328,4 +328,3 @@ class GroupActions:
             #print("style not none")
             layer.loadNamedStyle(style)
         layer.triggerRepaint()
-

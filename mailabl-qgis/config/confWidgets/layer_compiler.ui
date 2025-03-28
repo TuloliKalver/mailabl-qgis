@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>350</height>
+    <height>225</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>900</width>
-    <height>350</height>
+    <height>225</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>900</width>
-    <height>350</height>
+    <height>225</height>
    </size>
   </property>
   <property name="font">
@@ -34,108 +34,641 @@
   </property>
   <property name="styleSheet">
    <string notr="true">
+/* ====================================================== */
+/* 🎨 Global Theme - Base Colors, Background &amp; Typography */
+/* ====================================================== */
+* {
+    border: transparent;
+    background-color: #1d252b; /* Updated background */
+    padding: 0;
+    margin: 0;
+    color: #c5c5d2; /* Default light gray text */
+}
 
-#fHelpMenu, 
-#fSettingsProperties
-{
-   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */
+
+/* ------------------------------------------------------ */
+/* 🧠 Global Interaction Effects - Focused Field &amp; Tabs   */
+/* ------------------------------------------------------ */
+QLineEdit:focus, QTextEdit:focus, QComboBox:focus,   QTabBar::tab:selected {
+        /* 🟢 Bottom glow - Extends further for visibility */
+    border: 1px solid; 
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));	
+
+}
+
+ QLineEdit:hover, QTextEdit:hover, QComboBox:hover, QTabBar::tab:hover {
+        /* 🟡 Hover Glow - Softer but Visible */
+    border: 1px solid; 
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));	
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:0.5, fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 88), stop:0.920455 rgba(46, 47, 56, 76));
+}
+
+/* ---------------------------- */
+/* 📝 QLineEdit Styling */
+/* ---------------------------- */
+QLineEdit {
+    background-color: #303a42;   /* Matches the global dark background */
+    color: #c5c5d2;              /* Default light gray text */
+    border: 1px solid #4d4d4d;   /* Subtle default border */
+    border-radius: 4px;          /* Rounded corners for a smooth look */
+    padding: 6px;                /* Adequate padding for text clarity */
+}
+
+/* 
+   Note: Your existing rules for QLineEdit:focus and QLineEdit:hover already provide
+   the gradient border and glow effects. This default state ensures a smooth transition 
+   into those interactive states.
+*/
+
+/* ---------------------------- */
+/* 🔘 Disabled State for QLineEdit */
+/* ---------------------------- */
+QLineEdit:disabled {
+    background-color: #24252e;  /* A slightly darker tone for disabled state */
+    border: 1px dashed rgba(120, 120, 130, 0.5);  /* Dashed and faded border */
+    color: rgba(170, 170, 180, 0.5);  /* Muted text color */
+    opacity: 0.5;               /* Lower opacity to indicate inactivity */
+}
+
+/* ---------------------------- */
+/* 🖱️ QListWidget Focus */
+/* ---------------------------- */
+QListWidget:focus {
+	boreder: 1px solid;
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));	
+}
+
+/* ---------------------------- */
+/* 🖱️ QListWidget Hovered Item */
+/* ---------------------------- */
+QListWidget::item:hover {
+    border: 1px solid; 
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, 
+        fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, 
+        fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
+        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
+        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));  
+	background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:0.5, fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 255), stop:0.920455 rgba(46, 47, 56, 253));
+    border-radius: 4px;
+}
+
+/* ---------------------------- */
+/* ✅ QListWidget Selected Item */
+/* ---------------------------- */
+QListWidget::item:selected {
+	color: #c5c5d2; /* Default light gray text */	
+    border: 1px solid; 
+ 	 border-radius: 4px;
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, 
+        fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 66), stop:1 rgba(46, 47, 56, 54));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, 
+        fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 66), stop:1 rgba(46, 47, 56, 54));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
+        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 66), stop:1 rgba(46, 47, 56, 54));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
+        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 66), stop:1 rgba(46, 47, 56, 54));  
+	background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:1.24, fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 172), stop:0.920455 rgba(46, 47, 56, 0));
+}
+
+
+
+/* ---------------------------- */
+/* 🔘 QPushButton Styling */
+/* ---------------------------- */
+
+QPushButton {
+    padding: 4px 8px;
+    text-align: center;
     border-radius: 5px;
-	border-top: none;
-    border-left: none;
-    border-right: none;
+	background-color: rgb(9, 144, 143);
+    border: 1px solid #565869; /* Default border */
+    color: #ececf1; /* Brighter text */
+    transition: all 150ms ease-in-out; /* Smooth transition */
+}
+
+/* 🟢 Hover Effect - Glow &amp; Color Shift */
+QPushButton:hover {
+    background-color: #5c5d6e; /* Slightly lighter background */
+    border: 1px solid #acacbe; /* Lighter border */
+    
+color: #c5c5d2; /* Default text color */
+
+}
+
+/* 🔴 Pressed Effect - Darker Look &amp; More Intense Glow */
+QPushButton:pressed {
+    background-color: #2d2e3a; /* Darker background */
+    border: 1px solid #8e8ea0; /* Slightly darker border */
+    color: #bdbecf; /* Dimmed text */
+
+}
+
+/* ⚫ Disabled State - More Noticeable */
+QPushButton:disabled {
+    background-color: #24252e; /* **Much darker background** */
+    border: 1px dashed rgba(120, 120, 130, 0.5); /* **Dashed, faded border** */
+    color: rgba(170, 170, 180, 0.5); /* **Faded text color** */
+    opacity: 0.5; /* **Lower opacity to indicate inactive state** */
+}
+
+QPushButton:focus{
+	    border: 1px solid; 	
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));	
+	background-color: rgb(31, 93, 92);
 }
 
 
-QWidget{
-    background-color: #272c35;
-	color:#c5c5d2
+/* General QCheckBox styles */
+QCheckBox {
+    color: #ececf1; /* Text color */
+    spacing: 5px; /* Space between checkbox and text */
+}
+
+/* Style the indicator (checkbox) */
+QCheckBox::indicator {
+    width: 12px;
+    height: 12px;
+    background-color: #40414f; /* Background color for unchecked state */
+    border: 1px solid #565869; /* Border for unchecked state */
+    border-radius: 3px;
+}
+
+/* Style the indicator when checked */
+QCheckBox::indicator:checked {
+    background-color: rgba(70, 70, 85, 0.5); /* Semi-transparent gray background color for checked state */
+    border: 1px solid #acacbe;
+    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+}
+
+/* Style the indicator when unchecked */
+QCheckBox::indicator:unchecked {
+    background-color: #40414f; /* Background color for unchecked state */
+    border: 1px solid #565869; /* Border for unchecked state */
+}
+
+/* Style the indicator when hovered */
+QCheckBox::indicator:hover {
+    background-color: #565869;
+}
+
+/* Style the indicator when disabled */
+QCheckBox::indicator:disabled {
+    background-color: #30303a; /* Darker background color for disabled state */
+    border: 1px solid #40414f; /* Darker border for disabled state */
+}
+
+/* Style the indicator when checked and disabled */
+QCheckBox::indicator:checked:disabled {
+    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray background color for checked and disabled state */
+    border: 1px solid #40414f;
+    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
+    opacity: 0.5; /* Make the icon appear disabled */
+}
+
+/* Style the checkbox text when disabled */
+QCheckBox:disabled {
+    color: #6a6a75; /* Darker text color for disabled state */
+}
+
+/* ══════════════════════════════════════════════════════ */
+/*                 ✅ QCheckBox Styling                   */
+/* ══════════════════════════════════════════════════════ */
+
+QCheckBox {
+    color: #d1d1e0;
+    spacing: 5px;
+    font-size: 14px;
+}
+
+/* Base indicator styling */
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #1f5d5c;
+    border-radius: 3px;
+    background: #597278
+}
+
+/* Hover effect for indicator */
+QCheckBox::indicator:hover {
+    border: 1px solid #0b4544;
+}
+
+/* Checked state with a custom image for the check mark */
+QCheckBox::indicator:checked {
+    background: rgb(9,144,143);
+    border: 1px solid #565869;
 }
 
 
-/*esialgu jaotamata omadused*/
-QComboBox{
-
-	background-color:#40414f;
-	color:#ececf1;
-	border: 1px solid #565869;
-	border-radius: 3px;
-	padding-left: 5px
-}
-
-/*Style the dropdown area*/
-QComboBox::drop-down{
-	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:135, stop:0.704545 rgba(64, 65, 79), stop:1 rgba(217, 217, 227));
-	border: 1px solid #565869;
-	border-radius: 8px;
-	height:16px;
-	width: 16px;
-	subcontrol-origin: padding;
-    subcontrol-position: left
-}
-
-QComboBox::on{
-
-  	border: 0.5px solid #acacbe;
-}
-
-QAbstractItemView {
-	background-color:#40414f;
-	color:#ececf1;
-	border: 1px solid #565869;
-	border-radius: 4px;
-	padding-left: 5px
+/* ⚫ Disabled State - More Noticeable */
+QCheckBox::indicator:disabled {
+    background-color: #1d252b;
+    border: 1px dashed rgba(120, 120, 130, 0.5); /* **Dashed, faded border** */
+    color: rgba(170, 170, 180, 0.5); /* **Faded text color** */
+    opacity: 0.5; /* **Lower opacity to indicate inactive state** */
 }
 
 
-QPushButton{
-	padding: 2px 8px;
-	text-align: center;
-	border-radius: 6px;
-	background-color:#40414f;
-	border: 1px solid #565869;
+QGroupBox{
+	color: #ececf1;
 }
 
 
-QPushButton:hover{
-    background-color: #8e8ea0;
-	border: 0.5px solid #acacbe;
-	color: #343541;
-	text-align: center;	
-	padding: 2px 8px;
-    border-radius: 6px;
-	
-}
+/* ══════════════════════════════════════════════════════ */
+/*                     🔘 COMBOBOX STYLING                */
+/* ══════════════════════════════════════════════════════ */
 
-QLabel {
-    background-color: #40414f;
-    color: #ececf1;
+QComboBox {
+    background-color: #2e2f38;
+    color: #c5c5d2;
     border: 1px solid #565869;
     border-radius: 3px;
-    padding: 3px;
+    padding-left: 5px;
 }
 
-QLineEdit {
-    background-color: #35363f;  /* Lighter background color */
+QComboBox::drop-down {
+    background-color: #2e2f38;
+    border: none;
+    border-radius: 10px;
+    width: 16px;
+    height: 16px;
+    subcontrol-origin: padding;
+    subcontrol-position: right; /* Adjusted to right for a common look */
+}
+
+
+
+QComboBox QAbstractItemView {
+    background-color: #2e2f38;
+    border: 1px solid #565869;
+    selection-background-color: qradialgradient(
+        spread: pad,
+        cx: 1,
+        cy: 0.728,
+        radius: 0.826,
+        fx: 0.498455,
+        fy: 0.95,
+        stop: 0.125 rgba(9,144,143,150),
+        stop: 1 rgba(46,47,56,253)
+    );
+    selection-color: #ececf1;
+}
+
+QComboBox QAbstractItemView::item {
+    background-color: #2e2f38;
+    color: #c5c5d2;
+}
+
+QComboBox QAbstractItemView::item:selected {
+    background-color: qradialgradient(
+        spread: pad,
+        cx: 1,
+        cy: 0.728,
+        radius: 0.826,
+        fx: 0.498455,
+        fy: 0.95,
+        stop: 0.125 rgba(9,144,143,150),
+        stop: 1 rgba(46,47,56,253)
+    );
     color: #ececf1;
-    /*border: 1px solid #4d4d5b;  Thinner border with a different color */
+}
+
+QComboBox QAbstractItemView::item:hover {
+    background-color: qradialgradient(
+        spread: pad,
+        cx: 1,
+        cy: 0.995,
+        radius: 1.24,
+        fx: 1,
+        fy: 0.988,
+        stop: 0 rgba(9,144,143,150),
+        stop: 0.920455 rgba(46,47,56,253)
+    );
+    color: #ececf1;
+}
+
+QComboBox:focus {
+    border: 1px solid qradialgradient(
+        spread: pad,
+        cx: 0,
+        cy: 0.347273,
+        radius: 0.826,
+        fx: 0.453364,
+        fy: 0.097,
+        stop: 0.125 rgba(9,144,143,88),
+        stop: 1 rgba(46,47,56,76)
+    );
+}
+
+QComboBox:disabled {
+    background-color: #2e2f38;
+    border: 1px solid #565869;
+    color: #8a95a5;
+}
+
+
+
+
+/* ══════════════════════════════════════════════════════ */
+/* 🧭 Global Vertical ScrollBar - Core UI Scroll Styling  */
+/* ══════════════════════════════════════════════════════ */
+
+QScrollBar:vertical {
+    border: none;
+    background: #2e2f38;  /* Match background color */
+    width: 8px;
+    margin: 0px;  /* Remove spacing */
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
+        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 255), stop:1 rgba(46, 47, 56, 253));
+    min-height: 25px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:1.24, 
+        fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 255), stop:0.920455 rgba(46, 47, 56, 253));
+}
+
+/* Hide Up/Down Buttons */
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical {
+    background: none;
+    height: 0px;
+}
+
+/* Make the unused track area blend with background */
+QScrollBar::add-page:vertical, 
+QScrollBar::sub-page:vertical {
+    background: #2e2f38;
+}
+
+/* ════════════════════════════════════════════════════════ */
+/* 🧭 Global Horisontal ScrollBar - Core UI Scroll Styling  */
+/* ════════════════════════════════════════════════════════ */
+
+
+QScrollBar:horizontal {
+    border: none;
+    background: #2e2f38;  /* Match background color */
+    height: 8px;
+    margin: 0px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
+        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 255), stop:1 rgba(46, 47, 56, 253));
+    min-width: 25px;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:1.24, 
+        fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 255), stop:0.920455 rgba(46, 47, 56, 253));
+}
+
+/* Hide Left/Right Buttons */
+QScrollBar::add-line:horizontal, 
+QScrollBar::sub-line:horizontal {
+    background: none;
+    width: 0px;
+}
+
+/* Make the unused track area blend with background */
+QScrollBar::add-page:horizontal, 
+QScrollBar::sub-page:horizontal {
+    background: #2e2f38;
+}
+
+
+/* ====================================================== */
+/* 📊 QTableView - Layout, Colors, and Interaction Styles */
+/* ====================================================== */
+
+QTableView {
+    background-color: #2e2f38; /* Consistent dark gray base */
+    border: 1px solid #4d4d4d;
     border-radius: 5px;
-    padding: 4px;
-}
-
-QLineEdit:hover {
-    background-color: #3d3e47;  /* Slightly darker background color on hover */
-}
-
-/* Remove top and side borders */
-QLineEdit {
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    gridline-color: #565869;
+    /* Updated selection gradient using teal accent */
+    selection-background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(9,144,143,10),
+        stop: 1 rgba(9,144,143,50)
+    );
+    selection-color: #ececf1;
 }
 
 
+/* Adjust header style with white text */
+QHeaderView::section {
+    background-color: #35353f;
+    color: #ececf1; 
+    border-top: 0.5px solid #323232;
+    border-left: 0.5px solid #323232;
+    border-right: 0.5px solid #323232;
+    border-bottom: 1px solid #4d4d4d;
+    padding: 1px 3px;
+    font-size: 12px;
+}
 
-</string>
+/* Entire table disabled state */
+QTableView:disabled {
+    background-color: rgba(30,30,35,180);
+    color: rgba(150,150,160,120);
+    border: 1px solid rgba(100,100,110,80);
+    gridline-color: rgba(80,80,90,80);
+    cursor: not-allowed;
+}
+
+/* Make headers look disabled */
+QTableView:disabled QHeaderView::section {
+    background-color: rgba(50,50,58,150);
+    
+    border-bottom: 1px solid rgba(80,80,90,100);
+}
+
+/* Remove focus outline when disabled */
+QTableView:disabled:focus {
+    outline: none;
+}
+
+/* Corner widget (where row/column headers meet) */
+QTableCornerButton::section {
+    background: #35353f;
+    border: 1px solid #4d4d4d;
+}
+
+/* Disabled corner styling */
+QTableView:disabled QTableCornerButton::section {
+    background: rgba(50,50,58,150);
+    border: 1px solid rgba(80,80,90,100);
+}
+
+/* Disable selection effect when the table is disabled */
+QTableView:disabled QTableView::item:selected {
+    background-color: rgba(50,50,58,100);
+    color: rgba(150,150,160,100);
+}
+
+/* Hovered rows for better contrast */
+QTableView::item:hover {
+    background-color: #3a3f4b;
+    color: #ececf1;
+    min-height: 16px;  /* Decreased row height */
+}
+
+/* Selected rows using the same teal gradient as QTableView selection */
+QTableView::item:selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(9,144,143,10),
+        stop: 1 rgba(9,144,143,50)
+    );
+    /*color: #ececf1;*/
+    min-height: 16px;  /* Decreased row height */
+}
+
+/* Non-selected rows with a subtle gradient for depth */
+QTableView::item {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(46,47,56,25),
+        stop: 1 rgba(46,47,56,255)
+    );
+    color: #d1d1e0;
+    min-height: 16px;  /* Decreased row height */
+}
+
+/* Ensure deselected rows return to their default style */
+QTableView::item:!selected {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 0, y2: 1,
+        stop: 0 rgba(46,47,56,25),
+        stop: 1 rgba(46,47,56,255)
+    );
+    color: #d1d1e0;
+    min-height: 16px;  /* Decreased row height */
+}
+
+/* Disabled item styling */
+QTableView::item:disabled {
+    background-color: rgba(50,50,58,100);
+    color: rgba(150,150,160,100);
+    font-style: italic;
+    border: 1px dashed rgba(100,100,110,80);
+    min-height: 16px;  /* Decreased row height */
+}
+
+
+
+
+
+/* ====================================================== */
+/* 🧩 Targeted UI Elements - ID-Based Custom Styling      */
+/* ====================================================== */
+
+#Sevituudid{
+    background-color: #343b47;
+}
+
+#leftMenuContainer {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #202123, stop:1 #18191d);
+    border-right: 1px solid #3a3a3a;
+    padding-right: 2px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#rightFrame {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #202123, stop:1 #18191d);
+    border-left: 1px solid #3a3a3a;
+    padding-lef: 2px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#SetupLayers, #SetupLayers_2, #SetupUserData {
+border: none;
+border-bottom: 1px solid rgb(131, 142, 162);
+}
+
+#UC_Main_Frame QPushButton,#pbChoose_Properties_for_Projects{
+	padding: 1px 8px;
+    border-radiusr: 6px;
+}
+
+#UC_Main_Frame QPushButton:hover{
+
+	padding: 1px 8px;
+    border-radius: 6px;
+}
+
+
+#wOl_Settings QPushButton{
+	padding: 1px 8px;
+    border-radius: 6px;
+}
+
+#wOl_Settings QPushButton:hover{
+	padding: 1px 8px;
+    border-radius: 6px;
+}
+
+#rightMenuContainer QPushButton{
+	text-align: right;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+    
+}
+
+#rightMenuContainer QPushButton:hover{
+    text-align: right;
+    border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;  
+}
+
+
+#leftMenuContainer QPushButton{
+	text-align: left;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;	
+}
+#leftMenuContainer QPushButton:hover{
+    text-align: left;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+
+}
+
+#MailablDialogBase{
+    border: 1px solid #4d4d4d;
+	border-top-left-radius: 7px;     /* Rounded top-left corner */
+    border-top-right-radius: 7px;    /* Rounded top-right corner */
+    border-right-radius: 7px;        /* No rounding on right side */
+    border-left-radius: 7px;    
+	background: None;  /* 10% transparency */
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">

@@ -17,7 +17,8 @@
 
 """
 import os
-from PyQt5.QtCore import QTimer
+
+from PyQt5.QtCore import QTimer, Qt
 from .utils.UIDeleteTables import UIDeleteTables
 from .Functions.DeletProcessUIActions import DeletProcessUIActions
 from .utils.UIDeleteCheckboxes import UIDeleteCheckboxes
@@ -53,7 +54,7 @@ from .queries.python.access_credentials import  (clear_UC_data,
                                                 get_access_token, print_result,
                                                 save_user_name)
 from .queries.python.users.user_info import UserSettings
-from .queries.python.projects.ProjectTableGenerators.projects import Projects, projectsTableDecorator, searchProjectsValue
+from .queries.python.projects.ProjectTableGenerators.projects import Projects
 from .queries.python.property_data import Properties, MyLablChecker
 from .queries.python.Statuses.statusManager import InsertStatusToComboBox
 from .KeelelisedMuutujad.messages import Headings, HoiatusTexts,HoiatusTextsAuto, EdukuseTexts
@@ -70,7 +71,9 @@ from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, RemapPropertiesLayer
 from .utils.window_manager import WindowManager, WindowManagerMinMax
 from .utils.custom_event_filter import BlockButtonsToPreferLabelEventFilter, ReturnPressedManager
-from .utils.table_view_utils import TableDataInserter
+from .utils.TableUtilys.TableHelpers import TableDataInserter
+from .utils.ProgressHelper import ProgressHelper
+from .utils.TableUtilys.TableHelpers import TableHelper
 from .processes.tester import ProgressBarTester
 from .utils.signal_utils import execute_with_block
 from .app.button_connector import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
@@ -102,7 +105,6 @@ setting_layer = connect_settings_to_layer
 selector_class = properties_selectors()
 projects = CadasterSelector()
 progress_bar = progress
-
 
 load = SettingsDataSaveAndLoad()
 stacked_widgets = stackedWidgetsSpaces()
@@ -138,7 +140,21 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
        # Set always on top flag
 
 
+        Startup.FirstLoad(self)
+        #setup login dialog and hide frames to block functionality!
+        startup_frames = [self.leftMenuContainer,
+                        self.rightMenuContainer, 
+                        self.frAgreements,
+                        self.swWorkSpace,
+                        self.lblUserAccessDenied
+                        ]
+
+        self.on_load(startup_frames)
+
         # Initialize WindowManager with this window
+        ProgressHelper.set_dialog(self)
+        TableHelper.set_dialog(self)
+
         self.window_manager = WindowManager(self)
 
         self.AddProcessPrepareTables = AddProcessPrepareTables(self)
@@ -146,7 +162,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Initialize ReturnPressedManager
         self.return_pressed_manager = ReturnPressedManager(self)
                 
-        startup_frames = [self.leftMenuContainer, self.rightMenuContainer, self.frAgreements,self.swWorkSpace]
         # Setup connections for existing QLineEdit widgets
         label_callbacks = {
             'isSelectedCadaster': self.start_propertie_search,
@@ -167,8 +182,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.custom_event_filter.set_button_focus_policy()
 
         self.setup_timer()
-        Startup.FirstLoad(self)
-
+    
         # Install event filter on the main window
         self.installEventFilter(self.custom_event_filter)
 
@@ -187,6 +201,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         pbDel_city =  self.pbDel_City
         pbDel_PreConfirm = self.pbDel_PreConfirm
 
+        #TODO - this is not working yet!!!#
+        self.treeView.setVisible(False)
 
         self.f_delete_lists = UIDeleteButtonsManager(pbDel_State, pbDel_city, pbDel_PreConfirm)
 
@@ -219,8 +235,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     
         self.set_layer_settings_labels()
         
-    #setup login dialog and hide frames to block functionality!
-        self.on_load(startup_frames)
+
         
         object_listView_Add_State = self.listWidget_State
         object_listView_Add_State.setSelectionMode(QListView.ExtendedSelection)  # Allows selecting multiple items with Ctrl or Shift keys
@@ -240,19 +255,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
 
     #Confirm password entering
-        self.pbUC_Save.clicked.connect(lambda: self.save_user_data(startup_frames))
+        self.pbLogin.clicked.connect(lambda: self.save_user_data(startup_frames))
+        self.pbCancelLogin.clicked.connect(self.remove_UC_data)
 
-        # Set focus policy for all buttons
-
-        #if self.lePassword.hasFocus():
-        #    self.lePassword.returnPressed.connect(lambda: self.save_user_data(startup_frames))
-        #else:
-        #    pass
-        
-        self.pbUC_Cancel.clicked.connect(self.remove_UC_data)
         self.pbLogOut.clicked.connect(self.log_out)
         self.pbLogOut.setVisible(False)
-        #self.pbConnectNew.clicked.connect(self.token)
 
 # Opens and handles the sub menu
         
@@ -348,7 +355,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSearchProjects.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_PROJECTS))
         self.pbSearchContracts.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_CONTRACTS))
         self.pbSearcheasements.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_EASEMENTS))
-
         
     #Adding and removing        
         self.pbSearch_Add.clicked.connect(lambda: searchGeneral.search_cadastral_items_by_values(self))
@@ -526,10 +532,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         lblRegistryNr = self.RegistryNr_value
         lblCadastralNr = self.CadasterNr_value
         pbOProperty = self.pbOpenProperty
+        treeView = self.treeView
         global feature_tool  # Use global variable to keep reference
         
-        # Initialize WindowManager with this window
-        #self.window_manager = WindowManager(self)
         self.window_manager_minmax = WindowManagerMinMax(self)
         self.window_manager_minmax.minimize_window()
         feature_tool = FeatureInfoTool(
@@ -544,7 +549,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             treeWidget=treeWidget,
             reset_timer=lambda: self.reset_timer(),
             main_window = self,
-            pbOProperty= pbOProperty
+            pbOProperty= pbOProperty,
+            treeView=treeView
         )
         self.pbDisconnect.setEnabled(True)
         self.timer.start()
@@ -660,13 +666,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbGenProjectFolder.blockSignals(False)
 
 ########################################################################
-    def universalSearchWrapper(self, module_name): 
-        search_engine = ModularSearchEngine()       
-        search_engine.universalSearch(self, module_name)
+    def universalSearchWrapper(self, module_name):
+        search_engine = ModularSearchEngine()
+        search_engine.universalSearch(self,module_name)
 
     def limitedLoad(self):
         table = self.tblMailabl_projects
-        projectsTableDecorator.load_Mailabl_projects_list_with_zoomed_map_elements(table)
+        Projects.load_Mailabl_projects_list_with_zoomed_map_elements(table)
         
     def handleSidebar_help(self):
         button1 = self.pbMailabl        
@@ -1072,7 +1078,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         version_nr = Version.get_plugin_version(path)
         lblVersion = self.lblLoadVersion
         if version_nr == 'dev':
-            lblVersion.setStyleSheet("color: red;")
+            lblVersion.setStyleSheet("color: #bc5152;")
         else:
             lblVersion.setStyleSheet("")  # Reset to default style
 
@@ -1095,22 +1101,32 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         if access_token_success:
             user_name, user_lastname, roles_text, has_qgis_access = UserSettings.user_data(self, username)
-            
+
             # Get version number to check if it's "dev" mode
             path = PathLoaderSimple.metadata()
             version_nr = Version.get_plugin_version(path)
             lblVersion = self.lbVersionNumber
-
             if version_nr == 'dev':
-                lblVersion.setStyleSheet("color: red;")
+                lblVersion.setStyleSheet("color: #bc5152;")
                 lblVersion.setText(f"v.{version_nr}")
-                if not has_qgis_access:
-                    QMessageBox.warning(self, pealkiri.warningSimple, sisu.kasutaja_oigused_puuduvad)
+                if has_qgis_access == False:
+                    self.lblUserAccessDenied.setVisible(True)
+                    self.lblUserAccessDenied.setText(sisu.kasutaja_oigused_puuduvad)
+                    self.lblUserAccessDenied.setStyleSheet("color: #bc5152;")
+                    self.lblUserAccessDenied.setAlignment(Qt.AlignCenter)
+                    self.pbLogin.setEnabled(False)
+                    self.pbLogin.setStyleSheet("background-color: #bc5152;")
+                    return  # Stop further execution
             else:
                 lblVersion.setStyleSheet("")  # Reset to default style
                 lblVersion.setText(f"v.{version_nr}")
-                if not has_qgis_access:
-                    QMessageBox.warning(self, pealkiri.warningSimple, sisu.kasutaja_oigused_puuduvad)
+                if has_qgis_access == False:
+                    self.lblUserAccessDenied.setVisible(True)
+                    self.lblUserAccessDenied.setText(sisu.kasutaja_oigused_puuduvad)
+                    self.lblUserAccessDenied.setStyleSheet("color: #bc5152;")
+                    self.lblUserAccessDenied.setAlignment(Qt.AlignCenter)
+                    self.pbLogin.setEnabled(False)
+                    self.pbLogin.setStyleSheet("background-color: #bc5152;")
                     return  # Stop further execution
 
             self.lbNuserName.setText(user_name)
@@ -1230,7 +1246,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             model.removeRows(0, model.rowCount())
         comboBox = self.cmbProjectStatuses
         statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
-        Projects.load_mailabl_projects_list(table, statusValue)
+        Projects.load_projects_by_status(table, statusValue)
         button.blockSingnals = False
         
     def Delete_reset_stage(self):

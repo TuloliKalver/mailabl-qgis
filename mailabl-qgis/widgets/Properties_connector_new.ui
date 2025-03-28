@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
+    <width>500</width>
     <height>375</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>700</width>
+    <width>500</width>
     <height>375</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>700</width>
+    <width>500</width>
     <height>375</height>
    </size>
   </property>
@@ -30,333 +30,380 @@
   </property>
   <property name="styleSheet">
    <string notr="true">
-
-#lblDescription {
-    border: None;
-    background-color: #272c35;
-    color: #c5c5d2;
-    padding-left: 0px; /* Adjust the left padding as needed */
-    padding-right: 0px; /* Adjust the right padding as needed */
-    padding-top: 0px; /* Adjust the top padding as needed */
-    padding-bottom: 0px; /* Adjust the bottom padding as needed */
+/* ====================================================== */
+/* 🎨 Global Theme - Base Colors, Background &amp; Typography */
+/* ====================================================== */
+* {
+    border: transparent;
+	boreder-radius: 7px;
+    background-color: #1d252b; /* Updated background */
+    padding: 0;
+    margin: 0;
+    color: #c5c5d2; /* Default light gray text */
 }
 
 
-#fHeader, #fHelpMenu, 
-#fSettingsFolders, #fSettingsFolderStucture,
-#fSettingsMain 
-{
-   border: 2px solid #4d4d5b;    /*Same border style as QLineEdit */
-    border-radius: 5px;
-	border-top: none;
-    border-left: none;
-    border-right: none;
+QDialog {
+	border: 1px solid;
+	border-top-left-radius: 7px;     /* Rounded top-left corner */
+    border-top-right-radius: 7px;    /* Rounded top-right corner */
+    border-right-radius: 7px;        /* No rounding on right side */
+    border-left-radius: 7px;    
+	background-color: rgba(29, 37, 43, 0.8);  /* 10% transparency */
 }
 
-
-QWidget{
-    background-color: #272c35;
-	color:#c5c5d2
-}
-
-
-/*esialgu jaotamata omadused*/
-
-
-
-QCheckBox:disabled {
-    color: #8a95a5; /* Adjust text color for disabled state */
-}
-
-
-QAbstractItemView {
-	background-color:#40414f;
-	color:#ececf1;
-	border: 1px solid #565869;
-	border-radius: 4px;
-	padding-left: 0px
-}
-
-
-QPushButton{
-	padding: 2px 5px;
-	text-align: center;
-	border-radius: 5px;
-	background-color:#40414f;
-	border: 1px solid #565869;
-}
-
-
-QPushButton:hover{
-    background-color: #8e8ea0;
-	border: 0.5px solid #acacbe;
-	color: #343541;
-	text-align: center;
-	padding: 2px 5px;
-    border-radius: 5px;	
-}
-
-QPushButton:disabled {
-    background-color: #303040; /* Adjusted disabled background color */
-    border: 1px solid #707070; /* Adjust border color for disabled state */
-    color: #8a95a5; /* Adjust text color for disabled state */
-}
-
-QLabel {
-    background-color: #40414f;
-    color: #ececf1;
-    border: 1px solid #565869;
-    border-radius: 3px;
-    padding: 3px;
-}
-
-#label_12,
-#label_11
- {
-    background-color: #40414f;
-    color: #ececf1;
-    border: 1px solid #565869;
-	padding: 1px 4px 1px 4px;
+/* ------------------------------------------------------ */
+/* 🧠 Global Interaction Effects - Focused Field &amp; Tabs   */
+/* ------------------------------------------------------ */
+QLineEdit:focus, QTextEdit:focus, QComboBox:focus,   QTabBar::tab:selected {
+        /* 🟢 Bottom glow - Extends further for visibility */
+    border: 1px solid; 
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));	
 
 }
 
+ QLineEdit:hover, QTextEdit:hover, QComboBox:hover, QTabBar::tab:hover {
+        /* 🟡 Hover Glow - Softer but Visible */
+    border: 1px solid; 
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));	
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:0.5, fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 88), stop:0.920455 rgba(46, 47, 56, 76));
+}
+
+/* ---------------------------- */
+/* 📝 QLineEdit Styling */
+/* ---------------------------- */
 QLineEdit {
-    background-color: #35363f;  /* Lighter background color */
-    color: #ececf1;
-    border: 1px solid #4d4d5b;  /*Thinner border with a different color */
-    border-radius: 5px;
-    padding: 1px 4px 1px 4px;	
+    background-color: #1d252b;   /* Matches the global dark background */
+    color: #c5c5d2;              /* Default light gray text */
+    border: 1px solid #4d4d4d;   /* Subtle default border */
+    border-radius: 4px;          /* Rounded corners for a smooth look */
+    padding: 6px;                /* Adequate padding for text clarity */
 }
 
-QLineEdit:hover {
-    background-color: #3d3e47;  /* Slightly darker background color on hover */
-}
+/* 
+   Note: Your existing rules for QLineEdit:focus and QLineEdit:hover already provide
+   the gradient border and glow effects. This default state ensures a smooth transition 
+   into those interactive states.
+*/
 
-/* Remove top and side borders */
-QLineEdit {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-}
-
+/* ---------------------------- */
+/* 🔘 Disabled State for QLineEdit */
+/* ---------------------------- */
 QLineEdit:disabled {
-    color: #8a95a5; /* Adjust text color for disabled state */
+    background-color: #24252e;  /* A slightly darker tone for disabled state */
+    border: 1px dashed rgba(120, 120, 130, 0.5);  /* Dashed and faded border */
+    color: rgba(170, 170, 180, 0.5);  /* Muted text color */
+    opacity: 0.5;               /* Lower opacity to indicate inactivity */
+}
+
+
+/* ---------------------------- */
+/* 🔘 QPushButton Styling */
+/* ---------------------------- */
+
+QPushButton {
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 5px;
+	background-color: rgb(9, 144, 143);
+    border: 1px solid #565869; /* Default border */
+    color: #ececf1; /* Brighter text */
+    transition: all 150ms ease-in-out; /* Smooth transition */
+}
+
+/* 🟢 Hover Effect - Glow &amp; Color Shift */
+QPushButton:hover {
+    background-color: #5c5d6e; /* Slightly lighter background */
+    border: 1px solid #acacbe; /* Lighter border */
+    
+color: #c5c5d2; /* Default text color */
+
+}
+
+/* 🔴 Pressed Effect - Darker Look &amp; More Intense Glow */
+QPushButton:pressed {
+    background-color: #2d2e3a; /* Darker background */
+    border: 1px solid #8e8ea0; /* Slightly darker border */
+    color: #bdbecf; /* Dimmed text */
+
+}
+
+/* ⚫ Disabled State - More Noticeable */
+QPushButton:disabled {
+    background-color: #24252e; /* **Much darker background** */
+    border: 1px dashed rgba(120, 120, 130, 0.5); /* **Dashed, faded border** */
+    color: rgba(170, 170, 180, 0.5); /* **Faded text color** */
+    opacity: 0.5; /* **Lower opacity to indicate inactive state** */
+}
+
+QPushButton:focus{
+	    border: 1px solid; 	
+    border-left-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-top-color: qradialgradient(spread:pad, cx:0, cy:0.347273, radius:0.826, fx:0.453364, fy:0.097, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-bottom-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));
+    border-right-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 88), stop:1 rgba(46, 47, 56, 76));	
+	background-color: rgb(31, 93, 92);
 }
 
 
 
-/* General QComboBox styles */
-QComboBox {
-    background-color: #40414f; /* Set the background color */
-    color: #ececf1;
-    border: 1px solid #565869;
-    border-radius: 3px;
-    padding-left: 5px;
+
+
+
+
+
+/* ══════════════════════════════════════════════════════ */
+/* 🧭 Global Vertical ScrollBar - Core UI Scroll Styling  */
+/* ══════════════════════════════════════════════════════ */
+
+QScrollBar:vertical {
+    border: none;
+    background: #2e2f38;  /* Match background color */
+    width: 8px;
+    margin: 0px;  /* Remove spacing */
+    border-radius: 4px;
 }
 
-/* Style the dropdown button */
-QComboBox::drop-down {
-    background-color: #40414f;
-    border: 0px solid #40414f;
-    border-radius: 10px;
-    width: 16px;
-    height: 16px;
-    subcontrol-origin: padding;
-    subcontrol-position: left; /* Center the arrow icon */
+QScrollBar::handle:vertical {
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
+        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 255), stop:1 rgba(46, 47, 56, 253));
+    min-height: 25px;
+    border-radius: 4px;
 }
 
-/* Style for the list view that shows the items */
-QComboBox QAbstractItemView {
-    background-color: #40414f;
-    border: 1px solid #acacbe;
-    selection-background-color: #800080; /* Set the color of the selected row to purple */
-    selection-color: #ececf1; /* Ensure the text color of the selected row is readable */
+QScrollBar::handle:vertical:hover {
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:1.24, 
+        fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 255), stop:0.920455 rgba(46, 47, 56, 253));
 }
 
-/* Style for individual items in the list */
-QComboBox QAbstractItemView::item {
-    background-color: #40414f;
-    color: #ececf1; /* Set the text color */
+/* Hide Up/Down Buttons */
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical {
+    background: none;
+    height: 0px;
 }
 
-/* Style for the selected item */
-QComboBox QAbstractItemView::item:selected {
-    background-color: #800080; /* Set the background color of the selected row to purple */
-    color: #ececf1; /* Ensure the text color of the selected row is readable */
+/* Make the unused track area blend with background */
+QScrollBar::add-page:vertical, 
+QScrollBar::sub-page:vertical {
+    background: #2e2f38;
 }
 
-/* Style for the hovered item */
-QComboBox QAbstractItemView::item:hover {
-    background-color: #a64ca6; /* Set the background color of the hovered row to a lighter purple */
-    color: #ececf1; /* Ensure the text color of the hovered row is readable */
+/* ════════════════════════════════════════════════════════ */
+/* 🧭 Global Horisontal ScrollBar - Core UI Scroll Styling  */
+/* ════════════════════════════════════════════════════════ */
+
+
+QScrollBar:horizontal {
+    border: none;
+    background: #2e2f38;  /* Match background color */
+    height: 8px;
+    margin: 0px;
+    border-radius: 4px;
 }
 
-/* Style the QComboBox when it is focused */
-QComboBox:focus {
-    border: 0.5px solid #acacbe;
+QScrollBar::handle:horizontal {
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
+        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 255), stop:1 rgba(46, 47, 56, 253));
+    min-width: 25px;
+    border-radius: 4px;
 }
 
-/* Style the arrow inside the dropdown */
-QComboBox::down-arrow {
-    width: 0;
-    height: 0;
-    border-left: 6px solid #40414f;
-    border-right: 6px solid #40414f;
-    border-top: 8px solid #ececf1; /* Adjust the color to match your design */
-    margin: 8px auto; /* Center the arrow */
+QScrollBar::handle:horizontal:hover {
+    background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:1.24, 
+        fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 255), stop:0.920455 rgba(46, 47, 56, 253));
 }
 
-/* Style the QComboBox when it is in &quot;on&quot; state */
-QComboBox::on {
-    border: 0.5px solid #acacbe;
+/* Hide Left/Right Buttons */
+QScrollBar::add-line:horizontal, 
+QScrollBar::sub-line:horizontal {
+    background: none;
+    width: 0px;
 }
 
-/* Style the QComboBox when it is disabled */
-QComboBox:disabled {
-    background-color: #40414f; /* Set the background color for the disabled state */
-    border: 1px solid #565869; /* Adjust border color for disabled state */
-    color: #8a95a5; /* Adjust text color for disabled state */
+/* Make the unused track area blend with background */
+QScrollBar::add-page:horizontal, 
+QScrollBar::sub-page:horizontal {
+    background: #2e2f38;
 }
 
 
-/* General QTableView adjustments */
+/* ====================================================== */
+/* 📊 QTableView - Layout, Colors, and Interaction Styles */
+/* ====================================================== */
+
 QTableView {
-    background-color: #2e2f38; /* Dark gray for all rows */
-    color: #d1d1e0; /* Light gray text color */
-    border: 1px solid #4d4d4d; /* Border color matching the scrollbar groove */
-    border-radius: 5px; /* Rounded corners */
-    gridline-color: #565869; /* Gridline color */
+    background-color: #2e2f38; /* Consistent dark gray base */
+    border: 1px solid #4d4d4d;
+    border-radius: 5px;
+    gridline-color: #565869;
+    /* Updated selection gradient using teal accent */
     selection-background-color: qlineargradient(
         x1: 0, y1: 0, x2: 0, y2: 1,
-		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
-        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
-    ); /* Gradient for selected cells */
-    selection-color: #ececf1; /* Lighter text color for selected cells */
+        stop: 0 rgba(9,144,143,10),
+        stop: 1 rgba(9,144,143,50)
+    );
+    selection-color: #ececf1;
 }
 
-/* Adjust header style */
+
+/* Adjust header style with white text */
 QHeaderView::section {
-    background-color: #35353f; /* Darker gray background for the header */
-    color: #d1d1e0; /* Light gray text color in the header */
-    border-top: 0.5px solid #323232; /* Slightly darker border on top */
-    border-left: 0.5px solid #323232; /* Slightly darker border on left */
-    border-right: 0.5px solid #323232; /* Slightly darker border on right */
-    border-bottom: 1px solid #4d4d4d; /* Lighter bottom border to separate data from headers */
-    padding: 1px 3px; /* Slightly reduced padding */
-    border-top-left-radius: 2px; /* Retain rounding on the top-left corner */
-    border-top-right-radius: 2px; /* Retain rounding on the top-right corner */
-    border-bottom-left-radius: 0px; /* No rounding on the bottom-left corner */
-    border-bottom-right-radius: 0px; /* No rounding on the bottom-right corner */
-    font-size: 11px; /* Reduced font size */
+    background-color: #35353f;
+    color: #ececf1; 
+    border-top: 0.5px solid #323232;
+    border-left: 0.5px solid #323232;
+    border-right: 0.5px solid #323232;
+    border-bottom: 1px solid #4d4d4d;
+    padding: 1px 3px;
+    font-size: 12px;
 }
 
-/* Style for hovered rows */
+/* Entire table disabled state */
+QTableView:disabled {
+    background-color: rgba(30,30,35,180);
+    color: rgba(150,150,160,120);
+    border: 1px solid rgba(100,100,110,80);
+    gridline-color: rgba(80,80,90,80);
+    cursor: not-allowed;
+}
+
+/* Make headers look disabled */
+QTableView:disabled QHeaderView::section {
+    background-color: rgba(50,50,58,150);
+    
+    border-bottom: 1px solid rgba(80,80,90,100);
+}
+
+/* Remove focus outline when disabled */
+QTableView:disabled:focus {
+    outline: none;
+}
+
+/* Corner widget (where row/column headers meet) */
+QTableCornerButton::section {
+    background: #35353f;
+    border: 1px solid #4d4d4d;
+}
+
+/* Disabled corner styling */
+QTableView:disabled QTableCornerButton::section {
+    background: rgba(50,50,58,150);
+    border: 1px solid rgba(80,80,90,100);
+}
+
+/* Disable selection effect when the table is disabled */
+QTableView:disabled QTableView::item:selected {
+    background-color: rgba(50,50,58,100);
+    color: rgba(150,150,160,100);
+}
+
+/* Hovered rows for better contrast */
 QTableView::item:hover {
-    background-color: #4e4f5b; /* Medium gray background color when hovering over a row */
-    color: #ececf1; /* Text color on hover for better contrast */
+    background-color: #3a3f4b;
+    color: #ececf1;
+    min-height: 16px;  /* Decreased row height */
 }
 
-/* Style for selected rows */
+/* Selected rows using the same teal gradient as QTableView selection */
 QTableView::item:selected {
     background-color: qlineargradient(
         x1: 0, y1: 0, x2: 0, y2: 1,
-		stop: 0 rgba(46, 47, 56, 10),   /* Lighter gray with higher transparency (about 47%) */
-        stop: 1 rgba(210, 72, 72, 50)    /* Darker red with lower transparency (about 29%) */
-    ); /* Gradient background color for selected rows */
-    color: #ececf1; /* Light gray text color for selected rows */
+        stop: 0 rgba(9,144,143,10),
+        stop: 1 rgba(9,144,143,50)
+    );
+    /*color: #ececf1;*/
+    min-height: 16px;  /* Decreased row height */
 }
 
-/* Style for all rows (non-selected) */
+/* Non-selected rows with a subtle gradient for depth */
 QTableView::item {
     background-color: qlineargradient(
         x1: 0, y1: 0, x2: 0, y2: 1,
-        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
-        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
-    ); /* Gradient background color for non-selected rows */
-    color: #d1d1e0; /* Light gray text color */
+        stop: 0 rgba(46,47,56,25),
+        stop: 1 rgba(46,47,56,255)
+    );
+    color: #d1d1e0;
+    min-height: 16px;  /* Decreased row height */
 }
 
-/* Ensure deselected rows return to their original state */
+/* Ensure deselected rows return to their default style */
 QTableView::item:!selected {
     background-color: qlineargradient(
         x1: 0, y1: 0, x2: 0, y2: 1,
-        stop: 0 rgba(80, 80, 80, 25),   /* Lighter gray with 20% opacity (2 steps lighter) */
-        stop: 1 rgba(42, 42, 51, 255)    /* Darker gray with 35% opacity */
-    ); /* Reset to the default background color */
-    color: #d1d1e0; /* Reset to the default text color */
+        stop: 0 rgba(46,47,56,25),
+        stop: 1 rgba(46,47,56,255)
+    );
+    color: #d1d1e0;
+    min-height: 16px;  /* Decreased row height */
 }
 
-/* General QScrollBar style within QTableView */
-QScrollBar:vertical, QScrollBar:horizontal {
-    background-color: transparent; /* Ensure the scrollbar background is transparent */
+/* Disabled item styling */
+QTableView::item:disabled {
+    background-color: rgba(50,50,58,100);
+    color: rgba(150,150,160,100);
+    font-style: italic;
+    border: 1px dashed rgba(100,100,110,80);
+    min-height: 16px;  /* Decreased row height */
 }
 
-/* Vertical scroll bar groove (track) */
-QScrollBar::groove:vertical {
-    border: 1px solid #4d4d4d; /* Dark border around the groove */
-    width: 8px; /* Width of the groove */
-    background: #333; /* Darker gray for the groove background */
-    border-radius: 3px; /* Adjusted to be less than half of 8px */
+QTableView::item {
+    background-color: rgba(50,50,58,0.75);
+    color: #c5c5d2;;
 }
 
-/* Horizontal scroll bar groove (track) */
-QScrollBar::groove:horizontal {
-    border: 1px solid #4d4d4d; /* Dark border around the groove */
-    height: 8px; /* Height of the groove */
-    background: #333; /* Darker gray for the groove background */
-    border-radius: 3px; /* Adjusted to be less than half of 8px */
+QLabel{
+	/* background-color: rgba(46, 47, 56, 0.1);   🟩 holder */
+	background-color: None;
+
 }
 
-/* Vertical scroll bar handle (thumb) */
-QScrollBar::handle:vertical {
-    background: #b5b5b5; /* Lighter gray for the handle */
-    border: 1px solid #707070; /* Slightly darker border for the handle */
-    width: 16px; /* Width of the handle */
-    border-radius: 6px; /* Adjusted to be less than half of 16px for a rounded effect */
+
+QWidget,  QGroupBox {
+    background-color: rgba(46, 47, 56, 0.1);  /* 🟩 holder */
+    color: #c5c5d2;
 }
 
-/* Horizontal scroll bar handle (thumb) */
-QScrollBar::handle:horizontal {
-    background: #b5b5b5; /* Lighter gray for the handle */
-    border: 1px solid #707070; /* Slightly darker border for the handle */
-    height: 16px; /* Height of the handle */
-    border-radius: 6px; /* Adjusted to be less than half of 16px for a rounded effect */
+QLineEdit, QTextEdit, QComboBox {
+    background-color: rgba(29, 37, 43, 0.45);  /* 🟨 input */ 
 }
 
-/* Handle when hovered (both vertical and horizontal) */
-QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
-    background: #d8d8d8; /* Lighter gray when hovered */
+QPushButton {
+    background-color: rgba(9, 144, 143, 1.0);  /* 🟦 button */
 }
 
-/* Handle when pressed (both vertical and horizontal) */
-QScrollBar::handle:vertical:pressed, QScrollBar::handle:horizontal:pressed {
-    background: #999; /* Darker gray when pressed */
+#lblDescription {
+    background-color: rgba(29, 37, 43, 0.45);  /* 🟨 input */
+    border: 1px solid #4d4d4d;   /* Subtle default border */
+    border-radius: 4px;          /* Rounded corners for a smooth look */
+    padding: 6px; 
+
 }
 
-/* Slider groove when focused (both vertical and horizontal) */
-QScrollBar::groove:vertical:focus, QScrollBar::groove:horizontal:focus {
-    background: #444; /* Slightly brighter when focused */
+
+#dragFrame  {
+	border-top-left-radius: 7px;     /* Rounded top-left corner */
+    border-top-right-radius: 7px;    /* Rounded top-right corner */
+    border-right-radius: 7px;        /* No rounding on right side */
+    border-left-radius: 7px;    
+    background-color: rgba(9, 144, 143, 1.0);  /* 🟦 button*/ 
+    cursor: move;
 }
 
-/* Scrollbar arrows (both vertical and horizontal) */
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
-QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
-    background: #40414f; /* Background for the arrows */
-    border: 1px solid #565869; /* Border for the arrows */
-    border-radius: 2px; /* Adjusted to be less than half of 4px */
+#lblTitel{
+	background: None;
 }
 
-/* Arrows on hover */
-QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover,
-QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {
-    background: #8e8ea0; /* Lighter background on hover */
+QScrollBar:horizontal, QScrollBar:vertical {
+    background-color: rgba(46, 47, 56, 0.1);  /* 🟫 scrollbar */
 }
 
-/* Style for the scroll bar pages (scroll bar track) */
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical,
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-    background: none; /* No background for the pages */
-}
 </string>
   </property>
   <property name="modal">
@@ -364,7 +411,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>5</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -389,22 +436,68 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
-       <number>5</number>
+       <number>2</number>
       </property>
       <property name="leftMargin">
-       <number>5</number>
+       <number>2</number>
       </property>
       <property name="topMargin">
-       <number>5</number>
+       <number>2</number>
       </property>
       <property name="rightMargin">
-       <number>5</number>
+       <number>2</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>2</number>
       </property>
+      <item alignment="Qt::AlignVCenter">
+       <widget class="QFrame" name="dragFrame">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>1000000</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="lblTitel">
+           <property name="text">
+            <string>Kinnistutega sidumine</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item>
        <widget class="QFrame" name="frame_3">
         <property name="styleSheet">
@@ -418,7 +511,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
-          <number>5</number>
+          <number>3</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -469,6 +562,9 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
                 <pointsize>10</pointsize>
                </font>
               </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -477,7 +573,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <property name="spacing">
-                <number>5</number>
+                <number>3</number>
                </property>
                <property name="leftMargin">
                 <number>0</number>
@@ -527,8 +623,17 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
                </item>
                <item>
                 <widget class="QLineEdit" name="leElementName">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="mouseTracking">
+                  <bool>true</bool>
+                 </property>
                  <property name="acceptDrops">
                   <bool>false</bool>
+                 </property>
+                 <property name="frame">
+                  <bool>true</bool>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
@@ -551,7 +656,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <property name="spacing">
-             <number>5</number>
+             <number>0</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -581,16 +686,16 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <property name="spacing">
-             <number>5</number>
+             <number>3</number>
             </property>
             <property name="leftMargin">
-             <number>0</number>
+             <number>50</number>
             </property>
             <property name="topMargin">
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>0</number>
+             <number>50</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
@@ -653,105 +758,6 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
              </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="fHelpMenu">
-        <property name="minimumSize">
-         <size>
-          <width>200</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_10">
-         <property name="spacing">
-          <number>5</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>5</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label_4">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Kuidas tööriista kasutada?</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::AutoText</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTextEdit" name="textEdit">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Oled valinud elemendi, millele soovid kinnistuid lisada. &lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Akna ülemises osas näed elemendi numbrit ja nimetust, millele asud kinnistuid lisama.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Seostamiseks võid: &lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  1. valida korraga &lt;span style=&quot; font-weight:600;&quot;&gt;ühe kinnistu&lt;/span&gt; - iga klikk, mille ekraanil teed valib uue kinnistu.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  2. hoides all Ctrl ja valides&lt;span style=&quot; font-weight:600;&quot;&gt; lisamiseks uusi kinnistuid&lt;/span&gt;, jääb eelnevalt tehtud valik alles.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;  3. hoides all hiire &lt;span style=&quot; font-weight:600;&quot;&gt;vasakut nuppu&lt;/span&gt;, saad kasutada &lt;span style=&quot; font-weight:600;&quot;&gt;ruut valikut&lt;/span&gt;. Kõik kinnistud, mis jäävad ruudu sisse kaasatakse valikusse.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;“Kinnistute lisamine” akna nimekirjas kuvatakse koheselt iga uus valitud kinnistu.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kasutades valikuid:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Alusta valimist uuesti&lt;/span&gt; - tühistab kaardil tehtud valiku ja saad uuesti valitud elemendile kinnistute lisamist alustada&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Tühista&lt;/span&gt; - tühistab valitud kinnistud ja sulgeb “Kinnistute sidumine” akna&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Salvesta&lt;/span&gt; - salvestab valitud kinnistud kinnistud elemendi külge. &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;NB! Uute seoste nägemiseks vajuta värskendamise nuppu!&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sul on võimalik kasutada ka muid QGIS valiku meetodeid. Kuniks see tööriist on avatud ja valikuid teostatakse kinnistute kihil, kaasatakse kinnistud lisatavate kinnistute hulka. &lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="overwriteMode">
-            <bool>false</bool>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-           </property>
           </widget>
          </item>
         </layout>

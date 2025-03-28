@@ -23,11 +23,6 @@ class requestBuilder:
             "query": query,
             "variables": variables
         }
-        #print("'variables'")
-        #print(variables)
-        # Print the query before sending
-        #print("GraphQL Query:")
-        #print(query)
 
         # Construct the HTTP headers with the access token
         headers = {
@@ -36,16 +31,12 @@ class requestBuilder:
             "User-Agent": f"QGIS/{Qgis.QGIS_VERSION} ({platform.system()} {platform.release()})"
         }
 
-        # Send the POST request to the GraphQL endpoint
         try:
             # Send the POST request to the GraphQL endpoint with timeout
             response = requests.post(graphql_url, headers=headers, json=payload, timeout=30)
         except requests.Timeout:
             print("Request timed out.")
             return None
-        response = requests.post(graphql_url, headers=headers, json=payload)
-        #print("response")
-        #print(response)
         # Check for empty response
         if not response.content:
             print(f"Empty response received for query: {query}")
@@ -53,8 +44,6 @@ class requestBuilder:
 
         # Parse the JSON response
         data = response.json()
-        #print("data:")
-        #print(data)
         # Check if the response is empty
         if not data:
             print(f"Data returned empty - maybe need to check query: {query}")
@@ -76,6 +65,6 @@ class RequestErrorHandler:
             error_message = '\n'.join(error_messages)
             text = (f"GraphQL request failed:\n{error_message}")
             heading = pealkiri.warningSimple
-            QMessageBox.warning(None, heading, text)
+            QMessageBox.warning(self, heading, text)
             return True  # Indicate that an error occurred
         return False  # No error occurred

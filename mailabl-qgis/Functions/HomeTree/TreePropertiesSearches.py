@@ -7,11 +7,12 @@ from qgis.utils import iface
 
 from ...config.settings import SettingsDataSaveAndLoad
 from .BuildTree import MyTreeHome
+from .BuildViewTree import MyTreeHomeView
 from ...utils.window_manager import WindowManager, WindowManagerMinMax
-from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, OldKatastriyksus
+from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 class FeatureInfoTool:
-    def __init__(self, label, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget, reset_timer, main_window, pbOProperty):
+    def __init__(self, label, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget, reset_timer, main_window, pbOProperty, treeView):
         self.layer = None
         self.label = label
         self.lblRegistry = lblRegistry
@@ -23,6 +24,7 @@ class FeatureInfoTool:
         self.lblcreated_at = created_at
         self.lblupdated_at = updated_at
         self.lbltreewidget = treeWidget
+        self.tree_View = treeView
         self.main_window = main_window
         self.window_manager = WindowManager(self.main_window)
         self.window_manager_minMax = WindowManagerMinMax(self.main_window)
@@ -110,6 +112,8 @@ class FeatureInfoTool:
                 
 
                 MyTreeHome.update_tree_with_modules(self.lbltreewidget, tunnus_value)
+                #TODO - This version works but it's not possible to color cells based on the search results.
+                #MyTreeHomeView.update_tree_with_modules(self.tree_View, tunnus_value)
                 # This is possible if cell coloring can be implemented
                 
             else:
@@ -263,15 +267,10 @@ class FeatureInfoToolSearch:
         layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
         print(f"Layer: {layer}")
 
-
         # Get the selected feature IDs from the layer
         selected = layer.selectedFeatureIds()
-
-
         # Ensure the feature IDs are integers
         selected_features = [layer.getFeature(int(fid)) for fid in selected]
-
-        # Initialize Katastriyksus instance
         katastriyksus = Katastriyksus()
         
         # Define a list of field names
@@ -311,12 +310,9 @@ class FeatureInfoToolSearch:
         
         if feature_data:
             # Extract values into variables
-
             tunnus_value = self.set_values_to_labels(feature_data)
-
             MyTreeHome.update_tree_with_modules(self.lbltreewidget, tunnus_value)
             # This is possible if cell coloring can be implemented
-            
         QCoreApplication.processEvents()
         self.property_button.setEnabled(True)
         return tunnus_value

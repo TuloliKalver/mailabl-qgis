@@ -10,8 +10,8 @@ from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .list_handler import ExpandProcessListsFunctions
 from ..config.settings import SettingsDataSaveAndLoad
 from ..Functions.DeletProcessUIActions import DeletProcessUIActions
-from ..Functions.Contracts.contractsItems import ContractsMain
-from ..Functions.Easements.EasementsItems import EasementssMain
+from ..Functions.Contracts.Contracts import ContractsMain
+from ..Functions.Easements.Easements import EasementssMain
 from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
 from ..KeelelisedMuutujad.modules import Modules
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
@@ -65,11 +65,11 @@ class WorkSpaceHandler:
         comboBox = self.cmbProjectStatuses
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
         status_id = SettingsDataSaveAndLoad.load_projects_status_id(self)
-        InsertStatusToComboBox.add_statuses_to_listview_set_status(self, comboBox, module, status_id)
+        InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, comboBox, module, status_id)
         
         statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
         
-        Projects.load_mailabl_projects_list(table, statusValue)
+        Projects.load_projects_by_status(table, statusValue)
         button.blockSignals(False)
     
     def swWorkSpace_Contracts_FrontPage(self):
@@ -90,15 +90,15 @@ class WorkSpaceHandler:
         types_combo_box = self.cmbcontractTypes_checkable
         #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
         prefered_statuses = SettingsDataSaveAndLoad.load_contract_status_ids(self)
-        InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
+        InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, combo_box, module, prefered_statuses)
   
         prefered_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)    
         InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
         selected_types_ids = types_combo_box.checkedItemsData()
         
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
-
-        ContractsMain.main_contracts(self, table, selected_types_ids, statusValue)
+        # Insert the results to TableView 
+        ContractsMain.load_main_contracts_by_type_and_status(self, table, selected_types_ids, statusValue)
                 
         push_button.blockSignals(False)
         refresh_button.blockSignals(False)
@@ -114,7 +114,7 @@ class WorkSpaceHandler:
         types_combo_box = self.cmbcontractTypes_checkable
         selected_types_ids = types_combo_box.checkedItemsData()
         statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)  
-        ContractsMain.main_contracts(self, table, selected_types_ids, statusValue)
+        ContractsMain.load_main_contracts_by_type_and_status(self, table, selected_types_ids, statusValue)
         refresh_button.blockSignals(False)
 
     def swWorkSpace_easements_frontpage(self):
@@ -138,7 +138,7 @@ class WorkSpaceHandler:
             button.blockSignals(False)
             return
         else:
-            InsertStatusToComboBox.add_statuses_to_listview_set_status(self, combo_box, module, prefered_statuses)
+            InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, combo_box, module, prefered_statuses)
         prefered_types = SettingsDataSaveAndLoad.load_easements_type_names(self)
         if prefered_types == '' or None:
             heading = Headings().warningSimple
@@ -151,7 +151,7 @@ class WorkSpaceHandler:
             
         prefered_types_ids = types_combo_box.checkedItemsData()
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
-        EasementssMain.main_asements(self, table, prefered_types_ids, statusValue)
+        EasementssMain.load_main_asements_by_type_and_status(self, table, prefered_types_ids, statusValue)
         button.blockSignals(False)
 
     def easements_reload(self):
@@ -168,7 +168,7 @@ class WorkSpaceHandler:
         types_combo_box = self.cmbeasementTypesCheckable
         selected_types_ids = types_combo_box.checkedItemsData()
         statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
-        EasementssMain.main_asements(self, table, selected_types_ids, statusValue)
+        EasementssMain.load_main_asements_by_type_and_status(self, table, selected_types_ids, statusValue)
         button.blockSignals(False)
         
     @staticmethod

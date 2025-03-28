@@ -46,40 +46,54 @@ class OpenLink:
         self.terms = config.get('terms', '')
 
     @staticmethod
-    def weblink_by_module(module):
-        print
-        return f"{OpenLink().main}{module}"
+    def weblink_by_module(module_path: str) -> str:
+        """
+        Build a full link like: https://example.com/projects/
+        Usage:
+            OpenLink.weblink_by_module(MailablWebModules.PROJECTS)
+        """
+        return f"{OpenLink().main}{module_path}"
 
 class MailablWebModules:
-    def __init__(self):
-        self.projects = '/projects/'
-        self.contracts = '/contracts/'
-        self.easements = '/easements/'
-        self.tasks = '/tasks/'
-        self.letters = '/letters/'
-        self.coordinations = '/coordinations/'
-        self.ordinances = '/ordinances/'
-        self.submissions = '/submissions/'
-        self.properties = '/properties/'
+    # ✅ Class-level constants (recommended for future use)
+    PROJECTS = '/projects/'
+    CONTRACTS = '/contracts/'
+    EASEMENTS = '/easements/'
+    TASKS = '/tasks/'
+    LETTERS = '/letters/'
+    COORDINATIONS = '/coordinations/'
+    ORDINANCES = '/ordinances/'
+    SUBMISSIONS = '/submissions/'
+    PROPERTIES = '/properties/'
 
+    # 🧪 Keep instance-level attributes for compatibility/testing
+    #def __init__(self):
+    #    self.projects = self.PROJECTS
+    #    self.contracts = self.CONTRACTS
+    #    self.easements = self.EASEMENTS
+    #    self.tasks = self.TASKS
+    #    self.letters = self.LETTERS
+    #    self.coordinations = self.COORDINATIONS
+    #    self.ordinances = self.ORDINANCES
+    #    self.submissions = self.SUBMISSIONS
+    #    self.properties = self.PROPERTIES
 
     def get_web_link(self, module_name):
         
         web_links_by_module = {
-            Modules.MODULE_PROJECTS: self.projects,
-            Modules.MODULE_CONTRACTS: self.contracts,
-            Modules.MODULE_EASEMENTS: self.easements,
-            Modules.MODULE_TASKS: self.tasks,
-            Modules.MODULE_LETTER: self.letters,
-            Modules.MODULE_COORDINATION: self.coordinations,  # Corrected typo
-            Modules.MODULE_ORDINANCES: self.ordinances,
-            Modules.MODULE_SUBMISSIONS: self.submissions,
-            Modules.MODULE_PROPRETIES: self.properties
+            Modules.MODULE_PROJECTS: MailablWebModules.PROJECTS,
+            Modules.MODULE_CONTRACTS: MailablWebModules.CONTRACTS,
+            Modules.MODULE_EASEMENTS: MailablWebModules.EASEMENTS,
+            Modules.MODULE_TASKS: MailablWebModules.TASKS,
+            Modules.MODULE_LETTER: MailablWebModules.LETTERS,
+            Modules.MODULE_COORDINATION: MailablWebModules.COORDINATIONS,
+            Modules.MODULE_ORDINANCES: MailablWebModules.ORDINANCES,
+            Modules.MODULE_SUBMISSIONS: MailablWebModules.SUBMISSIONS,
+            Modules.MODULE_PROPRETIES: MailablWebModules.PROPERTIES
         }
 
         if module_name not in web_links_by_module:
             raise ValueError(f"Invalid module name: {module_name}")
-
         return web_links_by_module[module_name]
     
     
@@ -191,7 +205,6 @@ class Filepaths:
         return os.path.join(PLUGIN_DIR_MAIN, WIDGETS_FOLDER, widget_name)
 
     
-
     @staticmethod
     def load_ui_file(ui_file_path):
         return loadUi(ui_file_path)
@@ -361,15 +374,9 @@ class SettingsDataSaveAndLoad:
     
     def save_target_cadastral(self, input_value, target_value):
         settings = QgsSettings()
-        #print(f"save_target_cadastral 'target_value' {target_value}")
-        #save setup target
         target_settings_address = SettingsDataSaveAndLoad.target_cadastral(self)
-        #print(f"save_target_cadastral 'target_settings_address' {target_settings_address}")
         settings.setValue(target_settings_address, input_value)
-        #save setup input
-        #print(f"save_target_cadastral 'input_vlue': {input_value}")
         input_setting_address = SettingsDataSaveAndLoad.input_cadastral(self)
-        #print(f"save_target_cadastral 'input_setting_address' {input_setting_address}")
         settings.setValue(input_setting_address, target_value)
         
     def save_target_projects(self, input_value):
@@ -415,7 +422,7 @@ class SettingsDataSaveAndLoad:
         settings = QgsSettings()
         # Extract the integer value from the list
         project_id_int = int(project_id[0]) if project_id else None
-        print(f"id_s: {project_id_int}")
+        #print(f"id_s: {project_id_int}")
         path = SettingsDataSaveAndLoad.projects_preferred_status_ID(self)
         path_name = SettingsDataSaveAndLoad.projects_preferred_status_Name(self)
         settings.setValue(path, project_id_int)
@@ -426,8 +433,8 @@ class SettingsDataSaveAndLoad:
     def save_contract_settings(self, contract_type_names, contratc_status_names, contract_status_ids):
         settings = QgsSettings()
         contract_status_ids_int = int(contract_status_ids[0]) if contract_status_ids else None
-        print(f"id_s: {contract_status_ids_int}")
-        print(f"contract types: {contract_type_names}")
+        #print(f"id_s: {contract_status_ids_int}")
+        #print(f"contract types: {contract_type_names}")
         contrcts_status_ids_path = SettingsDataSaveAndLoad.contracts_preferred_status_ids(self)
         contracts_status_name_path = SettingsDataSaveAndLoad.contracts_preferred_status_name(self)
         contract_name_paths = SettingsDataSaveAndLoad.contracts_preferred_type_name(self)

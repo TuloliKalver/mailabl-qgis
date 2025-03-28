@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QMessageBox
 from ..Functions.item_selector_tools import properties_selectors
-from ..queries.python.projects.ProjectTableGenerators.projects import searchProjectsValue
-from .Contracts.contractsItems import ContractsMain
-from .Easements.EasementsItems import EasementssMain
+from ..queries.python.projects.ProjectTableGenerators.projects import Projects
+from .Contracts.Contracts import ContractsMain
+from .Easements.Easements import EasementssMain
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..KeelelisedMuutujad.modules import Modules
 
@@ -16,16 +16,16 @@ class searchGeneral:
         search_items = self.leSearch_Add.displayText()
         items_list = [item.strip() for item in search_items.split(',')]
         items_str = ', '.join('"{}"'.format(item) for item in items_list)
-        properties_selectors.show_connected_cadasters(items_str, layer_type)
+        properties_selectors.show_connected_properties_on_map(items_str, layer_type)
 
 
 class ModularSearchEngine:
     def __init__(self):
         # Define the mapping between module names and their respective search functions
         self.search_functions = {
-            Modules.MODULE_PROJECTS: searchProjectsValue.load_Mailabl_projects_by_number,
-            Modules.MODULE_CONTRACTS: ContractsMain().search_contracts,
-            Modules.MODULE_EASEMENTS: EasementssMain().easemenets_by_number
+            Modules.MODULE_PROJECTS: Projects.load_projects_by_number,
+            Modules.MODULE_CONTRACTS: ContractsMain.load_contracts_by_query,
+            Modules.MODULE_EASEMENTS: EasementssMain.load_easemenets_by_number
         }
 
     def universalSearch(self,instance, module_name):

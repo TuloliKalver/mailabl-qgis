@@ -189,7 +189,6 @@ class Mailabl:
                 action)
             self.iface.removeToolBarIcon(action)
 
-
     def run(self):
         """Siin toimub käivitamine... vajadusel saab siia lisada käivitamisel tehtavad kontrollide vajadused"""
 

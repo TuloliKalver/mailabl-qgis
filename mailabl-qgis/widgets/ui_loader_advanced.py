@@ -1,22 +1,15 @@
 import os
 from PyQt5.QtGui import  QStandardItemModel
 from PyQt5.uic import loadUi
-
 from ..Functions.add_items import DataPreparation
-from PyQt5.QtCore import QCoreApplication
-
-
 
 model = QStandardItemModel()
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
 #Status bar widget folder
 widgets_folder = "widgets"  
 #widgets_path = os.path.join(plugin_dir,widgets_folder, "WStatusBar.ui")
 widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui"))
-
-
 
 class Directories:
     # Declare catalogues and links
@@ -105,84 +98,3 @@ class loader():
             print("User pressed Cancel")
             return decision, returned_cadastral_units
 
-    
-    def clear_table_from_inMailabl_rows(input_layer_name, table_1, rowIDs_cadastralData, returned_cadastral_units):
-        result = []
-        indexes_to_remove = []
-        total_rows = len(rowIDs_cadastralData)
-        count = 0
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_widget.setWindowTitle("valikust välja jäänud kinnistud eemaldatakse tablesit!")
-        progress_bar.setMaximum(total_rows)
-        progress_widget.show()
-        
-        
-        print(f"Total_rows '{total_rows}'")
-        for item in rowIDs_cadastralData:
-            #print(f"item: {item_s1}")
-            # Access values for 'index' and 'number'
-            number_value = item['number']
-            #print(f"index: {index_value}, number: {number_value}")
-            print(f"if 'number_value' in 'returned_units'")
-            print (f"if {number_value} in {returned_cadastral_units}")
-        
-            if number_value in returned_cadastral_units:
-                print("else append features")
-                index_value = item['index']
-                indexes_to_remove.append(index_value)
-
-                #pass
-            #if number_value in returned_cadastral_units:
-                #print("number not in ")
-                #print(number_value)
-            else:
-                print("number in")
-                print(number_value)
-                #result.append(number_value)
-            count +=1
-            progress_bar.setValue(count)
-            QCoreApplication.processEvents()
-            
-        model_before = table_1.model()
-        indexes_to_remove.sort(reverse=True)
-        print(f"indexes to be removed:'{indexes_to_remove}'")
-
-        # Remove rows from the model based on IDs
-        for row_id in indexes_to_remove:
-            model_before.removeRow(row_id)
-            QCoreApplication.processEvents()
-            
-        # Update the table view
-        #table_1.update()
-        # Get the model from the table view
-#        model_after = table_1.model()
-
-        # Get the data from the first column of the updated model
-#        column_data = []
-
-#        count = 0 
-        
-        #count_selected_rows_before = model_before.rowCount()        
-#        count_selected_rows_after = model_after.rowCount()
-        #print(f"count_selected_rows_before: '{count_selected_rows_before}'")
-        #print(f"count_selected_rows_after: '{count_selected_rows_after}'")
-        
-#        progress_bar.setMaximum(count_selected_rows_after)
-#        progress_bar.setValue(count)
-        #progress_widget.setWindowTitle("Appending something somewhere third time!!!")
-
-#        for row_index in range(model_after.rowCount()):
-#            # Assuming the first column is at index 0
-#            item = model_after.item(row_index, 0)
-            
-            # Check if the item exists
-#            if item is not None:
-                # Retrieve the data from the item and add it to the list
-#                column_data.append(item.text())
-#                count +=1
-#                progress_bar.setValue(count)
-#                QCoreApplication.processEvents()
-        # Now, column_data contains the data from the first column of the updated model
-        #print(column_data)
-        progress_widget.hide()

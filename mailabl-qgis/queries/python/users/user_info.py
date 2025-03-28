@@ -81,7 +81,7 @@ class UserSettings:
             print(f"User: {user_name} {user_lastname}")
             print(f"Roles: {roles_text}")
             print(f"Has QGIS Access: {has_qgis_access}")
-            print(f"Abilities: {abilities}")
+            #print(f"Abilities: {abilities}")
             
             # Return the extracted data if needed for further processing
             return user_name, user_lastname, roles_text, has_qgis_access
@@ -89,3 +89,6 @@ class UserSettings:
         else:
             print(f"Failed to fetch data: {response.status_code}")
             return None
+
+
+

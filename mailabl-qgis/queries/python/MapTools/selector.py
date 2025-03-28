@@ -41,7 +41,7 @@ class visibleSelector:
     
     
     def get_projects_list_connected_with_view_properties(self, id_values):
-        print(f"id_value: '{id_values}'")
+        #print(f"id_value: '{id_values}'")
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query_for_projects(self, query_loader.Q_Properties_related_projects)
         #print(f"query: {query}")
@@ -69,8 +69,8 @@ class visibleSelector:
             
             if response.status_code == 200:
                 edge = handleResponse.response_properties_data_edges(response)
-                print("edge")
-                print(edge)
+                #print("edge")
+                #print(edge)
                 # Extract project IDs from the response
                 for item in edge:
                     for project in item['node']['projects']['edges']:

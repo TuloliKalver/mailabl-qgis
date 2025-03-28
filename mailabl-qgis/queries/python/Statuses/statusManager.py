@@ -2,6 +2,7 @@
 # pylint: disable=relative-beyond-top-level
 # pylint: disable=no-name-in-module
 
+from PyQt5.QtWidgets import  QListView
 from ..DataLoading_classes import GraphQLQueryLoader, Graphql_project
 from ..query_tools import requestBuilder
 
@@ -127,7 +128,7 @@ class InsertStatusToComboBox:
             comboBox.setCurrentIndex(0)
             
 
-    def add_statuses_to_listview_set_status (self, comboBox, module_name, status_id):
+    def add_statuses_to_combobox_and_set_preferes_status (self, comboBox, module_name, status_id):
         # Clear existing items in the combo box
         comboBox.clear()
 
@@ -137,6 +138,8 @@ class InsertStatusToComboBox:
         for item_text, item_id in statuses:
             comboBox.addItem(item_text)
             comboBox.setItemData(comboBox.count() - 1, item_id)
+                
+        comboBox.setView(QListView())
         
                 # Find the index of the item with the provided status_id
         for index in range(comboBox.count()):

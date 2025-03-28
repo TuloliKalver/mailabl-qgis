@@ -1,27 +1,29 @@
 import subprocess
 import webbrowser
 import requests
-
-
+from qgis.core import QgsSettings
+from PyQt5.uic import loadUi
 from PyQt5.QtGui import QColor, QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QItemDelegate
-from PyQt5.QtCore import Qt
-from ...utils.table_view_utils import Colors
-from ...KeelelisedMuutujad.modules import Modules
-from ...config.settings import Filepaths, IconsByName
-from ...config.iconHandler import iconHandler
+from PyQt5.QtCore import Qt, QCoreApplication
+from .TreeHelper import TreeHelper, StoreValues
+from ...utils.ColorUtils import ColorUtils
+from ...KeelelisedMuutujad.modules import Modules, Languages, ModuleTranslation
 from ...queries.python.query_tools import requestBuilder
 from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_properties
 from ...queries.python.responses import handleResponse
 from .query_cordinator import PropertiesConnectedElementsQueries
-from ...config.settings import MailablWebModules, OpenLink
+
+from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
+
+paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
 
 class MyTreeHomeView:
     header_number = 'Number'
     header_name = 'Nimetus'
     header_id = 'ID'
     header_file_path = "file_path_button"
-    header_statuses = 'Staatus'
+    header_statuses = 'status'
 
     @staticmethod
     def fetch_module_data(module_name, item):
@@ -47,13 +49,60 @@ class MyTreeHomeView:
     def update_tree_with_modules(treeView, item):
         print(f"item: {item}")
 
+        langage = Languages.ESTONIA
+
+        widget = paths.UI_multiline_Statusbar
+        widget_path = paths.get_widgets_path(widget)
+        progress_widget = loadUi(widget_path)
+        progress_bar = progress_widget.testBar
+        progress_widget.setWindowTitle("Kontrollin andmeid")
+        progress_widget.show()
+
+        # Get the module attributes
+        module_attrs = [attr for attr in dir(Modules) if not attr.startswith("_") and not callable(getattr(Modules, attr))]
+        total = len(module_attrs)
+
+        # Set the maximum value of the progress bar
+        progress_bar.setMaximum(total)
+
+        #end_cursor_id = None  # Initialize end_cursor before the loop
+        first = 1
+        after = None
+        # Extract the single item from the list and convert to string
+        item_str = str(item[0]) if isinstance(item, list) and len(item) == 1 else str(item)
+        
+        variables_id =  {
+            "first": first,
+            "after": after,
+            "search": item_str
+        }
+
+        query_id = Graphql_properties().load_query_for_properties_WHERE(Graphql_properties().W_properties_number_improwed)
+
+        response_id = requestBuilder().construct_and_send_request(None,query_id, variables_id)
+        #print(f"response {response}")
+        #start do use data
+        if response_id.status_code == 200:
+            data_id = handleResponse.response_properties_data_edges(response_id)
+            #print(f"returned data: {data_id}")
+                # Extract the id value from the returned data
+            if data_id and 'node' in data_id[0]:
+                property_id = data_id[0]['node'].get('id')
+                #print(f"Extracted id: {property_id}")
+                StoreValues().save_propertyID(property_id)
+            else:
+                print("No valid data found to extract id")
+
+   
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels([MyTreeHomeView.header_number, MyTreeHomeView.header_name, MyTreeHomeView.header_id, "", MyTreeHomeView.header_file_path, "", MyTreeHomeView.header_statuses])
 
         child_data = {}
-        for module_name in (getattr(Modules, attr) for attr in dir(Modules) if not attr.startswith("_") and not callable(getattr(Modules, attr))):
-            something = PropertiesConnectedElementsQueries()
-            module_data = something.fetch_module_data(module_name, item)
+        for index, module_name in enumerate((getattr(Modules, attr) for attr in module_attrs), start=1):
+            # Update the progress bar
+            progress_bar.setValue(index) 
+            property_id_str = str(property_id)
+            module_data = PropertiesConnectedElementsQueries().fetch_module_data(module_name, property_id_str)
             if module_data:
                 for data_list in module_data:
                     for item in data_list:
@@ -63,31 +112,77 @@ class MyTreeHomeView:
                             if typename not in child_data:
                                 child_data[typename] = []
                             child_data[typename].append(node_data)
+        QCoreApplication.processEvents()
         print(f"child_data: {child_data}")
 
         if child_data:
             for typename, items in child_data.items():
-                root_item = QStandardItem(typename)
+                # Create root item (parent row)
+                root_item = QStandardItem(ModuleTranslation.module_name(typename.lower() + 's', langage))
+                
+                # Store module type in UserRole
+                root_item.setData("main_item", Qt.UserRole)
+                root_item.setData(typename.lower() + 's', Qt.UserRole)
+
                 for child in items:
-                    child_item = QStandardItem()
-                    child_item.setText(child["number"])
-                    name_item = QStandardItem()
-                    name_item.setText(child["name"])
+                    # Prepare all columns as QStandardItems
+                    number_item = QStandardItem()
+                    title_item = QStandardItem()
                     id_item = QStandardItem()
-                    id_item.setText(child["id"])
+                    dummy_item = QStandardItem()  # placeholder for column 3 (for icons)
                     file_path_item = QStandardItem()
-                    file_path_item.setText(child.get("dok", ""))
+                    file_dummy_item = QStandardItem()  # placeholder for column 5 (for icons)
                     status_item = QStandardItem()
-                    status_name = child["status"]['name']
-                    status_color = child["status"]['color']
+
+                    module = typename.lower() + 's'
+
+                    # Fill items based on module type
+                    if module == Modules.MODULE_TASKS:
+                        number_item.setText("")
+                        file_path_item.setText("")
+                        title_item.setText(child.get("title", ""))
+                    else:
+                        title_item.setText(child.get("name", ""))
+                        number = child.get("number", "")
+                        number_item.setText(str(number) if number else "")
+                        file_path = child.get("filesPath", "")
+                        file_path_item.setText(file_path)
+                        file_path_item.setData(file_path, Qt.UserRole)
+
+                    # Set ID
+                    id_item.setText(child.get("id", ""))
+
+                    # Set status name and color
+                    status = child.get(MyTreeHomeView.header_statuses, {})
+                    status_name = status.get("name", "")
+                    status_color = status.get("color", "")
                     status_item.setText(status_name)
-                    MyTreeHomeView.set_status_color(status_item, status_color)
-                    # Create a custom delegate for coloring status items
+                    TreeHelper.set_status_color(status_item, status_color)
 
-                    root_item.appendRow([child_item, name_item, id_item, QStandardItem(), file_path_item, QStandardItem(), status_item])
+                    # Optional: Set module type for internal reference (could be used for click handlers)
+                    dummy_item.setData(typename, Qt.UserRole)
 
+                    # For TreeView (QStandardItem)
+                    TreeHelper.set_clickable_webIcon(dummy_item)
+                    TreeHelper.set_clickable_folderIcon(file_path_item, 5)
+
+                    # Add row to root item
+                    root_item.appendRow([
+                        number_item,
+                        title_item,
+                        id_item,
+                        dummy_item,
+                        file_path_item,
+                        file_dummy_item,
+                        status_item
+                    ])
+
+                # Finally, add the root item to the model
                 model.appendRow(root_item)
-                treeView.setModel(model)
+
+        # Close the progress widget after the loop ends
+        progress_widget.close()
+
 
         delegate = StatusColorDelegate(treeView)
         treeView.setItemDelegate(delegate)
@@ -100,49 +195,11 @@ class MyTreeHomeView:
         treeView.setColumnWidth(5, 15)
         treeView.setColumnWidth(1, 400)
 
-        treeView.clicked.connect(MyTreeHomeView.open_in_web_browser)
-        treeView.clicked.connect(MyTreeHomeView.handle_dok_clicked)
+        treeView.clicked.connect(TreeHelper.open_in_web_brauser)
+        treeView.clicked.connect(TreeHelper.handle_dok_clicked)
+        treeView.setModel(model)
 
-    @staticmethod
-    def set_status_color(status_item, color_code):
-        if color_code:
-            try:                    
-                rgb_color = Colors.hex_to_rgb(color_code)
-                background_color = QColor(*rgb_color)
-                foreground_color = QColor(Qt.black)  # Set foreground color to black
-                status_item.setBackground(background_color)
-                status_item.setForeground(foreground_color)
-                status_item.setTextAlignment(Qt.AlignCenter)
-            except Exception as e:
-                print(f"Error in setting color: {e}")
-
-    @staticmethod
-    def open_in_web_browser(index):
-        if index.column() == 3:
-            item = index.model().itemFromIndex(index)
-            module = item.data(Qt.UserRole)
-            if module:
-                module = module.lower() + 's'
-            print(f"Module in column head: {module}")
-            link_id = item.text(2)
-            web_module = MailablWebModules().get_web_link(module)
-            print(f"web_module: {web_module}")
-            web_link = OpenLink.weblink_by_module(web_module)
-            print(f"web_link: {web_link}")
-            link = f"{web_link}{link_id}"
-            response = requests.get(link, verify=False)
-            webbrowser.open(response.url)
-
-    @staticmethod
-    def handle_dok_clicked(index):
-        if index.column() == 5:
-            item = index.model().itemFromIndex(index)
-            dok_path = item.text(4)
-            print(f"dok_path: {dok_path}")
-            subprocess.Popen(['explorer', dok_path.replace('/', '\\')], shell=True)
-
-# Note: Make sure to adapt any other functions that interact with the items to handle the new QTreeView's model-based system.
-
+        
 class StatusColorDelegate(QItemDelegate):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -153,13 +210,16 @@ class StatusColorDelegate(QItemDelegate):
         # Call the base class paint method to draw the default item content
         self.drawBaseContent(painter, option, index)  # Added missing method call
 
-        if index.column() == MyTreeHomeView.header_statuses.index(index):            # Get the status text and color
+
+        status_col = MyTreeHomeView.header_statuses.index(MyTreeHomeView.header_statuses)  # or whatever the label is
+        if index.column() == status_col:            # Get the status text and color
+
             status_text = index.data(Qt.DisplayRole)
             status_color_code = index.data(Qt.UserRole + 1)  # Assuming color is stored in UserRole + 1
 
             if status_color_code:
                 try:
-                    rgb_color = Colors.hex_to_rgb(status_color_code)
+                    rgb_color = ColorUtils.hex_to_rgb(status_color_code)
                     background_color = QColor(*rgb_color)
                     painter.setBrush(background_color)
                     painter.drawRect(option.rect)
@@ -190,3 +250,4 @@ class StatusColorDelegate(QItemDelegate):
 
         #  - Draw the text using the painter's drawText() method with appropriate alignment
         painter.drawText(text_rect, Qt.AlignLeft | Qt.AlignVCenter, item_text)
+

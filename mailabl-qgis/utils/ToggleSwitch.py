@@ -2,7 +2,7 @@ from qgis.core import QgsSettings
 from PyQt5.QtCore import QSize, Qt, QRectF, QPropertyAnimation, pyqtProperty
 from PyQt5.QtWidgets import QAbstractButton, QApplication, QFrame, QHBoxLayout, QWidget
 from PyQt5.QtGui import QColor, QPainter, QPen, QFont
-from .table_view_utils import Colors
+from .ColorUtils import ColorUtils
 
 
 class ToggleSwitch(QAbstractButton):
@@ -18,7 +18,7 @@ class ToggleSwitch(QAbstractButton):
         self._animation = QPropertyAnimation(self, b"offset")
         self._animation.setDuration(300)
         color_red = "#d24848"
-        self._on_color = QColor(*Colors.hex_to_rgb(color_red))        
+        self._on_color = QColor(*ColorUtils.hex_to_rgb(color_red))        
         self._off_color = QColor("#848484")
         self.setFont(QFont("Arial", 8, QFont.Bold))
         self.label = label
