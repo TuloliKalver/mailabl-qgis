@@ -4,7 +4,7 @@ from ..Functions.EVEL.evel_general import EVELTools
 from ..KeelelisedMuutujad.Maa_amet_fields import RemapPropertiesLayer
 from ..widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from ..processes.tester import ProgressBarTester
-from ..KeelelisedMuutujad.modules import Modules
+from ..KeelelisedMuutujad.modules import Module
 
 from ..utils.signal_utils import execute_with_block
 from ..widgets.properties_connector_UIcontroller import PropertiesConnectorUIController
@@ -44,9 +44,9 @@ class PropertiesModuleButtonConnector:
 
         # Define lambdas to connect buttons to functions
         button_functions = {
-            button_contracts: lambda: execute_with_block(button_contracts, PropertiesConnectorUIController.load_properties_connector, self, Modules.MODULE_CONTRACTS, table_contracts, button_contracts),
-            button_projects: lambda: execute_with_block(button_projects, PropertiesConnectorUIController.load_properties_connector, self, Modules.MODULE_PROJECTS, table_projects, button_projects),
-            button_easements: lambda: execute_with_block(button_easements, PropertiesConnectorUIController.load_properties_connector, self, Modules.MODULE_EASEMENTS, table_easements, button_easements),
+            button_contracts: lambda: execute_with_block(button_contracts, PropertiesConnectorUIController.load_properties_connector, self, Module.CONTRACT, table_contracts, button_contracts),
+            button_projects: lambda: execute_with_block(button_projects, PropertiesConnectorUIController.load_properties_connector, self, Module.PROJECT, table_projects, button_projects),
+            button_easements: lambda: execute_with_block(button_easements, PropertiesConnectorUIController.load_properties_connector, self, Module.EASEMENT, table_easements, button_easements),
         }
 
         # Connect buttons to functions

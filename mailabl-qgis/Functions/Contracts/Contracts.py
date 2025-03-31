@@ -8,8 +8,8 @@ from PyQt5.QtCore import QCoreApplication
 
 from ...queries.python.DataLoading_classes import GraphqlQueriesContracts
 from ...queries.python.query_tools import requestBuilder
-from ...config.settings import MailablWebModules
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ...KeelelisedMuutujad.modules import Module
 from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
 from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
 
@@ -33,7 +33,7 @@ class ContractsMain:
         model = ContractModels._model_for_contracts_by_types_and_statuses(self, types, statuses, language=language)
 
         if model is not None:
-            module = MailablWebModules.CONTRACTS
+            module = Module.CONTRACT
             ModuleTableBuilder.setup(table, model, module, language)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
@@ -45,7 +45,7 @@ class ContractsMain:
         model = ContractModels._model_for_contract_search_results(query, language)
 
         if model is not None:
-            module = MailablWebModules.CONTRACTS
+            module = Module.CONTRACT
             ModuleTableBuilder.setup(table, model, module, language)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad

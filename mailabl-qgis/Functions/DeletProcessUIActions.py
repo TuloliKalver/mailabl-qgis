@@ -149,8 +149,8 @@ class DeleteProcessHandlers:
             self.tabw_delete_list.setCurrentIndex(0)
             self.tabw_delete_list.show()
 
-            expression = shp_tools.universal_map_simplifier(
-                layer_name, county_nimi_field, state_nimi_field, city_nimi_field,
+            expression = shp_tools._builds_universal_query_based_restrictions(
+                county_nimi_field, state_nimi_field, city_nimi_field,
                 county_restriction, state_restrictions, city_restrictions
             )
 

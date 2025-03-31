@@ -2,7 +2,7 @@ import os
 import json
 from PyQt5.uic import loadUi
 from qgis.core import QgsSettings
-from ..KeelelisedMuutujad.modules import Modules
+from ..KeelelisedMuutujad.modules import Module
 
 PLUGIN_DIR = os.path.dirname(__file__)
 PLUGIN_DIR_MAIN = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -66,30 +66,20 @@ class MailablWebModules:
     SUBMISSIONS = '/submissions/'
     PROPERTIES = '/properties/'
 
-    # 🧪 Keep instance-level attributes for compatibility/testing
-    #def __init__(self):
-    #    self.projects = self.PROJECTS
-    #    self.contracts = self.CONTRACTS
-    #    self.easements = self.EASEMENTS
-    #    self.tasks = self.TASKS
-    #    self.letters = self.LETTERS
-    #    self.coordinations = self.COORDINATIONS
-    #    self.ordinances = self.ORDINANCES
-    #    self.submissions = self.SUBMISSIONS
-    #    self.properties = self.PROPERTIES
 
+#/TODO: rebuild link services to Delegate based services as in other views
     def get_web_link(self, module_name):
         
         web_links_by_module = {
-            Modules.MODULE_PROJECTS: MailablWebModules.PROJECTS,
-            Modules.MODULE_CONTRACTS: MailablWebModules.CONTRACTS,
-            Modules.MODULE_EASEMENTS: MailablWebModules.EASEMENTS,
-            Modules.MODULE_TASKS: MailablWebModules.TASKS,
-            Modules.MODULE_LETTER: MailablWebModules.LETTERS,
-            Modules.MODULE_COORDINATION: MailablWebModules.COORDINATIONS,
-            Modules.MODULE_ORDINANCES: MailablWebModules.ORDINANCES,
-            Modules.MODULE_SUBMISSIONS: MailablWebModules.SUBMISSIONS,
-            Modules.MODULE_PROPRETIES: MailablWebModules.PROPERTIES
+            Module.PROJECT: MailablWebModules.PROJECTS,
+            Module.CONTRACT: MailablWebModules.CONTRACTS,
+            Module.EASEMENT: MailablWebModules.EASEMENTS,
+            Module.TASK: MailablWebModules.TASKS,
+            Module.LETTER: MailablWebModules.LETTERS,
+            Module.COORDINATION: MailablWebModules.COORDINATIONS,
+            Module.ORDINANCE: MailablWebModules.ORDINANCES,
+            Module.SUBMISSION: MailablWebModules.SUBMISSIONS,
+            Module.PROPRETIE: MailablWebModules.PROPERTIES
         }
 
         if module_name not in web_links_by_module:

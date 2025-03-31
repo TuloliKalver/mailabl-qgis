@@ -4,7 +4,7 @@ from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .Contracts.Contracts import ContractsMain
 from .Easements.Easements import EasementssMain
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
-from ..KeelelisedMuutujad.modules import Modules
+from ..KeelelisedMuutujad.modules import Module
 
 class searchGeneral:
     @staticmethod
@@ -23,23 +23,23 @@ class ModularSearchEngine:
     def __init__(self):
         # Define the mapping between module names and their respective search functions
         self.search_functions = {
-            Modules.MODULE_PROJECTS: Projects.load_projects_by_number,
-            Modules.MODULE_CONTRACTS: ContractsMain.load_contracts_by_query,
-            Modules.MODULE_EASEMENTS: EasementssMain.load_easemenets_by_number
+            Module.PROJECT: Projects.load_projects_by_number,
+            Module.CONTRACT: ContractsMain.load_contracts_by_query,
+            Module.EASEMENT: EasementssMain.load_easemenets_by_number
         }
 
     def universalSearch(self,instance, module_name):
         # Get the corresponding line edit and table based on the module name
         line_edits = {
-            Modules.MODULE_PROJECTS: instance.le_searchProjects,
-            Modules.MODULE_CONTRACTS: instance.le_searchContracts,
-            Modules.MODULE_EASEMENTS: instance.leSearcheasements
+            Module.PROJECT: instance.le_searchProjects,
+            Module.CONTRACT: instance.le_searchContracts,
+            Module.EASEMENT: instance.leSearcheasements
         }
 
         tables = {
-            Modules.MODULE_PROJECTS: instance.tblMailabl_projects,
-            Modules.MODULE_CONTRACTS: instance.ContractView,
-            Modules.MODULE_EASEMENTS: instance.tweasementView
+            Module.PROJECT: instance.tblMailabl_projects,
+            Module.CONTRACT: instance.ContractView,
+            Module.EASEMENT: instance.tweasementView
         }
 
         lineEdit = line_edits[module_name]

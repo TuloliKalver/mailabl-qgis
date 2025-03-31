@@ -1,23 +1,23 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget
 
-class WindowManager:
+class WindowPrositionHelper:
     def __init__(self, window):
         self.window = window
         self.original_flags = window.windowFlags()
 
-    def toggle_always_on_top(self):
+    def _toggle_always_on_top(self):
         if self.window.windowFlags() & Qt.WindowStaysOnTopHint:
-            self.turn_off_always_on_top()
+            self._turn_off_always_on_top()
         else:
-            self.turn_on_always_on_top()
+            self._turn_on_always_on_top()
 
-    def turn_on_always_on_top(self):
+    def _turn_on_always_on_top(self):
         if not (self.window.windowFlags() & Qt.WindowStaysOnTopHint):
             self.window.setWindowFlags(self.window.windowFlags() | Qt.WindowStaysOnTopHint)
             self.window.show()
 
-    def turn_off_always_on_top(self):
+    def _turn_off_always_on_top(self):
         if self.window.windowFlags() & Qt.WindowStaysOnTopHint:
             self.window.setWindowFlags(self.original_flags)
             self.window.show()
@@ -30,19 +30,19 @@ class WindowManagerMinMax:
         self.is_minimized = False
         self.original_geometry = window.geometry()
 
-    def minimize_window(self):
+    def _minimize_window(self):
         if not self.is_minimized:
             self.window.showMinimized()
             self.is_minimized = True
             self.is_maximized = False
 
-    def maximize_window(self):
+    def _maximize_window(self):
         if not self.is_maximized:
             self.window.showMaximized()
             self.is_maximized = True
             self.is_minimized = False
 
-    def restore_window(self):
+    def _restore_window(self):
         self.window.setGeometry(self.original_geometry)
         self.window.showNormal()
         self.window.raise_()  # Bring the window to the front
@@ -50,8 +50,8 @@ class WindowManagerMinMax:
         self.is_maximized = False
         self.is_minimized = False
 
-    def toggle_maximize(self):
+    def _toggle_maximize(self):
         if self.is_maximized:
-            self.restore_window()
+            self._restore_window()
         else:
-            self.maximize_window()
+            self._maximize_window()

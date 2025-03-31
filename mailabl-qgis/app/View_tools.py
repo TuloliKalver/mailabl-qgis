@@ -183,8 +183,8 @@ class listView_functions():
     def __init__(self):
         pass
 
-
-    def toggleListSelection(self, list_view, state):
+    @staticmethod
+    def toggleListSelection( list_view, state):
         #print("started toggle selection in view_tools.py line 385")
         # state = 2 when checked, 0 when unchecked
         if state == 2:
@@ -193,7 +193,8 @@ class listView_functions():
         else:
             list_view.selectionModel().clearSelection()
 
-    def onSelectionChangeReturnChanges(self, selected, deselected, table):
+    @staticmethod
+    def onSelectionChangeReturnChanges(selected, deselected, table):
         # Get the model from the QTableView
         model = table.model()
         
@@ -416,10 +417,8 @@ class shp_tools:
     
     
     
-    
-    def create_item_list_with_where(self,view_item, total, restriction, input_layer_name, where_field, field):
-        import time
-        start = time.perf_counter()        
+    @staticmethod
+    def create_item_list_with_where(total, restriction, input_layer_name, where_field, field):
         # Get the input layer by name from the QgsProject
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         
@@ -453,19 +452,13 @@ class shp_tools:
             elif row == three_quarter_point:
                 progress_widget.label_3.setText("ohoo lõpp paistab.")
             QCoreApplication.processEvents()  # Process events to allow GUI updates
-            #print(f"row item: {row}")
-        # Get unique values from the filtered list
-        #unique_values = list(set(filtered_values))
-
-        # Sort and return the unique values
-        #sorted_values = sorted(unique_values)
         
         sorted_values = sorted(set(filtered_values))
         #print(f"sorted_values: {sorted_values}")
         return sorted_values
 
-
-    def create_item_list_with_MultyWhere(self, restrictions, layer_name, where_field, field):
+    @staticmethod
+    def create_item_list_with_MultyWhere(restrictions, layer_name, where_field, field):
         progress_handler = ProgressBarHandler()
         input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         total = input_layer.featureCount()  # Automatically get the total number of features
@@ -503,76 +496,17 @@ class shp_tools:
         #print(f"Sorted unique values: {sorted_filtered_values}")
         return sorted_filtered_values
 
+    @staticmethod
+    def county_map_simplifier(county_nimi_field, input_layer_name, viewItem_county):
+        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
 
-    def create_item_list_with_MultyWhere_old(self, total, restrictions, input_layer_name, where_field, field):
-        # Get the input layer by name from the QgsProject
-        input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        
-        ui_file_path = widgets_path
-        progress_widget = loadUi(ui_file_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
-        # Set the window title for the progress_widget
-        progress_widget.setWindowTitle(Headings().nimekirja_koostamine)
-        progress_widget.show()
-        
-        quarter_point = total // 4  # Calculate the quarter point
-        halfway_point = total // 2  # Calculate the halfway point
-        three_quarter_point = total * 3 // 4  # Calculate the three-quarter point
-        
-        #filtered_values = QStandardItemModel()
-        filtered_values = []
-        row = 0
-        # Iterate through features and filter based on where_field and restrictions
-        for feature in input_layer.getFeatures():
-            if feature[where_field] in restrictions:
-            
-                filtered_values.append(feature[field])
-            row += 1
-            progress_bar.setValue(row)
-            
-            # Update the label content at different progress points
-            if row == quarter_point:
-                progress_widget.label_2.setText("Uhh kui palju tööd:")
-                progress_widget.label_3.setText("Olen juba veerandi läbinud")
-                
-            elif row == halfway_point:
-                progress_widget.label_3.setText("Ära noki nina!")
-            elif row == three_quarter_point:
-                progress_widget.label_3.setText("Sain nimekirja kokku.")
-            
-            QCoreApplication.processEvents()  # Process events to allow GUI updates
-        # Get unique values from the filtered list
-        unique_values = list(set(filtered_values))
-
-        # Sort and return the unique values
-        sorted_values = sorted(unique_values)
-        #print(f"sorted_values: {sorted_values}")
-        return sorted_values
-
-
-
-    
-    def county_map_simplifier(self, county_nimi_field, input_layer_name, viewItem_county,viewItem_state, viewItem_city):
-        try:
-            layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        except IndexError:
-            #print(f"Layer '{input_layer_name}' not found.")
-            heading = pealkiri.warningSimple
-            text = HoiatusTextsAuto().input_layer_missing(input_layer_name)
-            QMessageBox.warning(self, heading,text)
-            #print("No items selected")
-            return
         item_county = viewItem_county.currentItem()
-        item_state = viewItem_state.currentItem()
-        item_city = viewItem_city.currentItem()
         
         county_restriction = item_county.text()
         expression = f"{county_nimi_field} IN ('{county_restriction}')"
         layer.setSubsetString(expression)
-        
-    def universal_map_simplifier(
-                                input_layer_name,
+    @staticmethod    
+    def _builds_universal_query_based_restrictions(
                                 county_nimi_field, 
                                 state_field,
                                 city_field,
@@ -580,15 +514,6 @@ class shp_tools:
                                 state_restrictions, 
                                 city_restrictions
                                 ):
-        try:
-            layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        except IndexError:
-            #print(f"Layer '{input_layer_name}' not found.")
-            text = HoiatusTextsAuto().input_layer_missing(input_layer_name)
-            heading = pealkiri.warningSimple
-            QMessageBox.warning(None, heading, text)
-            #print("No items selected")
-            return
     
         # Construct the expression based on selected items
         expression = ""
@@ -608,15 +533,6 @@ class shp_tools:
 
         return expression
 
-    def delete_selected_map_elements (layer):
-            selected_features = layer.selectedFeatures()
-
-            # Delete each selected feature
-            with edit(layer):
-                for feature in selected_features:
-                    layer.deleteFeature(feature.id())
-
-
 class TableViewadjuster:
     @staticmethod
     def QTableView_look(table_view):
@@ -633,60 +549,6 @@ class TableViewadjuster:
         # Block editing for all cells
         table_view.setEditTriggers(QTableView.NoEditTriggers)
         
-        
-class finder_deque_method:
-    def create_item_list_for_cities(self, total, restrictions, input_layer_name, where_field, field):
-        print(f"restrictions: {restrictions}")
-        print(f"where field: {where_field}")
-        print(f"field: {field}")
-        
-        # Get the input layer by name from the QgsProject
-        print(f"input_layer_name: {input_layer_name}")
-        input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-        print(f"input_layer: {input_layer}")
-        ui_file_path = widgets_path
-        progress_widget = loadUi(ui_file_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
-            # Set the window title for the progress_widget
-        progress_widget.setWindowTitle("Koostan linnade/külade nimekirja!")
-        progress_widget.show()
-        
-        quarter_point = total // 4  # Calculate the quarter point
-        halfway_point = total // 2  # Calculate the halfway point
-        three_quarter_point = total * 3 // 4  # Calculate the three-quarter point
-        
-
-        # Instead of using a list, use a deque
-        filtered_values = deque()
-        row = 0
-
-        # Iterate through features and filter based on where_field and restrictions
-        for feature in input_layer.getFeatures():
-            #print(feature)
-            if feature[where_field] in restrictions:
-                filtered_values.append(feature[field])
-            row += 1
-            progress_bar.setValue(row)
-
-            # Update the label content at different progress points
-            if row == quarter_point:
-                progress_widget.label_2.setText("Uhh kui palju tööd:")
-                progress_widget.label_3.setText("Olen juba veerandi läbinud")
-            elif row == halfway_point:
-                progress_widget.label_3.setText("Ära noki nina!")
-            elif row == three_quarter_point:
-                progress_widget.label_3.setText("Sain nimekirja kokku.")
-
-            QCoreApplication.processEvents()  # Process events to allow GUI updates
-
-        # Get unique values from the filtered deque
-        unique_values = list(set(filtered_values))
-
-        # Sort and return the unique values
-        sorted_values = sorted(unique_values)
-        return sorted_values
-
 class MapSelector:
     @staticmethod
     def set_MapItemsByItemList_WithZoom(layer, items:list, field:str):
@@ -703,34 +565,9 @@ class MapSelector:
         iface.zoomToActiveLayer()
         QCoreApplication.processEvents()
     
-    @staticmethod
-    def set_MapItemsByItemList_NoZoom(layer, items:list, filed:str):
-        properties_final_quoted = [f"'{item_text}'" for item_text in items]
-        expression = f"{filed} IN ({', '.join(properties_final_quoted)})"
-        print(f"Expression is: '{expression}'")
-        iface.setActiveLayer(layer)
-        layer.blockSignals(False)
-        layer.removeSelection()        
-        layer.setSubsetString(expression)
-        layer.selectAll()
-        layer.triggerRepaint()
-        layer.updateExtents()
-        QCoreApplication.processEvents()
-        
-    @staticmethod
-    def select_MapItemsByItem_NoZoom(layer, item:str, field:str):
-        expression = f"{field} IN ('{item}')"
-        print(f"Expression is: '{expression}'")
-        iface.setActiveLayer(layer)
-        layer.removeSelection()
-        layer.selectByExpression(expression)
-        layer.triggerRepaint()
-        layer.updateExtents()
-        QCoreApplication.processEvents()
-    
-
 class LayerProcessor:
-    def process_layer_with_progress(self, layer_name, filter_function, process_function=None, progress_messages=None):
+    @staticmethod
+    def process_layer_with_progress(layer_name, filter_function, process_function=None, progress_messages=None):
         """
         A universal function to process layers with progress updates.
 

@@ -6,7 +6,7 @@
 from PyQt5.QtCore import QCoreApplication
 from ...queries.python.DataLoading_classes import GraphqlQueriesEasements
 from ...queries.python.query_tools import requestBuilder
-from ...config.settings import MailablWebModules
+from ...KeelelisedMuutujad.modules import Module
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
 from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
@@ -41,7 +41,7 @@ class EasementssMain:
 
         model = queryHandling._model_for_easments_by_types_and_statuses(self, types, statuses, language)
         if model is not None:
-            module = MailablWebModules.EASEMENTS
+            module = Module.EASEMENT
             ModuleTableBuilder.setup(table, model, module, language)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
@@ -52,7 +52,7 @@ class EasementssMain:
 
         model = queryHandling._model_for_easments_search_results(search_values, language)
         if model is not None:
-            module = MailablWebModules.EASEMENTS
+            module = Module.EASEMENT
             ModuleTableBuilder.setup(table, model, module, language)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad

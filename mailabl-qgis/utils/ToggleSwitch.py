@@ -2,7 +2,7 @@ from qgis.core import QgsSettings
 from PyQt5.QtCore import QSize, Qt, QRectF, QPropertyAnimation, pyqtProperty
 from PyQt5.QtWidgets import QAbstractButton, QApplication, QFrame, QHBoxLayout, QWidget
 from PyQt5.QtGui import QColor, QPainter, QPen, QFont
-from .ColorUtils import ColorUtils
+from .ColorHelper import ColorUtils
 
 
 class ToggleSwitch(QAbstractButton):

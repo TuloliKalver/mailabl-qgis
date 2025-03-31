@@ -8,13 +8,13 @@ from PyQt5.QtWidgets import QTreeWidgetItem
 from PyQt5.QtGui import QIcon, QBrush
 from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QColor
-from ...utils.ColorUtils import ColorUtils
-from ...KeelelisedMuutujad.modules import Modules, Languages, ModuleTranslation
+from ...utils.ColorHelper import ColorUtils
+from ...KeelelisedMuutujad.modules import Module, Languages, ModuleTranslation
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler
 from ...queries.python.query_tools import requestBuilder
 from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_properties
-from ...queries.python.responses import handleResponse
+from ...queries.python.responses import HandlePropertiesResponses
 from .query_cordinator import PropertiesConnectedElementsQueries
 from ...config.settings import MailablWebModules, OpenLink
 from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
@@ -56,7 +56,7 @@ class MyTreeHome:
         progress_widget.show()
         
         # Get the module attributes
-        module_attrs = [attr for attr in dir(Modules) if not attr.startswith("_") and not callable(getattr(Modules, attr))]
+        module_attrs = [attr for attr in dir(Module) if not attr.startswith("_") and not callable(getattr(Module, attr))]
         total = len(module_attrs)
 
         # Set the maximum value of the progress bar
@@ -83,7 +83,7 @@ class MyTreeHome:
         #print(f"response {response}")
         #start do use data
         if response_id.status_code == 200:
-            data_id = handleResponse.response_properties_data_edges(response_id)
+            data_id = HandlePropertiesResponses._response_properties_data_edges(response_id)
             #print(f"returned data: {data_id}")
                 # Extract the id value from the returned data
             if data_id and 'node' in data_id[0]:
@@ -96,7 +96,7 @@ class MyTreeHome:
         # Continue with your function implementation
 
         child_data = {}
-        for index, module_name in enumerate((getattr(Modules, attr) for attr in module_attrs), start=1):
+        for index, module_name in enumerate((getattr(Module, attr) for attr in module_attrs), start=1):
             # Update the progress bar
             progress_bar.setValue(index) 
             property_id_str = str(property_id)
@@ -140,7 +140,7 @@ class MyTreeHome:
                     child_item.setText(2, child["id"])  # Store the link in column 2
                     # Assuming 'dok' is a key that may or may not exist in each child dictionary
                     #print(f"typename: {typename}")
-                    if module == Modules.MODULE_TASKS:
+                    if module == Module.TASK:
                         child_item.setText(0, "")
                         child_item.setText(4, "")
                         child_item.setText(1, child.get("title",""))
@@ -234,7 +234,7 @@ class MyTreeHome:
 
     def open_property():
         link_id = StoreValues().return_prperties_id()
-        module = Modules.MODULE_PROPRETIES
+        module = Module.PROPRETIE
         web_module = MailablWebModules().get_web_link(module)
         #print(f"web_module: {web_module}")
         web_link = OpenLink.weblink_by_module(web_module)

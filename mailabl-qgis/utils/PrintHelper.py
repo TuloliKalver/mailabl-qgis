@@ -7,7 +7,7 @@ lblArea = "Area"
 lblPropertie = "Propertie"
 
 
-class PrintEasement:
+class PrintHelpers:
     @staticmethod
     def printprewiev_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number = None):
         # Get the layer
@@ -71,7 +71,7 @@ class PrintEasement:
         if label_properties:
             label_properties.setText(value_string)
 
-        scale_factor = PrintEasement.center_items_in_map(selected_features, map_item, layout, scale_text)
+        scale_factor = PrintHelpers.center_items_in_map(selected_features, map_item, layout, scale_text)
 
         label_scale = layout.itemById(lblScale)
         if label_scale is None:
@@ -79,8 +79,6 @@ class PrintEasement:
         else:
             # Set the text of the label item
             label_scale.setText(f"Mõõtkava: {scale_factor}")
-
-
 
     @staticmethod
     def center_items_in_map(selected_features, map_item, layout, scale_text):

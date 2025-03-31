@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore
-from ...utils.printers import PrintEasement
+from ...utils.PrintHelper import PrintHelpers
 from .Easements import queryHandling
 from .resticon import WaterWorks, GetRuledRestriction
 from ..Union import Union
@@ -195,7 +195,7 @@ class EasementTools(QObject):
             value4 = index_4.data()
             value_string += str(value1) + ", " + str(value2) + ", "+ str(value3) + ", " + str(value4)
 
-        PrintEasement.printprewiev_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number)
+        PrintHelpers.printprewiev_selected_items(layer_name, layout_name, layout_map_item, scale_text, value_string, number)
 
     def connect_button_click_signal(self):
         if self.widget_EasmentTools:

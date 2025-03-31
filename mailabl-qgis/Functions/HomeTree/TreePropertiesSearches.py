@@ -8,7 +8,7 @@ from qgis.utils import iface
 from ...config.settings import SettingsDataSaveAndLoad
 from .BuildTree import MyTreeHome
 from .BuildViewTree import MyTreeHomeView
-from ...utils.window_manager import WindowManager, WindowManagerMinMax
+from ...utils.UIWindowHelpers import WindowPrositionHelper, WindowManagerMinMax
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
 class FeatureInfoTool:
@@ -26,7 +26,7 @@ class FeatureInfoTool:
         self.lbltreewidget = treeWidget
         self.tree_View = treeView
         self.main_window = main_window
-        self.window_manager = WindowManager(self.main_window)
+        self.window_manager = WindowPrositionHelper(self.main_window)
         self.window_manager_minMax = WindowManagerMinMax(self.main_window)
         self.setup_layer()
         self.katastriyksus = Katastriyksus()
@@ -108,7 +108,7 @@ class FeatureInfoTool:
                 # Extract values into variables
                 tunnus_value = self.set_values_to_labels(feature_data)
 
-                self.window_manager_minMax.restore_window()
+                self.window_manager_minMax._restore_window()
                 
 
                 MyTreeHome.update_tree_with_modules(self.lbltreewidget, tunnus_value)

@@ -10,7 +10,7 @@ from ...Functions.propertie_layer.InsertPropertiesToMailabl import PropertiesLay
 from ...queries.python.projects_pandas import TableHeaders
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, Flags, FilesByNames
 from ...KeelelisedMuutujad.messages import LabelsTexts
-from ...KeelelisedMuutujad.modules import Modules, ModuleTranslation, Languages
+from ...KeelelisedMuutujad.modules import Module, ModuleTranslation, Languages
 from ...KeelelisedMuutujad.messages import InfoTexts, Headings
 
 
@@ -60,14 +60,14 @@ class PropertiesConnector(QObject):
         table_view = widget.tvProperties
 
         if module is not None:
-            if module == Modules.MODULE_PROJECTS:
-                self.module = Modules.MODULE_PROJECTS
+            if module == Module.PROJECT:
+                self.module = Module.PROJECT
                 module_text = ModuleTranslation.module_name(module, language, plural=False)
-            if module == Modules.MODULE_CONTRACTS:
-                self.module = Modules.MODULE_CONTRACTS
+            if module == Module.CONTRACT:
+                self.module = Module.CONTRACT
                 module_text = ModuleTranslation.module_name(module, language, plural=False)
-            if module == Modules.MODULE_EASEMENTS:
-                self.module = Modules.MODULE_CONTRACTS
+            if module == Module.EASEMENT:
+                self.module = Module.CONTRACT
                 module_text = ModuleTranslation.module_name(module,language, plural=False)
 
         selection_monitor = None
@@ -267,15 +267,15 @@ class WidgetLabels:
 
 class ConnectorFunctions:
     def add_properties_to_module(self, widget, module, element_id, element_name):
-        if module == Modules.MODULE_PROJECTS:
+        if module == Module.PROJECT:
             from ...queries.python.update_relations.update_project_properties import ProjectsProperties
             result = ProjectsProperties.update_projects_properties(self, element_id, widget)
             return result
-        if module == Modules.MODULE_CONTRACTS:
+        if module == Module.CONTRACT:
             from ...queries.python.update_relations.update_contract_properties import ContractProperties
             result = ContractProperties.update_contract_properties(self, element_id, widget)
             return result
-        if module == Modules.MODULE_EASEMENTS:
+        if module == Module.EASEMENT:
             from ...queries.python.update_relations.update_easements_properties import EasementProperties
             result = EasementProperties.update_easements_properties(self, element_id, widget, element_name)
             return result

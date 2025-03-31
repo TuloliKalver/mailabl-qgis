@@ -4,8 +4,8 @@ import requests
 from qgis.core import QgsSettings
 from PyQt5.QtGui import QIcon, QColor, QStandardItemModel, QStandardItem
 from PyQt5.QtCore import Qt
-from ...utils.ColorUtils import ColorUtils
-from ...KeelelisedMuutujad.modules import Modules
+from ...utils.ColorHelper import ColorUtils
+from ...KeelelisedMuutujad.modules import Module
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler
 from ...config.settings import MailablWebModules, OpenLink
@@ -127,7 +127,7 @@ class TreeHelper:
     @staticmethod
     def open_property():
         link_id = StoreValues().return_prperties_id()
-        module = Modules.MODULE_PROPRETIES
+        module = Module.PROPRETIE
         web_module = MailablWebModules().get_web_link(module)
         #print(f"web_module: {web_module}")
         web_link = OpenLink.weblink_by_module(web_module)

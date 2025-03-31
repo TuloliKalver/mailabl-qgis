@@ -7,14 +7,14 @@ from PyQt5.QtGui import QColor, QBrush, QPen, QIcon
 from PyQt5.QtCore import Qt, QRect, QRectF
 from PyQt5.QtWidgets import QStyledItemDelegate
 from ...queries.python.projects_pandas import  ProjectsQueries
+from ...queries.python.fetchers.ModulePropertiesFetcher import PropertiesModuleFetcher
 from ...Functions.Easements.EasementsWhere import getEasementsWhere
 from ...Functions.item_selector_tools import properties_selectors
 from ...queries.python.ContractWhere import getContractsWhere                    
 from ...config.iconHandler import iconHandler
 from ...config.settings import Filepaths, IconsByName, OpenLink, MailablWebModules
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
-from ...utils.TableUtilys.TableHelpers import TableExtractor
-
+from ...KeelelisedMuutujad.modules import Module
 class CustomRoles:
     # custom roles for the delegate to use in the view
     BackgroundColor = Qt.UserRole + 10
@@ -48,7 +48,7 @@ class FancyStatusDelegate(QStyledItemDelegate):
         text = index.data(Qt.DisplayRole)
 
         if color_code:
-            from ..ColorUtils import ColorUtils
+            from ..ColorHelper import ColorUtils
 
             padding_x = 5
             padding_y = 3
@@ -136,20 +136,17 @@ class SelectByModuleElementsOnMapDelegate(QStyledItemDelegate):
         else:
             super().paint(painter, option, index)
 
-
     def editorEvent(self, event, model, option, index):
         if event.type() == event.MouseButtonRelease:
             if event.button() == Qt.LeftButton:
                 id_value = str(model.data(model.index(index.row(), self.ID_column_index), Qt.DisplayRole))
-                if id_value != None:
-                    if self.module == MailablWebModules.PROJECTS:
-                        values = ProjectsQueries.query_projects_related_properties(self, id_value)
-                    elif self.module == MailablWebModules.CONTRACTS:
-                        values = getContractsWhere.query_contracts_related_properties(self, id_value)
-                    elif self.module == MailablWebModules.EASEMENTS:
-                        values = getEasementsWhere().query_easement_related_properties(self, id_value)
-                    else:
-                        return False
+                if id_value is not None and self.module in {
+                                                Module.PROJECT, 
+                                                Module.CONTRACT, 
+                                                Module.EASEMENT
+                                            }:
+                    fetcher = PropertiesModuleFetcher(id_value=id_value, module=self.module)
+                    values = fetcher._fetch_properties_cadastral_numbers()
                     layer_type = "active"
                     properties_selectors.show_connected_properties_on_map(values, layer_type)
                     return True
@@ -183,7 +180,8 @@ class OpenMailablItemByModule(QStyledItemDelegate):
                 return True
         return super().editorEvent(event, model, option, index)
     def open_mailabl_item(self, id):
-        web_link = OpenLink.weblink_by_module(self.module)
+        link_from_module = (f"/{self.module}s/")
+        web_link = OpenLink.weblink_by_module(link_from_module)
         link = f"{web_link}{id}"
         response = requests.get(link, verify=False)
         webbrowser.open(response.url)

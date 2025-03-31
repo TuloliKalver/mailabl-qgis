@@ -1,25 +1,25 @@
-from ...KeelelisedMuutujad.modules import Modules
+from ...KeelelisedMuutujad.modules import Module
 from ...queries.python.DataLoading_classes import Graphql_properties, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
-from ...queries.python.responses import handleResponse
+from ...queries.python.responses import HandlePropertiesResponses
 from ...queries.python.DataLoading_classes import Graphql_properties
 
 
 
 class PropertiesConnectedElementsQueries:
     module_to_filename = {
-        Modules.MODULE_CONTRACTS: "connected_contracts.graphql",
-        Modules.MODULE_COORDINATION: "connected_coordinations.graphql",
-        Modules.MODULE_EASEMENTS: "connected_easements.graphql",
-        Modules.MODULE_PROJECTS: "connected_projects.graphql",
-        Modules.MODULE_SPECIFICATIONS: "connected_specifications.graphql",
-        Modules.MODULE_SUBMISSIONS: "connected_submissions.graphql",
-        Modules.MODULE_TASKS: "connected_tasks.graphql"
+        Module.CONTRACT: "connected_contracts.graphql",
+        Module.COORDINATION: "connected_coordinations.graphql",
+        Module.EASEMENT: "connected_easements.graphql",
+        Module.PROJECT: "connected_projects.graphql",
+        Module.SPECIFICATION: "connected_specifications.graphql",
+        Module.SUBMISSION: "connected_submissions.graphql",
+        Module.TASK: "connected_tasks.graphql"
     }
 
     def __init__(self):
         self.query_loader = GraphQLQueryLoader()
-        self.handle_response = handleResponse()
+        self.handle_response = HandlePropertiesResponses()
 
     def load_query_properties(self, module_name):
         module_file = self.module_to_filename.get(module_name)
@@ -44,7 +44,7 @@ class PropertiesConnectedElementsQueries:
         first_value = 30
 
         #print(f"guery: {query}")
-        if module_name == Modules.MODULE_TASKS:
+        if module_name == Module.TASK:
             variables = {
                 "id": propertie_id,
                 "first": first_value,
@@ -88,29 +88,29 @@ class ProcessElementData:
         #print(f"data: {data}")
 
         # Identify the module name by checking which key exists in the response data
-        if module_name == Modules.MODULE_CONTRACTS:
-            values = data['data']['property'][Modules.MODULE_CONTRACTS]['edges']
+        if module_name == Module.CONTRACT:
+            values = data['data']['property'][Module.CONTRACT]['edges']
             result.append(values)
-        elif module_name == Modules.MODULE_PROJECTS:
-            values = data['data']['property'][Modules.MODULE_PROJECTS]['edges']
+        elif module_name == Module.PROJECT:
+            values = data['data']['property'][Module.PROJECT]['edges']
             result.append(values)
-        elif module_name == Modules.MODULE_COORDINATION:
-            values = data['data']['property'][Modules.MODULE_COORDINATION]['edges']
+        elif module_name == Module.COORDINATION:
+            values = data['data']['property'][Module.COORDINATION]['edges']
             result.append(values)
-        elif module_name == Modules.MODULE_EASEMENTS:
-            values = data['data']['property'][Modules.MODULE_EASEMENTS]['edges']
-            result.append(values)
-
-        elif module_name == Modules.MODULE_SPECIFICATIONS:
-            values = data['data']['property'][Modules.MODULE_SPECIFICATIONS]['edges']
+        elif module_name == Module.EASEMENT:
+            values = data['data']['property'][Module.EASEMENT]['edges']
             result.append(values)
 
-        elif module_name == Modules.MODULE_SUBMISSIONS:
-            values = data['data']['property'][Modules.MODULE_SUBMISSIONS]['edges']
+        elif module_name == Module.SPECIFICATION:
+            values = data['data']['property'][Module.SPECIFICATION]['edges']
             result.append(values)
 
-        elif module_name == Modules.MODULE_TASKS:
-            values = data['data']['property'][Modules.MODULE_TASKS]['edges']
+        elif module_name == Module.SUBMISSION:
+            values = data['data']['property'][Module.SUBMISSION]['edges']
+            result.append(values)
+
+        elif module_name == Module.TASK:
+            values = data['data']['property'][Module.TASK]['edges']
             result.append(values)
 
         #print(f"result: {result}")

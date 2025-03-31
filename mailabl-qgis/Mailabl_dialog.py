@@ -17,8 +17,12 @@
 
 """
 import os
-
+import gc
 from PyQt5.QtCore import QTimer, Qt
+from .config.SetupModules.SetupProjects import SetupProjects
+from .config.SetupModules.SetupConrtacts import SetupConrtacts
+from .config.SetupModules.SetupEasments import SetupEasments
+from .config.SetupModules.SetupUsers import SetupUsers
 from .utils.UIDeleteTables import UIDeleteTables
 from .Functions.DeletProcessUIActions import DeletProcessUIActions
 from .utils.UIDeleteCheckboxes import UIDeleteCheckboxes
@@ -31,12 +35,12 @@ from PyQt5.QtGui import QStandardItemModel
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
-from .config.layer_setup import SetupCadastralLayers, Setup_ProjectLayers, Setup_Conrtacts, SetupEasments, SetupUsers
+from .config.SetupModules.SetupMainLayers import SetupCadastralLayers
 from .config.settings import connect_settings_to_layer, Flags, settingPageElements
 from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
 from .config.mainwidget import WidgetInfo
-from .KeelelisedMuutujad.modules import Modules
+from .KeelelisedMuutujad.modules import Module
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
 from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
@@ -56,7 +60,7 @@ from .queries.python.access_credentials import  (clear_UC_data,
 from .queries.python.users.user_info import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects
 from .queries.python.property_data import Properties, MyLablChecker
-from .queries.python.Statuses.statusManager import InsertStatusToComboBox
+from .utils.ComboboxHelper import GetValuesFromComboBox
 from .KeelelisedMuutujad.messages import Headings, HoiatusTexts,HoiatusTextsAuto, EdukuseTexts
 from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
@@ -69,7 +73,7 @@ from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
 from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, RemapPropertiesLayer
-from .utils.window_manager import WindowManager, WindowManagerMinMax
+from .utils.UIWindowHelpers import WindowPrositionHelper, WindowManagerMinMax
 from .utils.custom_event_filter import BlockButtonsToPreferLabelEventFilter, ReturnPressedManager
 from .utils.TableUtilys.TableHelpers import TableDataInserter
 from .utils.ProgressHelper import ProgressHelper
@@ -77,6 +81,7 @@ from .utils.TableUtilys.TableHelpers import TableHelper
 from .processes.tester import ProgressBarTester
 from .utils.signal_utils import execute_with_block
 from .app.button_connector import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
+from .utils.SpatialDataHelper import ZoomForModuleData
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -155,7 +160,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         ProgressHelper.set_dialog(self)
         TableHelper.set_dialog(self)
 
-        self.window_manager = WindowManager(self)
+        self.window_manager = WindowPrositionHelper(self)
 
         self.AddProcessPrepareTables = AddProcessPrepareTables(self)
 
@@ -165,9 +170,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Setup connections for existing QLineEdit widgets
         label_callbacks = {
             'isSelectedCadaster': self.start_propertie_search,
-            'le_searchContracts': lambda: self.universalSearchWrapper(Modules.MODULE_CONTRACTS),
-            'le_searchProjects': lambda: self.universalSearchWrapper(Modules.MODULE_PROJECTS),
-            'leSearcheasements': lambda: self.universalSearchWrapper(Modules.MODULE_EASEMENTS),
+            'le_searchContracts': lambda: self.universalSearchWrapper(Module.CONTRACT),
+            'le_searchProjects': lambda: self.universalSearchWrapper(Module.PROJECT),
+            'leSearcheasements': lambda: self.universalSearchWrapper(Module.EASEMENT),
             'leText_For_Sync_GreateLayerName': self.generate_virtual_mapLayer_synced_with_Mailabl
         }
 
@@ -193,7 +198,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         # Hide typing password
         self.lePassword.setEchoMode(QLineEdit.Password)
-        self.widget_19.setVisible(False)
         
         
         # declaring Delete process elements    
@@ -271,9 +275,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.pbActivateLabelSettings.clicked.connect(self.SaveToLabel)
 
 
-        self.pbeasements.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_easements_frontpage(self))
+        self.pbeasements.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Easements(self))
         self.pbRefreshEasementTable.clicked.connect(lambda: WorkSpaceHandler.easements_reload(self))
-        self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self))
+        self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts(self))
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
         self.pbMapThemes.setEnabled(False)
@@ -322,8 +326,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         #Setting workspace buttons and functions
         self.pbLayerSettings.clicked.connect(self.layer_setup)
-        self.pbSettings_Setup_Projects.clicked.connect(lambda: Setup_ProjectLayers.load_project_settings_widget(self))
-        self.pbSettings_Setup_Contracts.clicked.connect(lambda: Setup_Conrtacts.load_contract_settings_widget(self))
+        self.pbSettings_Setup_Projects.clicked.connect(lambda: SetupProjects.load_project_settings_widget(self))
+        self.pbSettings_Setup_Contracts.clicked.connect(lambda: SetupConrtacts.load_contract_settings_widget(self))
         self.pbSettingsSetupEasements.clicked.connect(lambda: SetupEasments.load_easements_settings_widget(self))
         self.pbUserSettings.clicked.connect(lambda: SetupUsers.load_user_settings_widget(self))
 
@@ -352,9 +356,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.pbDelete_items_getCounty.clicked.connect(self.get_Mailabl_existing_counties)
         
 
-        self.pbSearchProjects.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_PROJECTS))
-        self.pbSearchContracts.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_CONTRACTS))
-        self.pbSearcheasements.clicked.connect(lambda: self.universalSearchWrapper(Modules.MODULE_EASEMENTS))
+        self.pbSearchProjects.clicked.connect(lambda: self.universalSearchWrapper(Module.PROJECT))
+        self.pbSearchContracts.clicked.connect(lambda: self.universalSearchWrapper(Module.CONTRACT))
+        self.pbSearcheasements.clicked.connect(lambda: self.universalSearchWrapper(Module.EASEMENT))
         
     #Adding and removing        
         self.pbSearch_Add.clicked.connect(lambda: searchGeneral.search_cadastral_items_by_values(self))
@@ -401,7 +405,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pbMainMenu.clicked.connect(self.handleSidebar_leftButtons)
         
-        self.pushButton.clicked.connect(self.limitedLoad)
+
+        
+        self.zoom_handler = ZoomForModuleData()
+        self.pbZoomProjects.clicked.connect(
+            lambda: self.zoom_handler.zoom_functions[Module.PROJECT](self, module=Module.PROJECT, language="et")
+        )
         
         self.helpMenuToggle.clicked.connect(self.handleSidebar_help)
         self.helpMenuToggle.setVisible(False) #nupp on peidus kuni funktiooni välja arendamiseni 
@@ -436,6 +445,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
     def start_propertie_search(self):
+        gc.collect()  # Force garbage collection
         engine = SearchProperties(self)
         label = self.isSelectedCadaster
         result = engine.search_for_item(label=label)
@@ -485,7 +495,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.handle_toggle(toggle_value_on_load)
         # Connect the toggled signal
         self.togglebutton.toggled.connect(self.handle_toggle)
-
+        gc.collect()  # Force garbage collection
+            
 
     def handle_toggle(self, state):
         if state:
@@ -496,6 +507,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.layout1.addWidget(self.togglebutton)
             self.set_start_page_based_on_toggle_and_preferred_settings()
             #print("started 'swWorkspace_home'")
+            gc.collect()  # Force garbage collection
+            
         else:
             #print("started True toggle setup")
             self.ToggleStatus.setText("Näita kirjeldust")
@@ -503,6 +516,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.togglebutton.setParent(self.frame2)
             self.layout2.addWidget(self.togglebutton)
             WorkSpaceHandler.swWorkSpace_Properties(self)
+            gc.collect()  # Force garbage collection
+            
             #print("started 'swWorkspace_Proerties'")
         #print(f"Toggle switch is {'ON' if state else 'OFF'}")
 
@@ -536,7 +551,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         global feature_tool  # Use global variable to keep reference
         
         self.window_manager_minmax = WindowManagerMinMax(self)
-        self.window_manager_minmax.minimize_window()
+        self.window_manager_minmax._minimize_window()
         feature_tool = FeatureInfoTool(
             label=label,
             lblCadastralNr=lblCadastralNr,
@@ -563,7 +578,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.pbDisconnect.setEnabled(False)
             self.pbSelecPrpertiesOveral.setEnabled(True)
         self.timer.stop()
-
+        gc.collect()  # Force garbage collection
+            
 
     def stop_feature_info_tool_timed(self):
         global feature_tool  # Use global variable to keep reference
@@ -573,6 +589,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.pbDisconnect.setEnabled(False)
             self.pbSelecPrpertiesOveral.setEnabled(True)
         self.timer.stop()
+        gc.collect()  # Force garbage collection
+            
 
     def reset_timer(self):
         self.timer.start()
@@ -582,7 +600,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         from .processes.SyncProperties.CompyleOldPropertyModel import LayerCompilerSetup
         print("button clicked")
         LayerCompilerSetup.load_layer_compiler_widget(self)
-
+        gc.collect()  # Force garbage collection
+            
     def log_out(self):
         Unload.log_out(self)
 
@@ -629,7 +648,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.properties_connector.ConnectorWidgetClosed.connect(lambda: self.on_properties_connector_widget_closed(button))
             # Load the properties connector widget UI
             self.properties_connector.load_propertiesconnector_widget_ui(module)
-        
+            gc.collect()  # Force garbage collection
+            
         else:
             text = HoiatusTexts().andmed_valimata
             heading = Headings().warningSimple
@@ -637,6 +657,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             for single_button in buttons:
                 single_button.setEnabled(True)
             button.setEnabled(True)
+            gc.collect()  # Force garbage collection
             return
 
     def on_properties_connector_widget_closed(self, button):
@@ -649,7 +670,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button.setEnabled(True)
         #print("Closed properties loader window")
         self.showNormal()
-
+        gc.collect()  # Force garbage collection
+            
     def generate_project_folder(self):
         self.pbGenProjectFolder.blockSignals(True)
         table = self.tblMailabl_projects
@@ -664,16 +686,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             QMessageBox.information(self, heading, text)
         
         self.pbGenProjectFolder.blockSignals(False)
-
+        gc.collect()  # Force garbage collection
+            
 ########################################################################
     def universalSearchWrapper(self, module_name):
         search_engine = ModularSearchEngine()
         search_engine.universalSearch(self,module_name)
 
-    def limitedLoad(self):
-        table = self.tblMailabl_projects
-        Projects.load_Mailabl_projects_list_with_zoomed_map_elements(table)
-        
+
     def handleSidebar_help(self):
         button1 = self.pbMailabl        
         help_menu = self.helpMenu
@@ -689,7 +709,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #measure text lenght
         length = len(button1.text())
         alter_containers.toggle_right_menu(self, length, buttons, original_texts, new_texts, help_menu, container, container_width)
- 
+        gc.collect()  # Force garbage collection
+            
+
     def handleSidebar_leftButtons(self):
         button1 = self.pbSettings
         button2 = self.pbExpand
@@ -872,13 +894,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                             hide_buttons,
                                             checkboxes)
 
-        shp_class = shp_tools
         viewItem_county = self.listWidget_county
-        viewItem_state = self.listWidget_State
-        viewItem_city = self.listWidget_City
-        
+
         layer.blockSignals(False)
-        shp_class.county_map_simplifier(self, county_nimi_field, input_layer_name, viewItem_county, viewItem_state, viewItem_city)
+        shp_tools.county_map_simplifier(county_nimi_field, input_layer_name, viewItem_county)
         
     #Functions in Development
         
@@ -936,13 +955,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         #print(f"Restriction: {restriction}")
         item_count_before = shp_tools.count_items_in_layer(input_layer_name)
-        sorted_values = shp_tools().create_item_list_with_where(viewItem_state, item_count_before, county_restriction, input_layer_name, county_nimi_field, state_nimi_field)
+        sorted_values = shp_tools.create_item_list_with_where(viewItem_state, item_count_before, county_restriction, input_layer_name, county_nimi_field, state_nimi_field)
         list_functions.insert_values_to_listView_object(viewItem_state,sorted_values) 
         #viewItem_state.addItems(sorted_values)
         #viewItem_state.update()
         
-        expression_before = shp_tools.universal_map_simplifier(
-                            input_layer_name,
+        expression_before = shp_tools._builds_universal_query_based_restrictions(
+                            
                             county_nimi_field, 
                             state_nimi_field,
                             city_nimi_field,
@@ -1019,8 +1038,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             QMessageBox.information(self, heading, text)
         else:
             
-            expression_before = shp_tools.universal_map_simplifier(
-                                input_layer_name,
+            expression_before = shp_tools._builds_universal_query_based_restrictions(
+                                
                                 county_nimi_field, 
                                 state_nimi_field,
                                 city_nimi_field,
@@ -1046,12 +1065,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 return
 
             item_count_before = shp_tools.count_items_in_layer(input_layer_name)    
-            city_list = shp_tools().create_item_list_with_MultyWhere(item_count_before, items_name_state, input_layer_name, state_nimi_field, city_nimi_field)
+            city_list = shp_tools.create_item_list_with_MultyWhere(item_count_before, items_name_state, input_layer_name, state_nimi_field, city_nimi_field)
             list_functions.insert_values_to_listView_object(viewItem_city, city_list)
             #viewItem_city.update()
 
-            expression = shp_tools.universal_map_simplifier(
-                                input_layer_name,
+            expression = shp_tools._builds_universal_query_based_restrictions(
+                                
                                 county_nimi_field, 
                                 state_nimi_field,
                                 city_nimi_field,
@@ -1245,7 +1264,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if model is not None:
             model.removeRows(0, model.rowCount())
         comboBox = self.cmbProjectStatuses
-        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
+        statusValue = GetValuesFromComboBox._get_selected_status_id_from_combobox(comboBox)
         Projects.load_projects_by_status(table, statusValue)
         button.blockSingnals = False
         
@@ -1277,27 +1296,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             
             button_to_activate = self.pbDel_County
             activ_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
-            '''
-            f_delete.DeleteProcess_get_state_list(button_to_activate, activ_cadastral_layer, 
-                                                state_nimi_field, 
-                                                county_nimi_field,
-                                                city_nimi_field,
-                                                lwDel_County_Names,
-                                                lwDel_State_names,
-                                                lwDel_City_Names,
-                                                lbl
-                                                )
-            '''
-            module = MapRestictionsAndListWidgetDataInserion()
-            module.get_state_list(button_to_activate, activ_cadastral_layer, 
-                                                state_nimi_field, 
-                                                county_nimi_field,
-                                                city_nimi_field,
-                                                lwDel_County_Names,
-                                                lwDel_State_names,
-                                                lwDel_City_Names,
-                                                lbl
-                                                )
+            
+            MapRestictionsAndListWidgetDataInserion.get_state_list(button=button_to_activate,
+                                  layer_name=activ_cadastral_layer,
+                                    state_field = state_nimi_field,
+                                    county_field = county_nimi_field,
+                                    lwDel_County_Names = lwDel_County_Names, 
+                                    lwDel_State_names = lwDel_State_names,
+                                    lbl=lbl
+                                    )
             
     def delete_process_after_state(self):
         lwDel_County_Names = self.lwDelete_County_Names
@@ -1373,8 +1380,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.tabW_Delete_list.show()
             DeletProcessUIActions.Delete_process_view_after_city(self)
             #Clean code in universal map simplifier because it creates only expression 
-            expression = shp_tools.universal_map_simplifier(
-                                layer_name,
+            expression = shp_tools._builds_universal_query_based_restrictions(
+                                
                                 county_nimi_field, 
                                 state_nimi_field,
                                 city_nimi_field,

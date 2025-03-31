@@ -1,7 +1,6 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=relative-beyond-top-level
 # pylint: disable=no-name-in-module
-from PyQt5.QtCore import QObject
 from qgis.core import QgsProject
 from qgis.utils import iface
 from PyQt5.QtWidgets import QMessageBox
@@ -12,13 +11,14 @@ from ..config.settings import SettingsDataSaveAndLoad
 from ..Functions.DeletProcessUIActions import DeletProcessUIActions
 from ..Functions.Contracts.Contracts import ContractsMain
 from ..Functions.Easements.Easements import EasementssMain
-from ..queries.python.Statuses.statusManager import InsertStatusToComboBox
-from ..KeelelisedMuutujad.modules import Modules
+from ..utils.ComboboxHelper import GetValuesFromComboBox
+from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
-from ..queries.python.Types_Tags.type_tag_manager import InsertTypesToComboBox
-
+from ..core.module.TypeManager import TypeManager
+from ..utils.ComboboxHelper import ComboBoxHelper
  
 pealkiri = Headings()
+combo_handler = ComboBoxHelper()
 
 class MyClassWithIndexes():
     def __init__(self):
@@ -40,7 +40,6 @@ class MyClassWithIndexes():
 class WorkSpaceHandler:
     
     def swWorkSpace_Home(self):
-        #ToggleHandler.handle_toggle(state)
         print("started 'swWorkspace_Home'")
         self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().homepage)
         self.sw_HM.setCurrentIndex(0)
@@ -51,56 +50,74 @@ class WorkSpaceHandler:
         self.sw_HM.setCurrentIndex(0)
 
     def swWorkspace_Projects(self):
+        module = Module.PROJECT
         self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().projects)
         self.sw_HM.setCurrentIndex(8) 
         button = self.pbProjects
         button.blockSignals(True)
         table = self.tblMailabl_projects
         model = table.model()
-        if model is not None:
-            model.removeRows(0, model.rowCount())
+        if model:
+            model.clear()
         self.le_searchProjects.clear()
 
-        module = Modules.MODULE_PROJECTS
-        comboBox = self.cmbProjectStatuses
-        #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
-        status_id = SettingsDataSaveAndLoad.load_projects_status_id(self)
-        InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, comboBox, module, status_id)
-        
-        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)
-        
-        Projects.load_projects_by_status(table, statusValue)
+        combo_handler = ComboBoxHelper()
+
+        combo_box = self.cmbProjectStatuses
+        selected_status = combo_handler.populate_comboBox_smart(
+            comboBox=combo_box,
+            button=button,
+            module=module,
+            context=self,
+            preferred_items=False
+        )
+         
+        Projects.load_projects_by_status(table, selected_status)
         button.blockSignals(False)
     
-    def swWorkSpace_Contracts_FrontPage(self):
-        push_button = self.pbContracts
+    def swWorkSpace_Contracts(self):
+        module = Module.CONTRACT
+        button = self.pbContracts
         refresh_button = self.pbRefresh_tblMailabl_contracts
-        push_button.blockSignals(True)
+        button.blockSignals(True)
         refresh_button.blockSignals(True)
-        #widget = self.pbContracts_SliderFrame
-        #WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
         self.sw_HM.setCurrentIndex(1)
         self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().contracts)
         table = self.ContractView
         model = table.model()
-        if model is not None:
-            model.removeRows(0, model.rowCount())
-        module = Modules.MODULE_CONTRACTS
+        if model:
+            model.clear()
+
+        combo_handler = ComboBoxHelper()
+        # Add statuses to the combobox and set the preferred status
         combo_box = self.cmbcontractStatuses
+        selected_status = combo_handler.populate_comboBox_smart(
+            comboBox=combo_box,
+            button=button,
+            module=module,
+            context=self,
+            preferred_items=False
+        )
+
+        # Add types to the combobox and set the preferred     
         types_combo_box = self.cmbcontractTypes_checkable
-        #QTimer.singleShot(500, lambda: Projects.load_Mailabl_projects_list(self, table))
-        prefered_statuses = SettingsDataSaveAndLoad.load_contract_status_ids(self)
-        InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, combo_box, module, prefered_statuses)
-  
-        prefered_types = SettingsDataSaveAndLoad.load_contracts_type_names(self)    
-        InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
-        selected_types_ids = types_combo_box.checkedItemsData()
+        combo_handler.populate_comboBox_smart(
+            comboBox=types_combo_box,
+            button=button,
+            module=module,
+            context=self,
+            preferred_items=True
+        )
         
-        statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
-        # Insert the results to TableView 
-        ContractsMain.load_main_contracts_by_type_and_status(self, table, selected_types_ids, statusValue)
+        selected_type_ids = types_combo_box.checkedItemsData()
+        
+        ContractsMain.load_main_contracts_by_type_and_status(self,
+                                                             table=table,
+                                                             types=selected_type_ids,
+                                                             statuses=selected_status
+                                                             )
                 
-        push_button.blockSignals(False)
+        button.blockSignals(False)
         refresh_button.blockSignals(False)
 
     def contracts_reload(self):
@@ -113,11 +130,12 @@ class WorkSpaceHandler:
         comboBox = self.cmbcontractStatuses
         types_combo_box = self.cmbcontractTypes_checkable
         selected_types_ids = types_combo_box.checkedItemsData()
-        statusValue = InsertStatusToComboBox.get_selected_status_id(comboBox)  
+        statusValue = GetValuesFromComboBox._get_selected_status_id_from_combobox(comboBox)  
         ContractsMain.load_main_contracts_by_type_and_status(self, table, selected_types_ids, statusValue)
         refresh_button.blockSignals(False)
 
-    def swWorkSpace_easements_frontpage(self):
+    def swWorkSpace_Easements(self):
+        module = Module.EASEMENT
         button = self.pbeasements
         button.blockSignals(True)
         self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().easements)
@@ -127,31 +145,27 @@ class WorkSpaceHandler:
         model = table.model()
         if model is not None:
             model.removeRows(0, model.rowCount())
-        module = Modules.MODULE_EASEMENTS
-        combo_box = self.cmbeasementStatuses
+
+        statuses_combo_box = self.cmbeasementStatuses
+        selected_status = combo_handler.populate_comboBox_smart(
+            comboBox=statuses_combo_box,
+            button=button,
+            module=module,
+            context=self,
+            preferred_items=False
+        )
+
         types_combo_box = self.cmbeasementTypesCheckable
-        prefered_statuses = SettingsDataSaveAndLoad.load_easements_status_ids(self)
-        if prefered_statuses == '' or None:
-            heading = Headings().warningSimple
-            text = "Jätkamiseks seadista eelistatud staatus"
-            QMessageBox.warning(None, heading, text)
-            button.blockSignals(False)
-            return
-        else:
-            InsertStatusToComboBox.add_statuses_to_combobox_and_set_preferes_status(self, combo_box, module, prefered_statuses)
-        prefered_types = SettingsDataSaveAndLoad.load_easements_type_names(self)
-        if prefered_types == '' or None:
-            heading = Headings().warningSimple
-            text = "Jätkamiseks seadista eelistatud kitsenduste liigid"
-            QMessageBox.warning(None, heading, text)
-            button.blockSignals(False)
-            return
-        else:
-            InsertTypesToComboBox.add_elementTypes_to_listview(self, types_combo_box, prefered_types, module)
-            
+        combo_handler.populate_comboBox_smart(
+            comboBox=types_combo_box,
+            button=button,
+            module=module,
+            context=self,
+            preferred_items=True
+        )
+
         prefered_types_ids = types_combo_box.checkedItemsData()
-        statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
-        EasementssMain.load_main_asements_by_type_and_status(self, table, prefered_types_ids, statusValue)
+        EasementssMain.load_main_asements_by_type_and_status(self, table, prefered_types_ids, selected_status)
         button.blockSignals(False)
 
     def easements_reload(self):
@@ -167,15 +181,14 @@ class WorkSpaceHandler:
         combo_box = self.cmbeasementStatuses
         types_combo_box = self.cmbeasementTypesCheckable
         selected_types_ids = types_combo_box.checkedItemsData()
-        statusValue = InsertStatusToComboBox.get_selected_status_id(combo_box)
+        statusValue = GetValuesFromComboBox._get_selected_status_id_from_combobox(combo_box)
         EasementssMain.load_main_asements_by_type_and_status(self, table, selected_types_ids, statusValue)
         button.blockSignals(False)
-        
+
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
         self.swWorkSpace.setCurrentIndex(6)
         self.sw_HM.setCurrentIndex(6)
-
     @staticmethod
     def swWorkSpace_AddDrawings_FrontPage(self):
         self.swWorkSpace.setCurrentIndex(6)
@@ -289,25 +302,3 @@ class TabHandler:
             tab_widget.setTabEnabled(2, True)
             tab_widget.setCurrentIndex(2)
 
-class ToggleHandler(QObject):
-    def __init__(self, main_window):
-        super().__init__()
-        self.main = main_window
-        
-
-    def handle_toggle(self, state):
-        if state:
-            print("started False toggle setup")
-            self.main.ToggleStatus.setText("Olen üldjuhendiga tuttav")
-            self.main.teWelcomeContent.setVisible(True)
-            self.main.setLayout(self.main.layout1)
-            WorkSpaceHandler().swWorkSpace_Home(self.main)
-            print("started 'swWorkspace_home'")
-        else:
-            print("started True toggle setup")
-            self.main.ToggleStatus.setText("Nita kirjelduset")
-            self.main.teWelcomeContent.setVisible(False)
-            self.main.setLayout(self.main.layout2)
-            WorkSpaceHandler().swWorkSpace_Properties(self.main, state)
-            print("started 'swWorkspace_Proerties'")
-        print(f"Toggle switch is {'ON' if state else 'OFF'}")

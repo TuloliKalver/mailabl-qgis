@@ -80,9 +80,9 @@ class WidgetInfo:
             my_function = lambda: WorkSpaceHandler.swWorkSpace_Properties(self)
 
         return {
-            0: lambda: WorkSpaceHandler.swWorkSpace_easements_frontpage(self),
+            0: lambda: WorkSpaceHandler.swWorkSpace_Easements(self),
             1: None,
-            2: lambda: WorkSpaceHandler.swWorkSpace_Contracts_FrontPage(self),
+            2: lambda: WorkSpaceHandler.swWorkSpace_Contracts(self),
             3: None,
             4: None,
             5: my_function,

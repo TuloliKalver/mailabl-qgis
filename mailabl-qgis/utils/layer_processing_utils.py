@@ -5,8 +5,8 @@ def retrieve_and_process_layer(layer_name, filter_function, process_function):
     """
     Helper function to retrieve a layer and process it using LayerProcessor.
     """
-    processor = LayerProcessor()
-    return processor.process_layer_with_progress(
+
+    return LayerProcessor.process_layer_with_progress(
         layer_name=layer_name,
         filter_function=filter_function,
         process_function=process_function

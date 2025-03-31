@@ -105,14 +105,27 @@ class DeletingProcesses:
 
 
 class MapRestictionsAndListWidgetDataInserion():
-    def get_state_list(self, button, layer_name, state_field,
-                                     county_field, city_field,
-                                     lwDel_County_Names, lwDel_State_names,
-                                     lwDel_City_Names, lbl):
+    @staticmethod
+    def get_state_list(button, 
+                        layer_name, 
+                        state_field,
+                        county_field, 
+                        lwDel_County_Names, 
+                        lwDel_State_names,
+                        lbl
+                    ):
         item_county = lwDel_County_Names.currentItem()
         county_restriction = item_county.text() if item_county else ""
-        DeletingProcesses.process_layer_selection(button, layer_name, county_field, county_restriction,
-                                     state_field, lwDel_State_names, lbl, county_restriction)
+        DeletingProcesses.process_layer_selection(
+                                                None,
+                                                button=button,
+                                                layer_name=layer_name,
+                                                field_to_filter=county_field,
+                                                filter_value=county_restriction,
+                                                process_field=state_field, 
+                                                list_widget=lwDel_State_names, 
+                                                lbl=lbl, 
+                                            )
 
     def get_city_list(self, button, layer_name, state_field,
                                     city_field,

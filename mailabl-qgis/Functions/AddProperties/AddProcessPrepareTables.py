@@ -64,8 +64,8 @@ class AddProcessPrepareTables:
         self.cb_streets.show()
         self.cb_streets_include.show()
         
-        expression = shp_tools.universal_map_simplifier(
-            input_layer_name,
+        expression = shp_tools._builds_universal_query_based_restrictions(
+            
             county_nimi_field,
             state_nimi_field,
             city_nimi_field,

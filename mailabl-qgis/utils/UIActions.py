@@ -23,11 +23,9 @@ class UIActions:
         for element in elements:
             element.setChecked(False)
 
-
     def check_box_states_True(self, elements):
         for element in elements:
             element.setChecked(True)
-
 
     def block_signals_False(self, elements):
         for element in elements:

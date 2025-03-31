@@ -97,8 +97,7 @@ class GraphQLQueryLoader:
         current_dir = os.path.abspath(__file__)
         self.plugin_dir = os.path.abspath(os.path.join(current_dir, '..', '..', '..'))
         
-        self.Projects_statuses = 'statuses.graphql'
-
+        self.statuses = 'statuses.graphql'
         
         # Navigate to the 'queries/graphql' folder and then into the 'graphql' subfolder
         self.graphql_folder = 'queries/graphql'
@@ -148,8 +147,8 @@ class GraphQLQueryLoader:
         graphql_path = os.path.join(path.plugin_dir, path.graphql_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()
-
-    def load_query_for_projects(self, query_file_name):
+    @staticmethod
+    def load_query_for_projects(query_file_name):
         path = GraphQLQueryLoader()
         graphql_path = os.path.join(path.plugin_dir, path.projects_folder, query_file_name)
         with open(graphql_path, 'r') as file:

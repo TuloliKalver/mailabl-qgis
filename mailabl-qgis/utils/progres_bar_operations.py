@@ -74,7 +74,7 @@ class ProgressBarHandler(QWidget):
 
 
 # Wrapper function for universal use
-
+@staticmethod
 def run_with_progress(task_function, window_title="Processing", total_steps=None):
     """
     Universal wrapper function to run any task with a progress bar.

@@ -9,7 +9,7 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QHeaderView
 from .DataLoading_classes import GraphQLQueryLoader, Graphql_properties
-from .responses import handleResponse
+from .responses import HandlePropertiesResponses
 from .query_tools import requestBuilder
 from ...config.ui_directories import PathLoaderSimple
 
@@ -828,7 +828,7 @@ class MyLablChecker:
 #        print(f"response {response}")
         #start do use data
         if response.status_code == 200:
-            data = handleResponse.response_properties_data_edges(response)
+            data = HandlePropertiesResponses._response_properties_data_edges(response)
             #pprint(data)
             missing_items = MyLablChecker.find_missing_items(self, item_list=item, graphql_data=data)
             #print("missing item")
@@ -892,8 +892,8 @@ class PropertiesGeneralQueries:
             response = requestBuilder.construct_and_send_request(self, query, variables)
 
             if response.status_code == 200:
-                returned_id = handleResponse.response_properties_data_ids(response)
-                cadaster = handleResponse.response_properties_cadastral_numbers(response)
+                returned_id = HandlePropertiesResponses._response_properties_data_ids(response)
+                cadaster = HandlePropertiesResponses._response_properties_cadastral_numbers(response)
                 
                 data = response.json()
                 pageInfo = data.get("data", {}).get("properties", {}).get("pageInfo", {})
@@ -952,7 +952,7 @@ class PropertiesGeneralQueries:
             response = requestBuilder.construct_and_send_request(self, query, variables)
 
             if response.status_code == 200:
-                returned_id = handleResponse.response_properties_data_ids(response)
+                returned_id = HandlePropertiesResponses._response_properties_data_ids(response)
                 #cadaster = handleResponse.response_properties_cadastral_numbers(response)
                 
                 data = response.json()

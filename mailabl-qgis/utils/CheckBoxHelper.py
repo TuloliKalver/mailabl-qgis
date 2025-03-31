@@ -1,4 +1,17 @@
+from PyQt5.QtWidgets import QCheckBox
 
+class CheckboxHelper:
+    dialog = None  # Class-level variable to store the dialog reference
+
+    @staticmethod
+    def set_dialog(main_dialog):
+        """Sets the main dialog reference for ButtonHelper."""
+        CheckboxHelper.dialog = main_dialog
+
+    @staticmethod
+    def get_checkbox_by_name(element_name):
+        element = CheckboxHelper.dialog.findChild(QCheckBox, element_name)
+        return element
 
 
 class CheckBoxes:
@@ -31,6 +44,7 @@ class CheckBoxes:
                 else:
                     checkbox.setText(f"{current_text}* ({text}m)")
                     checkbox.setEnabled(False)
+
 
 
 
