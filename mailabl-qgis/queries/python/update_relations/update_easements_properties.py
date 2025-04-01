@@ -1,10 +1,10 @@
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QMessageBox, QWidget
+from PyQt5.QtWidgets import  QWidget
 from ..property_data import PropertiesGeneralQueries
 from ..query_tools import requestBuilder
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer
-
+from ....utils.messagesHelper import ModernMessageDialog
 from PyQt5.uic import loadUi
 from ....KeelelisedMuutujad.messages import Headings, InfoTexts
 
@@ -28,7 +28,7 @@ class EasementProperties:
             parent_widget = QWidget()
             heading = pealkiri.warningSimple
             text = "Vali kaardikihil vähemalt üks kinnistu"  
-            QMessageBox.information(parent_widget, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             return
         
         for row in range(model_properties.rowCount()):

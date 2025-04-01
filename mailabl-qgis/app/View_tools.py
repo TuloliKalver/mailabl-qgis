@@ -8,7 +8,7 @@ from qgis.core import QgsProject, edit, QgsFeatureRequest
 
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMessageBox
+
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QAbstractItemView, QTableView
 from PyQt5.QtCore import QDate
@@ -17,6 +17,7 @@ from PyQt5.QtWidgets import QListWidgetItem
 from ..config.settings import SettingsDataSaveAndLoad
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTextsAuto, HoiatusTexts
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ..utils.messagesHelper import ModernMessageDialog
 
 from ..utils.progres_bar_operations import run_with_progress, ProgressBarHandler       
 

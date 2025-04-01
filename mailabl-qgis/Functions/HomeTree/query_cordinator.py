@@ -89,28 +89,28 @@ class ProcessElementData:
 
         # Identify the module name by checking which key exists in the response data
         if module_name == Module.CONTRACT:
-            values = data['data']['property'][Module.CONTRACT]['edges']
+            values = data['data']['property'][f"{Module.CONTRACT}s"]['edges']
             result.append(values)
         elif module_name == Module.PROJECT:
-            values = data['data']['property'][Module.PROJECT]['edges']
+            values = data['data']['property'][f"{Module.PROJECT}s"]['edges']
             result.append(values)
         elif module_name == Module.COORDINATION:
-            values = data['data']['property'][Module.COORDINATION]['edges']
+            values = data['data']['property'][f"{Module.COORDINATION}s"]['edges']
             result.append(values)
         elif module_name == Module.EASEMENT:
-            values = data['data']['property'][Module.EASEMENT]['edges']
+            values = data['data']['property'][f"{Module.EASEMENT}s"]['edges']
             result.append(values)
 
         elif module_name == Module.SPECIFICATION:
-            values = data['data']['property'][Module.SPECIFICATION]['edges']
+            values = data['data']['property'][f"{Module.SPECIFICATION}s"]['edges']
             result.append(values)
 
         elif module_name == Module.SUBMISSION:
-            values = data['data']['property'][Module.SUBMISSION]['edges']
+            values = data['data']['property'][f"{Module.SUBMISSION}s"]['edges']
             result.append(values)
 
         elif module_name == Module.TASK:
-            values = data['data']['property'][Module.TASK]['edges']
+            values = data['data']['property'][f"{Module.TASK}s"]['edges']
             result.append(values)
 
         #print(f"result: {result}")

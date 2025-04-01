@@ -48,7 +48,8 @@ class SHPLayerLoader:
                 ShapefileImporter.import_shpFile_as_virtual_layer(file_path, imporditavad_group)
                 text = (f"Andmed on edukalt imporditud ja lisatud\n{import_subgroup_layer_name}\ngrupi kihile")
                 heading = pealkiri.informationSimple
-                QMessageBox.information(None, heading, text)
+                from ...utils.messagesHelper import ModernMessageDialog
+                ModernMessageDialog.Info_messages_modern(heading, text)
                 save_setting = SettingsDataSaveAndLoad()
                 save_setting.save_SHP_layer_setting(label, layer_name)
 
@@ -78,7 +79,7 @@ class SHPLayerLoader:
     @staticmethod
     def create_progress_widget(name, label_1):
         file = FilesByNames()
-        file_path = Filepaths.get_widget(file.statusbar_widget)
+        file_path = Filepaths._get_widget_name(file.statusbar_widget)
         progress_widget = Filepaths.load_ui_file(file_path)
         progress_widget.label.setText(name)
         progress_widget.label_2.setText(label_1)

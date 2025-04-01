@@ -197,7 +197,9 @@ class Mailabl:
         if project.fileName() == '':
             text = HoiatusTexts().projekt_valimata
             heading = Headings().warningSimple
-            QMessageBox.warning(None, heading, text)
+            from .utils.messagesHelper import ModernMessageDialog
+            ModernMessageDialog.Info_messages_modern(heading, text)
+
             return
 
         # Create the dialog with elements (after translation) and keep reference

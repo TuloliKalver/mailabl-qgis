@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QListView, QMessageBox, QComboBox, QPushButton
+from PyQt5.QtWidgets import QListView, QComboBox, QPushButton
 from typing import Any
 from ..KeelelisedMuutujad.messages import Headings
 from ..core.module.TypeManager import TypeManager
-
+from ..utils.messagesHelper import ModernMessageDialog
 
 class ComboBoxHelper:
     """
@@ -68,7 +68,7 @@ class ComboBoxHelper:
                 print(f"Types from {module}: ", types)
             
             if not types:
-                QMessageBox.warning(None, Headings().warningSimple, "Jätkamiseks seadista eelistatud liigid")
+                ModernMessageDialog.Info_messages_modern(Headings().warningSimple, "Jätkamiseks seadista eelistatud liigid")
                 button.blockSignals(False)
                 return None
 

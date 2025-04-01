@@ -6,9 +6,10 @@ from ...config.settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad
 from ...utils.ComboboxHelper import GetValuesFromComboBox
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...utils.ComboboxHelper import ComboBoxHelper
+from ...utils.messagesHelper import ModernMessageDialog
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFrame, QMessageBox
+from PyQt5.QtWidgets import QFrame
 from PyQt5.uic import loadUi
 
 pealkiri = Headings()
@@ -117,7 +118,8 @@ class SetupEasments:
 
         text = edu.salvestatud
         heading = pealkiri.tubli
-        QMessageBox.information(widget, heading, text)
+        ModernMessageDialog.Info_messages_modern(heading, text)
+
         # Additional logic if needed
         print("saved")
 
@@ -127,5 +129,5 @@ class SetupEasments:
 
         text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.warningSimple
-        QMessageBox.information(widget, heading, text)
+        ModernMessageDialog.Info_messages_modern(heading, text)
         widget.reject()  # Close the dialog       

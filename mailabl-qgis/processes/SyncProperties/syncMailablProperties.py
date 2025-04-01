@@ -7,12 +7,12 @@ from PyQt5.QtCore import QCoreApplication, QTimer
 from PyQt5.QtWidgets import QListWidgetItem
 from PyQt5.QtGui import QIcon
 from ...Functions.item_selector_tools import properties_selectors
-from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import connect_settings_to_layer
-from ...app.View_tools import shp_tools
 from...Functions.layer_generator import LayerCopier
 from ...KeelelisedMuutujad.messages import Headings
 from ...KeelelisedMuutujad.Mailabl_features import MailablGroupLayers
+from ...utils.messagesHelper import ModernMessageDialog
+
 
 pealkiri = Headings()
 
@@ -103,7 +103,7 @@ class PropertiesBaseMap:
         if not future_layer_name_text or len(future_layer_name_text) < 3:
             text = ("Nimetus on vigane või lisamata")    
             heading = pealkiri.warningSimple
-            QMessageBox.warning(self.frSync_Cadastrals_Main, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
             # Set red background color for the label
             border = ("border: 1px solid #D32F2F; border-radius: 5px;")
             #background_red = "background-color: #D32F2F"

@@ -122,7 +122,7 @@ class IconsByName:
 class FilesByNames:
     def __init__(self):
 
-        self.MaaAmet_import = "MaaAmet_Layer_backround.qml"
+        self.MaaAmet_import = "Properties_backgrund.qml"
         self.MaaAmet_temp = "Maa_amet_temp_layer.qml"
         self.Easement_style = "Easement_Properties.qml"
         self.Easement_Water = "Easement_W.qml"
@@ -130,8 +130,8 @@ class FilesByNames:
         self.Easement_sewage = "Easement_Sew.qml"
         self.Easement_prSewage = "Easement_PrSew.qml"
         self.Easement_Drainage = "Easement_Drainage.qml"
-        self.easement_unined = "UnionedEasement.qml"
-        self.easement_evelLayer = "Servituut.qml"
+        self.Easement_unioned = "UnionedEasement.qml"
+        self.Easement_evelLayer = "Servituut.qml"
         #Need to be separated into diferent classes!
         self.statusbar_widget = "WStatusBar.ui"
         self.layer_setup_ui = "LayerSetup.ui"
@@ -145,6 +145,11 @@ class FilesByNames:
         self.add_properties_to_module_ui = "Properties_connector_new.ui"
         self.EVEL_tools_ui = "EVEL.ui"
 
+        self.info_message_ui = "infoMessages.ui"
+        self.error_message_ui = "errorMessage.ui"  #planned
+        self.warning_message_ui = "warningMessage.ui"  #planned
+        self.success_message_ui = "successMessage.ui"   #planned
+        self.loading_message_ui = "loadingMessage.ui"   #planned
 
 class Filepaths:
     @staticmethod
@@ -178,7 +183,6 @@ class Filepaths:
     def get_style(style_name):
         return os.path.join(PLUGIN_DIR_MAIN, QGIS_STYLES_FOLDER, style_name)
 
-
     @staticmethod
     def get_easements_tools():
         return os.path.join(PLUGIN_DIR_MAIN, FUNCTIONS_FOLDER, EASEMENTS_FOLDER, WIDGETS_FOLDER, FilesByNames().easement_tools_ui)
@@ -191,7 +195,7 @@ class Filepaths:
         return os.path.join(PLUGIN_DIR, CONF_WIDGETS_FOLDER, widget_name)
     
     @classmethod
-    def get_widget(self, widget_name):
+    def _get_widget_name(self, widget_name):
         return os.path.join(PLUGIN_DIR_MAIN, WIDGETS_FOLDER, widget_name)
 
     
@@ -207,9 +211,6 @@ class QGISSavedMAilablSettings:
         self.setup_label_cadastral_toBeAdded = '/Mailabl/Setting/labels/cadastralToBeAdded'
         self.setup_label_cadastrals_for_importing ='/Mailabl/Settings/lables/SHP_Layer'
         
-
-
-
 
 #Handles storing and displaying data in labels on other places
 class DataSettings:
@@ -352,8 +353,6 @@ class SettingsDataSaveAndLoad:
         TARGET_CADASTRAL = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
         return TARGET_CADASTRAL
 
-
-
     def save_SHP_layer_setting(self,label,layer):
         settings = QgsSettings()
         #save setup target
@@ -379,8 +378,6 @@ class SettingsDataSaveAndLoad:
         preferred_folder_name_adress = SettingsDataSaveAndLoad.projects_Folder_preferred_name_structure(self)
         settings.setValue(preferred_folder_name_adress, input_value)
 
-
-
     def save_user_values(self, user_name, user_lastname, roles):
         settings = QgsSettings()
         
@@ -390,7 +387,6 @@ class SettingsDataSaveAndLoad:
         settings.setValue(user_name_address, user_name)
         settings.setValue(user_lastname_address, user_lastname)
         settings.setValue(user_roles_address, roles)
-
 
     def save_user_prefered_startpage(self, user_page_index, user_page_name):
         settings = QgsSettings()
@@ -419,7 +415,6 @@ class SettingsDataSaveAndLoad:
         settings.setValue(path_name, status_name)
         # Set the text of the label to the string representation of project_id_int
         label.setText(str(project_id_int))
-
     def save_contract_settings(self, contract_type_names, contratc_status_names, contract_status_ids):
         settings = QgsSettings()
         contract_status_ids_int = int(contract_status_ids[0]) if contract_status_ids else None
@@ -431,7 +426,6 @@ class SettingsDataSaveAndLoad:
         settings.setValue(contrcts_status_ids_path, contract_status_ids_int)
         settings.setValue(contracts_status_name_path, contratc_status_names)
         settings.setValue(contract_name_paths, contract_type_names)
-
     def save_easements_settings(self, easements_type_names, contratc_status_names, easements_status_ids):
         settings = QgsSettings()
         easements_status_ids_int = int(easements_status_ids[0]) if easements_status_ids else None
@@ -443,7 +437,6 @@ class SettingsDataSaveAndLoad:
         settings.setValue(easments_status_ids_path, easements_status_ids_int)
         settings.setValue(easements_status_name_path, contratc_status_names)
         settings.setValue(easements_name_paths, easements_type_names)
-
 
     def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
                               lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
@@ -468,7 +461,6 @@ class SettingsDataSaveAndLoad:
         lblPreferredContractsTypes_value.setText(contracts_type_names)
         lbl_preferred_contract_status.setText(contracts_status_names)
         
-        
     def on_save_button_clicked_cadastrals(self, input_layer_combo_box, target_layer_combo_box):
         #print("started to save")
         input_value = input_layer_combo_box.currentText()
@@ -484,7 +476,6 @@ class SettingsDataSaveAndLoad:
         #SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, input_value)
         SettingsDataSaveAndLoad.save_target_projects(self, project_value)
         SettingsDataSaveAndLoad.save_FolderValues(self,lblProjectsFolder_location, lblProjectsTargetFolder_location, copy_folder, target_folder)
-
 
     def load_projcets_copy_folder_path_value(self):
         settings_address = SettingsDataSaveAndLoad.projects_copyFolderPath(self)
@@ -511,7 +502,6 @@ class SettingsDataSaveAndLoad:
         settings = QgsSettings()
         return settings.value(settings_projects_preferred_folder_name, '', type=str)
     
-
     def load_user_name(self):
         user_name = SettingsDataSaveAndLoad.user_name(self)
         settings = QgsSettings()

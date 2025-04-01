@@ -1,9 +1,9 @@
 import requests, platform
 from qgis.core import Qgis
 from .access_credentials import load_token
-from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import GraphQLSettings
 from ...KeelelisedMuutujad.messages import Headings
+from ...utils.messagesHelper import ModernMessageDialog
  
 pealkiri = Headings()
 
@@ -15,7 +15,7 @@ class requestBuilder:
         if not access_token:
             text = ("Access token not found. Please connect first.")
             heading = pealkiri.informationSimple
-            QMessageBox.warning(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             return None
 
         # Construct the request payload
@@ -65,6 +65,6 @@ class RequestErrorHandler:
             error_message = '\n'.join(error_messages)
             text = (f"GraphQL request failed:\n{error_message}")
             heading = pealkiri.warningSimple
-            QMessageBox.warning(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             return True  # Indicate that an error occurred
         return False  # No error occurred

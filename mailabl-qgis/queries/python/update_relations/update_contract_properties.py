@@ -6,7 +6,7 @@ from ..property_data import PropertiesGeneralQueries
 from ..query_tools import requestBuilder
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
-
+from ....utils.messagesHelper import ModernMessageDialog
 from PyQt5.uic import loadUi
 from ....KeelelisedMuutujad.messages import Headings, InfoTexts
  
@@ -30,7 +30,7 @@ class ContractProperties:
             parent_widget = QWidget()
             heading = pealkiri.warningSimple
             text = "Vali kaardikihil vähemalt üks kinnistu"  
-            QMessageBox.information(parent_widget, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             pass
         for row in range(model_properties.rowCount()):
             item_column_0 = model_properties.item(row, 0)

@@ -44,10 +44,20 @@ class HoiatusTexts:
         self.projektid_puuduvad = "Piirkonnas puuduvad teadaolevad projektid"        
         self.kihil_kinnistu_valik = "Vali vähemalt üks kinnistu"
         self.ostingu_tulemused_puuduvad = "Otsingule vastavaid tulemused puuduvad"
+        self.Liiga_palju_kinnistuid = "Valitud on rohkem kui üks objekt. \n Palun valige uuesti.\n Hetkel on toetatud ainult üksiku kinnistu valik!"
+
 
 class HoiatusTextsAuto:        
     @staticmethod
     # Kuvab kihi nimetust mis laadimisel jäeb puudu - kommentaati vaja lisada kasutuskoht. ise ei mäleta. 
+    def strange_usage_folder(folder_name):
+        return f"Nädis nimetus {folder_name}"
+
+    @staticmethod
+    def no_match_for_this(lable_text):
+        text = (f"Märksõnale {lable_text} ei leitud ühtegi vastet")
+        return text
+
     def input_layer_missing(layer_name_text):
         aluskiht_puudu = f"Laaditavate kinnistute kiht {layer_name_text} on puudu.\nJätkamiseks lae algandmed."
         return aluskiht_puudu
@@ -120,7 +130,7 @@ class KriitilisedTexts:
 
 class EdukuseTexts:
     def __init__(self):
-        self.tehtud = "Tubli! Kõik on tehtud"
+        self.tehtud = "Toiming edukalt lõpetatud"
         self.salvestatud = "Kõik on salvestatud"
 
 class Salvestamisel:

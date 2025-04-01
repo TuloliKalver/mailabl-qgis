@@ -5,9 +5,7 @@ from qgis.core import QgsMapLayer, QgsProject, QgsProcessingFeatureSourceDefinit
 from qgis.gui import QgsMapToolPan
 
 
-from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt
 from PyQt5 import QtCore
 from ...utils.PrintHelper import PrintHelpers
 from .Easements import queryHandling
@@ -22,6 +20,8 @@ from ...config.settings import Filepaths, Flags, SettingsDataSaveAndLoad, FilesB
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ..intersect import Intersect, TempIntersectLayerName
 from ..join_layers import JoinLayers
+from ...utils.messagesHelper import ModernMessageDialog
+
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -145,7 +145,7 @@ class EasementTools(QObject):
             heading = pealkiri.tubli
             self.cleanup()
             self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
-            QMessageBox.information(self.widget_EasmentTools, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
             if on_selection_changed_lambda_easements:
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
@@ -163,7 +163,7 @@ class EasementTools(QObject):
             self.cleanup()
             text = sisu.kasutaja_peatas_protsessi
             heading = pealkiri.informationSimple
-            QMessageBox.information(self.widget_EasmentTools, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
             if on_selection_changed_lambda_easements:
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
@@ -615,19 +615,25 @@ class BufferTools:
                 buffer_layer.triggerRepaint()
 
             else:
-                QMessageBox.information(None, Headings().informationSimple, HoiatusTexts().kihil_kinnistu_valik)
+                heading = Headings().informationSimple
+                text = HoiatusTexts().kihil_kinnistu_valik
+                ModernMessageDialog.Info_messages_modern(heading, text)
+
+
                 if checkbox is not None:
                     checkbox.setChecked(False)
                 
         else:
-            QMessageBox.warning(None, Headings().warningCritical, HoiatusTexts().puudulik_kinnistute_seadistus)
+            heading = Headings().warningCritical
+            text = HoiatusTexts().puudulik_kinnistute_seadistus
+            ModernMessageDialog.Info_messages_modern(heading, text)
             if checkbox is not None:
                     checkbox.setChecked(False)
                 
 class cbMapSelectors:    
 
     def selectWater_pipes(widget, checkbox):
-        print(f"ccheckbox: {checkbox}")
+        #print(f"checkbox: {checkbox}")
         water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)
                 
         temp_layer_name = TempBufferLayerNames.water_temp_name
@@ -658,7 +664,7 @@ class cbMapSelectors:
             MapCleaners.clear_selection_and_delete_temp_layer(water_layer_name, temp_layer_name)
     
     def selectSewer_pipes(widget, checkbox):
-        print(f"ccheckbox: {checkbox}")
+        #print(f"checkbox: {checkbox}")
         sewer_layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)        
         temp_layer_name = TempBufferLayerNames.sewer_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name

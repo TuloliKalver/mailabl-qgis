@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QMessageBox
+
 from .connector_widget_engine.UI_controllers import PropertiesConnector
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..utils.signal_utils import disable_buttons, reset_buttons
-
+from ..utils.messagesHelper import ModernMessageDialog
 class PropertiesConnectorUIController:
     _is_open = False  # Class-level variable to track if the widget is open
 
@@ -75,7 +75,7 @@ class PropertiesConnectorUIController:
         """
         text = HoiatusTexts().andmed_valimata
         heading = Headings().warningSimple
-        QMessageBox.information(table, heading, text)
+        ModernMessageDialog.Info_messages_modern(heading,text)
 
         # Re-enable buttons since no selection was made
         reset_buttons(self, button, button_names)

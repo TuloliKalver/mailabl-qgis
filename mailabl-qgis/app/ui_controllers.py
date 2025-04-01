@@ -5,6 +5,7 @@ from ..config.settings import Flags
 from PyQt5.QtCore import QTimer
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..app.workspace_handler import WorkSpaceHandler
+from ..utils.messagesHelper import ModernMessageDialog
 
 pealkiri = Headings()
 
@@ -358,11 +359,12 @@ class LayerChecker:
                 if feature_count > 0:
                     pass
                 else:
-                    QMessageBox.warning(None, heading, text)
+                    ModernMessageDialog.Info_messages_modern(heading, text)
+
             else:
-                QMessageBox.warning(None, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading, text)
         else:
-            QMessageBox.warning(None, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
 
 class ColorHandler:
 

@@ -1272,7 +1272,7 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pbtest">
+                   <widget class="QPushButton" name="pbtest_2">
                     <property name="styleSheet">
                      <string notr="true"/>
                     </property>
@@ -1913,7 +1913,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>7</number>
+                  <number>6</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">

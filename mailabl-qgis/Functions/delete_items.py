@@ -2,14 +2,13 @@
 
 import os
 from qgis.core import QgsProject
-from PyQt5.QtWidgets import QMessageBox
 from ..app.View_tools import listView_functions, tableView_functions, shp_tools
 from ..config.settings import SettingsDataSaveAndLoad
-from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ..KeelelisedMuutujad.messages import Headings
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..utils.signal_utils import block_signals
 from ..utils.layer_processing_utils import retrieve_and_process_layer, apply_subset_filter, no_filter
-
+from ..utils.messagesHelper import ModernMessageDialog
 
 
 table_functions = tableView_functions()
@@ -67,7 +66,7 @@ class DeletingProcesses:
             except IndexError:
                 text = (f"Laetavate kinnistute kiht {layer_name} on puudu.\nJätkamiseks lae algandmed")
                 heading = pealkiri.warningSimple
-                QMessageBox.warning(None, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading,text)
                 return
 
             data_list = retrieve_and_process_layer(

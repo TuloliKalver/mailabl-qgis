@@ -1,17 +1,14 @@
 from PyQt5.uic import loadUi
-from qgis.core import  QgsProject, QgsMapLayer
-from qgis.utils import iface
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import  QMessageBox, QWidget
+from PyQt5.QtWidgets import  QWidget
 from ..DataLoading_classes import GraphQLQueryLoader
 from ..property_data import PropertiesGeneralQueries
 from ..query_tools import requestBuilder
-from ....Functions.propertie_layer.InsertPropertiesToMailabl import PropertiesLayerFunctions
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
-from ....config.settings import  connect_settings_to_layer, Flags
-from ....KeelelisedMuutujad.messages import Headings, HoiatusTexts, InfoTexts
- 
+from ....KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ....utils.messagesHelper import ModernMessageDialog
+
 pealkiri = Headings()
 
 # Adjust the delay interval and sleep duration according to your requirements
@@ -30,7 +27,7 @@ class ProjectsProperties:
             parent_widget = QWidget()
             heading = Headings().warningSimple
             text = HoiatusTexts().kihil_kinnistu_valik
-            QMessageBox.information(parent_widget, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             
         for row in range(model_properties.rowCount()):
             item_column_0 = model_properties.item(row, 0)

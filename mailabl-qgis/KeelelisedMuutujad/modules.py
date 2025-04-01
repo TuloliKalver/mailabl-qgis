@@ -11,7 +11,8 @@ class Module:
     SUBMISSION = "submission"
     PROPRETIE = "propertie"
 
-
+    all_modules = [CONTRACT, PROJECT, TASK, COORDINATION, LETTER,
+                    SPECIFICATION, EASEMENT, ORDINANCE, SUBMISSION]
 
 class Languages:
     ESTONIA = "Eesti"
@@ -44,6 +45,7 @@ class ModuleTranslation:
 
     @staticmethod
     def module_name(module, language, plural=True):
+        print("module:", module)
         if plural:
             return ModuleTranslation.translations_plural.get(module, {}).get(language, "Translation not available")
         else:

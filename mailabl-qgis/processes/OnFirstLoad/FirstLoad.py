@@ -1,7 +1,7 @@
 from .CloseUnload import Unload
 from .AddSetupLayers import SetupLayers
 from ...config.settings import Devuser
-from PyQt5.QtWidgets import QMessageBox
+from ...utils.messagesHelper import ModernMessageDialog
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 
 
@@ -29,5 +29,8 @@ class Startup:
             self.lePassword.setText('')
 
     def closePluginWindow():
-        QMessageBox.information(None, Headings().tubli, HoiatusTexts().korrigeeri_sümbolit)        
+
+        heading = Headings().tubli
+        text = HoiatusTexts().korrigeeri_sümbolit
+        ModernMessageDialog.Info_messages_modern(heading,text)  
         unload_events.closeEvent()

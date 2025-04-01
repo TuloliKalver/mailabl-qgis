@@ -7,10 +7,11 @@ from qgis.core import QgsFeature, QgsExpression, QgsExpressionContext, QgsExpres
 
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QFileDialog
 from ..config.settings import Filepaths, FilesByNames, connect_settings_to_layer
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ..utils.messagesHelper import ModernMessageDialog
 
 pealkiri = Headings()
 
@@ -39,7 +40,7 @@ class LayerCopier():
             # User canceled the folder selection, handle accordingly
             text = HoiatusTexts().kasutaja_peatas_protsessi
             heading = pealkiri.informationSimple
-            QMessageBox.information(None, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             return  # or raise an exception or perform other actions as needed
         input_layer = QgsProject.instance().mapLayersByName(memory_layer_name)[0]
         #iface.activeLayer(input_layer)
@@ -57,11 +58,11 @@ class LayerCopier():
                 os.remove(output_file_path)
                 text = HoiatusTextsAuto.deleted_output_file_sucess(output_file_path)
                 heading = pealkiri.warningSimple
-                QMessageBox.information(None, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading,text)
             except OSError as e:
                 heading = Headings().warningCritical
                 text = HoiatusTextsAuto.unable_to_delete_output_file(output_file_path, e)
-                QMessageBox.critical(None, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading,text)
                 # Handle the error as needed
         else:
             #print("started generating file")
@@ -81,12 +82,12 @@ class LayerCopier():
             )
             # Check the result and print the error message if any
             if result == QgsVectorFileWriter.NoError:
-                pass #QMessageBox.information(None, "Information","Layer saved successfully!")
+                pass
 
             else:
                 heading = pealkiri.warningSimple
                 text = HoiatusTextsAuto.save_layer_error(error_message)
-                QMessageBox.information(None,text,heading)
+                ModernMessageDialog.Info_messages_modern(heading,text)
                 
             # Check if the GeoPackage file exists
             if os.path.exists(output_file_path):
@@ -106,7 +107,7 @@ class LayerCopier():
                 else:
                     text = HoiatusTextsAuto.load_layer_error(output_file_path)
                     heading = pealkiri.warningSimple
-                    QMessageBox.information(None,heading,text)
+                    ModernMessageDialog.Info_messages_modern(heading,text)
             
                 #Remove layer if it exists
                 if QgsProject.instance().mapLayersByName(memory_layer_name):
@@ -126,16 +127,17 @@ class LayerCopier():
                 updated_layer.triggerRepaint()
                 text = HoiatusTextsAuto.layer_indexing(new_layer_name)
                 heading = pealkiri.informationSimple
-                QMessageBox.information(None, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading,text)
                 updated_layer.dataProvider().createSpatialIndex()
+    
                 text = HoiatusTextsAuto.generated_layer_in_subgroup(new_layer_name, group_layer_name)
                 heading = pealkiri.informationSimple
-                QMessageBox.information(None, heading,text)                
+                ModernMessageDialog.Info_messages_modern(heading,text)              
                 
             else:
                 text = HoiatusTextsAuto.load_gpkg_file_error(output_file_path)
                 heading = pealkiri.informationSimple
-                QMessageBox.information(None, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading,text)
 
     @staticmethod
     def copy_virtual_layer_for_properties(new_layer_name, group_name):
@@ -187,7 +189,7 @@ class LayerCopier():
         else:
             text = HoiatusTexts().laadimine_error
             heading = pealkiri.informationSimple
-            QMessageBox.information(None, heading,text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
         return None
     
     
@@ -241,7 +243,7 @@ class LayerCopier():
         if selected_features == 0:
             text = HoiatusTexts().kinnistuid_ei_leidnud
             heading = pealkiri.informationSimple
-            QMessageBox.warning(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
 
         count = 1
         progress_widget = loadUi(widgets_path)

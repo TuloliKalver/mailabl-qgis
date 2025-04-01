@@ -3,7 +3,7 @@ from PyQt5.QtGui import QStandardItemModel
 from PyQt5.QtWidgets import  QMessageBox, QAbstractItemView
 from PyQt5.QtCore import QCoreApplication
 from ...app.View_tools import MapSelector, TableViewadjuster
-#from ...app.workspace_handler import TabHandler
+from ...app.workspace_handler import TabHandler
 from ..Tools import tableFunctions
 from ..QstandardModelTools.QStandardModelHandler import ModelHeadersGenerator, CombineModels, DataExtractors
 from ..DeletProcessUIActions import DeletProcessUIActions #Delete_finalProcess, 
@@ -11,6 +11,8 @@ from ...queries.python.property_data import PropertiesGeneralQueries, deleteProp
 from ...config.settings import SettingsDataSaveAndLoad
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ...utils.messagesHelper import ModernMessageDialog
+
 
 pealkiri = Headings()
 class DeleteActions:
@@ -33,7 +35,7 @@ class DeleteActions:
         if len(data) == 0 and len(data2) == 0:
             text = HoiatusTexts().kihil_kinnistu_valik
             heading = Headings().warningSimple
-            QMessageBox.warning(self,heading,text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
             return
         else:
             button.blockSignals(True)
@@ -70,7 +72,7 @@ class DeleteActions:
         if len(cadasters) == 0:
             text = HoiatusTexts().kinnistuid_ei_leidnud
             heading = Headings().warningSimple
-            QMessageBox.warning(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
             TabHandler.tabViewByState(tab_widget,True)
             tab_widget.hide()
             model_properties.clear()
@@ -90,7 +92,6 @@ class DeleteActions:
             model_final = table_target.model()
         
             properties_final = DataExtractors.ExtractCadastralNrDataFromModel(model_final, header_names) 
-            #print(f"Final values: {properties_final}")
             MapSelector.set_MapItemsByItemList_WithZoom(active_layer, properties_final, field)
             QCoreApplication.processEvents()
             
@@ -98,7 +99,7 @@ class DeleteActions:
             Delete_finalProcess.clear_layer_from_deleted_items(self, active_cadastral_layer_name)
             text = (f"Valitud kinnitsud eemaldati edukalt Mailablist ja kihilt:\n{active_cadastral_layer_name}")
             heading = pealkiri.informationSimple
-            QMessageBox.information(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             DeletProcessUIActions.Delete_process_view_on_load(self)
 
             button.blockSignals(False)

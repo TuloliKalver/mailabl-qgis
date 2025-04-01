@@ -1,9 +1,9 @@
 import requests, platform
-from PyQt5.QtWidgets import QMessageBox
 from qgis.core import QgsSettings, Qgis
 from ...config.settings import GraphQLSettings
 from ..python.DataLoading_classes import GraphQLQueryLoader
 from ...KeelelisedMuutujad.messages import Headings
+from ...utils.messagesHelper import ModernMessageDialog
 #from ...queries.python.query_tools import requestBuilder
 # Kontolli ja lahenda lõplikult miks ei saa kasutada request builderit selles moodulis?
  
@@ -101,12 +101,12 @@ def get_access_token(self):
         else:
             text = "Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli"
             heading = pealkiri.warningSimple
-            QMessageBox.warning(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             return False  # Authentication failure
     else:
         text = "Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti"
         heading = pealkiri.warningSimple
-        QMessageBox.warning(self, heading, text)
+        ModernMessageDialog.Info_messages_modern(heading,text)
         return False  # Network or other error
 
 

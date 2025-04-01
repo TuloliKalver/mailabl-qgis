@@ -7,7 +7,8 @@ from ...config.settings import SettingsDataSaveAndLoad
 from ...queries.python.projects_pandas import TableHeaders
 from ...queries.python.DataLoading_classes import GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
-
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, HoiatusTextsAuto
+from ...utils.messagesHelper import ModernMessageDialog
 def copy_and_rename_folder(table):
     text = "Ettevalmistatud struktuuriga projektikaustade genereerimine on mõeldud eelkõige uutele projektidele.\nEnne jätkamist kontrolli ega samasisulist kausta pole juba loodud.\nOled kindel, et soovid jätkata?"
 
@@ -61,8 +62,10 @@ def copy_and_rename_folder(table):
                     folder_name = FolderNameGenerator().folder_structure_name_order(project_name, project_number)
                     
                     # Check if the target folder with the new name already exists
-                    if os.path.exists(os.path.join(os.path.dirname(target_folder), folder_name)):
-                        QMessageBox.information(None, "Error", f"Kaust nimega '{folder_name}' on juba sihtkohas olemas.")
+                    if os.path.exists(os.path.join(os.path.dirname(target_folder), folder_name)):                        
+                        text = f"Kaust nimega '{folder_name}' on juba sihtkohas olemas."
+                        heading = Headings().warningSimple
+                        ModernMessageDialog.Info_messages_modern(heading,text)
                     else:
                         shutil.copytree(source_folder, target_folder)
                         os.rename(target_folder, os.path.join(os.path.dirname(target_folder), folder_name))
@@ -81,17 +84,29 @@ def copy_and_rename_folder(table):
 
                         else:
                             print("Operation canceled by the user.")
-
-                        QMessageBox.information(None, "Success", f"Kausta '{source_folder}'\n(k.a kaustas sisalduvad alamkaustad ja failid) dubleerimine õnnestus. \n\nSihtkohta on genereeritud kaust nimetusega \n'{folder_name}'.")
-
+                
+                        # Display success message using modern dialog box
+                        heading = Headings().tubli
+                        text = (f"Kausta '{source_folder}'\n(k.a kaustas sisalduvad alamkaustad ja failid) dubleerimine õnnestus.")
+                        text_2 = f"Sihtkohta on genereeritud kaust nimetusega \n'{folder_name}'."
+                        ModernMessageDialog.Info_messages_modern(heading,text, text_2)
+                       
                 except Exception as e:
-                    QMessageBox.critical(None, "Error", f"An error occurred: {e}")
-            
+                    heading = Headings().warningSimple
+                    text = f"An error occurred: {e}"
+                    ModernMessageDialog.Info_messages_modern(heading,text)
+                    
+
             else:
-                QMessageBox.error(None, 'Error', f"Jätkamiseks vali mõni projekt")    
-        
+                heading = Headings().warningSimple
+                text = f"Jätkamiseks vali mõni projekt"
+                ModernMessageDialog.Info_messages_modern(heading,text)
+
         else:
-            print(f"Header '{value}' not found or empty in the model.")
+            heading = Headings().warningSimple
+            text = HoiatusTexts().error
+            ModernMessageDialog.Info_messages_modern(heading,text)
+            print(f"Header  not found or empty in the model.")
 
     else:
         print("Operation canceled by the user.")
@@ -148,7 +163,9 @@ class FolderNameGenerator:
         folder_name = "".join(folder_name_parts)
 
         # Print the constructed folder name
-        QMessageBox.information(None, "tulemus", f"Näidis nimetus{folder_name}")
+        heading = Headings().tubli
+        text = HoiatusTextsAuto().strange_usage_folder(folder_name)
+        ModernMessageDialog.Info_messages_modern(heading, text)
         #print("Folder name:", folder_name)
 
 

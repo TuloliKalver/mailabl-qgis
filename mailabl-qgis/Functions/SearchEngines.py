@@ -1,10 +1,11 @@
-from PyQt5.QtWidgets import QMessageBox
+
 from ..Functions.item_selector_tools import properties_selectors
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .Contracts.Contracts import ContractsMain
 from .Easements.Easements import EasementssMain
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..KeelelisedMuutujad.modules import Module
+from ..utils.messagesHelper import ModernMessageDialog
 
 class searchGeneral:
     @staticmethod
@@ -51,7 +52,7 @@ class ModularSearchEngine:
             # Frame the label with a red border
             lineEdit.setStyleSheet("border: 1px solid #D32F2F;")
             # Display warning message
-            QMessageBox.warning(instance, Headings().warningSimple, HoiatusTexts().otsing_puudu)
+            ModernMessageDialog.Info_messages_modern(Headings().warningSimple, HoiatusTexts().otsing_puudu)
             return
         else:
             lineEdit.setStyleSheet("border: None")

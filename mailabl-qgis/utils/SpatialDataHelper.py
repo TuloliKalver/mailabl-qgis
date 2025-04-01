@@ -2,7 +2,6 @@
 import gc
 from qgis.core import QgsProject, QgsSpatialIndex, QgsRectangle, QgsVectorLayer, QgsFeature, QgsGeometry, QgsPointXY
 from qgis.utils import iface
-from PyQt5.QtWidgets import QMessageBox
 from ..queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_project
 from ..queries.python.responses import HandlePropertiesResponses
 from ..queries.python.query_tools import requestBuilder
@@ -12,7 +11,7 @@ from ..config.settings import SettingsDataSaveAndLoad
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..queries.python.projects_pandas import ProjectModelBuilders
 from ..utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
-
+from ..utils.messagesHelper import ModernMessageDialog
 
 
 
@@ -32,7 +31,9 @@ class ZoomForModuleData:
         table = tables.get(module)
         if not table:
             print(f"❗ Module {module} not mapped to any table")
-            QMessageBox.warning(self, "Tabel puudub", f"Tabelit moodulile {module} ei leitud.")
+            heading = Headings().error_simple
+            message = f"❗ Tabelit moodulile {module} ei leitud."
+            ModernMessageDialog.Info_messages_modern(heading,message)
             return
 
         layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -43,7 +44,7 @@ class ZoomForModuleData:
         )
 
         if not selected_features:
-            QMessageBox.warning(self, Headings().warningSimple, HoiatusTexts().zoom_siin_ei_ole_midagi)
+            ModernMessageDialog.Info_messages_modern(Headings().warningSimple, HoiatusTexts().zoom_siin_ei_ole_midagi)
             return
 
         model = ProjectModelBuilders()._model_for_module_zoomed_map_properties(
@@ -52,7 +53,7 @@ class ZoomForModuleData:
 
         if model is None:
 
-            QMessageBox.warning(self, Headings().warningSimple, "Mudeli loomine ebaõnnestus.")
+            ModernMessageDialog.Info_messages_modern( Headings().warningSimple, "Mudeli loomine ebaõnnestus.")
             return
 
         ModuleTableBuilder.setup(table, model, module, language)

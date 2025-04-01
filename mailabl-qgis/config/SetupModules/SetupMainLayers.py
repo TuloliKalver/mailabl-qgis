@@ -5,11 +5,11 @@
 
 # Related Third-Party Imports
 from qgis.core import QgsMapLayer, QgsProject
-from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
 from ..settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...utils.ComboboxHelper import ComboBoxHelper
+from ...utils.messagesHelper import ModernMessageDialog
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -59,7 +59,7 @@ class SetupCadastralLayers:
                                                      lblProjectsTargetFolder_location, lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value)
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
-        QMessageBox.information(widget, heading, text)
+        ModernMessageDialog.Info_messages_modern(heading, text)
         # Additional logic if needed
 
         widget.accept()  # Close the dialog
@@ -68,7 +68,7 @@ class SetupCadastralLayers:
         # Handle logic when the cancel button is clicked
         text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.informationSimple
-        QMessageBox.information(widget, heading, text)
+        ModernMessageDialog.Info_messages_modern(heading, text)
         widget.reject()  # Close the dialog        
 
 

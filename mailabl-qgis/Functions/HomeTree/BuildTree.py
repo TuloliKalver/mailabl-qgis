@@ -40,31 +40,28 @@ class MyTreeHome:
     @staticmethod
     def update_tree_with_modules(treeWidget, item):
         #print(f"item: {item}")
-        langage = Languages.ESTONIA
+        language = Languages.ESTONIA
 
         treeWidget.clear()  # Clear existing items (optional)
         treeWidget.setHeaderLabel("Seotud tulemusi")
         treeWidget.setHeaderLabels([MyTreeHome.header_number, MyTreeHome.header_name, MyTreeHome.header_id, "", MyTreeHome.header_file_path, "", MyTreeHome.header_statuses])
             # Initialize child_data to combine results from all modules
 
+        from ...utils.ProgressHelper import ProgressDialogModern as progress
+
+        #progress_widget.setWindowTitle("Kontrollin andmeid")
         
-        widget = paths.UI_multiline_Statusbar
-        widget_path = paths.get_widgets_path(widget)
-        progress_widget = loadUi(widget_path)
-        progress_bar = progress_widget.testBar
-        progress_widget.setWindowTitle("Kontrollin andmeid")
-        progress_widget.show()
+        QCoreApplication.processEvents()
         
         # Get the module attributes
-        module_attrs = [attr for attr in dir(Module) if not attr.startswith("_") and not callable(getattr(Module, attr))]
+        module_attrs = Module().all_modules# [attr for attr in dir(Module) if not attr.startswith("_") and not callable(getattr(Module, attr))]
         total = len(module_attrs)
 
         # Set the maximum value of the progress bar
-        progress_bar.setMaximum(total)
 
-        #print(f"item for property id: {item}")
-        #query_loader = Graphql_properties()
+        progress.load_progress_dialog(value=0, maximum=total)       
         
+
         #end_cursor_id = None  # Initialize end_cursor before the loop
         first = 1
         after = None
@@ -94,11 +91,9 @@ class MyTreeHome:
                 print("No valid data found to extract id")
 
         # Continue with your function implementation
-
         child_data = {}
-        for index, module_name in enumerate((getattr(Module, attr) for attr in module_attrs), start=1):
+        for index, module_name in enumerate(Module().all_modules, start=1):
             # Update the progress bar
-            progress_bar.setValue(index) 
             property_id_str = str(property_id)
             module_data = PropertiesConnectedElementsQueries().fetch_module_data(module_name, property_id_str)
             #print(f"module_data: {module_data}")
@@ -113,26 +108,28 @@ class MyTreeHome:
                                 child_data[typename] = []
                                 # Remove the last character from typename
                             child_data[typename].append(node_data)
+            progress.load_progress_dialog(value=index)
             QCoreApplication.processEvents()
 
         #print(f"child_data: {child_data}")
-        # Close the progress widget after the loop ends
-        progress_widget.close()
         #print(f"child data: {child_data}")
+ 
+        length = len(child_data.keys())
+        progress.load_progress_dialog(value=0, maximum=length)
         if child_data:  # Only add module if data is returned
+            #print(f"length: {length}")
             for typename, items in child_data.items():  # Iterate over child_data correctly
                 root_item = QTreeWidgetItem(treeWidget)
-                
                 # Set custom property for main item
                 root_item.setData(0, QtCore.Qt.UserRole, "main_item")
 
-                #print(f"type_name")
-                # Convert to lowercase and add "s" (handle potential None value)
-                module = typename.lower() + 's'
+                # Use lowe bechase typename has capital letters at start
+                module = typename.lower() 
                 # Store the module information in the item's data
                 root_item.setData(0, Qt.UserRole, module)
 
-                moduel_str = ModuleTranslation.module_name(module, langage)
+                # Translate the module name using ModuleTranslation
+                moduel_str = ModuleTranslation.module_name(module, language)
                 root_item.setText(0, moduel_str)
 
                 for child in items:  # Iterate over each item in the list
@@ -166,6 +163,11 @@ class MyTreeHome:
 
                     MyTreeHome.set_clickable_webIcon(child_item, 3) 
                     MyTreeHome.set_clickable_folderIcon(child_item, 5)
+                length = length+1
+                progress.load_progress_dialog(value=0, maximum=length)
+                QCoreApplication.processEvents()
+        
+        progress.load_progress_dialog(value=0, maximum=0,show=False)  
         # Hide the second column (index 1)
         treeWidget.setColumnHidden(2, True)
         treeWidget.setColumnHidden(4, True)
@@ -178,8 +180,6 @@ class MyTreeHome:
         treeWidget.setColumnWidth(1, 350)
         treeWidget.setColumnWidth(3, 30)
         treeWidget.setColumnWidth(5, 30)
-
-
 
         # Expand all items to make sure they are visible
         treeWidget.expandAll()
@@ -233,12 +233,10 @@ class MyTreeHome:
             subprocess.Popen(['explorer', dok_path.replace('/', '\\')], shell=True)
 
     def open_property():
-        link_id = StoreValues().return_prperties_id()
+        link_id = StoreValues().return_properties_id()
         module = Module.PROPRETIE
         web_module = MailablWebModules().get_web_link(module)
-        #print(f"web_module: {web_module}")
         web_link = OpenLink.weblink_by_module(web_module)
-        #print(f"web_link: {web_link}")
         link = f"{web_link}{link_id}"
         response = requests.get(link, verify=False)
         webbrowser.open(response.url)
@@ -247,7 +245,7 @@ class StoreValues:
     def __init__(self) -> None:
         self.propertyID_location = 'MailablProperty_id/stores_id'
 
-    def return_prperties_id(self):
+    def return_properties_id(self):
         settings_address = self.propertyID_location
         settings = QgsSettings()
         value = settings.value(settings_address, '', type=str)

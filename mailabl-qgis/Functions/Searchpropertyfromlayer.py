@@ -1,11 +1,13 @@
 import re
-from PyQt5.QtWidgets import QMessageBox, QInputDialog, QWidget
+from PyQt5.QtWidgets import QInputDialog, QWidget
 from qgis.core import (QgsProject, QgsVectorLayer, QgsExpression, QgsExpressionContext, 
-                       QgsExpressionContextUtils, QgsField, QgsFeatureRequest, QgsFeature)
+                       QgsExpressionContextUtils, QgsField, QgsFeatureRequest)
 from qgis.PyQt.QtCore import QVariant
 from qgis.utils import iface
 from ..config.settings import SettingsDataSaveAndLoad
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts, HoiatusTextsAuto, EdukuseTexts
+from ..utils.messagesHelper import ModernMessageDialog
 
 class SearchProperties:
     def __init__(self, parent: QWidget):
@@ -69,9 +71,10 @@ class SearchProperties:
                 self.layer.changeAttributeValue(feature.id(), self.layer.fields().indexFromName(self.search_field), value)
 
             self.layer.commitChanges()
+            return True
         else:
-                print(f"Expression error: {expression.parserErrorString()}")
-
+            print(f"Expression error: {expression.parserErrorString()}")
+            return False
 
 
     def search_for_item(self, label):
@@ -79,9 +82,19 @@ class SearchProperties:
 
         # Ensure the search field exists
         if self.search_field not in [field.name() for field in self.layer.fields()]:
-            QMessageBox.information(None, "Info", "Paistab, et kasutad otsingut esmakordselt. Teen vajalikud andmebaasi ettevalmistused.")
-            self.add_search_field()
-            QMessageBox.information(None, "Info", "Valmis. Head kasutamist.")
+            heading = Headings().informationSimple
+            text = "Paistab, et kasutad otsingut esmakordselt."
+            text_2 = "Teen vajalikud andmebaasi ettevalmistused."
+            ModernMessageDialog.Info_messages_modern(heading,text, text_2)
+            result = self.add_search_field()
+            if result != True:
+                heading = Headings().warningCritical
+                text = HoiatusTexts().error
+                ModernMessageDialog.Info_messages_modern(heading,text)
+            else:
+                heading = Headings().informationSimple
+                text = EdukuseTexts().tehtud
+                ModernMessageDialog.Info_messages_modern(heading,text)
 
         # Get the label text value and convert it to lowercase
         label_text = label.text().lower() if hasattr(label, 'text') else str(label).lower()
@@ -157,9 +170,10 @@ class SearchProperties:
         features = list(self.layer.getFeatures(request))
         
         if not features:
-            text = f"Märksõnale {label_text} ei leitud ühtegi vastet"
-            QMessageBox.information(None, "Info", text)
-            print(f"Label '{label_text}' not found in the search_field.")
+            heading = Headings().informationSimple
+            text = HoiatusTextsAuto.no_match_for_this(label_text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
+            #print(f"Label '{label_text}' not found in the search_field.")
             return None
 
         if len(features) == 1:

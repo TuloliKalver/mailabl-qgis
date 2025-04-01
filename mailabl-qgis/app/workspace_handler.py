@@ -3,7 +3,6 @@
 # pylint: disable=no-name-in-module
 from qgis.core import QgsProject
 from qgis.utils import iface
-from PyQt5.QtWidgets import QMessageBox
 
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .list_handler import ExpandProcessListsFunctions
@@ -14,9 +13,11 @@ from ..Functions.Easements.Easements import EasementssMain
 from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
-from ..core.module.TypeManager import TypeManager
+
 from ..utils.ComboboxHelper import ComboBoxHelper
- 
+from ..utils.messagesHelper import ModernMessageDialog
+
+
 pealkiri = Headings()
 combo_handler = ComboBoxHelper()
 
@@ -240,8 +241,8 @@ class WorkSpaceHandler:
         else:
             text = HoiatusTexts().error
             heading = pealkiri.warningSimple
-            QMessageBox.warning(self, heading, text)       
-
+            ModernMessageDialog.Info_messages_modern(heading, text)
+    
         label = self.CadastralMovesMainLabel
         heading = "Kinnistute eemaldamine"
         label.setText(heading)

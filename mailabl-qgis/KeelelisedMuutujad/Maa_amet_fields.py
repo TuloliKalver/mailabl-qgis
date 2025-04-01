@@ -1,7 +1,6 @@
 from qgis.utils import iface
 from qgis.core import QgsVectorLayer, QgsProject, QgsField
 from PyQt5.QtCore import QVariant
-from PyQt5.QtWidgets import QMessageBox
 from ..config.settings import SettingsDataSaveAndLoad
 
 
@@ -135,7 +134,7 @@ class RemapPropertiesLayer:
             #print("Stage I committed successfully.")
             pass
         else:
-            self.show_message("Viga", "Veeru nimede uuendamisel tekkis viga.")
+            ModernMessageDialog.Info_messages_modern("Viga", "Veeru nimede uuendamisel tekkis viga.")
             #print("Error committing changes.")
             return
         
@@ -177,11 +176,11 @@ class RemapPropertiesLayer:
             self.layer.addAttribute(new_field)
 
         if self.layer.commitChanges():
-            self.show_message("Info","Väljad edukalt uuendatud")
+            ModernMessageDialog.Info_messages_modern("Info","Väljad edukalt uuendatud")
             #print("Stage I committed successfully.")
             pass
         else:
-            self.show_message("Viga", "Veergude lisamisel tekkis viga.")
+            ModernMessageDialog.Info_messages_modern("Viga", "Veergude lisamisel tekkis viga.")
             #print("Error committing changes.")
             return
 
@@ -213,10 +212,3 @@ class RemapPropertiesLayer:
 
         #print("Finished cleaning up temporary field names.")
 
-    @staticmethod
-    def show_message(title, message):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowTitle(title)
-        msg.setText(message)
-        msg.exec_()

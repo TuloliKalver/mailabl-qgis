@@ -4,9 +4,9 @@ from ...config.settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad
 from ...utils.ComboboxHelper import GetValuesFromComboBox
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...utils.ComboboxHelper import ComboBoxHelper
+from ...utils.messagesHelper import ModernMessageDialog
 
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
 
 
@@ -124,7 +124,7 @@ class SetupProjects:
                               lblPreferredContractsTypes_value)
         text = edu.salvestatud
         heading = pealkiri.tubli
-        QMessageBox.information(widget, heading, text)
+        ModernMessageDialog.Info_messages_modern(heading, text)
         # Additional logic if needed
 
         widget.accept()  # Close the dialog
@@ -132,7 +132,7 @@ class SetupProjects:
         # Handle logic when the cancel button is clicked
         text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.warningSimple
-        QMessageBox.information(widget, heading, text)
+        ModernMessageDialog.Info_messages_modern(heading, text)
         widget.reject()  # Close the dialog        
     def addSelectedItem(widget):
         combo_box_name = widget.cmbNameElements
@@ -148,13 +148,17 @@ class SetupProjects:
                 label_symbol.setStyleSheet("border: None")
                 if symbol_text == '' or None:
                     label_symbol.setStyleSheet("border: 1px solid #D32F2F;")
-                    QMessageBox.warning(widget, pealkiri.warningSimple, sisu.puudulikud_andmed)
+                    heading = Headings.warningSimple
+                    text = sisu.puudulikud_andmed
+                    ModernMessageDialog.Info_messages_modern(heading,text)
                     return
-                # Check if the symbol_text contains disallowed characters
+                                    # Check if the symbol_text contains disallowed characters
                 if re.search(r'[<>:"/\\|?*.]', symbol_text):
                     # Display warning message
                     label_symbol.setStyleSheet("border: 1px solid #D32F2F;")
-                    QMessageBox.warning(widget, pealkiri.warningSimple, sisu.korrigeeri_sümbolit)
+                    pealkiri=Headings.warningSimple
+                    text=sisu.korrigeeri_sümbolit
+                    ModernMessageDialog.Info_messages_modern(heading,text)
                     return
                 else:
                     # Add selected item to label with or without parentheses
@@ -224,6 +228,5 @@ class SetupProjects:
             #selected_id = widget.cmbProjects_Layer.itemData(index)
             if index == 1:
                 line_edit.setVisible(True)
-
             else:
                 line_edit.setVisible(False)

@@ -4,22 +4,15 @@ from qgis.core import QgsFeature, QgsSpatialIndex, QgsLayerTreeGroup, QgsGeometr
 from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QFileDialog
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import QCoreApplication
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad
-from qgis.PyQt.QtCore import QCoreApplication
-from qgis.core import QgsFeatureRequest
 from ...KeelelisedMuutujad.messages import Headings
- 
+from ...utils.messagesHelper import ModernMessageDialog
 pealkiri = Headings()
 
 #declare catalouges and links
 #main directory
 plugin_dir = os.path.dirname(__file__)
 
-#style setup folder
-#style_folder = "QGIS_styles" 
-#style_path = os.path.join(style_folder, "Maa_amet_import_2.qml")
 style_path = Filepaths().File_maaAmet_style()
 
 #Status bar widget folder
@@ -67,9 +60,9 @@ def load_shp_layer(label):
                             QgsProject.instance().removeMapLayer(existing_layer.layer())
 
                 import_shpFile_AS_virtualLayer(file_path, imporditavad_group)
-            text = (f"Andmed on edukalt imporditud ja lisatud\n{import_subgroup_layer_name}\ngrupi kihile")
+            text = (f"Andmed on edukalt imporditud ja lisatud\n{imporditavad_group.name()}\ngrupi kihile")
             heading = pealkiri.tubli    
-            QMessageBox.information(None, heading,text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
         save_setting = SettingsDataSaveAndLoad()
         save_setting.save_SHP_layer_setting(label, layer_name)
 

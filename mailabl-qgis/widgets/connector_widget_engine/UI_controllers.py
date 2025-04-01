@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QFrame
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QObject, pyqtSignal
-from PyQt5.QtWidgets import QMessageBox
 from ...utils.TableUtilys.TableHelpers import TableExtractor
 from ...Functions.propertie_layer.InsertPropertiesToMailabl import PropertiesLayerFunctions
 from ...queries.python.projects_pandas import TableHeaders
@@ -12,7 +11,7 @@ from ...config.settings import Filepaths, SettingsDataSaveAndLoad, Flags, FilesB
 from ...KeelelisedMuutujad.messages import LabelsTexts
 from ...KeelelisedMuutujad.modules import Module, ModuleTranslation, Languages
 from ...KeelelisedMuutujad.messages import InfoTexts, Headings
-
+from ...utils.messagesHelper import ModernMessageDialog
 
 language = Languages.ESTONIA
 
@@ -36,7 +35,7 @@ class PropertiesConnector(QObject):
 
         global selection_monitor
         widget_file = FilesByNames().add_properties_to_module_ui
-        ui_file_path = Filepaths.get_widget(widget_file)
+        ui_file_path = Filepaths._get_widget_name(widget_file)
         print(f"UI file path: {ui_file_path}")
         widget = loadUi(ui_file_path)
         
@@ -152,7 +151,7 @@ class PropertiesConnector(QObject):
                 total_returned_ids, total_ids_Table = result
                 text = InfoTexts().properties_successfully_added(element_name, total_returned_ids, total_ids_Table)
                 heading = Headings().informationSimple      
-                QMessageBox.information(None, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading,text)
         else:
             if widget is not None:
                 self.unset_widget_actions(widget)
@@ -160,7 +159,7 @@ class PropertiesConnector(QObject):
                 self.ConnectorWidgetClosed.emit()
                 text = InfoTexts().error_adding_properties(element_name)
                 heading = Headings().informationSimple
-                QMessageBox.warning(None, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading,text)
 
     def unset_widget_actions(self, widget):
         iface.actionPan().trigger()

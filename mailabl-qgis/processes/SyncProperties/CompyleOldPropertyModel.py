@@ -1,11 +1,10 @@
 from qgis.core import QgsProject, QgsLayerTree, QgsLayerTreeGroup, QgsLayerTreeLayer, QgsFeature, edit
 from PyQt5.QtWidgets import QMessageBox
-from qgis.core import QgsProject
-from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import connect_settings_to_layer
 from ...config.settings import Filepaths, FilesByNames
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, OldKatastriyksus, KatasterMappings
 from PyQt5.uic import loadUi
+from ...utils.messagesHelper import ModernMessageDialog
 
 class LayerCompiler:
     def find_layer_by_name(name, root=None):
@@ -168,14 +167,7 @@ class LayerCompilerSetup():
     def compile_layers(self, new_layer_name):
         compiler = LayerCompiler()
         compiler.compile_layers(self, new_layer_name)
-        QMessageBox.information(None, 'Info', 'Layer compilation complete.')
+        heading = "info"
+        text = "Layer compilation complete."
+        ModernMessageDialog.Info_messages_modern(heading,text)  
 
-# Assuming you have some setup where this gets called
-#def main():
-#    app = QApplication([])
-#    setup = LayerCompilerSetup()
-#    setup.load_layer_compiler_widget()
-#    app.exec_()
-
-#if __name__ == '__main__':
-#    main()

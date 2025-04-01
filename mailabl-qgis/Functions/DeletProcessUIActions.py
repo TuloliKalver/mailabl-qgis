@@ -10,10 +10,10 @@ from ..utils.UIDeleteCheckboxes import UIDeleteCheckboxes
 from ..utils.TableUtilys.TableHelpers import TableDataInserter
 #from ..Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
-from PyQt5.QtWidgets import QMessageBox
 from ..config.settings import SettingsDataSaveAndLoad
 from ..app.View_tools import  shp_tools, tableView_functions
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ..utils.messagesHelper import ModernMessageDialog
 from qgis.core import QgsProject
 
 table_functions = tableView_functions()
@@ -111,7 +111,8 @@ class DeleteProcessHandlers:
     def delete_process_after_county(self):
         if not self.lwDel_County_Names or not self.lwDel_County_Names.selectedItems():
             DeletProcessUIActions.Delete_process_view_after_unsuccessful_county(self)
-            QMessageBox.warning(None, Headings().warningSimple, HoiatusTexts().maakond_valimata)
+            ModernMessageDialog.Info_messages_modern(Headings().warningSimple, HoiatusTexts().maakond_valimata)
+            
         else:
             DeletProcessUIActions.Delete_process_view_after_county(self)
             activ_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -122,7 +123,7 @@ class DeleteProcessHandlers:
     def delete_process_after_state(self):
         if not self.lwDel_State_names or not self.lwDel_State_names.selectedItems():
             DeletProcessUIActions.Delete_process_view_after_unsuccessful_state(self)
-            QMessageBox.warning(None, Headings().warningSimple, HoiatusTexts().omavalitsus_valimata)
+            ModernMessageDialog.Info_messages_modern(Headings().warningSimple, HoiatusTexts().omavalitsus_valimata)
         else:
             DeletProcessUIActions.Delete_process_view_after_state(self)
             activ_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -135,7 +136,7 @@ class DeleteProcessHandlers:
         TabHandler.tabViewByState(self.tabw_delete_list, state=True)
         if not self.lwDel_State_names or not self.lwDel_State_names.selectedItems():
             DeletProcessUIActions.Delete_process_view_after_unsuccessful_city(self)
-            QMessageBox.warning(None, Headings().warningSimple, HoiatusTexts().omavalitsus_valimata)
+            ModernMessageDialog.Info_messages_modern(Headings().warningSimple, HoiatusTexts().omavalitsus_valimata)
         else:
             DeletProcessUIActions.Delete_process_view_after_city(self)
             layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()

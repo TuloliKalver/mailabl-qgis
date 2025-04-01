@@ -5,11 +5,11 @@ import uuid
 from ..queries.python.property_data import add_properties
 from PyQt5.QtCore import QCoreApplication
 from pprint import pprint
-from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
 from ..config.ui_directories import PathLoaderSimple
 from ..KeelelisedMuutujad.messages import Headings
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ..utils.messagesHelper import ModernMessageDialog
 
 pealkiri = Headings()
 
@@ -24,7 +24,7 @@ class TableSelections:
             #print("Andmeid ei ole valitud.")            
             text = ("Andmeid ei ole valitud")
             heading = pealkiri.warningSimple
-            QMessageBox.warning(None, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             return None
         
         selection_model = table.selectionModel()

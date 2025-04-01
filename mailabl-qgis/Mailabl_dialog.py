@@ -82,6 +82,7 @@ from .processes.tester import ProgressBarTester
 from .utils.signal_utils import execute_with_block
 from .app.button_connector import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
 from .utils.SpatialDataHelper import ZoomForModuleData
+from .utils.messagesHelper import ModernMessageDialog
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -159,6 +160,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Initialize WindowManager with this window
         ProgressHelper.set_dialog(self)
         TableHelper.set_dialog(self)
+
 
         self.window_manager = WindowPrositionHelper(self)
 
@@ -297,7 +299,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pbSettings.clicked.connect(self.toggle_settings_main_view)
         #Add shae files
-        self.pbSettings_AddShapeFile.clicked.connect(self.load_cadastrals) #pbLisaShpFail
+        self.pbSettings_AddShapeFile.clicked.connect(self.load_cadastrals) 
         
     # workspace page ID 5 = Homepage
         self.pbHome.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Properties(self))
@@ -435,7 +437,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.main_window_toggle_option()
         self.pbOpenProperty.setEnabled(False)
-        self.pbtest.setVisible(False)
+
+
+        self.label_5.setVisible(False)
+        self.pbtest_2.setVisible(False)
+        #self.pbtest_2.clicked.connect(ModernMessageDialog.Info_messages_modern)
+
+
+
 
     def on_label_return_pressed(self):
         # Identify which label sent the signal
@@ -620,7 +629,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         else:
             text = HoiatusTexts().andmed_valimata
             heading = Headings().warningSimple
-            QMessageBox.information(self.tweasementView, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
             self.showNormal()
             button.setEnabled(True)
             return
@@ -653,7 +662,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         else:
             text = HoiatusTexts().andmed_valimata
             heading = Headings().warningSimple
-            QMessageBox.information(table, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
             for single_button in buttons:
                 single_button.setEnabled(True)
             button.setEnabled(True)
@@ -683,7 +692,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         else:
             text = HoiatusTexts().projekt_valimata
             heading = Headings().warningSimple
-            QMessageBox.information(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
         
         self.pbGenProjectFolder.blockSignals(False)
         gc.collect()  # Force garbage collection
@@ -911,7 +920,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             #print(f"Layer '{input_layer_name}' not found.")
             text = HoiatusTextsAuto.input_layer_missing(input_layer_name)
             heading = Headings().warningSimple
-            QMessageBox.warning(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
             
             return
         hide_buttons = [self.pbDone_State, 
@@ -1035,7 +1044,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             #print("print")
             text = HoiatusTexts().omavalitsus_valimata
             heading = Headings().warningSimple
-            QMessageBox.information(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
         else:
             
             expression_before = shp_tools._builds_universal_query_based_restrictions(
@@ -1060,7 +1069,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             else:
                 text = HoiatusTexts().linn_kyla_valimata
                 heading = Headings().warningSimple
-                QMessageBox.warning(self, heading, text)
+                ModernMessageDialog.Info_messages_modern(heading, text)
                 #print("No items selected")
                 return
 
@@ -1157,7 +1166,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.resize(1150, 700)
 
         else:
-            QMessageBox.warning(self, pealkiri.warningCritical, sisu.vigane_voti)
+            heading = pealkiri.warningCritical
+            text = sisu.vigane_voti
+            ModernMessageDialog.Info_messages_modern(heading, text)
 
     def set_start_page_based_on_toggle_and_preferred_settings(self):
         index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)            
@@ -1287,7 +1298,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             # No item selected, perform your desired action here
             text = HoiatusTexts().maakond_valimata
             heading = Headings().warningSimple
-            QMessageBox.warning(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
+
             
         else:
             # Item selected, continue with your process        
@@ -1317,7 +1329,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             # No item selected, perform your desired action here
             text = HoiatusTexts().omavalitsus_valimata
             heading = Headings().warningSimple
-            QMessageBox.warning(None, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
+
         else:
             DeletProcessUIActions.Delete_process_view_after_state(self)
 
@@ -1353,7 +1366,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             # No item selected, perform your desired action here
             text = HoiatusTexts().omavalitsus_valimata
             heading = Headings().warningSimple
-            QMessageBox.warning(self, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading, text)
+
         else:
             DeletProcessUIActions.Delete_process_view_after_city(self)
             button = self.pbDel_City

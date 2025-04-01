@@ -3,12 +3,11 @@
 # pylint: disable=no-nam
 
 
-import gc
+
 import pandas as pd
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QMessageBox
 from .DataLoading_classes import Graphql_project, GraphQLQueryLoader
 from .query_tools import requestBuilder
 from.fetchers.ModulePropertiesFetcher import PropertiesModuleFetcher
@@ -20,7 +19,7 @@ from ...utils.DataExtractors.DataExtractors import DataExtractor
 from ...utils.ProgressHelper import ProgressHelper
 from ...KeelelisedMuutujad.modules import Module
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
-
+from ...utils.messagesHelper import ModernMessageDialog
 
 
 pealkiri = Headings()
@@ -229,7 +228,7 @@ class ProjectModelBuilders:
         if  total_projects == 0:
             text = "Antud numbriga projekti ei leitud"
             heading = pealkiri.informationSimple
-            QMessageBox.information(None, heading, text)
+            ModernMessageDialog.Info_messages_modern(heading,text)
             return None
 
         else:
@@ -267,7 +266,7 @@ class ProjectModelBuilders:
         # Splitting the list into sublists with a maximum of 4 items each
         #sublists = [selected_features[i:i+Constants.items_for_page_medium] for i in range(0, len(selected_features), Constants.items_for_page_medium)]
         value = 0
-        progress = ProgressHelper.update_progress(value=value+5, maximum=100)
+        progress = ProgressHelper.updat_progress_on_main_dialog(value=value+5, maximum=100)
         MAX_ITEMS_PER_SET = 15
 
         grouped_cadasters = [selected_features[i:i + MAX_ITEMS_PER_SET] 
@@ -290,7 +289,7 @@ class ProjectModelBuilders:
                 progress.setValue(idx)
                 QCoreApplication.processEvents()
             # Ensure progress bar reaches 100% at the end
-            ProgressHelper.update_progress(value=0)                
+            ProgressHelper.updat_progress_on_main_dialog(value=0)                
         
         # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
         data_optimal = {project['id']: project for project in data_total}.values()

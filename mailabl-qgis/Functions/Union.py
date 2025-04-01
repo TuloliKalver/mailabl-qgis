@@ -27,7 +27,7 @@ class  Union:
                     'OUTPUT': 'memory:'
                 })
 
-                style_name = FilesByNames().easement_unined
+                style_name = FilesByNames().Easement_unioned
 
                 QGIS_Layer_style = Filepaths().get_style(style_name)
 

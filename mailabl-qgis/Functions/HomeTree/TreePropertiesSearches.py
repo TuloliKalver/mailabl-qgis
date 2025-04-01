@@ -1,6 +1,5 @@
 import re
-from PyQt5.QtCore import QDate, QCoreApplication, QTimer
-from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from PyQt5.QtCore import QDate, QCoreApplication
 
 from qgis.core import QgsProject, QgsVectorLayer
 from qgis.utils import iface
@@ -8,9 +7,10 @@ from qgis.utils import iface
 from ...config.settings import SettingsDataSaveAndLoad
 from .BuildTree import MyTreeHome
 from .BuildViewTree import MyTreeHomeView
+from ...utils.messagesHelper import ModernMessageDialog
 from ...utils.UIWindowHelpers import WindowPrositionHelper, WindowManagerMinMax
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 class FeatureInfoTool:
     def __init__(self, label, lblCadastralNr, lblRegistry, address, purpose, area, created_at, updated_at, treeWidget, reset_timer, main_window, pbOProperty, treeView):
         self.layer = None
@@ -59,11 +59,15 @@ class FeatureInfoTool:
 
         # Check if more than one feature is selected
         if len(selected_features) > 1:
-            text = "Valitud on rohkem kui üks objekt. Palun valige uuesti. Hetkel on toetatud ainult üksiku kinnistu valik!"
-            heading = "info"
-            QMessageBox.information(None, heading, text) 
+            text = HoiatusTexts().Liiga_palju_kinnistuid
+            heading = Headings().warningSimple
+            ModernMessageDialog.Info_messages_modern(heading=heading, message=text)
+            self.window_manager_minMax._restore_window()
+            self.disconnect_signal()
             self.layer.removeSelection()
+            self.pbOProperty.setEnabled(True)        
             return
+            
         
         else:    
             # Initialize Katastriyksus instance
@@ -110,7 +114,6 @@ class FeatureInfoTool:
 
                 self.window_manager_minMax._restore_window()
                 
-
                 MyTreeHome.update_tree_with_modules(self.lbltreewidget, tunnus_value)
                 #TODO - This version works but it's not possible to color cells based on the search results.
                 #MyTreeHomeView.update_tree_with_modules(self.tree_View, tunnus_value)
@@ -219,7 +222,6 @@ class FeatureInfoTool:
                 print("Signal was not connected.")
                 pass
                 
-
     def disconnect_signal_timed(self):
         if self.layer:
             try:
@@ -228,8 +230,6 @@ class FeatureInfoTool:
                 print("Signal was not connected.")
                 pass
                 
-
-
     # Function to find field index case-insensitively
     def find_field_index(layer, field_name):
         # Get all field names from the layer
@@ -316,7 +316,6 @@ class FeatureInfoToolSearch:
         QCoreApplication.processEvents()
         self.property_button.setEnabled(True)
         return tunnus_value
-
 
     def set_values_to_labels(self, feature_data):
         tunnus_value = self.set_address(feature_data)

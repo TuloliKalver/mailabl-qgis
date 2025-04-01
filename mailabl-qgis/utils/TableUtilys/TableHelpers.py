@@ -114,7 +114,7 @@ class TableHelper:
         process_interval = 50  # Process events every 100 iterations
 
         max_items = model.rowCount()
-        progressBar = ProgressHelper.update_progress(value=0, maximum=max_items)
+        progressBar = ProgressHelper.updat_progress_on_main_dialog(value=0, maximum=max_items)
         
         process_interval = 100  # Frequency to process events for responsiveness
 
@@ -165,7 +165,7 @@ class TableHelper:
         feature_ids = []
         max_items = len(selected_rows)
         # Initialize the progress bar with 0 as the starting value and max_items as maximum.
-        progressBar = ProgressHelper.update_progress(value=0, maximum=max_items)
+        progressBar = ProgressHelper.updat_progress_on_main_dialog(value=0, maximum=max_items)
         
         process_interval = 10  # Adjust interval as needed for responsiveness
         for idx, index in enumerate(selected_rows):

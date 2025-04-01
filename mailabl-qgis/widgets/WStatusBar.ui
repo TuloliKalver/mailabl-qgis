@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>100</height>
+    <height>122</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>0</height>
+    <height>100</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>460</width>
-    <height>100</height>
+    <height>122</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -40,18 +40,15 @@
 /* ====================================================== */
 * {
     border: transparent;
-	boreder-radius: 7px;
     background-color: #1d252b; /* Updated background */
     padding: 0;
     margin: 0;
-    color: #c5c5d2; /* Default light gray text */
+    color: #ececf1; /* Brighter default text */
 }
 
 
-QWidget {
-
+#Edenemine {
     border: 1px solid #4d4d4d;
-    border-radius: 5px;
 	border-top-left-radius: 7px;     /* Rounded top-left corner */
     border-top-right-radius: 7px;    /* Rounded top-right corner */
     border-right-radius: 7px;        /* No rounding on right side */
@@ -59,15 +56,7 @@ QWidget {
 	background-color: rgba(29, 37, 43, 0.4);  /* 10% transparency */
 }
 
-QFrame {
 
-    border: 1px solid #4d4d4d;
-    border-radius: 5px;
-	border-top-left-radius: 7px;     /* Rounded top-left corner */
-    border-top-right-radius: 7px;    /* Rounded top-right corner */
-    border-right-radius: 7px;        /* No rounding on right side */
-    border-left-radius: 7px;    
-}
 
 
 /* ====================================== */
@@ -76,9 +65,7 @@ QFrame {
 
 QProgressBar {
     background-color: rgba(46, 47, 56, 0.3); /* Semi-transparent base */
-    color: #c5c5d2; /* Default light gray text */
     border: 1px solid rgba(77, 77, 77, 0.6); /* Soft border */
-    border-radius: 6px;
     text-align: center;
     padding: 2px;
 }
@@ -90,13 +77,12 @@ QProgressBar::chunk {
         stop: 0 rgba(9, 144, 143, 200),
         stop: 1 rgba(46, 47, 56, 180)
     );
-    border-radius: 3px;
+    border-radius: 4px;
 }
 
 /* Indeterminate progress bar style */
 QProgressBar[minimum=&quot;0&quot;][maximum=&quot;0&quot;] {
     background-color: rgba(46, 47, 56, 0.3);
-    color: #c5c5d2;
     border: 1px dashed rgba(120, 120, 130, 0.4);
 }
 
@@ -111,16 +97,14 @@ QProgressBar[minimum=&quot;0&quot;][maximum=&quot;0&quot;]::chunk {
 }
 
 
- QLabel, QGroupBox {
+ QLabel {
     background-color: rgba(46, 47, 56, 0.1);  /* 🟩 holder */
-    color: #c5c5d2;
 	border: None
 }
 
 QLineEdit, QTextEdit, QComboBox {
     background-color: rgba(29, 37, 43, 0.45);  /* 🟨 input */
 	border: None;
-    color: #c5c5d2;
 
 }
 
@@ -128,207 +112,179 @@ QPushButton {
     background-color: rgba(9, 144, 143, 1.0);  /* 🟦 button */
 }
 
-#lblDescription {
-    background-color: rgba(29, 37, 43, 0.45);  /* 🟨 input */
-    color: #c5c5d2;
-    border: 1px solid #4d4d4d;   /* Subtle default border */
-    border-radius: 4px;          /* Rounded corners for a smooth look */
-    padding: 6px; 
-
-}
-
 
 #dragFrame  {
 	border-top-left-radius: 7px;     /* Rounded top-left corner */
     border-top-right-radius: 7px;    /* Rounded top-right corner */
-    border-right-radius: 7px;        /* No rounding on right side */
-    border-left-radius: 7px;    
+    border-right-radius: 0px;        /* No rounding on right side */
+    border-left-radius: 0px;    
     background-color: rgba(9, 144, 143, 1.0); 
     cursor: move;
 }
 
-QScrollBar:horizontal, QScrollBar:vertical {
-    background-color: rgba(46, 47, 56, 0.1);  /* 🟫 scrollbar */
+
+
+
+#frame{
+	background-color: rgba(29, 37, 43, 0.7);  /* 10% transparency */	
+    border: 1px solid #4d4d4d;	
+	border-top-left-radius: 0px;     /* Rounded top-left corner */
+    border-top-right-radius: 0px;    /* Rounded top-right corner */
+    border-right-radius: 7px;        /* No rounding on right side */
+    border-left-radius: 7px;    
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="frame_2">
+    <widget class="QFrame" name="dragFrame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1000000</width>
+       <height>25</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>2</number>
+       <number>20</number>
       </property>
       <property name="topMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <item>
-       <widget class="QFrame" name="dragFrame">
+       <widget class="QLabel" name="lblTitle">
+        <property name="text">
+         <string>Edenemine</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="maximumSize">
+         <size>
+          <width>450</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Laadimine võtab mõned minutid! </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="bar">
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>25</height>
+          <height>20</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>1000000</width>
-          <height>25</height>
+          <width>450</width>
+          <height>20</height>
          </size>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+        <property name="value">
+         <number>24</number>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>20</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lblTitle">
-           <property name="text">
-            <string>Title</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="frame">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+       <widget class="QLabel" name="text_2">
+        <property name="maximumSize">
+         <size>
+          <width>450</width>
+          <height>16777215</height>
+         </size>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+         <enum>QFrame::Plain</enum>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="maximumSize">
-            <size>
-             <width>450</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Laadimine võtab mõned minutid! </string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="testBar">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>450</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="maximumSize">
-            <size>
-             <width>450</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Plain</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>450</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="text_1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>450</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
      </layout>
