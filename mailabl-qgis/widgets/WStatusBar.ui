@@ -1,62 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Edenemine</class>
- <widget class="QWidget" name="Edenemine">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>122</height>
+    <height>125</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>460</width>
     <height>100</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>460</width>
-    <height>122</height>
+    <height>125</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Laen kinnistuid</string>
+   <string>Dialog</string>
   </property>
   <property name="styleSheet">
    <string notr="true">
-/* ====================================================== */
-/* 🎨 Global Theme - Base Colors, Background &amp; Typography */
+
 /* ====================================================== */
 /* 🎨 Global Theme - Base Colors, Background &amp; Typography */
 /* ====================================================== */
 * {
     border: transparent;
-    background-color: #1d252b; /* Updated background */
     padding: 0;
     margin: 0;
     color: #ececf1; /* Brighter default text */
+    border: 1px solid #4d4d4d; 
 }
-
-
-#Edenemine {
-    border: 1px solid #4d4d4d;
-	border-top-left-radius: 7px;     /* Rounded top-left corner */
-    border-top-right-radius: 7px;    /* Rounded top-right corner */
-    border-right-radius: 7px;        /* No rounding on right side */
-    border-left-radius: 7px;    
-	background-color: rgba(29, 37, 43, 0.4);  /* 10% transparency */
-}
-
-
 
 
 /* ====================================== */
@@ -64,7 +45,7 @@
 /* ====================================== */
 
 QProgressBar {
-    background-color: rgba(46, 47, 56, 0.3); /* Semi-transparent base */
+    background-color: rgba(46, 47, 56, 0.4); /* Semi-transparent base */
     border: 1px solid rgba(77, 77, 77, 0.6); /* Soft border */
     text-align: center;
     padding: 2px;
@@ -122,16 +103,17 @@ QPushButton {
     cursor: move;
 }
 
-
-
+#frame_2{
+	border:None
+}
 
 #frame{
-	background-color: rgba(29, 37, 43, 0.7);  /* 10% transparency */	
+	background-color: rgba(29, 37, 43, 0.88);  /* 10% transparency */	
     border: 1px solid #4d4d4d;	
 	border-top-left-radius: 0px;     /* Rounded top-left corner */
     border-top-right-radius: 0px;    /* Rounded top-right corner */
-    border-right-radius: 7px;        /* No rounding on right side */
-    border-left-radius: 7px;    
+    border-bottom-right-radius: 7px;        /* No rounding on right side */
+    border-bottom-left-radius: 7px;    
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -206,7 +188,7 @@ QPushButton {
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lblMain">
         <property name="maximumSize">
          <size>
           <width>450</width>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Edenemine</class>
+ <widget class="QWidget" name="Edenemine">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>460</width>
+    <height>122</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>100</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>460</width>
+    <height>125</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Laen kinnistuid</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+/* ====================================================== */
+/* 🎨 Global Theme - Base Colors, Background &amp; Typography */
+/* ====================================================== */
+/* 🎨 Global Theme - Base Colors, Background &amp; Typography */
+/* ====================================================== */
+* {
+    border: transparent;
+    background-color: #1d252b; /* Updated background */
+    padding: 0;
+    margin: 0;
+    color: #ececf1; /* Brighter default text */
+}
+
+
+#Edenemine {
+    border: 1px solid #4d4d4d;
+	border-top-left-radius: 7px;     /* Rounded top-left corner */
+    border-top-right-radius: 7px;    /* Rounded top-right corner */
+    border-right-radius: 7px;        /* No rounding on right side */
+    border-left-radius: 7px;    
+	background-color: rgba(29, 37, 43, 0.4);  /* 10% transparency */
+}
+
+
+
+
+/* ====================================== */
+/* 📈 QProgressBar - Matches Theme Style  */
+/* ====================================== */
+
+QProgressBar {
+    background-color: rgba(46, 47, 56, 0.3); /* Semi-transparent base */
+    border: 1px solid rgba(77, 77, 77, 0.6); /* Soft border */
+    text-align: center;
+    padding: 2px;
+}
+
+/* Chunk (progress fill) with animated-like feel */
+QProgressBar::chunk {
+    background-color: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 0,
+        stop: 0 rgba(9, 144, 143, 200),
+        stop: 1 rgba(46, 47, 56, 180)
+    );
+    border-radius: 4px;
+}
+
+/* Indeterminate progress bar style */
+QProgressBar[minimum=&quot;0&quot;][maximum=&quot;0&quot;] {
+    background-color: rgba(46, 47, 56, 0.3);
+    border: 1px dashed rgba(120, 120, 130, 0.4);
+}
+
+/* Chunk while loading (indeterminate) */
+QProgressBar[minimum=&quot;0&quot;][maximum=&quot;0&quot;]::chunk {
+    background-color: qradialgradient(
+        cx: 0.5, cy: 0.5, radius: 0.8,
+        fx: 0.5, fy: 0.5,
+        stop: 0 rgba(9, 144, 143, 255),
+        stop: 1 rgba(46, 47, 56, 180)
+    );
+}
+
+
+ QLabel {
+    background-color: rgba(46, 47, 56, 0.1);  /* 🟩 holder */
+	border: None
+}
+
+QLineEdit, QTextEdit, QComboBox {
+    background-color: rgba(29, 37, 43, 0.45);  /* 🟨 input */
+	border: None;
+
+}
+
+QPushButton {
+    background-color: rgba(9, 144, 143, 1.0);  /* 🟦 button */
+}
+
+
+#dragFrame  {
+	border-top-left-radius: 7px;     /* Rounded top-left corner */
+    border-top-right-radius: 7px;    /* Rounded top-right corner */
+    border-right-radius: 0px;        /* No rounding on right side */
+    border-left-radius: 0px;    
+    background-color: rgba(9, 144, 143, 1.0); 
+    cursor: move;
+}
+
+
+
+
+#frame{
+	background-color: rgba(29, 37, 43, 0.7);  /* 10% transparency */	
+    border: 1px solid #4d4d4d;	
+	border-top-left-radius: 0px;     /* Rounded top-left corner */
+    border-top-right-radius: 0px;    /* Rounded top-right corner */
+    border-right-radius: 7px;        /* No rounding on right side */
+    border-left-radius: 7px;    
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="dragFrame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1000000</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lblTitle">
+        <property name="text">
+         <string>Edenemine</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="lblMain">
+        <property name="maximumSize">
+         <size>
+          <width>450</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Laadimine võtab mõned minutid! </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="bar">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>450</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="text_2">
+        <property name="maximumSize">
+         <size>
+          <width>450</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="text_1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>450</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

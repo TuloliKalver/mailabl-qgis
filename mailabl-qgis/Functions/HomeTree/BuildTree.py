@@ -47,11 +47,8 @@ class MyTreeHome:
         treeWidget.setHeaderLabels([MyTreeHome.header_number, MyTreeHome.header_name, MyTreeHome.header_id, "", MyTreeHome.header_file_path, "", MyTreeHome.header_statuses])
             # Initialize child_data to combine results from all modules
 
-        from ...utils.ProgressHelper import ProgressDialogModern as progress
+        from ...utils.ProgressHelper import ProgressDialogModern
 
-        #progress_widget.setWindowTitle("Kontrollin andmeid")
-        
-        QCoreApplication.processEvents()
         
         # Get the module attributes
         module_attrs = Module().all_modules# [attr for attr in dir(Module) if not attr.startswith("_") and not callable(getattr(Module, attr))]
@@ -59,8 +56,12 @@ class MyTreeHome:
 
         # Set the maximum value of the progress bar
 
-        progress.load_progress_dialog(value=0, maximum=total)       
+        progress = ProgressDialogModern(purpouse="Katastri laadimine", text="Palun oota...")
+        progress.update(1, "Esimene etapp")
+        progress.update(50, "Pool tehtud")
         
+
+        QCoreApplication.processEvents()
 
         #end_cursor_id = None  # Initialize end_cursor before the loop
         first = 1
@@ -108,14 +109,13 @@ class MyTreeHome:
                                 child_data[typename] = []
                                 # Remove the last character from typename
                             child_data[typename].append(node_data)
-            progress.load_progress_dialog(value=index)
             QCoreApplication.processEvents()
 
         #print(f"child_data: {child_data}")
         #print(f"child data: {child_data}")
  
         length = len(child_data.keys())
-        progress.load_progress_dialog(value=0, maximum=length)
+        progress.update(1, "uuesti")
         if child_data:  # Only add module if data is returned
             #print(f"length: {length}")
             for typename, items in child_data.items():  # Iterate over child_data correctly
@@ -164,10 +164,11 @@ class MyTreeHome:
                     MyTreeHome.set_clickable_webIcon(child_item, 3) 
                     MyTreeHome.set_clickable_folderIcon(child_item, 5)
                 length = length+1
-                progress.load_progress_dialog(value=0, maximum=length)
-                QCoreApplication.processEvents()
+                progress.update(length, "Toimetan")
         
-        progress.load_progress_dialog(value=0, maximum=0,show=False)  
+                QCoreApplication.processEvents()
+        progress.update(100, "Valmis!")
+        progress.close()
         # Hide the second column (index 1)
         treeWidget.setColumnHidden(2, True)
         treeWidget.setColumnHidden(4, True)

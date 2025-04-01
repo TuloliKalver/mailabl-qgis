@@ -55,9 +55,12 @@ class ProgressHelper:
 
 
 class ProgressDialogModern:
+    def __init__(self, value=0, maximum=100, **kwargs):
+        self.dialog, self.bar = ProgressDialogModern.load_progress_dialog(value=value, maximum=maximum, **kwargs)
+        self.dialog.show()
 
     @staticmethod
-    def load_progress_dialog(value:int, maximum:Optional[int]=None, title:str="Andmete laadimine...", text:str =None, text_2:str=None, Show=True):
+    def load_progress_dialog(value:int, maximum:Optional[int]=None, purpouse:str="", title:str="Andmete laadimine...", text:str ="", text_2:str="", Show=True):
         """
         Load the progress dialog with an initial value and maximum.
 
@@ -72,48 +75,50 @@ class ProgressDialogModern:
         
         from ..config.settings import Filepaths, FilesByNames
         widget_name = Filepaths._get_widget_name(FilesByNames().statusbar_widget)
-        print(f"widget name: {widget_name}")
         widget = Filepaths.load_ui_file(widget_name)
         if not widget:
             print(f"Could not load {widget_name} file.")
             return
-        for child in widget.children():
-            print(child.objectName())
         widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
         widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
         widget.setAttribute(Qt.WA_TranslucentBackground)
         widget.setAttribute(Qt.WA_DeleteOnClose)
     
-        drag_frame = widget.findChildren(QFrame, "dragFrame")
-        frame = widget.findChildren(QFrame, "frame")
+        title_label = widget.findChild(QLabel, "lblTitle", Qt.FindChildrenRecursively)
+        title_label.setText(str(title))
 
-        title_label = drag_frame.findChild(QLabel, "lblTitle", Qt.FindChildrenRecursively)
-        if not title_label:
-            print("⚠️ Could not find QLabel 'lblMainTitle' in progress dialog UI")
-        main_label = frame.findChild(QLabel, "lblMain", Qt.FindChildrenRecursively)
-        if not main_label:
-            print("⚠️ Could not find QLabel 'lblMain' in progress dialog UI")
-        label_1 = frame.findChild(QLabel, "text_1", Qt.FindChildrenRecursively)
-        if not label_1:
-            print("⚠️ Could not find QLabel 'text_1' in progress dialog UI")
-        label_2 = frame.findChild(QLabel, "text_2", Qt.FindChildrenRecursively)
-        if not label_2:
-            print("⚠️ Could not find QLabel 'text_2' in progress dialog UI")
-        progressBar = frame.findChild(QProgressBar, "bar", Qt.FindChildrenRecursively)
-        if not progressBar:
-            print("⚠️ Could not find QProgressBar 'bar' in progress dialog UI")
+        main_label = widget.findChild(QLabel, "lblMain", Qt.FindChildrenRecursively)
+        label_1 = widget.findChild(QLabel, "text_1", Qt.FindChildrenRecursively)
+        label_2 = widget.findChild(QLabel, "text_2", Qt.FindChildrenRecursively)
+        progressBar = widget.findChild(QProgressBar, "bar", Qt.FindChildrenRecursively)
+        
+        label_1.hide()
+        label_2.hide()
+        main_label.hide()
 
-        if title is not None:
-            main_label.setText(title)
-        if text is not None:
+        if purpouse != "" :
+            main_label.show()
+            main_label.setText(purpouse)
+        if text != "" :
+            label_1.show()
             label_1.setText(text)
-        if text_2 is not None:
+        if text_2 != "" :
+            label_2.show()
             label_2.setText(text_2) 
         if maximum  is not None:
             progressBar.setMaximum(maximum)
         progressBar.setValue(value)
 
-        if Show:
-            widget.show()
-        else:
-            widget.hide()
+        return widget, progressBar
+    
+
+    def update(self, value, label=None):
+        self.bar.setValue(value)
+        if label:
+            lbl = self.dialog.findChild(QLabel, "text_1", Qt.FindChildrenRecursively)
+            if lbl:
+                lbl.setText(label)
+        QCoreApplication.processEvents()
+
+    def close(self):
+        self.dialog.close()
