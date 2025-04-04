@@ -1,6 +1,6 @@
 from qgis.core import QgsProject, QgsLayerTree, QgsLayerTreeGroup, QgsLayerTreeLayer, QgsFeature, edit
 from PyQt5.QtWidgets import QMessageBox
-from ...config.settings import connect_settings_to_layer
+from ...config.settings import StoredLayers
 from ...config.settings import Filepaths, FilesByNames
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, OldKatastriyksus, KatasterMappings
 from PyQt5.uic import loadUi
@@ -34,7 +34,7 @@ class LayerCompiler:
         
         :param new_layer_name: Name of the new layer to which features will be appended.
         """
-        old_layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
+        old_layer_name = StoredLayers.ActiveMailablPropertiesLayer_name()
         print(f"Old Layer Name: {old_layer_name}")
 
         old_layer = LayerCompiler.find_layer_by_name(old_layer_name)

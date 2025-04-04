@@ -8,7 +8,7 @@ from ...config.settings import SettingsDataSaveAndLoad
 from .BuildTree import MyTreeHome
 from .BuildViewTree import MyTreeHomeView
 from ...utils.messagesHelper import ModernMessageDialog
-from ...utils.UIWindowHelpers import WindowPrositionHelper, WindowManagerMinMax
+from ...utils.UIWindowHelpers import WindowPositionHelper, WindowManagerMinMax
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 class FeatureInfoTool:
@@ -26,7 +26,7 @@ class FeatureInfoTool:
         self.lbltreewidget = treeWidget
         self.tree_View = treeView
         self.main_window = main_window
-        self.window_manager = WindowPrositionHelper(self.main_window)
+        self.window_manager = WindowPositionHelper(self.main_window)
         self.window_manager_minMax = WindowManagerMinMax(self.main_window)
         self.setup_layer()
         self.katastriyksus = Katastriyksus()

@@ -10,6 +10,7 @@ from ...KeelelisedMuutujad.modules import Module
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
 from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
+from ...utils.ProgressHelper import ProgressDialogModern
 
 class Constants:
     package_size = 25
@@ -39,26 +40,42 @@ class EasementssMain:
     @staticmethod
     def load_main_asements_by_type_and_status (self, table, types, statuses, language="et"):
 
+        #Adding progress
+        progress = ProgressDialogModern(title="Katastri laadimine", value=0)
+        progress.update(1, purpouse="Servituutide laadimine", text1="Palun oota...")
+
         model = queryHandling._model_for_easments_by_types_and_statuses(self, types, statuses, language)
+        progress.update(value=50)
+        #print(model)        
         if model is not None:
             module = Module.EASEMENT
             ModuleTableBuilder.setup(table, model, module, language)
+            progress.update(value=98)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
             heading = Headings().warningSimple
             print(f"{heading}, {text}")
+        progress.close()
 
     def load_easemenets_by_number(search_values, table, language="et" ):
+        #Adding progress
+        progress = ProgressDialogModern(title="Katastri laadimine", value=0)
+        progress.update(1, purpouse="Servituutide laadimine", text1="Palun oota...")
 
         model = queryHandling._model_for_easments_search_results(search_values, language)
+        progress.update(value=50)
+        
         if model is not None:
             module = Module.EASEMENT
             ModuleTableBuilder.setup(table, model, module, language)
+            progress.update(value=98)
+        
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
             heading = Headings().warningSimple
             print(f"{heading}, {text}")
-
+        progress.close()
+        
 
 class queryHandling:
     def __init__(self):

@@ -1,124 +1,130 @@
-
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QLabel, QFrame
+from PyQt5.QtCore import Qt, QCoreApplication
+from PyQt5.QtWidgets import QLabel, QProgressBar
 from typing import Optional
-
-from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QProgressBar
-
-
-class ProgressHelper:
-    dialog = None  # Class-level variable to store the dialog reference
-
-    @staticmethod
-    def set_dialog(main_dialog):
-        if main_dialog is None:
-            print("Warning: Attempting to set dialog with None")
-        ProgressHelper.dialog = main_dialog
-    @staticmethod
-    def updat_progress_on_main_dialog(value: int, maximum: Optional[int] = None):
-        """
-        Update the progress bar with a new value and optionally set a new maximum.
-        
-        Args:
-            progressBar (QProgressBar): The progress bar widget.
-            value (int): The new value to set.
-            maximum (int, optional): If provided, update the maximum value of the progress bar.
-        """
-
-        progressBar = ProgressHelper.dialog.findChild(QProgressBar, 'progressBar_Projects')
-
-        if progressBar:
-            if maximum is not None:
-                progressBar.setMaximum(maximum)
-            progressBar.setValue(value)
-            progressBar.show()
-            QCoreApplication.processEvents()  # Keep the UI responsive
-
-        return progressBar
-    
-    @staticmethod
-    def update_progressbar_by_current_index(current_index):
-        """
-        Update the progress bar during feature processing.
-
-        This function increments the progress bar for every tenth feature processed, ensuring
-        that the UI remains responsive by processing pending events.
-
-        Args:
-            progressBar (QProgressBar): The progress bar widget used to display progress.
-            current_index (int): The index of the current feature being processed.
-        """
-        if current_index % 100 == 0:
-            ProgressHelper.updat_progress_on_main_dialog(value=current_index)
-            QCoreApplication.processEvents()
+from PyQt5.QtWidgets import QFrame
 
 
 class ProgressDialogModern:
-    def __init__(self, value=0, maximum=100, **kwargs):
-        self.dialog, self.bar = ProgressDialogModern.load_progress_dialog(value=value, maximum=maximum, **kwargs)
+    active_instance = None  # Class-level tracker
+    _open_dialogs = set()
+    def __init__(self, value=0, maximum=100, title="Andmete laadimine...", stay_on_top=True, **kwargs):
+        self.dialog, self.bar = ProgressDialogModern.load_progress_dialog(
+            value=value,
+            maximum=maximum,
+            title=title,
+            stay_on_top=stay_on_top,
+            **kwargs
+        )
+        if not self.dialog:
+            print("⚠️ Progress dialog could not be loaded.")
+            return  # or raise Exception("Failed to load progress dialog")
+
+        drag_frame = self.dialog.findChild(QFrame, "dragFrame")  # if it's a QFrame
+        if drag_frame is not None:
+            # Pass `self` to static methods using lambda
+            drag_frame.mousePressEvent = lambda event, s=ProgressDialogModern.active_instance: s.start_drag(event)
+            drag_frame.mouseMoveEvent = lambda event, s=ProgressDialogModern.active_instance: s.do_drag(event)
+
+        else:
+            print("⚠️ dragFrame not found in UI.")
+
+        ProgressDialogModern._open_dialogs.add(self)
+
         self.dialog.show()
 
     @staticmethod
-    def load_progress_dialog(value:int, maximum:Optional[int]=None, purpouse:str="", title:str="Andmete laadimine...", text:str ="", text_2:str="", Show=True):
-        """
-        Load the progress dialog with an initial value and maximum.
-
-        Args:
-            value (int): Initial value for the progress bar.
-            maximum (int, optional): Maximum value for the progress bar. Defaults to None.
-            title (str, optional): Title of the progress dialog window. Defaults to "Andmete laadimine...".
-            text (str, optional): Text displayed in the first line of the status bar. Defaults to None.
-            text_2 (str, optional): Text displayed in the second line of the status bar. Defaults to None.
-            Show(bool,optional): Whether or not show dialog on screen
-        """
-        
+    def load_progress_dialog(value: int, maximum: Optional[int] = None, title: str = "Andmete laadimine...", stay_on_top=True):
         from ..config.settings import Filepaths, FilesByNames
         widget_name = Filepaths._get_widget_name(FilesByNames().statusbar_widget)
         widget = Filepaths.load_ui_file(widget_name)
+
         if not widget:
-            print(f"Could not load {widget_name} file.")
-            return
-        widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
-        widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
+            print(f"⚠️ Could not load {widget_name} file.")
+            return None, None
+
+        flags = Qt.FramelessWindowHint | Qt.Tool
+        if stay_on_top:
+            flags |= Qt.WindowStaysOnTopHint
+        widget.setWindowFlags(flags)
+
         widget.setAttribute(Qt.WA_TranslucentBackground)
         widget.setAttribute(Qt.WA_DeleteOnClose)
-    
+
+        # Set title (fixed on load)
         title_label = widget.findChild(QLabel, "lblTitle", Qt.FindChildrenRecursively)
-        title_label.setText(str(title))
+        if title_label:
+            title_label.setText(str(title))
 
-        main_label = widget.findChild(QLabel, "lblMain", Qt.FindChildrenRecursively)
-        label_1 = widget.findChild(QLabel, "text_1", Qt.FindChildrenRecursively)
-        label_2 = widget.findChild(QLabel, "text_2", Qt.FindChildrenRecursively)
-        progressBar = widget.findChild(QProgressBar, "bar", Qt.FindChildrenRecursively)
-        
-        label_1.hide()
-        label_2.hide()
-        main_label.hide()
+        # Hide all optional content initially
+        for name in ["lblMain", "text_1", "text_2"]:
+            label = widget.findChild(QLabel, name, Qt.FindChildrenRecursively)
+            if label:
+                label.hide()
 
-        if purpouse != "" :
-            main_label.show()
-            main_label.setText(purpouse)
-        if text != "" :
-            label_1.show()
-            label_1.setText(text)
-        if text_2 != "" :
-            label_2.show()
-            label_2.setText(text_2) 
-        if maximum  is not None:
-            progressBar.setMaximum(maximum)
-        progressBar.setValue(value)
 
-        return widget, progressBar
-    
 
-    def update(self, value, label=None):
-        self.bar.setValue(value)
-        if label:
-            lbl = self.dialog.findChild(QLabel, "text_1", Qt.FindChildrenRecursively)
-            if lbl:
-                lbl.setText(label)
+        progress_bar = widget.findChild(QProgressBar, "bar", Qt.FindChildrenRecursively)
+        if progress_bar:
+            if maximum is not None:
+                progress_bar.setMaximum(maximum)
+            progress_bar.setValue(value)
+
+
+        return widget, progress_bar
+
+    def update(self, value: int = None, purpouse: str = None, text1: str = None, text2: str = None, maximum: Optional[int] = None):
+        if self.bar:
+            if value is not None:
+                self.bar.setValue(value)
+            if maximum is not None:
+                self.bar.setMaximum(maximum)
+
+
+        label1 = self.dialog.text_1
+        if text1 is not None:
+            label1.show()
+            label1.setText(text1)
+
+        label2 = self.dialog.text_2
+        if text2 is not None:
+            label2.show()
+            label2.setText(text2)
+
+        lbl_main = self.dialog.lblMain
+        if purpouse is not None:
+            lbl_main.show()
+            lbl_main.setText(purpouse)
+
         QCoreApplication.processEvents()
 
     def close(self):
-        self.dialog.close()
+        if self.dialog:
+
+            self.dialog.hide()
+            ProgressDialogModern._open_dialogs.discard(self)
+            self.dialog.setParent(None)  # Detach from QGIS window tree
+            self.dialog.deleteLater()
+            self.dialog = None  # Important to prevent double-close
+
+        QCoreApplication.processEvents()  # 💡 Force UI refresh
+
+    def start_drag(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPos = event.globalPos() - self.dialog.frameGeometry().topLeft()
+            event.accept()
+
+    def do_drag(self, event):
+        if event.buttons() & Qt.LeftButton:
+            self.dialog.move(event.globalPos() - self.dragPos)
+            event.accept()
+
+    @staticmethod
+    def force_close(dialog_instance: "ProgressDialogModern"):
+        if dialog_instance:
+            print("🧹 Closing specific progress dialog")
+            dialog_instance.close()
+
+    @staticmethod
+    def close_all():
+        for dlg in list(ProgressDialogModern._open_dialogs):
+            dlg.close()

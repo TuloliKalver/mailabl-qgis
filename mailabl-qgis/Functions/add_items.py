@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QTableWidgetItem
 from ..Functions.Tools import tableFunctions, propertyUsages
 from ..queries.python.property_data import add_properties
 from ..config.settings import SettingsDataSaveAndLoad
+from ..utils.ProgressHelper import ProgressDialogModern
 
 plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -64,13 +65,9 @@ class Add_Properties_final:
         count = 0 
         paus_interval = 10  # Set the interval for the sleep timer
         sleep_duration = 2  # Set the sleep duration in seconds
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_widget.setWindowTitle("Lisan kinnistuid")
-        progress_bar.setMaximum(count_selected_rows)
-        progress_bar.setValue(count)
+        progress = ProgressDialogModern(title="Katastri laadimine", value=0)
+        progress.update(1, purpouse="Projektide laadimine", text1="Palun oota...")
         
-        progress_widget.show()
         for index in selected_indexes:
 
             each_data = tableFunctions.extract_property_data(self,index, table)
@@ -84,10 +81,10 @@ class Add_Properties_final:
             
             add_properties.add_additional_property_data(self, property_id, intended_usages)
             
-            count += 1
-            progress_bar.setValue(count)
+            #count += 1
             #progress_bar.setValue(total_fetched)
             QCoreApplication.processEvents()
             if count % paus_interval == 0:
+                progress.update(value=count, purpouse=f"{count}/{count_selected_rows}", text1="Palun oota...")
                 # Sleep for 0.5 seconds after every delete_interval items
                 time.sleep(sleep_duration)

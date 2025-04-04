@@ -13,7 +13,7 @@ plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 widgets_folder = "widgets"  
 widgets_path = os.path.normpath(os.path.join(plugin_dir, widgets_folder, "WStatusBar.ui"))
 
-class ProgressBarHandler(QWidget):
+class ProgressBarHandler_Comlex_old(QWidget):
     def __init__(self, window_title="Progress", max_value=100):
         super().__init__()
         self.window_title = window_title
@@ -88,7 +88,7 @@ def run_with_progress(task_function, window_title="Processing", total_steps=None
     - The result of the task function.
     """
     #print(f"[run_with_progress] Initializing progress bar with title: {window_title}")
-    progress_handler = ProgressBarHandler(window_title=window_title, max_value=total_steps or 100)
+    progress_handler = ProgressBarHandler_Comlex_old(window_title=window_title, max_value=total_steps or 100)
 
     if total_steps:
         #print("[run_with_progress] Running dynamic progress task...")

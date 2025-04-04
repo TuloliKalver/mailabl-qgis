@@ -5,7 +5,7 @@ from qgis.utils import iface
 from qgis.core import QgsProcessingFeatureSourceDefinition, QgsProject, QgsFeature, edit, QgsVectorLayer
 
 from PyQt5.QtCore import QCoreApplication
-from ..config.settings import SettingsDataSaveAndLoad, connect_settings_to_layer
+from ..config.settings import SettingsDataSaveAndLoad, StoredLayers
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 #Provides tools to select elements from map or from tables and show on map
 
@@ -15,10 +15,10 @@ class properties_selectors:
     @staticmethod
     def show_connected_properties_on_map(values, layer_type):
         if layer_type == "active":
-            layer_name =  connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
+            layer_name =  StoredLayers.ActiveMailablPropertiesLayer_name()
         #    print(f"layer_name if active = {layer_name}")
         if layer_type == "import":
-            layer_name = connect_settings_to_layer.Import_Layer_name()
+            layer_name = StoredLayers.Import_Layer_name()
         #    print(f"layer_name if import = {layer_name}")
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(True)
@@ -40,7 +40,7 @@ class properties_selectors:
     def show_AND_copy_connected_cadasters_for_sync_process_dev(values, memory_layer_name):
         #print(f"values in 'show_connected_cadasters_for_sync_process': {values}")
 
-        input_layer_name = connect_settings_to_layer.Import_Layer_name()
+        input_layer_name = StoredLayers.Import_Layer_name()
         #    print(f"layer_name if import = {layer_name}")
         
         input_layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
@@ -90,10 +90,10 @@ class properties_selectors:
         print(f"cadaster values in 'For_Base_layer_show_connected_cadasters' {values}")
         print(f"selected_feature_ids at the begining in 'For_Base_layer_show_connected_cadasters' {selected_feature_ids}")
         if layer_type == "active":
-            layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
+            layer_name = StoredLayers.ActiveMailablPropertiesLayer_name()
             #print(f"layer_name if active = {layer_name}")
         elif layer_type == "import":
-            layer_name = connect_settings_to_layer.Import_Layer_name()
+            layer_name = StoredLayers.Import_Layer_name()
             #print(f"layer_name if import = {layer_name}")
         print(f"layer_name in 'For_Base_layer_show_connected_cadasters' {layer_name}")
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
@@ -124,10 +124,10 @@ class properties_selectors:
 
     def create_mapView_of_county(self, layer_type, selected_county_item_text):
         if layer_type == "active":
-            layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
+            layer_name = StoredLayers.ActiveMailablPropertiesLayer_name()
             #print(f"layer_name if active = {layer_name}")
         elif layer_type == "import":
-            layer_name = connect_settings_to_layer.Import_Layer_name()
+            layer_name = StoredLayers.Import_Layer_name()
             #print(f"layer_name if import = {layer_name}")
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         layer.removeSelection()
@@ -147,10 +147,10 @@ class properties_selectors:
         
     def create_mapView_of_state(self, layer_type, selected_state_item_text):
         if layer_type == "active":
-            layer_name = connect_settings_to_layer.ActiveMailablPropertiesLayer_name()
+            layer_name = StoredLayers.ActiveMailablPropertiesLayer_name()
             #print(f"layer_name if active = {layer_name}")
         elif layer_type == "import":
-            layer_name = connect_settings_to_layer.Import_Layer_name()
+            layer_name = StoredLayers.Import_Layer_name()
             #print(f"layer_name if import = {layer_name}")
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         layer.removeSelection()

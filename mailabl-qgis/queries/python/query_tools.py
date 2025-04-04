@@ -14,7 +14,7 @@ class requestBuilder:
         access_token = load_token()
         if not access_token:
             text = ("Access token not found. Please connect first.")
-            heading = pealkiri.informationSimple
+            heading = pealkiri.infoSimple
             ModernMessageDialog.Info_messages_modern(heading,text)
             return None
 

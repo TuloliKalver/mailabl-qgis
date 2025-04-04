@@ -4,7 +4,7 @@ from qgis.core import  QgsProject, QgsVectorLayerExporter, QgsVectorFileWriter
 
 from ...Functions.AddProperties.CompareChangesForExistingData import ChangeComparer
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-from ...KeelelisedMuutujad.Mailabl_features import MailablGroupLayers, MailablLayers
+from ...KeelelisedMuutujad.FolderHelper import MailablGroupLayers, MailablLayers
 from ...Functions.layer_generator import LayerCopier
 
 class UpdateAndArchive:
@@ -78,7 +78,7 @@ class UpdateAndArchive:
     @staticmethod
     def update_active_layer_data(self, properties_to_update, active_layer_name, input_layer_name):
         archive_layer_name = MailablLayers.PROPERTIES_ARCHIVE
-        archchive_group_name = MailablGroupLayers.PROPERTIES_ARCHIVE
+        archchive_group_name = MailablGroupLayers.ARCHIVE
 
         # Retrieve layers by name
         input_layers = QgsProject.instance().mapLayersByName(input_layer_name)

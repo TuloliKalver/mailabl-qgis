@@ -3,7 +3,7 @@ class Headings:
         self.warningSimple = "Hoiatus!" 
         self.warningCritical = "Oi Oi Oi!"
         self.tubli = "Tubli!" 
-        self.informationSimple = "Info"
+        self.infoSimple = "Info"
         self.lisan_kinnistuid = "Lisan kinnistuid"
         self.katastrid_laetud = "Katastrid laetud"
         self.nimekirja_koostamine = "Koostan linnade/külade nimekirja!"

@@ -30,26 +30,26 @@ from .utils.UIDeleteListViews import UIDeleteListViews
 from .utils.UIDeleteButtonsManager import UIDeleteButtonsManager
 from qgis.core import QgsProject
 from qgis.PyQt import QtWidgets, uic
-from PyQt5.QtWidgets import  QLineEdit, QListView, QAbstractItemView, QMessageBox, QVBoxLayout
+from PyQt5.QtWidgets import  QLineEdit, QListView, QAbstractItemView, QVBoxLayout
 from PyQt5.QtGui import QStandardItemModel
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler, TabHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.SetupModules.SetupMainLayers import SetupCadastralLayers
-from .config.settings import connect_settings_to_layer, Flags, settingPageElements
+from .config.settings import StoredLayers, Flags, settingPageElements
 from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
 from .config.mainwidget import WidgetInfo
 from .KeelelisedMuutujad.modules import Module
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
-from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, ColorHandler, stackedWidgetsSpaces, alter_containers
-from .app.View_tools import listView_functions, shp_tools, tableView_functions, progress, ToolsProject, ToolsContract
+from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, stackedWidgetsSpaces, alter_containers
+from .app.View_tools import listView_functions, shp_tools, tableView_functions
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
 from .Functions.SearchEngines import searchGeneral,ModularSearchEngine
 from .Functions.delete_items import DeletingProcesses, MapRestictionsAndListWidgetDataInserion
 from .Functions.Tools import tableFunctions
-from .Functions.AddProperties.AddProperties_dev import AddProperties_dev
+#from .Functions.AddProperties.AddProperties_dev import AddProperties_dev
 from .Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 from .processes.ImportProcesses.Import_shp_file import SHPLayerLoader
 from .processes.OnFirstLoad.FirstLoad import Startup
@@ -68,21 +68,40 @@ from .Functions.EVEL.evel_general import EVELTools
 from .Functions.HomeTree.BuildTree import MyTreeHome
 from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool, FeatureInfoToolSearch
 from .Functions.Searchpropertyfromlayer import SearchProperties
-from .Functions.AddProperties.AddProcessPrepareTables import AddProcessPrepareTables
+#from .Functions.AddProperties.AddProcessPrepareTables import AddProcessPrepareTables
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
 from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
-from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus, RemapPropertiesLayer
-from .utils.UIWindowHelpers import WindowPrositionHelper, WindowManagerMinMax
+from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from .utils.UIWindowHelpers import WindowPositionHelper, WindowManagerMinMax
 from .utils.custom_event_filter import BlockButtonsToPreferLabelEventFilter, ReturnPressedManager
 from .utils.TableUtilys.TableHelpers import TableDataInserter
-from .utils.ProgressHelper import ProgressHelper
+
 from .utils.TableUtilys.TableHelpers import TableHelper
-from .processes.tester import ProgressBarTester
 from .utils.signal_utils import execute_with_block
 from .app.button_connector import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
 from .utils.SpatialDataHelper import ZoomForModuleData
 from .utils.messagesHelper import ModernMessageDialog
+
+
+
+###########################################################################################
+            ### MODULES IMPRORT FOR NEW UPDAATE
+
+##########################################################################################
+from functools import partial
+from .utils.ButtonsHelper import ButtonHelper
+from .utils.CheckBoxHelper import CheckboxHelper
+from .Common.app_state import PropertiesProcessStage, Processes
+from .utils.SelectionActions import SelectionActions
+from .utils.UIStateManager import UIStateManager
+from .utils.WidgetHelpers import WidgetAndWievHelpers, ListSelectionHandler
+from .utils.MapHelpers import MapDataFlowHelper
+from .utils.MapToolsHelper import MapToolsHelper
+from .Functions.FlowPropertiesAdd import AddProperties
+from .Common.ChaceHelpers import CacheUpdater
+from .utils.ListHelper import  ListSelections
+
 
 # This loads your .ui file so that PyQt can populate your plugin with the elements from Qt Designer
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -93,6 +112,7 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
 plugin_dir = os.path.dirname(__file__)
 
 ################################################################################################################
+
 #initialize
 
 pealkiri = Headings()
@@ -101,16 +121,16 @@ edu = EdukuseTexts()
 
 comboboxes = ComboBoxFunctions()
 process = RemoveProcess()
-color = ColorHandler()
+
 list_functions = listView_functions()
 table_functions = tableView_functions()
 graph_tools = ComboBoxMapTools()
 properties_functions = Properties()
 
-setting_layer = connect_settings_to_layer
+setting_layer = StoredLayers
 selector_class = properties_selectors()
 projects = CadasterSelector()
-progress_bar = progress
+
 
 load = SettingsDataSaveAndLoad()
 stacked_widgets = stackedWidgetsSpaces()
@@ -146,7 +166,39 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
        # Set always on top flag
 
 
+#################################################################################################################
+
+            #NEW INITIALIZERS
+
+#################################################################################################################
+
+        # Set this dialog as the main dialog for ButtonHelper
+        ButtonHelper.set_dialog(self)
+        ListSelectionHandler.set_dialog(self)
+        TableHelper.set_dialog(self)
+        MapDataFlowHelper.set_dialog(self)
+        WidgetAndWievHelpers.set_dialog(self)
+        CheckboxHelper.set_dialog(self)
+        
+        SelectionActions.initialize(self,
+            label=self.lblActionName, 
+            button_frame=self.frPropertiFlowHolder,
+            table_view=self.tvSelectedMapItems,
+            confirm_button=self.btnConfirmAction,
+            )
+
+        UI = UIStateManager(self)
+
+##########################################################################################################
+
+                ###UNTILL HERE UNORGANIZED NEW PARTS
+
+##########################################################################################################
+
+
         Startup.FirstLoad(self)
+        Startup.on_load(self)
+
         #setup login dialog and hide frames to block functionality!
         startup_frames = [self.leftMenuContainer,
                         self.rightMenuContainer, 
@@ -155,16 +207,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         self.lblUserAccessDenied
                         ]
 
-        self.on_load(startup_frames)
 
-        # Initialize WindowManager with this window
-        ProgressHelper.set_dialog(self)
         TableHelper.set_dialog(self)
+        
+        self.window_manager = WindowPositionHelper(self)
 
-
-        self.window_manager = WindowPrositionHelper(self)
-
-        self.AddProcessPrepareTables = AddProcessPrepareTables(self)
+        #self.AddProcessPrepareTables = AddProcessPrepareTables(self)
 
         # Initialize ReturnPressedManager
         self.return_pressed_manager = ReturnPressedManager(self)
@@ -193,6 +241,34 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Install event filter on the main window
         self.installEventFilter(self.custom_event_filter)
 
+
+        self.btnConfirmAction.setEnabled(False)
+
+        self.pbAction.setEnabled(True)
+        #self.pbAction.clicked.connect(partial(DuplicateLayerResolver.resolve_duplicate_layers_auto, layer_name="Arendatav_arhiiv kopeeri"))
+        #self.pbCancelAction.setEnabled(True)
+        
+#####################################################################################################################
+
+                            #NEW BUTTON CONNECTIONS
+ 
+#####################################################################################################################        
+
+        self.setup_button_actions()
+
+        #UIStateManager.disable_all()
+
+        self.lvCounty.itemSelectionChanged.connect(self.get_connected_signal)
+        self.lvState.itemSelectionChanged.connect(self.get_connected_signal)
+        self.lvSettlement.itemSelectionChanged.connect(self.get_connected_signal)
+
+        self.chkSelectAllSettlements.stateChanged.connect(self.on_toggle_all_with_list)
+        self.chkToggleRoadSelection.stateChanged.connect(self.on_toggle_select_only_non_transport_properties)
+#####################################################################################################################
+
+                        #OLD BUTTON CONNECTIONS
+
+######################################################################################################################
 
         self.sw_HM.setCurrentIndex(0)
         initial_size = self.UC_Main_Frame.size()
@@ -253,13 +329,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         object_tableView_Add_Street_list = self.tblvResults_streets_Confirm
 
 
-#Define buttons
-        self.pbCadasters = self.pbCadasters
-        self.pbAdd_SHP_To_Project = self.pbSettings_AddShapeFile
-        self.pbAvaMaaameti_veebikas = self.pbAvaMaaAmet
-        self.Start_update = self.pbUpdateData
-        
-
     #Confirm password entering
         self.pbLogin.clicked.connect(lambda: self.save_user_data(startup_frames))
         self.pbCancelLogin.clicked.connect(self.remove_UC_data)
@@ -269,14 +338,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 # Opens and handles the sub menu
         
-#        self.pbCadasters.clicked.connect(self.pb_Cadasters_change_help)
-        self.pbCadasters.clicked.connect(lambda: secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self))
-
-        #self.pbUpdateData.clicked.connect(lambda: WorkSpaceHandler.show_help_update(self))
-        self.pbUpdateData.clicked.connect(lambda: secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self))
-        #self.pbActivateLabelSettings.clicked.connect(self.SaveToLabel)
-
-
         self.pbeasements.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Easements(self))
         self.pbRefreshEasementTable.clicked.connect(lambda: WorkSpaceHandler.easements_reload(self))
         self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts(self))
@@ -299,7 +360,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pbSettings.clicked.connect(self.toggle_settings_main_view)
         #Add shae files
-        self.pbSettings_AddShapeFile.clicked.connect(self.load_cadastrals) 
+
         
     # workspace page ID 5 = Homepage
         self.pbHome.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Properties(self))
@@ -321,8 +382,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.btnUserPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_terms_of_use))
         self.btnPrivacyPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_privacy_policy))
         # Avab maa-ameti repositooriumi kaardiandmete alla laadimiseks
-        self.pbAvaMaaAmet.clicked.connect(lambda: loadWebpage.open_maa_amet_webpage(self))
-
+        
 
         #self.pbRefresh.clicked.connect(self.check_for_updates)
         
@@ -343,7 +403,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.listWidget_county.itemClicked.connect(self.get_state_list)
         self.pbDone_County.clicked.connect(self.get_state_list)
         self.pbDone_State.clicked.connect(self.get_city_list)
-        self.pbDoneCity.clicked.connect(self.AddProcessPrepareTables.prepare_properties_list_and_Add_to_table_updated_with_selecting_items)
+        #self.pbDoneCity.clicked.connect(self.AddProcessPrepareTables.prepare_properties_list_and_Add_to_table_updated_with_selecting_items)
 
 
         self.pbDel_County.clicked.connect(self.delete_process_after_county)
@@ -726,11 +786,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button2 = self.pbExpand
         button3 = self.pbRefresh
         button4 = self.pbRemove
-        button5 = self.pbCadasters
+
         #button6 is free to set any new buttons       
-        button7 = self.pbUpdateData
-        button8 = self.pbAvaMaaAmet
-        button9 = self.pbSettings_AddShapeFile
+        
+        
         button10 = self.pbAddDrawings
         button11 = self.pbContracts
         button12 = self.pbMainContract
@@ -1099,20 +1158,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
 
-    def on_load(self, frames):
-
-        FrameHandler.hide_multiple_frames(self, frames )
-        path = PathLoaderSimple.metadata()
-        version_nr = Version.get_plugin_version(path)
-        lblVersion = self.lblLoadVersion
-        if version_nr == 'dev':
-            lblVersion.setStyleSheet("color: #bc5152;")
-        else:
-            lblVersion.setStyleSheet("")  # Reset to default style
-
-        lblVersion.setText(f"v.{version_nr}")
-        #print(f"version_nr: '{version_nr}'")
-
     #creditentials handling
     def remove_UC_data(self):
         clear_UC_data()
@@ -1223,15 +1268,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                     lblProjectsTargetFolder_location, lbl_preferred_project_status, 
                                     lbl_preferred_contract_status, lblPreferredContractsTypes_value)        
 
-    def load_cadastrals(self):
-        self.sw_HM.setCurrentIndex(7)
-        self.sw_HM_Andmete_laadimine.setCurrentIndex(1)
-        self.swWorkSpace.setCurrentIndex(1)
-        self.swCadastral_sub_processes.setCurrentIndex(4)
-        label = self.lblSHPNewItems
-        SHPLayerLoader.load_shp_layer(label)
-        #shp_input = load.load_SHP_inputLayer_name()        
-        ColorHandler.changeButtonColor(self, self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)                                
+
 
     def generate_virtual_mapLayer_synced_with_Mailabl(self):
         # Create an instance of YourClas
@@ -1434,9 +1471,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         DeleteActions.delete_selected_items_from_mylabl(self)
         
     def toggle_settings_main_view(self):
-        input_layer_name = load.load_SHP_inputLayer_name()
-        
-        color.changeButtonColor(self.pbCadasters, self.pbExpand, self.pbRefresh, self. pbSyncMailabl, self.pbAvaMaaameti_veebikas, self.pbAdd_SHP_To_Project, input_layer_name, self.Start_update)
         self.swWorkSpace.setCurrentIndex(4)
         self.sw_HM.setCurrentIndex(4)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
@@ -1483,16 +1517,103 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                                         lbl_preferred_contract_status, lblPreferredContractsTypes_value)
 
         
-        if Flags.Flag_settings_button:
-            print("toggle if")
-            WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
+        #if Flags.Flag_settings_button:
+        #print("toggle if")
+        WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
             #widget.setMaximumHeight(16777215)
             #QTimer.singleShot(600, lambda: WidgetAnimator.toggle_Frame_height_for_settings(self, widget))
-        else:
-            print("toggle else")
-            secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self)
-            secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self)
+        #else:
+        #    print("toggle else")
+            #secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self)
+            #secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self)
             #widget.setMaximumHeight(0)
         Flags.Flag_settings_button = not Flags.Flag_settings_button
         print(f"Flags: {Flags.Flag_settings_button}")
+        
+
+#########################################################################################################################
+
+                    #new section to be implemented into Mailabl plugin 
+
+#########################################################################################################################
+
+    def get_connected_signal(self):
+        listWidgets = [self.lvCounty, self.lvState, self.lvSettlement]
+        for widget in listWidgets:
+            widget.setEnabled(False)
+        element = self.sender()
+        CacheUpdater.update_slected_items_cache(element)
+        
+        UI = UIStateManager(self)
+        
+        UI.flow_and_ui_controls()
+
+        for widget in listWidgets:
+            widget.setEnabled(True)
+
+    def setup_button_actions(self):
+        
+        loader = SHPLayerLoader(self)
+        UI = UIStateManager(self)
+        
+        
+        """Setup button-action mapping and connections."""
+        self.button_actions = {
+            self.btnAddElements: partial(SelectionActions.main_process_control, Processes.ADD, self.btnAddElements),
+            self.btnUpdateData: partial(SelectionActions.main_process_control, Processes.EDIT, self.btnUpdateData),
+            self.btnRemoveItems: partial(SelectionActions.main_process_control, Processes.REMOVE, self.btnRemoveItems),
+            self.btnConfirmAction: SelectionActions.execute_action,
+            self.btnCancelAction: SelectionActions.cancel_selection,
+            self.pbAction : AddProperties.store_to_archive,
+            self.pbLoaddShapeFile:loader.load_shp_layer,
+            self.pbOpenMaAmet:partial(loadWebpage.open_maa_amet_webpage_new),
+            #self.pbCancelAction: self.see_loaded_layers,
+            self.btnMapActions: UI.start_properti_flow_main
+        }
+
+        for button, function in self.button_actions.items():
+            button.clicked.connect(function)
+
+    def on_toggle_all_with_list(self, state):
+        checkbox = self.sender()
+        widget_name = checkbox.property("target_widget")
+        widget = getattr(self, widget_name, None)
+        if widget is not None:
+            if state == Qt.Checked:
+                ListSelections.select_all_items(widget)
+            else:
+                ListSelections.deselect_all_items(widget)
+
+    def on_toggle_all_with_Table(self, state):
+        checkbox = self.sender()
+        widget_name = checkbox.property("target_widget")
+        widget = getattr(self, widget_name, None)
+        if widget is not None:
+            if state == Qt.Checked:
+                TableHelper.select_all_items(widget)
+            else:
+                TableHelper.deselect_all_items(widget)
+
+    def on_toggle_select_only_non_transport_properties(self, state):
+        checkbox = self.sender()
+        widget_name = checkbox.property("target_widget")
+        widget = getattr(self, widget_name, None)
+        search_field = 'siht1'
+        search_value = 'TRANSPORDIMAA'
+        if widget is not None:
+            if state == Qt.Checked:
+                feature_ids = TableHelper.select_items_by_field(table=widget, field=search_field, search_value=search_value)
+                MapToolsHelper.select_features_by_ids(feature_ids=feature_ids, zoom_to=True)
+                checkbox.setText("Vali kõik")
+            else:
+                TableHelper.select_all_items(widget)
+                feature_ids = TableHelper.get_selected_feature_ids_from_table_model(widget)
+                MapToolsHelper.select_features_by_ids(feature_ids=feature_ids, zoom_to=True)
+                checkbox.setText("Eemalda tranpordimaa valikust")
+
+    @staticmethod
+    def see_loaded_layers():
+        stored_layers_settings = PropertiesProcessStage.loaded_layers
+        print("loaded layer settings are")
+        print(stored_layers_settings)
         

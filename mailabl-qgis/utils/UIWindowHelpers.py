@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget
 
-class WindowPrositionHelper:
+class WindowPositionHelper:
     def __init__(self, window):
         self.window = window
         self.original_flags = window.windowFlags()

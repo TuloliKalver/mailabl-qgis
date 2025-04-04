@@ -280,7 +280,7 @@ class secondLevelButtonsHandler:
     def toggle_Frame_height_Cadaster_functions(self):
         WorkSpaceHandler.show_help_update(self)
         self.CadastralMovesMainLabel.setText("Toimingud kinnistutega")
-        push_button = self.pbCadasters
+        push_button = self.btnMapActions
         widget = self.pbCadastraActions_SliderFrame
         main_widget = self.pbSettings_SliderFrame
         widgets_height = widget.height()
@@ -336,7 +336,7 @@ class FrameHandler:
         self.hide_frame("frame4")
         self.hide_frame("frame5")
 
-    def password_correct(self):
+    def chek_passed_main_dialog_setup(self):
         self.show_frame("frame1")
         self.show_frame("frame2")
         self.hide_frame("frame3")
@@ -345,7 +345,6 @@ class FrameHandler:
 
 class LayerChecker:
     def SHP_Layer_Checker(self, input_layer_name):
-        #setup messagebox
         text = HoiatusTexts().SHPfaili_laadimine
         heading = pealkiri.warningSimple
     
@@ -366,58 +365,6 @@ class LayerChecker:
         else:
             ModernMessageDialog.Info_messages_modern(heading, text)
 
-class ColorHandler:
-
-    def changeButtonColor(self, pbCadasters, pbExpand, pbRefresh, pbSyncMailabl, pbAvaMaaameti_veebikas, pbAdd_SHP_To_Project, input_layer_name, Start_update):
-        # Check if a virtual layer is present and has features
-        input_layers = QgsProject.instance().mapLayersByName(input_layer_name)
-        if input_layers:
-            input_layer = input_layers[0]  # Get the first layer from the list
-            if isinstance(input_layer, QgsVectorLayer):
-                feature_count = input_layer.featureCount()
-                #print("Feature Count:", feature_count, "on input layer named", input_layer_name)  # Print the feature count for debugging
-
-                if feature_count > 0:
-                    Start_update.setStyleSheet(background_green)
-                    pbAvaMaaameti_veebikas.setStyleSheet(background_green)
-                    pbAdd_SHP_To_Project.setStyleSheet(background_green)
-                    pbAdd_SHP_To_Project.setText(Headings().katastrid_laetud)
-                    #activate buttons
-                    pbExpand.setEnabled(True)
-                    pbRefresh.setEnabled(True)
-                    pbSyncMailabl.setEnabled(True)
-                    
-                else:
-                    #SHP_layer_not_does have data on_layer.
-                    Start_update.setStyleSheet(background_red)
-                    pbAdd_SHP_To_Project.setStyleSheet(background_red)
-                    pbAvaMaaameti_veebikas.setStyleSheet(background_red)
-                    pbAdd_SHP_To_Project.setText("Katastrite laadimine")
-                    #isolate buttons                    
-                    pbExpand.setEnabled(False)
-                    pbRefresh.setEnabled(False)
-                    pbSyncMailabl.setEnabled(False)
-
-                    
-            else:
-                Start_update.setStyleSheet(background_red)
-                pbAdd_SHP_To_Project.setStyleSheet(background_red)
-                pbAvaMaaameti_veebikas.setStyleSheet(background_red)
-                pbAdd_SHP_To_Project.setText("Katastrite laadimine")
-                #isolate buttons
-                pbExpand.setEnabled(False)
-                pbRefresh.setEnabled(False)
-                pbSyncMailabl.setEnabled(False)
-
-        else:
-            Start_update.setStyleSheet(background_red)
-            pbAdd_SHP_To_Project.setStyleSheet(background_red)
-            pbAvaMaaameti_veebikas.setStyleSheet(background_red)
-            pbAdd_SHP_To_Project.setText("Katastrite laadimine")
-            #isolate buttons
-            pbExpand.setEnabled(False)
-            pbRefresh.setEnabled(False)
-            pbSyncMailabl.setEnabled(False)
 
 
 class stackedWidgetsSpaces:

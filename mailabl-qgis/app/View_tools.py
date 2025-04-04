@@ -19,7 +19,7 @@ from ..KeelelisedMuutujad.messages import Headings, HoiatusTextsAuto, HoiatusTex
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..utils.messagesHelper import ModernMessageDialog
 
-from ..utils.progres_bar_operations import run_with_progress, ProgressBarHandler       
+from ..utils.progres_bar_operations import run_with_progress, ProgressBarHandler_Comlex_old       
 
 pealkiri = Headings()
 
@@ -48,14 +48,6 @@ class ToolsContract:
         contract_ToolsWidget.lblContractName.setText(Contract_name)
         contract_ToolsWidget.lblContractNumber.setText(Contract_number)
         return contract_ToolsWidget    
-
-class progress:
-        def progress_bar_load(total):
-            progress_widget = loadUi(widgets_path)
-            progress_bar = progress_widget.testBar
-            progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
-            #QCoreApplication.processEvents()  # Process events to allow GUI updates
-            return progress_bar
 
 
 class tableView_functions():
@@ -460,7 +452,7 @@ class shp_tools:
 
     @staticmethod
     def create_item_list_with_MultyWhere(restrictions, layer_name, where_field, field):
-        progress_handler = ProgressBarHandler()
+        progress_handler = ProgressBarHandler_Comlex_old()
         input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         total = input_layer.featureCount()  # Automatically get the total number of features
         #print(f"Total features in layer '{layer_name}': {total}")

@@ -29,8 +29,6 @@ class ButtonHelper:
         #print(f"Available buttons: {buttons_enable}")
         return buttons_enable, buttons_disable, list_wiget
 
-
-
     @staticmethod
     def get_button_objects(button_names):
         """
@@ -51,8 +49,6 @@ class ButtonHelper:
                 button_objects.append(button)
 
         return button_objects
-
-
     @staticmethod
     def get_list_widget_objects(list_widget_names):
         """
@@ -73,3 +69,8 @@ class ButtonHelper:
                 List_widget_objects.append(widget)
 
         return List_widget_objects
+    
+
+
+
+       

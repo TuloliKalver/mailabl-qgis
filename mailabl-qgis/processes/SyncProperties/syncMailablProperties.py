@@ -7,10 +7,10 @@ from PyQt5.QtCore import QCoreApplication, QTimer
 from PyQt5.QtWidgets import QListWidgetItem
 from PyQt5.QtGui import QIcon
 from ...Functions.item_selector_tools import properties_selectors
-from ...config.settings import connect_settings_to_layer
+from ...config.settings import StoredLayers
 from...Functions.layer_generator import LayerCopier
 from ...KeelelisedMuutujad.messages import Headings
-from ...KeelelisedMuutujad.Mailabl_features import MailablGroupLayers
+from ...KeelelisedMuutujad.FolderHelper import MailablGroupLayers
 from ...utils.messagesHelper import ModernMessageDialog
 
 
@@ -98,7 +98,7 @@ class PropertiesBaseMap:
         frSync_Overview_Main = self.frSync_Overview_Main
         frSync_Tools = self.frSync_Tools
 
-        input_layer_name =  connect_settings_to_layer.Import_Layer_name()
+        input_layer_name =  StoredLayers.Import_Layer_name()
         future_layer_name_text = lblFor_Sync_GreatLayerName.text()
         if not future_layer_name_text or len(future_layer_name_text) < 3:
             text = ("Nimetus on vigane või lisamata")    
@@ -136,7 +136,7 @@ class PropertiesBaseMap:
         
         layer_creator = True
         if layer_creator:
-            group_layer_name = MailablGroupLayers.NEW_PROPERTIES_NAME #'Uued kinnistud'
+            group_layer_name = MailablGroupLayers.NEW_PROPERTIES #'Uued kinnistud'
             memory_layer_name = LayerCopier.copy_virtual_layer_for_properties(future_layer_name_text, group_name=group_layer_name)
             layer_creator = False
             print(f"Created memory_layer_name at 'start': {memory_layer_name}")

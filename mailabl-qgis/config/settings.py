@@ -134,6 +134,9 @@ class FilesByNames:
         self.Easement_evelLayer = "Servituut.qml"
         #Need to be separated into diferent classes!
         self.statusbar_widget = "WStatusBar.ui"
+
+
+
         self.layer_setup_ui = "LayerSetup.ui"
         self.projects_setup_ui = "ProjectSetup.ui"
         self.contracts_setup_ui = "ContractsSetup.ui"
@@ -145,6 +148,7 @@ class FilesByNames:
         self.add_properties_to_module_ui = "Properties_connector_new.ui"
         self.EVEL_tools_ui = "EVEL.ui"
 
+        self.WConfirmation = "Confirmation_list.ui"
         self.info_message_ui = "infoMessages.ui"
         self.error_message_ui = "errorMessage.ui"  #planned
         self.warning_message_ui = "warningMessage.ui"  #planned
@@ -588,7 +592,7 @@ class SettingsDataSaveAndLoad:
         return value
 
 
-class connect_settings_to_layer:    
+class StoredLayers:    
     def ActiveMailablPropertiesLayer_name():
         active_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
         return active_layer

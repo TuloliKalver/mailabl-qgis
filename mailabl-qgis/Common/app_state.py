@@ -3,7 +3,7 @@
 from typing import Dict, Any
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 
-class AppState:
+class PropertiesProcessStage:
     # Current active process (e.g., "add", "edit", "remove").
     active_process = None  
 
@@ -20,7 +20,7 @@ class AppState:
     cache: Dict[str, Any] = {}
 
     # This can be set to one of the states defined in FlowStates.
-    current_flow_state = None
+    current_flow_stage = None
 
     current_process = None
 
@@ -34,7 +34,7 @@ class AppState:
         cls.active_layer = None
         cls.config = {}
         cls.cache = {}
-        cls.current_flow_state = None
+        cls.current_flow_stage = None
         cls.current_process = None
 
     @classmethod
@@ -42,7 +42,7 @@ class AppState:
         cls.active_process = None
         cls.loaded_layers = {}
         cls.active_layer = None
-        cls.current_flow_state = None
+        cls.current_flow_stage = None
         cls.current_process = None
 
 
@@ -50,24 +50,18 @@ class Processes:
     """
     Enumerates the possible states of the processes.
     """
-    ADD_MAPFEATURES = "add"
-    EDIT_MAPFEATURES = "edit"
-    REMOVE_MAPFEATURES = "remove"
+    ADD = "Kinnistute lisamine"
+    EDIT = "Andmete muutmine"
+    REMOVE = "Kinnistute eemaldamine"
 
-class Layers:
-    # Define layer names for consistency across the project
-    IMPORT_LAYER_NAME = "Eesti"
-    USER_LAYER_NAME = "uus_kiht"
-    ARCHIVE_PRE_LAYER_NAME = "Arendatav_arhiiv"
-    ARCHIVE_LAYER_NAME = "Minu_arhiiv"
+class Layers_NEED_CENTRALIZING:
+    from ..config.settings import StoredLayers
 
-class LayerGroups:
-    ARCHIVE = "Arhiiv"
-    TEMPORARY_LAYERS = "Ajutised kihid"
-    ARCHIVED_PROPERTIES = "Arhiveeritud kinnistud"
+    IMPORT_LAYER_NAME = StoredLayers.Import_Layer_name()
+    USER_LAYER_NAME = StoredLayers.ActiveMailablPropertiesLayer_name()
 
 
-class MainVaiables:
+class MainVariables:
     NAME = "name"
     ACTIVATE = "activated"
     CLEANUP = "cleanup"
@@ -75,7 +69,7 @@ class MainVaiables:
     MAX_ID = "max_fid"
     IS_ARCHIVE = "is_archive"
     
-class FlowStates:
+class FlowStages:
     """
     Enumerates the possible states of the application flow.
     """
@@ -90,14 +84,14 @@ class FlowStates:
 
 
     @classmethod
-    def forward_flow(cls):
+    def forward_stage(cls):
         # Store the current state
-        state = AppState.current_flow_state
-        mapping = Expressions.FLOW_EXPRESSION_MAPPING.get(state, {})
+        stage = PropertiesProcessStage.current_flow_stage
+        mapping = Expressions.FLOW_EXPRESSION_MAPPING.get(stage, {})
         next_flow = mapping.get("next_flow")
         #print(f"Process when started is set to {state}")        
         #print(f"Planned next flow {next_flow}")        
-        AppState.current_flow_state = next_flow
+        PropertiesProcessStage.current_flow_stage = next_flow
 
 
 
@@ -155,9 +149,9 @@ class Expressions:
 
 
     FLOW_EXPRESSION_MAPPING = {
-        FlowStates.COUNTY: {
+        FlowStages.COUNTY: {
             'field': Katastriyksus.mk_nimi,
-            'next_flow': FlowStates.PRE_STATE,
+            'next_flow': FlowStages.PRE_STATE,
             'attribute': 'selected_counties',
             'builder': lambda cache: Expressions.build_in_expression(
                 Katastriyksus.mk_nimi, cache.get('selected_counties', [])
@@ -165,9 +159,9 @@ class Expressions:
             'buttons_enable': [],
             'buttons_disable': ['btnConfirmAction']
         },
-        FlowStates.PRE_STATE: {
+        FlowStages.PRE_STATE: {
             'field': Katastriyksus.mk_nimi,
-            'next_flow': FlowStates.STATE,
+            'next_flow': FlowStages.STATE,
             'attribute': 'selected_municipalities',
             'builder': lambda cache: Expressions.build_in_expression(
                 Katastriyksus.mk_nimi, cache.get('selected_counties', [])
@@ -177,10 +171,10 @@ class Expressions:
             'list_widget_input': 'lvCounty',
             'list_widget_target': 'lvState',
         },
-        FlowStates.STATE: {
+        FlowStages.STATE: {
             'field': Katastriyksus.mk_nimi,
             'target_field': Katastriyksus.ov_nimi,
-            'next_flow': FlowStates.PRE_MUNICIPALITY,
+            'next_flow': FlowStages.PRE_MUNICIPALITY,
             'attribute': 'selected_state',
             'builder': lambda cache: Expressions.combine_expressions([
                 Expressions.build_in_expression(Katastriyksus.mk_nimi, cache.get('selected_counties', [])),
@@ -192,10 +186,10 @@ class Expressions:
             'list_widget_input': 'lvCounty',
             'list_widget_target': 'lvState',
         },
-        FlowStates.PRE_MUNICIPALITY: {
+        FlowStages.PRE_MUNICIPALITY: {
             'field': Katastriyksus.ay_nimi,
             'target_field': Katastriyksus.ov_nimi,
-            'next_flow': FlowStates.MUNICIPALITY,
+            'next_flow': FlowStages.MUNICIPALITY,
             'attribute': 'selected_municipalities',
             # Combine the county and municipality expressions from the cache
             'builder': lambda cache: Expressions.combine_expressions([
@@ -208,10 +202,10 @@ class Expressions:
             'list_widget_target': 'lvSettlement',
         },
 
-        FlowStates.MUNICIPALITY: {
+        FlowStages.MUNICIPALITY: {
             'field': Katastriyksus.ay_nimi,
             'target_field': Katastriyksus.ay_nimi,
-            'next_flow': FlowStates.PREVIEW,
+            'next_flow': FlowStages.PREVIEW,
             'attribute': 'selected_municipalities',
             'builder': lambda cache: Expressions.combine_expressions([
                 Expressions.build_in_expression(Katastriyksus.mk_nimi, cache.get('selected_counties', [])),
@@ -222,11 +216,11 @@ class Expressions:
             'list_widget_input': 'lvState',
             'list_widget_target': 'lvSettlement',
         },
-        FlowStates.PREVIEW: {
+        FlowStages.PREVIEW: {
             'field': Katastriyksus.ov_nimi,
             'extra_field': Katastriyksus.ay_nimi,
             'target_field': Katastriyksus.ay_nimi,
-            'next_flow': FlowStates.PREVIEW,
+            'next_flow': FlowStages.PREVIEW,
             'attribute': None,
             'builder': lambda cache: Expressions.combine_expressions([
                 Expressions.build_in_expression(Katastriyksus.mk_nimi, cache.get('selected_counties', [])),
@@ -237,7 +231,7 @@ class Expressions:
             'buttons_enable': [],
             'buttons_disable': [],
         },
-        FlowStates.COMPLETE: {
+        FlowStages.COMPLETE: {
             'field': Katastriyksus.mk_nimi,
             'target_field': Katastriyksus.ov_nimi,
             'extra_field': Katastriyksus.ay_nimi,
@@ -251,7 +245,7 @@ class Expressions:
             'buttons_enable': [],
             'buttons_disable': [],
         },
-        FlowStates.CANCEL: {
+        FlowStages.CANCEL: {
             'field': None,
             'target_field': None,
             'extra_field': None,
@@ -266,6 +260,6 @@ class Expressions:
         """
         Retrieve the field name based on the current flow state.
         """
-        flow = AppState.current_flow_state
+        flow = PropertiesProcessStage.current_flow_stage
         mapping = cls.FLOW_EXPRESSION_MAPPING.get(flow, {})
         return mapping.get('field', '')

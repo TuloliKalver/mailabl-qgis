@@ -18,7 +18,7 @@ from ...queries.python.responses import HandlePropertiesResponses
 from .query_cordinator import PropertiesConnectedElementsQueries
 from ...config.settings import MailablWebModules, OpenLink
 from ...config.ui_directories import PathLoader, plugin_dir_path, UI_multiline_Statusbar
-
+from ...utils.ProgressHelper import ProgressDialogModern
 
 paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
 
@@ -47,21 +47,14 @@ class MyTreeHome:
         treeWidget.setHeaderLabels([MyTreeHome.header_number, MyTreeHome.header_name, MyTreeHome.header_id, "", MyTreeHome.header_file_path, "", MyTreeHome.header_statuses])
             # Initialize child_data to combine results from all modules
 
-        from ...utils.ProgressHelper import ProgressDialogModern
-
-        
         # Get the module attributes
         module_attrs = Module().all_modules# [attr for attr in dir(Module) if not attr.startswith("_") and not callable(getattr(Module, attr))]
         total = len(module_attrs)
 
-        # Set the maximum value of the progress bar
+        # Initialize the progress dialog
+        progress = ProgressDialogModern(title="Katastri laadimine", value=0, maximum=total)
 
-        progress = ProgressDialogModern(purpouse="Katastri laadimine", text="Palun oota...")
-        progress.update(1, "Esimene etapp")
-        progress.update(50, "Pool tehtud")
-        
-
-        QCoreApplication.processEvents()
+        progress.update(1, purpouse="Katastri laadimine", text1="Palun oota...")
 
         #end_cursor_id = None  # Initialize end_cursor before the loop
         first = 1
@@ -82,6 +75,8 @@ class MyTreeHome:
         #start do use data
         if response_id.status_code == 200:
             data_id = HandlePropertiesResponses._response_properties_data_edges(response_id)
+            QCoreApplication.processEvents()
+
             #print(f"returned data: {data_id}")
                 # Extract the id value from the returned data
             if data_id and 'node' in data_id[0]:
@@ -90,13 +85,16 @@ class MyTreeHome:
                 StoreValues().save_propertyID(property_id)
             else:
                 print("No valid data found to extract id")
-
+        progress.update(value=10)
+        #print(f"property_id: {property_id}")
         # Continue with your function implementation
         child_data = {}
         for index, module_name in enumerate(Module().all_modules, start=1):
             # Update the progress bar
             property_id_str = str(property_id)
             module_data = PropertiesConnectedElementsQueries().fetch_module_data(module_name, property_id_str)
+            progress.update(value=25)
+            QCoreApplication.processEvents()
             #print(f"module_data: {module_data}")
             # Check if module_data is not empty before updating child_data
             if module_data:
@@ -115,7 +113,7 @@ class MyTreeHome:
         #print(f"child data: {child_data}")
  
         length = len(child_data.keys())
-        progress.update(1, "uuesti")
+        progress.update(50, "uuesti")
         if child_data:  # Only add module if data is returned
             #print(f"length: {length}")
             for typename, items in child_data.items():  # Iterate over child_data correctly
@@ -131,7 +129,7 @@ class MyTreeHome:
                 # Translate the module name using ModuleTranslation
                 moduel_str = ModuleTranslation.module_name(module, language)
                 root_item.setText(0, moduel_str)
-
+                progress.update(index, text2=f"Alustan moodulite laadimist")
                 for child in items:  # Iterate over each item in the list
                     child_item = QTreeWidgetItem(root_item)
                     child_item.setText(2, child["id"])  # Store the link in column 2
@@ -163,11 +161,12 @@ class MyTreeHome:
 
                     MyTreeHome.set_clickable_webIcon(child_item, 3) 
                     MyTreeHome.set_clickable_folderIcon(child_item, 5)
-                length = length+1
-                progress.update(length, "Toimetan")
-        
+                    length = length+1
+                    progress.update(length, text2="Laen Mooduleid")
+            
                 QCoreApplication.processEvents()
-        progress.update(100, "Valmis!")
+        # Step 2
+        progress.update(100, text1="Valmis!")
         progress.close()
         # Hide the second column (index 1)
         treeWidget.setColumnHidden(2, True)

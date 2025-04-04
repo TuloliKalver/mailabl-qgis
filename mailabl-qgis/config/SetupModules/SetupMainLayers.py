@@ -67,7 +67,7 @@ class SetupCadastralLayers:
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked
         text = sisu.kasutaja_peatas_protsessi
-        heading = pealkiri.informationSimple
+        heading = pealkiri.infoSimple
         ModernMessageDialog.Info_messages_modern(heading, text)
         widget.reject()  # Close the dialog        
 

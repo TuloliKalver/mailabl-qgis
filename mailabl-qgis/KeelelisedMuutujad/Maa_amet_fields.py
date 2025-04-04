@@ -2,7 +2,8 @@ from qgis.utils import iface
 from qgis.core import QgsVectorLayer, QgsProject, QgsField
 from PyQt5.QtCore import QVariant
 from ..config.settings import SettingsDataSaveAndLoad
-
+from ..utils.messagesHelper import ModernMessageDialog
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 
 class Katastriyksus:
     #fid = "fid"               # Baasis olev id
@@ -35,6 +36,13 @@ class Katastriyksus:
     #adob_id = "adob_id"        # Aadressiobjekti versiooni unikaalne identifikaator (unikaalne üle kõikide objektide kõikide versioonide).   new
     #oiguslik_alus = "oiguslik_alus"  # Katastriüksuse viimase muudatuse õiguslik alus  new
     eksport = "eksport"        # Andmete väljavõtte kuupäev
+
+
+
+    FieldsForTables = [tunnus, registr, ay_nimi, l_aadress, siht1, so_prts1, siht2, so_prts2, siht3, so_prts3, omvorm]
+
+
+
 
 class Puprpouse:
     transport = "TRANSPORDIMAA"
@@ -134,7 +142,9 @@ class RemapPropertiesLayer:
             #print("Stage I committed successfully.")
             pass
         else:
-            ModernMessageDialog.Info_messages_modern("Viga", "Veeru nimede uuendamisel tekkis viga.")
+            heading = Headings().warningSimple
+            message = "Veeru nimede uuendamisel tekkis viga."
+            ModernMessageDialog.Info_messages_modern(heading, message )
             #print("Error committing changes.")
             return
         
@@ -176,11 +186,15 @@ class RemapPropertiesLayer:
             self.layer.addAttribute(new_field)
 
         if self.layer.commitChanges():
-            ModernMessageDialog.Info_messages_modern("Info","Väljad edukalt uuendatud")
+            heading = Headings().infoSimple
+            message = HoiatusTexts().error
+            ModernMessageDialog.Info_messages_modern(heading, message)
             #print("Stage I committed successfully.")
             pass
         else:
-            ModernMessageDialog.Info_messages_modern("Viga", "Veergude lisamisel tekkis viga.")
+            heading = Headings().infoSimple
+            message = HoiatusTexts().error
+            ModernMessageDialog.Info_messages_modern(heading, message)
             #print("Error committing changes.")
             return
 

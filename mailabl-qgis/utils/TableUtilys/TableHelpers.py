@@ -5,8 +5,7 @@ from PyQt5.QtGui import QFontMetrics, QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QTableView
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from .TableHEaderIndexMap import HeaderIndexMap
-from ..ProgressHelper import ProgressHelper
-
+from ...utils.ProgressHelper import ProgressDialogModern
 
 class TableHelper:
     dialog = None  # Class-level variable to store the dialog reference
@@ -75,6 +74,23 @@ class TableHelper:
         table.clearSelection()
 
     @staticmethod
+    def select_all_items(table: QTableView):
+
+
+        """
+        Selects all items in the provided QTableView.
+        """
+        table.selectAll()
+
+    @staticmethod
+    def deselect_all_items(table: QTableView):
+        """ 
+        Deselect all items in a QTableView
+        """
+        table.clearSelection()
+
+
+    @staticmethod
     def select_items_by_field(table: QTableView, field: str, search_value: str):
         """
         Selects rows in a QTableView where the cell in the specified field does NOT match search_value.
@@ -114,9 +130,10 @@ class TableHelper:
         process_interval = 50  # Process events every 100 iterations
 
         max_items = model.rowCount()
-        progressBar = ProgressHelper.updat_progress_on_main_dialog(value=0, maximum=max_items)
-        
-        process_interval = 100  # Frequency to process events for responsiveness
+
+        progress = ProgressDialogModern(purpouse="Katastri laadimine", text="Palun oota...")
+        progress.update(1, "Katastri laadimine")
+
 
         for row in range(model.rowCount()):
             index = model.index(row, target_column)
@@ -131,14 +148,10 @@ class TableHelper:
                 selection_model.select(model.index(row, 0), selection_flags)
             
             # Update the progress bar for every processed row.
-            progressBar.setValue(row + 1)
+            progress.update(value=row+1, text1=f"Laen katastri {row}/{max_items}")
 
-            # Process pending events every 'process_interval' rows
-            if row % process_interval == 0:
-                QCoreApplication.processEvents()
-        
-        progressBar.hide()
-        #print(f"Mapfeatures are: {mapfeatures}")
+        progress.update(100,"Valmis")
+        progress.close()
         return mapfeatures    
 
     @staticmethod
@@ -165,23 +178,21 @@ class TableHelper:
         feature_ids = []
         max_items = len(selected_rows)
         # Initialize the progress bar with 0 as the starting value and max_items as maximum.
-        progressBar = ProgressHelper.updat_progress_on_main_dialog(value=0, maximum=max_items)
-        
+        progress = ProgressDialogModern(purpouse="Andmete laadimine", text="Palun oota...", maximum=max_items)
+        progress.update(1, "Esimene etapp")
         process_interval = 10  # Adjust interval as needed for responsiveness
         for idx, index in enumerate(selected_rows):
             # Assumes the feature id is stored in column 0 with Qt.UserRole.
             feature_id = model.item(index.row(), 0).data(Qt.UserRole)
             feature_ids.append(feature_id)
-            
-            # Update progress bar for each processed index.
-            progressBar.setValue(idx + 1)
-            
-            # Process pending events periodically.
-            if idx % process_interval == 0:
-                QCoreApplication.processEvents()
+            progress.update(
+                value=idx + 1
+            )            
 
-        progressBar.hide()
+        progress.close()
         return feature_ids
+
+
 
 class TableDataInserter:
     def insert_data_to_tables(self, tables_with_models, total, total_label, custom_row_height=20):

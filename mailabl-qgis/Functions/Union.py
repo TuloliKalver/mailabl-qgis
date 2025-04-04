@@ -33,7 +33,7 @@ class  Union:
 
                 # Get the group layer name
 
-                group_layer_name = MailablGroupLayers().TEMP_GRPUP_NAME
+                group_layer_name = MailablGroupLayers().TEMPORARY_LAYERS
 
                 # Get the group layer or create it if it doesn't exist
                 root = QgsProject.instance().layerTreeRoot()

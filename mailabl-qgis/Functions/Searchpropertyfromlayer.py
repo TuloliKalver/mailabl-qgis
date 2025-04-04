@@ -82,7 +82,7 @@ class SearchProperties:
 
         # Ensure the search field exists
         if self.search_field not in [field.name() for field in self.layer.fields()]:
-            heading = Headings().informationSimple
+            heading = Headings().infoSimple
             text = "Paistab, et kasutad otsingut esmakordselt."
             text_2 = "Teen vajalikud andmebaasi ettevalmistused."
             ModernMessageDialog.Info_messages_modern(heading,text, text_2)
@@ -92,7 +92,7 @@ class SearchProperties:
                 text = HoiatusTexts().error
                 ModernMessageDialog.Info_messages_modern(heading,text)
             else:
-                heading = Headings().informationSimple
+                heading = Headings().infoSimple
                 text = EdukuseTexts().tehtud
                 ModernMessageDialog.Info_messages_modern(heading,text)
 
@@ -170,7 +170,7 @@ class SearchProperties:
         features = list(self.layer.getFeatures(request))
         
         if not features:
-            heading = Headings().informationSimple
+            heading = Headings().infoSimple
             text = HoiatusTextsAuto.no_match_for_this(label_text)
             ModernMessageDialog.Info_messages_modern(heading, text)
             #print(f"Label '{label_text}' not found in the search_field.")

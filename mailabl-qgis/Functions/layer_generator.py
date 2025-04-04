@@ -1,17 +1,39 @@
 #layer_generator.py
-
+import gc
 import os
+from qgis.core import (
+    QgsProject,
+    QgsVectorLayer,
+    QgsVectorFileWriter,
+    QgsFeature,
+    QgsField,
+    QgsWkbTypes,
+    QgsCoordinateReferenceSystem,
+    QgsExpression,
+    QgsExpressionContext,
+    QgsExpressionContextUtils,
+    QgsLayerTreeGroup,
+)
 
-from qgis.core import QgsVectorLayer, QgsProject, QgsCoordinateReferenceSystem, QgsVectorFileWriter, QgsFeature
-from qgis.core import QgsFeature, QgsExpression, QgsExpressionContext, QgsExpressionContextUtils
+from typing import Tuple, Optional, List
 
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtCore import QCoreApplication, QVariant
 from PyQt5.QtWidgets import QFileDialog
-from ..config.settings import Filepaths, FilesByNames, connect_settings_to_layer
+from ..config.settings import Filepaths, FilesByNames, StoredLayers
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ..KeelelisedMuutujad.FolderHelper import MailablGroupLayers
 from ..utils.messagesHelper import ModernMessageDialog
+from ..utils.LayerHelpers import LayerSetups, fidOperations
+from ..utils.LayerGroupHelpers import LayerGroupHelper
+from ..utils.Logging.Logger import TracebackLogger
+from .LayerGeneratorHelper import ArchiveOptionBuilder
+
+
+
+
+
 
 pealkiri = Headings()
 
@@ -39,7 +61,7 @@ class LayerCopier():
         if selected_folder is None:
             # User canceled the folder selection, handle accordingly
             text = HoiatusTexts().kasutaja_peatas_protsessi
-            heading = pealkiri.informationSimple
+            heading = pealkiri.infoSimple
             ModernMessageDialog.Info_messages_modern(heading,text)
             return  # or raise an exception or perform other actions as needed
         input_layer = QgsProject.instance().mapLayersByName(memory_layer_name)[0]
@@ -126,17 +148,17 @@ class LayerCopier():
                 updated_layer.loadNamedStyle(QGIS_Layer_style)
                 updated_layer.triggerRepaint()
                 text = HoiatusTextsAuto.layer_indexing(new_layer_name)
-                heading = pealkiri.informationSimple
+                heading = pealkiri.infoSimple
                 ModernMessageDialog.Info_messages_modern(heading,text)
                 updated_layer.dataProvider().createSpatialIndex()
     
                 text = HoiatusTextsAuto.generated_layer_in_subgroup(new_layer_name, group_layer_name)
-                heading = pealkiri.informationSimple
+                heading = pealkiri.infoSimple
                 ModernMessageDialog.Info_messages_modern(heading,text)              
                 
             else:
                 text = HoiatusTextsAuto.load_gpkg_file_error(output_file_path)
-                heading = pealkiri.informationSimple
+                heading = pealkiri.infoSimple
                 ModernMessageDialog.Info_messages_modern(heading,text)
 
     @staticmethod
@@ -155,7 +177,7 @@ class LayerCopier():
                 QgsProject.instance().removeMapLayer(layer_id)
                 print(f"Memory layer '{memory_layer_name}' removed successfully.")
 
-        layer_name = connect_settings_to_layer.Import_Layer_name()
+        layer_name = StoredLayers.Import_Layer_name()
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
 
         # Create the memory layer
@@ -188,7 +210,7 @@ class LayerCopier():
             return selected_folder
         else:
             text = HoiatusTexts().laadimine_error
-            heading = pealkiri.informationSimple
+            heading = pealkiri.infoSimple
             ModernMessageDialog.Info_messages_modern(heading,text)
         return None
     
@@ -242,7 +264,7 @@ class LayerCopier():
         
         if selected_features == 0:
             text = HoiatusTexts().kinnistuid_ei_leidnud
-            heading = pealkiri.informationSimple
+            heading = pealkiri.infoSimple
             ModernMessageDialog.Info_messages_modern(heading,text)
 
         count = 1
@@ -330,3 +352,221 @@ class GroupActions:
             #print("style not none")
             layer.loadNamedStyle(style)
         layer.triggerRepaint()
+
+class LayerManager:
+    """
+    A class that provides helper methods to create and manage layers within a specific group
+    in a QGIS project.
+    """
+
+    @staticmethod
+    def get_or_create_group(group_name: str) -> QgsLayerTreeGroup:
+        """
+        Retrieve the group by name from the project's layer tree.
+        If the group doesn't exist, create it.
+        """
+        project = QgsProject.instance()
+        root = project.layerTreeRoot()
+        group = root.findGroup(group_name)
+        if group is None:
+            group = root.addGroup(group_name)
+        return group
+
+    @staticmethod
+    def remove_existing_layer(layer_name: str) -> bool:
+        """
+        Remove an existing layer with the specified name from the project.
+
+        Parameters:
+            layer_name (str): The name of the layer to remove.
+
+        Returns:
+            bool: True if the layer was successfully removed, False otherwise.
+        """
+        project = QgsProject.instance()
+        layers = project.mapLayersByName(layer_name)
+        if layers:
+            layer = layers[0]
+            project.removeMapLayer(layer.id())
+            # Verify if the layer is still present after removal.
+            if not project.mapLayersByName(layer_name):
+                #print(f"Layer '{layer_name}' removed successfully.")
+                gc.collect()
+                ret = LayerSetups.unregister_layer_configuration(layer_name=layer_name)
+                if ret:
+                    return True
+                else:
+                    message = "Unable to unload layers settings from layers usages"
+                    TracebackLogger.log_traceback(custom_message=message)
+                    return False
+            else:
+                message = f"Layer '{layer_name}' removal failed."
+                TracebackLogger.log_traceback(custom_message=message)
+                gc.collect()
+                return False
+        else:
+
+            message=f"Layer '{layer_name}' not found."
+            TracebackLogger.log_traceback(custom_message=message)
+            gc.collect()
+            return False
+        
+    @staticmethod
+    def check_layer_existance_by_name(layer_name: str)-> Optional[QgsVectorLayer]:
+        layers = QgsProject.instance().mapLayersByName(layer_name)
+        if layers:
+            if len(layers) > 1:
+                print(f"Warning: More than one layer exists with the name '{layer_name}'. Using the first one.")
+            return layers[0]
+        return None 
+        
+
+    @staticmethod
+    def create_memory_layer_by_coping_original_layer(new_layer_name: str, base_layer: QgsVectorLayer, is_archive=False) -> QgsVectorLayer: 
+   
+        # Now, base_layer should be a QgsVectorLayer. Continue with layer creation.
+        crs_auth_id = base_layer.crs().authid()
+        memory_layer_name = f"{new_layer_name}"
+
+        # Detect the geometry type from the base layer.
+        geometry_type_str = QgsWkbTypes.displayString(base_layer.wkbType())
+        
+        # Create the memory layer with the detected geometry type.
+        memory_layer = QgsVectorLayer(f'{geometry_type_str}?crs={crs_auth_id}', memory_layer_name, 'memory')
+        memory_layer.dataProvider().addAttributes(base_layer.fields())
+        memory_layer.updateFields()
+
+        if is_archive:        
+            if memory_layer.fields().indexOf("backup_date") == -1:
+                memory_layer.dataProvider().addAttributes([QgsField("backup_date", QVariant.String)])
+                memory_layer.updateFields()
+
+        memory_layer.setExtent(base_layer.extent())
+        memory_layer.setCrs(base_layer.crs())
+
+        nex_id=fidOperations.get_next_fid(target_layer=memory_layer)
+        LayerSetups.register_layer_configuration(memory_layer,max_fid=nex_id)
+        
+        return memory_layer
+
+    @staticmethod
+    def add_layer_to_group(layer: QgsVectorLayer, group=None):
+        """
+        Add the given layer to the specified group in the QGIS project.
+        IF Group Layer is not provided it is automaticaly generated in MAilabl -> Temporary layer group.
+        The group parameter can be either a QGIS group object or a string representing the group name.
+        """
+        if group == None:
+            group = MailablGroupLayers.TEMPORARY_LAYERS
+        project = QgsProject.instance()
+        # If group is provided as a string, retrieve or create the group.
+        if isinstance(group, str):
+            group = LayerManager.get_or_create_group(group)
+        
+        # Add the layer to the project without automatically updating the layer tree.
+        project.addMapLayer(layer, False)
+        # Insert the layer at the top of the group.
+        group.insertLayer(0, layer)
+
+
+    @staticmethod
+    def store_memory_layer_to_geopackage(memory_layer: QgsVectorLayer, target_layer_for_file: QgsVectorLayer, new_layer_name: str) -> Tuple[bool, Optional[List]]:
+        """
+        Stores a memory layer into an existing GeoPackage file as a new layer,
+        then loads the new layer, adds it to a group (using LayerGroups.ARCHIVE),
+        and sets it visible.
+
+        If the layer already exists in the GeoPackage, asks the user whether to
+        append data (which will add/update a 'backup_date' field with the current timestamp)
+        or replace the existing layer.
+
+        :param memory_layer: QgsVectorLayer representing the in-memory layer to save.
+        :param target_layer_for_file: QgsVectorLayer whose data source provides the GeoPackage file location.
+        """
+        uri = target_layer_for_file.dataProvider().dataSourceUri()
+        gpkg_path = uri.split("|")[0]
+        layer_uri = f"{gpkg_path}|layername={new_layer_name}"
+        # Check if the layer already exists in the GeoPackage
+        existing_layer = QgsVectorLayer(layer_uri, new_layer_name, "ogr")
+        #print(f"Existing layer: {existing_layer}")
+        if existing_layer.isValid():
+            layers = QgsProject.instance().mapLayersByName(new_layer_name)
+            if layers:
+                layer = layers[0]  # Use the first matching layer
+            else:
+                layer = None            
+            if layer is None:
+                layer = LayerGroupHelper.add_layer_to_projct_in_given_group(layer=existing_layer, group_name=MailablGroupLayers.ARCHIVED_PROPERTIES)
+                if layer is not None:
+                    res, features = LayerManager._commit_to_archive(memory_layer=memory_layer, layer=layer)
+                    return True, features
+                else:
+                    TracebackLogger.log_traceback(custom_message="Failed to add layer to group.")
+                return True,[]
+            else:
+                res, features = LayerManager._commit_to_archive(memory_layer=memory_layer, layer=layer)
+                return True, features
+        else:
+            TracebackLogger.log_traceback(custom_message="Failed to append features to geopackage.")
+            return False, []
+
+
+    @staticmethod
+    def _commit_to_archive(memory_layer: QgsVectorLayer, layer: QgsVectorLayer) -> Tuple[bool, Optional[List]]:
+        '''
+        Commits features from a temporary memory layer to a permanent archive target layer.
+
+        This method finalizes the archival process by:
+        - Appending features from the memory layer into the target layer.
+        - Registering the updated layer configuration, including the current maximum feature ID.
+        - Updating the target layer's spatial extents to incorporate the newly added features.
+
+        Parameters:
+            memory_layer (QgsVectorLayer): The source layer containing features pending archival.
+            layer (QgsVectorLayer): The target layer where the features are to be permanently stored.
+
+        Returns:
+            Tuple[bool, Optional[List]]:
+                - A boolean indicating if the archival operation was successful.
+                - A list of feature IDs that were appended if successful; otherwise, an empty list.
+
+        Side Effects:
+            - Updates the target layer's extents via layer.updateExtents().
+            - Registers the target layer's configuration with the current maximum feature ID.
+            - Logs a traceback message if the archival process fails.
+
+        Usage Example:
+            success, feature_ids = YourClass._commit_to_archive(memory_layer, target_layer)
+            if success:
+                print("Features archived successfully:", feature_ids)
+            else:
+                print("Archiving failed.")
+        '''
+        success, returned_features = ArchiveOptionBuilder.append_archive_items_to_layer(
+            memory_layer=memory_layer, 
+            target_layer=layer
+        )
+        
+        # Register the target layer's configuration with the updated maximum feature ID.
+        # This step ensures that any further operations are aware of the new feature boundaries.
+        LayerSetups.register_layer_configuration(
+            layer, 
+            max_fid=fidOperations.get_current_max_fid(target_layer=layer)
+        )
+        
+        # Check if the archiving (append) process was successful.
+        if success:
+            # Update the spatial extents of the target layer to include the newly added features.
+            layer.updateExtents()
+            
+            # Print the list of returned feature IDs to the console for debugging or logging purposes.
+            print(f"Returned ids: {returned_features}")
+            
+            # Return a tuple indicating success along with the list of new feature IDs.
+            return True, returned_features
+        else:
+            # Log a traceback message indicating the failure to append features to the geopackage.
+            TracebackLogger.log_traceback(custom_message="Failed to append features to geopackage.")
+            
+            # Return a tuple indicating failure and an empty list since no features were appended.
+            return False, []

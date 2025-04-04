@@ -3,7 +3,6 @@
 from ..Functions.EVEL.evel_general import EVELTools
 from ..KeelelisedMuutujad.Maa_amet_fields import RemapPropertiesLayer
 from ..widgets.connector_widget_engine.UI_controllers import PropertiesConnector
-from ..processes.tester import ProgressBarTester
 from ..KeelelisedMuutujad.modules import Module
 
 from ..utils.signal_utils import execute_with_block
@@ -12,13 +11,11 @@ from ..widgets.properties_connector_UIcontroller import PropertiesConnectorUICon
 class SettingsModuleButtonConnector:
     def button_controller(self):
         button_greate_EVEL = getattr(self, 'pbGreateEVEL', None)
-        test_button = getattr(self, 'pbtest', None)
         update_dataframe = getattr(self, 'pbUpdateToNewDataframe', None)
 
         # Define lambdas to connect buttons to functions
         button_functions = {
             button_greate_EVEL: lambda: execute_with_block(button_greate_EVEL, EVELTools.load_widget, self),
-            test_button: lambda: execute_with_block(test_button, ProgressBarTester().run_test_task),
             update_dataframe: lambda: execute_with_block(update_dataframe, RemapPropertiesLayer().update_attribute_table)
         }
 
@@ -27,7 +24,7 @@ class SettingsModuleButtonConnector:
             PropertiesConnector.connect_button(button, function)
 
         # Populate the buttons list
-        buttons = [button_greate_EVEL, test_button, update_dataframe]
+        buttons = [button_greate_EVEL, update_dataframe]
 
         return buttons
 

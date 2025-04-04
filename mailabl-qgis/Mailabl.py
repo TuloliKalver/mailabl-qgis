@@ -229,6 +229,10 @@ class Mailabl:
         """Function to be called when the plugin dialog is closed."""
         # Check if the dialog was accepted (OK button was pressed)
         print("Dialog closed")
+        from .utils.ProgressHelper import ProgressDialogModern  # Adjust path
+        ProgressDialogModern.close_all()
+
+
         # Update the window status to 'closed' in settings
         settings = QgsSettings()
         settings.setValue('/Mailabl/Setting/windowStatus', 'closed')

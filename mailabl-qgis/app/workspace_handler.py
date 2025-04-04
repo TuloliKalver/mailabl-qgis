@@ -21,17 +21,17 @@ from ..utils.messagesHelper import ModernMessageDialog
 pealkiri = Headings()
 combo_handler = ComboBoxHelper()
 
-class MyClassWithIndexes():
-    def __init__(self):
-        self.cadastralmoves = 1
-        self.easements = 0
-        self.contracts = 2
-        self.help = 3
-        self.settings = 4
-        self.homepage = 5
-        self.proerties = 6
-        self.projects = 7
-        self.removeproperties = 8
+class CenterMainSliderIndexes():
+    EASEMENTS = 0
+    CADASTRALMOVES = 1
+    CONTRACTS = 2
+    HELP = 3
+    SETTINGS = 4
+    HOMEPAGE = 5
+    PROPERTIES = 6
+    PROJECTS = 7
+    REMOVEPROPERTIES = 8
+    PROPERTIES_OPERATIONS = 9
 
     def swWorkSpace(self, index):
         # This is a placeholder method to demonstrate how you might use the MyClassWithIndexes().
@@ -42,17 +42,17 @@ class WorkSpaceHandler:
     
     def swWorkSpace_Home(self):
         print("started 'swWorkspace_Home'")
-        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().homepage)
+        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.HOMEPAGE)
         self.sw_HM.setCurrentIndex(0)
 
     def swWorkSpace_Properties(self):
         print("started 'swWorkspace_Properties'")
-        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().proerties)
+        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.PROPERTIES)
         self.sw_HM.setCurrentIndex(0)
 
     def swWorkspace_Projects(self):
         module = Module.PROJECT
-        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().projects)
+        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.PROJECTS)
         self.sw_HM.setCurrentIndex(8) 
         button = self.pbProjects
         button.blockSignals(True)
@@ -83,7 +83,7 @@ class WorkSpaceHandler:
         button.blockSignals(True)
         refresh_button.blockSignals(True)
         self.sw_HM.setCurrentIndex(1)
-        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().contracts)
+        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.CONTRACTS)
         table = self.ContractView
         model = table.model()
         if model:
@@ -139,7 +139,7 @@ class WorkSpaceHandler:
         module = Module.EASEMENT
         button = self.pbeasements
         button.blockSignals(True)
-        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().easements)
+        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.EASEMENTS)
         self.sw_HM.setCurrentIndex(5)
         table = self.tweasementView
         # Assuming 'table' is your QTableView object
@@ -172,7 +172,7 @@ class WorkSpaceHandler:
     def easements_reload(self):
         button = self.pbeasements
         button.blockSignals(True)
-        self.swWorkSpace.setCurrentIndex(MyClassWithIndexes().easements)
+        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.EASEMENTS)
         self.sw_HM.setCurrentIndex(5)
         table = self.tweasementView
         # Assuming 'table' is your QTableView object

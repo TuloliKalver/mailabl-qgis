@@ -150,7 +150,7 @@ class PropertiesConnector(QObject):
                 self.ConnectorWidgetClosed.emit()
                 total_returned_ids, total_ids_Table = result
                 text = InfoTexts().properties_successfully_added(element_name, total_returned_ids, total_ids_Table)
-                heading = Headings().informationSimple      
+                heading = Headings().infoSimple      
                 ModernMessageDialog.Info_messages_modern(heading,text)
         else:
             if widget is not None:
@@ -158,7 +158,7 @@ class PropertiesConnector(QObject):
                 widget.accept()
                 self.ConnectorWidgetClosed.emit()
                 text = InfoTexts().error_adding_properties(element_name)
-                heading = Headings().informationSimple
+                heading = Headings().infoSimple
                 ModernMessageDialog.Info_messages_modern(heading,text)
 
     def unset_widget_actions(self, widget):

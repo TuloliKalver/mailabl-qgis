@@ -162,7 +162,7 @@ class EasementTools(QObject):
         if self.widget_EasmentTools is not None:
             self.cleanup()
             text = sisu.kasutaja_peatas_protsessi
-            heading = pealkiri.informationSimple
+            heading = pealkiri.infoSimple
             ModernMessageDialog.Info_messages_modern(heading, text)
             if on_selection_changed_lambda_easements:
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
@@ -590,7 +590,7 @@ class BufferTools:
                     pass
 
                 # Get the group layer name
-                group_layer_name = MailablGroupLayers().TEMP_GRPUP_NAME
+                group_layer_name = MailablGroupLayers().TEMPORARY_LAYERS
 
                 # Get the group layer or create it if it doesn't exist
                 root = QgsProject.instance().layerTreeRoot()
@@ -615,7 +615,7 @@ class BufferTools:
                 buffer_layer.triggerRepaint()
 
             else:
-                heading = Headings().informationSimple
+                heading = Headings().infoSimple
                 text = HoiatusTexts().kihil_kinnistu_valik
                 ModernMessageDialog.Info_messages_modern(heading, text)
 
@@ -902,7 +902,7 @@ class ComboBoxInputs:
 class BufferByLine:
     def create_road_center_line(widget):
         temp_spline_layer = TempBufferLayerNames.spline_layer_name
-        group_layer_name = MailablGroupLayers().TEMP_GRPUP_NAME
+        group_layer_name = MailablGroupLayers().TEMPORARY_LAYERS
         
         # Get the group layer or create it if it doesn't exist
         root = QgsProject.instance().layerTreeRoot()

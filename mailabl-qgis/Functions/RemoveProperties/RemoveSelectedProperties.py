@@ -98,7 +98,7 @@ class DeleteActions:
             deleteProperty.delete_multiple_items(self, ToBe_deleted_properties)
             Delete_finalProcess.clear_layer_from_deleted_items(self, active_cadastral_layer_name)
             text = (f"Valitud kinnitsud eemaldati edukalt Mailablist ja kihilt:\n{active_cadastral_layer_name}")
-            heading = pealkiri.informationSimple
+            heading = pealkiri.infoSimple
             ModernMessageDialog.Info_messages_modern(heading,text)
             DeletProcessUIActions.Delete_process_view_on_load(self)
 

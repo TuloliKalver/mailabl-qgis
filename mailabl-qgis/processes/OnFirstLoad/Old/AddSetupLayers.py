@@ -1,9 +1,9 @@
 from qgis.core import QgsProject, QgsLayerTreeGroup
-from ....KeelelisedMuutujad.Mailabl_features import MailablGroupLayers
+from ....KeelelisedMuutujad.FolderHelper import MailablGroupLayers
 #Remove code from Kataster_Dialog.py rows 217 and 732 and froward until Def end
 class Group_layer:
     def __init__(self):    
-        self.main_group = MailablGroupLayers.MAILABL_MAIN_GROUP_NAME #'Mailabl settings'  # Main group name
+        self.main_group = MailablGroupLayers.MAILABL_MAIN #'Mailabl settings'  # Main group name
         
     # Function to create the structured layer hierarchy
     def create_mailabl_setup_group_layer(self):

@@ -18,7 +18,12 @@ class loadWebpage:
         self.swCadastral_sub_processes.setCurrentIndex(4)
         loadWebpage.open_webpage(WebLinks().page_maa_amet)
 
-        
+    @staticmethod
+    def open_maa_amet_webpage_new():
+        loadWebpage.open_webpage(WebLinks().page_maa_amet)
+
+
+
     @staticmethod
     def open_webpage(page_address):
         # Define the web link URL

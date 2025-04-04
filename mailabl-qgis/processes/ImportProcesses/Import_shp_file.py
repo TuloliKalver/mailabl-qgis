@@ -1,8 +1,10 @@
+import gc
 import os
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
-from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QFileDialog
 from qgis.core import QgsVectorLayer, QgsFeature, QgsSpatialIndex, QgsLayerTreeGroup, QgsGeometry, QgsProject
+from ...utils.ProgressHelper import ProgressDialogModern
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...KeelelisedMuutujad.messages import Headings
  
@@ -23,8 +25,11 @@ class SpatialIndexCreator:
 
 
 class SHPLayerLoader:
-    @staticmethod
-    def load_shp_layer(label):
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.label = self.dialog.lblSHPNewItems
+    
+    def load_shp_layer(self):
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.ExistingFiles)
         file_dialog.setNameFilter("Shapefiles (*.shp)")
@@ -47,44 +52,27 @@ class SHPLayerLoader:
 
                 ShapefileImporter.import_shpFile_as_virtual_layer(file_path, imporditavad_group)
                 text = (f"Andmed on edukalt imporditud ja lisatud\n{import_subgroup_layer_name}\ngrupi kihile")
-                heading = pealkiri.informationSimple
+                heading = pealkiri.infoSimple
                 from ...utils.messagesHelper import ModernMessageDialog
                 ModernMessageDialog.Info_messages_modern(heading, text)
+                
                 save_setting = SettingsDataSaveAndLoad()
-                save_setting.save_SHP_layer_setting(label, layer_name)
-
+                save_setting.save_SHP_layer_setting(self.label, layer_name)
+                
+                self.dialog.frMaaAmetControlls.setVisible(False)
+                self.dialog.frPropertiFlowHolder.setVisible(True)
+                self.dialog.pbAction.setEnabled(False)
     @staticmethod
     def add_spatial_index_to_layer(layer_name):
         layers = QgsProject.instance().mapLayersByName(layer_name)
         if layers:
             layer = layers[0]
             if layer is not None and layer.isValid():
-                total_features = layer.featureCount()
-                progress_widget = UtilityFunctions.create_progress_widget()
-                progress_bar = progress_widget.testBar
-                progress_bar.setMinimum(0)
-                progress_bar.setMaximum(100)
-                progress_widget.show()
-                QCoreApplication.processEvents()
-
-                count = 0
-                for processed_features in range(1, total_features + 1):
-                    progress_percentage = int((processed_features / total_features) * 100)
-                    progress_bar.setValue(progress_percentage)
-                    QCoreApplication.processEvents()
-
+                #progress = ProgressDialogModern(maximum=0)
+                #progress.load_progress_dialog(title = f"Indekseerin kihi {layer_name} andmed ")
                 layer.dataProvider().createSpatialIndex()
-                progress_widget.close()
-
-    @staticmethod
-    def create_progress_widget(name, label_1):
-        file = FilesByNames()
-        file_path = Filepaths._get_widget_name(file.statusbar_widget)
-        progress_widget = Filepaths.load_ui_file(file_path)
-        progress_widget.label.setText(name)
-        progress_widget.label_2.setText(label_1)
-        return progress_widget
-
+                QCoreApplication.processEvents()
+                #progress.close()
 
 class ShapefileImporter:
     @staticmethod
@@ -101,11 +89,8 @@ class ShapefileImporter:
 
         total_rows = shapefile_layer.featureCount()
 
-        progress_widget = SHPLayerLoader.create_progress_widget("Kihi importimine", "Kihi impordi edenemine")
-        
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(total_rows)
-        progress_widget.show()
+        progress = ProgressDialogModern(title="Kihi importimine", maximum=total_rows)
+        progress.update(text1=f"Kihi {shp_layer_name} impordi edenemine")
         QCoreApplication.processEvents()
 
         fields = shapefile_layer.fields()
@@ -115,9 +100,7 @@ class ShapefileImporter:
 
         count = 0
         for feature in shapefile_layer.getFeatures():
-            count += 1
-            progress_bar.setValue(count)
-
+        
             attrs = feature.attributes()
             geom = feature.geometry()
 
@@ -126,46 +109,32 @@ class ShapefileImporter:
             new_feature.setGeometry(QgsGeometry(geom))
             virtual_layer_provider.addFeature(new_feature)
 
-            UtilityFunctions.update_progress_label(progress_widget, count, total_rows)
+            count += 1
+            quarter_point = total_rows // 4
+            halfway_point = total_rows // 2
+            three_quarter_point = total_rows * 3 // 4
+            progress.update(value=count)
+            if count == quarter_point:
+                progress.update(text2 = "Nüüd siruta varbaid")
+            elif count == halfway_point:
+                progress.update(text2 ="Pool teed läbitud - ära magama jää!")
+            elif count == three_quarter_point:
+                progress.update(text2 = "Natuke veel minna - jõuad mõned kükid teha")
+        QCoreApplication.processEvents()
 
-            QCoreApplication.processEvents()
 
         virtual_layer.commitChanges()
         virtual_layer.updateExtents()
         virtual_layer.dataProvider().createSpatialIndex()
-        progress_widget.hide()
         add_style = Filepaths.get_style(FilesByNames().MaaAmet_import)
         virtual_layer.loadNamedStyle(add_style)
         if virtual_layer.isValid():
             QgsProject.instance().addMapLayer(virtual_layer, False)
             group_layer.insertLayer(0, virtual_layer)
 
+        progress.close()
+
         del shapefile_layer
-        del progress_widget
         del virtual_layer
+        gc.collect()
 
-
-class UtilityFunctions:
-    @staticmethod
-    def create_progress_widget():
-        widgets_path = Filepaths.load_ui_file(FilesByNames().statusbar_widget)
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_widget.label.setText("Indekseerin laetud kihti!")
-        progress_widget.label_2.setText("Ruumiliselt indekseeritud kaardikihid on töökindlamad")
-        return progress_widget
-
-    @staticmethod
-    def update_progress_label(progress_widget, current_count, total_rows):
-        quarter_point = total_rows // 4
-        halfway_point = total_rows // 2
-        three_quarter_point = total_rows * 3 // 4
-
-        if current_count == quarter_point:
-            progress_widget.label_2.setText("Nüüd siruta varbaid")
-        elif current_count == halfway_point:
-            progress_widget.label_2.setText("Pool teed läbitud - ära magama jää!")
-        elif current_count == three_quarter_point:
-            progress_widget.label_2.setText("Natuke veel minna - jõuad mõned kükid teha")
-
-        QCoreApplication.processEvents()

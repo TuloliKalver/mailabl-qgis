@@ -12,7 +12,7 @@ from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...KeelelisedMuutujad.modules import Module
 from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
 from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
-
+from ...utils.ProgressHelper import ProgressDialogModern    
 
 class Constants:
     package_size = 25
@@ -29,28 +29,39 @@ class Constants:
 class ContractsMain:
     @staticmethod
     def load_main_contracts_by_type_and_status (self, table, types, statuses, language="et"):
-
+        #Adding progress
+        module = Module.CONTRACT
+        progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
+        progress.update(1, purpouse="Lepingute laadimine", text1="Palun oota...")
         model = ContractModels._model_for_contracts_by_types_and_statuses(self, types, statuses, language=language)
 
         if model is not None:
-            module = Module.CONTRACT
+            progress.update(50)
             ModuleTableBuilder.setup(table, model, module, language)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
             heading = Headings().warningSimple
             print(f"{heading}, {text}")
-
+        progress.update(98)
+        progress.close()
+        
     @staticmethod
     def load_contracts_by_query (query, table, language="et"):
+        module = Module.CONTRACT
+        progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
+        progress.update(1, purpouse="Lepingute laadimine", text1="Palun oota...")
+
         model = ContractModels._model_for_contract_search_results(query, language)
 
         if model is not None:
-            module = Module.CONTRACT
+            progress.update(50)
             ModuleTableBuilder.setup(table, model, module, language)
         else:            
             text = HoiatusTexts().ostingu_tulemused_puuduvad
             heading = Headings().warningSimple
             print(f"{heading}, {text}")
+        progress.update(98)
+        progress.close()
 
 class ContractModels: 
     @staticmethod

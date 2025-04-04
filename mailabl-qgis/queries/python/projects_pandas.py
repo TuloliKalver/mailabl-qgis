@@ -16,7 +16,6 @@ from ...config.ui_directories import PathLoaderSimple
 from ...KeelelisedMuutujad.messages import Headings
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...utils.DataExtractors.DataExtractors import DataExtractor
-from ...utils.ProgressHelper import ProgressHelper
 from ...KeelelisedMuutujad.modules import Module
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...utils.messagesHelper import ModernMessageDialog
@@ -70,13 +69,6 @@ class ProjectsQueries:
 
     @staticmethod
     def _fetch_active_main_projects_by_status(self, statuses):
-        widgets_path = PathLoaderSimple.widget_statusBar_path(self)
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        label_2 = progress_widget.label_2
-        progress_bar.setMaximum(100)
-        progress_widget.setWindowTitle("Laen projekte")
-        progress_widget.show()
         
         # Load the project query using the loader instance
         query_loader = Graphql_project()
@@ -114,17 +106,11 @@ class ProjectsQueries:
             last_page = projects_pageInfo.get("lastPage")
             current_page = projects_pageInfo.get("currentPage")
             total = projects_pageInfo.get("total")
-            
+   
+            #TODO: add loading of projects by pages         
             fetched_items.extend(fetched_data)
             total_fetched += len(fetched_data)
-            
-            text = "Projekte kokku"
-            if current_page == 1:
-                label_2.setText(f"{text}: {total}")
-                progress_bar.setMaximum(last_page)
-                
-            label_2.setText(f"{text}: {total}")
-            progress_bar.setValue(current_page)
+    
             QCoreApplication.processEvents()
 
             if not projects_end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items) or not projects_hasNextPage:
@@ -227,7 +213,7 @@ class ProjectModelBuilders:
         total_projects = len(data)
         if  total_projects == 0:
             text = "Antud numbriga projekti ei leitud"
-            heading = pealkiri.informationSimple
+            heading = pealkiri.infoSimple
             ModernMessageDialog.Info_messages_modern(heading,text)
             return None
 
@@ -266,7 +252,7 @@ class ProjectModelBuilders:
         # Splitting the list into sublists with a maximum of 4 items each
         #sublists = [selected_features[i:i+Constants.items_for_page_medium] for i in range(0, len(selected_features), Constants.items_for_page_medium)]
         value = 0
-        progress = ProgressHelper.updat_progress_on_main_dialog(value=value+5, maximum=100)
+
         MAX_ITEMS_PER_SET = 15
 
         grouped_cadasters = [selected_features[i:i + MAX_ITEMS_PER_SET] 
@@ -274,7 +260,6 @@ class ProjectModelBuilders:
 
         #print(f"grouped_cadasters: '{grouped_cadasters}'")
         data_total = []
-        progress.setValue(value+5)
         idx = 0
         for group in grouped_cadasters:
             #print(f"feature: '{group}'")
@@ -284,13 +269,9 @@ class ProjectModelBuilders:
             data_total.extend(data)  # Append all project dictionaries to the list
             #print(f"data_total: {data_total}")
             
-            idx += Constants.items_for_page_medium
-            if idx % Constants.sleepPackage == 0:
-                progress.setValue(idx)
-                QCoreApplication.processEvents()
+            QCoreApplication.processEvents()
             # Ensure progress bar reaches 100% at the end
-            ProgressHelper.updat_progress_on_main_dialog(value=0)                
-        
+            
         # Convert the list of dictionaries to a set to remove duplicates based on the 'id'
         data_optimal = {project['id']: project for project in data_total}.values()
         #print(f"total len of all projects: '{len(data_total)}'")
@@ -314,5 +295,5 @@ class ProjectModelBuilders:
         for row_index, row_data in df.iterrows():
             data_items = [QStandardItem(str(row_data[label])) for label in headers]
             model.appendRow(data_items)
-        
+        progress.close()
         return model
