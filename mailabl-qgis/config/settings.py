@@ -593,11 +593,11 @@ class SettingsDataSaveAndLoad:
 
 
 class StoredLayers:    
-    def ActiveMailablPropertiesLayer_name():
+    def users_properties_layer_name():
         active_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
         return active_layer
         
-    def Import_Layer_name():
+    def import_layer_name():
         settings_loader = SettingsDataSaveAndLoad()
         active_layer = settings_loader.load_SHP_inputLayer_name()
         return active_layer

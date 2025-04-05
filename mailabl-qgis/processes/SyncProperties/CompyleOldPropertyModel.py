@@ -34,7 +34,7 @@ class LayerCompiler:
         
         :param new_layer_name: Name of the new layer to which features will be appended.
         """
-        old_layer_name = StoredLayers.ActiveMailablPropertiesLayer_name()
+        old_layer_name = StoredLayers.users_properties_layer_name()
         print(f"Old Layer Name: {old_layer_name}")
 
         old_layer = LayerCompiler.find_layer_by_name(old_layer_name)

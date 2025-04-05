@@ -1,10 +1,10 @@
 
 
-class MailablGroupLayers:
+class MailablGroupFolders:
     MAILABL_MAIN = 'Mailabl settings'  # Main group name
     IMPORT = 'Imporditavad kinnistud'  # Name for importable properties
     NEW_PROPERTIES = 'Uued kinnistud'  # Name for new properties
-    TEMPORARY_LAYERS = 'Ajutised kihid'  # Name for tools layer
+    SANDBOXING = 'Ajutised kihid'  # Name for tools layer
     ARCHIVE = "Arhiiv"
     ARCHIVED_PROPERTIES = "Arhiveeritud kinnistud"
 
@@ -15,7 +15,7 @@ class MailablGroupLayers:
                     ARCHIVE,
                     ARCHIVED_PROPERTIES}
 
-class MailablLayers:
+class MailablLayerNames:
     PROPERTIES_ARCHIVE = "Arhiveeritud kinnistud"
-    ARCHIVE_PRE_LAYER_NAME = "Arendatav_arhiiv"
+    SANDBOX_LAYER = "Arendatav_arhiiv"
     ARCHIVE_LAYER_NAME = "Minu_arhiiv"

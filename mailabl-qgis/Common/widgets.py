@@ -30,8 +30,8 @@ class Buttons:
     BTN_ADD_ELEMENTS = (QtWidgets.QPushButton, 'btnAddElements')
     BTN_REMOVE_ITEMS = (QtWidgets.QPushButton, 'btnRemoveItems')
     BTN_UPDATE_DATA = (QtWidgets.QPushButton, 'btnUpdateData')
-    BTN_CONFIRM_ACTION = (QtWidgets.QPushButton, 'btnConfirmAction')
-    BTN_CANCEL_ACTION = (QtWidgets.QPushButton, 'btnCancelAction')
+    BTN_CONFIRM_ACTION = (QtWidgets.QPushButton, 'pbConfirmAction')
+    BTN_CANCEL_ACTION = (QtWidgets.QPushButton, 'pbCancelAction')
 
 class Labels:
     LBL_ACTION_NAME = (QtWidgets.QLabel, 'lblActionName')

@@ -23,7 +23,7 @@ from PyQt5.QtWidgets import QFileDialog
 from ..config.settings import Filepaths, FilesByNames, StoredLayers
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-from ..KeelelisedMuutujad.FolderHelper import MailablGroupLayers
+from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
 from ..utils.messagesHelper import ModernMessageDialog
 from ..utils.LayerHelpers import LayerSetups, fidOperations
 from ..utils.LayerGroupHelpers import LayerGroupHelper
@@ -177,7 +177,7 @@ class LayerCopier():
                 QgsProject.instance().removeMapLayer(layer_id)
                 print(f"Memory layer '{memory_layer_name}' removed successfully.")
 
-        layer_name = StoredLayers.Import_Layer_name()
+        layer_name = StoredLayers.import_layer_name()
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
 
         # Create the memory layer
@@ -394,10 +394,13 @@ class LayerManager:
                 gc.collect()
                 ret = LayerSetups.unregister_layer_configuration(layer_name=layer_name)
                 if ret:
+                    gc.collect()
                     return True
                 else:
-                    message = "Unable to unload layers settings from layers usages"
-                    TracebackLogger.log_traceback(custom_message=message)
+                    gc.collect()
+                
+                    #message = "Unable to unload layers settings from layers usages"
+                    #TracebackLogger.log_traceback(custom_message=message)
                     return False
             else:
                 message = f"Layer '{layer_name}' removal failed."
@@ -450,19 +453,19 @@ class LayerManager:
         return memory_layer
 
     @staticmethod
-    def add_layer_to_group(layer: QgsVectorLayer, group=None):
+    def add_layer_to_sandbox_group(layer: QgsVectorLayer, group=None):
         """
         Add the given layer to the specified group in the QGIS project.
         IF Group Layer is not provided it is automaticaly generated in MAilabl -> Temporary layer group.
         The group parameter can be either a QGIS group object or a string representing the group name.
         """
         if group == None:
-            group = MailablGroupLayers.TEMPORARY_LAYERS
+            group = MailablGroupFolders.SANDBOXING
         project = QgsProject.instance()
         # If group is provided as a string, retrieve or create the group.
         if isinstance(group, str):
             group = LayerManager.get_or_create_group(group)
-        
+
         # Add the layer to the project without automatically updating the layer tree.
         project.addMapLayer(layer, False)
         # Insert the layer at the top of the group.
@@ -496,7 +499,7 @@ class LayerManager:
             else:
                 layer = None            
             if layer is None:
-                layer = LayerGroupHelper.add_layer_to_projct_in_given_group(layer=existing_layer, group_name=MailablGroupLayers.ARCHIVED_PROPERTIES)
+                layer = LayerGroupHelper.add_layer_to_projct_in_given_group(layer=existing_layer, group_name=MailablGroupFolders.ARCHIVED_PROPERTIES)
                 if layer is not None:
                     res, features = LayerManager._commit_to_archive(memory_layer=memory_layer, layer=layer)
                     return True, features

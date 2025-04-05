@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1189</width>
-    <height>1142</height>
+    <height>1119</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1299,6 +1299,13 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
+                   <widget class="QPushButton" name="pushButton">
+                    <property name="text">
+                     <string>test</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
                    <widget class="QFrame" name="frame_61">
                     <property name="frameShape">
                      <enum>QFrame::StyledPanel</enum>
@@ -1464,7 +1471,7 @@ QProgressBar::chunk {
                          <number>0</number>
                         </property>
                         <property name="leftMargin">
-                         <number>10</number>
+                         <number>8</number>
                         </property>
                         <property name="topMargin">
                          <number>8</number>
@@ -1490,7 +1497,7 @@ QProgressBar::chunk {
                            </size>
                           </property>
                           <property name="text">
-                           <string>btnMapActions</string>
+                           <string>Toimingud kinnistutega</string>
                           </property>
                           <property name="icon">
                            <iconset>
@@ -1503,6 +1510,19 @@ QProgressBar::chunk {
                            </size>
                           </property>
                          </widget>
+                        </item>
+                        <item>
+                         <spacer name="verticalSpacer">
+                          <property name="orientation">
+                           <enum>Qt::Vertical</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>20</width>
+                            <height>40</height>
+                           </size>
+                          </property>
+                         </spacer>
                         </item>
                        </layout>
                       </widget>
@@ -10702,29 +10722,6 @@ QTreeView::item:hover {
                           <number>20</number>
                          </property>
                          <item>
-                          <widget class="QPushButton" name="pbSyncMailabl">
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>24</height>
-                            </size>
-                           </property>
-                           <property name="text">
-                            <string>Mailabliga sünkroniseerimine</string>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normaloff>icons/Icons_hele/cloud-lightning.svg</normaloff>icons/Icons_hele/cloud-lightning.svg</iconset>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>20</width>
-                             <height>20</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
                           <widget class="QPushButton" name="btnAddElements">
                            <property name="text">
                             <string>Lisa ja arhiveeri</string>
@@ -10790,7 +10787,30 @@ QTreeView::item:hover {
                           </widget>
                          </item>
                          <item>
-                          <widget class="QPushButton" name="pbCancelAction">
+                          <widget class="QPushButton" name="pbSyncMailabl">
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string>Mailabliga sünkroniseerimine</string>
+                           </property>
+                           <property name="icon">
+                            <iconset>
+                             <normaloff>icons/Icons_hele/cloud-lightning.svg</normaloff>icons/Icons_hele/cloud-lightning.svg</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>20</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="pbCancelPropertiesAction">
                            <property name="text">
                             <string>CancelAction</string>
                            </property>
@@ -11021,26 +11041,6 @@ QListWidget::item:selected {
                             </size>
                            </property>
                           </spacer>
-                         </item>
-                         <item>
-                          <widget class="QPushButton" name="btnConfirmAction">
-                           <property name="text">
-                            <string>Kinnita</string>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>18</width>
-                             <height>18</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QPushButton" name="btnCancelAction">
-                           <property name="text">
-                            <string>Tühista</string>
-                           </property>
-                          </widget>
                          </item>
                         </layout>
                        </widget>
@@ -11894,16 +11894,22 @@ QListWidget::item:selected {
                                 </spacer>
                                </item>
                                <item>
-                                <widget class="QPushButton" name="pbAction_2">
+                                <widget class="QPushButton" name="pbConfirmAction">
                                  <property name="text">
-                                  <string>Action</string>
+                                  <string>Alusta</string>
+                                 </property>
+                                 <property name="iconSize">
+                                  <size>
+                                   <width>18</width>
+                                   <height>18</height>
+                                  </size>
                                  </property>
                                 </widget>
                                </item>
                                <item>
-                                <widget class="QPushButton" name="pbAction">
+                                <widget class="QPushButton" name="pbCancelAction">
                                  <property name="text">
-                                  <string>Alusta lisamist</string>
+                                  <string>Tühista</string>
                                  </property>
                                 </widget>
                                </item>

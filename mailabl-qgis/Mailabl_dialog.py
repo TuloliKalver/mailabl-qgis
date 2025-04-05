@@ -184,7 +184,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             label=self.lblActionName, 
             button_frame=self.frPropertiFlowHolder,
             table_view=self.tvSelectedMapItems,
-            confirm_button=self.btnConfirmAction,
+            confirm_button=self.pbConfirmAction,
             )
 
         UI = UIStateManager(self)
@@ -240,13 +240,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     
         # Install event filter on the main window
         self.installEventFilter(self.custom_event_filter)
-
-
-        self.btnConfirmAction.setEnabled(False)
-
-        self.pbAction.setEnabled(True)
-        #self.pbAction.clicked.connect(partial(DuplicateLayerResolver.resolve_duplicate_layers_auto, layer_name="Arendatav_arhiiv kopeeri"))
-        #self.pbCancelAction.setEnabled(True)
         
 #####################################################################################################################
 
@@ -499,9 +492,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbOpenProperty.setEnabled(False)
 
 
-        self.label_5.setVisible(False)
-        self.pbtest_2.setVisible(False)
-        #self.pbtest_2.clicked.connect(ModernMessageDialog.Info_messages_modern)
+
 
 
 
@@ -1552,7 +1543,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             widget.setEnabled(True)
 
     def setup_button_actions(self):
-        
+        self.label_5.setVisible(False)
+        self.pbtest_2.setVisible(True)
+
         loader = SHPLayerLoader(self)
         UI = UIStateManager(self)
         
@@ -1562,12 +1555,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.btnAddElements: partial(SelectionActions.main_process_control, Processes.ADD, self.btnAddElements),
             self.btnUpdateData: partial(SelectionActions.main_process_control, Processes.EDIT, self.btnUpdateData),
             self.btnRemoveItems: partial(SelectionActions.main_process_control, Processes.REMOVE, self.btnRemoveItems),
-            self.btnConfirmAction: SelectionActions.execute_action,
-            self.btnCancelAction: SelectionActions.cancel_selection,
-            self.pbAction : AddProperties.store_to_archive,
+            self.pbConfirmAction: partial(SelectionActions.execute_action),
+            self.pbCancelAction: SelectionActions.cancel_selection,
+            #self.pbConfirmAction : AddProperties.store_to_archive,
             self.pbLoaddShapeFile:loader.load_shp_layer,
             self.pbOpenMaAmet:partial(loadWebpage.open_maa_amet_webpage_new),
-            #self.pbCancelAction: self.see_loaded_layers,
+            self.pbtest_2: self.see_loaded_layers,
             self.btnMapActions: UI.start_properti_flow_main
         }
 

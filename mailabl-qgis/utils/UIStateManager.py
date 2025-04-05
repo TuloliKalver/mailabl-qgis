@@ -30,8 +30,8 @@ class UIStateManager:
                             self.dialog.btnRemoveItems]
         
         self.action_buttons = [self.dialog.btnAddElements, self.dialog.btnUpdateData, 
-                            self.dialog.btnRemoveItems, self.dialog.btnConfirmAction, 
-                            self.dialog.btnCancelAction, self.dialog.pbAction]
+                            self.dialog.btnRemoveItems, self.dialog.pbConfirmAction, 
+                            self.dialog.pbCancelAction]
 
         self.slider_ws = self.dialog.swWorkSpace
         self.slider_m = self.dialog.swCadastral_sub_processes
@@ -111,8 +111,6 @@ class UIStateManager:
         Expected states: "county", "state", "municipality", "complete"
 
         """
-
-
         lv_county, lv_state, lv_municipality = self.list_views[:3]
         cb_municipality, cb_roads = self.check_boxes[:2]
         #pbConCounty, pbConState, pbConMunicipality, bbForward, pbBack = cls.flow_buttons [:5]

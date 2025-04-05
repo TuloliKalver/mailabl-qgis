@@ -324,7 +324,8 @@ class LayerFilterSetters:
                                                feature_id, 
                                                target_layer, 
                                                delete_input_data=False,
-                                               commit=False):
+                                               commit=False,
+                                               update_data=False):
         """
         Move features (geometry and attributes) from the input_layer to the target_layer.
         New features will be created so that QGIS assigns them new unique IDs.
@@ -334,7 +335,7 @@ class LayerFilterSetters:
         :param target_layer: The target QgsVectorLayer where features will be added.
         :param delete_input_data: If True, delete the features from the input_layer after moving.
         """
-    
+
         result = FeaturePreparations._feature_preparations_between_layers_using_name_for_field_detections(input_layer=input_layer, target_layer=target_layer, feature_id=feature_id)
         if result is False:
             print("The function returned False: no features found in the archive layer.")
@@ -353,6 +354,9 @@ class LayerFilterSetters:
 
                 #delete the elements from the layer if requested!
                 LayerActions._delete_element_from_layer(input_data=delete_input_data, feature_id=feature_id, layer=input_layer)
+                
+                
+                
                 return True
 
     @staticmethod
@@ -503,13 +507,15 @@ class LayerActions:
         if commit:
             if not layer.isEditable():
                     layer.startEditing()
+                    print(f"Started editing layer '{layer.name()}'.")
 
         loaded_layer_settings = PropertiesProcessStage.loaded_layers
+        #print(f"Loaded Layers Settings: {loaded_layer_settings}")
         layer_name = layer.name()
-        print(f"Layer_name {layer_name} from {layer} ")
+        #print(f"Layer_name {layer_name} from {layer} ")
         layer_info = loaded_layer_settings.get(layer_name, {})
         new_feature_fid = layer_info.get(MainVariables.MAX_ID)
-
+        #print(f"Max Fid {new_feature_fid}")
         if not new_feature:  # Check if the list is empty
             print(f"No features provided to add to layer '{layer.name()}'.")
             return False
@@ -525,9 +531,16 @@ class LayerActions:
         
         # addFeatures expects a list, so wrap the single feature in a list
         res, _ = layer.dataProvider().addFeatures([feature_to_add])
+        print(f"Added features to layer '{layer.name()}': {res}")
+        
         if commit:
             layer.commitChanges()
-        new_generated_max = fidOperations.get_next_fid(target_layer=layer)
+        
+        #optimized target feature creation 
+        #new_generated_max = fidOperations.get_next_fid(target_layer=layer)
+        
+        new_generated_max = new_feature_fid + 1
+        
         LayerSetups.register_layer_configuration(layer=layer, max_fid=new_generated_max)
         gc.collect()
         return res
@@ -607,6 +620,7 @@ class FeaturePreparations:
         new_feat.setGeometry(feat.geometry())  # Copy geometry.
         # Map attributes based on matching field names.
         new_attr_values = LayerActions._map_attributes_by_name(feat, target_fields)
+        #print(f"New attr values: {new_attr_values}")
         new_feat.setAttributes(new_attr_values)
         new_features.append(new_feat)
         gc.collect()

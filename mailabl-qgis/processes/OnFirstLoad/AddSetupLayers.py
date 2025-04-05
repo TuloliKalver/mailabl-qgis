@@ -1,10 +1,10 @@
 from qgis.core import QgsProject, QgsLayerTreeGroup
-from ...KeelelisedMuutujad.FolderHelper import MailablGroupLayers
+from ...KeelelisedMuutujad.FolderHelper import MailablGroupFolders
 
 
 class SetupLayers:
     def __init__(self):
-        self.main_group = MailablGroupLayers.MAILABL_MAIN #'Mailabl settings'  # Main group name
+        self.main_group = MailablGroupFolders.MAILABL_MAIN #'Mailabl settings'  # Main group name
         
     # Function to create the structured layer hierarchy
     def create_mailabl_setup_group_layer(self):
@@ -19,12 +19,11 @@ class SetupLayers:
             mailabl_group = QgsLayerTreeGroup(self.main_group)
             root.insertChildNode(-1, mailabl_group)
 
-
-        groups = MailablGroupLayers.GropupLayers
+        groups = MailablGroupFolders.GropupLayers
         for group in groups:
 
             group_layer = mailabl_group.findGroup(group)
-                    # Create child group layers if they don't exist
+            # Create child group layers if they don't exist
             if group_layer is None:
                 # If the importable properties group doesn't exist, create it
                 group_layer = QgsLayerTreeGroup(group)

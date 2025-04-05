@@ -2,7 +2,7 @@
 from qgis.core import QgsProject
 import processing
 from ..config.settings import Filepaths, FilesByNames
-from ..processes.OnFirstLoad.AddSetupLayers import SetupLayers, MailablGroupLayers
+from ..processes.OnFirstLoad.AddSetupLayers import SetupLayers, MailablGroupFolders
 
 class  Union:
 # remove existing temporary layers if they exist
@@ -33,7 +33,7 @@ class  Union:
 
                 # Get the group layer name
 
-                group_layer_name = MailablGroupLayers().TEMPORARY_LAYERS
+                group_layer_name = MailablGroupFolders().SANDBOXING
 
                 # Get the group layer or create it if it doesn't exist
                 root = QgsProject.instance().layerTreeRoot()

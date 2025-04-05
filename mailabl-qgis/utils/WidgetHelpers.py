@@ -120,7 +120,7 @@ class WidgetAndWievHelpers:
                 progress.update(3)
             # Update the UI widget with the retrieved map items
             if flow_state == FlowStages.PREVIEW:
-                button_name = ['btnConfirmAction']
+                button_name = ['pbConfirmAction']
                 buttons = ButtonHelper.get_button_objects(button_name)    
                 selected_text = ListSelections.get_selected_item_texts(list_widget)
 

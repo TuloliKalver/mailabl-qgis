@@ -61,7 +61,7 @@ class SHPLayerLoader:
                 
                 self.dialog.frMaaAmetControlls.setVisible(False)
                 self.dialog.frPropertiFlowHolder.setVisible(True)
-                self.dialog.pbAction.setEnabled(False)
+                self.dialog.pbConfirmAction.setEnabled(False)
     @staticmethod
     def add_spatial_index_to_layer(layer_name):
         layers = QgsProject.instance().mapLayersByName(layer_name)
@@ -77,11 +77,11 @@ class SHPLayerLoader:
 class ShapefileImporter:
     @staticmethod
     def import_shpFile_as_virtual_layer(file_path, group_layer):
+        gc.collect()
         shp_layer_name = file_path.split('/')[-1].split('.')[0]
         shapefile_layer = QgsVectorLayer(file_path, "shapefile_import", "ogr")
         if not shapefile_layer.isValid():
             return None
-
         crs = shapefile_layer.crs()
         virtual_layer = QgsVectorLayer("Polygon?crs=" + crs.authid(), shp_layer_name, "memory")
         if not virtual_layer.isValid():

@@ -57,8 +57,8 @@ class Processes:
 class Layers_NEED_CENTRALIZING:
     from ..config.settings import StoredLayers
 
-    IMPORT_LAYER_NAME = StoredLayers.Import_Layer_name()
-    USER_LAYER_NAME = StoredLayers.ActiveMailablPropertiesLayer_name()
+    IMPORT_LAYER_NAME = StoredLayers.import_layer_name()
+    USER_LAYER_NAME = StoredLayers.users_properties_layer_name()
 
 
 class MainVariables:
@@ -157,7 +157,7 @@ class Expressions:
                 Katastriyksus.mk_nimi, cache.get('selected_counties', [])
             ),
             'buttons_enable': [],
-            'buttons_disable': ['btnConfirmAction']
+            'buttons_disable': ['pbConfirmAction']
         },
         FlowStages.PRE_STATE: {
             'field': Katastriyksus.mk_nimi,
@@ -167,7 +167,7 @@ class Expressions:
                 Katastriyksus.mk_nimi, cache.get('selected_counties', [])
             ),
             'buttons_enable': [],
-            'buttons_disable': ['btnConfirmAction', 'btnCancelAction'],
+            'buttons_disable': ['pbConfirmAction', 'pbCancelAction'],
             'list_widget_input': 'lvCounty',
             'list_widget_target': 'lvState',
         },
@@ -181,8 +181,8 @@ class Expressions:
                 Expressions.build_in_expression(Katastriyksus.ov_nimi, cache.get('selected_state', []))
             ]),
 
-            'buttons_enable': ['btnCancelAction'],
-            'buttons_disable': ['btnConfirmAction'],
+            'buttons_enable': ['pbCancelAction'],
+            'buttons_disable': ['pbConfirmAction'],
             'list_widget_input': 'lvCounty',
             'list_widget_target': 'lvState',
         },
@@ -197,7 +197,7 @@ class Expressions:
                 Expressions.build_in_expression(Katastriyksus.ov_nimi, cache.get('selected_state', []))
             ]),
             'buttons_enable': [],
-            'buttons_disable': ['btnConfirmAction'],
+            'buttons_disable': ['pbConfirmAction'],
             'list_widget_input': 'lvState',
             'list_widget_target': 'lvSettlement',
         },
@@ -212,7 +212,7 @@ class Expressions:
                 Expressions.build_in_expression(Katastriyksus.ov_nimi, cache.get('selected_state', [])),
             ]),
             'buttons_enable': [],
-            'buttons_disable': ['btnConfirmAction'],
+            'buttons_disable': ['pbConfirmAction'],
             'list_widget_input': 'lvState',
             'list_widget_target': 'lvSettlement',
         },

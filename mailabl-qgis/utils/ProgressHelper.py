@@ -82,11 +82,13 @@ class ProgressDialogModern:
 
         label1 = self.dialog.text_1
         if text1 is not None:
+            #print(f"Updating text1 with '{text1}'")
             label1.show()
             label1.setText(text1)
 
         label2 = self.dialog.text_2
         if text2 is not None:
+            #print(f"Updating text2 with '{text2}'")
             label2.show()
             label2.setText(text2)
 

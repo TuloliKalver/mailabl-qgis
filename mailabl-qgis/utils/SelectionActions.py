@@ -71,7 +71,7 @@ class SelectionActions:
         Cancels any existing process, sets UI state, and loads required layers.
         """
 
-
+        gc.collect()
         # Define the total number of steps for progress tracking.
         #print("going through main process controll")
         AddProperties.set_buttons_in_dev()
@@ -88,7 +88,7 @@ class SelectionActions:
         selected_button.setEnabled(False)
         frames = [self.dialog.FrMunicipality,self.dialog.FrState,
                         self.dialog.FRCounty, self.dialog.frResultViewer,
-                        self.dialog.frControllButtons,]
+                        self.dialog.frControllButtons]
         for frame in frames:
             frame.show()
 
@@ -108,17 +108,21 @@ class SelectionActions:
 
         if planned_process in [add, edit]:
             ui_state.flow_and_ui_controls()
-            
+
+
             layers_config = [
                 {"name": Layers_NEED_CENTRALIZING.IMPORT_LAYER_NAME, "activated": True, "cleanup": True},
                 {"name": Layers_NEED_CENTRALIZING.USER_LAYER_NAME, "activated": False, "cleanup": False}
             ]
+
             print (f"layers config is {layers_config}")
         elif planned_process == remove:
             ui_state.flow_and_ui_controls()
             layers_config = [
                 {"name": Layers_NEED_CENTRALIZING.USER_LAYER_NAME, "activated": True, "cleanup": True}
             ]
+
+
         else:
             progress.close()
             self.show_message("Error", f"Unknown process: {planned_process}")
@@ -166,7 +170,8 @@ class SelectionActions:
             process = PropertiesProcessStage.active_process.get("process")
             button = PropertiesProcessStage.active_process.get("button")
             self.show_message("Action", f"Canceled {process} process.")
-            frames = UIStateManager.frames()
+            ui = UIStateManager(self)
+            frames = ui.frames()
             print(f"frames are {frames}")
             if button:
                 button.setEnabled(True)
@@ -188,11 +193,16 @@ class SelectionActions:
                 if button:
                     button.setEnabled(True)
                 result = AddProperties.add_properties_final_flow_controller()
+                print(f"result is {result}")
                 if result == False:
                     MessageLoaders.show_message("Result", f"Nothing to update or to archive")
+                    return
                 if result == True:
                     MessageLoaders.show_message("Result", f"All updatin processes handled succesfully")
-
+                    return
+                else:
+                    MessageLoaders.show_message("Error", f"Something went wrong during {process} process")
+                    return
             if process == Processes.EDIT:
                 MessageLoaders.show_message("Executing", f"Executing {process.capitalize()} Process...")
                 return

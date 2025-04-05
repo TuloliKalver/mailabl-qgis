@@ -37,7 +37,7 @@ class MapDataFlowHelper:
         layer = PropertiesProcessStage.active_layer
         validation = MapToolsHelper.validate_active_layer(layer)
         if validation == False:
-            print(f"Failed to validate Layer: {layer}")
+           # print(f"Failed to validate Layer: {layer}")
             return
 
         total_features = layer.featureCount()

@@ -13,7 +13,7 @@ from .resticon import WaterWorks, GetRuledRestriction
 from ..Union import Union
 from ..propertie_layer.InsertPropertiesToMailabl import PropertiesLayerFunctions
 from ..item_selector_tools import UseQGISNative
-from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers, MailablGroupLayers
+from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers, MailablGroupFolders
 from ...config.settings import SettingsDataSaveAndLoad
 from ...config.QGISSettingPaths import LayerSettings, SettingsLoader
 from ...config.settings import Filepaths, Flags, SettingsDataSaveAndLoad, FilesByNames
@@ -590,7 +590,7 @@ class BufferTools:
                     pass
 
                 # Get the group layer name
-                group_layer_name = MailablGroupLayers().TEMPORARY_LAYERS
+                group_layer_name = MailablGroupFolders().SANDBOXING
 
                 # Get the group layer or create it if it doesn't exist
                 root = QgsProject.instance().layerTreeRoot()
@@ -902,7 +902,7 @@ class ComboBoxInputs:
 class BufferByLine:
     def create_road_center_line(widget):
         temp_spline_layer = TempBufferLayerNames.spline_layer_name
-        group_layer_name = MailablGroupLayers().TEMPORARY_LAYERS
+        group_layer_name = MailablGroupFolders().SANDBOXING
         
         # Get the group layer or create it if it doesn't exist
         root = QgsProject.instance().layerTreeRoot()

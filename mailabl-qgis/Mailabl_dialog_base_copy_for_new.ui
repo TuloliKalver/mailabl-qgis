@@ -6554,7 +6554,7 @@ QProgressBar::chunk {
                            </spacer>
                           </item>
                           <item alignment="Qt::AlignVCenter">
-                           <widget class="QPushButton" name="btnConfirmAction">
+                           <widget class="QPushButton" name="pbConfirmAction">
                             <property name="text">
                              <string>Kinnita</string>
                             </property>
@@ -6567,7 +6567,7 @@ QProgressBar::chunk {
                            </widget>
                           </item>
                           <item alignment="Qt::AlignVCenter">
-                           <widget class="QPushButton" name="btnCancelAction">
+                           <widget class="QPushButton" name="pbCancelAction">
                             <property name="text">
                              <string>Tühista</string>
                             </property>

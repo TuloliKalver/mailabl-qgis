@@ -5,7 +5,7 @@ from ..Functions.layer_generator import LayerManager
 from ..utils.ButtonsHelper import ButtonHelper
 from ..utils.MapToolsHelper import MapToolsHelper
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-from ..KeelelisedMuutujad.FolderHelper import MailablLayers
+from ..KeelelisedMuutujad.FolderHelper import MailablLayerNames
 from ..Common.app_state import PropertiesProcessStage, Layers_NEED_CENTRALIZING
 
 
@@ -14,7 +14,7 @@ class AddProperties:
 
     @staticmethod
     def set_buttons_in_dev():
-        action = 'pbAction'
+        action = 'pbConfirmAction'
         cancel = 'pbCancelAction'
         button_names = [action, cancel]
         buttons = ButtonHelper.get_button_objects(button_names)
@@ -32,16 +32,19 @@ class AddProperties:
         Compare difrences on the two layers and then make list of difrences
         Select diferences on both layers 
         """
+        print("stage define layers")
         active_layer = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if info.get('activated')), None)
         target_layer_from_mappings = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if not info.get('activated')), None)
         #print(f"active layer {active_layer}")
-        #print(f"target_layer {target_layer}")
+        #print(f"target_layer {target_layer_from_mappings}")
         field = Katastriyksus.tunnus
-
+        
+        #print("stage load layers")
         LayerFilterSetters._copy_layer_filter_by_preassigned_layers()
         target_cadastrals = LayerProcessHandlers.get_comparison_fields_list_and_element_ids(field_name=field,layer=target_layer_from_mappings)
         active_cadastrals = LayerProcessHandlers.get_comparison_fields_list_and_element_ids(field_name=field, layer=active_layer)
 
+        #print("stage compare layers")
         # Convert keys to sets for comparison
         target_keys = set(target_cadastrals.keys())
         active_keys = set(active_cadastrals.keys())
@@ -56,52 +59,68 @@ class AddProperties:
         #print(f"to be archived {not_available_anymore_ids}")
         #print(f"to be added {missing_in_active_ids}")
 
+        
         if not_available_anymore:
+            print("not available anymore")
             MapToolsHelper.select_features_by_ids(feature_ids=not_available_anymore_ids, 
                                                   layer=target_layer_from_mappings)
-            archive_layer_name = MailablLayers.ARCHIVE_PRE_LAYER_NAME
-            
-            archive_layer = LayerManager.check_layer_existance_by_name(archive_layer_name)
+            sandbox_layer_name = MailablLayerNames.SANDBOX_LAYER
+            print("stage move data")            
+            sandbox_layer = LayerManager.check_layer_existance_by_name(sandbox_layer_name)
             #print(f"Returned layer: {layer}")
-            if archive_layer == None:
-                archive_layer = LayerManager.create_memory_layer_by_coping_original_layer(archive_layer_name, active_layer, is_archive=True)
-                LayerManager.add_layer_to_group(archive_layer)
+            if sandbox_layer == None:
+                sandbox_layer = LayerManager.create_memory_layer_by_coping_original_layer(sandbox_layer_name, active_layer, is_archive=True)
+                LayerManager.add_layer_to_sandbox_group(sandbox_layer)
                 gc.collect()  # Force garbage collection
             else:
-                nex_id=fidOperations.get_next_fid(target_layer=archive_layer)
-                LayerSetups.register_layer_configuration(archive_layer,max_fid=nex_id)
+                print("stage get next fid")
+                nex_id=fidOperations.get_next_fid(target_layer=sandbox_layer)
+                LayerSetups.register_layer_configuration(sandbox_layer,max_fid=nex_id)
             
             for feat_to_archive in not_available_anymore_ids:
                 #move to archive layer
-                #print(f"targetlayer = {target_layer_from_mappings}")
+                print(f"targetlayer = {target_layer_from_mappings}")
                 result = LayerFilterSetters._move_data_and_geometry_between_layers(input_layer=target_layer_from_mappings, 
                                                                                    feature_id=feat_to_archive,
-                                                                                   target_layer=archive_layer,
+                                                                                   target_layer=sandbox_layer,
                                                                                    delete_input_data=True,
                                                                                    commit=False)
         
             gc.collect()  # Force garbage collection
             AddProperties.store_to_archive()
-            LayerManager.remove_existing_layer(archive_layer_name)
+            LayerManager.remove_existing_layer(sandbox_layer_name)
             #MessageLoaders.show_message('Tehtud', f"Arhiveeritud id: {feat_to_archive}")
             gc.collect()      
-
+        
         if missing_in_active_ids:
+            print("stage missing in active")
             MapToolsHelper.select_features_by_ids(feature_ids=missing_in_active_ids,
                                                   layer=active_layer)
-            for feat in missing_in_active_ids:
-                print(f"feat equals to: {feat} (type: {type(feat)})")
-                result = LayerFilterSetters._move_data_and_geometry_between_layers(input_layer=active_layer, 
-                                                                                   feature_id=feat, 
-                                                                                   target_layer=target_layer_from_mappings, 
-                                                                                   delete_input_data=False,
-                                                                                   commit=True)
-                #MessageLoaders.show_message('Tehtud', f"Lisatud id: {feat_missing_in_active}")
-                if result:
-                    gc.collect()
-                    return True
-        #value_list = LayerFilterSetters._select_target_features_based_on_temporary_archived_elements(target_layer=target_layer, archive_layer=archive_layer, connection_field=Katastriyksus.tunnus)
-        #print(f"Values to be updated in Mailable: {value_list}")
+            #print(f"Missing in active ids: {missing_in_active_ids}")
+            max_items = len(missing_in_active)
+            from ..utils.ProgressHelper import ProgressDialogModern
+            heading = "Salvestamine"
+            progress = ProgressDialogModern(maximum=max_items, title=heading)
+
+            for count, feat_id in enumerate(missing_in_active_ids, start=1):
+                is_last = count == max_items  # Check if this is the last iteration returns True or False
+                commit = is_last  # Only commit on the last one
+
+                LayerFilterSetters._move_data_and_geometry_between_layers(
+                    input_layer=active_layer,
+                    feature_id=feat_id,
+                    target_layer=target_layer_from_mappings,
+                    delete_input_data=False,
+                    commit=commit,
+                    update_data=True
+                )
+
+                progress.update(value=count)
+
+            progress.close()
+            gc.collect()
+            return True
+
         if missing_in_active_ids or not_available_anymore_ids:
             return False
         
@@ -122,29 +141,29 @@ class AddProperties:
                 False otherwise.
         """
         #TODO Remove after testing
-        layers_config = [            
-            {"name": Layers_NEED_CENTRALIZING.IMPORT_LAYER_NAME, "activated": True, "cleanup": True},
-            {"name": Layers_NEED_CENTRALIZING.USER_LAYER_NAME, "activated": False, "cleanup": False}
-            ]
-        LayerProcessHandlers.load_and_handle_layers(layers_config)
+        #layers_config = [            
+        #    {"name": Layers_NEED_CENTRALIZING.IMPORT_LAYER_NAME, "activated": True, "cleanup": True},
+        #    {"name": Layers_NEED_CENTRALIZING.USER_LAYER_NAME, "activated": False, "cleanup": False}
+        #    ]
+        #LayerProcessHandlers.load_and_handle_layers(layers_config)
         #TODO Remove after testing until here
 
         active_layer = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if not info.get('activated')), None)
         
-        #pre_archive_layer_name = Layers.ARCHIVE_PRE_LAYER_NAME
-        #archive_memory_layer = LayerManager.check_layer_existance_by_name(pre_archive_layer_name)
-        #Check if memory layer exists and if it has duplicates if it has duplicates removes other duplicate layers
+        archive_memory_layer = DuplicateLayerResolver.resolve_duplicate_layers_auto(layer_name=MailablLayerNames.SANDBOX_LAYER)
 
-        archive_memory_layer = DuplicateLayerResolver.resolve_duplicate_layers_auto(layer_name=MailablLayers.ARCHIVE_PRE_LAYER_NAME)
-
-        #print(f"Archive memory layer: {archive_memory_layer}")
+        print(f"Archive memory layer: {archive_memory_layer}")
+        if archive_memory_layer is None:
+            print("No pre-archive layer found.")
+            return False
 
         if archive_memory_layer.dataProvider().name() == "memory":
             if archive_memory_layer.isValid():
                 #print(f"active_layer: {active_layer}")
-                res, returned_features = LayerManager.store_memory_layer_to_geopackage(memory_layer=archive_memory_layer, target_layer_for_file=active_layer, new_layer_name = MailablLayers.ARCHIVE_LAYER_NAME)
+                res, returned_features = LayerManager.store_memory_layer_to_geopackage(memory_layer=archive_memory_layer, target_layer_for_file=active_layer, new_layer_name = MailablLayerNames.ARCHIVE_LAYER_NAME)
                 
                 if res is not None:
+                    print(f"Returned features: {returned_features}")
                     print("Stored archive memory layer to file")
                     return True
                 else:
