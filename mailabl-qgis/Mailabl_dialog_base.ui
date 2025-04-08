@@ -2186,7 +2186,7 @@ QProgressBar::chunk {
 </string>
                      </property>
                      <property name="currentIndex">
-                      <number>5</number>
+                      <number>1</number>
                      </property>
                      <widget class="QWidget" name="swAdd_cadastrals">
                       <property name="styleSheet">
@@ -3213,36 +3213,6 @@ QProgressBar::chunk {
                                 <property name="bottomMargin">
                                  <number>3</number>
                                 </property>
-                                <item>
-                                 <spacer name="horizontalSpacer_10">
-                                  <property name="orientation">
-                                   <enum>Qt::Horizontal</enum>
-                                  </property>
-                                  <property name="sizeHint" stdset="0">
-                                   <size>
-                                    <width>658</width>
-                                    <height>20</height>
-                                   </size>
-                                  </property>
-                                 </spacer>
-                                </item>
-                                <item>
-                                 <widget class="QPushButton" name="pbConfirm_action">
-                                  <property name="text">
-                                   <string>Kinnita</string>
-                                  </property>
-                                  <property name="icon">
-                                   <iconset>
-                                    <normaloff>icons/Icons_hele/check.svg</normaloff>icons/Icons_hele/check.svg</iconset>
-                                  </property>
-                                  <property name="iconSize">
-                                   <size>
-                                    <width>18</width>
-                                    <height>18</height>
-                                   </size>
-                                  </property>
-                                 </widget>
-                                </item>
                                </layout>
                               </widget>
                              </item>
@@ -6575,8 +6545,8 @@ p, li { white-space: pre-wrap; }
                       <property name="geometry">
                        <rect>
                         <x>0</x>
-                        <y>-415</y>
-                        <width>730</width>
+                        <y>-372</y>
+                        <width>749</width>
                         <height>1011</height>
                        </rect>
                       </property>
@@ -10595,6 +10565,13 @@ QTreeView::item:hover {
                              <number>0</number>
                             </property>
                             <item alignment="Qt::AlignRight">
+                             <widget class="QLabel" name="label_26">
+                              <property name="text">
+                               <string>Eemalda kinnistuid</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item alignment="Qt::AlignRight">
                              <widget class="QLabel" name="label_19">
                               <property name="font">
                                <font>
@@ -10648,6 +10625,17 @@ QTreeView::item:hover {
                             <property name="bottomMargin">
                              <number>0</number>
                             </property>
+                            <item>
+                             <widget class="QPushButton" name="btnRemoveItems_noImport">
+                              <property name="text">
+                               <string>Eemalda kinnistuid</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/delete.svg</normaloff>icons/Icons_hele/delete.svg</iconset>
+                              </property>
+                             </widget>
+                            </item>
                             <item>
                              <widget class="QPushButton" name="pbLoaddShapeFile">
                               <property name="minimumSize">
@@ -10733,20 +10721,6 @@ QTreeView::item:hover {
                           </widget>
                          </item>
                          <item>
-                          <widget class="QPushButton" name="btnUpdateData">
-                           <property name="styleSheet">
-                            <string notr="true"/>
-                           </property>
-                           <property name="text">
-                            <string>Uuenda andmeid</string>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
                           <widget class="QPushButton" name="btnRemoveItems">
                            <property name="text">
                             <string>Eemalda kinnistuid</string>
@@ -10756,6 +10730,42 @@ QTreeView::item:hover {
                              <normaloff>icons/Icons_hele/delete.svg</normaloff>icons/Icons_hele/delete.svg</iconset>
                            </property>
                           </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="pbSyncMailabl">
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>24</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string>Mailabliga sünkroniseerimine</string>
+                           </property>
+                           <property name="icon">
+                            <iconset>
+                             <normaloff>icons/Icons_hele/cloud-lightning.svg</normaloff>icons/Icons_hele/cloud-lightning.svg</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>20</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="verticalSpacer_5">
+                           <property name="orientation">
+                            <enum>Qt::Vertical</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>20</width>
+                             <height>40</height>
+                            </size>
+                           </property>
+                          </spacer>
                          </item>
                          <item>
                           <widget class="QPushButton" name="pbUpdateToNewDataframe">
@@ -10787,139 +10797,14 @@ QTreeView::item:hover {
                           </widget>
                          </item>
                          <item>
-                          <widget class="QPushButton" name="pbSyncMailabl">
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>24</height>
-                            </size>
-                           </property>
-                           <property name="text">
-                            <string>Mailabliga sünkroniseerimine</string>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normaloff>icons/Icons_hele/cloud-lightning.svg</normaloff>icons/Icons_hele/cloud-lightning.svg</iconset>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>20</width>
-                             <height>20</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
                           <widget class="QPushButton" name="pbCancelPropertiesAction">
                            <property name="text">
-                            <string>CancelAction</string>
+                            <string>Lahku</string>
                            </property>
                            <property name="icon">
                             <iconset>
                              <normaloff>icons/Icons_hele/log-out.svg</normaloff>icons/Icons_hele/log-out.svg</iconset>
                            </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QFrame" name="pbCadastraActions_SliderFrame">
-                           <property name="maximumSize">
-                            <size>
-                             <width>16777215</width>
-                             <height>400</height>
-                            </size>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true"/>
-                           </property>
-                           <property name="frameShape">
-                            <enum>QFrame::StyledPanel</enum>
-                           </property>
-                           <property name="frameShadow">
-                            <enum>QFrame::Raised</enum>
-                           </property>
-                           <layout class="QVBoxLayout" name="verticalLayout_72">
-                            <property name="leftMargin">
-                             <number>12</number>
-                            </property>
-                            <property name="topMargin">
-                             <number>6</number>
-                            </property>
-                            <property name="rightMargin">
-                             <number>0</number>
-                            </property>
-                            <property name="bottomMargin">
-                             <number>6</number>
-                            </property>
-                            <item>
-                             <widget class="QPushButton" name="pbRefresh">
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string>Andmete värskendamine*</string>
-                              </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>20</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QPushButton" name="pbRemove">
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string>Kinnistute eemaldamine</string>
-                              </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/minus-square.svg</normaloff>icons/Icons_hele/minus-square.svg</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>20</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QPushButton" name="pbExpand">
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string>Kinnistute lisamine</string>
-                              </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/plus-square.svg</normaloff>icons/Icons_hele/plus-square.svg</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>20</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
                           </widget>
                          </item>
                         </layout>
@@ -11029,6 +10914,13 @@ QListWidget::item:selected {
                          <property name="bottomMargin">
                           <number>0</number>
                          </property>
+                         <item>
+                          <widget class="QPushButton" name="pbSelectFromMap">
+                           <property name="text">
+                            <string>Valin kaardilt</string>
+                           </property>
+                          </widget>
+                         </item>
                          <item>
                           <spacer name="horizontalSpacer_57">
                            <property name="orientation">

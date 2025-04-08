@@ -123,3 +123,4 @@ class MapDataFlowHelper:
         progress.close()
         gc.collect()
         return data, feature_ids, field_names
+

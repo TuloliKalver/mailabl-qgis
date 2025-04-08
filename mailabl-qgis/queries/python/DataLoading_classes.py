@@ -154,8 +154,8 @@ class GraphQLQueryLoader:
         with open(graphql_path, 'r') as file:
             return file.read()
 
-
-    def load_query_properties(self, query_file_name):
+    @staticmethod
+    def load_query_properties( query_file_name):
         path = GraphQLQueryLoader()
         graphql_path = os.path.join(path.plugin_dir, path.properties_folder, query_file_name)
         with open(graphql_path, 'r') as file:

@@ -1,7 +1,9 @@
 #UIStateManager.py
-from ..Common.app_state import PropertiesProcessStage, FlowStages
+from qgis.core import  QgsProject
 from PyQt5.QtWidgets import QListView, QTableView, QTableWidget, QCheckBox
 from .WidgetHelpers import WidgetAndWievHelpers, ListSelectionHandler
+from ..config.settings import SettingsDataSaveAndLoad
+from ..Common.app_state import PropertiesProcessStage, FlowStages
 from ..utils.ProgressHelper import ProgressDialogModern
 from ..app.workspace_handler import CenterMainSliderIndexes
 
@@ -26,10 +28,10 @@ class UIStateManager:
             
         self.table = [self.dialog.tvSelectedMapItems]
         
-        self.main_frame_buttons = [self.dialog.btnAddElements, self.dialog.btnUpdateData,
+        self.main_frame_buttons = [self.dialog.btnAddElements, 
                             self.dialog.btnRemoveItems]
         
-        self.action_buttons = [self.dialog.btnAddElements, self.dialog.btnUpdateData, 
+        self.action_buttons = [self.dialog.btnAddElements,
                             self.dialog.btnRemoveItems, self.dialog.pbConfirmAction, 
                             self.dialog.pbCancelAction]
 
@@ -50,21 +52,22 @@ class UIStateManager:
         self.lbl_action.setText("Andmete laadimine")
 
 
-        from ..config.settings import SettingsDataSaveAndLoad
         load = SettingsDataSaveAndLoad()
         layer_name = load.load_SHP_inputLayer_name()
         print(f"loaded layer name {layer_name}")
-        from qgis.core import  QgsProject
         layer = QgsProject.instance().mapLayersByName(layer_name)
 
-        lv_county, lv_state, lv_municipality = self.list_views[:3]
-        cb_municipality, cb_roads = self.check_boxes[:2]
+        lv_county = self.dialog.lvCounty
+        lv_state = self.dialog.lvState
+        lv_municipality = self.dialog.lvSettlement
+        cb_municipality = self.dialog.chkSelectAllSettlements
+        cb_roads = self.dialog.chkToggleRoadSelection
+
         all_checkboxes = self.check_boxes + [cb_municipality, cb_roads]
         all_tables = self.table
         all_controls = all_checkboxes + all_tables
 
         if not layer:
-            print("layer not loaded")
             self.dialog.frMaaAmetControlls.setVisible(True)
             self.dialog.frPropertiFlowHolder.setVisible(False)
             UIActions.hide(self.frames)
@@ -87,24 +90,6 @@ class UIStateManager:
         WidgetAndWievHelpers.reset_and_set_data(all_controls + all_checkboxes, data=[], state=False)  # Disable everything else
         WidgetAndWievHelpers.reset_and_set_data(all_tables, data=[], state=False)
 
-    def enable_after_process_selection(self, selected_button):
-        """
-        Enable all UI elements (buttons, check_boxes, list views) and then disable the selected button.
-        """
-        UIActions.show(self.frames)
-        selected_button.setEnabled(False)
-
-    @classmethod
-    def enable_elements(cls, elements):
-        """Enable (show) specific UI elements."""
-        UIActions.show(elements)
-
-    @classmethod
-    def disable_elements(cls, elements):
-        """Disable (hide) specific UI elements."""
-        UIActions.hide(elements)
-
-
     def flow_and_ui_controls(self):
         """
         Adjust the visibility and enabled state of list views based on the selection flow state.
@@ -112,34 +97,31 @@ class UIStateManager:
 
         """
         lv_county, lv_state, lv_municipality = self.list_views[:3]
-        cb_municipality, cb_roads = self.check_boxes[:2]
-        #pbConCounty, pbConState, pbConMunicipality, bbForward, pbBack = cls.flow_buttons [:5]
-        
-        all_views = [lv_county, lv_state, lv_municipality ]
-        #all_buttons = [pbConCounty, pbConState, pbConMunicipality]
+        cb_municipality, cb_roads = self.check_boxes[:2]        
+        all_views = [lv_county, lv_state, lv_municipality]
         all_checkboxes = self.check_boxes + [cb_municipality, cb_roads]
         all_tables = self.table
         all_controls = all_checkboxes + all_tables
+        all_checkboxes = cb_municipality, cb_roads
+
 
         state = PropertiesProcessStage.current_flow_stage
         # ** Define UI Elements **
 
         start_value = 0
-        progress = ProgressDialogModern(title="Andmete laadimine", value=start_value)
+        progress = ProgressDialogModern(title="Andmete laadimine...", value=start_value)
 
         # Define state-specific UI actions
         if state == FlowStages.COUNTY:
-            progres_steps = 5
+            progres_steps = 4
             progress.update(text1="Palun oota...", maximum=progres_steps)
             WidgetAndWievHelpers.reset_and_set_data(lv_county, data=[], state=True)  # Enable county list
             UIActions.disable_and_clear(all_checkboxes)
             progress.update(1)
             WidgetAndWievHelpers.reset_and_set_data([lv_municipality, lv_state], data=[], state=False)
             progress.update(2)
-            WidgetAndWievHelpers.reset_and_set_data(all_controls + all_checkboxes, data=[], state=False)  # Disable everything else
+            WidgetAndWievHelpers.reset_and_set_data(all_controls, data=[], state=False)  # Disable everything else
             progress.update(3)
-            WidgetAndWievHelpers.reset_and_set_data(all_tables, data=[], state=False)
-            progress.update(4)
             FlowStages.forward_stage()
             progress.close()
 
@@ -259,7 +241,3 @@ class UIActions:
                         model.setRowCount(0)
                     else:
                         print("Warning: The model for QTableView does not support clearing.")
-
-
-
-

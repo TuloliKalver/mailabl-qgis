@@ -33,24 +33,22 @@ from qgis.PyQt import QtWidgets, uic
 from PyQt5.QtWidgets import  QLineEdit, QListView, QAbstractItemView, QVBoxLayout
 from PyQt5.QtGui import QStandardItemModel
 from .app.web import loadWebpage, WebLinks
-from .app.workspace_handler import WorkSpaceHandler, TabHandler
+from .app.workspace_handler import WorkSpaceHandler
 from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.SetupModules.SetupMainLayers import SetupCadastralLayers
-from .config.settings import StoredLayers, Flags, settingPageElements
+from .config.settings import StoredLayers, settingPageElements
 from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
 from .config.mainwidget import WidgetInfo
 from .KeelelisedMuutujad.modules import Module
 from .app.checkable_comboboxes import ComboBoxFunctions, ComboBoxMapTools
 from .app.remove_processes import RemoveProcess
-from .app.ui_controllers import FrameHandler, WidgetAnimator, secondLevelButtonsHandler, stackedWidgetsSpaces, alter_containers
+from .app.ui_controllers import FrameHandler, WidgetAnimator, stackedWidgetsSpaces, alter_containers
 from .app.View_tools import listView_functions, shp_tools, tableView_functions
 from .Functions.item_selector_tools import CadasterSelector, properties_selectors
 from .Functions.SearchEngines import searchGeneral,ModularSearchEngine
-from .Functions.delete_items import DeletingProcesses, MapRestictionsAndListWidgetDataInserion
+from .Functions.delete_items import DeletingProcesses
 from .Functions.Tools import tableFunctions
-#from .Functions.AddProperties.AddProperties_dev import AddProperties_dev
-from .Functions.RemoveProperties.RemoveSelectedProperties import DeleteActions
 from .processes.ImportProcesses.Import_shp_file import SHPLayerLoader
 from .processes.OnFirstLoad.FirstLoad import Startup
 from .processes.SyncProperties.syncMailablProperties import PropertiesBaseMap
@@ -68,17 +66,13 @@ from .Functions.EVEL.evel_general import EVELTools
 from .Functions.HomeTree.BuildTree import MyTreeHome
 from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool, FeatureInfoToolSearch
 from .Functions.Searchpropertyfromlayer import SearchProperties
-#from .Functions.AddProperties.AddProcessPrepareTables import AddProcessPrepareTables
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 from .processes.OnFirstLoad.CloseUnload import Unload
 from .utils.ToggleSwitch import ToggleSwitch, StoreValues_Toggle
 from .KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from .utils.UIWindowHelpers import WindowPositionHelper, WindowManagerMinMax
 from .utils.custom_event_filter import BlockButtonsToPreferLabelEventFilter, ReturnPressedManager
-from .utils.TableUtilys.TableHelpers import TableDataInserter
-
 from .utils.TableUtilys.TableHelpers import TableHelper
-from .utils.signal_utils import execute_with_block
 from .app.button_connector import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
 from .utils.SpatialDataHelper import ZoomForModuleData
 from .utils.messagesHelper import ModernMessageDialog
@@ -98,7 +92,6 @@ from .utils.UIStateManager import UIStateManager
 from .utils.WidgetHelpers import WidgetAndWievHelpers, ListSelectionHandler
 from .utils.MapHelpers import MapDataFlowHelper
 from .utils.MapToolsHelper import MapToolsHelper
-from .Functions.FlowPropertiesAdd import AddProperties
 from .Common.ChaceHelpers import CacheUpdater
 from .utils.ListHelper import  ListSelections
 
@@ -189,6 +182,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         UI = UIStateManager(self)
 
+
 ##########################################################################################################
 
                 ###UNTILL HERE UNORGANIZED NEW PARTS
@@ -257,6 +251,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.chkSelectAllSettlements.stateChanged.connect(self.on_toggle_all_with_list)
         self.chkToggleRoadSelection.stateChanged.connect(self.on_toggle_select_only_non_transport_properties)
+
+        self.pbCancelPropertiesAction.clicked.connect(self.exit_properties_process_flows)
+
+
 #####################################################################################################################
 
                         #OLD BUTTON CONNECTIONS
@@ -344,10 +342,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     
         self.pbSync_start_sync.clicked.connect(self.generate_virtual_mapLayer_synced_with_Mailabl)
         
-        self.pbRefresh.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Refresh(self))
-        self.pbExpand.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Expand(self))
-        self.pbRemove.clicked.connect(lambda: WorkSpaceHandler.swDeleteworkspace(self))
-
 
     # Setting processes 
 
@@ -377,7 +371,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         # Avab maa-ameti repositooriumi kaardiandmete alla laadimiseks
         
 
-        #self.pbRefresh.clicked.connect(self.check_for_updates)
         
         #Setting workspace buttons and functions
         self.pbLayerSettings.clicked.connect(self.layer_setup)
@@ -396,19 +389,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         #self.listWidget_county.itemClicked.connect(self.get_state_list)
         self.pbDone_County.clicked.connect(self.get_state_list)
         self.pbDone_State.clicked.connect(self.get_city_list)
-        #self.pbDoneCity.clicked.connect(self.AddProcessPrepareTables.prepare_properties_list_and_Add_to_table_updated_with_selecting_items)
-
-
-        self.pbDel_County.clicked.connect(self.delete_process_after_county)
-        pbDel_State.clicked.connect(self.delete_process_after_state)
-        pbDel_city.clicked.connect(self.delete_process_after_city)
-
-        pbDel_PreConfirm.clicked.connect(self.DeleteProcess_check_validity_in_Mylabl)
-        
-        lwDelete_County_Names.clicked.connect(self.Delete_reset_stage)
-        lwDel_State_Names.clicked.connect(self.Delete_reset_to_stage_state)
-        
-        #self.pbDelete_items_getCounty.clicked.connect(self.get_Mailabl_existing_counties)
         
 
         self.pbSearchProjects.clicked.connect(lambda: self.universalSearchWrapper(Module.PROJECT))
@@ -446,18 +426,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         tbl_Delete_properties.setSelectionBehavior(QAbstractItemView.SelectRows)
         tbl_Delete_streets.setSelectionBehavior(QAbstractItemView.SelectRows)
 
-
-
-        
         #self.pbCooseFromMap_Add.clicked.connect(self.manualy_choose_properties_to_Add)
         
-        self.listWidget_county.clicked.connect(self.update_map_with_restricted_county)
-        self.listWidget_State.clicked.connect(self.update_step_2)
-        self.listWidget_City.clicked.connect(self.update_step_3)
-        
-        
-        self.pbConfirm_action.clicked.connect(self.StartImportProcess)
-
         self.pbMainMenu.clicked.connect(self.handleSidebar_leftButtons)
         
 
@@ -493,16 +463,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
 
-
-
-
-
     def on_label_return_pressed(self):
         # Identify which label sent the signal
         sender = self.sender()
         if isinstance(sender, QLineEdit):
             self.start_propertie_search()
-
 
     def start_propertie_search(self):
         gc.collect()  # Force garbage collection
@@ -774,13 +739,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     def handleSidebar_leftButtons(self):
         button1 = self.pbSettings
-        button2 = self.pbExpand
-        button3 = self.pbRefresh
-        button4 = self.pbRemove
-
-        #button6 is free to set any new buttons       
-        
-        
         button10 = self.pbAddDrawings
         button11 = self.pbContracts
         button12 = self.pbMainContract
@@ -790,21 +748,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button16 = self.pbProjects
         button17 = self.pbeasements
         button18 = self.pbSyncMailabl
-
         left_menu = self.leftMenuContainer
         container = self.leftMenuContainer
         container_width = container.width()
         #print(container_width)
         
         buttons = [button1, 
-                button2,
-                button3,
-                button4,
-                #button6 is free to set any new buttons
-                button5,
-                button7,
-                button8,
-                button9,
                 button10,
                 button11,
                 button12,
@@ -816,14 +765,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 button18]
 
         original_texts = {button1: "Sätted",
-                            button2: "Kinnistute lisamine",
-                            button3: "Andmete värskendamine",
-                            button4: "Kinnistute eemaldamine",
-                            button5: "Toimingud kinnistutega",
-                            #button6 is free to set any new buttons
-                            button7: "Andmete laadimine",
-                            button8: "Maa-ametisse",
-                            button9: "Lae algandmed",
                             button10: "Teostusjoonised",
                             button11: "Lepingud",
                             button12: "Teenuslepingud",
@@ -836,14 +777,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         }
 
         new_texts = {button1: "",
-                    button2: "",
-                    button3: "",
-                    button4: "",
-                    button5: "",
-                    #button6 is free to set any new buttons
-                    button7: "",
-                    button8: "",
-                    button9: "",
                     button10: "",
                     button11: "",
                     button12: "",
@@ -858,107 +791,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         length = len(button18.text())
         alter_containers.toggle_left_menu(self, length, buttons, original_texts, new_texts, left_menu, container, container_width)
 
-    def StartImportProcess(self):
-        AddProperties_dev.check_for_duplicates_and_add_only_matches(self)
-
-    def update_step_2 (self):
-        layer_name = load.load_SHP_inputLayer_name()
-        layer = QgsProject.instance().mapLayersByName(layer_name)[0]
-
-        layer.blockSignals(True)
-        # Deselect all selected items on the map
-        layer.removeSelection()
-
-        hide_buttons = [ 
-                self.pbDoneCity,
-                self.pbConfirm_action,
-                self.pbCancel_streets_reset,
-                self.pbConfirm_streets_action]
-        
-        list_views = [
-                        self.listWidget_City]
-        
-        checkboxes = [
-                        self.cbChooseAll_Cities,
-                        self.cbChooseAllAdd_properties, 
-                        self.cbChooseAllAdd__street_properties,
-                        self.cbOnPropertiesTab_Include_streets]
-        object_tables = [self.tblvResults_streets_Confirm,
-                            self.tblvResults_Confirm]
-
-
-        #clear to proper stage = hide and clear tables, buttons and checkboxes
-        list_functions.unload_and_hide_connectedItems(list_views, 
-                                            object_tables,
-                                            hide_buttons,
-                                            checkboxes)
-
-    def update_step_3 (self):
-        layer_name = load.load_SHP_inputLayer_name()
-        layer = QgsProject.instance().mapLayersByName(layer_name)[0]
-
-        layer.blockSignals(True)
-        # Deselect all selected items on the map
-        layer.removeSelection()
-
-        hide_buttons = [ 
-                self.pbConfirm_action,
-                self.pbCancel_streets_reset,
-                self.pbConfirm_streets_action]
-        
-        list_views = []
-        
-        checkboxes = [
-                        self.cbChooseAllAdd_properties, 
-                        self.cbChooseAllAdd__street_properties,
-                        self.cbOnPropertiesTab_Include_streets]
-        object_tables = [self.tblvResults_streets_Confirm,
-                            self.tblvResults_Confirm]
-
-
-        #clear to proper stage = hide and clear tables, buttons and checkboxes
-        list_functions.unload_and_hide_connectedItems(list_views, 
-                                            object_tables,
-                                            hide_buttons,
-                                            checkboxes)
     
-    def update_map_with_restricted_county (self):
-        input_layer_name = load.load_SHP_inputLayer_name()
-        layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
-
-        layer.blockSignals(True)
-        # Deselect all selected items on the map
-        layer.removeSelection()
-
-        hide_buttons = [self.pbDone_State, 
-                self.pbDoneCity,
-                self.pbConfirm_action,
-                self.pbCancel_streets_reset,
-                self.pbConfirm_streets_action]
-        
-        list_views = [self.listWidget_State, 
-                        self.listWidget_City]
-        
-        checkboxes = [self.cbChooseAll_States,
-                        self.cbChooseAll_Cities,
-                        self.cbChooseAllAdd_properties, 
-                        self.cbChooseAllAdd__street_properties,
-                        self.cbOnPropertiesTab_Include_streets]
-        object_tables = [self.tblvResults_streets_Confirm,
-                            self.tblvResults_Confirm]
-
-        #clear to proper stage = hide and clear tables, buttons and checkboxes
-        list_functions.unload_and_hide_connectedItems(list_views, 
-                                            object_tables,
-                                            hide_buttons,
-                                            checkboxes)
-
-        viewItem_county = self.listWidget_county
-
-        layer.blockSignals(False)
-        shp_tools.county_map_simplifier(county_nimi_field, input_layer_name, viewItem_county)
-        
-    #Functions in Development
         
     def get_state_list(self):
         self.sw_HM.setCurrentIndex(3)
@@ -1307,165 +1140,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         Projects.load_projects_by_status(table, statusValue)
         button.blockSingnals = False
         
-    def Delete_reset_stage(self):
-        DeletProcessUIActions.Delete_process_view_on_countyListView_click(self)
         
-    def Delete_reset_to_stage_state(self):
-        DeletProcessUIActions.Delete_process_view_after_state(self)
-        self.pbDel_City.hide()
-        self.lwDelete_Cities_Names.clear()
-    
-    def delete_process_after_county(self):
-        lwDel_County_Names = self.lwDelete_County_Names
-        lwDel_State_names = self.lwDel_State_Names
-        lwDel_City_Names = self.lwDelete_Cities_Names
-
-        check_items = lwDel_County_Names.selectedItems()
-        if not check_items:
-            DeletProcessUIActions.Delete_process_view_after_unsuccessful_county(self)
-            # No item selected, perform your desired action here
-            text = HoiatusTexts().maakond_valimata
-            heading = Headings().warningSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
 
             
-        else:
-            # Item selected, continue with your process        
-            lbl = self.lblDel_Amount
-            DeletProcessUIActions.Delete_process_view_after_county(self)
-            
-            button_to_activate = self.pbDel_County
-            activ_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
-            
-            MapRestictionsAndListWidgetDataInserion.get_state_list(button=button_to_activate,
-                                  layer_name=activ_cadastral_layer,
-                                    state_field = state_nimi_field,
-                                    county_field = county_nimi_field,
-                                    lwDel_County_Names = lwDel_County_Names, 
-                                    lwDel_State_names = lwDel_State_names,
-                                    lbl=lbl
-                                    )
-            
-    def delete_process_after_state(self):
-        lwDel_County_Names = self.lwDelete_County_Names
-        lwDel_State_names = self.lwDel_State_Names
-        lwDel_City_Names = self.lwDelete_Cities_Names
-        
-        check_items = lwDel_State_names.selectedItems()
-        if not check_items:
-            DeletProcessUIActions.Delete_process_view_after_unsuccessful_state(self)
-            # No item selected, perform your desired action here
-            text = HoiatusTexts().omavalitsus_valimata
-            heading = Headings().warningSimple
-            ModernMessageDialog.Info_messages_modern(heading, text)
-
-        else:
-            DeletProcessUIActions.Delete_process_view_after_state(self)
-
-            lbl = self.lblDel_Amount        
-            button = self.pbDel_State
-            activ_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
-            f_delete.DeleteProcess_get_city_list(button, activ_cadastral_layer, 
-                                                state_nimi_field, 
-                                                city_nimi_field,
-                                                lwDel_State_names,
-                                                lwDel_City_Names,
-                                                lbl
-                                                )
-            
-            
-    def delete_process_after_city(self):
-
-        tbl_streets = self.tbl_Delete_streets
-        tbl_properties = self.tbl_Delete_properties
-
-        lwDel_County_Names = self.lwDelete_County_Names
-        lwDel_State_names = self.lwDel_State_Names
-        lwDel_City_Names = self.lwDelete_Cities_Names
-        total_count_label = self.lblDel_Amount        
-        button = self.pbDel_City
-        tab_widget = self.tabW_Delete_list
-        TabHandler.tabViewByState(tab_widget,state=True)
-        button.blockSignals(True)
-        
-        check_items = lwDel_State_names.selectedItems()
-        if not check_items:
-            DeletProcessUIActions.Delete_process_view_after_unsuccessful_city(self)
-            # No item selected, perform your desired action here
-            text = HoiatusTexts().omavalitsus_valimata
-            heading = Headings().warningSimple
-            ModernMessageDialog.Info_messages_modern(heading, text)
-
-        else:
-            DeletProcessUIActions.Delete_process_view_after_city(self)
-            button = self.pbDel_City
-            
-            layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
-            #print(f"shp_input_layer_name {layer_name}")
-            layer = QgsProject.instance().mapLayersByName(layer_name)[0]
-            #TODO rethink signal blocking!
-            layer.blockSignals(True)
-            # Deselect all selected items on the map
-            layer.removeSelection()
-            layer.blockSignals(False)
-            
-            County_Names =   lwDel_County_Names.currentItem()
-            State_names = lwDel_State_names.selectedItems()
-            City_Names = lwDel_City_Names.selectedItems()
-            
-            county_restriction = County_Names.text() if County_Names is not None else ""
-            state_restrictions = "', '".join([item.text() for item in State_names]) if State_names else ""
-            #print(f"Selected items state: {state_restrictions}")
-            city_restrictions = "', '".join([item.text() for item in City_Names]) if City_Names else ""
-            #print(f"Selected items city: {city_restrictions}")
-            self.tabW_Delete_list.setCurrentIndex(0)  
-            self.tabW_Delete_list.show()
-            DeletProcessUIActions.Delete_process_view_after_city(self)
-            #Clean code in universal map simplifier because it creates only expression 
-            expression = shp_tools._builds_universal_query_based_restrictions(
-                                
-                                county_nimi_field, 
-                                state_nimi_field,
-                                city_nimi_field,
-                                county_restriction, 
-                                state_restrictions, 
-                                city_restrictions
-                                )
-            # Disable signals for the layer        
-            layer.setSubsetString(expression)
-            layer.triggerRepaint()
-            layer.updateExtents()
-            layer.blockSignals(True)
-            layer.selectAll()    
-            shp_tools.activateLayer_zoomTo(layer)
-            properties_model, streets_model, total = table_functions.generate_table_from_selected_map_items_with_roads(layer_name)
-            
-      
-            inserter = TableDataInserter()
-            inserter.insert_data_to_tables(
-            tables_with_models = [
-                (tbl_streets, streets_model),
-                (tbl_properties, properties_model)
-                    ],
-                 total=total,
-                 total_label=total_count_label
-             )
-
-            
-            layer.blockSignals(False)
-            
-        UIDeleteCheckboxes.checkboxes_on_after_city(self)
-        button.blockSignals(False)
-
-    def DeleteProcess_check_validity_in_Mylabl (self):
-
-        DeleteActions.delete_selected_items_from_mylabl(self)
         
     def toggle_settings_main_view(self):
         self.swWorkSpace.setCurrentIndex(4)
         self.sw_HM.setCurrentIndex(4)
         self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-        widget = self.pbSettings_SliderFrame   
+        
         
         lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
         lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
@@ -1508,18 +1191,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                                                         lbl_preferred_contract_status, lblPreferredContractsTypes_value)
 
         
-        #if Flags.Flag_settings_button:
-        #print("toggle if")
+
+        widget = self.pbSettings_SliderFrame   
         WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
-            #widget.setMaximumHeight(16777215)
-            #QTimer.singleShot(600, lambda: WidgetAnimator.toggle_Frame_height_for_settings(self, widget))
-        #else:
-        #    print("toggle else")
-            #secondLevelButtonsHandler.toggle_Frame_height_DataLoading(self)
-            #secondLevelButtonsHandler.toggle_Frame_height_Cadaster_functions(self)
-            #widget.setMaximumHeight(0)
-        Flags.Flag_settings_button = not Flags.Flag_settings_button
-        print(f"Flags: {Flags.Flag_settings_button}")
+
+
         
 
 #########################################################################################################################
@@ -1544,24 +1220,24 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     def setup_button_actions(self):
         self.label_5.setVisible(False)
-        self.pbtest_2.setVisible(True)
+        self.pbtest_2.setVisible(False)
 
         loader = SHPLayerLoader(self)
         UI = UIStateManager(self)
-        
+    
         
         """Setup button-action mapping and connections."""
         self.button_actions = {
             self.btnAddElements: partial(SelectionActions.main_process_control, Processes.ADD, self.btnAddElements),
-            self.btnUpdateData: partial(SelectionActions.main_process_control, Processes.EDIT, self.btnUpdateData),
             self.btnRemoveItems: partial(SelectionActions.main_process_control, Processes.REMOVE, self.btnRemoveItems),
+            self.btnRemoveItems_noImport: partial(SelectionActions.main_process_control, Processes.REMOVE, self.btnRemoveItems_noImport),
             self.pbConfirmAction: partial(SelectionActions.execute_action),
             self.pbCancelAction: SelectionActions.cancel_selection,
             #self.pbConfirmAction : AddProperties.store_to_archive,
             self.pbLoaddShapeFile:loader.load_shp_layer,
             self.pbOpenMaAmet:partial(loadWebpage.open_maa_amet_webpage_new),
             self.pbtest_2: self.see_loaded_layers,
-            self.btnMapActions: UI.start_properti_flow_main
+            self.btnMapActions: UI.start_properti_flow_main,
         }
 
         for button, function in self.button_actions.items():
@@ -1610,3 +1286,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         print("loaded layer settings are")
         print(stored_layers_settings)
         
+    def exit_properties_process_flows(self):
+        WorkSpaceHandler.swWorkSpace_Properties(self)
+        widget = self.pbSettings_SliderFrame   
+        WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
+

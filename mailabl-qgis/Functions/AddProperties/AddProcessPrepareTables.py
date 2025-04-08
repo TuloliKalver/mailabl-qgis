@@ -37,7 +37,7 @@ class AddProcessPrepareTables:
 
 
 
-        TabHandler.tabViewByState(self.tab_widget, state=True)
+        TabHandler.tabViewByState_NOT_NEEDED(self.tab_widget, state=True)
         input_layer_name = SettingsDataSaveAndLoad().load_SHP_inputLayer_name()
         layer = QgsProject.instance().mapLayersByName(input_layer_name)[0]
         layer.blockSignals(True)

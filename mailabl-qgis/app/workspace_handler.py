@@ -5,7 +5,7 @@ from qgis.core import QgsProject
 from qgis.utils import iface
 
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
-from .list_handler import ExpandProcessListsFunctions
+from .list_handler import ExpandProcessListsFunctions_NOT_NEEDED
 from ..config.settings import SettingsDataSaveAndLoad
 from ..Functions.DeletProcessUIActions import DeletProcessUIActions
 from ..Functions.Contracts.Contracts import ContractsMain
@@ -195,63 +195,6 @@ class WorkSpaceHandler:
         self.swWorkSpace.setCurrentIndex(6)
         self.sw_HM.setCurrentIndex(2)
 
-    @staticmethod        
-    def swWorkSpace_Refresh(self):
-        label = self.CadastralMovesMainLabel
-        heading = "Andmete värskendamine"
-        label.setText(heading)
-        self.swWorkSpace.setCurrentIndex(1)  # Värskenda olemasolevaid katastri andmeid
-        self.swCadastral_sub_processes.setCurrentIndex(3)
-        self.sw_HM.setCurrentIndex(3)
-        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-        self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(0)
-
-    @staticmethod
-    def swWorkSpace_Expand(self):
-        label = self.CadastralMovesMainLabel
-        label.setText("Kinnistute lisamine")
-        self.swWorkSpace.setCurrentIndex(1)
-        self.swCadastral_sub_processes.setCurrentIndex(0)
-        self.sw_HM.setCurrentIndex(3)
-        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(0)
-        self.sw_HM_Toimingud_kinnistutega_Laiendamine.setCurrentIndex(0)
-        self.pbDone_State.hide()
-        self.cbChooseAll_States.hide()
-        self.cbChooseAll_Cities.hide()
-        self.cbChooseAllAdd_properties.hide()
-        self.pbDoneCity.hide()
-        self.pbConfirm_action.hide()
-
-        self.listWidget_State.clear()
-        self.listWidget_City.clear()
-        self.listWidget_county.clear()
-        tab_widget = self.tabWidget_Propertie_list
-        TabHandler.tabViewByState(tab_widget,True)
-        tab_widget.setCurrentIndex(0)
-        tab_widget.hide()
-        ExpandProcessListsFunctions.get_county_list(self)
-    
-    @staticmethod
-    def swDeleteworkspace(self):
-
-        active_cadastral_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        if active_cadastral_layer:
-            layer = QgsProject.instance().mapLayersByName(active_cadastral_layer)[0]
-            iface.setActiveLayer(layer)
-        else:
-            text = HoiatusTexts().error
-            heading = pealkiri.warningSimple
-            ModernMessageDialog.Info_messages_modern(heading, text)
-    
-        label = self.CadastralMovesMainLabel
-        heading = "Kinnistute eemaldamine"
-        label.setText(heading)
-        self.swWorkSpace.setCurrentIndex(1)  # Eemalda kinnistuid
-        self.swCadastral_sub_processes.setCurrentIndex(1)
-        self.sw_HM.setCurrentIndex(3)
-        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(1)
-        self.sw_HM_Toimingud_kinnistutega_Kitsendamine.setCurrentIndex(0)
-        DeletProcessUIActions.Delete_process_view_on_load(self)
 
     @staticmethod
     def Open_generate_mapLayer_synced_with_Mailabl_first_page(self):
@@ -288,7 +231,7 @@ class WorkSpaceHandler:
         
 class TabHandler:
     @staticmethod
-    def tabViewByState(tab_widget, state: bool):
+    def tabViewByState_NOT_NEEDED(tab_widget, state: bool):
         if state is True:
             # Assuming tab_widget is your QTabWidget object and index is the index of the tab you want to hide
             tab_widget.setTabEnabled(0, True)

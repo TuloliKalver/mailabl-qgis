@@ -147,6 +147,7 @@ class SelectByModuleElementsOnMapDelegate(QStyledItemDelegate):
                                             }:
                     fetcher = PropertiesModuleFetcher(id_value=id_value, module=self.module)
                     values = fetcher._fetch_properties_cadastral_numbers()
+                    #print("returned values", values)
                     layer_type = "active"
                     properties_selectors.show_connected_properties_on_map(values, layer_type)
                     return True

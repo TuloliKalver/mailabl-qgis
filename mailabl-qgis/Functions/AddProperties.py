@@ -47,6 +47,7 @@ class AddProperties_dev:
             #AddProperties_dev.handle_archived_properties(self, number)
             # TODO: Import into "mylabl" as before
             AddProperties_dev.import_into_mylabl(self, number)
+            
 
         clear_sub_string = ""
         #active_layer_name, input_layer_name = AddProperties_dev.load_import_and_activ_layers(self)

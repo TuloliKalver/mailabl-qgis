@@ -232,6 +232,7 @@ class MyTreeHome:
             #print(f"dok_path: {dok_path}")
             subprocess.Popen(['explorer', dok_path.replace('/', '\\')], shell=True)
 
+    @staticmethod
     def open_property():
         link_id = StoreValues().return_properties_id()
         module = Module.PROPRETIE

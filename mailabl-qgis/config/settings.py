@@ -34,7 +34,7 @@ class Version:
 
 class Flags:
     active_properties_layer_flag = False
-    Flag_settings_button = True
+    
     Flag_SliderButton_LoadData = False
     Flag_SliderButton_Properties = False    
     Flag_Running_Process = False

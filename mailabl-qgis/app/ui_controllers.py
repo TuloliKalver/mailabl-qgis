@@ -243,69 +243,6 @@ class WidgetAnimator:
         #print("Total buttons height in first level frames:", total_height)
         return total_height
 
-class secondLevelButtonsHandler:
-    @staticmethod
-    def toggle_Frame_height_DataLoading(self):
-        WorkSpaceHandler.show_help_update(self)
-        self.CadastralMovesMainLabel.setText("Andmete laadimine")
-        push_button = self.pbUpdateData
-        widget = self.pbUpdateData_SliderFrame
-        main_widget = self.pbSettings_SliderFrame
-        widgets_height = widget.height()
-        aditional_height = WidgetAnimator.buttons_sliderFrame_height(self,push_button, button_padding)
-        if Flags.Flag_SliderButton_LoadData:
-            new_height = 0
-            widget.setMaximumHeight(0)
-            easing_curve = QEasingCurve.InBounce
-
-        else:
-            #print("Started to expand")
-            new_height = aditional_height
-            #print(f"Expanding height {aditional_height}")
-            widget.setMaximumHeight(16777215)
-            main_widget.setMaximumHeight(16777215)
-            easing_curve = QEasingCurve.OutBounce
-
-        duration_in_milliseconds = 250
-        self.animation_2 = QPropertyAnimation(widget, b"minimumHeight")
-        self.animation_2.setDuration(duration_in_milliseconds)
-        self.animation_2.setStartValue(widgets_height)
-        self.animation_2.setEndValue(new_height)
-        self.animation_2.setEasingCurve(easing_curve)
-        self.animation_2.start()
-        QTimer.singleShot(duration_in_milliseconds+250, lambda: WidgetAnimator.animationFinished(animation=self.animation_2))
-        Flags.Flag_SliderButton_LoadData = not Flags.Flag_SliderButton_LoadData
-
-    @staticmethod
-    def toggle_Frame_height_Cadaster_functions(self):
-        WorkSpaceHandler.show_help_update(self)
-        self.CadastralMovesMainLabel.setText("Toimingud kinnistutega")
-        push_button = self.btnMapActions
-        widget = self.pbCadastraActions_SliderFrame
-        main_widget = self.pbSettings_SliderFrame
-        widgets_height = widget.height()
-        aditional_height = WidgetAnimator.buttons_sliderFrame_height(self,push_button, button_padding)
-
-        if Flags.Flag_SliderButton_LoadData:
-            new_height = 0
-            widget.setMaximumHeight(0)
-            easing_curve = QEasingCurve.InBounce
-            
-        else:
-            new_height = aditional_height
-            widget.setMaximumHeight(16777215)
-            main_widget.setMaximumHeight(16777215)
-            easing_curve = QEasingCurve.OutBounce
-
-        duration_in_milliseconds = 250
-        self.animation_2 = QPropertyAnimation(widget, b"minimumHeight")
-        self.animation_2.setDuration(duration_in_milliseconds)
-        self.animation_2.setStartValue(widgets_height)
-        self.animation_2.setEndValue(new_height)
-        self.animation_2.setEasingCurve(easing_curve)
-        self.animation_2.start()
-        QTimer.singleShot(duration_in_milliseconds+250, lambda: WidgetAnimator.animationFinished(animation=self.animation_2))
-        Flags.Flag_SliderButton_LoadData = not Flags.Flag_SliderButton_LoadData
 
 
 class FrameHandler:

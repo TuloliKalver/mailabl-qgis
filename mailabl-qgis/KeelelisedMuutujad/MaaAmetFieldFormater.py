@@ -16,6 +16,12 @@ def date_formatter(value):
         return value.toString("dd.MM.yyyy")
     return value
 
+def date_formatter_for_Mailabl_insertion(value):
+    if isinstance(value, QDate):
+        return value.toString("yyyy-MM-dd")
+    return value
+
+
 def number_formatter(value):
     """Formatter for numeric fields: convert to string (or use more elaborate formatting)."""
     return str(value)

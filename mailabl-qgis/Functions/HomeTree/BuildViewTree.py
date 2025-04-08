@@ -29,7 +29,7 @@ class MyTreeHomeView:
     def fetch_module_data(module_name, item):
         print(f"module name in query: {module_name} and item: {item}")
         query_loader = Graphql_properties()
-        query = GraphQLQueryLoader().load_query_properties(query_loader.W_properties_number)
+        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
         end_cursor = None
         variables = {
             "first": 1,

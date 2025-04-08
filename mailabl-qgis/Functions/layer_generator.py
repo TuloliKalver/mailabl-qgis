@@ -20,12 +20,14 @@ from typing import Tuple, Optional, List
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication, QVariant
 from PyQt5.QtWidgets import QFileDialog
+
+from ..utils.LayerSetups import LayerSetups
 from ..config.settings import Filepaths, FilesByNames, StoredLayers
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
 from ..utils.messagesHelper import ModernMessageDialog
-from ..utils.LayerHelpers import LayerSetups, fidOperations
+from ..utils.LayerHelpers import fidOperations
 from ..utils.LayerGroupHelpers import LayerGroupHelper
 from ..utils.Logging.Logger import TracebackLogger
 from .LayerGeneratorHelper import ArchiveOptionBuilder
@@ -550,8 +552,6 @@ class LayerManager:
             target_layer=layer
         )
         
-        # Register the target layer's configuration with the updated maximum feature ID.
-        # This step ensures that any further operations are aware of the new feature boundaries.
         LayerSetups.register_layer_configuration(
             layer, 
             max_fid=fidOperations.get_current_max_fid(target_layer=layer)
@@ -562,10 +562,6 @@ class LayerManager:
             # Update the spatial extents of the target layer to include the newly added features.
             layer.updateExtents()
             
-            # Print the list of returned feature IDs to the console for debugging or logging purposes.
-            print(f"Returned ids: {returned_features}")
-            
-            # Return a tuple indicating success along with the list of new feature IDs.
             return True, returned_features
         else:
             # Log a traceback message indicating the failure to append features to the geopackage.

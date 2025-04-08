@@ -1,16 +1,19 @@
 import gc
-from .LayerHelpers import LayerSetups, LayerProcessHandlers
+
+from .LayerSetups import LayerSetups
+from .LayerHelpers import LayerProcessHandlers
 from .WidgetHelpers import WidgetAndWievHelpers
 from .MapHelpers import MapDataFlowHelper
 from ..Common.app_state import PropertiesProcessStage, Expressions,  Processes, FlowStages, Layers_NEED_CENTRALIZING
 from ..Functions.FlowPropertiesAdd import AddProperties
+from ..Functions.RemoveProperties.RemoveSelectedProperties import ReomoveProcessController
 from ..utils.UIStateManager import UIStateManager
 from ..utils.TableUtilys.TableHelpers import TableHelper
 from ..utils.ProgressHelper import ProgressDialogModern
 from ..utils.MessagesHelpers import MessageLoaders
-
-
-
+from ..utils.messagesHelper import ModernMessageDialog
+from ..utils.LayerHelpers import LayerFilterSetters
+from ..config.settings import StoredLayers
 
 class SelectionActions:
     """Class responsible for handling user selections and executing actions.""" 
@@ -31,6 +34,36 @@ class SelectionActions:
         """
         print(f"{title}: {text}")
 
+
+
+    @classmethod
+    def cancel_selection(cls):
+        """Handle process cancellation and cleanup."""
+        if PropertiesProcessStage.active_process:
+            process = PropertiesProcessStage.active_process.get("process")
+            button = PropertiesProcessStage.active_process.get("button")
+            frames = [cls.dialog.FrMunicipality,cls.dialog.FrState,
+                            cls.dialog.FRCounty, cls.dialog.frResultViewer,
+                            cls.dialog.frControllButtons]
+            for frame in frames:
+                frame.hide()
+            cls.dialog.frPropertiFlowHolder.show()
+            if button:
+                button.setEnabled(True)
+        PropertiesProcessStage.current_flow_stage = FlowStages.COMPLETE
+        #cls._reset_previous_process()
+        UI = UIStateManager(cls.dialog)
+        UI.flow_and_ui_controls()
+        PropertiesProcessStage.clear_all_app_states()
+        cls.dialog.lblActionName.setText('Vali mida sa kinnistutega teha tahad')
+        layer_name =  StoredLayers.users_properties_layer_name()
+        LayerFilterSetters._reset_layer(layer_name)
+        
+
+        
+
+
+
     @classmethod
     def _reset_previous_process(self):
         """Cancel any active process and re-enable its button."""
@@ -47,21 +80,7 @@ class SelectionActions:
                 PropertiesProcessStage.current_flow_stage = None
 
 
-    @classmethod
-    def cleanup_map_and_functions(self):
-        """
-        Unload all layers that were flagged for cleanup,
-        reset the active process, and clear UI state.
-        """
-        ui_state = UIStateManager(self.dialog)
-        #print(f"active layer is {AppState.active_layer}")
-        LayerSetups.unload_layer_usage(PropertiesProcessStage.active_layer)
-        PropertiesProcessStage.loaded_layers = {}  # Clear the loaded layers dictionary.
-        PropertiesProcessStage.active_layer = None
-        ui_state.flow_and_ui_controls()
-        PropertiesProcessStage.clear_flow_and_processes()
-        gc.collect()  # Force garbage collection
-        self.label.setText("")
+
 
 
     @classmethod
@@ -163,24 +182,8 @@ class SelectionActions:
         print("Final cleanup — progress should now be closed")
         print(f"progress.dialog: {progress.dialog}, active_instance: {ProgressDialogModern.active_instance}")
 
-    @classmethod
-    def cancel_selection(self):
-        """Handle process cancellation and cleanup."""
-        if PropertiesProcessStage.active_process:
-            process = PropertiesProcessStage.active_process.get("process")
-            button = PropertiesProcessStage.active_process.get("button")
-            self.show_message("Action", f"Canceled {process} process.")
-            ui = UIStateManager(self)
-            frames = ui.frames()
-            print(f"frames are {frames}")
-            if button:
-                button.setEnabled(True)
-            from .UIStateManager import UIActions
-            UIActions.hide(frames)
-            
-        self.frButtons.show()
-        self.cleanup_map_and_functions()
 
+        
 
     @classmethod
     def execute_action(self):
@@ -191,26 +194,38 @@ class SelectionActions:
             #print(f"process on execution {process} and button on process {button}")
             if process == Processes.ADD:
                 if button:
-                    button.setEnabled(True)
+                    button.setEnabled(False)
                 result = AddProperties.add_properties_final_flow_controller()
                 print(f"result is {result}")
                 if result == False:
-                    MessageLoaders.show_message("Result", f"Nothing to update or to archive")
+                    ModernMessageDialog.Info_messages_modern("Result", f"Nothing to update or to archive")
                     return
                 if result == True:
-                    MessageLoaders.show_message("Result", f"All updatin processes handled succesfully")
+
+                    ModernMessageDialog.Info_messages_modern("Result", f"All updatin processes handled succesfully")
+                    SelectionActions.cancel_selection()
+
                     return
                 else:
-                    MessageLoaders.show_message("Error", f"Something went wrong during {process} process")
+                    ModernMessageDialog.Info_messages_modern("Error", f"Something went wrong during {process} process")
                     return
             if process == Processes.EDIT:
-                MessageLoaders.show_message("Executing", f"Executing {process.capitalize()} Process...")
+                ModernMessageDialog.Info_messages_modern("Executing", f"Executing {process.capitalize()} Process...")
                 return
             if process == Processes.REMOVE:
-                MessageLoaders.show_message("Executing", f"Executing {process.capitalize()} Process...")
+                if button:
+                    button.setEnabled(False)
+                    result = ReomoveProcessController.reomve_process_controller(delete_anyway=True)
+                    if result == False:
+                        ModernMessageDialog.Info_messages_modern("Result", f"Nothing to delete")
+                        return
+                    if result == True:
+                        ModernMessageDialog.Info_messages_modern("Result", f"All deletion processes handled succesfully")
+                        SelectionActions.cancel_selection()
+                    else:
+                        ModernMessageDialog.Info_messages_modern("Error", f"Something went wrong during {process} process")
                 return
-            
-            #self.cleanup_map_and_functions()
         else:
             MessageLoaders.show_message("Error", "No action selected!")
             #self.cleanup_map_and_functions()
+

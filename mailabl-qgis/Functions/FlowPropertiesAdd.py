@@ -1,6 +1,8 @@
 import os
 import gc
-from ..utils.LayerHelpers import LayerFilterSetters, LayerProcessHandlers, LayerSetups, fidOperations, DuplicateLayerResolver
+
+from ..utils.LayerSetups import LayerSetups
+from ..utils.LayerHelpers import LayerFilterSetters, LayerProcessHandlers, fidOperations, DuplicateLayerResolver
 from ..Functions.layer_generator import LayerManager
 from ..utils.ButtonsHelper import ButtonHelper
 from ..utils.MapToolsHelper import MapToolsHelper
@@ -61,11 +63,11 @@ class AddProperties:
 
         
         if not_available_anymore:
-            print("not available anymore")
+            #print("not available anymore")
             MapToolsHelper.select_features_by_ids(feature_ids=not_available_anymore_ids, 
                                                   layer=target_layer_from_mappings)
             sandbox_layer_name = MailablLayerNames.SANDBOX_LAYER
-            print("stage move data")            
+            #print("stage move data")            
             sandbox_layer = LayerManager.check_layer_existance_by_name(sandbox_layer_name)
             #print(f"Returned layer: {layer}")
             if sandbox_layer == None:
@@ -79,8 +81,8 @@ class AddProperties:
             
             for feat_to_archive in not_available_anymore_ids:
                 #move to archive layer
-                print(f"targetlayer = {target_layer_from_mappings}")
-                result = LayerFilterSetters._move_data_and_geometry_between_layers(input_layer=target_layer_from_mappings, 
+                #print(f"targetlayer = {target_layer_from_mappings}")
+                result = LayerFilterSetters._move_feature_data_and_geometry_between_layers(input_layer=target_layer_from_mappings, 
                                                                                    feature_id=feat_to_archive,
                                                                                    target_layer=sandbox_layer,
                                                                                    delete_input_data=True,
@@ -106,7 +108,7 @@ class AddProperties:
                 is_last = count == max_items  # Check if this is the last iteration returns True or False
                 commit = is_last  # Only commit on the last one
 
-                LayerFilterSetters._move_data_and_geometry_between_layers(
+                LayerFilterSetters._move_feature_data_and_geometry_between_layers(
                     input_layer=active_layer,
                     feature_id=feat_id,
                     target_layer=target_layer_from_mappings,
@@ -140,13 +142,7 @@ class AddProperties:
             bool: True if the archive was stored and the temporary archive layer was removed successfully;
                 False otherwise.
         """
-        #TODO Remove after testing
-        #layers_config = [            
-        #    {"name": Layers_NEED_CENTRALIZING.IMPORT_LAYER_NAME, "activated": True, "cleanup": True},
-        #    {"name": Layers_NEED_CENTRALIZING.USER_LAYER_NAME, "activated": False, "cleanup": False}
-        #    ]
-        #LayerProcessHandlers.load_and_handle_layers(layers_config)
-        #TODO Remove after testing until here
+
 
         active_layer = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if not info.get('activated')), None)
         

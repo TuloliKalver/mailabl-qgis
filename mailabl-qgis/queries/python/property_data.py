@@ -28,7 +28,7 @@ widgets_path = os.path.join(plugin_dir, process_folder, importProcess_folder, wi
 class Properties:
     def get_property_CSC(self):
         query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(self,query_loader.Q_Property_CSC)
+        query = GraphQLQueryLoader.load_query_properties(query_loader.Q_Property_CSC)
         
         total_fetched = 0
         current_page = 1
@@ -67,7 +67,7 @@ class Properties:
         progress_bar.setValue(41)
 
         query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(self,query_loader.Q_All_Properties)
+        query = GraphQLQueryLoader.load_query_properties(query_loader.Q_All_Properties)
 
         total_fetched = 0
         current_page = 1
@@ -533,20 +533,23 @@ class WhereProperties:
         return [], False, "", "", ""
 
 class deleteProperty:
-    def delete_single_item(self, item):
+    @staticmethod
+    def delete_single_item(item: str):
         query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(self,query_loader.D_ALL_properties)
+        query = GraphQLQueryLoader.load_query_properties(query_loader.D_ALL_properties)
     
         variables = {
             "id": item  # ID of property i want to delete
             }
-        response = requestBuilder.construct_and_send_request(self, query, variables)
+        response = requestBuilder.construct_and_send_request(None, query, variables)
         
         # Check the response for errors
         if response.status_code != 200:
             print(f"Failed to delete property with ID {item}. Status Code: {response.status_code}")
-            raise ValueError(f"GraphQL request failed. Status Code: {response.status_code}")
-        
+            return False
+        else:
+            return True
+
     @staticmethod
     def delete_multiple_items(self, item_list):
         total = len(item_list)
@@ -588,14 +591,15 @@ class add_properties:
 
     def add_single_property_item(self,item):
         query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(self, query_loader.ADD_Selected_properties)
+        query = GraphQLQueryLoader.load_query_properties(query_loader.ADD_Selected_properties)
 
         # Assuming item is a JSON string
-        item_dict = json.loads(item)
+        #if item.startswith("{"):
+        #    item = json.loads(item) 
         #print(f"item {item_dict}")
 
         variables = {
-            "input": item_dict
+            "input": item
         }
 
         try:
@@ -635,7 +639,7 @@ class add_properties:
     def add_additional_property_data(self, input_id, uses_input):
 
             query_loader = Graphql_properties()
-            query = GraphQLQueryLoader.load_query_properties(self, query_loader.ADD_properties_purpose)
+            query = GraphQLQueryLoader.load_query_properties(query_loader.ADD_properties_purpose)
         # Construct the list of PropertyIntendedUseInput
             variables = {
                 "input": {
@@ -650,7 +654,7 @@ class add_properties:
                 raise Exception("GraphQL request failed")
             # Get the ID of the deleted property
             added_input = response.json()
-            print(f"inserted item {added_input}")
+            #print(f"inserted item {added_input}")
 
     @staticmethod
     def add_multiple_items(self, item_list):
@@ -741,7 +745,7 @@ class MyLablChecker:
             #final_ids.extend(ids)
             batches_done += 1
             progress_bar.setValue(batches_done)
-            QCoreApplication.processEvents()
+        QCoreApplication.processEvents()
         progress_bar.close()
         print(f"final data = {final_data}")
         return final_data
@@ -808,7 +812,7 @@ class MyLablChecker:
     def get_properties_where_for_duplicates(self, item):
 
         query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(self,query_loader.W_properties_number)
+        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
 
         #print("Query added")
         end_cursor = None  # Initialize end_cursor before the loop
@@ -838,6 +842,48 @@ class MyLablChecker:
             print(f"Error: {response.status_code}")
             return None
 
+
+    def get_properties_where_for_duplicates_EQUALS(item: str)->bool:
+
+        query_loader = Graphql_properties()
+        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
+
+        #print("Query added")
+        end_cursor = None  # Initialize end_cursor before the loop
+        
+        variables = {
+                    "first": 50,  # Fetch 50 items per query
+                    "after": end_cursor,  # Use the endCursor as the after value
+                    "where":
+                            {
+                            "column": "CADASTRAL_UNIT_NUMBER",
+                            "operator": "EQ", 
+                            "value": item #array anna siin items
+                            }
+                    }
+
+        response = requestBuilder.construct_and_send_request(None, query, variables)
+#        print(f"response {response}")
+        #start do use data
+        if response.status_code == 200:
+            data = HandlePropertiesResponses._response_properties_data_edges(response)
+            #print(data)
+            if data:
+                #print("is present in mylabl")
+                return False, data
+            else:
+                #print("missing item")
+                return True, []
+            
+        else:
+            print(f"Error: {response.status_code}")
+            return False, []
+
+
+
+
+
+
     def find_missing_items(self, item_list, graphql_data):
         returned_items = set()
         # Extract unique item numbers from the GraphQL data
@@ -857,7 +903,7 @@ class PropertiesGeneralQueries:
         total_in_list = len(properties_list)
         
         query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(self, query_loader.W_properties_number)
+        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
         
         sleep_duration = 1
         chunk_size = 50
@@ -920,7 +966,7 @@ class PropertiesGeneralQueries:
         total_in_list = len(properties_list)
         
         query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(self, query_loader.W_properties_number)
+        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
         
         sleep_duration = 1
         chunk_size = 50        

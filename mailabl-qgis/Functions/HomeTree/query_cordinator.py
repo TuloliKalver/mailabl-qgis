@@ -21,8 +21,9 @@ class PropertiesConnectedElementsQueries:
         self.query_loader = GraphQLQueryLoader()
         self.handle_response = HandlePropertiesResponses()
 
-    def load_query_properties(self, module_name):
-        module_file = self.module_to_filename.get(module_name)
+    def load_query_properties(module_name):
+        cl = PropertiesConnectedElementsQueries()
+        module_file = cl.module_to_filename.get(module_name)
         if not module_file:
             raise ValueError(f"Module name {module_name} is not valid.")
         Graphql_properties().load_query_properties_connected_elements(module_file)

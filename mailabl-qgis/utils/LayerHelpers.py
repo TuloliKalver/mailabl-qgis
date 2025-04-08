@@ -1,135 +1,22 @@
 #LayerHelper.py
 
 import gc
-from typing import Optional, List, Dict, Any
-from qgis.utils import iface # type: ignore
-from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject, QgsVectorLayer # type: ignore
+from typing import Optional, Any
+from qgis.utils import iface 
+from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject, QgsVectorLayer 
+
 from PyQt5.QtWidgets import QMessageBox
+from .LayerFeaturehepers import DataMappers
+from ..utils.LayerSetups import LayerSetups
+from ..utils.LayerFeaturehepers import LayerFeaturehepers
 from ..Common.app_state import PropertiesProcessStage, Expressions, MainVariables
-from ..utils.MessagesHelpers import MessageLoaders, TextMessages, TitleMessages
+from ..utils.MessagesHelpers import MessageLoaders
 from ..utils.Logging.Logger import TracebackLogger
+from ..Functions.add_items import add_properties
+from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
+from ..queries.python.property_data import MyLablChecker
 
 
-class LayerSetups:
-
-    @classmethod
-    #def load_layer_with_activation_option(cls, layer_name, activate=False):
-    def load_layer_with_activation_option(cls, layer_name: str, activate: bool = False) -> Optional[QgsVectorLayer]:
-        """
-        Load a specific QGIS layer by name and optionally activate it.
-
-        Activation includes:
-         - Making the layer visible in the layer tree.
-         - Setting the layer as active in QGIS.
-         - Triggering the selection tool so the user can start selecting features.
-
-        :param layer_name: str
-            The name of the layer to load.
-        :param activate: bool
-            If True, the loaded layer will be activated (made visible, set as active, and selection tool triggered).
-            Default is False.
-        :return: Optional[QgsVectorLayer]
-            Returns the loaded QgsVectorLayer if found; otherwise, returns None.
-        """
-        # Find the layer by name.
-        layer = QgsProject.instance().mapLayersByName(layer_name)
-        if layer:
-            print(f"Layer '{layer_name}' found.")
-            selected_layer = layer[0]
-            if activate:
-                # Make sure the layer is visible in the layer tree.
-                layer_tree = QgsProject.instance().layerTreeRoot()
-                layer_node = layer_tree.findLayer(selected_layer.id())
-                if layer_node:
-                    layer_node.setItemVisibilityChecked(True)
-                
-                # Set the layer as active in QGIS.
-                iface.setActiveLayer(selected_layer)
-                # Activate the selection tool so the user can select features.
-                iface.actionSelect().trigger()
-            return selected_layer
-        else:
-            MessageLoaders.layername_error(layer_name)
-            TracebackLogger.log_traceback(custom_message=layer_name)
-            return None
-
-    @classmethod
-    def unload_layer_usage(cls, layer: QgsVectorLayer):
-        """
-        Unload the usage of the provided layer instance by:
-        - Clearing any selections on the layer.
-        - Ending editing mode if the layer is editable.
-        - Switching to the pan tool to ensure no other tool remains active.
-        - Resetting the layer's feature filter expression.
-        """
-
-        if not layer:
-            MessageLoaders.show_message(TitleMessages.error, TextMessages.no_layer_provided)
-            TracebackLogger.log_traceback(custom_message=layer.name())
-            return
-
-        # Clear any selection on the layer (for vector layers)
-        try:
-            layer.removeSelection()
-        except Exception:
-            # If the layer type doesn't support selection removal, ignore the error.
-            pass
-
-        # If the layer is in editing mode, toggle editing off.
-        if layer.isEditable():
-            iface.actionToggleEditing().trigger()
-
-        # Activate the pan tool to deactivate any other active tools.
-        iface.actionPan().trigger()
-
-        # Clear the feature filter expression.
-        try:
-            layer.setSubsetString('')
-        except Exception:
-            # If the layer does not support subset string changes, ignore the error.
-            pass
-
-    @staticmethod
-    def register_layer_configuration(layer: QgsVectorLayer, activate: bool = False, cleanup: bool = False, is_archive_memory: bool = False,  max_fid: Optional[int] = None) -> None:
-        """
-        Register the configuration settings for a layer by storing it in AppState.loaded_layers.
-
-        :param layer: QgsVectorLayer - the layer to register.
-        :param activate: bool - indicates if the layer should be activated (default is False).
-        :param cleanup: bool - indicates if the layer should be flagged for cleanup (default is False).
-        :param max_fid: Optional[int] - the maximum feature ID; if None, it defaults to 1.
-        :return: None
-        """
-        if max_fid is None:
-            max_fid = 1
-        layer_name: str = layer.name()
-        PropertiesProcessStage.loaded_layers[layer_name] = {
-            MainVariables.Layer: layer,
-            MainVariables.CLEANUP: cleanup,
-            MainVariables.ACTIVATE: activate,
-            MainVariables.MAX_ID: max_fid,
-            MainVariables.IS_ARCHIVE: is_archive_memory
-
-        }
-        gc.collect()  # Force garbage collection after updating configuration
-        #print(f"Layer '{layer_name}' registered with settings: activate={activate}, cleanup={cleanup}, max_fid={max_fid}")
-
-    @staticmethod
-    def unregister_layer_configuration(layer_name: str) -> bool:
-        """
-        Unregister a layer from the AppState.loaded_layers configuration.
-
-        :param layer: QgsVectorLayer - the layer to unregister.
-        :return: bool - True if the layer was successfully removed, False otherwise.
-        """
-        if layer_name in PropertiesProcessStage.loaded_layers:
-            del PropertiesProcessStage.loaded_layers[layer_name]
-            gc.collect()  # Force garbage collection after removal
-            #print(f"Layer '{layer_name}' removed from loaded layers.")
-            return True
-        else:
-            #print(f"Layer '{layer_name}' not found in loaded layers.")
-            return False
 
 class DuplicateLayerResolver:
     @staticmethod
@@ -243,7 +130,7 @@ class LayerProcessHandlers:
             layer_name = info.get(MainVariables.NAME)
             activate = info.get(MainVariables.ACTIVATE, False)
             cleanup = info.get(MainVariables.CLEANUP, False)
-            print(f"Loading layer: {layer_name}. Activate: {activate}, Cleanup: {cleanup}")
+            #print(f"Loading layer: {layer_name}. Activate: {activate}, Cleanup: {cleanup}")
             layer = LayerSetups.load_layer_with_activation_option(layer_name, activate=activate)
             max_fid = fidOperations.get_next_fid(target_layer=layer)
             if not layer:
@@ -291,8 +178,25 @@ class LayerProcessHandlers:
         
         return field_value_to_id
 
+    @staticmethod
+    def _get_selected_elemntsID_from_layer(layer: QgsVectorLayer):
+        selected_features = []
+        for feature in layer.selectedFeatures():
+            selected_features.append(feature.id())
+        if not selected_features:
+            print("No features were selected.")
+            return []
+        return selected_features
 
 
+    def _get_selected_objects_from_layer(layer: QgsVectorLayer):
+        selected_objects = []
+        for feature in layer.selectedFeatures():
+            selected_objects.append(feature)
+        if not selected_objects:
+            print("No objects were selected.")
+            return []
+        return selected_objects
 
 class LayerFilterSetters:
     @staticmethod
@@ -319,8 +223,19 @@ class LayerFilterSetters:
         expression = Expressions.clear
         target_layer.setSubsetString(expression)
 
+    def _reset_layer(layer_name: str, set_visible=True):
+        layer = QgsProject.instance().mapLayersByName(layer_name)[0]
+        if set_visible:
+            QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(True)
+        else:
+            QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(False)
+        layer.removeSelection()
+        expression = Expressions.clear
+        layer.setSubsetString(expression)
+
+
     @staticmethod
-    def _move_data_and_geometry_between_layers(input_layer, 
+    def _move_feature_data_and_geometry_between_layers(input_layer, 
                                                feature_id, 
                                                target_layer, 
                                                delete_input_data=False,
@@ -336,28 +251,43 @@ class LayerFilterSetters:
         :param delete_input_data: If True, delete the features from the input_layer after moving.
         """
 
-        result = FeaturePreparations._feature_preparations_between_layers_using_name_for_field_detections(input_layer=input_layer, target_layer=target_layer, feature_id=feature_id)
-        if result is False:
-            print("The function returned False: no features found in the archive layer.")
-            return False
-        elif result is None:
-            print("The function returned None: no connection values found in the archive layer.")
-            return False
-        else:
-            # If a tuple is returned, unpack it.
-            new_features, success = result
-            if success:
-                #Add the features to the memory layer
-                LayerActions._add_feature_to_layer_with_commit_option(layer=target_layer, 
-                                                             new_feature=new_features,
-                                                             commit=commit)
+        # Ensure we're working with valid layers
+        new_feature = LayerFeaturehepers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
 
-                #delete the elements from the layer if requested!
-                LayerActions._delete_element_from_layer(input_data=delete_input_data, feature_id=feature_id, layer=input_layer)
-                
-                
-                
+        # Add the new feature to the target layer
+        LayerFeaturehepers._add_feature_to_layer_with_commit_option(layer=target_layer, 
+                                                        new_feature=new_feature,
+                                                        commit=commit)
+
+        #update search fields in the target_layer
+        LayerFeaturehepers.update_search_fields_in_layer(layer=target_layer)
+
+        #delete the elements from the layer if requested!
+        LayerFeaturehepers._delete_element_from_layer(delete=delete_input_data, feature_id=feature_id, layer=input_layer)
+        gc.collect()
+        #feature = LayerFeaturehepers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
+        #print (f"feature_data: {feature}")
+        if not update_data:
+            return True
+        else:
+            layer_data = LayerFeaturehepers._get_attributes_as_dict(feature=new_feature)
+            #print (f"layer_data: {layer_data}")
+            tunnus = layer_data.get(Katastriyksus.tunnus)
+            #print (f"Tunnus: {tunnus}")            
+            res,_ =MyLablChecker.get_properties_where_for_duplicates_EQUALS(item=tunnus)
+            if res is True:
+
+                prepared_data, usage_data = DataMappers._map_properties_main_details_from_input(layer_data=layer_data)
+                #print(f"street and house from prepared data: {prepared_data['address'].get('street')} and {prepared_data['address'].get('houseNumber')}")                
+                #print(f"usage_data: {usage_data}")
+
+                property_id = add_properties.add_single_property_item(None, prepared_data)
+                #print(f"usage_data: {usage_data}")
+                add_properties.add_additional_property_data(None, property_id, usage_data)            
+                gc.collect()
                 return True
+            else:
+                print ("Duplicate found!")
 
     @staticmethod
     def _select_target_features_based_on_temporary_archived_elements(target_layer, archive_layer, connection_field):
@@ -396,190 +326,50 @@ class LayerFilterSetters:
         
         # Build the expression for selection. Note the use of double quotes around the field name.
         expression = f"\"{connection_field}\" IN ({values_list})"
-        print(f"Selecting features in target layer using expression: {expression}")
+        #print(f"Selecting features in target layer using expression: {expression}")
 
         # Apply the selection on the target layer.
         target_layer.selectByExpression(expression)
         return values_list, True
 
-class LayerActions:
-    @staticmethod
-    def _delete_element_from_layer(input_data, feature_id, layer: QgsVectorLayer) -> None:
-        # If deletion is requested, remove features from the input layer.
-        if input_data:
-            res = layer.dataProvider().deleteFeatures([feature_id])
-            if res:
-                print(f"Successfully deleted features from input layer '{layer.name()}'.")
-            else:
-                print(f"Failed to delete features from input layer '{layer.name()}'.")
-            layer.triggerRepaint()
-
-    @staticmethod
-    def _get_layer_fetaures_by_id(layer: QgsVectorLayer, feature_id: int) -> QgsFeature:
-
-        request = QgsFeatureRequest().setFilterFids([feature_id])
-        feat = next(layer.getFeatures(request), None)
-
-        if feat:
-            # Do something with the retrieved feature.
-            #print(f"Feature found: {feat}")
-            pass
-        else:
-            print(f"Feature with id {feature_id} not found.")
-
-        return feat
-    @staticmethod
-    def _get_all_features_from_layer(layer: QgsVectorLayer) -> List[QgsFeature]:
-        """
-        Retrieves all features from the provided layer.
-        """
-        features = [f for f in layer.getFeatures()]
-        if not features:
-            print(f"No features found in layer '{layer.name()}'.")
-            return []
-        return features        
-    @staticmethod
-    def _map_attributes_by_name(input_feature: QgsFeature, target_fields: List) -> List:
-        """
-        Map attributes from an input feature to a list of attribute values that match
-        the target layer's fields by name. If the input feature doesn't have a field,
-        assign None.
-        
-        :param input_feature: QgsFeature from the input layer.
-        :param target_fields: QgsFields object from the target layer.
-        :return: List of attribute values in the order of target_fields.
-        """
-        # Get the names of fields present in the input feature.
-        input_field_names = input_feature.fields().names()
-        new_attrs = []
-        for field in target_fields:
-            field_name = field.name()
-            if field_name in input_field_names:
-                new_attrs.append(input_feature[field_name])
-            else:
-                # Field not present in input; assign a default value.
-                new_attrs.append(None)
-        return new_attrs
-
-    @staticmethod
-    def _map_attributes_by_feature(feature: QgsFeature) -> List: 
-        """
-        Creates a new QGIS feature by copying the geometry and attributes from the provided feature.
-        
-        This helper function replicates the behavior of the `_map_attributes_by_name` function,
-        but should only be used when the source and target fields match exactly. It copies the
-        geometry and attributes from the source feature into a new feature, then sets the new
-        feature's ID to -1 so that QGIS will assign a unique ID when it is added to a layer.
-        
-        Parameters:
-            feature (QgsFeature): The source feature whose geometry and attributes are to be copied.
-            
-        Returns:
-            list: A list containing a single QgsFeature. This feature has the same geometry and attributes
-                as the input feature, but with a new, system-assigned unique ID.
-        """
-        features = []
-
-        feat = QgsFeature()                     
-        feat.setGeometry(feature.geometry())    
-        feat.setAttributes(feature.attributes())  
-        feat.setId(-1)                          
-        features.append(feat)
-
-        return features
-
-
-    @staticmethod
-    def _add_feature_to_layer_with_commit_option(layer: QgsVectorLayer, new_feature: QgsFeature, commit=False) -> bool:
-        """
-        Adds the provided features to the target layer, updates its extents, and triggers a repaint.
-        
-        This helper function abstracts the logic of adding features to a layer. It attempts to add the new features,
-        prints a success or failure message based on the outcome, updates the layer's extents, and triggers a repaint.
-        
-        Parameters:
-            target_layer (QgsVectorLayer): The layer to which the features will be added.
-            new_features (List[QgsFeature]): A list of features to be added.
-        
-        Returns:
-            bool: True if the features were successfully added; otherwise, False.
-        """
-        if commit:
-            if not layer.isEditable():
-                    layer.startEditing()
-                    print(f"Started editing layer '{layer.name()}'.")
-
-        loaded_layer_settings = PropertiesProcessStage.loaded_layers
-        #print(f"Loaded Layers Settings: {loaded_layer_settings}")
-        layer_name = layer.name()
-        #print(f"Layer_name {layer_name} from {layer} ")
-        layer_info = loaded_layer_settings.get(layer_name, {})
-        new_feature_fid = layer_info.get(MainVariables.MAX_ID)
-        #print(f"Max Fid {new_feature_fid}")
-        if not new_feature:  # Check if the list is empty
-            print(f"No features provided to add to layer '{layer.name()}'.")
-            return False
-
-        # Take the first feature from the list (assuming single feature for now)
-        feature_to_add = new_feature[0]
-
-        # Replace or set the fid field (assuming the target layer has an 'fid' field)
-        fid_index = layer.fields().indexOf('fid')  # Get the index of the 'fid' field
-        if fid_index != -1:  # Check if 'fid' field exists
-            print(f"Setting atribute on fid_index {fid_index} of {new_feature_fid}")
-            feature_to_add.setAttribute(fid_index, new_feature_fid)
-        
-        # addFeatures expects a list, so wrap the single feature in a list
-        res, _ = layer.dataProvider().addFeatures([feature_to_add])
-        print(f"Added features to layer '{layer.name()}': {res}")
-        
-        if commit:
-            layer.commitChanges()
-        
-        #optimized target feature creation 
-        #new_generated_max = fidOperations.get_next_fid(target_layer=layer)
-        
-        new_generated_max = new_feature_fid + 1
-        
-        LayerSetups.register_layer_configuration(layer=layer, max_fid=new_generated_max)
-        gc.collect()
-        return res
 
 class fidOperations:
+
     @staticmethod
     def get_current_max_fid(target_layer: QgsVectorLayer) -> Optional[int]:
         """
-        Retrieves the current maximum 'fid' value from the target_layer.
-        
-        Parameters:
-            target_layer (QgsVectorLayer): The layer in which to look for the maximum fid.
-        
-        Returns:
-            int | None: The maximum fid value found, or None if the 'fid' field does not exist
-                        or no valid fid values are found.
+        Retrieves the current maximum 'fid' value from the attribute field,
+        ignoring any subset filters or layer-level filters.
         """
-        # Get the index of the 'fid' field.
         if target_layer is None:
             TracebackLogger.log_traceback(custom_message="Target layer is None.")
             return None
-        
-        fid_index = target_layer.fields().indexOf('fid')
-        if fid_index == -1:
-            TracebackLogger.log_traceback(custom_message="No 'fid' field found.")
+
+        # Get base data source WITHOUT the subset string
+        base_source = target_layer.dataProvider().dataSourceUri().split("|")[0]
+        provider_type = target_layer.providerType()
+
+        # Create clean layer without filters
+        raw_layer = QgsVectorLayer(base_source, "raw_layer", provider_type)
+
+        if not raw_layer.isValid():
+            TracebackLogger.log_traceback(custom_message="Could not load raw version of target layer.")
             return None
-        
-        fid_values = []
-        # Iterate over features to collect valid fid values.
-        for feature in target_layer.getFeatures():
+
+        fid_index = raw_layer.fields().indexOf('fid')
+        if fid_index == -1:
+            TracebackLogger.log_traceback(custom_message="No 'fid' field found in raw layer.")
+            return None
+
+        max_fid = None
+        for feature in raw_layer.getFeatures():
             fid = feature.attribute('fid')
             if fid is not None and isinstance(fid, (int, float)):
-                fid_values.append(fid)
-        
-        if fid_values:
-            return int(max(fid_values))
-        else:
-            print("No valid 'fid' values found.")
-            return None
+                max_fid = max(fid, max_fid) if max_fid is not None else fid
+
+        return int(max_fid) if max_fid is not None else None
+
+
 
     @staticmethod
     def get_next_fid(target_layer: QgsVectorLayer, starting_fid: int = 1) -> int:
@@ -611,18 +401,16 @@ class FeaturePreparations:
     def _feature_preparations_between_layers_using_name_for_field_detections(input_layer, target_layer, feature_id) -> tuple[list[Any], bool]:
         #print(f"target_layer: {target_layer}")
         #get layer features by fature_id 
-        feat = LayerActions._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
+        feat = LayerFeaturehepers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
              
         # Create new features for the target layer, ensuring new IDs are assigned.
-        new_features = []
         target_fields = target_layer.fields()  # Get the target layer's fields once.
         new_feat = QgsFeature()  # Create a new, empty feature.
         new_feat.setGeometry(feat.geometry())  # Copy geometry.
         # Map attributes based on matching field names.
-        new_attr_values = LayerActions._map_attributes_by_name(feat, target_fields)
+        new_attr_values = LayerFeaturehepers._map_attributes_by_name(feat, target_fields)
         #print(f"New attr values: {new_attr_values}")
         new_feat.setAttributes(new_attr_values)
-        new_features.append(new_feat)
         gc.collect()
-        return new_features, True
+        return new_feat, True
     

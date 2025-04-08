@@ -5,10 +5,10 @@ from PyQt5.QtWidgets import QListWidgetItem
 from .View_tools import shp_tools
 from ..config.settings import SettingsDataSaveAndLoad
 
-class ExpandProcessListsFunctions:
+class ExpandProcessListsFunctions_NOT_NEEDED:
     
     @staticmethod
-    def get_county_list(self):      
+    def get_county_list_NOT_NEEDED(self):      
         from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
         field_county_name = Katastriyksus.mk_nimi #'MK_NIMI'
         expression = ""

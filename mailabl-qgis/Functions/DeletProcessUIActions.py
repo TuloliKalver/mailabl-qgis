@@ -28,7 +28,7 @@ def get_selected_item_text(item):
 
 class DeletProcessUIActions():
 
-    def Delete_process_view_on_load(self):
+    def Delete_process_view_on_load_NOT_NEEDED(self):
         UIDeleteButtonsManager.buttons_on_load(self)
         UIDeleteCheckboxes.checkboxes_on_load(self)
         UIDeleteTables.tables_on_load(self)
@@ -133,7 +133,7 @@ class DeleteProcessHandlers:
 
     def delete_process_after_city(self):
         from ..app.workspace_handler import TabHandler
-        TabHandler.tabViewByState(self.tabw_delete_list, state=True)
+        TabHandler.tabViewByState_NOT_NEEDED(self.tabw_delete_list, state=True)
         if not self.lwDel_State_names or not self.lwDel_State_names.selectedItems():
             DeletProcessUIActions.Delete_process_view_after_unsuccessful_city(self)
             ModernMessageDialog.Info_messages_modern(Headings().warningSimple, HoiatusTexts().omavalitsus_valimata)

@@ -38,9 +38,11 @@ class Katastriyksus:
     eksport = "eksport"        # Andmete väljavõtte kuupäev
 
 
-
     FieldsForTables = [tunnus, registr, ay_nimi, l_aadress, siht1, so_prts1, siht2, so_prts2, siht3, so_prts3, omvorm]
 
+    search_field = "search_field"
+    # Define a list of field names
+    search_field_items = [tunnus, l_aadress, ay_nimi, ov_nimi, mk_nimi ]
 
 
 

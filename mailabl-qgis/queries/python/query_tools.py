@@ -1,6 +1,8 @@
 import requests, platform
 from qgis.core import Qgis
 from .access_credentials import load_token
+from qgis.PyQt.QtCore import QVariant
+
 from ...config.settings import GraphQLSettings
 from ...KeelelisedMuutujad.messages import Headings
 from ...utils.messagesHelper import ModernMessageDialog
@@ -18,10 +20,12 @@ class requestBuilder:
             ModernMessageDialog.Info_messages_modern(heading,text)
             return None
 
+        sanitized_variables = requestBuilder.sanitize_for_json(variables)
+
         # Construct the request payload
         payload = {
             "query": query,
-            "variables": variables
+            "variables": sanitized_variables
         }
         #print(f"payload is_printed {payload}")
         # Construct the HTTP headers with the access token
@@ -57,6 +61,22 @@ class requestBuilder:
             RequestErrorHandler.handle_error(self, errors)
 
         return response
+
+    @staticmethod
+    def sanitize_for_json(obj):
+        """
+        Recursively convert QVariant types to native Python types for JSON serialization.
+        """
+
+        if isinstance(obj, dict):
+            return {k: requestBuilder.sanitize_for_json(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [requestBuilder.sanitize_for_json(v) for v in obj]
+        elif isinstance(obj, QVariant):
+            return None if obj.isNull() else obj.value()  # ✅ this is the key fix
+        elif hasattr(obj, 'value'):
+            return obj.value()  # handles QVariant-like types
+        return obj
 
 class RequestErrorHandler:
     def handle_error(self, errors):
