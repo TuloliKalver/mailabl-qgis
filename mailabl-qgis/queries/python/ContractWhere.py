@@ -1,13 +1,19 @@
 
 from PyQt5.QtCore import QCoreApplication
-from .DataLoading_classes import GraphqlQueriesContracts
+from .DataLoading_classes import GraphqlQueriesContracts, GraphQLQueryLoader
 from .query_tools import requestBuilder
+from ...KeelelisedMuutujad.modules import Module
 
 class getContractsWhere:
     @staticmethod
     def query_contracts_related_properties(self, id_value):
-        query_loader = GraphqlQueriesContracts()
-        query = GraphqlQueriesContracts.load_query_for_contracts(query_loader.Q_where_Contracts_related_properties)
+
+        module = Module.CONTRACT
+        query_name =  GraphqlQueriesContracts.RELATED_PROPERTIES
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
+
+
         desired_total_items = None
         items_for_page = 50  
         end_cursor = None  

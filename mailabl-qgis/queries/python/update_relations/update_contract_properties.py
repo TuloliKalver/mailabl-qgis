@@ -1,15 +1,15 @@
 
 from PyQt5.QtCore import QCoreApplication
 from ..DataLoading_classes import GraphqlQueriesContracts
-from PyQt5.QtWidgets import  QMessageBox, QWidget
-from ..property_data import PropertiesGeneralQueries
+from ..property_data import PropertiesGeneralQueries, GraphQLQueryLoader
 from ..query_tools import requestBuilder
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
 from ....utils.messagesHelper import ModernMessageDialog
 from PyQt5.uic import loadUi
 from ....KeelelisedMuutujad.messages import Headings, InfoTexts
- 
+from ....KeelelisedMuutujad.modules import Module
+
 pealkiri = Headings()
 
 on_selection_changed_lambda = None
@@ -27,7 +27,6 @@ class ContractProperties:
         properties = []
         count = model_properties.rowCount()
         if count == 0:
-            parent_widget = QWidget()
             heading = pealkiri.warningSimple
             text = "Vali kaardikihil vähemalt üks kinnistu"  
             ModernMessageDialog.Info_messages_modern(heading,text)
@@ -43,7 +42,7 @@ class ContractProperties:
 
         total_ids_Table = len(properties)
         #print(f"properties {properties}")
-        returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_ids(self, properties_list=properties)
+        returned_ids = PropertiesGeneralQueries._get_properties_MyLabl_ids(self, properties_list=properties)
         
         total_returned_ids = len(returned_ids)
         print(f"returned_ids (total: {total_returned_ids}) when adding properties to project")
@@ -63,8 +62,11 @@ class ContractProperties:
         for i in range(0, total_returned_ids, chunk_size):
             chunk = returned_ids[i:i+chunk_size]
             
-            query_loader = GraphqlQueriesContracts() 
-            query = query_loader.load_query_for_contracts(query_loader.UPDATE_contract_properties)
+
+            module = Module.CONTRACT
+            query_name =  GraphqlQueriesContracts.UPDATE_CONTRACT_PROPERTIES
+            query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
             
             variables = {
                         "input": {

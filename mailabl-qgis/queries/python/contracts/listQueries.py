@@ -4,15 +4,19 @@ from PyQt5.QtCore import Qt, QCoreApplication
 from ..Statuses.statusManager import Statuses
 from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
 from ..query_tools import requestBuilder
-
+from ....KeelelisedMuutujad.modules import Module
 
 class ContractsQueries_list:
     @staticmethod
     def query_contracts_by_status(self, statuses):
         #print(statuses)
         # Load the project query using the loader instance
-        query_loader = GraphqlQueriesContracts()
-        query = GraphQLQueryLoader.load_query_for_contracts(self,query_loader.Q_All_contracts)        
+
+        module = Module.CONTRACT
+        query_name =  GraphqlQueriesContracts.ALL_CONTRACTS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
+
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value

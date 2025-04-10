@@ -53,13 +53,17 @@ class PropertiesModuleFetcher:
         """
         if self.module == Module.PROJECT:
             query_loader = Graphql_project()
-            return GraphQLQueryLoader.load_query_for_projects(query_loader.Q_where_Projects_related_properties)
+            query_name = query_loader.Q_where_Projects_related_properties
+            query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)
+            return query
         elif self.module == Module.CONTRACT:
             query_loader = GraphqlQueriesContracts()
-            return query_loader.load_query_for_contracts(query_loader.Q_where_Contracts_related_properties)
+            query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)
+            return query
         elif self.module == Module.EASEMENT:
-            query_loader = GraphqlQueriesEasements()
-            return query_loader.load_query_for_easements(query_loader.Q_where_easement_related_properties)
+            query_name = GraphqlQueriesEasements.Q_WHERE_EASEMENT_RELATED_PROPERTYS
+            query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)  
+            return query
         else:
             raise ValueError(f"Invalid module: {self.module}")
 

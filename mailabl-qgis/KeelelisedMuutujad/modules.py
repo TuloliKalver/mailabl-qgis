@@ -12,6 +12,7 @@ class Module:
     PROPRETIE = "propertie"
     USER = "me"
     TAGS = "tags"
+    STATUSES = "statuses"
 
     all_modules = [CONTRACT, PROJECT, TASK, COORDINATION, LETTER,
                     SPECIFICATION, EASEMENT, ORDINANCE, SUBMISSION]

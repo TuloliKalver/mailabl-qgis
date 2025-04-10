@@ -1,16 +1,21 @@
 
 from PyQt5.QtCore import QCoreApplication
-from ...queries.python.DataLoading_classes import GraphqlQueriesEasements
+from ...queries.python.DataLoading_classes import GraphqlQueriesEasements, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
-
+from ...KeelelisedMuutujad.modules import Module
 
 class getEasementsWhere:
     @staticmethod
     def query_easement_related_properties(self, id_value):
         #print(f"id value in query {id_value}")
         #Load the project query using the loader instance
-        query_loader = GraphqlQueriesEasements()
-        query = query_loader.load_query_for_easements(query_loader.Q_where_easement_related_properties)
+
+        module = Module.EASEMENT
+
+        query_name = GraphqlQueriesEasements.Q_WHERE_EASEMENT_RELATED_PROPERTYS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
+
+        
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value

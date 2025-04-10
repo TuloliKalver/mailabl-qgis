@@ -276,5 +276,5 @@ class ConnectorFunctions:
             return result
         if module == Module.EASEMENT:
             from ...queries.python.update_relations.update_easements_properties import EasementProperties
-            result = EasementProperties.update_easements_properties(self, element_id, widget, element_name)
+            result = EasementProperties.update_easements_properties(self, element_id, widget)
             return result

@@ -3,8 +3,9 @@
 # pylint: disable=no-name-in-module
 
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts, GraphqlQueriesEasements
+from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts, GraphqlQueriesEasements, GraphqlStatuses
 from ..query_tools import requestBuilder
+from ....KeelelisedMuutujad.modules import Module
 
 STATE_OPEN = "OPEN"
 STATE_CLOSED = "CLOSED"
@@ -13,8 +14,10 @@ class Statuses:
 
     def get_all_statuses_by_module(self, module):
         print(f"Getting all statuses by module: {module} in getting all statuses")
-        query_loader = GraphQLQueryLoader()
-        query = query_loader.load_query(query_loader.statuses)
+        status_module = Module.STATUSES
+        query_file =  GraphqlStatuses.STATUSES
+        query = GraphQLQueryLoader.load_query_by_module(status_module, query_file)
+
         variables = {
             "where": {
                 "AND":[
@@ -42,8 +45,10 @@ class ContractTypes:
 
     def get_contract_types(self):
 
-        query_loader = GraphqlQueriesContracts()
-        query = GraphqlQueriesContracts.load_query_for_contracts(query_loader.contracts_types)        
+        module = Module.CONTRACT
+        query_name =  GraphqlQueriesContracts.CONTRACT_TYPES
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
         # Set the desired total number of items to fetch
         desired_total_items = None  
         items_for_page = 50  
@@ -84,8 +89,13 @@ class ContractTypes:
 class EasementTypes:
     def get_easement_types(self):
 
-        query_loader = GraphqlQueriesEasements()
-        query = GraphqlQueriesEasements.load_query_for_easements(self, query_loader.easement_types)        
+
+        module = Module.EASEMENT
+
+        query_name = GraphqlQueriesEasements.EASMENT_TYPES
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
+
+
         desired_total_items = None 
         items_for_page = 50  
         end_cursor = None

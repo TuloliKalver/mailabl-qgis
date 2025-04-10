@@ -12,6 +12,7 @@ from .query_tools import requestBuilder
 from ...config.ui_directories import PathLoaderSimple
 from ...utils.TagsEngines import TagsEngines
 from ...KeelelisedMuutujad.modules import Module
+from ...utils.ProgressHelper import ProgressDialogModern
 
 items_to_fetch = 100
 
@@ -586,9 +587,13 @@ class PropertiesGeneralQueries:
 
         return fetched_items, cadasters
 
-    def get_properties_MyLabl_ids(self, properties_list):
+    def _get_properties_MyLabl_ids(self, properties_list):
         print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
+        
+
+
+
         
         query_loader = GraphqlProperties()
         query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
@@ -599,12 +604,7 @@ class PropertiesGeneralQueries:
         total_chunk = 0  # Initialize total_chunk
         end_cursor = None  # Initialize end_cursor before the loop
 
-        widgets_path = PathLoaderSimple.widget_statusBar_path(self)
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(len(properties_list))
-        progress_widget.setWindowTitle("Valmistan andmeid ette")
-        progress_widget.show()
+        progress = ProgressDialogModern(maximum=100)
         
         fetched_items = []
         
@@ -636,12 +636,12 @@ class PropertiesGeneralQueries:
                 total_fetched += len(returned_id)  # Adjust total_fetched based on the returned items
                 total_chunk += 1  # Increment total_chunk
                 
-                progress_bar.setValue(total_fetched)
+                progress.update(total_fetched)
                 QCoreApplication.processEvents()
             
             if len(chunk) < chunk_size or total_fetched % chunk_size == 0:
                 time.sleep(sleep_duration)
-
+        progress.close()
         return fetched_items
 
     @staticmethod

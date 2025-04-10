@@ -31,9 +31,6 @@ class GraphqlProperties:
         #Folders
         self.properties_folder = 'queries/graphql/properties'
         self.properties_WHERE_folder = 'queries/graphql/properties/WHERE'
-        #General
-        self.Q_Property_CSC = 'property_CSC.graphql'
-        self.Q_All_Properties = 'propertyQuery.graphql'
 
         #Where type
 
@@ -43,7 +40,7 @@ class GraphqlProperties:
         self.W_properties_Address_State = 'ADDRESS_State.graphql'
         self.W_properties_Address_City = 'ADDRESS_City.graphql'
         self.W_properties_ID_CadastralNR = 'ADDRESS_ID_CadastralNR.graphql'
-        self.W_Conditional_properties = 'Properties_where.graphql'
+
         #Add
         self.ADD_Selected_properties = 'Add_property.graphql'
         self.ADD_properties_purpose = 'Add_purpose.graphql'
@@ -70,39 +67,31 @@ class GraphqlProperties:
             return file.read()
 
 class GraphqlQueriesContracts:
-    def __init__(self):
-        self.Q_All_contracts = 'contracts.graphql'
-        self.Q_contract_minimal = 'contracts_minimal.graphql'
-        self.Q_where_Contracts_related_properties = 'W_contract_id.graphql'
-        self.Q_where_Contracts_by_cadastrals = 'propertiesrelated_contracts.graphql'
-        self.UPDATE_contract_properties = 'update_contract_properties.graphql'     
-        self.contracts_types = 'contract_types.graphql'   
-        self.Q_where_contracts_type_status = 'contracts_type_status.graphql'
-    @staticmethod
-    def load_query_for_contracts(query_file_name):
-        path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir, path.contracts_folder, query_file_name)
-        with open(graphql_path, 'r') as file:
-            return file.read()
+
+    ALL_CONTRACTS = 'contracts.graphql'
+    CONTRACTS_MINIMAL = 'contracts_minimal.graphql'
+    RELATED_PROPERTIES = 'W_contract_id.graphql'
+    BY_CADASTRAL = 'propertiesrelated_contracts.graphql'
+    UPDATE_CONTRACT_PROPERTIES = 'update_contract_properties.graphql'
+    CONTRACT_TYPES = 'contract_types.graphql'
+    WHERE_CONTRACTS_TYPE_STATUS = 'contracts_type_status.graphql'
+
 
 class GraphqlQueriesEasements:
-    def __init__(self):
-        self.easement_types = 'easements_types.graphql'   
-        self.Q_where_easements_type_status = 'easements_type_status.graphql'
-        self.UPDATE_easments_properties = 'update_easements_properties.graphql'
-        self.Q_where_easement_related_properties = 'W_easement_id.graphql'
-        self.Q_All_easements = 'easements.graphql'
+    EASMENT_TYPES = 'easements_types.graphql'
+    WHERE_EASEMENTS_TYPE_STATUS = 'easements_type_status.graphql'
+    UPDATE_EASEMENTS_PROPERTIES = 'update_easements_properties.graphql'
+    Q_WHERE_EASEMENT_RELATED_PROPERTYS = 'W_easement_id.graphql'
+    Q_All_EASEMENTS = 'easements.graphql'
 
-    def load_query_for_easements(self, query_file_name):
-        path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir, path.easements_folder, query_file_name)
-        with open(graphql_path, 'r') as file:
-            return file.read()
 
 class GraphqlTags:
     CREATE_TAG = 'CreateTag.graphql'
     TAGS_BY_MODULE = 'TagsByModule.graphql'
     TAGS_ID_BY_MODULE_AND_NAME = 'IDByModuleAndName.graphql'
+
+class GraphqlStatuses:
+    STATUSES = 'statuses.graphql'
 
 
 class QueryFolders:
@@ -114,15 +103,13 @@ class QueryFolders:
     PROJECTS_FOLDER = 'queries/graphql/projects'
     CONTRACTS_FOLDER = 'queries/graphql/contracts'
     TAGS_FOLDER = 'queries/graphql/tags'
-
+    STATUS_FOLDERS = 'queries/graphql/statuses'
 
 class GraphQLQueryLoader:
     CURRENT_DIR = os.path.abspath(__file__)
     PLUGIN_DIR = os.path.abspath(os.path.join(CURRENT_DIR, '..', '..', '..'))
 
     def __init__(self):
-        
-        self.statuses = 'statuses.graphql'
         
         # Navigate to the 'queries/graphql' folder and then into the 'graphql' subfolder
         self.graphql_folder = 'queries/graphql'
@@ -134,22 +121,6 @@ class GraphQLQueryLoader:
         self.user_folder ='queries/graphql/user'
         self.easements_folder = 'queries/graphql/easements'
 
-        self.Q_Property_CSC = 'property_CSC.graphql'
-        self.Q_All_Properties = 'propertyQuery.graphql'
-        
-        self.D_ALL_properties = 'deleteProperty.graphql'
-        
-        self.W_Conditional_properties = 'Properties_where.graphql'
-        self.W_properties_number = 'id_number.graphql'
-        self.W_properties_Address_County = 'ADDRESS_County.graphql'
-        self.W_properties_Address_State = 'ADDRESS_State.graphql'
-        self.W_properties_Address_City = 'ADDRESS_City.graphql'
-        self.W_properties_ID_CadastralNR = 'ADDRESS_ID_CadastralNR.graphql'
-        
-        self.ADD_Selected_properties = 'Add_property.graphql'
-        self.ADD_properties_purpose = 'Add_purpose.graphql'
-        
-        self.CHECK_properties_mylabl = 'Properties_ID_Cadastral.graphql'
         
 
             #User related queries
@@ -158,11 +129,8 @@ class GraphQLQueryLoader:
         self.Q_me = 'me.graphql'
 
             #Projects related queries
-        self.Q_All_Projects = 'projects.graphql'
-        self.Q_Where_By_status_Projects = 'W_project_status.graphql'
-        self.Q_where_Projects_related_properties = 'w_projects_id.graphql'
         self.UPDATE_project_properties = 'update_project_properties.graphql'
-        self.Projects_tags = 'projects_tags.graphql'
+
         
         
     def load_query(self, query_file_name):
@@ -186,7 +154,7 @@ class GraphQLQueryLoader:
 
     
     @staticmethod
-    def load_query_by_module( module: Module, filename: str) -> str:
+    def load_query_by_module(module: Module, filename: str) -> str:
 
         folders = {
             Module.PROPRETIE: QueryFolders.PROPERTIES_FOLDER,
@@ -194,7 +162,8 @@ class GraphQLQueryLoader:
             Module.EASEMENT: QueryFolders.EASEMENTS_FOLDER,
             Module.PROJECT: QueryFolders.PROJECTS_FOLDER,
             Module.CONTRACT: QueryFolders.CONTRACTS_FOLDER,
-            Module.TAGS: QueryFolders.TAGS_FOLDER
+            Module.TAGS: QueryFolders.TAGS_FOLDER,
+            Module.STATUSES: QueryFolders.STATUS_FOLDERS
         }
 
         folder = folders.get(module)

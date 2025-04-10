@@ -164,7 +164,6 @@ class MapExtentFeatureReader():
                 features.append(f)
         return features
 
-
     @staticmethod
     def _get_features_by_geometry(layer: QgsVectorLayer, geometry: QgsGeometry) -> list[QgsFeature]:
         """
@@ -204,14 +203,14 @@ class MapExtentFeatureReader():
         return [f for f in layer.getFeatures() if f[field_name] == value]
 
     @staticmethod
-    def get_module_feature_conneted_with_propertie_list(cadastral_numbers, module=None):
+    def get_module_feature_conneted_with_propertie_list_CHEK_FOR_MODULE_USAGE(cadastral_numbers, module=None):
         #print(f"cadastral_numbers: {cadastral_numbers}")
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query_for_projects(query_loader.Q_Properties_related_projects)
         #print(f"query: {query}")
         items_for_page = 50
         end_cursor = None
-        projects_list = []
+        data = []
         variables =        {
                     "first": items_for_page,
                     "after": "",
@@ -233,9 +232,9 @@ class MapExtentFeatureReader():
                 #print(f"YES WE ARE DEVELOPING IN THE RIGHT DIRECTION!")
                 edge = HandlePropertiesResponses._response_properties_data_edges(response)
                 for item in edge:
-                    for project in item['node'][module]['edges']:
-                        if project['node']['id']:
-                            projects_list.append(project['node'])
+                    for i in item['node'][module]['edges']:
+                        if i['node']['id']:
+                            data.append(i['node'])
                     page_info = item['node'][module]['pageInfo']
                     if page_info['hasNextPage']:
                         end_cursor = page_info['endCursor']
@@ -243,4 +242,4 @@ class MapExtentFeatureReader():
                         break
                 else:
                     break  # Exit loop if there are no more pages
-        return projects_list
+        return data

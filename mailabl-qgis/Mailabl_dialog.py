@@ -114,6 +114,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 #################################################################################################################
 
+
+
+
+
+
+
         # Set this dialog as the main dialog for ButtonHelper
         ButtonHelper.set_dialog(self)
         ListSelectionHandler.set_dialog(self)
@@ -128,6 +134,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.custom_event_filter = BlockButtonsToPreferLabelEventFilter(self)
         self.evel_tools = EVELTools()
         self.zoom_handler = ZoomForModuleData()
+        self.pmbc = PropertiesModuleButtonConnector(self)
+        self.smbc = SettingsModuleButtonConnector(self)
 
         UI = UIStateManager(self)
         loader = SHPLayerLoader(self)
@@ -135,8 +143,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 
         Startup.FirstLoad(self)
 
-        PropertiesModuleButtonConnector().button_controller(self)
-        SettingsModuleButtonConnector.button_controller(self)
+
+        self.pmbc.button_controller()
+        self.smbc.button_controller()
+
+
+
 
         self.return_pressed_manager.setup_connections_to_handle_return()
         self.custom_event_filter.set_button_focus_policy()

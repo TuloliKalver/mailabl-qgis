@@ -6,7 +6,7 @@ import pandas as pd
 from typing import List
 from PyQt5.QtCore import QCoreApplication
 
-from ...queries.python.DataLoading_classes import GraphqlQueriesContracts
+from ...queries.python.DataLoading_classes import GraphqlQueriesContracts, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...KeelelisedMuutujad.modules import Module
@@ -86,8 +86,9 @@ class ContractsQueries:
     def _query_contracts_by_number(contract_number):
         #print(statuses)
         # Load the project query using the loader instance
-        query_loader = GraphqlQueriesContracts()
-        query = GraphqlQueriesContracts.load_query_for_contracts(query_loader.Q_All_contracts)        
+        module = Module.CONTRACT
+        query_name =  GraphqlQueriesContracts.ALL_CONTRACTS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value
@@ -136,11 +137,15 @@ class ContractsQueries:
         return fetched_items[:desired_total_items]
     @staticmethod
     def _query_contracts_by_type_status_elements(self, type_values, statuses):
-        print(f"type_values: '{type_values}'")
+
         #print(statuses)
         # Load the project query using the loader instance
-        query_loader = GraphqlQueriesContracts()
-        query = GraphqlQueriesContracts.load_query_for_contracts(query_loader.Q_where_contracts_type_status)        
+
+        module = Module.CONTRACT
+        query_name =  GraphqlQueriesContracts.WHERE_CONTRACTS_TYPE_STATUS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
+     
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value

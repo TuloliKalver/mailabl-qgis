@@ -1,6 +1,7 @@
 from ...config.settings import SettingsDataSaveAndLoad
 from ...KeelelisedMuutujad.modules import Module
-from ...queries.python.Statuses.statusManager import Statuses, ContractTypes, EasementTypes
+from ...queries.python.statuses.statusManager import Statuses, ContractTypes, EasementTypes
+
 
 class TypeManager:
     def __init__(self):

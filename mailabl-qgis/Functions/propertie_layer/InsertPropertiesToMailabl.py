@@ -16,26 +16,7 @@ class PropertiesLayerFunctions:
     def generate_table_from_selected_map_items(self, view_item, layer_name):
         input_layer = QgsProject.instance().mapLayersByName(layer_name)[0]    
         features = input_layer.selectedFeatures()
-        
-        total = len(features)
-        paths = PathLoader(plugin_dir_path, UI_multiline_Statusbar)
-        
-        widget = paths.UI_multiline_Statusbar
-        widget_path = paths.get_widgets_path(widget)
-        progress_widget = loadUi(widget_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
-        progress_widget.setWindowTitle("Koostan kinnistute nimekirja!")
-        progress_widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
-        progress_widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
-        progress_widget.setAttribute(Qt.WA_TranslucentBackground)
-        progress_widget.setAttribute(Qt.WA_DeleteOnClose)
-        progress_widget.show()
                         
-        quarter_point = total // 4  # Calculate the quarter point
-        halfway_point = total // 2  # Calculate the halfway point
-        three_quarter_point = total * 3 // 4  # Calculate the three-quarter point
-        
         headers = [
             Katastriyksus.tunnus, #'TUNNUS', 
             Katastriyksus.hkood, #'MK_kood', 
@@ -80,21 +61,10 @@ class PropertiesLayerFunctions:
             row += 1
 
             main_row += 1
-            progress_bar.setValue(main_row)
-            # Update the label content at different progress points
-            if row == quarter_point:
-                progress_widget.label_2.setText("Kas teadsid, et:")
-                progress_widget.label_3.setText("98% meie kodumaa jõgedest on joogikõlbuliku veega")
-                
-            elif row == halfway_point:
-                progress_widget.label_3.setText("Eestis on 56-s linnatüüpi asulat")
-            elif row == three_quarter_point:
-                progress_widget.label_3.setText("Inimese keha sisaldab 65% vett.")
             QCoreApplication.processEvents()  # Process events to allow GUI updates
         #print(f"row item: {row_items}")
 
-        progress_widget.close() 
-
+        
     @staticmethod
     def _create_model_for_selected_map_features(features, fields):
         model = QStandardItemModel()

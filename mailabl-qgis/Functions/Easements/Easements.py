@@ -4,7 +4,7 @@
 
 
 from PyQt5.QtCore import QCoreApplication
-from ...queries.python.DataLoading_classes import GraphqlQueriesEasements
+from ...queries.python.DataLoading_classes import GraphqlQueriesEasements, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.modules import Module
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
@@ -113,8 +113,12 @@ class EasementsQueries:
         #print(f"type_values: '{type_values}'")
         #print(statuses)
         # Load the project query using the loader instance
-        query_loader = GraphqlQueriesEasements()
-        query = GraphqlQueriesEasements.load_query_for_easements(self, query_loader.Q_where_easements_type_status)        
+
+        module = Module.EASEMENT
+
+        query_name = GraphqlQueriesEasements.WHERE_EASEMENTS_TYPE_STATUS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
+
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value
@@ -181,8 +185,12 @@ class EasementsQueries:
     def query_easements_by_number(self, easement_number):
         #print(statuses)
         # Load the project query using the loader instance
-        query_loader = GraphqlQueriesEasements()
-        query = query_loader.load_query_for_easements(query_loader.Q_where_easements_type_status)        
+
+        module = Module.EASEMENT
+
+        query_name = GraphqlQueriesEasements.WHERE_EASEMENTS_TYPE_STATUS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
+
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value

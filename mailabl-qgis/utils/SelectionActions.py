@@ -96,8 +96,7 @@ class SelectionActions:
         AddProperties.set_buttons_in_dev()
         self.frButtons.hide()
         progres_steps = 5  # Steps: 1-reset/initial, 2-flow controls, 3-layer load, 4-map elements, 5-final UI update
-        start_value = 0
-
+        
         # Initialize the progress bar using the helper.
         progress = ProgressDialogModern(title="Laen andmeid", value=0, maximum=progres_steps)
         progress.update(text1="Palun oota...")
