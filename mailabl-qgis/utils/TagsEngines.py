@@ -21,7 +21,7 @@ class TagsEngines:
             }
         }
 
-        response = requestBuilder.construct_and_send_request(None, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         if not response:
             print("Create tag failed — no response")
             return False
@@ -52,7 +52,7 @@ class TagsEngines:
             }
         }
 
-        response = requestBuilder.construct_and_send_request(None, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         if not response:
             print("Tag loading failed — no response")
             return []
@@ -89,7 +89,7 @@ class TagsEngines:
             }
         }
 
-        response = requestBuilder.construct_and_send_request(None, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         if not response:
             print("Failed to load tags")
             return None

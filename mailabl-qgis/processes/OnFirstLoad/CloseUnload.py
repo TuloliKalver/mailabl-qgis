@@ -38,6 +38,6 @@ class Unload:
                     }
                     }
         variables = {}
-        response = requestBuilder.construct_and_send_request(self, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         print(response)
         #clear_UC_data()

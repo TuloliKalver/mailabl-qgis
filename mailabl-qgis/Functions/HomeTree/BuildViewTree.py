@@ -41,7 +41,7 @@ class MyTreeHomeView:
                 "value": item
             }
         }
-        response = requestBuilder().construct_and_send_request(None, query, variables)
+        response = requestBuilder().construct_and_send_request(query, variables)
         if response.status_code == 200:
             data = HandlePropertiesResponses._response_properties_data_edges(response)
             return data
@@ -79,7 +79,7 @@ class MyTreeHomeView:
 
 
 
-        response = requestBuilder().construct_and_send_request(None,query, variables)
+        response = requestBuilder().construct_and_send_request(query, variables)
         #print(f"response {response}")
         #start do use data
         if response.status_code == 200:

@@ -48,7 +48,7 @@ class WhereProperties:
                     }
                 }
         
-        response = requestBuilder.construct_and_send_request(self, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         county_names = []
         #start do use data
         if response.status_code == 200:
@@ -130,7 +130,7 @@ class WhereProperties:
         else:
             variables = variables_after
             
-        response = requestBuilder.construct_and_send_request(self,query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
        # print(f"response: {response}")
         #start do use data
         if response.status_code == 200:
@@ -209,7 +209,7 @@ class WhereProperties:
             #print("not city item")
             variables = variables_after
             
-        response = requestBuilder.construct_and_send_request(self, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
 
         #start do use data
         if response.status_code == 200:
@@ -268,7 +268,7 @@ class WhereProperties:
                     }
                 }
                 
-                response = requestBuilder.construct_and_send_request(self, query, variables)
+                response = requestBuilder.construct_and_send_request(query, variables)
 
                 # Check if response is None
                 if response is not None:
@@ -324,7 +324,7 @@ class deleteProperty:
         variables = {
             "id": item  # ID of property i want to delete
             }
-        response = requestBuilder.construct_and_send_request(None, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         
         # Check the response for errors
         if response.status_code != 200:
@@ -370,7 +370,7 @@ class add_properties:
 
         try:
             # Send the POST request to the GraphQL endpoint with a 30-second timeout
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
             # Check the response for errors
             response.raise_for_status()
             # Get the ID of the added property
@@ -387,7 +387,7 @@ class add_properties:
             user_response = input("No response received within 30 seconds. Do you want to continue? (yes/no): ").lower()
             if user_response == 'yes':
                 # Retry the request
-                response = requestBuilder.construct_and_send_request(self, query, variables)
+                response = requestBuilder.construct_and_send_request(query, variables)
                 response.raise_for_status()
                 added_property = response.json()
                 property_id = added_property['data']['createProperty']['id']
@@ -417,7 +417,7 @@ class add_properties:
             }
         }
         # Send the POST request to the GraphQL endpoint
-        response = requestBuilder.construct_and_send_request(self, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         # Check the response for errors
         if response.status_code != 200:
             raise Exception("GraphQL request failed")
@@ -451,7 +451,7 @@ class MyLablChecker:
                             }
                     }
 
-        response = requestBuilder.construct_and_send_request(self, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
 #        print(f"response {response}")
         #start do use data
         if response.status_code == 200:
@@ -488,7 +488,7 @@ class MyLablChecker:
                             }
                     }
 
-        response = requestBuilder.construct_and_send_request(None, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
 #        print(f"response {response}")
         #start do use data
         if response.status_code == 200:
@@ -557,7 +557,7 @@ class PropertiesGeneralQueries:
                 }
             }
 
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
 
             if response.status_code == 200:
                 returned_id = HandlePropertiesResponses._response_properties_data_ids(response)
@@ -583,7 +583,8 @@ class PropertiesGeneralQueries:
 
         return fetched_items, cadasters
 
-    def _get_properties_MyLabl_ids(self, properties_list):
+    @staticmethod
+    def _get_properties_MyLabl_ids(properties_list):
         #print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
         
@@ -614,7 +615,7 @@ class PropertiesGeneralQueries:
                 }
             }
 
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
 
             if response.status_code == 200:
                 returned_id = HandlePropertiesResponses._response_properties_data_ids(response)
@@ -657,7 +658,7 @@ class PropertiesGeneralQueries:
             """
         variables = {"id": property_id}
 
-        response = requestBuilder.construct_and_send_request(None, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         if not response:
             print("Failed to fetch property.")
             return False
@@ -689,7 +690,7 @@ class UpdateData:
             }
         }
         
-        response = requestBuilder.construct_and_send_request(None, mutation, variables)
+        response = requestBuilder.construct_and_send_request(mutation, variables)
         if not response:
             print("Test update failed — no response")
             return False
@@ -714,7 +715,7 @@ class UpdateData:
 
         variables = {"id": property_id}
 
-        response = requestBuilder.construct_and_send_request(None, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         if not response:
             print("Failed to fetch current tags")
             return False
@@ -742,7 +743,7 @@ class UpdateData:
             }
         }
 
-        update_response = requestBuilder.construct_and_send_request(None, update_mutation, variables)
+        update_response = requestBuilder.construct_and_send_request(update_mutation, variables)
         if not update_response:
             print("Failed to update tags")
             return False

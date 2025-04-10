@@ -75,7 +75,7 @@ class MyTreeHome:
         query = GraphQLQueryLoader.load_query_by_module(module, file)
 
 
-        response = requestBuilder().construct_and_send_request(None,query, variables)
+        response = requestBuilder().construct_and_send_request(query, variables)
         #print(f"response {response}")
         #start do use data
         if response.status_code == 200:

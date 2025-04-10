@@ -227,7 +227,7 @@ class MapExtentFeatureReader():
                     }
                 }
         while True:
-            response = requestBuilder.construct_and_send_request(None, query, variables)
+            response = requestBuilder.construct_and_send_request( query, variables)
             
             module = (f"{module}s")
             if response.status_code == 200:

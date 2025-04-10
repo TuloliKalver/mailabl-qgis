@@ -28,7 +28,7 @@ class Statuses:
                 ]
             }
         }
-        response = requestBuilder.construct_and_send_request(self, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         if response.status_code == 200:
             data = response.json()
             statuses_data = data.get('data', {}).get('statuses', {}).get('edges', [])
@@ -64,7 +64,7 @@ class ContractTypes:
                 "after": end_cursor if end_cursor else None
             }
 
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
 
             if response.status_code == 200:
                 data = response.json()
@@ -108,7 +108,7 @@ class EasementTypes:
                 "after": end_cursor if end_cursor else None
             }
 
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
             if response.status_code == 200:
                 data = response.json()
                 QCoreApplication.processEvents()

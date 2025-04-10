@@ -143,7 +143,7 @@ class PropertiesConnector(QObject):
             widget.accept()
             self.ConnectorWidgetClosed.emit()
     def on_save_button_clicked(self, widget, module, element_id, element_name):
-        result = ConnectorFunctions.add_properties_to_module(self, widget, module, element_id, element_name)
+        result = ConnectorFunctions.add_properties_to_module(widget, module, element_id)
         if result:
             if widget is not None:
                 self.unset_widget_actions(widget)
@@ -266,13 +266,14 @@ class WidgetLabels:
         return input_headers, module_headers
 
 class ConnectorFunctions:
-    def add_properties_to_module(self, widget, module, element_id, element_name):
+    @staticmethod
+    def add_properties_to_module(widget, module:str, element_id: str):
         if module == Module.PROJECT:
-            result = ConnectElementWithPropertysties._add_properties_to_module_item(self, element_id, widget, module)
+            result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
             return result
         if module == Module.CONTRACT:
-            result = ConnectElementWithPropertysties._add_properties_to_module_item(self, element_id, widget, module)
+            result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
             return result
         if module == Module.EASEMENT:
-            result = ConnectElementWithPropertysties._add_properties_to_module_item(self, element_id, widget, module)
+            result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
             return result

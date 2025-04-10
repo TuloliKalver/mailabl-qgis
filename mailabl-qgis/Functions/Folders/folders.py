@@ -131,7 +131,7 @@ class Link_updater:
                     }
                     }
         
-        response = requestBuilder.construct_and_send_request(self, query, variables)
+        response = requestBuilder.construct_and_send_request(query, variables)
         print(response)
 
 

@@ -89,7 +89,7 @@ class PropertiesModuleFetcher:
                 "id": self.id_value
             }
 
-            response = requestBuilder.construct_and_send_request(None, self.query, variables)
+            response = requestBuilder.construct_and_send_request(self.query, variables)
             QCoreApplication.processEvents()
 
             if response.status_code == 200:
@@ -137,7 +137,7 @@ class PropertiesModuleFetcher:
                     }
                 }
         while True:
-            response = requestBuilder.construct_and_send_request(None, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
             
             module = (f"{module}s")
             if response.status_code == 200:

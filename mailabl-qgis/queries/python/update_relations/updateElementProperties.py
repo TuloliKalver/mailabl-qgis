@@ -22,7 +22,7 @@ timer_instance = Timer(delay_interval=delay_interval, sleep_duration=sleep_durat
 class ConnectElementWithPropertysties:
     
     @staticmethod
-    def _add_properties_to_module_item(self, item_id, widget, module):
+    def _add_properties_to_module_item(item_id, widget, module):
        
         if module == Module.PROJECT:
             query_name = GraphqlProjects.UPDATE_project_properties
@@ -54,7 +54,7 @@ class ConnectElementWithPropertysties:
                 properties.append(cadastral_nr)
 
         total_ids_Table = len(properties)
-        returned_ids = PropertiesGeneralQueries._get_properties_MyLabl_ids(self, properties_list=properties)
+        returned_ids = PropertiesGeneralQueries._get_properties_MyLabl_ids(properties_list=properties)
         total_returned_ids = len(returned_ids)
 
         chunk_size = 25
@@ -75,7 +75,7 @@ class ConnectElementWithPropertysties:
                     }
                 }
 
-                response = requestBuilder.construct_and_send_request(None, query, variables)
+                response = requestBuilder.construct_and_send_request(query, variables)
                 count += 1
                 progress.update(count)
                 QCoreApplication.processEvents()

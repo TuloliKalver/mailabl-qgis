@@ -88,7 +88,7 @@ class ProjectsQueries:
                 }
             }
             
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
 
             if response.status_code != 200:
                 print(f"Error: {response.status_code}")
@@ -133,7 +133,7 @@ class ProjectsQueries:
                     ]
                 }
             }
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
 
             if response.status_code == 200:
                 data = response.json()

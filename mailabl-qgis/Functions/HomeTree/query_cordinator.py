@@ -71,7 +71,7 @@ class PropertiesConnectedElementsQueries:
             ] 
             }
 
-        response = requestBuilder().construct_and_send_request(None, query, variables)
+        response = requestBuilder().construct_and_send_request(query, variables)
 
         if response.status_code == 200:
             data = response.json()

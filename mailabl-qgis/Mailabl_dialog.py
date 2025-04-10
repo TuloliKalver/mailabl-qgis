@@ -550,16 +550,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         save_user_name(self)
         res = get_access_token(self)
-        res = True
         if res:
-            
+        
             user_name, user_lastname, roles_text, has_qgis_access, propeties_create = UserSettings.user_data()
-            #propeties_create = True
-            #has_qgis_access = True
-            #user_name = "Nipi"
-            #user_lastname =  " Tiri"
-            #roles_text = "many_roles!!"
-
+            
             #print(f"has properties rights: {propeties_create}")
             if propeties_create == False:
                 self.btnMapActions.hide()

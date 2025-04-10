@@ -11,7 +11,7 @@ pealkiri = Headings()
 
 class requestBuilder:
     @staticmethod
-    def construct_and_send_request(self, query: str, variables: dict) -> requests.Response:       
+    def construct_and_send_request(query: str, variables: dict) -> requests.Response:       
         graphql_url = GraphQLSettings.graphql_endpoint()
         access_token = load_token()
         if not access_token:
@@ -60,7 +60,7 @@ class requestBuilder:
         #print(f"Errors: {errors}")
         if errors:
             #print(f"errors: errors")
-            RequestErrorHandler.handle_error(self, errors)
+            RequestErrorHandler.handle_error(errors)
 
         return response
 
@@ -81,7 +81,7 @@ class requestBuilder:
         return obj
 
 class RequestErrorHandler:
-    def handle_error(self, errors):
+    def handle_error(errors):
         if errors:
             error_messages = [error.get('message', 'Unknown error') for error in errors]
             error_message = '\n'.join(error_messages)

@@ -109,7 +109,7 @@ class ContractsQueries:
                 }
             }
             
-            response = requestBuilder.construct_and_send_request(None, query, variables) #/TODO None can be replaced with self if needed
+            response = requestBuilder.construct_and_send_request(query, variables) #/TODO None can be replaced with self if needed
 
             if response.status_code == 200:
                 data = response.json()
@@ -192,7 +192,7 @@ class ContractsQueries:
 
 
 
-            response = requestBuilder.construct_and_send_request(self, query, variables)
+            response = requestBuilder.construct_and_send_request(query, variables)
 
             if response.status_code == 200:
                 data = response.json()

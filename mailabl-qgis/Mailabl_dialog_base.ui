@@ -51,6 +51,7 @@
 }
 
 
+
 /* ------------------------------------------------------ */
 /* 🧠 Global Interaction Effects - Focused Field &amp; Tabs   */
 /* ------------------------------------------------------ */
@@ -666,6 +667,7 @@ border-bottom: 1px solid rgb(131, 142, 162);
 
 }
 
+
 #MailablDialogBase{
     border: 1px solid #4d4d4d;
 	border-top-left-radius: 7px;     /* Rounded top-left corner */
@@ -673,6 +675,14 @@ border-bottom: 1px solid rgb(131, 142, 162);
     border-right-radius: 7px;        /* No rounding on right side */
     border-left-radius: 7px;    
 	background: None;  /* 10% transparency */
+}
+
+#frAgreements QPushButton {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+
 }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_6">
