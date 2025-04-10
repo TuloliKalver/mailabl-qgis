@@ -1,8 +1,8 @@
 from ...KeelelisedMuutujad.modules import Module
-from ...queries.python.DataLoading_classes import Graphql_properties, GraphQLQueryLoader
+from ...queries.python.DataLoading_classes import GraphqlProperties, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...queries.python.responses import HandlePropertiesResponses
-from ...queries.python.DataLoading_classes import Graphql_properties
+from ...queries.python.DataLoading_classes import GraphqlProperties
 
 
 
@@ -26,7 +26,7 @@ class PropertiesConnectedElementsQueries:
         module_file = cl.module_to_filename.get(module_name)
         if not module_file:
             raise ValueError(f"Module name {module_name} is not valid.")
-        Graphql_properties().load_query_properties_connected_elements(module_file)
+        GraphqlProperties().load_query_properties_connected_elements(module_file)
 
 
     def fetch_module_data(self, module_name, propertie_id):
@@ -40,7 +40,7 @@ class PropertiesConnectedElementsQueries:
             #raise ValueError(f"Module name {module_name} is not valid.")
 
 
-        query = Graphql_properties().load_query_properties_connected_elements(module_file)
+        query = GraphqlProperties().load_query_properties_connected_elements(module_file)
 
         first_value = 30
 

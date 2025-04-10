@@ -270,11 +270,11 @@ class LayerFilterSetters:
         if not update_data:
             return True
         else:
-            layer_data = LayerFeaturehepers._get_attributes_as_dict(feature=new_feature)
+            layer_data = LayerFeaturehepers._get_feature_attributes_as_dict(feature=new_feature)
             #print (f"layer_data: {layer_data}")
             tunnus = layer_data.get(Katastriyksus.tunnus)
             #print (f"Tunnus: {tunnus}")            
-            res,_ =MyLablChecker.get_properties_where_for_duplicates_EQUALS(item=tunnus)
+            res,_ = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
             if res is True:
 
                 prepared_data, usage_data = DataMappers._map_properties_main_details_from_input(layer_data=layer_data)

@@ -123,6 +123,7 @@ class FilesByNames:
     def __init__(self):
 
         self.MaaAmet_import = "Properties_backgrund.qml"
+        self.Archived_layer = "Archived_properties.qml"
         self.MaaAmet_temp = "Maa_amet_temp_layer.qml"
         self.Easement_style = "Easement_Properties.qml"
         self.Easement_Water = "Easement_W.qml"
@@ -252,6 +253,11 @@ class SettingsDataSaveAndLoad:
         SHP_CADASTRAL = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{settings_SHP_layer_name}"
         #print(f"SHP_layer {SHP_CADASTRAL}")
         return SHP_CADASTRAL
+    
+    def Archived_layers(self):
+        archived_layers = 'labels/archivedLayers'
+        ARCHIVED_LAYER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{archived_layers}"
+        return ARCHIVED_LAYER
 
     def target_cadastral (self):
         self.setup_label_cadastral_current = 'labels/cadastralCurrent'
@@ -364,6 +370,13 @@ class SettingsDataSaveAndLoad:
         target_settings_address = SettingsDataSaveAndLoad.SHP_import_layer(self)
         settings.setValue(target_settings_address, value)
         label.setText(value)
+
+    def save_archived_layers(self, layers, label=None,):
+        settings = QgsSettings()
+        archived_layers_address = SettingsDataSaveAndLoad.Archived_layers(self)
+        settings.setValue(archived_layers_address, layers)
+        if label is not None:
+            label.setText(layers)
     
     def save_target_cadastral(self, input_value, target_value):
         settings = QgsSettings()
@@ -602,12 +615,3 @@ class StoredLayers:
         active_layer = settings_loader.load_SHP_inputLayer_name()
         return active_layer
     
-
-class settingPageElements():
-    def __init__(self,lblcurrent_main_layer_label, lblnewCadastrals_input_layer_label, lblSHPNewItems, label_14, lblLayerProjects_Properties):
-        self.lblcurrent_main_layer_label = lblcurrent_main_layer_label
-        self.lblnewCadastrals_input_layer_label = lblnewCadastrals_input_layer_label
-        self.lblSHPNewItems = lblSHPNewItems
-        self.label_14 = label_14
-        self.lblLayerProjects_Properties = lblLayerProjects_Properties
-        

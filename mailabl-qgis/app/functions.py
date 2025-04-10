@@ -3,7 +3,7 @@ from qgis.core import (QgsFeature,
 from PyQt5.QtCore import QVariant
 from qgis.core import QgsField
 from qgis.core import QgsProject, QgsFeature, edit
-from .View_tools import shp_tools
+from .View_tools import shp_tools_MOVE_TOOL
 from qgis.core import QgsField
 
 class QGIS_items:
@@ -115,7 +115,7 @@ class QGIS_data_transfers:
         target_layer.commitChanges()
         target_layer.updateExtents()
         
-        shp_tools.activateLayer_zoomTo(target_layer)
+        shp_tools_MOVE_TOOL.activateLayer_zoomTo_MOVE_TOOL(target_layer)
         
 
 

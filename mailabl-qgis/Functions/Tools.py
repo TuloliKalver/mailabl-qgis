@@ -87,7 +87,6 @@ class tableFunctions:
         # Assuming 'indexes' is a list of QModelIndex objects representing selected rows
         return data
 
-
     #Extracts table data and assigns row index to data!
     def extract_table_indexes_and_cadasters_from_data(data):
         #print(f"values of data {data}")
@@ -145,9 +144,6 @@ class tableFunctions:
         #print("before outbut number values:" )
         #pprint(number_values)
         return CadastralUnits
-
-
-
     
     def return_id(self, index, table):
         # Assuming you want data from column 0 (index 0 in Python)
@@ -161,15 +157,12 @@ class tableFunctions:
         # Now you have the ID value from the selected row, column 0
         #return str(id_data)
         return (id_data)
-    
-    
+        
     def custom_encoder(obj):
         if isinstance(obj, str):
             return obj.encode('utf-8').decode('unicode-escape')
         return obj
         
-
-    
     def extract_property_data(self, index, table):
         # Assuming table is a QTableView and has a QStandardItemModel set
         model = table.model()
@@ -252,7 +245,6 @@ class tableFunctions:
         #print(input_data)
         return encoded_input_data
     
-    
     def extract_cadastralNrData_from_table(self, indexes, table):
         #print(f"index in 'extract_cadastralNrData_from_table': {indexes}")
         # Assuming table is a QTableView and has a QStandardItemModel set
@@ -289,9 +281,6 @@ class tableFunctions:
         #return (encoded_input_data)
         #print(input_data)
         return encoded_input_data
-
-
-    
 
     def find_missing_items(item_list, graphql_data):
         #print("Item list")

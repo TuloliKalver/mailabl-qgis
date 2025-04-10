@@ -10,7 +10,7 @@ from .TreeHelper import TreeHelper, StoreValues
 from ...utils.ColorHelper import ColorUtils
 from ...KeelelisedMuutujad.modules import Module, Languages, ModuleTranslation
 from ...queries.python.query_tools import requestBuilder
-from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_properties
+from ...queries.python.DataLoading_classes import GraphQLQueryLoader, GraphqlProperties
 from ...queries.python.responses import HandlePropertiesResponses
 from .query_cordinator import PropertiesConnectedElementsQueries
 
@@ -28,7 +28,7 @@ class MyTreeHomeView:
     @staticmethod
     def fetch_module_data(module_name, item):
         print(f"module name in query: {module_name} and item: {item}")
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
         end_cursor = None
         variables = {
@@ -77,7 +77,7 @@ class MyTreeHomeView:
             "search": item_str
         }
 
-        query_id = Graphql_properties().load_query_for_properties_WHERE(Graphql_properties().W_properties_number_improwed)
+        query_id = GraphqlProperties().load_query_for_properties_WHERE(GraphqlProperties().W_properties_number_improwed)
 
         response_id = requestBuilder().construct_and_send_request(None,query_id, variables_id)
         #print(f"response {response}")

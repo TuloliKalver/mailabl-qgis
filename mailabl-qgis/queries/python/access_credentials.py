@@ -69,14 +69,14 @@ def get_access_token(self):
 
     # Construct GraphQL mutation for authentication
     graphql_mutation = f'''
-    mutation {{
-        login(input: {{ username: "{username}", password: "{password}" }}) {{
-            accessToken
-            refreshToken
-            expiresIn
-        }}
-    }}
-    '''
+                        mutation {{
+                            login(input: {{ username: "{username}", password: "{password}" }}) {{
+                                accessToken
+                                refreshToken
+                                expiresIn
+                            }}
+                        }}
+                    '''
 
     # Construct the request payload
     payload = {

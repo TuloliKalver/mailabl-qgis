@@ -7,6 +7,7 @@ from qgis.core import QgsVectorLayer, QgsFeature, QgsSpatialIndex, QgsLayerTreeG
 from ...utils.ProgressHelper import ProgressDialogModern
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...KeelelisedMuutujad.messages import Headings
+from ...utils.messagesHelper import ModernMessageDialog
  
 pealkiri = Headings()
 
@@ -51,9 +52,9 @@ class SHPLayerLoader:
                                 QgsProject.instance().removeMapLayer(existing_layer.layer())
 
                 ShapefileImporter.import_shpFile_as_virtual_layer(file_path, imporditavad_group)
+
                 text = (f"Andmed on edukalt imporditud ja lisatud\n{import_subgroup_layer_name}\ngrupi kihile")
                 heading = pealkiri.infoSimple
-                from ...utils.messagesHelper import ModernMessageDialog
                 ModernMessageDialog.Info_messages_modern(heading, text)
                 
                 save_setting = SettingsDataSaveAndLoad()

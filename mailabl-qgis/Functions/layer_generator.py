@@ -22,7 +22,7 @@ from PyQt5.QtCore import QCoreApplication, QVariant
 from PyQt5.QtWidgets import QFileDialog
 
 from ..utils.LayerSetups import LayerSetups
-from ..config.settings import Filepaths, FilesByNames, StoredLayers
+from ..config.settings import Filepaths, FilesByNames, StoredLayers, SettingsDataSaveAndLoad
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
@@ -502,6 +502,14 @@ class LayerManager:
                 layer = None            
             if layer is None:
                 layer = LayerGroupHelper.add_layer_to_projct_in_given_group(layer=existing_layer, group_name=MailablGroupFolders.ARCHIVED_PROPERTIES)
+
+                add_style = Filepaths.get_style(FilesByNames().Archived_layer)
+                layer.loadNamedStyle(add_style)
+
+                layer_name = layer.name()
+                save_setting = SettingsDataSaveAndLoad()
+                save_setting.save_archived_layers(layer_name)
+
                 if layer is not None:
                     res, features = LayerManager._commit_to_archive(memory_layer=memory_layer, layer=layer)
                     return True, features

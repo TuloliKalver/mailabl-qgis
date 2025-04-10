@@ -26,8 +26,7 @@ class WidgetInfo:
 
         print(f"widget_info: {widget_info}")
         return widget_info
-        
-    
+            
     @staticmethod
     def create_visible_name_dropdown(stacked_widget_info, comboBox, index_id):
         comboBox.clear()
@@ -48,9 +47,6 @@ class WidgetInfo:
                 comboBox.setCurrentIndex(index)
                 break
 
-
-
-
     # Retrieving the selected item's ID
     @staticmethod
     def get_selected_index(comboBox):
@@ -61,23 +57,7 @@ class WidgetInfo:
             return selected_id
         return None
     
-    def mapped_indexes_functions(self, state):
-        """
-        Maps indexes to their corresponding functions.
-        
-        Args:
-            self: Reference to the current instance.
-        
-        Returns:
-            dict: A dictionary mapping indexes to functions.
-        """
-        print(f"using mapped index for index")
-        if state:
-            print(f"state is True for home setting")
-            my_function = lambda: WorkSpaceHandler.swWorkSpace_Home(self) 
-        else:
-            print(f"state is False for home setting")
-            my_function = lambda: WorkSpaceHandler.swWorkSpace_Properties(self)
+    def mapped_indexes_functions(self):
 
         return {
             0: lambda: WorkSpaceHandler.swWorkSpace_Easements(self),
@@ -85,7 +65,7 @@ class WidgetInfo:
             2: lambda: WorkSpaceHandler.swWorkSpace_Contracts(self),
             3: None,
             4: None,
-            5: my_function,
+            5: lambda: WorkSpaceHandler.swWorkSpace_Home(self),
             6: None,
             7: lambda: WorkSpaceHandler.swWorkspace_Projects(self),
             8: None

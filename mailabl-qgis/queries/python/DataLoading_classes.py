@@ -1,4 +1,6 @@
 import os
+from ...KeelelisedMuutujad.modules import Module
+
 
 class Graphql_project:
     def __init__(self):
@@ -20,7 +22,11 @@ class Graphql_project:
             return file.read()
 
 
-class Graphql_properties:
+class GraphqlProperties:
+    PROPERTIES_TAGS = 'Tags.graphql'
+    UPDATE_TAGS = 'UpdateTags.graphql'
+    UPDAT_STREET_NAME = 'UpdateStreetName.graphql'
+
     def __init__(self):
         #Folders
         self.properties_folder = 'queries/graphql/properties'
@@ -47,6 +53,8 @@ class Graphql_properties:
         self.CHECK_properties_Mylabl = 'Properties_ID_Cadastral.graphql'
         #delete
         self.D_ALL_properties = 'deleteProperty.graphql'
+
+
 
     def load_query_for_properties_WHERE(self, query_file_name):
         path = GraphQLQueryLoader()
@@ -91,11 +99,28 @@ class GraphqlQueriesEasements:
         with open(graphql_path, 'r') as file:
             return file.read()
 
+class GraphqlTags:
+    CREATE_TAG = 'CreateTag.graphql'
+    TAGS_BY_MODULE = 'TagsByModule.graphql'
+    TAGS_ID_BY_MODULE_AND_NAME = 'IDByModuleAndName.graphql'
+
+
+class QueryFolders:
+    PROPERTIES_FOLDER = 'queries/graphql/properties'
+    PROPERTIES_WHERE_FOLDER = 'queries/graphql/properties/WHERE'
+    PROPERTIES_CONNECTIONS = 'queries/graphql/properties/Connected_data'
+    USER_FOLDER = 'queries/graphql/user'
+    EASEMENTS_FOLDER = 'queries/graphql/easements'
+    PROJECTS_FOLDER = 'queries/graphql/projects'
+    CONTRACTS_FOLDER = 'queries/graphql/contracts'
+    TAGS_FOLDER = 'queries/graphql/tags'
+
 
 class GraphQLQueryLoader:
+    CURRENT_DIR = os.path.abspath(__file__)
+    PLUGIN_DIR = os.path.abspath(os.path.join(CURRENT_DIR, '..', '..', '..'))
+
     def __init__(self):
-        current_dir = os.path.abspath(__file__)
-        self.plugin_dir = os.path.abspath(os.path.join(current_dir, '..', '..', '..'))
         
         self.statuses = 'statuses.graphql'
         
@@ -108,9 +133,7 @@ class GraphQLQueryLoader:
         self.contracts_folder ='queries/graphql/contracts'
         self.user_folder ='queries/graphql/user'
         self.easements_folder = 'queries/graphql/easements'
-        
-        # Define query files
-            #Properties related queries
+
         self.Q_Property_CSC = 'property_CSC.graphql'
         self.Q_All_Properties = 'propertyQuery.graphql'
         
@@ -144,25 +167,40 @@ class GraphQLQueryLoader:
         
     def load_query(self, query_file_name):
         path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir, path.graphql_folder, query_file_name)
+        graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, path.graphql_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()
     @staticmethod
     def load_query_for_projects(query_file_name):
         path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir, path.projects_folder, query_file_name)
+        graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, path.projects_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()
 
     @staticmethod
     def load_query_properties( query_file_name):
         path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir, path.properties_folder, query_file_name)
+        graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, path.properties_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()
 
-    def load_query_users(self, query_file_name):
-        path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir,  path.user_folder, query_file_name)
+    
+    @staticmethod
+    def load_query_by_module( module: Module, filename: str) -> str:
+
+        folders = {
+            Module.PROPRETIE: QueryFolders.PROPERTIES_FOLDER,
+            Module.USER: QueryFolders.USER_FOLDER,
+            Module.EASEMENT: QueryFolders.EASEMENTS_FOLDER,
+            Module.PROJECT: QueryFolders.PROJECTS_FOLDER,
+            Module.CONTRACT: QueryFolders.CONTRACTS_FOLDER,
+            Module.TAGS: QueryFolders.TAGS_FOLDER
+        }
+
+        folder = folders.get(module)
+        if not folder:
+            raise ValueError(f"Unknown module: {module}")
+
+        graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, folder, filename)
         with open(graphql_path, 'r') as file:
             return file.read()

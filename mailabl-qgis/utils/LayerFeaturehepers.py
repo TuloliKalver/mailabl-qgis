@@ -67,7 +67,7 @@ class LayerFeaturehepers:
         return None
     
     @staticmethod
-    def _get_attributes_as_dict(feature: QgsFeature) -> dict:
+    def _get_feature_attributes_as_dict(feature: QgsFeature) -> dict:
         return {field.name(): feature[field.name()] for field in feature.fields()}
 
     @staticmethod

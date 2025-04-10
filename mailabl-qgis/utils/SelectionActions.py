@@ -18,13 +18,13 @@ from ..config.settings import StoredLayers
 class SelectionActions:
     """Class responsible for handling user selections and executing actions.""" 
     @classmethod
-    def initialize(self, dialog, label, button_frame, confirm_button, table_view):
+    def __init__(self, dialog):
         """Initialize UI label for updates."""
         self.dialog = dialog
-        self.label = label
-        self.frButtons = button_frame
-        self.table_view = table_view
-        self.confirm_button = confirm_button
+        self.label = self.dialog.lblActionName 
+        self.frButtons = self.dialog.frPropertiFlowHolder
+        self.table_view = self.dialog.tvSelectedMapItems
+        self.confirm_button = self.dialog.pbConfirmAction
 
     @staticmethod
     def show_message(title, text):

@@ -13,7 +13,7 @@ from ...KeelelisedMuutujad.modules import Module, Languages, ModuleTranslation
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler
 from ...queries.python.query_tools import requestBuilder
-from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_properties
+from ...queries.python.DataLoading_classes import GraphQLQueryLoader, GraphqlProperties
 from ...queries.python.responses import HandlePropertiesResponses
 from .query_cordinator import PropertiesConnectedElementsQueries
 from ...config.settings import MailablWebModules, OpenLink
@@ -68,7 +68,7 @@ class MyTreeHome:
             "search": item_str
         }
 
-        query_id = Graphql_properties().load_query_for_properties_WHERE(Graphql_properties().W_properties_number_improwed)
+        query_id = GraphqlProperties().load_query_for_properties_WHERE(GraphqlProperties().W_properties_number_improwed)
 
         response_id = requestBuilder().construct_and_send_request(None,query_id, variables_id)
         #print(f"response {response}")

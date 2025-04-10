@@ -8,6 +8,8 @@ class Headings:
         self.katastrid_laetud = "Katastrid laetud"
         self.nimekirja_koostamine = "Koostan linnade/külade nimekirja!"
 
+
+
 class HoiatusTexts:
     def __init__(self):       
         self.puudulik_kinnistute_seadistus = "Kontrolli kinnistute seadistusi"
@@ -129,6 +131,7 @@ class KriitilisedTexts:
         self.error = "Midagi läks valesti.\nPöördu admini poole"
 
 class EdukuseTexts:
+
     def __init__(self):
         self.tehtud = "Toiming edukalt lõpetatud"
         self.salvestatud = "Kõik on salvestatud"

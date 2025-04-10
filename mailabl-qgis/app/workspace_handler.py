@@ -1,13 +1,8 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=relative-beyond-top-level
 # pylint: disable=no-name-in-module
-from qgis.core import QgsProject
-from qgis.utils import iface
 
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
-from .list_handler import ExpandProcessListsFunctions_NOT_NEEDED
-from ..config.settings import SettingsDataSaveAndLoad
-from ..Functions.DeletProcessUIActions import DeletProcessUIActions
 from ..Functions.Contracts.Contracts import ContractsMain
 from ..Functions.Easements.Easements import EasementssMain
 from ..utils.ComboboxHelper import GetValuesFromComboBox
@@ -43,17 +38,17 @@ class WorkSpaceHandler:
     def swWorkSpace_Home(self):
         print("started 'swWorkspace_Home'")
         self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.HOMEPAGE)
-        self.sw_HM.setCurrentIndex(0)
+        
 
     def swWorkSpace_Properties(self):
         print("started 'swWorkspace_Properties'")
         self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.PROPERTIES)
-        self.sw_HM.setCurrentIndex(0)
+        
 
     def swWorkspace_Projects(self):
         module = Module.PROJECT
         self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.PROJECTS)
-        self.sw_HM.setCurrentIndex(8) 
+        
         button = self.pbProjects
         button.blockSignals(True)
         table = self.tblMailabl_projects
@@ -82,7 +77,7 @@ class WorkSpaceHandler:
         refresh_button = self.pbRefresh_tblMailabl_contracts
         button.blockSignals(True)
         refresh_button.blockSignals(True)
-        self.sw_HM.setCurrentIndex(1)
+
         self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.CONTRACTS)
         table = self.ContractView
         model = table.model()
@@ -140,7 +135,7 @@ class WorkSpaceHandler:
         button = self.pbeasements
         button.blockSignals(True)
         self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.EASEMENTS)
-        self.sw_HM.setCurrentIndex(5)
+        
         table = self.tweasementView
         # Assuming 'table' is your QTableView object
         model = table.model()
@@ -173,7 +168,7 @@ class WorkSpaceHandler:
         button = self.pbeasements
         button.blockSignals(True)
         self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.EASEMENTS)
-        self.sw_HM.setCurrentIndex(5)
+        
         table = self.tweasementView
         # Assuming 'table' is your QTableView object
         model = table.model()
@@ -189,11 +184,11 @@ class WorkSpaceHandler:
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
         self.swWorkSpace.setCurrentIndex(6)
-        self.sw_HM.setCurrentIndex(6)
+        
     @staticmethod
     def swWorkSpace_AddDrawings_FrontPage(self):
         self.swWorkSpace.setCurrentIndex(6)
-        self.sw_HM.setCurrentIndex(2)
+        
 
 
     @staticmethod
@@ -218,31 +213,6 @@ class WorkSpaceHandler:
         self.frSync_Tools.show()
         
         self.swWorkSpace.setCurrentIndex(1)
-        self.swCadastral_sub_processes.setCurrentIndex(2)
-        self.sw_HM.setCurrentIndex(3)
-        self.sw_HM_Toimingud_kinnistutega.setCurrentIndex(3)   
-        
-    @staticmethod
-    def show_help_update (self):
-        self.sw_HM.setCurrentIndex(7)
-        self.sw_HM_Andmete_laadimine.setCurrentIndex(0)
-        self.swWorkSpace.setCurrentIndex(1)
-        self.swCadastral_sub_processes.setCurrentIndex(4)
-        
-class TabHandler:
-    @staticmethod
-    def tabViewByState_NOT_NEEDED(tab_widget, state: bool):
-        if state is True:
-            # Assuming tab_widget is your QTabWidget object and index is the index of the tab you want to hide
-            tab_widget.setTabEnabled(0, True)
-            tab_widget.setTabEnabled(1, True)            
-            tab_widget.setTabEnabled(2, False)
-            tab_widget.setCurrentIndex(0)
+        self.swCadastral_sub_processes.setCurrentIndex(0)
 
-        if state is False:
-            #print("close")
-            tab_widget.setTabEnabled(0, False)
-            tab_widget.setTabEnabled(1, False)
-            tab_widget.setTabEnabled(2, True)
-            tab_widget.setCurrentIndex(2)
-
+        

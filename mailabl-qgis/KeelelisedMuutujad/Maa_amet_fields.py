@@ -3,7 +3,7 @@ from qgis.core import QgsVectorLayer, QgsProject, QgsField
 from PyQt5.QtCore import QVariant
 from ..config.settings import SettingsDataSaveAndLoad
 from ..utils.messagesHelper import ModernMessageDialog
-from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 
 class Katastriyksus:
     #fid = "fid"               # Baasis olev id
@@ -134,7 +134,7 @@ class RemapPropertiesLayer:
     def update_attribute_table(self):
         self.validate_layer()
         iface.setActiveLayer(self.layer)
-        
+        print(f"Layer_name: {self.layer.name()}")
         self.layer.startEditing()
         layer_fields = self.layer.fields()
         temp_field_mapping = self.rename_fields_temporarily(layer_fields)
@@ -147,7 +147,7 @@ class RemapPropertiesLayer:
             heading = Headings().warningSimple
             message = "Veeru nimede uuendamisel tekkis viga."
             ModernMessageDialog.Info_messages_modern(heading, message )
-            #print("Error committing changes.")
+            print("Error committing changes.")
             return
         
         self.remove_temp_suffix()
@@ -162,7 +162,7 @@ class RemapPropertiesLayer:
                 idx = layer_fields.indexFromName(old_field)
                 self.layer.renameAttribute(idx, temp_name)
                 temp_field_mapping[temp_name] = new_field
-                #print(f"Temporarily renamed field {old_field} to {temp_name}")
+                print(f"Temporarily renamed field {old_field} to {temp_name}")
         return temp_field_mapping
 
     def rename_fields_to_final(self, layer_fields, temp_field_mapping):
@@ -170,7 +170,7 @@ class RemapPropertiesLayer:
             if layer_fields.indexFromName(temp_name) != -1:
                 idx = layer_fields.indexFromName(temp_name)
                 self.layer.renameAttribute(idx, new_field)
-                #print(f"Renamed field {temp_name} to {new_field}")
+                print(f"Renamed field {temp_name} to {new_field}")
 
     def add_missing_fields(self):
         self.layer.startEditing()
@@ -189,19 +189,16 @@ class RemapPropertiesLayer:
 
         if self.layer.commitChanges():
             heading = Headings().infoSimple
-            message = HoiatusTexts().error
+            message = EdukuseTexts().salvestatud
             ModernMessageDialog.Info_messages_modern(heading, message)
-            #print("Stage I committed successfully.")
+            print("Stage I committed successfully.")
             pass
         else:
             heading = Headings().infoSimple
             message = HoiatusTexts().error
             ModernMessageDialog.Info_messages_modern(heading, message)
-            #print("Error committing changes.")
+            print("Error committing changes.")
             return
-
-
-
 
     def remove_temp_suffix(self):
         self.validate_layer()

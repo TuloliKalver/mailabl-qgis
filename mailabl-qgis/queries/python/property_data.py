@@ -1,18 +1,17 @@
 import time
 import os
 import re
-import json
+
 import requests
 from requests.exceptions import Timeout
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QHeaderView
-from .DataLoading_classes import GraphQLQueryLoader, Graphql_properties
+from .DataLoading_classes import GraphQLQueryLoader, GraphqlProperties
 from .responses import HandlePropertiesResponses
 from .query_tools import requestBuilder
 from ...config.ui_directories import PathLoaderSimple
-
+from ...utils.TagsEngines import TagsEngines
+from ...KeelelisedMuutujad.modules import Module
 
 items_to_fetch = 100
 
@@ -25,251 +24,11 @@ importProcess_folder = "ImportProcesses"
 widgets_path = os.path.join(plugin_dir, process_folder, importProcess_folder, widgets_folder, "WStatusBar.ui")
 
 
-class Properties:
-    def get_property_CSC(self):
-        query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.Q_Property_CSC)
-        
-        total_fetched = 0
-        current_page = 1
-        last_page = None  # Set this value based on the server's response
-        end_cursor = None  # Initialize end_cursor before the loop
-        fetched_items = []  # Initialize an empty list to store fetched items
-
-        while (not items_to_fetch or total_fetched < items_to_fetch) and (not last_page or current_page <= last_page):
-            variables = {
-                "first": 50,  # Fetch 50 items per query
-                "after": end_cursor if end_cursor else None,  # Use the endCursor as the after value
-            }
-            response = requestBuilder.construct_and_send_request(self, query, variables)
-            if response.status_code == 200:
-                data = response.json()
-                fetched_data = data.get("data", {}).get("properties", {}).get("edges", [])
-                pageInfo = data.get("data", {}).get("properties", {}).get("pageInfo", {})
-                end_cursor = pageInfo.get("endCursor")
-                last_page = pageInfo.get("lastPage")
-                # Append the fetched_data to the fetched_items list
-                fetched_items.extend(fetched_data)
-                # Update total_fetched by adding the length of fetched_data
-                total_fetched += len(fetched_data)
-                if total_fetched >= items_to_fetch:
-                    break  # Exit the loop if desired_total_items are reached
-            else:
-                #print(f"Error: {response.status_code}")
-                return None  # Return None if there's an error in the response
-            # Move to the next page
-            current_page += 1
-        return fetched_items  # Return the fetched items after the loop
-
-    def get_properties(self, progress_bar):
-        # Set up the progress bar
-        #progress_bar.setVisible(True)
-        progress_bar.setValue(41)
-
-        query_loader = Graphql_properties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.Q_All_Properties)
-
-        total_fetched = 0
-        current_page = 1
-        last_page = None  # Set this value based on the server's response
-        end_cursor = None  # Initialize end_cursor before the loop
-        
-        fetched_items = [] # Initialize an empty list to store fetched items
-
-        progress_bar.setValue(50)
-
-        while (not items_to_fetch or total_fetched < items_to_fetch) and (not last_page or current_page <= last_page):
-            variables = {
-                "first": 50,  # Fetch 50 items per query
-                "after": end_cursor if end_cursor else None,  # Use the endCursor as the after value
-            }
-
-            progress_bar.setValue(55)
-            # Send the POST request to the GraphQL endpoint
-            response = requestBuilder.construct_and_send_request(self, query, variables)
-            progress_bar.setValue(65)
-            #start do use data
-            if response.status_code == 200:
-                data = response.json()
-                #print(f"Data {data}")
-                fetched_data = data.get("data", {}).get("properties", {}).get("edges", [])
-                #print(f"Peamised kinnistud: {fetched_data}")
-                
-                pageInfo = data.get("data",{}).get("properties",{}).get("pageInfo",{})#.get("currentPage")
-                #print(f"Current page: '{pageInfo}")
-                end_cursor = pageInfo.get("endCursor")
-                #print(f"End cursor: {end_cursor}")
-                last_page = pageInfo.get("lastPage")
-                #print(f"Last page: {last_page}")
-                
-                # Append the fetched_data to the fetched_items list
-                fetched_items.extend(fetched_data)
-                
-                total_fetched += len(fetched_data)
-                
-                if total_fetched >= items_to_fetch:
-                    break  # Exit the loop if desired_total_items are reached
-                
-            else:
-                print(f"Error: {response.status_code}")
-                return None
-
-            # Move to the next page
-            current_page += 1
-            
-            # Return only the desired number of items
-        return fetched_items#[:desired_total_items]
-
-    def properties_list(self):
-        model = QStandardItemModel()
-
-        # Set header labels
-        header_labels = ['ID','Vastutav isik','Kataster', 'Aadress', 'Pindala','Looja', 'Lisatud']
-        
-
-        model.setHorizontalHeaderLabels(self, header_labels)
-        # Set column width mode to adjust to contents
-        self.tblOfContents.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-
-        data = Properties.get_properties(self)
-
-        # Display the fetched properties
-        for property_item in data:
-            property_node = property_item.get("node", {})
-            id_item = QStandardItem(str(property_node.get("id", "")))
-            address_item = QStandardItem(property_node.get("displayAddress", ""))
-            x_item = QStandardItem(property_node.get("cadastralUnit", {}).get("number",""))
-            size_item = QStandardItem(str(property_node.get("area", {}).get("size", "")))
-            creator_item = QStandardItem(str(property_node.get("creator", {}).get("displayName", "N/A")) if property_node.get("creator") else QStandardItem("N/A"))
-            created_item = QStandardItem(str(property_node.get("createdAt", "")))
-
-        # Extract member information
-            members = property_node.get("members", {}).get("edges", [])
-            member_names = [member["node"]["displayName"] for member in members]
-            member_item = QStandardItem(", ".join(member_names)) if member_names else QStandardItem("N/A")
-
-        # Extract contact information
-            contacts = property_node.get("contacts", {}).get("edges", [])
-            contact_items = []
-
-            for contact in contacts:
-                contact_node = contact.get("node", {})
-                contact_display_name = contact_node.get("displayName", "N/A")
-                contact_type = contact_node.get("type", "N/A")
-                    
-                if contact_type:
-                    contact_items.append(f"{contact_display_name} ({contact_type})")
-                else:
-                    contact_items.append(contact_display_name)
-
-            contact_item = QStandardItem(", ".join(contact_items)) if contact_items else QStandardItem("N/A")
-
-            # Convert the list of strings to a list of QStandardItems
-            property_items = [id_item, 
-                            x_item, 
-                            member_item,
-                            address_item, 
-                            size_item, 
-                            creator_item, 
-                            created_item
-                            ]
-            
-            # Append the list of QStandardItems to the table model
-            model.appendRow(property_items)
-            
-        return model
-    
-    def properties_list_for_deleting(self, progress_bar):
-        progress_bar.setValue(10)
-        model = QStandardItemModel()
-
-        # Set header labels
-        header_labels = ['ID', 'HKT kood', 'Kataster', 'Aadress', 'Esmane registrering', 'Mailabli lisatud', 'Looja',]
-
-        model.setHorizontalHeaderLabels(header_labels)
-
-        try:
-            # Attempt to fetch data from Properties.get_properties
-            data = Properties.get_properties(self, progress_bar)
-            if data is None:
-                raise Exception("Error: No data retrieved from Properties.get_properties.")
-            
-            progress_bar.setValue(1)
-
-            # Display the fetched properties
-            index = 1
-            for property_item in data:
-                property_node = property_item.get("node", {})
-                id_item = QStandardItem(str(property_node.get("id", "")))
-                immovableNumber_item = QStandardItem(str(property_node.get("immovableNumber","")))
-                address_item = QStandardItem(property_node.get("displayAddress", ""))
-                cadastralUnit_item = QStandardItem(property_node.get("cadastralUnit", {}).get("number",""))
-                firstRegistration_item = QStandardItem(property_node.get("cadastralUnit", {}).get("firstRegistration",""))
-                size_item = QStandardItem(str(property_node.get("area", {}).get("size", "")))
-                creator_item = QStandardItem(str(property_node.get("creator", {}).get("displayName", "N/A")) if property_node.get("creator") else QStandardItem("N/A"))
-                created_item = QStandardItem(str(property_node.get("createdAt", "")))
-                # Your existing code to populate the table model
-
-                # Convert the list of strings to a list of QStandardItems
-                property_items = [id_item, 
-                                immovableNumber_item,
-                                cadastralUnit_item, 
-                                address_item, 
-                                firstRegistration_item,
-                                created_item,
-                                creator_item 
-                                ]
-
-                # Append the list of QStandardItems to the table model
-                model.appendRow(property_items)
-                index += 1
-                progress_bar.setValue(index)
-
-        except Exception as e:
-            # Handle exceptions here
-            print(f"Error: {e}")
-            # You can raise or handle the exception as appropriate for your use case.
-            # For now, just printing the error message.
-
-        return model
-
-    def county_list_model(self):
-        data = Properties.get_property_CSC(self)
-        unique_counties = set()  # Initialize an empty set to store unique county names
-        
-        # Display the fetched properties
-        for property_item in data:
-            property_node = property_item.get("node", {})
-            county_name = property_node.get("address", {}).get("county")
-            
-            # Check if county_name is not None and not already in the set
-            if county_name:
-                unique_counties.add(county_name)
-        
-        # Convert the set of unique county names to QStandardItem objects
-        county_items = [QStandardItem(county) for county in unique_counties]
-
-        return county_items
-
-    def county_list_text(self):
-        data = Properties.get_property_CSC(self)
-        property_items = []  # Initialize an empty list to store county names
-        
-        # Display the fetched properties
-        for property_item in data:
-            property_node = property_item.get("node", {})
-            county_item = QStandardItem(str(property_node.get("address", {}).get("county", ""))) if property_node.get("address") else QStandardItem()
-            county_text = county_item.text()  # Get the text of the QStandardItem
-            
-            if county_text:  # Only add non-empty county names to the list
-                property_items.append(county_text)
-        
-        return property_items
 
 class WhereProperties:
     @staticmethod
     def Return_Mailabl_County_list_with_where_COUNTY_NOT_IN(self, county_items):
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_County)
         #print("Query added")
 
@@ -315,7 +74,7 @@ class WhereProperties:
 
     @staticmethod  
     def Return_Mailabl_State_list_Where_county_IN(self, county_item, state_item, end_cursor):
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_State)
         #print("Query added")
 
@@ -388,7 +147,7 @@ class WhereProperties:
     
     @staticmethod            
     def Return_Mailabl_City_list_Where_State_IN(self, state_item, city_item):
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_City)
         #print("Query added")
         items_for_page = 1  # Adjust this to your desired value
@@ -459,7 +218,7 @@ class WhereProperties:
     
     @staticmethod
     def Return_Mailabl_Properties_Where_City_IN(self, city_item, state_item, next_page):
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_ID_CadastralNR)
         
         items_for_page = 50  # Adjust this to your desired value
@@ -535,7 +294,7 @@ class WhereProperties:
 class deleteProperty:
     @staticmethod
     def delete_single_item(item: str):
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = GraphQLQueryLoader.load_query_properties(query_loader.D_ALL_properties)
     
         variables = {
@@ -590,7 +349,7 @@ class add_properties:
         return data
 
     def add_single_property_item(self,item):
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = GraphQLQueryLoader.load_query_properties(query_loader.ADD_Selected_properties)
 
         # Assuming item is a JSON string
@@ -638,7 +397,7 @@ class add_properties:
 
     def add_additional_property_data(self, input_id, uses_input):
 
-            query_loader = Graphql_properties()
+            query_loader = GraphqlProperties()
             query = GraphQLQueryLoader.load_query_properties(query_loader.ADD_properties_purpose)
         # Construct the list of PropertyIntendedUseInput
             variables = {
@@ -679,139 +438,10 @@ class add_properties:
                 time.sleep(sleep_duration)
 
 class MyLablChecker:
-    def create_batches(self, data, batch_size):
-        return [data[i:i + batch_size] for i in range(0, len(data), batch_size)]
-
-    def process_data_in_batches_with_progress(self, items):
-        """
-        Process data in batches, update progress, and return the final result.
-        """
-        batch_size = 50
-        batched_data_list = list(self.create_batches(items, batch_size))
-        #print("batched_data_list:")
-        #pprint(batched_data_list)
-
-        batches_done = 0
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(len(batched_data_list))  # Set the maximum value of the progress bar
-        progress_widget.show()
-        progress_widget.setWindowTitle("Andmete eelkontoll")
-
-        progress_bar.setValue(0)
-        QCoreApplication.processEvents()
-        import time
-        final_data = []
-        for batch in batched_data_list:
-            #print(f"batch = {batch}")
-            data_returned = self.get_properties_where_for_duplicates(batch)
-            #print(f"Final results of non duplicates = {data_returned}")
-            final_data.extend(data_returned)
-            batches_done += 1
-            progress_bar.setValue(batches_done)
-            time.sleep(1)
-            QCoreApplication.processEvents()
-        progress_bar.close()
-        #print(f"final data = {final_data}")
-        return final_data
-
-    def DeleteProcess_Data_preparation(self, items):
-        """
-        Process data in batches, update progress, and return the final result.
-        """
-        batch_size = 50
-        batched_data_list = list(MyLablChecker.create_batches(self,items, batch_size))
-        #print("batched_data_list:")
-        #pprint(batched_data_list)
-
-        batches_done = 0
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(len(batched_data_list))  # Set the maximum value of the progress bar
-        progress_widget.show()
-        progress_bar.setValue(0)    
-        QCoreApplication.processEvents()
-
-        final_data = []
-        for batch in batched_data_list:
-            print(f"batch = {batch}")
-            #data_returned, ids  =  DeleteFunctions.DeleteProcess_get_properties_where_for_duplicates(self, batch)
-            
-            returned_ids = PropertiesGeneralQueries.get_properties_MyLabl_idsAndCadastrals(self, batch)
-            print(f"returned_ids: {returned_ids}")
-            if returned_ids is None:
-                returned_ids = ""        
-            final_data.extend(returned_ids)
-            #final_ids.extend(ids)
-            batches_done += 1
-            progress_bar.setValue(batches_done)
-        QCoreApplication.processEvents()
-        progress_bar.close()
-        print(f"final data = {final_data}")
-        return final_data
-
-    def clean_import_data_from_duplicates(self, data, confirmation_list, total):
-        #print(f"Data in 'clean_import_data_from_duplicates': {data}")
-        #print(f"confirmation_list in 'clean_import_data_from_duplicates': {confirmation_list}")
-        true_values_count = 0
-        false_values_count = 0
-        false_values = []
-        true_values = []
-        cadastral_numbers = []
-        if not isinstance(data, dict):
-            print("Invalid data format. Expected a dictionary.")
-            
-        keys_done =  0
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(total)  # Set the maximum value of the progress bar
-        progress_widget.show()
-        progress_bar.setValue(keys_done)    
-        QCoreApplication.processEvents()
-
-        for key, value in data.items():
-            try:
-                item_data = json.loads(value)
-                #print(f"item_data")
-            except json.JSONDecodeError as e:
-                #print(f"Error decoding JSON for key {key}: {e}")
-                continue
-
-            cadastral_unit = item_data.get("cadastralUnit", {})
-            cadastral_number = cadastral_unit.get("number", "")
-            #print(f"cadastral_unit = {cadastral_unit}")
-            #print(f"Cadastral_number = {cadastral_number}")
-        
-            if cadastral_number in confirmation_list:
-                #print("Number found in data")
-                #print(f"{number} in {data}")
-                true_values.append(item_data)
-                cadastral_numbers.append(cadastral_number)
-                true_values_count += 1
-                #keys.append(key)
-                #print(f"output item = {output}")
-            if cadastral_number not in confirmation_list:
-                false_values.append(item_data)
-                false_values_count +=1           
-            else:
-                pass
-                #pass
-                #print("Number not found in data")
-                #print(f"{number} not in {item_data}")
-                #print("Discard")
-            keys_done += 1
-            progress_bar.setValue(keys_done)           
-            QCoreApplication.processEvents()
-    
-        progress_bar.close()
-        #print(f"False_values_in 'clean_import_data_from_duplicates': {false_values}")
-        #print(f"Tue_values_in 'clean_import_data_from_duplicates': {cadastral_numbers}")
-        return false_values, true_values_count, false_values_count, cadastral_numbers
-
 
     def get_properties_where_for_duplicates(self, item):
 
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
 
         #print("Query added")
@@ -843,9 +473,9 @@ class MyLablChecker:
             return None
 
 
-    def get_properties_where_for_duplicates_EQUALS(item: str)->bool:
+    def _get_propertie_ids_by_cadastral_numbers_EQUALS(item: str)->bool:
 
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
 
         #print("Query added")
@@ -880,10 +510,6 @@ class MyLablChecker:
             return False, []
 
 
-
-
-
-
     def find_missing_items(self, item_list, graphql_data):
         returned_items = set()
         # Extract unique item numbers from the GraphQL data
@@ -897,12 +523,11 @@ class MyLablChecker:
         return missing_items
     
 
-
 class PropertiesGeneralQueries:
     def get_properties_MyLabl_idsAndCadastrals(self, properties_list):
         total_in_list = len(properties_list)
         
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
         
         sleep_duration = 1
@@ -965,7 +590,7 @@ class PropertiesGeneralQueries:
         print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
         
-        query_loader = Graphql_properties()
+        query_loader = GraphqlProperties()
         query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
         
         sleep_duration = 1
@@ -1019,3 +644,143 @@ class PropertiesGeneralQueries:
 
         return fetched_items
 
+    @staticmethod
+    def _get_properties_street_name_to_achived(property_id) -> bool:
+        #item_id: str, notes_text: str
+
+        old_name = "Õpetajate tee"
+
+
+        query = """
+            query GetPropertyName($id: ID!) {
+                property(id: $id) {
+                    id
+                    address {
+                            street 
+                        }
+                    }
+                }
+            """
+        variables = {"id": property_id}
+
+        response = requestBuilder.construct_and_send_request(None, query, variables)
+        if not response:
+            print("Failed to fetch property.")
+            return False
+
+        data = response.json()
+        if "errors" in data or not data.get("data"):
+            print("Error fetching property name:", data.get("errors"))
+            return False
+
+        current_name = data["data"]["property"]["address"].get('street')
+
+        return current_name
+
+
+class UpdateData:
+        
+    @staticmethod
+    def _update_properties_name(propertie_id, new_name, module):
+        
+        mutation_file =  GraphqlProperties.UPDAT_STREET_NAME
+        mutation = GraphQLQueryLoader.load_query_by_module(module=module, filename=mutation_file)
+
+        variables = {
+            "input": {
+                "id": propertie_id,
+                "address": {
+                    "street": new_name
+                        }
+            }
+        }
+        
+        response = requestBuilder.construct_and_send_request(None, mutation, variables)
+        if not response:
+            print("Test update failed — no response")
+            return False
+
+        result = response.json()
+        if "errors" in result:
+            print("Test update error:", result["errors"])
+            return False
+        if result:
+            print(result)
+        else:
+            print("No result received.")
+
+    @staticmethod
+    def _update_property_tags(property_id: str, module: str, tag_id: str) -> bool:
+        #property_id = "133842"
+        #tag_id = "91"
+        
+
+        query_file = GraphqlProperties.PROPERTIES_TAGS
+        query = GraphQLQueryLoader.load_query_by_module(module=module, filename=query_file)
+
+        variables = {"id": property_id}
+
+        response = requestBuilder.construct_and_send_request(None, query, variables)
+        if not response:
+            print("Failed to fetch current tags")
+            return False
+
+        current_data = response.json()
+        print(f"Current data: {current_data}")
+        current_tags = current_data["data"]["property"]["tags"]["edges"]
+        current_tag_ids = [tag["node"]["id"] for tag in current_tags]
+
+        if tag_id not in current_tag_ids:
+            current_tag_ids.append(tag_id)
+        print(f"Adding tag with ID {tag_id} to property {property_id}")
+        print(f"Current tags for property {property_id}: {[tag['node']['name'] for tag in current_tags]}")
+        print(f"Tags in input: {current_tag_ids}")
+        # Step 2: Re-assign ALL tags
+
+        update_guery_file = GraphqlProperties.UPDATE_TAGS
+        update_mutation = GraphQLQueryLoader.load_query_by_module(module=module, filename=update_guery_file)
+        variables = {
+            "input": {
+                "id": property_id,
+                "tags": {
+                    "associate": current_tag_ids
+                }
+            }
+        }
+
+        update_response = requestBuilder.construct_and_send_request(None, update_mutation, variables)
+        if not update_response:
+            print("Failed to update tags")
+            return False
+
+        updated_data = update_response.json()
+        if "errors" in updated_data:
+            print("Tag update error:", updated_data["errors"])
+            return False
+
+        updated_tags = updated_data["data"]["updateProperty"]["tags"]["edges"]
+        tag_names = [tag["node"]["name"] for tag in updated_tags]
+        print(f"Updated tags for property {property_id}: {', '.join(tag_names)}")
+        return True
+
+    @staticmethod
+    def _update_archived_properies_data(item_id: str) -> bool:
+        module=Module.PROPRETIE
+        tag_name = "Arhiveeritud"
+        tag_id = TagsEngines.get_modules_tag_id_by_name(tag_name=tag_name, module=module)
+        if tag_id == None:
+            res = TagsEngines.create_tag(tag_name=tag_name, module=module)
+
+            if res is not False:
+                tag_id=res
+
+        UpdateData._update_property_tags(property_id=item_id, module=module, tag_id=tag_id)
+
+        current_name = PropertiesGeneralQueries._get_properties_street_name_to_achived(property_id=item_id)
+        print(current_name)
+        new_name = "ARHIIVEERITUD - " + current_name
+        #new_name = "Õpetajate tee" #in testing store this name if reset needed!
+
+        UpdateData._update_properties_name(propertie_id=item_id, new_name=new_name, module=module)
+
+ 

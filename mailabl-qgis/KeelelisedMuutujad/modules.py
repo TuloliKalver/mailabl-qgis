@@ -10,6 +10,8 @@ class Module:
     ORDINANCE = "ordinance"
     SUBMISSION = "submission"
     PROPRETIE = "propertie"
+    USER = "me"
+    TAGS = "tags"
 
     all_modules = [CONTRACT, PROJECT, TASK, COORDINATION, LETTER,
                     SPECIFICATION, EASEMENT, ORDINANCE, SUBMISSION]

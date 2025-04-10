@@ -28,11 +28,11 @@ class ReomoveProcessController:
         count = 1
         for feature in features:
             progress.update(value=count)
-            layer_data = LayerFeaturehepers._get_attributes_as_dict(feature=feature)
+            layer_data = LayerFeaturehepers._get_feature_attributes_as_dict(feature=feature)
             #print (f"layer_data: {layer_data}")
             tunnus = layer_data.get(Katastriyksus.tunnus)
             #print (f"Tunnus: {tunnus}")            
-            res, data = MyLablChecker.get_properties_where_for_duplicates_EQUALS(item=tunnus)
+            res, data = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
             #print(f"res: {res}" )
             #print(f"data: {data}")
             # If a duplicate is found

@@ -10,13 +10,7 @@ class WebLinks:
 
 class loadWebpage:
 # maa-ameti kodulehe avamine
-    @staticmethod
-    def open_maa_amet_webpage(self):
-        self.sw_HM_Andmete_laadimine.setCurrentIndex(2)
-        self.sw_HM.setCurrentIndex(7)
-        self.swWorkSpace.setCurrentIndex(1)
-        self.swCadastral_sub_processes.setCurrentIndex(4)
-        loadWebpage.open_webpage(WebLinks().page_maa_amet)
+
 
     @staticmethod
     def open_maa_amet_webpage_new():

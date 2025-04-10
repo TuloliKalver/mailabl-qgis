@@ -1,5 +1,4 @@
 
-from ..Functions.item_selector_tools import properties_selectors
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .Contracts.Contracts import ContractsMain
 from .Easements.Easements import EasementssMain
@@ -7,21 +6,12 @@ from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..KeelelisedMuutujad.modules import Module
 from ..utils.messagesHelper import ModernMessageDialog
 
-class searchGeneral:
-    @staticmethod
-    def search_cadastral_items_by_values(self):
-        layer_type = "import"
-        self.tabWidget_Propertie_list.setCurrentIndex(0)
-        self.cbChooseAllAdd_properties.setChecked(False)
-        self.cbChooseAllAdd__street_properties.setChecked(False)
-        search_items = self.leSearch_Add.displayText()
-        items_list = [item.strip() for item in search_items.split(',')]
-        items_str = ', '.join('"{}"'.format(item) for item in items_list)
-        properties_selectors.show_connected_properties_on_map(items_str, layer_type)
 
 
 class ModularSearchEngine:
-    def __init__(self):
+    def __init__(self, dialog):
+        self.dialog =dialog
+
         # Define the mapping between module names and their respective search functions
         self.search_functions = {
             Module.PROJECT: Projects.load_projects_by_number,
@@ -29,18 +19,18 @@ class ModularSearchEngine:
             Module.EASEMENT: EasementssMain.load_easemenets_by_number
         }
 
-    def universalSearch(self,instance, module_name):
+    def universalSearch(self, module_name):
         # Get the corresponding line edit and table based on the module name
         line_edits = {
-            Module.PROJECT: instance.le_searchProjects,
-            Module.CONTRACT: instance.le_searchContracts,
-            Module.EASEMENT: instance.leSearcheasements
+            Module.PROJECT: self.dialog.le_searchProjects,
+            Module.CONTRACT: self.dialog.le_searchContracts,
+            Module.EASEMENT: self.dialog.leSearcheasements
         }
 
         tables = {
-            Module.PROJECT: instance.tblMailabl_projects,
-            Module.CONTRACT: instance.ContractView,
-            Module.EASEMENT: instance.tweasementView
+            Module.PROJECT: self.dialog.tblMailabl_projects,
+            Module.CONTRACT: self.dialog.ContractView,
+            Module.EASEMENT: self.dialog.tweasementView
         }
 
         lineEdit = line_edits[module_name]

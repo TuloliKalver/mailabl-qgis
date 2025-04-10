@@ -28,16 +28,16 @@ class UIStateManager:
             
         self.table = [self.dialog.tvSelectedMapItems]
         
-        self.main_frame_buttons = [self.dialog.btnAddElements, 
+        self.main_frame_buttons = [self.dialog.pbAddElements, 
                             self.dialog.btnRemoveItems]
         
-        self.action_buttons = [self.dialog.btnAddElements,
+        self.action_buttons = [self.dialog.pbAddElements,
                             self.dialog.btnRemoveItems, self.dialog.pbConfirmAction, 
                             self.dialog.pbCancelAction]
 
         self.slider_ws = self.dialog.swWorkSpace
-        self.slider_m = self.dialog.swCadastral_sub_processes
-        self.slider_h = self.dialog.sw_HM
+
+        
         self.lbl_action = self.dialog.lblPropertieOperations
         self.lbl = self.dialog.lblActionName
 
@@ -48,8 +48,10 @@ class UIStateManager:
         remains active while the others are disabled and hidden.
         """
         self.slider_ws.setCurrentIndex(CenterMainSliderIndexes.PROPERTIES_OPERATIONS)
-        self.slider_h.setCurrentIndex(8)
+        
         self.lbl_action.setText("Andmete laadimine")
+
+        self.dialog.btnMapActions.setEnabled(False)
 
 
         load = SettingsDataSaveAndLoad()
@@ -175,6 +177,8 @@ class UIStateManager:
             progress.update(text1="Palun oota...", maximum=progres_steps)
             WidgetAndWievHelpers.reset_and_set_data(all_controls + all_views, data=None, state=False)  # Disable everything
             progress.close()
+
+
 
 
 class UIActions:

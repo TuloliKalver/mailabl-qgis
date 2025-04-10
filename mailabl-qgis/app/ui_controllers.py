@@ -1,10 +1,9 @@
 from PyQt5.QtCore import QEasingCurve, QPropertyAnimation
-from PyQt5.QtWidgets import QPushButton, QFrame, QMessageBox
+from PyQt5.QtWidgets import QPushButton, QFrame
 from qgis.core import (QgsProject, QgsVectorLayer)
-from ..config.settings import Flags
 from PyQt5.QtCore import QTimer
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
-from ..app.workspace_handler import WorkSpaceHandler
+
 from ..utils.messagesHelper import ModernMessageDialog
 
 pealkiri = Headings()
@@ -304,57 +303,10 @@ class LayerChecker:
 
 
 
-class stackedWidgetsSpaces:
-    #Stacked_widgets
-    
-    EMPTY_PAGE = "Empty"
-    SETTINGS_MAIN_PAGE = "SettingsMain"
-    LOAD_DATA_PAGE = "LoadData"
-    PROPERTIES_ACTIONS_MAIN_PAGE = "PropertiesActionsMain"
+
+class AlterContainers():
     
 
-    sw_helpMenu_mapping = {
-        EMPTY_PAGE: 0,
-        SETTINGS_MAIN_PAGE: 1,
-        LOAD_DATA_PAGE: 2,
-        PROPERTIES_ACTIONS_MAIN_PAGE: 3
-        }
-    
-    def change_help_content(self,stacked_widget, page_name):
-        print(f"page_name {page_name}")
-        print(f"Stacked widget {stacked_widget}")
-        if page_name in self.sw_helpMenu_mapping:
-            index = self.sw_helpMenu_mapping[page_name]
-            print(f"index {index}")
-            stacked_widget.setCurrentIndex(index)
-        else:
-            print(f"Page '{page_name}' not found in the mapping.")
-            
-class alter_containers():
-    
-    def toggle_right_menu(self, length, buttons, original_texts, new_texts, help_menu, container, container_width):
-        if length == 0:
-            for button in buttons:
-                button.setText(original_texts[button])
-                help_menu.show()
-                new_width = 250
-    #            print(f"new height {new_height}")
-                easing_curve = QEasingCurve.OutBounce
-
-        else:
-            for button in buttons:
-                button.setText(new_texts[button])
-                new_width = 65
-                #print(f"new width {new_width}")
-                easing_curve = QEasingCurve.OutBounce
-                help_menu.hide()
-                
-        self.animation = QPropertyAnimation(container, b"minimumWidth")
-        self.animation.setDuration(350)
-        self.animation.setStartValue(container_width)
-        self.animation.setEndValue(new_width)
-        self.animation.setEasingCurve(easing_curve)  # Set the easing curve here
-        self.animation.start()
 
     def toggle_left_menu(self, length, buttons, original_texts, new_texts, help_menu, container, container_width):
         if length == 0:

@@ -11,7 +11,7 @@ pealkiri = Headings()
 
 class requestBuilder:
     @staticmethod
-    def construct_and_send_request(self, query, variables):       
+    def construct_and_send_request(self, query: str, variables: dict) -> requests.Response:       
         graphql_url = GraphQLSettings.graphql_endpoint()
         access_token = load_token()
         if not access_token:
@@ -38,6 +38,7 @@ class requestBuilder:
         try:
             # Send the POST request to the GraphQL endpoint with timeout
             response = requests.post(graphql_url, headers=headers, json=payload, timeout=30)
+            
         except requests.Timeout:
             print("Request timed out.")
             return None
@@ -86,5 +87,6 @@ class RequestErrorHandler:
             text = (f"GraphQL request failed:\n{error_message}")
             heading = pealkiri.warningSimple
             ModernMessageDialog.Info_messages_modern(heading,text)
+            #print(f"Error message: {text}")
             return True  # Indicate that an error occurred
         return False  # No error occurred

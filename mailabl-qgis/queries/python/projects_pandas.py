@@ -5,21 +5,16 @@
 
 
 import pandas as pd
-from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from .DataLoading_classes import Graphql_project, GraphQLQueryLoader
 from .query_tools import requestBuilder
-from.fetchers.ModulePropertiesFetcher import PropertiesModuleFetcher
-
-from ...config.ui_directories import PathLoaderSimple
+from .fetchers.ModulePropertiesFetcher import PropertiesModuleFetcher
 from ...KeelelisedMuutujad.messages import Headings
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...utils.DataExtractors.DataExtractors import DataExtractor
-from ...KeelelisedMuutujad.modules import Module
-from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...utils.messagesHelper import ModernMessageDialog
-
+from ...utils.ProgressHelper import ProgressDialogModern
 
 pealkiri = Headings()
 
@@ -103,11 +98,6 @@ class ProjectsQueries:
             
             projects_end_cursor = projects_pageInfo.get("endCursor")
             projects_hasNextPage = projects_pageInfo.get("hasNextPage")
-            last_page = projects_pageInfo.get("lastPage")
-            current_page = projects_pageInfo.get("currentPage")
-            total = projects_pageInfo.get("total")
-   
-            #TODO: add loading of projects by pages         
             fetched_items.extend(fetched_data)
             total_fetched += len(fetched_data)
     
@@ -120,14 +110,8 @@ class ProjectsQueries:
 
     @staticmethod    
     def _fetch_projects_by_number(self, project_number):
-        widgets_path = PathLoaderSimple.widget_statusBar_path(self)
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        label_2 = progress_widget.label_2
-        progress_bar.setMaximum(100)
-        progress_widget.setWindowTitle("Laen projekte")
-        progress_widget.show()
         
+        progress = ProgressDialogModern(title="Laen projekte...", maximum=100)
         query_loader = Graphql_project()
         query = GraphQLQueryLoader.load_query(self, query_loader.Q_Where_By_status_Projects)
         
@@ -157,21 +141,16 @@ class ProjectsQueries:
                 projects_has_next_page = projects_page_info.get("hasNextPage")
                 total_fetched += len(fetched_data)
                 fetched_items.extend(fetched_data)
-                total = projects_page_info.get("total")
-                current_page = projects_page_info.get("currentPage")
-                last_page = projects_page_info.get("lastPage")
-                label_2.setText(f"Projekte kokku: {total}")
-                progress_bar.setMaximum(last_page)
-                progress_bar.setValue(current_page)
-                QCoreApplication.processEvents()
 
+                progress.update(value=total_fetched, maximum=desired_total_items)
+                
                 if not projects_end_cursor or (desired_total_items is not None and total_fetched >= desired_total_items) or not projects_has_next_page:
+                    progress.close()
                     break
             else:
                 print(f"Error: {response.status_code}")
                 return None
             QCoreApplication.processEvents()
-        
         return fetched_items[:desired_total_items]            
 
 class ProjectModelBuilders:
@@ -295,5 +274,4 @@ class ProjectModelBuilders:
         for row_index, row_data in df.iterrows():
             data_items = [QStandardItem(str(row_data[label])) for label in headers]
             model.appendRow(data_items)
-        progress.close()
         return model
