@@ -1,6 +1,6 @@
 
 from PyQt5.QtCore import QCoreApplication
-from .DataLoading_classes import GraphqlQueriesContracts, GraphQLQueryLoader
+from .DataLoading_classes import GraphqlContracts, GraphQLQueryLoader
 from .query_tools import requestBuilder
 from ...KeelelisedMuutujad.modules import Module
 
@@ -9,7 +9,7 @@ class getContractsWhere:
     def query_contracts_related_properties(self, id_value):
 
         module = Module.CONTRACT
-        query_name =  GraphqlQueriesContracts.RELATED_PROPERTIES
+        query_name =  GraphqlContracts.RELATED_PROPERTIES
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
 

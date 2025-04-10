@@ -17,21 +17,19 @@ from ...utils.ProgressHelper import ProgressDialogModern
 items_to_fetch = 100
 
 
-plugin_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..",".."))
-#Status bar widget folder
-widgets_folder = "widgets"
-process_folder = "processes"
-importProcess_folder = "ImportProcesses"
-widgets_path = os.path.join(plugin_dir, process_folder, importProcess_folder, widgets_folder, "WStatusBar.ui")
-
-
-
 class WhereProperties:
     @staticmethod
     def Return_Mailabl_County_list_with_where_COUNTY_NOT_IN(self, county_items):
-        query_loader = GraphqlProperties()
-        query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_County)
+        #query_loader = GraphqlProperties()
+        #query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_County)
         #print("Query added")
+
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_Address_County
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
+
 
         items_for_page = 1  # Adjust this to your desired value
         end_cursor = None  # Initialize end_cursor before the loop
@@ -75,9 +73,19 @@ class WhereProperties:
 
     @staticmethod  
     def Return_Mailabl_State_list_Where_county_IN(self, county_item, state_item, end_cursor):
-        query_loader = GraphqlProperties()
-        query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_State)
+        #query_loader = GraphqlProperties()
+        #query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_State)
         #print("Query added")
+
+
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_Address_State
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
+
+
+
 
         items_for_page = 1  # Adjust this to your desired value
         #end_cursor = None  # Initialize end_cursor before the loop
@@ -148,9 +156,15 @@ class WhereProperties:
     
     @staticmethod            
     def Return_Mailabl_City_list_Where_State_IN(self, state_item, city_item):
-        query_loader = GraphqlProperties()
-        query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_City)
+        #query_loader = GraphqlProperties()
+        #query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_City)
         #print("Query added")
+        
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_Address_City
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
         items_for_page = 1  # Adjust this to your desired value
         end_cursor = None  # Initialize end_cursor before the loop
 
@@ -219,9 +233,14 @@ class WhereProperties:
     
     @staticmethod
     def Return_Mailabl_Properties_Where_City_IN(self, city_item, state_item, next_page):
-        query_loader = GraphqlProperties()
-        query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_ID_CadastralNR)
-        
+        #query_loader = GraphqlProperties()
+        #query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_ID_CadastralNR)
+                
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_ID_CadastralNR
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
         items_for_page = 50  # Adjust this to your desired value
 
         # Counter to keep track of consecutive requests
@@ -295,9 +314,13 @@ class WhereProperties:
 class deleteProperty:
     @staticmethod
     def delete_single_item(item: str):
-        query_loader = GraphqlProperties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.D_ALL_properties)
-    
+
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.D_ALL_properties
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
+
         variables = {
             "id": item  # ID of property i want to delete
             }
@@ -309,27 +332,6 @@ class deleteProperty:
             return False
         else:
             return True
-
-    @staticmethod
-    def delete_multiple_items(self, item_list):
-        total = len(item_list)
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(total)
-        progress_widget.setWindowTitle("Eemaldan kinnistuid")
-        progress_widget.show()
-        count = 0
-        paus_interval = 25  # Set the interval for the sleep timer
-        sleep_duration = 1  # Set the sleep duration in seconds
-
-        for item in item_list:
-            deleteProperty.delete_single_item(self, item)
-            count += 1
-            progress_bar.setValue(count)
-            QCoreApplication.processEvents()
-
-            if count % paus_interval == 0:
-                time.sleep(sleep_duration)
                 
 class add_properties:
     # Function to extract street name and house number
@@ -350,8 +352,12 @@ class add_properties:
         return data
 
     def add_single_property_item(self,item):
-        query_loader = GraphqlProperties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.ADD_Selected_properties)
+
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.ADD_Selected_properties
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
 
         # Assuming item is a JSON string
         #if item.startswith("{"):
@@ -398,52 +404,38 @@ class add_properties:
 
     def add_additional_property_data(self, input_id, uses_input):
 
-            query_loader = GraphqlProperties()
-            query = GraphQLQueryLoader.load_query_properties(query_loader.ADD_properties_purpose)
-        # Construct the list of PropertyIntendedUseInput
-            variables = {
-                "input": {
-                    "id": input_id,
-                    "uses": uses_input
-                }
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.ADD_properties_purpose
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
+    # Construct the list of PropertyIntendedUseInput
+        variables = {
+            "input": {
+                "id": input_id,
+                "uses": uses_input
             }
-            # Send the POST request to the GraphQL endpoint
-            response = requestBuilder.construct_and_send_request(self, query, variables)
-            # Check the response for errors
-            if response.status_code != 200:
-                raise Exception("GraphQL request failed")
-            # Get the ID of the deleted property
-            added_input = response.json()
-            #print(f"inserted item {added_input}")
+        }
+        # Send the POST request to the GraphQL endpoint
+        response = requestBuilder.construct_and_send_request(self, query, variables)
+        # Check the response for errors
+        if response.status_code != 200:
+            raise Exception("GraphQL request failed")
+        # Get the ID of the deleted property
+        added_input = response.json()
+        #print(f"inserted item {added_input}")
 
-    @staticmethod
-    def add_multiple_items(self, item_list):
-        total = len(item_list)
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(total)
-        progress_widget.setWindowTitle("Lisan kinnistud mailabli")
-        progress_widget.show()
-        import time
-        count = 0
-        delete_interval = 25  # Set the interval for the sleep timer
-        sleep_duration = 1  # Set the sleep duration in seconds
 
-        for item in item_list:
-            add_properties.add_single_property_item(self, item)
-            progress_bar.setValue(count)
-            QCoreApplication.processEvents()
-
-            if count % delete_interval == 0:
-                # Sleep for 0.5 seconds after every delete_interval items
-                time.sleep(sleep_duration)
 
 class MyLablChecker:
 
     def get_properties_where_for_duplicates(self, item):
 
-        query_loader = GraphqlProperties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_number
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
 
         #print("Query added")
         end_cursor = None  # Initialize end_cursor before the loop
@@ -476,8 +468,11 @@ class MyLablChecker:
 
     def _get_propertie_ids_by_cadastral_numbers_EQUALS(item: str)->bool:
 
-        query_loader = GraphqlProperties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_number
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
 
         #print("Query added")
         end_cursor = None  # Initialize end_cursor before the loop
@@ -523,14 +518,15 @@ class MyLablChecker:
         missing_items = [item for item in item_list if item not in returned_items]
         return missing_items
     
-
 class PropertiesGeneralQueries:
     def get_properties_MyLabl_idsAndCadastrals(self, properties_list):
         total_in_list = len(properties_list)
         
-        query_loader = GraphqlProperties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
-        
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_number
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
         sleep_duration = 1
         chunk_size = 50
         
@@ -591,13 +587,14 @@ class PropertiesGeneralQueries:
         print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
         
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_number
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
 
 
 
-        
-        query_loader = GraphqlProperties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
-        
+
         sleep_duration = 1
         chunk_size = 50        
         total_fetched = 0

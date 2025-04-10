@@ -1,6 +1,6 @@
 
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import GraphqlQueriesContracts
+from ..DataLoading_classes import GraphqlContracts
 from ..property_data import PropertiesGeneralQueries, GraphQLQueryLoader
 from ..query_tools import requestBuilder
 from ....config.ui_directories import PathLoaderSimple
@@ -64,7 +64,7 @@ class ContractProperties:
             
 
             module = Module.CONTRACT
-            query_name =  GraphqlQueriesContracts.UPDATE_CONTRACT_PROPERTIES
+            query_name =  GraphqlContracts.UPDATE_CONTRACT_PROPERTIES
             query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
             

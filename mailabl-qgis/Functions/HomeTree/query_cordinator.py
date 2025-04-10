@@ -39,7 +39,6 @@ class PropertiesConnectedElementsQueries:
             return
             #raise ValueError(f"Module name {module_name} is not valid.")
 
-
         query = GraphqlProperties().load_query_properties_connected_elements(module_file)
 
         first_value = 30

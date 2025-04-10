@@ -4,7 +4,7 @@
 
 
 from PyQt5.QtCore import QCoreApplication
-from ...queries.python.DataLoading_classes import GraphqlQueriesEasements, GraphQLQueryLoader
+from ...queries.python.DataLoading_classes import GraphqlEasements, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.modules import Module
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
@@ -116,7 +116,7 @@ class EasementsQueries:
 
         module = Module.EASEMENT
 
-        query_name = GraphqlQueriesEasements.WHERE_EASEMENTS_TYPE_STATUS
+        query_name = GraphqlEasements.WHERE_EASEMENTS_TYPE_STATUS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
 
         # Set the desired total number of items to fetch
@@ -188,7 +188,7 @@ class EasementsQueries:
 
         module = Module.EASEMENT
 
-        query_name = GraphqlQueriesEasements.WHERE_EASEMENTS_TYPE_STATUS
+        query_name = GraphqlEasements.WHERE_EASEMENTS_TYPE_STATUS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
 
         # Set the desired total number of items to fetch

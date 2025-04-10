@@ -62,19 +62,24 @@ class MyTreeHome:
         # Extract the single item from the list and convert to string
         item_str = str(item[0]) if isinstance(item, list) and len(item) == 1 else str(item)
         
-        variables_id =  {
+        variables =  {
             "first": first,
             "after": after,
             "search": item_str
         }
 
-        query_id = GraphqlProperties().load_query_for_properties_WHERE(GraphqlProperties().W_properties_number_improwed)
+        
+        module = Module.PROPRETIE
 
-        response_id = requestBuilder().construct_and_send_request(None,query_id, variables_id)
+        file =  GraphqlProperties.W_properties_number_improwed
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
+
+        response = requestBuilder().construct_and_send_request(None,query, variables)
         #print(f"response {response}")
         #start do use data
-        if response_id.status_code == 200:
-            data_id = HandlePropertiesResponses._response_properties_data_edges(response_id)
+        if response.status_code == 200:
+            data_id = HandlePropertiesResponses._response_properties_data_edges(response)
             QCoreApplication.processEvents()
 
             #print(f"returned data: {data_id}")

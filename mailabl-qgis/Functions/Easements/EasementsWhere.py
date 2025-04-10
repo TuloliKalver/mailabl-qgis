@@ -1,6 +1,6 @@
 
 from PyQt5.QtCore import QCoreApplication
-from ...queries.python.DataLoading_classes import GraphqlQueriesEasements, GraphQLQueryLoader
+from ...queries.python.DataLoading_classes import GraphqlEasements, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.modules import Module
 
@@ -12,7 +12,7 @@ class getEasementsWhere:
 
         module = Module.EASEMENT
 
-        query_name = GraphqlQueriesEasements.Q_WHERE_EASEMENT_RELATED_PROPERTYS
+        query_name = GraphqlEasements.Q_WHERE_EASEMENT_RELATED_PROPERTYS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
 
         

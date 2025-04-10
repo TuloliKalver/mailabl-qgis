@@ -7,7 +7,7 @@ from ....utils.messagesHelper import ModernMessageDialog
 from ....KeelelisedMuutujad.messages import Headings, InfoTexts
 from ....KeelelisedMuutujad.modules import Module
 from ....utils.ProgressHelper import ProgressDialogModern
-from ..DataLoading_classes import GraphqlQueriesEasements, GraphQLQueryLoader, GraphqlQueriesContracts
+from ..DataLoading_classes import GraphqlEasements, GraphQLQueryLoader, GraphqlContracts
 
 
 
@@ -58,7 +58,7 @@ class EasementProperties:
 
             module = Module.EASEMENT
 
-            query_name = GraphqlQueriesEasements.UPDATE_EASEMENTS_PROPERTIES
+            query_name = GraphqlEasements.UPDATE_EASEMENTS_PROPERTIES
             query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
 
             for property_id in chunk:
@@ -96,11 +96,11 @@ class EasementProperties:
             query = query_loader.load_query_for_projects(query_loader.UPDATE_project_properties)
 
         if Module.CONTRACT:
-            query_name =  GraphqlQueriesContracts.UPDATE_CONTRACT_PROPERTIES
+            query_name =  GraphqlContracts.UPDATE_CONTRACT_PROPERTIES
             query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
         if Module.EASEMENT:
-            query_name = GraphqlQueriesEasements.UPDATE_EASEMENTS_PROPERTIES
+            query_name = GraphqlEasements.UPDATE_EASEMENTS_PROPERTIES
             query = GraphQLQueryLoader.load_query_by_module(module,query_name)            
 
         properties_table = widget.tvProperties

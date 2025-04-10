@@ -3,7 +3,7 @@
 # pylint: disable=no-name-in-module
 
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts, GraphqlQueriesEasements, GraphqlStatuses
+from ..DataLoading_classes import GraphQLQueryLoader, GraphqlContracts, GraphqlEasements, GraphqlStatuses
 from ..query_tools import requestBuilder
 from ....KeelelisedMuutujad.modules import Module
 
@@ -46,7 +46,7 @@ class ContractTypes:
     def get_contract_types(self):
 
         module = Module.CONTRACT
-        query_name =  GraphqlQueriesContracts.CONTRACT_TYPES
+        query_name =  GraphqlContracts.CONTRACT_TYPES
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
         # Set the desired total number of items to fetch
@@ -92,7 +92,7 @@ class EasementTypes:
 
         module = Module.EASEMENT
 
-        query_name = GraphqlQueriesEasements.EASMENT_TYPES
+        query_name = GraphqlEasements.EASMENT_TYPES
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
 
 

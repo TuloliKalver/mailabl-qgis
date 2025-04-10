@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import Graphql_project, GraphQLQueryLoader, GraphqlQueriesContracts, GraphqlQueriesEasements
+from ..DataLoading_classes import Graphql_project, GraphQLQueryLoader, GraphqlContracts, GraphqlEasements
 from ..query_tools import requestBuilder
 from ...python.responses import JsonResponseHandler, GetValuFromEdge
 from ...python.responses import HandlePropertiesResponses
@@ -57,11 +57,11 @@ class PropertiesModuleFetcher:
             query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)
             return query
         elif self.module == Module.CONTRACT:
-            query_loader = GraphqlQueriesContracts()
+            query_name = GraphqlContracts.RELATED_PROPERTIES
             query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)
             return query
         elif self.module == Module.EASEMENT:
-            query_name = GraphqlQueriesEasements.Q_WHERE_EASEMENT_RELATED_PROPERTYS
+            query_name = GraphqlEasements.Q_WHERE_EASEMENT_RELATED_PROPERTYS
             query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)  
             return query
         else:

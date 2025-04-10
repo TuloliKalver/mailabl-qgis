@@ -26,10 +26,11 @@ class MyTreeHomeView:
     header_statuses = 'status'
 
     @staticmethod
-    def fetch_module_data(module_name, item):
-        print(f"module name in query: {module_name} and item: {item}")
-        query_loader = GraphqlProperties()
-        query = GraphQLQueryLoader.load_query_properties(query_loader.W_properties_number)
+    def fetch_module_data(module, item):
+        #print(f"module name in query: {module} and item: {item}")
+        query_name = GraphqlProperties.W_properties_number
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
         end_cursor = None
         variables = {
             "first": 1,
@@ -51,19 +52,11 @@ class MyTreeHomeView:
 
         langage = Languages.ESTONIA
 
-        widget = paths.UI_multiline_Statusbar
-        widget_path = paths.get_widgets_path(widget)
-        progress_widget = loadUi(widget_path)
-        progress_bar = progress_widget.testBar
-        progress_widget.setWindowTitle("Kontrollin andmeid")
-        progress_widget.show()
 
         # Get the module attributes
         module_attrs = [attr for attr in dir(Module) if not attr.startswith("_") and not callable(getattr(Module, attr))]
         total = len(module_attrs)
 
-        # Set the maximum value of the progress bar
-        progress_bar.setMaximum(total)
 
         #end_cursor_id = None  # Initialize end_cursor before the loop
         first = 1
@@ -71,19 +64,26 @@ class MyTreeHomeView:
         # Extract the single item from the list and convert to string
         item_str = str(item[0]) if isinstance(item, list) and len(item) == 1 else str(item)
         
-        variables_id =  {
+        variables =  {
             "first": first,
             "after": after,
             "search": item_str
         }
 
-        query_id = GraphqlProperties().load_query_for_properties_WHERE(GraphqlProperties().W_properties_number_improwed)
 
-        response_id = requestBuilder().construct_and_send_request(None,query_id, variables_id)
+        module = Module.PROPRETIE
+
+        file =  GraphqlProperties.W_properties_number_improwed
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
+
+
+
+        response = requestBuilder().construct_and_send_request(None,query, variables)
         #print(f"response {response}")
         #start do use data
-        if response_id.status_code == 200:
-            data_id = HandlePropertiesResponses._response_properties_data_edges(response_id)
+        if response.status_code == 200:
+            data_id = HandlePropertiesResponses._response_properties_data_edges(response)
             #print(f"returned data: {data_id}")
                 # Extract the id value from the returned data
             if data_id and 'node' in data_id[0]:
@@ -100,7 +100,6 @@ class MyTreeHomeView:
         child_data = {}
         for index, module_name in enumerate((getattr(Module, attr) for attr in module_attrs), start=1):
             # Update the progress bar
-            progress_bar.setValue(index) 
             property_id_str = str(property_id)
             module_data = PropertiesConnectedElementsQueries().fetch_module_data(module_name, property_id_str)
             if module_data:
@@ -181,8 +180,6 @@ class MyTreeHomeView:
                 model.appendRow(root_item)
 
         # Close the progress widget after the loop ends
-        progress_widget.close()
-
 
         delegate = StatusColorDelegate(treeView)
         treeView.setItemDelegate(delegate)

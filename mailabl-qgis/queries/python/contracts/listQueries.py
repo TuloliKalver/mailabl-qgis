@@ -2,7 +2,7 @@
 import pandas as pd
 from PyQt5.QtCore import Qt, QCoreApplication
 from ..Statuses.statusManager import Statuses
-from ..DataLoading_classes import GraphQLQueryLoader, GraphqlQueriesContracts
+from ..DataLoading_classes import GraphQLQueryLoader, GraphqlContracts
 from ..query_tools import requestBuilder
 from ....KeelelisedMuutujad.modules import Module
 
@@ -13,7 +13,7 @@ class ContractsQueries_list:
         # Load the project query using the loader instance
 
         module = Module.CONTRACT
-        query_name =  GraphqlQueriesContracts.ALL_CONTRACTS
+        query_name =  GraphqlContracts.ALL_CONTRACTS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
 

@@ -6,7 +6,7 @@ import pandas as pd
 from typing import List
 from PyQt5.QtCore import QCoreApplication
 
-from ...queries.python.DataLoading_classes import GraphqlQueriesContracts, GraphQLQueryLoader
+from ...queries.python.DataLoading_classes import GraphqlContracts, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...KeelelisedMuutujad.modules import Module
@@ -87,7 +87,7 @@ class ContractsQueries:
         #print(statuses)
         # Load the project query using the loader instance
         module = Module.CONTRACT
-        query_name =  GraphqlQueriesContracts.ALL_CONTRACTS
+        query_name =  GraphqlContracts.ALL_CONTRACTS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
         # Set the desired total number of items to fetch
         desired_total_items = None  # Adjust this to your desired value
@@ -142,7 +142,7 @@ class ContractsQueries:
         # Load the project query using the loader instance
 
         module = Module.CONTRACT
-        query_name =  GraphqlQueriesContracts.WHERE_CONTRACTS_TYPE_STATUS
+        query_name =  GraphqlContracts.WHERE_CONTRACTS_TYPE_STATUS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
      

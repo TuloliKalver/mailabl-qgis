@@ -2,6 +2,19 @@ import os
 from ...KeelelisedMuutujad.modules import Module
 
 
+class QueryFolders:
+    PROPERTIES_FOLDER = 'queries/graphql/properties'
+    PROPERTIES_WHERE_FOLDER = 'queries/graphql/properties/WHERE'
+    PROPERTIES_CONNECTIONS = 'queries/graphql/properties/Connected_data'
+    USER_FOLDER = 'queries/graphql/user'
+    EASEMENTS_FOLDER = 'queries/graphql/easements'
+    PROJECTS_FOLDER = 'queries/graphql/projects'
+    CONTRACTS_FOLDER = 'queries/graphql/contracts'
+    TAGS_FOLDER = 'queries/graphql/tags'
+    STATUS_FOLDERS = 'queries/graphql/statuses'
+
+
+
 class Graphql_project:
     def __init__(self):
         self.projects_folder = 'queries/graphql/projects'
@@ -27,46 +40,40 @@ class GraphqlProperties:
     UPDATE_TAGS = 'UpdateTags.graphql'
     UPDAT_STREET_NAME = 'UpdateStreetName.graphql'
 
+
+    W_properties_number = 'id_number.graphql'
+    W_properties_number_improwed = 'id_number.graphql'
+    W_properties_Address_County = 'ADDRESS_County.graphql'
+    W_properties_Address_State = 'ADDRESS_State.graphql'
+    W_properties_Address_City = 'ADDRESS_City.graphql'
+    W_properties_ID_CadastralNR = 'ADDRESS_ID_CadastralNR.graphql'
+    ADD_Selected_properties = 'Add_property.graphql'
+    ADD_properties_purpose = 'Add_purpose.graphql'
+    UPDATE_project_properties = 'update_project_properties.graphql'
+    CHECK_properties_Mylabl = 'Properties_ID_Cadastral.graphql'
+    #delete
+    D_ALL_properties = 'deleteProperty.graphql'
+
+
     def __init__(self):
         #Folders
         self.properties_folder = 'queries/graphql/properties'
         self.properties_WHERE_folder = 'queries/graphql/properties/WHERE'
 
-        #Where type
-
-        self.W_properties_number = 'id_number.graphql'
-        self.W_properties_number_improwed = 'id_number.graphql'
-        self.W_properties_Address_County = 'ADDRESS_County.graphql'
-        self.W_properties_Address_State = 'ADDRESS_State.graphql'
-        self.W_properties_Address_City = 'ADDRESS_City.graphql'
-        self.W_properties_ID_CadastralNR = 'ADDRESS_ID_CadastralNR.graphql'
-
-        #Add
-        self.ADD_Selected_properties = 'Add_property.graphql'
-        self.ADD_properties_purpose = 'Add_purpose.graphql'
-        #update   
-        self.UPDATE_project_properties = 'update_project_properties.graphql'
-        #check
-        self.CHECK_properties_Mylabl = 'Properties_ID_Cadastral.graphql'
-        #delete
-        self.D_ALL_properties = 'deleteProperty.graphql'
 
 
 
-    def load_query_for_properties_WHERE(self, query_file_name):
-        path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir, path.properties_WHERE_folder, query_file_name)
-        with open(graphql_path, 'r') as file:
-            return file.read()
-        
+
+
+
     def load_query_properties_connected_elements(self, query_file_name):
         path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir, path.properties_connections, query_file_name)
+        graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, path.properties_connections, query_file_name)
         #print(f"graphql path: {graphql_path}")
         with open(graphql_path, 'r') as file:
             return file.read()
 
-class GraphqlQueriesContracts:
+class GraphqlContracts:
 
     ALL_CONTRACTS = 'contracts.graphql'
     CONTRACTS_MINIMAL = 'contracts_minimal.graphql'
@@ -77,7 +84,7 @@ class GraphqlQueriesContracts:
     WHERE_CONTRACTS_TYPE_STATUS = 'contracts_type_status.graphql'
 
 
-class GraphqlQueriesEasements:
+class GraphqlEasements:
     EASMENT_TYPES = 'easements_types.graphql'
     WHERE_EASEMENTS_TYPE_STATUS = 'easements_type_status.graphql'
     UPDATE_EASEMENTS_PROPERTIES = 'update_easements_properties.graphql'
@@ -94,16 +101,6 @@ class GraphqlStatuses:
     STATUSES = 'statuses.graphql'
 
 
-class QueryFolders:
-    PROPERTIES_FOLDER = 'queries/graphql/properties'
-    PROPERTIES_WHERE_FOLDER = 'queries/graphql/properties/WHERE'
-    PROPERTIES_CONNECTIONS = 'queries/graphql/properties/Connected_data'
-    USER_FOLDER = 'queries/graphql/user'
-    EASEMENTS_FOLDER = 'queries/graphql/easements'
-    PROJECTS_FOLDER = 'queries/graphql/projects'
-    CONTRACTS_FOLDER = 'queries/graphql/contracts'
-    TAGS_FOLDER = 'queries/graphql/tags'
-    STATUS_FOLDERS = 'queries/graphql/statuses'
 
 class GraphQLQueryLoader:
     CURRENT_DIR = os.path.abspath(__file__)
@@ -114,7 +111,7 @@ class GraphQLQueryLoader:
         # Navigate to the 'queries/graphql' folder and then into the 'graphql' subfolder
         self.graphql_folder = 'queries/graphql'
         self.properties_folder = 'queries/graphql/properties'
-        self.properties_WHERE_folder = 'queries/graphql/properties/WHERE'
+
         self.properties_connections = 'queries/graphql/properties/Connected_data'
         self.projects_folder = 'queries/graphql/projects'
         self.contracts_folder ='queries/graphql/contracts'
