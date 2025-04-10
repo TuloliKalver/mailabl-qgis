@@ -5,7 +5,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import SettingsDataSaveAndLoad
 from ...queries.python.projects_pandas import TableHeaders
-from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_project
+from ...queries.python.FileLoaderHelper import GraphQLQueryLoader, GraphqlProjects
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, HoiatusTextsAuto
 from ...KeelelisedMuutujad.modules import Module
@@ -120,7 +120,7 @@ class Link_updater:
             
         module = Module.PROJECT
 
-        file =  Graphql_project.UPDATE_project_properties
+        file =  GraphqlProjects.UPDATE_project_properties
         query = GraphQLQueryLoader.load_query_by_module(module, file)
         
         variables = {

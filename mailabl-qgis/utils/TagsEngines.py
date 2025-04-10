@@ -1,6 +1,6 @@
 from ..KeelelisedMuutujad.modules import Module
 from ..queries.python.query_tools import requestBuilder
-from ..queries.python.DataLoading_classes import GraphQLQueryLoader, GraphqlTags
+from ..queries.python.FileLoaderHelper import GraphQLQueryLoader, GraphqlTags
 
 
 MODULE = Module.TAGS

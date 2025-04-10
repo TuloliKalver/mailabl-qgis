@@ -6,7 +6,7 @@ import pandas as pd
 from typing import List
 from PyQt5.QtCore import QCoreApplication
 
-from ...queries.python.DataLoading_classes import GraphqlContracts, GraphQLQueryLoader
+from ...queries.python.FileLoaderHelper import GraphqlContracts, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...KeelelisedMuutujad.modules import Module

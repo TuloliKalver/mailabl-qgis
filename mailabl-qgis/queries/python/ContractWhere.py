@@ -1,6 +1,6 @@
 
 from PyQt5.QtCore import QCoreApplication
-from .DataLoading_classes import GraphqlContracts, GraphQLQueryLoader
+from .FileLoaderHelper import GraphqlContracts, GraphQLQueryLoader
 from .query_tools import requestBuilder
 from ...KeelelisedMuutujad.modules import Module
 

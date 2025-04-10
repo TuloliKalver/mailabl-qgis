@@ -1,5 +1,5 @@
 from ...queries.python.access_credentials import clear_UC_data
-from ...queries.python.DataLoading_classes import GraphQLQueryLoader
+from ...queries.python.FileLoaderHelper import GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 
 

@@ -3,7 +3,7 @@
 # pylint: disable=no-name-in-module
 
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import GraphQLQueryLoader, GraphqlContracts, GraphqlEasements, GraphqlStatuses
+from ..FileLoaderHelper import GraphQLQueryLoader, GraphqlContracts, GraphqlEasements, GraphqlStatuses
 from ..query_tools import requestBuilder
 from ....KeelelisedMuutujad.modules import Module
 

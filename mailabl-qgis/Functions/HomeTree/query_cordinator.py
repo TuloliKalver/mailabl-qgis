@@ -1,8 +1,8 @@
 from ...KeelelisedMuutujad.modules import Module
-from ...queries.python.DataLoading_classes import GraphqlProperties, GraphQLQueryLoader
+from ...queries.python.FileLoaderHelper import GraphqlProperties, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...queries.python.responses import HandlePropertiesResponses
-from ...queries.python.DataLoading_classes import GraphqlProperties
+from ...queries.python.FileLoaderHelper import GraphqlProperties
 
 
 

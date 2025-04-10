@@ -12,6 +12,7 @@ from ...KeelelisedMuutujad.messages import LabelsTexts
 from ...KeelelisedMuutujad.modules import Module, ModuleTranslation, Languages
 from ...KeelelisedMuutujad.messages import InfoTexts, Headings
 from ...utils.messagesHelper import ModernMessageDialog
+from ...queries.python.update_relations.updateElementProperties import ConnectElementWithPropertysties
 
 language = Languages.ESTONIA
 
@@ -267,14 +268,11 @@ class WidgetLabels:
 class ConnectorFunctions:
     def add_properties_to_module(self, widget, module, element_id, element_name):
         if module == Module.PROJECT:
-            from ...queries.python.update_relations.update_project_properties import ProjectsProperties
-            result = ProjectsProperties.update_projects_properties(self, element_id, widget)
+            result = ConnectElementWithPropertysties._add_properties_to_module_item(self, element_id, widget, module)
             return result
         if module == Module.CONTRACT:
-            from ...queries.python.update_relations.update_contract_properties import ContractProperties
-            result = ContractProperties.update_contract_properties(self, element_id, widget)
+            result = ConnectElementWithPropertysties._add_properties_to_module_item(self, element_id, widget, module)
             return result
         if module == Module.EASEMENT:
-            from ...queries.python.update_relations.update_easements_properties import EasementProperties
-            result = EasementProperties.update_easements_properties(self, element_id, widget)
+            result = ConnectElementWithPropertysties._add_properties_to_module_item(self, element_id, widget, module)
             return result

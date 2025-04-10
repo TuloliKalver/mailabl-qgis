@@ -7,9 +7,10 @@
 import pandas as pd
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from .DataLoading_classes import Graphql_project, GraphQLQueryLoader
+from .FileLoaderHelper import GraphqlProjects, GraphQLQueryLoader
 from .query_tools import requestBuilder
 from .fetchers.ModulePropertiesFetcher import PropertiesModuleFetcher
+from ...KeelelisedMuutujad.modules import Module
 from ...KeelelisedMuutujad.messages import Headings
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...utils.DataExtractors.DataExtractors import DataExtractor
@@ -66,8 +67,9 @@ class ProjectsQueries:
     def _fetch_active_main_projects_by_status(self, statuses):
         
         # Load the project query using the loader instance
-        query_loader = Graphql_project()
-        query = GraphQLQueryLoader.load_query(self,query_loader.Q_Where_By_status_Projects)
+        module = Module.PROJECT
+        query_name = GraphqlProjects.Q_Where_By_status_Projects
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
         desired_total_items = None  # Adjust this to your desired value
         projects_end_cursor = None  # Initialize end_cursor before the loop
         total_fetched = 0
@@ -110,11 +112,12 @@ class ProjectsQueries:
 
     @staticmethod    
     def _fetch_projects_by_number(self, project_number):
-        
         progress = ProgressDialogModern(title="Laen projekte...", maximum=100)
-        query_loader = Graphql_project()
-        query = GraphQLQueryLoader.load_query(self, query_loader.Q_Where_By_status_Projects)
-        
+        module = Module.PROJECT
+        query_name = GraphqlProjects.Q_Where_By_status_Projects
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
+
         desired_total_items = None
         projects_end_cursor = None
         total_fetched = 0

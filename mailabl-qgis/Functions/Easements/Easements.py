@@ -4,7 +4,7 @@
 
 
 from PyQt5.QtCore import QCoreApplication
-from ...queries.python.DataLoading_classes import GraphqlEasements, GraphQLQueryLoader
+from ...queries.python.FileLoaderHelper import GraphqlEasements, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.modules import Module
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts

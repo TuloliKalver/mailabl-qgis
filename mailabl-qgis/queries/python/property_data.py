@@ -6,7 +6,7 @@ import requests
 from requests.exceptions import Timeout
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
-from .DataLoading_classes import GraphQLQueryLoader, GraphqlProperties
+from .FileLoaderHelper import GraphQLQueryLoader, GraphqlProperties
 from .responses import HandlePropertiesResponses
 from .query_tools import requestBuilder
 from ...config.ui_directories import PathLoaderSimple
@@ -584,16 +584,13 @@ class PropertiesGeneralQueries:
         return fetched_items, cadasters
 
     def _get_properties_MyLabl_ids(self, properties_list):
-        print(f"propertie list: {properties_list}")
+        #print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
         
         module = Module.PROPRETIE
 
         file =  GraphqlProperties.W_properties_number
         query = GraphQLQueryLoader.load_query_by_module(module, file)
-
-
-
 
         sleep_duration = 1
         chunk_size = 50        
@@ -625,6 +622,7 @@ class PropertiesGeneralQueries:
                 
                 data = response.json()
                 pageInfo = data.get("data", {}).get("properties", {}).get("pageInfo", {})
+                print(f"page info: {pageInfo}")
                 end_cursor = pageInfo.get("endCursor")
                 
                 fetched_items.extend(returned_id)
@@ -646,7 +644,6 @@ class PropertiesGeneralQueries:
         #item_id: str, notes_text: str
 
         old_name = "Õpetajate tee"
-
 
         query = """
             query GetPropertyName($id: ID!) {

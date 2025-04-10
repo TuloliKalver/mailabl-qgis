@@ -2,7 +2,7 @@
 import gc
 from qgis.core import QgsProject, QgsSpatialIndex, QgsRectangle, QgsVectorLayer, QgsFeature, QgsGeometry, QgsPointXY
 from qgis.utils import iface
-from ..queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_project
+from ..queries.python.FileLoaderHelper import GraphQLQueryLoader, GraphqlProjects
 from ..queries.python.responses import HandlePropertiesResponses
 from ..queries.python.query_tools import requestBuilder
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
@@ -207,7 +207,7 @@ class MapExtentFeatureReader():
         #print(f"cadastral_numbers: {cadastral_numbers}")
         
         my_module = Module.PROJECT
-        query_name = Graphql_project.Q_Properties_related_projects
+        query_name = GraphqlProjects.Q_Properties_related_projects
         query = GraphQLQueryLoader.load_query_by_module(my_module, query_name)
         #print(f"query: {query}")
         items_for_page = 50

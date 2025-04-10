@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QCoreApplication
-from ..DataLoading_classes import Graphql_project, GraphQLQueryLoader, GraphqlContracts, GraphqlEasements
+from ..FileLoaderHelper import GraphqlProjects, GraphQLQueryLoader, GraphqlContracts, GraphqlEasements
 from ..query_tools import requestBuilder
 from ...python.responses import JsonResponseHandler, GetValuFromEdge
 from ...python.responses import HandlePropertiesResponses
@@ -52,7 +52,7 @@ class PropertiesModuleFetcher:
             ValueError: If the module is not recognized.
         """
         if self.module == Module.PROJECT:
-            query_loader = Graphql_project()
+            query_loader = GraphqlProjects()
             query_name = query_loader.Q_where_Projects_related_properties
             query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)
             return query
@@ -116,7 +116,7 @@ class PropertiesModuleFetcher:
 
         my_module = Module.PROJECT
 
-        query_name = Graphql_project.Q_Properties_related_projects
+        query_name = GraphqlProjects.Q_Properties_related_projects
         query = GraphQLQueryLoader.load_query_by_module(my_module, query_name)
         
         #print(f"query: {query}")

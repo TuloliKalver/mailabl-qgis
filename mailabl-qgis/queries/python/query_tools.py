@@ -34,7 +34,8 @@ class requestBuilder:
             "Content-Type": "application/json",
             "User-Agent": f"QGIS/{Qgis.QGIS_VERSION} ({platform.system()} {platform.release()})"
         }
-
+        #print(f"payload is_printed {payload}")
+        # Send the POST request to the GraphQL endpoint with timeout
         try:
             # Send the POST request to the GraphQL endpoint with timeout
             response = requests.post(graphql_url, headers=headers, json=payload, timeout=30)

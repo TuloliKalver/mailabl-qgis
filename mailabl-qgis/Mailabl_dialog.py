@@ -48,7 +48,7 @@ from .Functions.HomeTree.BuildTree import MyTreeHome
 from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool, FeatureInfoToolSearch
 from .Functions.Searchpropertyfromlayer import SearchProperties
 
-from .queries.python.users.user_info import UserSettings
+from .queries.python.users.user import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects
 from .queries.python.access_credentials import  (clear_UC_data,
                                                 get_access_token, print_result,

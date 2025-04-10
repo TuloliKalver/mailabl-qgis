@@ -13,7 +13,7 @@ from ...KeelelisedMuutujad.modules import Module, Languages, ModuleTranslation
 from ...config.settings import Filepaths, IconsByName
 from ...config.iconHandler import iconHandler
 from ...queries.python.query_tools import requestBuilder
-from ...queries.python.DataLoading_classes import GraphQLQueryLoader, GraphqlProperties
+from ...queries.python.FileLoaderHelper import GraphQLQueryLoader, GraphqlProperties
 from ...queries.python.responses import HandlePropertiesResponses
 from .query_cordinator import PropertiesConnectedElementsQueries
 from ...config.settings import MailablWebModules, OpenLink

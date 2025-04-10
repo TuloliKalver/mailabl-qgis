@@ -1,12 +1,13 @@
 mutation UpdateProject($input: UpdateProjectInput!) {
-  updateProject(input: $input) {
+updateProject(input: $input) {
     __typename
     id
-    properties
-        {
+    properties{
       edges {
         node {
           id
+          displayAddress
+          cadastralUnitNumber
         }
       }
     }

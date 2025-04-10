@@ -1,21 +1,20 @@
+import json
+
 from ....KeelelisedMuutujad.messages import Headings
 from ....KeelelisedMuutujad.modules import Module
 
-from ..DataLoading_classes import GraphQLQueryLoader
+from ..FileLoaderHelper import GraphQLQueryLoader, GraphqlUser
 from ..query_tools import requestBuilder
-import json
  
 pealkiri = Headings()
-
 
 class UserSettings:
     @staticmethod
     def user_data():
+        
         module = Module.USER
-        
-
-        query = GraphQLQueryLoader.load_query_by_module(module, GraphQLQueryLoader().Q_me)
-        
+        query_name = GraphqlUser.Q_me
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
         
         roles = []
         variables = {}
@@ -55,13 +54,7 @@ class UserSettings:
                 ability.get("action") == "create" and ability.get("subject") == ["Property","properties"]
                 for ability in abilities
             )
-            
-            # Output the extracted data for debugging or further use
-            #print(f"User: {user_name} {user_lastname}")
-            #print(f"Roles: {roles_text}")
-            #print(f"Has QGIS Access: {has_qgis_access}")
-            #print(f"Abilities: {abilities}")
-            
+                        
             # Return the extracted data if needed for further processing
             return user_name, user_lastname, roles_text, has_qgis_access, properties_create
 

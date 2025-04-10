@@ -5,26 +5,26 @@ updateEasement(input: $input) {
     properties {
     edges {
         node {
-        __typename
-        id
-        displayAddress
-        cadastralUnitNumber
-        }
-        area {
-        size
-        unit
-        }
+            __typename
+            id
+            displayAddress
+            cadastralUnitNumber
+            }
+            area {
+                size
+                unit
+                }
         isPayable
         pricePerAreaUnit {
-        amount
-        currencyCode
-        }
+                    amount
+                    currencyCode
+                    }
         totalPrice {
-        amount
-        currencyCode
-        }
+                amount
+                currencyCode
+                }
         nextPaymentDate
+            }
+        }
     }
-    }
-}
 }
