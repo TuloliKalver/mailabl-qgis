@@ -7,7 +7,7 @@ from ....utils.messagesHelper import ModernMessageDialog
 from ....KeelelisedMuutujad.messages import Headings, InfoTexts
 from ....KeelelisedMuutujad.modules import Module
 from ....utils.ProgressHelper import ProgressDialogModern
-from ..DataLoading_classes import GraphqlEasements, GraphQLQueryLoader, GraphqlContracts
+from ..DataLoading_classes import GraphqlEasements, GraphQLQueryLoader, GraphqlContracts, Graphql_project
 
 
 
@@ -91,17 +91,17 @@ class EasementProperties:
     @staticmethod    
     def _add_properties_to_module_item(self, easements_id, widget, module):
 
-        if Module.PROJECT:
-            query_loader = GraphQLQueryLoader() 
-            query = query_loader.load_query_for_projects(query_loader.UPDATE_project_properties)
+        if module == Module.PROJECT:
+            query_name = Graphql_project.UPDATE_project_properties
+            query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
-        if Module.CONTRACT:
+        if module == Module.CONTRACT:
             query_name =  GraphqlContracts.UPDATE_CONTRACT_PROPERTIES
             query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
-        if Module.EASEMENT:
+        if module == Module.EASEMENT:
             query_name = GraphqlEasements.UPDATE_EASEMENTS_PROPERTIES
-            query = GraphQLQueryLoader.load_query_by_module(module,query_name)            
+            query = GraphQLQueryLoader.load_query_by_module(module, query_name)            
 
         properties_table = widget.tvProperties
         model_properties = properties_table.model()

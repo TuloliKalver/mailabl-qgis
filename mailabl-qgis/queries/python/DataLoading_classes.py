@@ -16,23 +16,13 @@ class QueryFolders:
 
 
 class Graphql_project:
-    def __init__(self):
-        self.projects_folder = 'queries/graphql/projects'
-
-        self.Q_All_Projects = 'projects.graphql'
-        self.Q_Where_By_status_Projects = 'W_project_status.graphql'
-        self.Q_where_Projects_related_properties = 'W_projects_id.graphql'
-        self.UPDATE_project_properties = 'update_project_properties.graphql'
-        self.Projects_tags = 'projects_tags.graphql'
-        self.Projects_Open = 'Statuses_where_condition.graphql' #query statuses for different modules, returns ID
-        self.Q_Properties_related_projects = 'propertiesrelated_projects.graphql'
-
-    def load_query_for_projects(self, query_file_name):
-        path = GraphQLQueryLoader()
-        graphql_path = os.path.join(path.plugin_dir, path.projects_folder, query_file_name)
-        print(f"path: {graphql_path}")
-        with open(graphql_path, 'r') as file:
-            return file.read()
+    Q_All_Projects = 'projects.graphql'
+    Q_Where_By_status_Projects = 'W_project_status.graphql'
+    Q_where_Projects_related_properties = 'W_projects_id.graphql'
+    UPDATE_project_properties = 'update_project_properties.graphql'
+    Projects_tags = 'projects_tags.graphql'
+    Projects_Open = 'Statuses_where_condition.graphql' #query statuses for different modules, returns ID
+    Q_Properties_related_projects = 'propertiesrelated_projects.graphql'
 
 
 class GraphqlProperties:
@@ -53,17 +43,6 @@ class GraphqlProperties:
     CHECK_properties_Mylabl = 'Properties_ID_Cadastral.graphql'
     #delete
     D_ALL_properties = 'deleteProperty.graphql'
-
-
-    def __init__(self):
-        #Folders
-        self.properties_folder = 'queries/graphql/properties'
-        self.properties_WHERE_folder = 'queries/graphql/properties/WHERE'
-
-
-
-
-
 
 
     def load_query_properties_connected_elements(self, query_file_name):
@@ -139,13 +118,6 @@ class GraphQLQueryLoader:
     def load_query_for_projects(query_file_name):
         path = GraphQLQueryLoader()
         graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, path.projects_folder, query_file_name)
-        with open(graphql_path, 'r') as file:
-            return file.read()
-
-    @staticmethod
-    def load_query_properties( query_file_name):
-        path = GraphQLQueryLoader()
-        graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, path.properties_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()
 

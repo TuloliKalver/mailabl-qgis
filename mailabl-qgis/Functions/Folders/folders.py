@@ -5,10 +5,13 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMessageBox
 from ...config.settings import SettingsDataSaveAndLoad
 from ...queries.python.projects_pandas import TableHeaders
-from ...queries.python.DataLoading_classes import GraphQLQueryLoader
+from ...queries.python.DataLoading_classes import GraphQLQueryLoader, Graphql_project
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, HoiatusTextsAuto
+from ...KeelelisedMuutujad.modules import Module
 from ...utils.messagesHelper import ModernMessageDialog
+
+
 def copy_and_rename_folder(table):
     text = "Ettevalmistatud struktuuriga projektikaustade genereerimine on mõeldud eelkõige uutele projektidele.\nEnne jätkamist kontrolli ega samasisulist kausta pole juba loodud.\nOled kindel, et soovid jätkata?"
 
@@ -114,21 +117,26 @@ def copy_and_rename_folder(table):
 
 class Link_updater:
     def update_link(self, project_id, link):
-            query_loader = GraphQLQueryLoader() 
-            query = query_loader.load_query_for_projects(query_loader.UPDATE_project_properties)
             
-            variables = {
-                        "input": {
-                            "id": project_id,
-                            "filesPath": link
-                             
-                        }
-                        }
-            
-            response = requestBuilder.construct_and_send_request(self, query, variables)
-            print(response)
+        module = Module.PROJECT
+
+        file =  Graphql_project.UPDATE_project_properties
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+        
+        variables = {
+                    "input": {
+                        "id": project_id,
+                        "filesPath": link
+                            
+                    }
+                    }
+        
+        response = requestBuilder.construct_and_send_request(self, query, variables)
+        print(response)
+
 
 class FolderNameGenerator:
+    
     def folder_structure_name_order(self, project_name, project_number):
         value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
         print(f"Value: {value}")
