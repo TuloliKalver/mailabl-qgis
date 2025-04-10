@@ -87,41 +87,21 @@ class GraphQLQueryLoader:
 
     def __init__(self):
         
-        # Navigate to the 'queries/graphql' folder and then into the 'graphql' subfolder
+    # Navigate to the 'queries/graphql' folder and then into the 'graphql' subfolder
         self.graphql_folder = 'queries/graphql'
-        self.properties_folder = 'queries/graphql/properties'
-
         self.properties_connections = 'queries/graphql/properties/Connected_data'
-        self.projects_folder = 'queries/graphql/projects'
-        self.contracts_folder ='queries/graphql/contracts'
-        self.user_folder ='queries/graphql/user'
-        self.easements_folder = 'queries/graphql/easements'
-
-        
-
-            #User related queries
+       
+    #User related queries
         self.Q_All_Users = 'users.graphql'
         self.Q_Where_user = 'users_where.graphql'
         self.Q_me = 'me.graphql'
-
-            #Projects related queries
-        self.UPDATE_project_properties = 'update_project_properties.graphql'
-
-        
-        
+    
     def load_query(self, query_file_name):
         path = GraphQLQueryLoader()
         graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, path.graphql_folder, query_file_name)
         with open(graphql_path, 'r') as file:
             return file.read()
-    @staticmethod
-    def load_query_for_projects(query_file_name):
-        path = GraphQLQueryLoader()
-        graphql_path = os.path.join(GraphQLQueryLoader.PLUGIN_DIR, path.projects_folder, query_file_name)
-        with open(graphql_path, 'r') as file:
-            return file.read()
 
-    
     @staticmethod
     def load_query_by_module(module: Module, filename: str) -> str:
 

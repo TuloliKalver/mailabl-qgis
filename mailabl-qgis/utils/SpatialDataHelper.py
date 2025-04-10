@@ -205,8 +205,10 @@ class MapExtentFeatureReader():
     @staticmethod
     def get_module_feature_conneted_with_propertie_list_CHEK_FOR_MODULE_USAGE(cadastral_numbers, module=None):
         #print(f"cadastral_numbers: {cadastral_numbers}")
-        query_loader = Graphql_project()
-        query = GraphQLQueryLoader.load_query_for_projects(query_loader.Q_Properties_related_projects)
+        
+        my_module = Module.PROJECT
+        query_name = Graphql_project.Q_Properties_related_projects
+        query = GraphQLQueryLoader.load_query_by_module(my_module, query_name)
         #print(f"query: {query}")
         items_for_page = 50
         end_cursor = None

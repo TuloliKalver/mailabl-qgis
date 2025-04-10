@@ -1,12 +1,13 @@
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import  QWidget
-from ..DataLoading_classes import GraphQLQueryLoader
+from ..DataLoading_classes import GraphQLQueryLoader, Graphql_project
 from ..property_data import PropertiesGeneralQueries
 from ..query_tools import requestBuilder
 from ....config.ui_directories import PathLoaderSimple
 from ....Functions.timer import Timer 
 from ....KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ....KeelelisedMuutujad.modules import Module
 from ....utils.messagesHelper import ModernMessageDialog
 
 pealkiri = Headings()
@@ -46,18 +47,15 @@ class ProjectsProperties:
         count = 0
         paus_interval = 25  # Set the interval for the sleep timer
         #sleep_duration = 1  # Set the sleep duration in seconds
-        widgets_path = PathLoaderSimple.widget_statusBar_path(self)
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_bar.setMaximum(total_returned_ids)
-        progress_widget.setWindowTitle("Kinnistutega sidumine")
-        progress_widget.show()
+       
 
         for i in range(0, total_returned_ids, chunk_size):
             chunk = returned_ids[i:i+chunk_size]
-            query_loader = GraphQLQueryLoader() 
-            query = query_loader.load_query_for_projects(query_loader.UPDATE_project_properties)
             
+            module = Module.PROJECT
+            query_name = Graphql_project.UPDATE_project_properties
+            query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
             variables = {
                         "input": {
                             "id": project_id,
@@ -71,12 +69,10 @@ class ProjectsProperties:
             requestBuilder.construct_and_send_request(self, query, variables)
 
             count += paus_interval
-            progress_bar.setValue(count)
             QCoreApplication.processEvents()
              
             if count % paus_interval == 0:
                 timer_instance.pause()
 
-        progress_widget.close()
         return total_returned_ids, total_ids_Table
     
