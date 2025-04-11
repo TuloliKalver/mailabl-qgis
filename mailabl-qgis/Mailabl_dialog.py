@@ -178,15 +178,21 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.pbCancelPropertiesAction: self.exit_properties_process_flows
         }
 
+        for button, function in self.properties_actions.items():
+            button.clicked.connect(function)
+
+##############################TESTING AREA##############################################################
         self.test_buttons = {
-            self.pbtest_2: self.test_update_property,
+            self.pbtest_2: self.test_property_archiving,
+            self.pushButton: self.test_gpkg_layer_deleting
         }
 
         for button,_ in self.test_buttons.items():
             button.setVisible(True)
 
-        for button, function in self.properties_actions.items():
+        for button, function in self.test_buttons.items():
             button.clicked.connect(function)
+#############################TESTING AREA################################################################
 
         self.list_widgets_with_signals = {
             self.lvCounty: self.get_connected_signal,
@@ -814,17 +820,31 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
     def exit_properties_process_flows(self):
         WorkSpaceHandler.swWorkSpace_Properties(self)
-        self.btnMapActions.setEnabled(True)
+        main_buttons = [self.pbHome, self.pbProjects, self.pbContracts, self.pbeasements, self.btnMapActions]
+        for button in main_buttons:
+            button.setEnabled(True)
         widget = self.pbSettings_SliderFrame   
         WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
 
 
+    @staticmethod
+    def test_property_archiving(self) -> bool:
+        print("testing property archiving")
+        from .Functions.GeopakagegeHandler import GeopakagegeHandler
+        GeopakagegeHandler.testing()
 
+    def test_gpkg_layer_deleting(self): 
+        from qgis.core import  QgsProject
+        
+        from .utils.ArchiveLayerHandler import GPKGHelpers
+        archive_layer_name = "Minu_arhiiv"
+        layer = QgsProject.instance().mapLayersByName('Kalver_test')[0]
+        layer_uri, gpkg_path = GPKGHelpers.get_layer_uri(layer, archive_layer_name)
+        GPKGHelpers.delete_layer_from_gpkg(gpkg_path=gpkg_path, layer_name=archive_layer_name)         
 
     @staticmethod
     def test_update_property(self) -> bool:
         #item_id: str, notes_text: str
-
         
         item_id = "133842"
         notes_text = "This is a test note."

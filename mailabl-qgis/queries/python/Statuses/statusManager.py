@@ -13,7 +13,7 @@ STATE_CLOSED = "CLOSED"
 class Statuses:
 
     def get_all_statuses_by_module(self, module):
-        print(f"Getting all statuses by module: {module} in getting all statuses")
+        #print(f"Getting all statuses by module: {module} in getting all statuses")
         status_module = Module.STATUSES
         query_file =  GraphqlStatuses.STATUSES
         query = GraphQLQueryLoader.load_query_by_module(status_module, query_file)

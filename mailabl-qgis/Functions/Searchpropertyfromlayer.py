@@ -177,15 +177,13 @@ class SearchProperties:
             return None
 
         if len(features) == 1:
-            return self.select_feature(features[0])
+            return self.select_feature_OLD_AND_SLOW(features[0])
 
         return self.select_from_multiple_features(features, label_text)
 
 
-
-
-    def select_feature(self, feature):
-        tunnus_value = feature[Katastriyksus.tunnus]  # Replace 'tunnus' with the actual field name if different
+    def select_feature_OLD_AND_SLOW(self, feature):
+        tunnus_value = feature[Katastriyksus.tunnus]  
         
         # Select the feature in the layer
         self.layer.selectByIds([feature.id()])
@@ -195,14 +193,15 @@ class SearchProperties:
                 
         print(f"Found with tunnus: {tunnus_value}")
         return tunnus_value, feature
-    
+
+
     def select_from_multiple_features(self, features, label_text):
         items = [f"{feature['search_field']}" for feature in features]
         item, ok = QInputDialog.getItem(self.parent, "Vali nimekirjast", f"Otsingule '{label_text}' leiti mitu vastust:", items, 0, False)
 
         if ok and item:
             selected_index = items.index(item)
-            return self.select_feature(features[selected_index])
+            return self.select_feature_OLD_AND_SLOW(features[selected_index])
         
         print(f"Selection canceled or invalid for label '{label_text}'.")
         return None

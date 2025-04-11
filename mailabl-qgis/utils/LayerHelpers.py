@@ -1,9 +1,13 @@
 #LayerHelper.py
 
+from qgis.core import QgsVectorLayer, QgsFields, QgsWkbTypes, QgsCoordinateReferenceSystem
+from typing import Tuple
+
+
 import gc
-from typing import Optional, Any
+from typing import Optional, Any, List
 from qgis.utils import iface 
-from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject, QgsVectorLayer 
+from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject, QgsVectorLayer, QgsRectangle
 
 from PyQt5.QtWidgets import QMessageBox
 from .LayerFeaturehepers import DataMappers
@@ -16,6 +20,29 @@ from ..Functions.add_items import add_properties
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..queries.python.property_data import MyLablChecker
 
+
+
+class LayerSchemas:
+
+    def extract_layer_schema(layer: QgsVectorLayer) -> Tuple[QgsFields, QgsWkbTypes.Type, QgsCoordinateReferenceSystem]:
+        """
+        Extracts the schema (fields, geometry type, CRS) from a given vector layer.
+
+        Args:
+            layer (QgsVectorLayer): The source layer.
+
+        Returns:
+            Tuple[QgsFields, QgsWkbTypes.Type, QgsCoordinateReferenceSystem]: 
+                A tuple containing (fields, geometry_type, crs).
+        """
+        if not layer.isValid():
+            raise ValueError("Layer is not valid.")
+
+        fields = layer.fields()
+        geometry_type = layer.wkbType()
+        crs = layer.crs()
+
+        return fields, geometry_type, crs
 
 
 class DuplicateLayerResolver:
@@ -112,7 +139,6 @@ class DuplicateLayerResolver:
                                 f"Kept layer: '{kept_layer.name()}'.")
         return kept_layer
 
-    
 class LayerProcessHandlers:
     @classmethod
     def load_and_handle_layers(cls, layers_info):
@@ -177,6 +203,66 @@ class LayerProcessHandlers:
                 field_value_to_id[value] = feature.id()
         
         return field_value_to_id
+
+    @staticmethod
+    def zoom_to_features_in_layer(features: List[QgsFeature], layer: QgsVectorLayer) -> None:
+        """
+        Selects the given features in a layer and zooms the map canvas to them.
+
+        Args:
+            features (List[QgsFeature]): A list of QgsFeature objects to zoom to.
+            layer (QgsVectorLayer): The layer that contains the features.
+
+        Returns:
+            None
+        """
+        feature_ids = [feature.id() for feature in features]
+        layer.selectByIds(feature_ids)
+        iface.mapCanvas().zoomToSelected(layer)
+
+    @staticmethod
+    def zoom_to_features_extent(features: List[QgsFeature]) -> None:
+        """
+        Zooms to the combined extent of the given features without selecting them.
+
+        Args:
+            features (List[QgsFeature]): Features to zoom to.
+
+        Returns:
+            None
+        """
+        if not features:
+            print("⚠️ No features provided.")
+            return
+
+        extent = QgsRectangle()
+        extent.setMinimal()
+
+        valid_feature_found = False
+
+        #print(f"🔍 Received {len(features)} features.")
+        
+        for i, feature in enumerate(features):
+            geom = feature.geometry()
+            if geom and not geom.isEmpty():
+                bbox = geom.boundingBox()
+                #print(f"  Feature {i} → BBox: {bbox.toString()}")
+                extent.combineExtentWith(bbox)
+                valid_feature_found = True
+            else:
+                print(f"⚠️ Feature {i} has no geometry!")
+
+        if not valid_feature_found:
+            print("❌ No valid geometries found in features.")
+            return
+
+        #print(f"✅ Combined extent: {extent.toString()}")
+
+        extent.scale(1.1)  # 10% buffer
+        iface.mapCanvas().setExtent(extent)
+        iface.mapCanvas().refresh()
+
+
 
     @staticmethod
     def _get_selected_elemntsID_from_layer(layer: QgsVectorLayer):
@@ -334,7 +420,6 @@ class LayerFilterSetters:
 
 
 class fidOperations:
-
     @staticmethod
     def get_current_max_fid(target_layer: QgsVectorLayer) -> Optional[int]:
         """
@@ -368,8 +453,6 @@ class fidOperations:
                 max_fid = max(fid, max_fid) if max_fid is not None else fid
 
         return int(max_fid) if max_fid is not None else None
-
-
 
     @staticmethod
     def get_next_fid(target_layer: QgsVectorLayer, starting_fid: int = 1) -> int:

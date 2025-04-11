@@ -41,6 +41,10 @@ class UIStateManager:
         self.lbl_action = self.dialog.lblPropertieOperations
         self.lbl = self.dialog.lblActionName
 
+        self.main_buttons = [self.dialog.pbHome, self.dialog.pbProjects, self.dialog.pbContracts, self.dialog.pbeasements]
+
+        
+
     def start_properti_flow_main(self):
         #print("started properties flow")
         """
@@ -68,6 +72,9 @@ class UIStateManager:
         all_checkboxes = self.check_boxes + [cb_municipality, cb_roads]
         all_tables = self.table
         all_controls = all_checkboxes + all_tables
+
+        for button in self.main_buttons:
+            button.setEnabled(False)
 
         if not layer:
             self.dialog.frMaaAmetControlls.setVisible(True)

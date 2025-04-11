@@ -22,13 +22,12 @@ from PyQt5.QtCore import QCoreApplication, QVariant
 from PyQt5.QtWidgets import QFileDialog
 
 from ..utils.LayerSetups import LayerSetups
-from ..config.settings import Filepaths, FilesByNames, StoredLayers, SettingsDataSaveAndLoad
+from ..config.settings import Filepaths, FilesByNames, StoredLayers
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
 from ..utils.messagesHelper import ModernMessageDialog
 from ..utils.LayerHelpers import fidOperations
-from ..utils.LayerGroupHelpers import LayerGroupHelper
 from ..utils.Logging.Logger import TracebackLogger
 from .LayerGeneratorHelper import ArchiveOptionBuilder
 
@@ -474,54 +473,6 @@ class LayerManager:
         group.insertLayer(0, layer)
 
 
-    @staticmethod
-    def store_memory_layer_to_geopackage(memory_layer: QgsVectorLayer, target_layer_for_file: QgsVectorLayer, new_layer_name: str) -> Tuple[bool, Optional[List]]:
-        """
-        Stores a memory layer into an existing GeoPackage file as a new layer,
-        then loads the new layer, adds it to a group (using LayerGroups.ARCHIVE),
-        and sets it visible.
-
-        If the layer already exists in the GeoPackage, asks the user whether to
-        append data (which will add/update a 'backup_date' field with the current timestamp)
-        or replace the existing layer.
-
-        :param memory_layer: QgsVectorLayer representing the in-memory layer to save.
-        :param target_layer_for_file: QgsVectorLayer whose data source provides the GeoPackage file location.
-        """
-        uri = target_layer_for_file.dataProvider().dataSourceUri()
-        gpkg_path = uri.split("|")[0]
-        layer_uri = f"{gpkg_path}|layername={new_layer_name}"
-        # Check if the layer already exists in the GeoPackage
-        existing_layer = QgsVectorLayer(layer_uri, new_layer_name, "ogr")
-        #print(f"Existing layer: {existing_layer}")
-        if existing_layer.isValid():
-            layers = QgsProject.instance().mapLayersByName(new_layer_name)
-            if layers:
-                layer = layers[0]  # Use the first matching layer
-            else:
-                layer = None            
-            if layer is None:
-                layer = LayerGroupHelper.add_layer_to_projct_in_given_group(layer=existing_layer, group_name=MailablGroupFolders.ARCHIVED_PROPERTIES)
-
-                add_style = Filepaths.get_style(FilesByNames().Archived_layer)
-                layer.loadNamedStyle(add_style)
-
-                layer_name = layer.name()
-                save_setting = SettingsDataSaveAndLoad()
-                save_setting.save_archived_layers(layer_name)
-
-                if layer is not None:
-                    res, features = LayerManager._commit_to_archive(memory_layer=memory_layer, layer=layer)
-                    return True, features
-                else:
-                    TracebackLogger.log_traceback(custom_message="Failed to add layer to group.")
-                return True,[]
-            else:
-                res, features = LayerManager._commit_to_archive(memory_layer=memory_layer, layer=layer)
-                return True, features
-        else:
-            TracebackLogger.log_traceback(custom_message="Failed to append features to geopackage.")
-            return False, []
 
 
     @staticmethod
@@ -577,3 +528,5 @@ class LayerManager:
             
             # Return a tuple indicating failure and an empty list since no features were appended.
             return False, []
+
+

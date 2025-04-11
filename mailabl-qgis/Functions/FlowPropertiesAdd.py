@@ -1,6 +1,8 @@
 import os
 import gc
 
+from .GeopakagegeHandler import GeopakagegeHandler
+
 from ..utils.LayerSetups import LayerSetups
 from ..utils.LayerHelpers import LayerFilterSetters, LayerProcessHandlers, fidOperations, DuplicateLayerResolver
 from ..Functions.layer_generator import LayerManager
@@ -77,7 +79,6 @@ class AddProperties:
                 LayerManager.add_layer_to_sandbox_group(sandbox_layer)
                 gc.collect()  # Force garbage collection
             else:
-                print("stage get next fid")
                 nex_id=fidOperations.get_next_fid(target_layer=sandbox_layer)
                 LayerSetups.register_layer_configuration(sandbox_layer,max_fid=nex_id)
             
@@ -156,7 +157,7 @@ class AddProperties:
         if archive_memory_layer.dataProvider().name() == "memory":
             if archive_memory_layer.isValid():
                 #print(f"active_layer: {active_layer}")
-                res, returned_features = LayerManager.store_memory_layer_to_geopackage(memory_layer=archive_memory_layer, target_layer_for_file=active_layer, new_layer_name = MailablLayerNames.ARCHIVE_LAYER_NAME)
+                res, returned_features = GeopakagegeHandler.store_memory_layer_to_geopackage(memory_layer=archive_memory_layer, target_layer_for_file=active_layer, new_layer_name = MailablLayerNames.ARCHIVE_LAYER_NAME)
 
                 if res is not None:
                     print(f"Returned features: {returned_features}")

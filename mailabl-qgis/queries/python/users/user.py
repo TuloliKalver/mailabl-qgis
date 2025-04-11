@@ -37,7 +37,7 @@ class UserSettings:
             
             # Extract abilities (which is a JSON string in the response)
             abilities_str = user.get("abilities", "[]")  # Default to empty list if not found
-            print(f"abilities_str: {abilities_str}")
+            #print(f"abilities_str: {abilities_str}")
             try:
                 # Parse the JSON string into a Python list
                 abilities = json.loads(abilities_str)
