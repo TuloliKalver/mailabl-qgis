@@ -1299,7 +1299,7 @@ QProgressBar::chunk {
                      <string notr="true"/>
                     </property>
                     <property name="text">
-                     <string>test</string>
+                     <string>Testi Arhiiv kihi loomist</string>
                     </property>
                     <property name="icon">
                      <iconset>
@@ -1314,16 +1314,16 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_5">
+                   <widget class="QPushButton" name="pushButton">
                     <property name="text">
-                     <string>TextLabel</string>
+                     <string>Testi Arhiiv kihi eemaldamist</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pushButton">
+                   <widget class="QLabel" name="label_5">
                     <property name="text">
-                     <string>test</string>
+                     <string>TextLabel</string>
                     </property>
                    </widget>
                   </item>

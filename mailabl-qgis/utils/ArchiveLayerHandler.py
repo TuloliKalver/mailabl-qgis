@@ -14,6 +14,8 @@ from qgis.core import QgsVectorLayer
 from typing import Optional
 from ..utils.LayerHelpers import LayerSchemas
 from ..utils.Logging.Logger import TracebackLogger
+from ..config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
+
 from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
 
 
@@ -195,4 +197,7 @@ class ArchiveLayerHandler:
 
         print("✅ New archive layer created. Adding to project.")
         new_layer = GPKGHelpers.load_layer_from_gpkg(gpkg_path, archive_layer_name, group_name=MailablGroupFolders.ARCHIVED_PROPERTIES)
+        add_style = Filepaths.get_style(FilesByNames().Archived_layer)
+        new_layer.loadNamedStyle(add_style)
+
         return new_layer

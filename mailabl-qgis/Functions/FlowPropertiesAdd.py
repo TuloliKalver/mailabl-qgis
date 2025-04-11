@@ -1,7 +1,7 @@
 import os
 import gc
 
-from .GeopakagegeHandler import GeopakagegeHandler
+from qgis.core import QgsVectorLayer
 
 from ..utils.LayerSetups import LayerSetups
 from ..utils.LayerHelpers import LayerFilterSetters, LayerProcessHandlers, fidOperations, DuplicateLayerResolver
@@ -13,7 +13,7 @@ from ..KeelelisedMuutujad.FolderHelper import MailablLayerNames
 from ..Common.app_state import PropertiesProcessStage
 from ..utils.LayerFeaturehepers import LayerFeaturehepers
 from ..queries.python.property_data import MyLablChecker, UpdateData
-
+from ..utils.ArchiveLayerHandler import ArchiveLayerHandler
 
 class AddProperties:
     test = "test"
@@ -91,10 +91,13 @@ class AddProperties:
                                                                                    delete_input_data=True,
                                                                                    commit=False)
             gc.collect()  # Force garbage collection
-            AddProperties.store_to_archive()
-            LayerManager.remove_existing_layer(sandbox_layer_name)
-            #MessageLoaders.show_message('Tehtud', f"Arhiveeritud id: {feat_to_archive}")
-            gc.collect()      
+            archive_layer_name = MailablLayerNames.ARCHIVE_LAYER_NAME
+            archive_layer = ArchiveLayerHandler.resolve_or_create_archive_layer(target_layer_from_mappings, archive_layer_name)
+            res = AddProperties.store_to_archive_PROCESS(archive_layer, feat_to_archive )
+            if res:
+                LayerManager.remove_existing_layer(sandbox_layer_name)
+                #MessageLoaders.show_message('Tehtud', f"Arhiveeritud id: {feat_to_archive}")
+                gc.collect()      
         
         if missing_in_active_ids:
             print("stage missing in active")
@@ -130,7 +133,7 @@ class AddProperties:
         
          
     @staticmethod
-    def store_to_archive() -> bool: 
+    def store_to_archive_PROCESS(arvhive_layer: QgsVectorLayer, features:int) -> bool: 
         """
         Stores the archive memory layer to file and then removes the temporary archive memory layer.
         
@@ -157,24 +160,23 @@ class AddProperties:
         if archive_memory_layer.dataProvider().name() == "memory":
             if archive_memory_layer.isValid():
                 #print(f"active_layer: {active_layer}")
-                res, returned_features = GeopakagegeHandler.store_memory_layer_to_geopackage(memory_layer=archive_memory_layer, target_layer_for_file=active_layer, new_layer_name = MailablLayerNames.ARCHIVE_LAYER_NAME)
+                LayerFilterSetters._move_feature_data_and_geometry_between_layers(
+                input_layer=active_layer,
+                feature_id=features,
+                target_layer=arvhive_layer,
+                delete_input_data=False,
+                commit=True,
+                update_data=True)
+                for feature in features:
+                    layer_data = LayerFeaturehepers._get_feature_attributes_as_dict(feature=feature)
+                    #print (f"layer_data: {layer_data}")
+                    tunnus = layer_data.get(Katastriyksus.tunnus)
+                    #print (f"Tunnus: {tunnus}")            
+                    res, id = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
 
-                if res is not None:
-                    print(f"Returned features: {returned_features}")
-                    print("Stored archive memory layer to file")
-                    for feature in returned_features:
-                        layer_data = LayerFeaturehepers._get_feature_attributes_as_dict(feature=feature)
-                        #print (f"layer_data: {layer_data}")
-                        tunnus = layer_data.get(Katastriyksus.tunnus)
-                        #print (f"Tunnus: {tunnus}")            
-                        res, id = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
+                    UpdateData._update_archived_properies_data(id)
 
-                        UpdateData._update_archived_properies_data(id)
-
-                    return True
-                else:
-                    print("Failed to store archive memory layer to file")
-                    return False
+                return True
             else:
                 print("The pre-archive layer is invalid.")
                 return False
