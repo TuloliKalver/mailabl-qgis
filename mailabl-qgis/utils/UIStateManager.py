@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QListView, QTableView, QTableWidget, QCheckBox
 from .WidgetHelpers import WidgetAndWievHelpers, ListSelectionHandler
 from ..config.settings import SettingsDataSaveAndLoad
 from ..Common.app_state import PropertiesProcessStage, FlowStages
+from ..Common.ChaceHelpers import CacheUpdater
 from ..utils.ProgressHelper import ProgressDialogModern
 from ..app.workspace_handler import CenterMainSliderIndexes
 
@@ -43,7 +44,39 @@ class UIStateManager:
 
         self.main_buttons = [self.dialog.pbHome, self.dialog.pbProjects, self.dialog.pbContracts, self.dialog.pbeasements]
 
+
+        self.list_widgets_with_signals = {
+            self.dialog.lvCounty: self.get_connected_signal,
+            self.dialog.lvState: self.get_connected_signal,
+            self.dialog.lvSettlement: self.get_connected_signal
+        }
+
+
+    def connect_list_signals(self):
+        for list_widget, func in self.list_widgets_with_signals.items():
+            list_widget.itemSelectionChanged.connect(func)
+
+    def disconnect_list_signals(self):
+        for list_widget, func in self.list_widgets_with_signals.items():
+            try:
+                list_widget.itemSelectionChanged.disconnect(func)
+            except TypeError:
+                pass
+
+
+    def get_connected_signal(self):
+        for widget in self.list_views:
+            widget.setEnabled(False)
+        element = self.dialog.sender()
+        CacheUpdater.update_slected_items_cache(element)
         
+        
+        self.flow_and_ui_controls()
+
+        for widget in self.list_views:
+            widget.setEnabled(True)
+
+
 
     def start_properti_flow_main(self):
         #print("started properties flow")
@@ -186,8 +219,6 @@ class UIStateManager:
             progress.close()
 
 
-
-
 class UIActions:
     @classmethod
     def hide(cls, elements):
@@ -207,8 +238,6 @@ class UIActions:
         """
         for element in elements:
             element.setEnabled(True)
-
-
 
     @classmethod
     def disable_and_clear(cls, elements):

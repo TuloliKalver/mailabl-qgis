@@ -14,6 +14,7 @@ from ..Common.app_state import PropertiesProcessStage
 from ..utils.LayerFeaturehepers import LayerFeaturehepers
 from ..queries.python.property_data import MyLablChecker, UpdateData
 from ..utils.ArchiveLayerHandler import ArchiveLayerHandler
+from ..utils.ProgressHelper import ProgressDialogModern
 
 class AddProperties:
     test = "test"
@@ -47,8 +48,8 @@ class AddProperties:
         
         #print("stage load layers")
         LayerFilterSetters._copy_layer_filter_by_preassigned_layers()
-        target_cadastrals = LayerProcessHandlers.get_comparison_fields_list_and_element_ids(field_name=field,layer=target_layer_from_mappings)
-        active_cadastrals = LayerProcessHandlers.get_comparison_fields_list_and_element_ids(field_name=field, layer=active_layer)
+        target_cadastrals = LayerProcessHandlers._get_comparison_fields_list_and_element_ids(field_name=field,layer=target_layer_from_mappings)
+        active_cadastrals = LayerProcessHandlers._get_comparison_fields_list_and_element_ids(field_name=field, layer=active_layer)
 
         #print("stage compare layers")
         # Convert keys to sets for comparison
@@ -62,8 +63,8 @@ class AddProperties:
         # Retrieve element IDs corresponding to the missing keys (note the swap):
         not_available_anymore_ids = [target_cadastrals[key] for key in not_available_anymore]
         missing_in_active_ids = [active_cadastrals[key] for key in missing_in_active]
-        #print(f"to be archived {not_available_anymore_ids}")
-        #print(f"to be added {missing_in_active_ids}")
+        print(f"to be archived {not_available_anymore_ids}")
+        print(f"to be added {missing_in_active_ids}")
 
         
         if not_available_anymore:
@@ -79,7 +80,7 @@ class AddProperties:
                 LayerManager.add_layer_to_sandbox_group(sandbox_layer)
                 gc.collect()  # Force garbage collection
             else:
-                nex_id=fidOperations.get_next_fid(target_layer=sandbox_layer)
+                nex_id=fidOperations._get_next_fid(target_layer=sandbox_layer)
                 LayerSetups.register_layer_configuration(sandbox_layer,max_fid=nex_id)
             
             for feat_to_archive in not_available_anymore_ids:
@@ -90,10 +91,15 @@ class AddProperties:
                                                                                    target_layer=sandbox_layer,
                                                                                    delete_input_data=True,
                                                                                    commit=False)
+                if result:    
+                    archive_features = LayerProcessHandlers._get_features_or_IDs_from_layer(sandbox_layer, return_ids_only=True)
+                    
+                    print(f"archived features: {archive_features}")
+                    
             gc.collect()  # Force garbage collection
             archive_layer_name = MailablLayerNames.ARCHIVE_LAYER_NAME
             archive_layer = ArchiveLayerHandler.resolve_or_create_archive_layer(target_layer_from_mappings, archive_layer_name)
-            res = AddProperties.store_to_archive_PROCESS(archive_layer, feat_to_archive )
+            res = AddProperties.store_to_archive_PROCESS(archive_layer, archive_features, sandbox_layer)
             if res:
                 LayerManager.remove_existing_layer(sandbox_layer_name)
                 #MessageLoaders.show_message('Tehtud', f"Arhiveeritud id: {feat_to_archive}")
@@ -105,7 +111,6 @@ class AddProperties:
                                                   layer=active_layer)
             #print(f"Missing in active ids: {missing_in_active_ids}")
             max_items = len(missing_in_active)
-            from ..utils.ProgressHelper import ProgressDialogModern
             heading = "Salvestamine"
             progress = ProgressDialogModern(maximum=max_items, title=heading)
 
@@ -133,7 +138,7 @@ class AddProperties:
         
          
     @staticmethod
-    def store_to_archive_PROCESS(arvhive_layer: QgsVectorLayer, features:int) -> bool: 
+    def store_to_archive_PROCESS(arvhive_layer: QgsVectorLayer, features:int, archive_memory_layer) -> bool: 
         """
         Stores the archive memory layer to file and then removes the temporary archive memory layer.
         
@@ -148,9 +153,8 @@ class AddProperties:
                 False otherwise.
         """
 
-        active_layer = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if not info.get('activated')), None)
+        #active_layer = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if not info.get('activated')), None)
         
-        archive_memory_layer = DuplicateLayerResolver.resolve_duplicate_layers_auto(layer_name=MailablLayerNames.SANDBOX_LAYER)
 
         print(f"Archive memory layer: {archive_memory_layer}")
         if archive_memory_layer is None:
@@ -161,7 +165,7 @@ class AddProperties:
             if archive_memory_layer.isValid():
                 #print(f"active_layer: {active_layer}")
                 LayerFilterSetters._move_feature_data_and_geometry_between_layers(
-                input_layer=active_layer,
+                input_layer=archive_memory_layer,
                 feature_id=features,
                 target_layer=arvhive_layer,
                 delete_input_data=False,

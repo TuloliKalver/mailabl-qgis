@@ -3,7 +3,8 @@ from qgis.core import QgsVectorLayer # type: ignore
 from typing import List, Optional
 from ..KeelelisedMuutujad.MaaAmetFieldFormater import format_field
 from ..Common.app_state import PropertiesProcessStage
-
+from ..utils.LayerHelpers import LayerProcessHandlers
+            
 
 class MapToolsHelper:
     @staticmethod
@@ -107,12 +108,17 @@ class MapToolsHelper:
         else:
             layer.removeSelection()
             layer.selectByIds(feature_ids)
-        
-        if refresh:
-            iface.mapCanvas().refresh()
-        
+            
         if zoom_to:
             iface.mapCanvas().zoomToSelected(layer)
+            
+            
+            #features = LayerProcessHandlers._get_all_features_from_layer(layer)
+            #LayerProcessHandlers.zoom_to_features_in_layer(features=features, layer=layer)
+
+        if refresh:
+            iface.mapCanvas().refresh()
+
     @staticmethod
     def validate_active_layer(layer):
         """

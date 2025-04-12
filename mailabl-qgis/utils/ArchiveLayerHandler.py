@@ -1,21 +1,17 @@
-from qgis.core import QgsProject, QgsVectorLayer
+import gc
+import os
+
 from qgis.core import (
     QgsFields, QgsVectorFileWriter, QgsWkbTypes,
-    QgsCoordinateReferenceSystem, QgsProject
+    QgsCoordinateReferenceSystem, QgsProject, QgsVectorLayer
 )
-import os
-from typing import List, Tuple, Optional
-from qgis.core import QgsVectorLayer, QgsVectorLayerExporter, QgsProject,  QgsVectorFileWriter
-
 from osgeo import ogr
-from qgis.utils import iface 
-from qgis.core import QgsVectorLayer
 
 from typing import Optional
+
 from ..utils.LayerHelpers import LayerSchemas
 from ..utils.Logging.Logger import TracebackLogger
-from ..config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
-
+from ..config.settings import Filepaths, FilesByNames
 from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
 
 
@@ -180,7 +176,7 @@ class ArchiveLayerHandler:
 
         # 3. Create new layer in GPKG
         print("⚠️ Archive layer not found — creating new one.")
-        fields, geometry_type, crs = LayerSchemas.extract_layer_schema(source_layer)
+        fields, geometry_type, crs = LayerSchemas._extract_layer_schema(source_layer)
 
         created = GPKGHelpers.create_empty_gpkg_layer(
             gpkg_path=gpkg_path,
@@ -199,5 +195,5 @@ class ArchiveLayerHandler:
         new_layer = GPKGHelpers.load_layer_from_gpkg(gpkg_path, archive_layer_name, group_name=MailablGroupFolders.ARCHIVED_PROPERTIES)
         add_style = Filepaths.get_style(FilesByNames().Archived_layer)
         new_layer.loadNamedStyle(add_style)
-
+        gc.collect()
         return new_layer

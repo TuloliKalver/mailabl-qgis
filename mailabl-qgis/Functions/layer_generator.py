@@ -27,11 +27,9 @@ from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAu
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
 from ..utils.messagesHelper import ModernMessageDialog
-from ..utils.LayerHelpers import fidOperations
+from ..utils.LayerHelpers import fidOperations, DuplicateLayerResolver
 from ..utils.Logging.Logger import TracebackLogger
 from .LayerGeneratorHelper import ArchiveOptionBuilder
-
-
 
 
 
@@ -420,8 +418,9 @@ class LayerManager:
         layers = QgsProject.instance().mapLayersByName(layer_name)
         if layers:
             if len(layers) > 1:
-                print(f"Warning: More than one layer exists with the name '{layer_name}'. Using the first one.")
-            return layers[0]
+                layer = DuplicateLayerResolver._resolve_duplicate_layers_auto(layer_name=MailablLayerNames.SANDBOX_LAYER)
+
+            return layers
         return None 
         
 
@@ -448,7 +447,7 @@ class LayerManager:
         memory_layer.setExtent(base_layer.extent())
         memory_layer.setCrs(base_layer.crs())
 
-        nex_id=fidOperations.get_next_fid(target_layer=memory_layer)
+        nex_id=fidOperations._get_next_fid(target_layer=memory_layer)
         LayerSetups.register_layer_configuration(memory_layer,max_fid=nex_id)
         
         return memory_layer
@@ -513,7 +512,7 @@ class LayerManager:
         
         LayerSetups.register_layer_configuration(
             layer, 
-            max_fid=fidOperations.get_current_max_fid(target_layer=layer)
+            max_fid=fidOperations._get_current_max_fid(target_layer=layer)
         )
         
         # Check if the archiving (append) process was successful.

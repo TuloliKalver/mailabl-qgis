@@ -38,7 +38,7 @@ class GeopakagegeHandler:
 
         # Zoom + select
         from ..utils.LayerHelpers import LayerProcessHandlers
-        LayerProcessHandlers.zoom_to_features_extent(matching_features)
+        LayerProcessHandlers._zoom_to_features_extent(matching_features)
         source_layer.selectByIds([f.id() for f in matching_features])
 
         # Resolve archive layer

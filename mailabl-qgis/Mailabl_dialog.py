@@ -28,7 +28,6 @@ from .app.ui_controllers import FrameHandler, WidgetAnimator, AlterContainers
 from .app.button_connector import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
 
 from .Common.app_state import PropertiesProcessStage, Processes
-from .Common.ChaceHelpers import CacheUpdater
 
 from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.SetupModules.SetupMainLayers import SetupCadastralLayers
@@ -115,11 +114,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 #################################################################################################################
 
 
-
-
-
-
-
         # Set this dialog as the main dialog for ButtonHelper
         ButtonHelper.set_dialog(self)
         ListSelectionHandler.set_dialog(self)
@@ -146,8 +140,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pmbc.button_controller()
         self.smbc.button_controller()
-
-
 
 
         self.return_pressed_manager.setup_connections_to_handle_return()
@@ -194,14 +186,21 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             button.clicked.connect(function)
 #############################TESTING AREA################################################################
 
-        self.list_widgets_with_signals = {
-            self.lvCounty: self.get_connected_signal,
-            self.lvState: self.get_connected_signal,
-            self.lvSettlement: self.get_connected_signal
-        }
 
-        for list_widget, function in self.list_widgets_with_signals.items():
-            list_widget.itemSelectionChanged.connect(function)
+############################# WRONG SIGNAL CoNNECTIONS ##########################################################
+        #self.list_widgets_with_signals = {
+        #    self.lvCounty: self.get_connected_signal,
+        #    self.lvState: self.get_connected_signal,
+        #    self.lvSettlement: self.get_connected_signal
+        #}
+
+#        for list_widget, function in self.list_widgets_with_signals.items():
+#            list_widget.itemSelectionChanged.connect(function)
+
+
+
+######################################################################
+
 
         self.chkSelectAllSettlements.stateChanged.connect(self.on_toggle_all_with_list)
         self.chkToggleRoadSelection.stateChanged.connect(self.on_toggle_select_only_non_transport_properties)
@@ -760,20 +759,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 #########################################################################################################################
 
-    def get_connected_signal(self):
-        listWidgets = [self.lvCounty, self.lvState, self.lvSettlement]
-        for widget in listWidgets:
-            widget.setEnabled(False)
-        element = self.sender()
-        CacheUpdater.update_slected_items_cache(element)
-        
-        UI = UIStateManager(self)
-        
-        UI.flow_and_ui_controls()
-
-        for widget in listWidgets:
-            widget.setEnabled(True)
-
 
     def on_toggle_all_with_list(self, state):
         checkbox = self.sender()
@@ -811,6 +796,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 feature_ids = TableHelper.get_selected_feature_ids_from_table_model(widget)
                 MapToolsHelper.select_features_by_ids(feature_ids=feature_ids, zoom_to=True)
                 checkbox.setText("Eemalda tranpordimaa valikust")
+
+
+
+################################Test AREA ##########################
+
+
+
 
     @staticmethod
     def see_loaded_layers():

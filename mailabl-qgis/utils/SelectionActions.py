@@ -39,6 +39,9 @@ class SelectionActions:
     @classmethod
     def cancel_selection(cls):
         """Handle process cancellation and cleanup."""
+        UI = UIStateManager(cls.dialog)
+        UI.disconnect_list_signals()
+
         if PropertiesProcessStage.active_process:
             process = PropertiesProcessStage.active_process.get("process")
             button = PropertiesProcessStage.active_process.get("button")
@@ -51,14 +54,14 @@ class SelectionActions:
             if button:
                 button.setEnabled(True)
         PropertiesProcessStage.current_flow_stage = FlowStages.COMPLETE
-        #cls._reset_previous_process()
-        UI = UIStateManager(cls.dialog)
-        UI.flow_and_ui_controls()
+
         PropertiesProcessStage.clear_all_app_states()
         cls.dialog.lblActionName.setText('Vali mida sa kinnistutega teha tahad')
         layer_name =  StoredLayers.users_properties_layer_name()
         LayerFilterSetters._reset_layer(layer_name)
-        
+        shape_layer_name = StoredLayers.import_layer_name()
+        print(f"shape_layer_name: {shape_layer_name}")
+        LayerFilterSetters._reset_layer(shape_layer_name)
 
         
 
@@ -102,14 +105,13 @@ class SelectionActions:
         progress.update(text1="Palun oota...")
 
         # Step 1: Reset previous process and update basic UI state.
-        self._reset_previous_process()
+        #self._reset_previous_process()
         selected_button.setEnabled(False)
         frames = [self.dialog.FrMunicipality,self.dialog.FrState,
                         self.dialog.FRCounty, self.dialog.frResultViewer,
                         self.dialog.frControllButtons]
         for frame in frames:
             frame.show()
-
 
         PropertiesProcessStage.active_process = {"process": planned_process, "button": selected_button}
         self.label.setText(planned_process)
@@ -126,15 +128,17 @@ class SelectionActions:
 
         if planned_process in [add, edit]:
             ui_state.flow_and_ui_controls()
-
+            ui_state.connect_list_signals()
 
             layers_config = [
                 {"name": Layers_NEED_CENTRALIZING.IMPORT_LAYER_NAME, "activated": True, "cleanup": True},
                 {"name": Layers_NEED_CENTRALIZING.USER_LAYER_NAME, "activated": False, "cleanup": False}
             ]
 
+
             print (f"layers config is {layers_config}")
         elif planned_process == remove:
+            ui_state.connect_list_signals()
             ui_state.flow_and_ui_controls()
             layers_config = [
                 {"name": Layers_NEED_CENTRALIZING.USER_LAYER_NAME, "activated": True, "cleanup": True}
@@ -149,7 +153,7 @@ class SelectionActions:
             return
         progress.update(value=2, maximum=progres_steps)
         # Step 3: Load layers.
-        if not LayerProcessHandlers.load_and_handle_layers(layers_config):
+        if not LayerProcessHandlers._load_and_handle_layers(layers_config):
             selected_button.setEnabled(True)
             PropertiesProcessStage.active_process = None
             progress.close()
@@ -171,7 +175,8 @@ class SelectionActions:
             map_item_list = MapDataFlowHelper.get_sorted_unique_values_from_filtered_layer(
                                                                                     field=field,
                                                                                     expression=expression,
-                                                                                    zoom_to=True)
+                                                                                    zoom_to=False,
+                                                                                    select=False)
             WidgetAndWievHelpers.reset_and_set_data(elements=self.dialog.lvCounty, data=map_item_list)
             
         progress.update(value=5, maximum=progres_steps)

@@ -1,65 +1,64 @@
 import gc
 from PyQt5.QtCore import QCoreApplication
+from qgis.core import QgsFeatureRequest
 from ...queries.python.property_data import deleteProperty
 from ...KeelelisedMuutujad.messages import Headings
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ...utils.LayerFeaturehepers import LayerFeaturehepers
 from ...queries.python.property_data import MyLablChecker
-from ...utils.LayerHelpers import LayerProcessHandlers
+from ...Common.app_state import PropertiesProcessStage
+from ...utils.ProgressHelper import ProgressDialogModern
+
 
 pealkiri = Headings()
 
 class ReomoveProcessController:
     @staticmethod
     def reomve_process_controller(delete_anyway = False):
-        from ...Common.app_state import PropertiesProcessStage
         active_layer = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if info.get('activated')), None)
-        tunnus = Katastriyksus.tunnus
-
-        features = LayerProcessHandlers._get_selected_objects_from_layer(active_layer)
-        #print(f"features: {features}")
-        if not features:
-            print("No features selected.")
+        if not active_layer or not active_layer.selectedFeatureCount():
+            print("❌ No features selected.")
             return False
-        from ...utils.ProgressHelper import ProgressDialogModern
-        heading = "Eemaldamine"
-        max_items = len(features)
-        progress = ProgressDialogModern(maximum=max_items, title=heading)
-        count = 1
-        for feature in features:
+
+        field_name = Katastriyksus.tunnus
+        selected_ids = active_layer.selectedFeatureIds()
+
+        heading = "Kinnistute eemaldamine..."
+        progress = ProgressDialogModern(maximum=len(selected_ids), title=heading)
+
+        for count, fid in enumerate(selected_ids, start=1):
             progress.update(value=count)
-            layer_data = LayerFeaturehepers._get_feature_attributes_as_dict(feature=feature)
-            #print (f"layer_data: {layer_data}")
-            tunnus = layer_data.get(Katastriyksus.tunnus)
-            #print (f"Tunnus: {tunnus}")            
+
+            # Use feature request to only pull the single feature
+            feature = next(active_layer.getFeatures(QgsFeatureRequest(fid)), None)
+            if not feature:
+                print(f"⚠️ Feature ID {fid} not found.")
+                continue
+
+            tunnus = feature[field_name]
             res, data = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
-            #print(f"res: {res}" )
-            #print(f"data: {data}")
-            # If a duplicate is found
+
             delete_successful = False
-            if res is False:
-                print("Duplicate found!")
+            if res is False and data:
+                print(f"🟠 item {tunnus} found in Mylabl")
                 node_ids = [entry['node']['id'] for entry in data]
 
-                # ✅ Try deleting from SaaS first
                 delete_successful = True
                 for item in node_ids:
                     result = deleteProperty.delete_single_item(item)
                     if not result:
-                        #print(f"❌ Failed to delete item {item} from SaaS")
+                        print(f"❌ SaaS deletion failed for {item}")
                         delete_successful = False
-                        break  # Optional: stop processing if any SaaS deletion fails
+                        break
 
-            # ✅ Only delete from QGIS layer if SaaS deletion worked
             if delete_successful or delete_anyway:
                 delete_res = LayerFeaturehepers._delete_feature_object(feature=feature, layer=active_layer)
                 if not delete_res:
-                    print(f"⚠️ Failed to delete feature from local layer")
+                    print(f"⚠️ Failed to delete feature {fid} from local layer")
 
-            count += 1
             gc.collect()
 
         gc.collect()
         progress.close()
-        QCoreApplication.processEvents()       
+        QCoreApplication.processEvents()
         return True

@@ -2,7 +2,7 @@
 
 from qgis.core import QgsVectorLayer, QgsFields, QgsWkbTypes, QgsCoordinateReferenceSystem
 from typing import Tuple
-
+from PyQt5.QtCore import QCoreApplication
 
 import gc
 from typing import Optional, Any, List
@@ -22,9 +22,39 @@ from ..queries.python.property_data import MyLablChecker
 
 
 
-class LayerSchemas:
+class FeatuerHelpers:
+    @staticmethod
+    def fast_collect_unique_values_and_ids(layer: QgsVectorLayer, field_index: int, progress=None):
+        unique_values = set()
+        feature_ids_append = feature_ids = []
 
-    def extract_layer_schema(layer: QgsVectorLayer) -> Tuple[QgsFields, QgsWkbTypes.Type, QgsCoordinateReferenceSystem]:
+        feature_ids_append = feature_ids.append  # Local var for faster access
+        add_value = unique_values.add            # Local var for faster access
+
+        features = layer.getFeatures()
+        total = layer.featureCount()
+
+        for idx, feature in enumerate(features):
+            try:
+                add_value(feature[field_index])
+                feature_ids_append(feature.id())
+            except Exception as e:
+                print(f"Skipping feature {feature.id()}: {e}")
+
+            if progress:
+                progress.update(value=idx)
+                if idx % 10 == 0:  # Don’t call this every iteration — only every few
+                    QCoreApplication.processEvents()
+
+        if progress:
+            progress.update(value=total)
+
+        return unique_values, feature_ids
+
+
+class LayerSchemas:
+    @staticmethod
+    def _extract_layer_schema(layer: QgsVectorLayer) -> Tuple[QgsFields, QgsWkbTypes.Type, QgsCoordinateReferenceSystem]:
         """
         Extracts the schema (fields, geometry type, CRS) from a given vector layer.
 
@@ -44,10 +74,9 @@ class LayerSchemas:
 
         return fields, geometry_type, crs
 
-
 class DuplicateLayerResolver:
     @staticmethod
-    def resolve_duplicate_layers(layer_name):
+    def _resolve_duplicate_layers(layer_name: str):
         """
         Resolves duplicate layers by letting the user choose which one to keep.
         Each layer with the given name is activated in turn and the user is prompted
@@ -105,7 +134,7 @@ class DuplicateLayerResolver:
         return final_keep
     
     @staticmethod
-    def resolve_duplicate_layers_auto(layer_name: str):
+    def _resolve_duplicate_layers_auto(layer_name: str):
         """
         Automatically resolves duplicate layers by keeping the first layer with the specified name
         and removing all other duplicates. A summary message is displayed at the end.
@@ -139,9 +168,10 @@ class DuplicateLayerResolver:
                                 f"Kept layer: '{kept_layer.name()}'.")
         return kept_layer
 
+################################################################################################################
 class LayerProcessHandlers:
     @classmethod
-    def load_and_handle_layers(cls, layers_info):
+    def _load_and_handle_layers(cls, layers_info):
         """
         Load multiple layers based on the provided configuration.
         Each dictionary in layers_info should have:
@@ -158,7 +188,7 @@ class LayerProcessHandlers:
             cleanup = info.get(MainVariables.CLEANUP, False)
             #print(f"Loading layer: {layer_name}. Activate: {activate}, Cleanup: {cleanup}")
             layer = LayerSetups.load_layer_with_activation_option(layer_name, activate=activate)
-            max_fid = fidOperations.get_next_fid(target_layer=layer)
+            max_fid = fidOperations._get_next_fid(target_layer=layer)
             if not layer:
                 MessageLoaders.layername_error(layer_name)
                 return False
@@ -171,7 +201,7 @@ class LayerProcessHandlers:
         return True
     
     @staticmethod
-    def set_or_reset_fid(layer_name, max_fid=None):
+    def _set_or_reset_fid(layer_name, max_fid=None):
         # Find the layer by name.
         layer = QgsProject.instance().mapLayersByName(layer_name)
         if layer:
@@ -179,7 +209,7 @@ class LayerProcessHandlers:
         LayerSetups.register_layer_configuration(layer=layer, max_fid=max_fid)
         
     @staticmethod
-    def get_comparison_fields_list_and_element_ids(field_name, layer):
+    def _get_comparison_fields_list_and_element_ids(field_name: List[str], layer: QgsVectorLayer):
         """
         Retrieve non-null field values and their corresponding element IDs from a QGIS layer,
         and combine them in a dictionary for easy lookup.
@@ -205,7 +235,7 @@ class LayerProcessHandlers:
         return field_value_to_id
 
     @staticmethod
-    def zoom_to_features_in_layer(features: List[QgsFeature], layer: QgsVectorLayer) -> None:
+    def _zoom_to_features_in_layer(features: List[QgsFeature], layer: QgsVectorLayer) -> None:
         """
         Selects the given features in a layer and zooms the map canvas to them.
 
@@ -221,7 +251,7 @@ class LayerProcessHandlers:
         iface.mapCanvas().zoomToSelected(layer)
 
     @staticmethod
-    def zoom_to_features_extent(features: List[QgsFeature]) -> None:
+    def _zoom_to_features_extent(features: List[QgsFeature]) -> None:
         """
         Zooms to the combined extent of the given features without selecting them.
 
@@ -262,8 +292,6 @@ class LayerProcessHandlers:
         iface.mapCanvas().setExtent(extent)
         iface.mapCanvas().refresh()
 
-
-
     @staticmethod
     def _get_selected_elemntsID_from_layer(layer: QgsVectorLayer):
         selected_features = []
@@ -283,6 +311,36 @@ class LayerProcessHandlers:
             print("No objects were selected.")
             return []
         return selected_objects
+
+
+    @staticmethod
+    def _get_all_features_from_layer(layer: QgsVectorLayer) -> List[QgsFeature]:
+        """
+        Returns a list of all feature objects from the given QgsVectorLayer.
+
+        :param layer: The QgsVectorLayer to read from.
+        :return: List of QgsFeature objects.
+        """
+ 
+        return [feature for feature in layer.getFeatures()]
+    
+    @staticmethod
+    def _get_features_or_IDs_from_layer(layer: QgsVectorLayer, return_ids_only: bool = False) -> list[Any]:
+        """
+        Retrieve either all feature IDs or all QgsFeature objects from a layer.
+
+        :param layer: The QgsVectorLayer to read from.
+        :param return_ids_only: If True, return feature IDs instead of QgsFeature objects.
+        :return: List of feature IDs or QgsFeature objects.
+        """
+        if not layer or not layer.isValid():
+            print("Invalid layer provided.")
+            return []
+
+        if return_ids_only:
+            return [feature.id() for feature in layer.getFeatures()]
+        else:
+            return [feature for feature in layer.getFeatures()]
 
 class LayerFilterSetters:
     @staticmethod
@@ -308,7 +366,7 @@ class LayerFilterSetters:
         target_layer = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if not info.get('activated')), None)
         expression = Expressions.clear
         target_layer.setSubsetString(expression)
-
+    @staticmethod
     def _reset_layer(layer_name: str, set_visible=True):
         layer = QgsProject.instance().mapLayersByName(layer_name)[0]
         if set_visible:
@@ -338,6 +396,8 @@ class LayerFilterSetters:
         """
 
         # Ensure we're working with valid layers
+        
+        
         new_feature = LayerFeaturehepers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
 
         # Add the new feature to the target layer
@@ -375,53 +435,10 @@ class LayerFilterSetters:
             else:
                 print ("Duplicate found!")
 
-    @staticmethod
-    def _select_target_features_based_on_temporary_archived_elements(target_layer, archive_layer, connection_field):
-        """
-        Select features in the target_layer based on connection values (e.g., source_id)
-        found in the archive_layer.
-        
-        :param target_layer: QgsVectorLayer - the target layer in which to select features.
-        :param archive_layer: QgsVectorLayer - the archive layer that holds moved features.
-        :param connection_field: str - the field name used to connect features between layers.
-        """
-        # Collect unique connection values from the archived layer.
-        connection_values = set()
-        features = archive_layer.getfeatures()
-        # Check if the features list is empty
-        if len(features) == 0:
-            print("no features found")
-            return False
-        else:
-            for feat in archive_layer.getFeatures():
-                val = feat[connection_field]
-                if val is not None:
-                    connection_values.add(val)
-            
-            if not connection_values:
-                print("No connection values found in the archive layer.")
-                return None
-
-        # Determine if the connection field is text or numeric based on a sample value.
-        sample_value = next(iter(connection_values))
-        if isinstance(sample_value, str):
-            # Wrap text values in single quotes.
-            values_list = ", ".join(f"'{val}'" for val in connection_values)
-        else:
-            values_list = ", ".join(map(str, connection_values))
-        
-        # Build the expression for selection. Note the use of double quotes around the field name.
-        expression = f"\"{connection_field}\" IN ({values_list})"
-        #print(f"Selecting features in target layer using expression: {expression}")
-
-        # Apply the selection on the target layer.
-        target_layer.selectByExpression(expression)
-        return values_list, True
-
 
 class fidOperations:
     @staticmethod
-    def get_current_max_fid(target_layer: QgsVectorLayer) -> Optional[int]:
+    def _get_current_max_fid(target_layer: QgsVectorLayer) -> Optional[int]:
         """
         Retrieves the current maximum 'fid' value from the attribute field,
         ignoring any subset filters or layer-level filters.
@@ -455,7 +472,7 @@ class fidOperations:
         return int(max_fid) if max_fid is not None else None
 
     @staticmethod
-    def get_next_fid(target_layer: QgsVectorLayer, starting_fid: int = 1) -> int:
+    def _get_next_fid(target_layer: QgsVectorLayer, starting_fid: int = 1) -> int:
         """
         Computes the next available unique feature ID for the target_layer using the
         current maximum fid. If no valid 'fid' values are found, returns starting_fid.
@@ -469,7 +486,7 @@ class fidOperations:
             int: The next available unique feature ID.
         """
         # Retrieve the current maximum fid using the helper function.
-        current_max_fid = fidOperations.get_current_max_fid(target_layer)
+        current_max_fid = fidOperations._get_current_max_fid(target_layer)
         
         if current_max_fid is None:
             # No valid fid values found; return the starting fid.

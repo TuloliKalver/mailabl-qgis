@@ -111,7 +111,7 @@ class ArchiveOptionBuilder:
         features = list(memory_layer.getFeatures())
 
         # Step 4: Get the current maximum feature ID and determine the next ID.
-        current_max_fid = fidOperations.get_next_fid(target_layer=target_layer)
+        current_max_fid = fidOperations._get_next_fid(target_layer=target_layer)
         max_fid = current_max_fid + 1
 
         # Step 5: Update each feature with a backup timestamp and new feature ID.

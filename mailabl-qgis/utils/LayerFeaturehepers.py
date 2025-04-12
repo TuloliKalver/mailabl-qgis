@@ -1,6 +1,6 @@
 import re
 import gc
-from typing import List
+from typing import List, Optional
 from qgis.PyQt.QtCore import QVariant
 
 from qgis.core import (
@@ -57,7 +57,7 @@ class LayerFeaturehepers:
 
     @staticmethod
     def _get_layer_fetaures_by_id(layer: QgsVectorLayer, feature_id: int) -> QgsFeature:
-
+        print(f"🔍 Searching for feature ID {feature_id} in layer '{layer.name()}'.")
         request = QgsFeatureRequest().setFilterFids([feature_id])
         feature = next(layer.getFeatures(request), None)
 
@@ -66,6 +66,35 @@ class LayerFeaturehepers:
         print(f"⚠️ Feature ID {feature_id} not found.")
         return None
     
+
+
+    @staticmethod
+    def _get_layer_features_by_id(layer: QgsVectorLayer, feature_id: int) -> Optional[QgsFeature]:
+        """
+        Returns the feature by ID from the given layer. Safe against memory layer quirks.
+        """
+
+        try:
+            request = QgsFeatureRequest().setFilterFid(feature_id)
+            feature_iter = layer.getFeatures(request)
+            feature = next(feature_iter, None)
+            if feature is None:
+                print(f"❌ Feature ID {feature_id} not found in layer '{layer.name()}'.")
+            return feature
+        except Exception as e:
+            print(f"🚨 Error while fetching feature ID {feature_id} from layer '{layer.name()}': {e}")
+            return None
+
+
+
+
+
+
+
+
+
+
+
     @staticmethod
     def _get_feature_attributes_as_dict(feature: QgsFeature) -> dict:
         return {field.name(): feature[field.name()] for field in feature.fields()}
@@ -187,7 +216,7 @@ class LayerFeaturehepers:
         #print(new_attrs)
         
         from ..utils.LayerHelpers import fidOperations
-        max_fid = fidOperations.get_next_fid(layer)
+        max_fid = fidOperations._get_next_fid(layer)
         #print(max_fid)
         # Set the value for the 'fid' field if it exists
         fid_index = target_fields.indexOf("fid")
