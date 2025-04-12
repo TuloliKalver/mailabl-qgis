@@ -303,14 +303,14 @@ class LayerProcessHandlers:
         return selected_features
 
 
-    def _get_selected_objects_from_layer(layer: QgsVectorLayer):
-        selected_objects = []
+    def _get_selected_features_from_layer(layer: QgsVectorLayer):
+        features = []
         for feature in layer.selectedFeatures():
-            selected_objects.append(feature)
-        if not selected_objects:
+            features.append(feature)
+        if not features:
             print("No objects were selected.")
             return []
-        return selected_objects
+        return features
 
 
     @staticmethod

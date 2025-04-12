@@ -19,61 +19,6 @@ class MapDataFlowHelper:
         """Sets the main dialog reference for ButtonHelper."""
         MapDataFlowHelper.dialog = main_dialog
 
-    @classmethod
-    def get_sorted_unique_values_from_filtered_layer_old(cls, field, 
-                                                    expression, 
-                                                    refresh_layer=False, 
-                                                    zoom_to=False,
-                                                    select=False):
-        """
-        Filters the active layer using an expression, then returns sorted unique
-        values for a given field, with optional selection and zoom.
-
-        Args:
-            field (str): Field name to extract from.
-            expression (str): Filter expression to apply.
-            refresh_layer (bool): Trigger repaint or refresh.
-            zoom_to (bool): Zoom to filtered features.
-            select (bool): Select filtered features.
-
-        Returns:
-            list: Sorted unique values from filtered results.
-        """
-
-        layer = PropertiesProcessStage.active_layer
-        if not MapToolsHelper.validate_active_layer(layer):
-            print("❌ Layer validation failed.")
-            return []
-
-        progress = ProgressDialogModern(title=f"Andmete laadimine...{field}", value=0)
-        progress.update(1, text1="Palun oota...")
-
-        if refresh_layer:
-            layer.triggerRepaint()
-
-        # Apply expression
-        print(f"Applying expression: {expression} on layer '{layer.name()}'")
-        MapToolsHelper.apply_subset_expression(layer=layer, expression=expression)
-
-        # Extract field index
-        field_index = MapToolsHelper.get_field_indices_for_single_field(layer, field)
-
-        # Get unique values and matching feature IDs
-        unique_values, feature_ids = FeatuerHelpers.fast_collect_unique_values_and_ids(
-            layer=layer,
-            field_index=field_index,
-            progress=progress
-        )
-
-        if select:
-            MapToolsHelper.select_features_by_ids(feature_ids=feature_ids, zoom_to=zoom_to)
-
-        progress.update(value=layer.featureCount())
-        progress.close()
-        gc.collect()
-
-        return sorted(unique_values)  # Or: return sorted(unique_values), feature_ids
-
 
     @classmethod
     def get_sorted_unique_values_from_filtered_layer(cls, field: str, expression: str,
@@ -97,15 +42,23 @@ class MapDataFlowHelper:
             print("❌ Layer validation failed.")
             return []
 
-        progress = ProgressDialogModern(title=f"Andmete laadimine...{field}", value=0)
+        field_index = layer.fields().indexFromName(field)
+        progress = ProgressDialogModern(title=f"Andmete laadimine...{field}", maximum=5)
         progress.update(1, text1="Palun oota...")
 
         if refresh_layer:
             layer.triggerRepaint()
 
-        # ✅ Build expression or skip if empty
+        # 🚀 Optimization: no filter, no zoom, no selection → use uniqueValues()
+        if not expression.strip() and not zoom_to and not select:
+            #print(f"⚡ Fast path: using layer.uniqueValues() for field '{field}'")
+            progress.update(5)
+            progress.close()
+            return sorted(layer.uniqueValues(field_index))
+
+        # Otherwise use request-based filtering
         if expression.strip():
-            print(f"🔍 Applying filter: {expression}")
+            #print(f"🔍 Applying filter: {expression}")
             exp = QgsExpression(expression)
             if exp.hasParserError():
                 print(f"❌ Expression parse error: {exp.parserErrorString()}")
@@ -113,30 +66,33 @@ class MapDataFlowHelper:
                 return []
             request = QgsFeatureRequest(exp)
         else:
-            print("⚠️ No expression applied. Fetching all features.")
+            #print("⚠️ No expression applied. Fetching all features.")
             request = QgsFeatureRequest()
 
-        # ✅ Optimize request
         request.setSubsetOfAttributes([field], layer.fields())
         if not zoom_to:
             request.setFlags(QgsFeatureRequest.NoGeometry)
 
         unique_values = set()
         feature_ids = []
+        collect_ids = select or zoom_to
 
+        progress.update(3)
         for feature in layer.getFeatures(request):
-            value = feature[field]
-            unique_values.add(value)
-            if select or zoom_to:
+            unique_values.add(feature[field])
+            if collect_ids:
                 feature_ids.append(feature.id())
 
+        progress.update(4)
         if select:
             MapToolsHelper.select_features_by_ids(feature_ids=feature_ids, zoom_to=zoom_to)
 
-        progress.update(value=layer.featureCount())
+        progress.update(5)
         progress.close()
         gc.collect()
+
         return sorted(unique_values)
+
 
 
 

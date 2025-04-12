@@ -110,11 +110,11 @@ class MapToolsHelper:
             layer.selectByIds(feature_ids)
             
         if zoom_to:
-            iface.mapCanvas().zoomToSelected(layer)
-            
+            #iface.mapCanvas().zoomToSelected(layer)
             
             #features = LayerProcessHandlers._get_all_features_from_layer(layer)
-            #LayerProcessHandlers.zoom_to_features_in_layer(features=features, layer=layer)
+            features = LayerProcessHandlers._get_selected_features_from_layer(layer)
+            LayerProcessHandlers._zoom_to_features_extent(features=features)
 
         if refresh:
             iface.mapCanvas().refresh()

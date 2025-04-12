@@ -167,7 +167,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.pbLoaddShapeFile:loader.load_shp_layer,
             self.pbOpenMaAmet:partial(loadWebpage.open_maa_amet_webpage_new),            
             self.btnMapActions: UI.start_properti_flow_main,
-            self.pbCancelPropertiesAction: self.exit_properties_process_flows
+            self.pbCancelPropertiesAction: UI.exit_properties_process_flows
         }
 
         for button, function in self.properties_actions.items():
@@ -186,16 +186,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             button.clicked.connect(function)
 #############################TESTING AREA################################################################
 
-
-############################# WRONG SIGNAL CoNNECTIONS ##########################################################
-        #self.list_widgets_with_signals = {
-        #    self.lvCounty: self.get_connected_signal,
-        #    self.lvState: self.get_connected_signal,
-        #    self.lvSettlement: self.get_connected_signal
-        #}
-
-#        for list_widget, function in self.list_widgets_with_signals.items():
-#            list_widget.itemSelectionChanged.connect(function)
 
 
 
@@ -810,14 +800,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         print("loaded layer settings are")
         print(stored_layers_settings)
         
-    def exit_properties_process_flows(self):
-        WorkSpaceHandler.swWorkSpace_Properties(self)
-        main_buttons = [self.pbHome, self.pbProjects, self.pbContracts, self.pbeasements, self.btnMapActions]
-        for button in main_buttons:
-            button.setEnabled(True)
-        widget = self.pbSettings_SliderFrame   
-        WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
-
 
     @staticmethod
     def test_property_archiving(self) -> bool:

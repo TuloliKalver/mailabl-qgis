@@ -57,6 +57,8 @@ class SelectionActions:
 
         PropertiesProcessStage.clear_all_app_states()
         cls.dialog.lblActionName.setText('Vali mida sa kinnistutega teha tahad')
+        
+        # Cleanup layers and reset states.
         layer_name =  StoredLayers.users_properties_layer_name()
         LayerFilterSetters._reset_layer(layer_name)
         shape_layer_name = StoredLayers.import_layer_name()
