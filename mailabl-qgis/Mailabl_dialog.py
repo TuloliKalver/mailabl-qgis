@@ -176,7 +176,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 ##############################TESTING AREA##############################################################
         self.test_buttons = {
             self.pbtest_2: self.test_property_archiving,
-            self.pushButton: self.test_gpkg_layer_deleting
+            self.pushButton: self.test_decision_tool
         }
 
         for button,_ in self.test_buttons.items():
@@ -793,12 +793,28 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
 
+    def test_decision_tool(self):
+        from .widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+        shp_layer_name ='kalver',
+            
+        choice = DecisionDialogHelper.ask_user(
+            title="Mõtte koht...",
+            message=f"Kas soovid {shp_layer_name} nimelise kihi \n oma Projektis veel kasutada? \n\n NB! Saad kihi alati ueesti laadida!",
+            parent=self
+        )
 
-    @staticmethod
-    def see_loaded_layers():
-        stored_layers_settings = PropertiesProcessStage.loaded_layers
-        print("loaded layer settings are")
-        print(stored_layers_settings)
+        print("made choice to:", choice)
+        if choice is False:
+            print("cancelled whole thing")
+            return
+
+        if choice is None:
+            print(f"user pressed cancel")
+            return  # ❌ User closed dialog — cancel exit entirely
+
+        if choice is True:  # ✅ Only delete if explicitly confirmed
+            print ("confirmed deletion")
+
         
 
     @staticmethod

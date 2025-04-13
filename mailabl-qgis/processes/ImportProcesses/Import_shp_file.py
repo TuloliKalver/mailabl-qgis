@@ -9,7 +9,9 @@ from ...utils.ProgressHelper import ProgressDialogModern
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...KeelelisedMuutujad.messages import Headings
 from ...utils.messagesHelper import ModernMessageDialog
- 
+from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+
+
 pealkiri = Headings()
 
 import_subgroup_layer_name = 'Imporditavad kinnistud'
@@ -44,9 +46,18 @@ class SHPLayerLoader:
 
                 ShapefileImporter.import_shp_file_as_memory_layer(file_path, imporditavad_group)
 
-                text = (f"Andmed on edukalt imporditud ja lisatud\n{import_subgroup_layer_name}\ngrupi kihile")
+       
+
+                text = (f"Fail {layer_name}.shp on imporditd\n\nLisasime selle gruppi \n\n{import_subgroup_layer_name}")
                 heading = pealkiri.infoSimple
-                ModernMessageDialog.Info_messages_modern(heading, text)
+                DecisionDialogHelper.ask_user(
+                    title=heading,
+                    message=text,
+                    options={"keep": "Jätka"
+                    },
+                    parent=self.dialog
+                )
+            
                 
                 save_setting = SettingsDataSaveAndLoad()
                 save_setting._save_SHP_layer_setting(self.label, layer_name)

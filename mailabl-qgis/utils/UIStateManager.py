@@ -12,6 +12,7 @@ from ..utils.ProgressHelper import ProgressDialogModern
 from ..utils.LayerHelpers import LayerFilterSetters
 from ..app.workspace_handler import CenterMainSliderIndexes, WorkSpaceHandler
 from ..app.ui_controllers import WidgetAnimator
+from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 
 
 class UIStateManager:
@@ -63,18 +64,18 @@ class UIStateManager:
 
     def exit_properties_process_flows(self):
         shp_layer_name = SettingsDataSaveAndLoad().load_SHP_inputLayer_name()
-        from ..widgets.decisionUIs.DecisionDialogHelper import DecisionDialogHelper
-
         choice = DecisionDialogHelper.ask_user(
-            title="Kihi eemaldamine",
-            message="Kas soovid selle kihi alles jätta või eemaldada?",
-            options={"keep": "Jäta alles", "delete": "Kustuta", "cancel": "Tühista"},
+            title="Mõtte koht...",
+            message=f"Kas soovid {shp_layer_name} nimelise \n alles jätta või eemaldada?",
             parent=self.dialog
         )
 
-        print("made choice to:", choice)
+        if choice is False:
+            print("cancelled whole thing")
+            return
 
         if choice is None:
+            print(f"user pressed cancel")
             return  # ❌ User closed dialog — cancel exit entirely
 
         if choice is True:  # ✅ Only delete if explicitly confirmed

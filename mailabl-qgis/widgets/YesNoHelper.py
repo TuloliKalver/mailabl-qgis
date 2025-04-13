@@ -10,7 +10,6 @@ model = QStandardItemModel()
 
 class Directories:
 
-        
     def load_ConfirmationUI():
         from ..config.settings import Filepaths, FilesByNames
         widget_name = Filepaths._get_widget_name(FilesByNames().WConfirmation)
