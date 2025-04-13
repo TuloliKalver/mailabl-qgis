@@ -5,29 +5,25 @@ from qgis.core import (
     QgsProject,
     QgsVectorLayer,
     QgsVectorFileWriter,
-    QgsFeature,
     QgsField,
     QgsWkbTypes,
     QgsCoordinateReferenceSystem,
-    QgsExpression,
-    QgsExpressionContext,
-    QgsExpressionContextUtils,
     QgsLayerTreeGroup,
 )
 
 from typing import Tuple, Optional, List
 
-from PyQt5.uic import loadUi
-from PyQt5.QtCore import QCoreApplication, QVariant
+from PyQt5.QtCore import QVariant
 from PyQt5.QtWidgets import QFileDialog
+
+from ..utils.fidOperationsHelper import fidOperations
 
 from ..utils.LayerSetups import LayerSetups
 from ..config.settings import Filepaths, FilesByNames, StoredLayers
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
-from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
 from ..utils.messagesHelper import ModernMessageDialog
-from ..utils.LayerHelpers import fidOperations, DuplicateLayerResolver
+from ..utils.LayerHelpers import DuplicateLayerResolver
 from ..utils.Logging.Logger import TracebackLogger
 from .LayerGeneratorHelper import ArchiveOptionBuilder
 
@@ -196,7 +192,6 @@ class LayerCopier():
     
         return f"{new_layer_name}-memory"
     
-    
     @staticmethod
     def user_folder_location_path():
         file_dialog = QFileDialog()
@@ -213,144 +208,6 @@ class LayerCopier():
             ModernMessageDialog.Info_messages_modern(heading,text)
         return None
     
-    
-    def generate_data_from_source(source_layer):
-        # Get the source layer
-        source_layer = QgsProject.instance().mapLayersByName(source_layer)[0]
-
-        # Check if the source layer is valid
-        if not source_layer:
-            print("Invalid source layer specified.")
-            return
-
-        # Get a sample feature from the source layer (you can modify this as needed)
-        sample_feature = next(source_layer.getFeatures())
-
-        # Create a dictionary to store generated data
-        generated_data = {}
-
-        # Generate data for each field based on the sample feature
-        for field in source_layer.fields():
-            field_name = field.name()
-
-            # Use the sample feature's value for the first feature found in the source layer
-            generated_data[field_name] = sample_feature[field_name]
-
-            # You can modify this part to generate different data if needed
-
-        return generated_data
-
-
-    def append_data(self,source_layer_name, target_layer_name):
-        # Get the source and target layers
-        #print(f"input layer: {source_layer_name}")
-        #print(f"target layer: {target_layer_name}")
-        
-        source_layer = QgsProject.instance().mapLayersByName(source_layer_name)[0]
-        target_layer = QgsProject.instance().mapLayersByName(target_layer_name)[0]
-        # Check if the layers are valid
-        if not source_layer or not target_layer:
-            print("Invalid layers specified.")
-            return
-        # Start editing the target layer
-        target_layer.startEditing()
-        # Select all features in the layer
-        source_layer.selectAll()
-        # Get selected features from the source layer
-        selected_features = source_layer.selectedFeatures()
-        #print(f"in 'append data' Total features: {len(selected_features)}")
-        
-        
-        if selected_features == 0:
-            text = HoiatusTexts().kinnistuid_ei_leidnud
-            heading = pealkiri.infoSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
-
-        count = 1
-        progress_widget = loadUi(widgets_path)
-        progress_bar = progress_widget.testBar
-        progress_widget.setWindowTitle(Headings().lisan_kinnistuid)
-        progress_bar.setMaximum(len(selected_features))
-        progress_bar.setValue(count)
-        progress_widget.show()
-
-        for source_feature in selected_features:
-            # Create a new feature for the target layer
-            #print(f"Loop {loop}")
-            new_feature = QgsFeature(target_layer.fields())
-            # Set data for each field from the source feature to the target feature
-            for field in target_layer.fields():
-                field_name = field.name()
-                # Check if the field exists in the source feature
-                if field_name in source_feature.fields().names():
-                    new_feature[field_name] = source_feature[field_name]
-
-            # Set geometry for the target feature
-            new_feature.setGeometry(source_feature.geometry())
-
-            # Evaluate and set the 'search_field' value
-            context = QgsExpressionContext()
-            context.appendScopes(QgsExpressionContextUtils.globalProjectLayerScopes(target_layer))
-            context.setFeature(new_feature)
-
-
-            katastriyksus = Katastriyksus()
-
-            self.search_field = 'search_field'
-            # Define a list of field names
-            field_names = [
-                katastriyksus.tunnus,
-                katastriyksus.l_aadress,
-                katastriyksus.ay_nimi,
-                katastriyksus.ov_nimi,
-                katastriyksus.mk_nimi,
-            ]
-
-            # Assuming 'field_names' is a list of field names to concatenate for the search field
-            virtual_field_expression = " || ' ' || ".join([f"lower({name})" for name in field_names])
-            expression = QgsExpression(virtual_field_expression)
-
-
-            if not expression.hasParserError():
-                value = expression.evaluate(context)
-                # Update the "search_field" attribute
-                new_feature[self.search_field] = value
-            else:
-                print(f"Error parsing expression: {expression.parserErrorString()}")
-
-            # Add the new feature to the target layer
-            target_layer.addFeature(new_feature)
-            count +=1
-            progress_bar.setValue(count)
-            QCoreApplication.processEvents()
-        # Commit changes to the target layer for each selected feature
-        target_layer.commitChanges()
-        #print("Selected features added to the target layer.")
-        progress_widget.hide()
-
-class GroupActions:
-    def add_layer_to_group (layer, grouplayer_name, style_name=None):
-        # Add the layer to the project without adding to the layer tree        
-        QgsProject.instance().addMapLayer(layer, False)
-        # Get the root of the layer tree
-        root = QgsProject.instance().layerTreeRoot()
-         # Find or create the sub-group layer within the main group
-        sub_group = root.findGroup(grouplayer_name)
-        sub_group.insertLayer(0, layer)
-
-        #print(style_name)
-        # Load the QGIS layer style
-        if style_name is not None:
-            style = Filepaths().get_style(style_name)
-            print(f"style: {style} for style_name: {style_name}")
-        else:
-            style = None
-            pass
-        # Apply the layer style
-        if style is not None:
-            #print("style not none")
-            layer.loadNamedStyle(style)
-        layer.triggerRepaint()
 
 class LayerManager:
     """
@@ -414,7 +271,7 @@ class LayerManager:
             return False
         
     @staticmethod
-    def check_layer_existance_by_name(layer_name: str)-> Optional[QgsVectorLayer]:
+    def _check_layer_existance_by_name(layer_name: str)-> Optional[QgsVectorLayer]:
         layers = QgsProject.instance().mapLayersByName(layer_name)
         if layers:
             if len(layers) > 1:
@@ -423,9 +280,8 @@ class LayerManager:
             return layers
         return None 
         
-
     @staticmethod
-    def create_memory_layer_by_coping_original_layer(new_layer_name: str, base_layer: QgsVectorLayer, is_archive=False) -> QgsVectorLayer: 
+    def _create_memory_layer_by_coping_original_layer(new_layer_name: str, base_layer: QgsVectorLayer, is_archive=False) -> QgsVectorLayer: 
    
         # Now, base_layer should be a QgsVectorLayer. Continue with layer creation.
         crs_auth_id = base_layer.crs().authid()
@@ -453,7 +309,7 @@ class LayerManager:
         return memory_layer
 
     @staticmethod
-    def add_layer_to_sandbox_group(layer: QgsVectorLayer, group=None):
+    def _add_layer_to_sandbox_group(layer: QgsVectorLayer, group=None):
         """
         Add the given layer to the specified group in the QGIS project.
         IF Group Layer is not provided it is automaticaly generated in MAilabl -> Temporary layer group.
@@ -470,9 +326,6 @@ class LayerManager:
         project.addMapLayer(layer, False)
         # Insert the layer at the top of the group.
         group.insertLayer(0, layer)
-
-
-
 
     @staticmethod
     def _commit_to_archive(memory_layer: QgsVectorLayer, layer: QgsVectorLayer) -> Tuple[bool, Optional[List]]:

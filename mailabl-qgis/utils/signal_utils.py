@@ -1,43 +1,5 @@
-from contextlib import contextmanager
+
 from PyQt5.QtWidgets import QPushButton
-
-@contextmanager
-def block_signals(widget):
-    """
-    Context manager to temporarily block signals for a widget.
-
-    This is useful when you want to suppress signal emissions temporarily,
-    such as when making multiple changes to a widget's state without triggering its connected slots.
-
-    Why use a context manager?
-    --------------------------
-    1. Simplifies Resource Management:
-       - Automatically blocks signals when entering the 'with' block and unblocks them when exiting.
-
-    2. Ensures Proper Cleanup:
-       - Guarantees signals are unblocked even if an error occurs inside the block.
-
-    3. Enhances Code Readability:
-       - The 'with' statement makes it clear where signals are suppressed.
-
-    Example usage:
-        with block_signals(my_button):
-            my_button.setChecked(True)
-            my_button.setText("Updated")
-
-    Without context manager:
-        my_button.blockSignals(True)
-        try:
-            my_button.setChecked(True)
-            my_button.setText("Updated")
-        finally:
-            my_button.blockSignals(False)
-    """
-    widget.blockSignals(True)
-    try:
-        yield
-    finally:
-        widget.blockSignals(False)
 
 
 def execute_with_block(button: QPushButton, func, *args, **kwargs):

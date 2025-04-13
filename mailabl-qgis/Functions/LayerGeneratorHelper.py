@@ -1,7 +1,8 @@
 import datetime
 from qgis.core import QgsVectorFileWriter # type: ignore
-from ..utils.LayerHelpers import fidOperations
+from ..utils.fidOperationsHelper import fidOperations
 from ..utils.MessagesHelpers import MessageLoaders
+from ..utils.messagesHelper import ModernMessageDialog
 from ..utils.Logging.Logger import TracebackLogger
 from ..utils.LayerGroupHelpers import LayerGroupHelper
 from qgis.core import QgsVectorFileWriter, QgsVectorLayer, QgsProject # type: ignore

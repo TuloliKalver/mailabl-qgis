@@ -1,21 +1,22 @@
 #LayerHelper.py
 
-from qgis.core import QgsVectorLayer, QgsFields, QgsWkbTypes, QgsCoordinateReferenceSystem
+import gc
+from typing import Any, List
+from qgis.utils import iface 
+
+from qgis.core import QgsVectorLayer, QgsFields, QgsWkbTypes, QgsCoordinateReferenceSystem, QgsFeature, QgsProject,  QgsRectangle
 from typing import Tuple
 from PyQt5.QtCore import QCoreApplication
 
-import gc
-from typing import Optional, Any, List
-from qgis.utils import iface 
-from qgis.core import QgsFeature, QgsFeatureRequest, QgsProject, QgsVectorLayer, QgsRectangle
 
 from PyQt5.QtWidgets import QMessageBox
-from .LayerFeaturehepers import DataMappers
+
+from ..utils.fidOperationsHelper import fidOperations
+from .DataMapperHelper import DataMapperHelper
 from ..utils.LayerSetups import LayerSetups
-from ..utils.LayerFeaturehepers import LayerFeaturehepers
+from ..utils.LayerFeaturehepers import LayerFeatureHelpers
 from ..Common.app_state import PropertiesProcessStage, Expressions, MainVariables
 from ..utils.MessagesHelpers import MessageLoaders
-from ..utils.Logging.Logger import TracebackLogger
 from ..Functions.add_items import add_properties
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..queries.python.property_data import MyLablChecker
@@ -50,7 +51,6 @@ class FeatuerHelpers:
             progress.update(value=total)
 
         return unique_values, feature_ids
-
 
 class LayerSchemas:
     @staticmethod
@@ -302,7 +302,6 @@ class LayerProcessHandlers:
             return []
         return selected_features
 
-
     def _get_selected_features_from_layer(layer: QgsVectorLayer):
         features = []
         for feature in layer.selectedFeatures():
@@ -311,7 +310,6 @@ class LayerProcessHandlers:
             print("No objects were selected.")
             return []
         return features
-
 
     @staticmethod
     def _get_all_features_from_layer(layer: QgsVectorLayer) -> List[QgsFeature]:
@@ -377,7 +375,6 @@ class LayerFilterSetters:
         expression = Expressions.clear
         layer.setSubsetString(expression)
 
-
     @staticmethod
     def _move_feature_data_and_geometry_between_layers(input_layer, 
                                                feature_id, 
@@ -398,32 +395,32 @@ class LayerFilterSetters:
         # Ensure we're working with valid layers
         
         
-        new_feature = LayerFeaturehepers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
+        new_feature = LayerFeatureHelpers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
 
         # Add the new feature to the target layer
-        LayerFeaturehepers._add_feature_to_layer_with_commit_option(layer=target_layer, 
+        LayerFeatureHelpers._add_feature_to_layer_with_commit_option(layer=target_layer, 
                                                         new_feature=new_feature,
                                                         commit=commit)
 
         #update search fields in the target_layer
-        LayerFeaturehepers.update_search_fields_in_layer(layer=target_layer)
+        LayerFeatureHelpers._update_search_fields_in_layer(layer=target_layer)
 
         #delete the elements from the layer if requested!
-        LayerFeaturehepers._delete_element_from_layer(delete=delete_input_data, feature_id=feature_id, layer=input_layer)
+        LayerFeatureHelpers._delete_element_from_layer(delete=delete_input_data, feature_id=feature_id, layer=input_layer)
         gc.collect()
         #feature = LayerFeaturehepers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
         #print (f"feature_data: {feature}")
         if not update_data:
             return True
         else:
-            layer_data = LayerFeaturehepers._get_feature_attributes_as_dict(feature=new_feature)
+            layer_data = LayerFeatureHelpers._get_feature_attributes_as_dict(feature=new_feature)
             #print (f"layer_data: {layer_data}")
             tunnus = layer_data.get(Katastriyksus.tunnus)
             #print (f"Tunnus: {tunnus}")            
             res,_ = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
             if res is True:
 
-                prepared_data, usage_data = DataMappers._map_properties_main_details_from_input(layer_data=layer_data)
+                prepared_data, usage_data = DataMapperHelper._map_properties_main_details_from_input(layer_data=layer_data)
                 #print(f"street and house from prepared data: {prepared_data['address'].get('street')} and {prepared_data['address'].get('houseNumber')}")                
                 #print(f"usage_data: {usage_data}")
 
@@ -435,82 +432,3 @@ class LayerFilterSetters:
             else:
                 print ("Duplicate found!")
 
-
-class fidOperations:
-    @staticmethod
-    def _get_current_max_fid(target_layer: QgsVectorLayer) -> Optional[int]:
-        """
-        Retrieves the current maximum 'fid' value from the attribute field,
-        ignoring any subset filters or layer-level filters.
-        """
-        if target_layer is None:
-            TracebackLogger.log_traceback(custom_message="Target layer is None.")
-            return None
-
-        # Get base data source WITHOUT the subset string
-        base_source = target_layer.dataProvider().dataSourceUri().split("|")[0]
-        provider_type = target_layer.providerType()
-
-        # Create clean layer without filters
-        raw_layer = QgsVectorLayer(base_source, "raw_layer", provider_type)
-
-        if not raw_layer.isValid():
-            TracebackLogger.log_traceback(custom_message="Could not load raw version of target layer.")
-            return None
-
-        fid_index = raw_layer.fields().indexOf('fid')
-        if fid_index == -1:
-            TracebackLogger.log_traceback(custom_message="No 'fid' field found in raw layer.")
-            return None
-
-        max_fid = None
-        for feature in raw_layer.getFeatures():
-            fid = feature.attribute('fid')
-            if fid is not None and isinstance(fid, (int, float)):
-                max_fid = max(fid, max_fid) if max_fid is not None else fid
-
-        return int(max_fid) if max_fid is not None else None
-
-    @staticmethod
-    def _get_next_fid(target_layer: QgsVectorLayer, starting_fid: int = 1) -> int:
-        """
-        Computes the next available unique feature ID for the target_layer using the
-        current maximum fid. If no valid 'fid' values are found, returns starting_fid.
-        
-        Parameters:
-            target_layer (QgsVectorLayer): The layer where features are being added.
-            starting_fid (int): The fid value to use if the layer is empty or has no valid 'fid' field.
-                                Default is 1.
-        
-        Returns:
-            int: The next available unique feature ID.
-        """
-        # Retrieve the current maximum fid using the helper function.
-        current_max_fid = fidOperations._get_current_max_fid(target_layer)
-        
-        if current_max_fid is None:
-            # No valid fid values found; return the starting fid.
-            return starting_fid
-        else:
-            # Return the next fid (max fid + 1).
-            return current_max_fid + 1
-
-
-class FeaturePreparations:
-    @staticmethod
-    def _feature_preparations_between_layers_using_name_for_field_detections(input_layer, target_layer, feature_id) -> tuple[list[Any], bool]:
-        #print(f"target_layer: {target_layer}")
-        #get layer features by fature_id 
-        feat = LayerFeaturehepers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
-             
-        # Create new features for the target layer, ensuring new IDs are assigned.
-        target_fields = target_layer.fields()  # Get the target layer's fields once.
-        new_feat = QgsFeature()  # Create a new, empty feature.
-        new_feat.setGeometry(feat.geometry())  # Copy geometry.
-        # Map attributes based on matching field names.
-        new_attr_values = LayerFeaturehepers._map_attributes_by_name(feat, target_fields)
-        #print(f"New attr values: {new_attr_values}")
-        new_feat.setAttributes(new_attr_values)
-        gc.collect()
-        return new_feat, True
-    

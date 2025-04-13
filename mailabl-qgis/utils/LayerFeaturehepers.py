@@ -1,59 +1,21 @@
-import re
-import gc
-from typing import List, Optional
-from qgis.PyQt.QtCore import QVariant
+#LayerFeaturehelpers.py
+
+from typing import List
+
 
 from qgis.core import (
     QgsFeatureRequest,
     QgsVectorLayer,
     QgsFeature,
-    QgsField,
+
     QgsExpression,
     QgsExpressionContext,
-    QgsExpressionContextUtils,
-    QgsFields
+    QgsExpressionContextUtils
 )
 
-
-
-from ..config.mylabl_API.settings import AreaUnit
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-from ..KeelelisedMuutujad.MaaAmetFieldFormater import date_formatter_for_Mailabl_insertion
-
-
-
-class LayerFeaturehepers:
-    @staticmethod
-    def _delete_element_from_layer(delete: bool, feature_id, layer: QgsVectorLayer) -> None:
-        # If deletion is requested, remove features from the input layer.
-        if delete is True:
-            res = layer.dataProvider().deleteFeatures([feature_id])
-            if res:
-                print(f"Successfully deleted features from input layer '{layer.name()}'.")
-            else:
-                print(f"Failed to delete features from input layer '{layer.name()}'.")
-            layer.triggerRepaint()
-
-    @staticmethod
-    def _delete_feature_object(feature: QgsFeature, layer: QgsVectorLayer, repaint: bool = True) -> bool:
-        """
-        Deletes the given QgsFeature object from the specified layer.
-        """
-        if not feature or not layer:
-            #print("❌ Missing feature or layer.")
-            return False
-
-        fid = feature.id()
-        res = layer.dataProvider().deleteFeatures([fid])
-        
-        if res:
-            #print(f"🗑️ Feature {fid} deleted from layer '{layer.name()}'.")
-            if repaint:
-                layer.triggerRepaint()
-            return True
-        else:
-            print(f"⚠️ Failed to delete feature {fid} from layer '{layer.name()}'.")
-            return False
+from ..utils.fidOperationsHelper import fidOperations
+class LayerFeatureHelpers:
 
     @staticmethod
     def _get_layer_fetaures_by_id(layer: QgsVectorLayer, feature_id: int) -> QgsFeature:
@@ -66,43 +28,10 @@ class LayerFeaturehepers:
         print(f"⚠️ Feature ID {feature_id} not found.")
         return None
     
-
-
-    @staticmethod
-    def _get_layer_features_by_id(layer: QgsVectorLayer, feature_id: int) -> Optional[QgsFeature]:
-        """
-        Returns the feature by ID from the given layer. Safe against memory layer quirks.
-        """
-
-        try:
-            request = QgsFeatureRequest().setFilterFid(feature_id)
-            feature_iter = layer.getFeatures(request)
-            feature = next(feature_iter, None)
-            if feature is None:
-                print(f"❌ Feature ID {feature_id} not found in layer '{layer.name()}'.")
-            return feature
-        except Exception as e:
-            print(f"🚨 Error while fetching feature ID {feature_id} from layer '{layer.name()}': {e}")
-            return None
-
-
-
-
-
-
-
-
-
-
-
     @staticmethod
     def _get_feature_attributes_as_dict(feature: QgsFeature) -> dict:
         return {field.name(): feature[field.name()] for field in feature.fields()}
 
-    @staticmethod
-    def _get_geometry_as_wkt(feature: QgsFeature) -> str:
-        return feature.geometry().asWkt() if feature.hasGeometry() else ""
-    
     @staticmethod
     def _get_all_features_from_layer(layer: QgsVectorLayer) -> List[QgsFeature]:
         """
@@ -137,7 +66,34 @@ class LayerFeaturehepers:
         return new_attrs
 
     @staticmethod
-    def update_search_fields_in_layer(layer: QgsVectorLayer):
+    def _map_attributes_by_feature(feature: QgsFeature) -> List:
+        """
+        Creates a new QGIS feature by copying the geometry and attributes from the provided feature.
+
+        This helper function replicates the behavior of the `_map_attributes_by_name` function,
+        but should only be used when the source and target fields match exactly. It copies the
+        geometry and attributes from the source feature into a new feature, then sets the new
+        feature's ID to -1 so that QGIS will assign a unique ID when it is added to a layer.
+
+        Parameters:
+            feature (QgsFeature): The source feature whose geometry and attributes are to be copied.
+
+        Returns:
+            list: A list containing a single QgsFeature. This feature has the same geometry and attributes
+                as the input feature, but with a new, system-assigned unique ID.
+        """
+        features = []
+
+        feat = QgsFeature()
+        feat.setGeometry(feature.geometry())
+        feat.setAttributes(feature.attributes())
+        feat.setId(-1)
+        features.append(feat)
+
+        return features
+
+    @staticmethod
+    def _update_search_fields_in_layer(layer: QgsVectorLayer):
         """
         Recomputes and updates the search field for all features in the layer.
         """
@@ -171,34 +127,6 @@ class LayerFeaturehepers:
         layer.commitChanges()
         #print("✅ Search fields updated.")        
         
-
-    @staticmethod
-    def _map_attributes_by_feature(feature: QgsFeature) -> List:
-        """
-        Creates a new QGIS feature by copying the geometry and attributes from the provided feature.
-
-        This helper function replicates the behavior of the `_map_attributes_by_name` function,
-        but should only be used when the source and target fields match exactly. It copies the
-        geometry and attributes from the source feature into a new feature, then sets the new
-        feature's ID to -1 so that QGIS will assign a unique ID when it is added to a layer.
-
-        Parameters:
-            feature (QgsFeature): The source feature whose geometry and attributes are to be copied.
-
-        Returns:
-            list: A list containing a single QgsFeature. This feature has the same geometry and attributes
-                as the input feature, but with a new, system-assigned unique ID.
-        """
-        features = []
-
-        feat = QgsFeature()
-        feat.setGeometry(feature.geometry())
-        feat.setAttributes(feature.attributes())
-        feat.setId(-1)
-        features.append(feat)
-
-        return features
-
     @staticmethod
     def _add_feature_to_layer_with_commit_option(layer: QgsVectorLayer, new_feature: QgsFeature, commit=False) -> bool:
         """
@@ -211,11 +139,11 @@ class LayerFeaturehepers:
             #print(f"✍️ Started editing layer '{layer.name()}'.")
         
         target_fields = layer.fields()  # Get the target layer's fields once.
-        new_attrs = LayerFeaturehepers._map_attributes_by_name(new_feature, target_fields)
+        new_attrs = LayerFeatureHelpers._map_attributes_by_name(new_feature, target_fields)
         #print(f"attributes before new max fid:")
         #print(new_attrs)
         
-        from ..utils.LayerHelpers import fidOperations
+
         max_fid = fidOperations._get_next_fid(layer)
         #print(max_fid)
         # Set the value for the 'fid' field if it exists
@@ -236,148 +164,34 @@ class LayerFeaturehepers:
 
         return res
 
-    
-class DataMappers:
-    
     @staticmethod
-    def _map_properties_main_details_from_input(layer_data: dict) -> dict:
-
-        siht1 = layer_data.get(Katastriyksus.siht1)
-        #print(f"siht1 {siht1}")
-        if siht1 in ("TRANSPORTIMAA", "KAITSEALUNE_MAA"):
-            #print("Extracting address details from street as transpordimaa or kaitsealune maa...")
-            street = layer_data.get(Katastriyksus.l_aadress)
-            house_number = ""
-        else:
-            #print("Extracting address details from street...")
-            street_data = layer_data.get(Katastriyksus.l_aadress)
-            data = AddressUtils._get_address_details_from_street(street_data)
-            street = data.get("street")
-            house_number = data.get("house", "")
-
-
-        prepared_data = {
-            "immovableNumber": layer_data.get(Katastriyksus.hkood),
-            "cadastralUnit": {
-                "number": layer_data.get(Katastriyksus.tunnus),
-
-                "firstRegistration": date_formatter_for_Mailabl_insertion(layer_data.get(Katastriyksus.registr)),
-                "lastUpdated": date_formatter_for_Mailabl_insertion(layer_data.get(Katastriyksus.muudet))
-            },
-            "address": {
-                "street": street,
-                "houseNumber": house_number,  # Can extract this later if needed
-                "city": layer_data.get(Katastriyksus.ay_nimi),
-                "state": layer_data.get(Katastriyksus.ov_nimi),
-                "county": layer_data.get(Katastriyksus.mk_nimi)
-            },
-            "area": {
-                "size": layer_data.get(Katastriyksus.pindala),
-                "unit": AreaUnit.M
-            }
-        }
-
-        usage_data = AddressUtils._extract_intended_use_data(layer_data)
-        return prepared_data, usage_data
-    
-class AddressUtils:
-    @staticmethod
-    def _get_address_details_from_street(street: str) -> dict:
-        data = {}
-         # Handle None, QVariant, "NULL", etc.
-        if not street or str(street).upper() == "NULL":
-            data['street'] = ""
-            data['house'] = ""
-            return data
-
-        # 💡 Case: building-like code (e.g., "L1", "T2")
-        if re.fullmatch(r'^[A-Za-z]{1,2}\d{1,2}$', street):
-            #print("📦 Detected building-like code → treat as full street")
-            data['street'] = street
-            return data
-
-        # 💡 Check for street + number (or fancy house number)
-        match = re.match(r'^(.*?)(\d+.*)$', street)
-        if match:
-            possible_street = match.group(1).strip()
-            possible_house = match.group(2).strip()
-            #print(f"🔧 Regex match → street: '{possible_street}', house: '{possible_house}'")
-
-            if re.match(r'^\d+', possible_house):
-                #print("✅ House part starts with number → valid house number")
-                data['street'] = possible_street
-                data['house'] = possible_house
+    def _delete_element_from_layer(delete: bool, feature_id, layer: QgsVectorLayer) -> None:
+        # If deletion is requested, remove features from the input layer.
+        if delete is True:
+            res = layer.dataProvider().deleteFeatures([feature_id])
+            if res:
+                print(f"Successfully deleted features from input layer '{layer.name()}'.")
             else:
-                #print("⚠️ House part doesn't start with number → fallback to full string as street")
-                data['street'] = street
+                print(f"Failed to delete features from input layer '{layer.name()}'.")
+            layer.triggerRepaint()
+
+    @staticmethod
+    def _delete_feature_object(feature: QgsFeature, layer: QgsVectorLayer, repaint: bool = True) -> bool:
+        """
+        Deletes the given QgsFeature object from the specified layer.
+        """
+        if not feature or not layer:
+            #print("❌ Missing feature or layer.")
+            return False
+
+        fid = feature.id()
+        res = layer.dataProvider().deleteFeatures([fid])
+        
+        if res:
+            #print(f"🗑️ Feature {fid} deleted from layer '{layer.name()}'.")
+            if repaint:
+                layer.triggerRepaint()
+            return True
         else:
-            #print("❌ No match found → fallback to full string as street")
-            data['street'] = street
-
-        #print(f"✅ Final parsed result: {data}")
-        return data
-
-    @staticmethod
-    def _extract_intended_use_data(layer_data: dict) -> dict:
-        usage_data = []
-        num_siht_items = 3
-
-        siht_field = Katastriyksus.siht1
-        prts_field = Katastriyksus.so_prts1
-        siht_base = siht_field[:-1]
-        prts_base = prts_field[:-1]
-
-        for i in range(1, num_siht_items + 1):
-            siht_name = f"{siht_base}{i}"
-            so_prts_name = f"{prts_base}{i}"
-
-            purpouse = layer_data.get(siht_name)
-
-            # ✅ Skip immediately if siht_name is empty or null
-            if not purpouse or str(purpouse).strip().upper() == "NULL":
-                continue
-
-            so_prts_data = layer_data.get(so_prts_name)
-
-            intended_use = {
-                "sortOrder": i,
-                "name": AddressUtils.normalize_purpose_name(purpouse),
-                "percentage": so_prts_data,
-            }
-
-            usage_data.append(intended_use)
-
-        return usage_data
-
-    
-    @staticmethod
-    def normalize_purpose_name(raw_name: str) -> str:
-        if not raw_name:
-            return ""
-
-        # Step 1: Lowercase and replace underscores
-        raw_name = raw_name.replace("_", " ").lower().strip()
-
-        # Step 2: Split into words
-        words = raw_name.split()
-
-        # Step 3: Capitalize only the first word
-        if words:
-            words[0] = words[0].capitalize()
-
-        # Step 4: Optional Estonian mapping on first word
-        estonian_fixes = {
-            "Uhiskondlike": "Ühiskondlike",
-            "Toostusmaa": "Tööstusmaa",
-            "Jaatmehoidla": "Jäätmehoidla",
-            "Maetoostusmaa": "Mäetööstusmaa",
-            "Turbatoostusmaa": "Turbatööstsmaa",
-            "üldkastutatav": "üldkasutatav"
-            # Add more if needed
-        }
-
-
-        for word in words:
-            word = estonian_fixes.get(word)
-
-        return " ".join(words)
+            print(f"⚠️ Failed to delete feature {fid} from layer '{layer.name()}'.")
+            return False

@@ -10,7 +10,7 @@ from qgis.core import (
     QgsLayerTreeGroup,
     QgsLayerTreeLayer
 )
-from ..layer_generator import GroupActions
+from ...utils.LayerGroupHelpers import LayerGroupHelper
 from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames, EvelLayerNames, UICheckboxes, CheckBoxMappings
 from ...config.settings import FilesByNames
 from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
@@ -90,7 +90,7 @@ class EVEL_Creator:
         EVEL_Creator.remove_layer_by_name(layer_name)
         
         # Add layer to the group layer and apply style
-        GroupActions.add_layer_to_group(layer, group_name, style_name)
+        LayerGroupHelper._add_layer_to_group(layer, group_name, style_name)
 
     @staticmethod
     def remove_layer_by_name(layer_name):

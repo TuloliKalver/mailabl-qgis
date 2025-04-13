@@ -2,8 +2,8 @@ from qgis.core import ( # type: ignore
     QgsProject,
     QgsVectorLayer,
 )
-from typing import Optional
 
+from ..config.settings import Filepaths
 
 
 class LayerGroupHelper:
@@ -24,6 +24,29 @@ class LayerGroupHelper:
     
         return layer
     
+    def _add_layer_to_group (layer, grouplayer_name, style_name=None):
+        # Add the layer to the project without adding to the layer tree        
+        QgsProject.instance().addMapLayer(layer, False)
+        # Get the root of the layer tree
+        root = QgsProject.instance().layerTreeRoot()
+         # Find or create the sub-group layer within the main group
+        sub_group = root.findGroup(grouplayer_name)
+        sub_group.insertLayer(0, layer)
+
+        #print(style_name)
+        # Load the QGIS layer style
+        if style_name is not None:
+            style = Filepaths().get_style(style_name)
+            print(f"style: {style} for style_name: {style_name}")
+        else:
+            style = None
+            pass
+        # Apply the layer style
+        if style is not None:
+            #print("style not none")
+            layer.loadNamedStyle(style)
+        layer.triggerRepaint()
+
 
 
     @staticmethod

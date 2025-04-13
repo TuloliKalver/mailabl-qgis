@@ -31,7 +31,9 @@ class UIStateManager:
         self.slider_ws = dialog.swWorkSpace
         self.lbl_action = dialog.lblPropertieOperations
         self.lbl = dialog.lblActionName
-        self.main_buttons = [dialog.pbHome, dialog.pbProjects, dialog.pbContracts, dialog.pbeasements]
+        self.main_buttons = [dialog.pbHome, dialog.pbProjects, dialog.pbContracts, 
+                             dialog.pbeasements, dialog.btnMapActions,
+                             dialog.pbMainMenu,dialog.pbSettings ]
 
         self.list_widgets_with_signals = {
             dialog.lvCounty: self.get_connected_signal,
@@ -60,21 +62,45 @@ class UIStateManager:
             widget.setEnabled(True)
 
     def exit_properties_process_flows(self):
+        shp_layer_name = SettingsDataSaveAndLoad().load_SHP_inputLayer_name()
+        from ..widgets.decisionUIs.DecisionDialogHelper import DecisionDialogHelper
+
+        choice = DecisionDialogHelper.ask_user(
+            title="Kihi eemaldamine",
+            message="Kas soovid selle kihi alles jätta või eemaldada?",
+            options={"keep": "Jäta alles", "delete": "Kustuta", "cancel": "Tühista"},
+            parent=self.dialog
+        )
+
+        print("made choice to:", choice)
+
+        if choice is None:
+            return  # ❌ User closed dialog — cancel exit entirely
+
+        if choice is True:  # ✅ Only delete if explicitly confirmed
+            layer_shp = QgsProject.instance().mapLayersByName(shp_layer_name)
+            if layer_shp:
+                layer_s = layer_shp[0]
+                if layer_s and layer_s.isValid():
+                    QgsProject.instance().removeMapLayer(layer_s)
+
+        # Reset state regardless of choice
         WorkSpaceHandler.swWorkSpace_Properties(self.dialog)
         for button in self.main_buttons:
             button.setEnabled(True)
         WidgetAnimator.toggle_Frame_height_for_settings(self.dialog, self.dialog.pbSettings_SliderFrame)
 
+        # Refresh layer
         layer_name = StoredLayers.users_properties_layer_name()
         LayerFilterSetters._reset_layer(layer_name)
         layers = QgsProject.instance().mapLayersByName(layer_name)
         if layers:
             iface.setActiveLayer(layers[0])
 
+
     def start_properti_flow_main(self):
         self.slider_ws.setCurrentIndex(CenterMainSliderIndexes.PROPERTIES_OPERATIONS)
         self.lbl_action.setText("Andmete laadimine")
-        self.dialog.btnMapActions.setEnabled(False)
 
         layer_name = SettingsDataSaveAndLoad().load_SHP_inputLayer_name()
         layer = QgsProject.instance().mapLayersByName(layer_name)

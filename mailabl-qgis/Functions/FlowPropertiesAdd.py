@@ -2,16 +2,17 @@ import os
 import gc
 
 from qgis.core import QgsVectorLayer
+from ..utils.fidOperationsHelper import fidOperations
 
 from ..utils.LayerSetups import LayerSetups
-from ..utils.LayerHelpers import LayerFilterSetters, LayerProcessHandlers, fidOperations, DuplicateLayerResolver
+from ..utils.LayerHelpers import LayerFilterSetters, LayerProcessHandlers, DuplicateLayerResolver
 from ..Functions.layer_generator import LayerManager
 from ..utils.ButtonsHelper import ButtonHelper
 from ..utils.MapToolsHelper import MapToolsHelper
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ..KeelelisedMuutujad.FolderHelper import MailablLayerNames
 from ..Common.app_state import PropertiesProcessStage
-from ..utils.LayerFeaturehepers import LayerFeaturehepers
+from ..utils.LayerFeaturehepers import LayerFeatureHelpers
 from ..queries.python.property_data import MyLablChecker, UpdateData
 from ..utils.ArchiveLayerHandler import ArchiveLayerHandler
 from ..utils.ProgressHelper import ProgressDialogModern
@@ -73,11 +74,11 @@ class AddProperties:
                                                   layer=target_layer_from_mappings)
             sandbox_layer_name = MailablLayerNames.SANDBOX_LAYER
             #print("stage move data")            
-            sandbox_layer = LayerManager.check_layer_existance_by_name(sandbox_layer_name)
+            sandbox_layer = LayerManager._check_layer_existance_by_name(sandbox_layer_name)
             #print(f"Returned layer: {layer}")
             if sandbox_layer == None:
-                sandbox_layer = LayerManager.create_memory_layer_by_coping_original_layer(sandbox_layer_name, active_layer, is_archive=True)
-                LayerManager.add_layer_to_sandbox_group(sandbox_layer)
+                sandbox_layer = LayerManager._create_memory_layer_by_coping_original_layer(sandbox_layer_name, active_layer, is_archive=True)
+                LayerManager._add_layer_to_sandbox_group(sandbox_layer)
                 gc.collect()  # Force garbage collection
             else:
                 nex_id=fidOperations._get_next_fid(target_layer=sandbox_layer)
@@ -172,7 +173,7 @@ class AddProperties:
                 commit=True,
                 update_data=True)
                 for feature in features:
-                    layer_data = LayerFeaturehepers._get_feature_attributes_as_dict(feature=feature)
+                    layer_data = LayerFeatureHelpers._get_feature_attributes_as_dict(feature=feature)
                     #print (f"layer_data: {layer_data}")
                     tunnus = layer_data.get(Katastriyksus.tunnus)
                     #print (f"Tunnus: {tunnus}")            

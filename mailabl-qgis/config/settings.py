@@ -363,7 +363,7 @@ class SettingsDataSaveAndLoad:
         TARGET_CADASTRAL = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
         return TARGET_CADASTRAL
 
-    def save_SHP_layer_setting(self,label,layer):
+    def _save_SHP_layer_setting(self,label,layer):
         settings = QgsSettings()
         #save setup target
         value = layer

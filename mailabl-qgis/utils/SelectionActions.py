@@ -1,6 +1,6 @@
 import gc
 
-from .LayerSetups import LayerSetups
+
 from .LayerHelpers import LayerProcessHandlers
 from .WidgetHelpers import WidgetAndWievHelpers
 from .MapHelpers import MapDataFlowHelper
@@ -25,15 +25,6 @@ class SelectionActions:
         self.frButtons = self.dialog.frPropertiFlowHolder
         self.table_view = self.dialog.tvSelectedMapItems
         self.confirm_button = self.dialog.pbConfirmAction
-
-    @staticmethod
-    def show_message(title, text):
-        """
-        Display a message.
-        In your main project, replace this stub with your preferred message display.
-        """
-        print(f"{title}: {text}")
-
 
 
     @classmethod
@@ -66,11 +57,8 @@ class SelectionActions:
         LayerFilterSetters._reset_layer(shape_layer_name)
 
         
-
-
-
     @classmethod
-    def _reset_previous_process(self):
+    def reset_previous_process(self):
         """Cancel any active process and re-enable its button."""
         gc.collect()  # Force garbage collection
         self.confirm_button.setEnabled(False)
@@ -80,12 +68,9 @@ class SelectionActions:
             prev_process = PropertiesProcessStage.active_process.get("process")
             if prev_button:
                 prev_button.setEnabled(True)
-                self.show_message("Process Canceled", f"Canceled previous {prev_process} process.")
+                self.show_message_DELETE("Process Canceled", f"Canceled previous {prev_process} process.")
                 PropertiesProcessStage.active_process = None
                 PropertiesProcessStage.current_flow_stage = None
-
-
-
 
 
     @classmethod
@@ -149,7 +134,7 @@ class SelectionActions:
 
         else:
             progress.close()
-            self.show_message("Error", f"Unknown process: {planned_process}")
+            self.show_message_DELETE("Error", f"Unknown process: {planned_process}")
             selected_button.setEnabled(True)
             PropertiesProcessStage.active_process = None
             return
@@ -187,9 +172,6 @@ class SelectionActions:
         gc.collect()
         print("Final cleanup — progress should now be closed")
         print(f"progress.dialog: {progress.dialog}, active_instance: {ProgressDialogModern.active_instance}")
-
-
-        
 
     @classmethod
     def execute_action(self):

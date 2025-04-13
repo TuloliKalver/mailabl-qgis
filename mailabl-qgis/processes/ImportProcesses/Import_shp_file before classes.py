@@ -64,7 +64,7 @@ def load_shp_layer(label):
             heading = pealkiri.tubli    
             ModernMessageDialog.Info_messages_modern(heading, text)
         save_setting = SettingsDataSaveAndLoad()
-        save_setting.save_SHP_layer_setting(label, layer_name)
+        save_setting._save_SHP_layer_setting(label, layer_name)
 
 
             

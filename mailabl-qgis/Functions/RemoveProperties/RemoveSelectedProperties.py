@@ -4,7 +4,7 @@ from qgis.core import QgsFeatureRequest
 from ...queries.python.property_data import deleteProperty
 from ...KeelelisedMuutujad.messages import Headings
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-from ...utils.LayerFeaturehepers import LayerFeaturehepers
+from ...utils.LayerFeaturehepers import LayerFeatureHelpers
 from ...queries.python.property_data import MyLablChecker
 from ...Common.app_state import PropertiesProcessStage
 from ...utils.ProgressHelper import ProgressDialogModern
@@ -52,7 +52,7 @@ class ReomoveProcessController:
                         break
 
             if delete_successful or delete_anyway:
-                delete_res = LayerFeaturehepers._delete_feature_object(feature=feature, layer=active_layer)
+                delete_res = LayerFeatureHelpers._delete_feature_object(feature=feature, layer=active_layer)
                 if not delete_res:
                     print(f"⚠️ Failed to delete feature {fid} from local layer")
 
