@@ -68,7 +68,7 @@ def copy_and_rename_folder(table):
                     if os.path.exists(os.path.join(os.path.dirname(target_folder), folder_name)):                        
                         text = f"Kaust nimega '{folder_name}' on juba sihtkohas olemas."
                         heading = Headings().warningSimple
-                        ModernMessageDialog.Info_messages_modern(heading,text)
+                        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
                     else:
                         shutil.copytree(source_folder, target_folder)
                         os.rename(target_folder, os.path.join(os.path.dirname(target_folder), folder_name))
@@ -92,23 +92,23 @@ def copy_and_rename_folder(table):
                         heading = Headings().tubli
                         text = (f"Kausta '{source_folder}'\n(k.a kaustas sisalduvad alamkaustad ja failid) dubleerimine õnnestus.")
                         text_2 = f"Sihtkohta on genereeritud kaust nimetusega \n'{folder_name}'."
-                        ModernMessageDialog.Info_messages_modern(heading,text, text_2)
+                        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text, text_2)
                        
                 except Exception as e:
                     heading = Headings().warningSimple
                     text = f"An error occurred: {e}"
-                    ModernMessageDialog.Info_messages_modern(heading,text)
+                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
                     
 
             else:
                 heading = Headings().warningSimple
                 text = f"Jätkamiseks vali mõni projekt"
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
 
         else:
             heading = Headings().warningSimple
             text = HoiatusTexts().error
-            ModernMessageDialog.Info_messages_modern(heading,text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             print(f"Header  not found or empty in the model.")
 
     else:
@@ -173,7 +173,7 @@ class FolderNameGenerator:
         # Print the constructed folder name
         heading = Headings().tubli
         text = HoiatusTextsAuto().strange_usage_folder(folder_name)
-        ModernMessageDialog.Info_messages_modern(heading, text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
         #print("Folder name:", folder_name)
 
 

@@ -4315,7 +4315,7 @@ p, li { white-space: pre-wrap; }
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>750</width>
+                        <width>650</width>
                         <height>985</height>
                        </rect>
                       </property>
@@ -8243,6 +8243,13 @@ QTreeView::item:hover {
                               </property>
                              </widget>
                             </item>
+                            <item alignment="Qt::AlignRight">
+                             <widget class="QLabel" name="label_12">
+                              <property name="text">
+                               <string>Sattusin valesse kohta</string>
+                              </property>
+                             </widget>
+                            </item>
                            </layout>
                           </widget>
                          </item>
@@ -8327,6 +8334,17 @@ QTreeView::item:hover {
                                 <width>20</width>
                                 <height>20</height>
                                </size>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QPushButton" name="pbCancelBeforeEntering">
+                              <property name="text">
+                               <string>Lahku</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/log-out.svg</normaloff>icons/Icons_hele/log-out.svg</iconset>
                               </property>
                              </widget>
                             </item>

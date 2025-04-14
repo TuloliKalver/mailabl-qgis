@@ -118,7 +118,7 @@ class SetupEasments:
 
         text = edu.salvestatud
         heading = pealkiri.tubli
-        ModernMessageDialog.Info_messages_modern(heading, text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
 
         # Additional logic if needed
         print("saved")
@@ -129,5 +129,5 @@ class SetupEasments:
 
         text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.warningSimple
-        ModernMessageDialog.Info_messages_modern(heading, text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
         widget.reject()  # Close the dialog       

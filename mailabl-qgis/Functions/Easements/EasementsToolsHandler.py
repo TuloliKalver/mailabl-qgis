@@ -145,7 +145,7 @@ class EasementTools(QObject):
             heading = pealkiri.tubli
             self.cleanup()
             self.uncheck_checkboxes(self.widget_EasmentTools, checkboxes_info)  # Uncheck checkboxes
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
             if on_selection_changed_lambda_easements:
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
@@ -163,7 +163,7 @@ class EasementTools(QObject):
             self.cleanup()
             text = sisu.kasutaja_peatas_protsessi
             heading = pealkiri.infoSimple
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
             if on_selection_changed_lambda_easements:
                 active_layer_name = SettingsLoader.get_setting(LayerSettings.CADASTRAL_CURRENT)
                 active_layer = QgsProject.instance().mapLayersByName(active_layer_name)[0]
@@ -617,7 +617,7 @@ class BufferTools:
             else:
                 heading = Headings().infoSimple
                 text = HoiatusTexts().kihil_kinnistu_valik
-                ModernMessageDialog.Info_messages_modern(heading, text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
 
 
                 if checkbox is not None:
@@ -626,7 +626,7 @@ class BufferTools:
         else:
             heading = Headings().warningCritical
             text = HoiatusTexts().puudulik_kinnistute_seadistus
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
             if checkbox is not None:
                     checkbox.setChecked(False)
                 

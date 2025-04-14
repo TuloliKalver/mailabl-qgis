@@ -227,8 +227,10 @@ class DecisionDialogHelper:
             choice = result["choice"]
             if choice == "delete":
                 return True  # ✅ Only return True for delete
-            return False     # ⛔️ Otherwise return False (you could return choice instead if needed)
-        return None          # 🚫 User closed the dialog or canceled
+            if choice == "keep":
+                return False     # ⛔️ Otherwise return False (you could return choice instead if needed)
+            if choice == "cancel":
+                return None          # 🚫 User closed the dialog or canceled
 
 
     @staticmethod

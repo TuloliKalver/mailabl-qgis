@@ -493,9 +493,9 @@ class MyLablChecker:
         #start do use data
         if response.status_code == 200:
             data = HandlePropertiesResponses._response_properties_data_edges(response)
-            #print(data)
+            print(data)
             if data:
-                #print("is present in mylabl")
+                print("is present in mylabl")
                 return False, data
             else:
                 #print("missing item")
@@ -721,15 +721,15 @@ class UpdateData:
             return False
 
         current_data = response.json()
-        print(f"Current data: {current_data}")
+        #print(f"Current data: {current_data}")
         current_tags = current_data["data"]["property"]["tags"]["edges"]
         current_tag_ids = [tag["node"]["id"] for tag in current_tags]
 
         if tag_id not in current_tag_ids:
             current_tag_ids.append(tag_id)
-        print(f"Adding tag with ID {tag_id} to property {property_id}")
-        print(f"Current tags for property {property_id}: {[tag['node']['name'] for tag in current_tags]}")
-        print(f"Tags in input: {current_tag_ids}")
+        #print(f"Adding tag with ID {tag_id} to property {property_id}")
+        #print(f"Current tags for property {property_id}: {[tag['node']['name'] for tag in current_tags]}")
+        #print(f"Tags in input: {current_tag_ids}")
         # Step 2: Re-assign ALL tags
 
         update_guery_file = GraphqlProperties.UPDATE_TAGS
@@ -755,11 +755,19 @@ class UpdateData:
 
         updated_tags = updated_data["data"]["updateProperty"]["tags"]["edges"]
         tag_names = [tag["node"]["name"] for tag in updated_tags]
-        print(f"Updated tags for property {property_id}: {', '.join(tag_names)}")
+        #print(f"Updated tags for property {property_id}: {', '.join(tag_names)}")
         return True
 
     @staticmethod
-    def _update_archived_properies_data(item_id: str) -> bool:
+    def _update_archived_properies_data(item_id: str, recovery_name: str = None) -> bool:
+        if isinstance(item_id, list):
+            # Get the first node's ID
+            item_id = item_id[0]["node"]["id"]
+        elif isinstance(item_id, dict):
+            item_id = item_id["node"]["id"]
+        # If it's already a str, nothing to do
+
+        #print(f"✔️ Final item_id to use: {item_id} ({type(item_id)})")
         module=Module.PROPRETIE
         tag_name = "Arhiveeritud"
         tag_id = TagsEngines.get_modules_tag_id_by_name(tag_name=tag_name, module=module)
@@ -772,10 +780,12 @@ class UpdateData:
         UpdateData._update_property_tags(property_id=item_id, module=module, tag_id=tag_id)
 
         current_name = PropertiesGeneralQueries._get_properties_street_name_to_achived(property_id=item_id)
-        print(current_name)
-        new_name = "ARHIIVEERITUD - " + current_name
-        #new_name = "Õpetajate tee" #in testing store this name if reset needed!
-
+        if recovery_name:
+            new_name = recovery_name
+        else:
+            print(current_name)
+            new_name = "ARHIIVEERITUD - " + current_name
+        
         UpdateData._update_properties_name(propertie_id=item_id, new_name=new_name, module=module)
 
  

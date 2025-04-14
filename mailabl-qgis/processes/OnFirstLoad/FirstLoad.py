@@ -39,7 +39,7 @@ class Startup:
 
         heading = Headings().tubli
         text = HoiatusTexts().korrigeeri_sümbolit
-        ModernMessageDialog.Info_messages_modern(heading,text)  
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)  
         unload_events.closeEvent()
 
 

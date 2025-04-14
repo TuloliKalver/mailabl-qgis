@@ -42,7 +42,7 @@ class ModularSearchEngine:
             # Frame the label with a red border
             lineEdit.setStyleSheet("border: 1px solid #D32F2F;")
             # Display warning message
-            ModernMessageDialog.Info_messages_modern(Headings().warningSimple, HoiatusTexts().otsing_puudu)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(Headings().warningSimple, HoiatusTexts().otsing_puudu)
             return
         else:
             lineEdit.setStyleSheet("border: None")

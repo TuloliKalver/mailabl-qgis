@@ -75,7 +75,7 @@ class PropertiesConnectorUIController:
         """
         text = HoiatusTexts().andmed_valimata
         heading = Headings().warningSimple
-        ModernMessageDialog.Info_messages_modern(heading,text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
 
         # Re-enable buttons since no selection was made
         reset_buttons(self, button, button_names)

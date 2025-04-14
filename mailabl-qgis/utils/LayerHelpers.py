@@ -188,7 +188,7 @@ class LayerProcessHandlers:
             cleanup = info.get(MainVariables.CLEANUP, False)
             #print(f"Loading layer: {layer_name}. Activate: {activate}, Cleanup: {cleanup}")
             layer = LayerSetups.load_layer_with_activation_option(layer_name, activate=activate)
-            max_fid = fidOperations._get_next_fid(target_layer=layer)
+            max_fid = fidOperations._get_layers_next_ids(target_layer=layer)
             if not layer:
                 MessageLoaders.layername_error(layer_name)
                 return False
@@ -392,25 +392,28 @@ class LayerFilterSetters:
         :param delete_input_data: If True, delete the features from the input_layer after moving.
         """
 
-        # Ensure we're working with valid layers
-        
-        
+
+        print(f"Moving feature with ID {feature_id} from {input_layer.name()} to {target_layer.name()}...")
+        #print(f"step 1 get features by id")
         new_feature = LayerFeatureHelpers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
 
         # Add the new feature to the target layer
+        #print(f"step 2 add feature to target layer")
         LayerFeatureHelpers._add_feature_to_layer_with_commit_option(layer=target_layer, 
                                                         new_feature=new_feature,
                                                         commit=commit)
-
+        #print(f"step 3 update search fields in target layer")
         #update search fields in the target_layer
         LayerFeatureHelpers._update_search_fields_in_layer(layer=target_layer)
-
+        #print(f"step 4 delete feature object from input layer")
         #delete the elements from the layer if requested!
         LayerFeatureHelpers._delete_element_from_layer(delete=delete_input_data, feature_id=feature_id, layer=input_layer)
+        #print(f"step 5 update search fields in input layer: {input_layer.name()}")
+        #update search fields in the input_layer
+        LayerFeatureHelpers._update_search_fields_in_layer(layer=input_layer)
+        #print(f"step 6 done!")
         gc.collect()
-        #feature = LayerFeaturehepers._get_layer_fetaures_by_id(layer=input_layer, feature_id=feature_id)
-        #print (f"feature_data: {feature}")
-        if not update_data:
+        if update_data is False:
             return True
         else:
             layer_data = LayerFeatureHelpers._get_feature_attributes_as_dict(feature=new_feature)
@@ -431,4 +434,6 @@ class LayerFilterSetters:
                 return True
             else:
                 print ("Duplicate found!")
+
+
 

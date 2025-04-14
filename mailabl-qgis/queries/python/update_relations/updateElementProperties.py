@@ -31,7 +31,7 @@ class ConnectElementWithPropertysties:
         elif module == Module.EASEMENT:
             query_name = GraphqlEasements.UPDATE_EASEMENTS_PROPERTIES
         else:
-            ModernMessageDialog.Info_messages_modern("Viga", "Moodulile {moddule}")
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Viga", "Moodulile {moddule}")
             return
 
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
@@ -44,7 +44,7 @@ class ConnectElementWithPropertysties:
         if count == 0:
             heading = pealkiri.warningSimple
             text = "Vali kaardikihil vähemalt üks kinnistu"  
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
             return
 
         for row in range(count):

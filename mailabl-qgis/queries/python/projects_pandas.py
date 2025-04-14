@@ -196,7 +196,7 @@ class ProjectModelBuilders:
         if  total_projects == 0:
             text = "Antud numbriga projekti ei leitud"
             heading = pealkiri.infoSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             return None
 
         else:

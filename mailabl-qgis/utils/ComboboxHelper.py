@@ -68,7 +68,7 @@ class ComboBoxHelper:
                 print(f"Types from {module}: ", types)
             
             if not types:
-                ModernMessageDialog.Info_messages_modern(Headings().warningSimple, "Jätkamiseks seadista eelistatud liigid")
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(Headings().warningSimple, "Jätkamiseks seadista eelistatud liigid")
                 button.blockSignals(False)
                 return None
 

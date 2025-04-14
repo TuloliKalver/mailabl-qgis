@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt
 
 class ModernMessageDialog():
-    def Info_messages_modern(heading, message, message_2=None):
+    def Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, message, message_2=None):
 
         from ..config.settings import Filepaths, FilesByNames
         widget_name = Filepaths._get_widget_name(FilesByNames().info_message_ui)

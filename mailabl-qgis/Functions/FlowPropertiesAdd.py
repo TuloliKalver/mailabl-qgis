@@ -69,35 +69,43 @@ class AddProperties:
 
         
         if not_available_anymore:
-            #print("not available anymore")
+            print(f"Stage not available anymore: {not_available_anymore_ids}")
             MapToolsHelper.select_features_by_ids(feature_ids=not_available_anymore_ids, 
                                                   layer=target_layer_from_mappings)
+            
             sandbox_layer_name = MailablLayerNames.SANDBOX_LAYER
-            #print("stage move data")            
             sandbox_layer = LayerManager._check_layer_existance_by_name(sandbox_layer_name)
+            
             #print(f"Returned layer: {layer}")
             if sandbox_layer == None:
                 sandbox_layer = LayerManager._create_memory_layer_by_coping_original_layer(sandbox_layer_name, active_layer, is_archive=True)
                 LayerManager._add_layer_to_sandbox_group(sandbox_layer)
                 gc.collect()  # Force garbage collection
             else:
-                nex_id=fidOperations._get_next_fid(target_layer=sandbox_layer)
+                nex_id=fidOperations._get_layers_next_ids(target_layer=sandbox_layer)
                 LayerSetups.register_layer_configuration(sandbox_layer,max_fid=nex_id)
             
-            for feat_to_archive in not_available_anymore_ids:
+            #for feat_to_archive in not_available_anymore_ids:
                 #move to archive layer
                 #print(f"targetlayer = {target_layer_from_mappings}")
-                result = LayerFilterSetters._move_feature_data_and_geometry_between_layers(input_layer=target_layer_from_mappings, 
-                                                                                   feature_id=feat_to_archive,
-                                                                                   target_layer=sandbox_layer,
-                                                                                   delete_input_data=True,
-                                                                                   commit=False)
-                if result:    
-                    archive_features = LayerProcessHandlers._get_features_or_IDs_from_layer(sandbox_layer, return_ids_only=True)
-                    
-                    print(f"archived features: {archive_features}")
-                    
-            gc.collect()  # Force garbage collection
+            print(f"Beginning archiving...")
+            max_items = len(not_available_anymore_ids)
+
+            for count, feat_id in enumerate(not_available_anymore_ids, start=1):
+                is_last = count == max_items  # Check if this is the last iteration returns True or False
+                commit = is_last  # Only commit on the last one
+
+
+                LayerFilterSetters._move_feature_data_and_geometry_between_layers(input_layer=target_layer_from_mappings, 
+                                                                                    feature_id=feat_id,
+                                                                                    target_layer=sandbox_layer,
+                                                                                    delete_input_data=True,
+                                                                                    commit=commit)
+                
+            archive_features = LayerProcessHandlers._get_features_or_IDs_from_layer(sandbox_layer, return_ids_only=True)
+            
+            print(f"Sandbox layer ids-s: {archive_features}")
+                
             archive_layer_name = MailablLayerNames.ARCHIVE_LAYER_NAME
             archive_layer = ArchiveLayerHandler.resolve_or_create_archive_layer(target_layer_from_mappings, archive_layer_name)
             res = AddProperties.store_to_archive_PROCESS(archive_layer, archive_features, sandbox_layer)
@@ -139,7 +147,7 @@ class AddProperties:
         
          
     @staticmethod
-    def store_to_archive_PROCESS(arvhive_layer: QgsVectorLayer, features:int, archive_memory_layer) -> bool: 
+    def store_to_archive_PROCESS(arvhive_layer: QgsVectorLayer, features_ids:int, archive_memory_layer) -> bool: 
         """
         Stores the archive memory layer to file and then removes the temporary archive memory layer.
         
@@ -157,7 +165,7 @@ class AddProperties:
         #active_layer = next((info['layer'] for info in PropertiesProcessStage.loaded_layers.values() if not info.get('activated')), None)
         
 
-        print(f"Archive memory layer: {archive_memory_layer}")
+        #print(f"Archive memory layer: {archive_memory_layer}")
         if archive_memory_layer is None:
             print("No pre-archive layer found.")
             return False
@@ -165,22 +173,41 @@ class AddProperties:
         if archive_memory_layer.dataProvider().name() == "memory":
             if archive_memory_layer.isValid():
                 #print(f"active_layer: {active_layer}")
-                LayerFilterSetters._move_feature_data_and_geometry_between_layers(
-                input_layer=archive_memory_layer,
-                feature_id=features,
-                target_layer=arvhive_layer,
-                delete_input_data=False,
-                commit=True,
-                update_data=True)
-                for feature in features:
+                
+                max_items = len(features_ids)
+                heading = "Salvestamine"
+
+                for count, feat_id in enumerate(features_ids, start=1):
+                    is_last = count == max_items  # Check if this is the last iteration returns True or False
+                    commit = is_last  # Only commit on the last one
+                    
+                
+                    #print(f"Archiving feature ID: {feat_id}")
+                    #print(f"layers: arhiivi kiht: {arvhive_layer}, mälu: {archive_memory_layer} ")
+
+
+                    LayerFilterSetters._move_feature_data_and_geometry_between_layers(
+                    input_layer=archive_memory_layer,
+                    feature_id=feat_id,
+                    target_layer=arvhive_layer,
+                    delete_input_data=False,
+                    commit=commit)
+
+            #################USE UPDATE DATA ONLY IF ADDING NEW PROPERTIES ELSE USE BELOW CODE ###########################
+
+                    print(f"Layer archiving completed.")
+                    
+                    feature =LayerFeatureHelpers._get_layer_fetaures_by_id(layer=archive_memory_layer, feature_id=feat_id)
+
                     layer_data = LayerFeatureHelpers._get_feature_attributes_as_dict(feature=feature)
                     #print (f"layer_data: {layer_data}")
                     tunnus = layer_data.get(Katastriyksus.tunnus)
                     #print (f"Tunnus: {tunnus}")            
                     res, id = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
-
+                    #print(f"res: {res} and id: {id}")
+                    
                     UpdateData._update_archived_properies_data(id)
-
+            #############################################################################################################
                 return True
             else:
                 print("The pre-archive layer is invalid.")

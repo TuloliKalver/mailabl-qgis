@@ -167,7 +167,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.pbLoaddShapeFile:loader.load_shp_layer,
             self.pbOpenMaAmet:partial(loadWebpage.open_maa_amet_webpage_new),            
             self.btnMapActions: UI.start_properti_flow_main,
-            self.pbCancelPropertiesAction: UI.exit_properties_process_flows
+            self.pbCancelPropertiesAction: UI.exit_properties_process_flows,
+            self.pbCancelBeforeEntering: UI.exit_properties_process_flows
         }
 
         for button, function in self.properties_actions.items():
@@ -175,8 +176,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 ##############################TESTING AREA##############################################################
         self.test_buttons = {
-            self.pbtest_2: self.test_property_archiving,
-            self.pushButton: self.test_decision_tool
+            self.pbtest_2: self.testing_max_fids,
+            self.pushButton: self.test_update_property
         }
 
         for button,_ in self.test_buttons.items():
@@ -400,7 +401,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         else:
             text = HoiatusTexts().andmed_valimata
             heading = Headings().warningSimple
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
             self.showNormal()
             button.setEnabled(True)
             return
@@ -433,7 +434,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         else:
             text = HoiatusTexts().andmed_valimata
             heading = Headings().warningSimple
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
             for single_button in buttons:
                 single_button.setEnabled(True)
             button.setEnabled(True)
@@ -463,7 +464,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         else:
             text = HoiatusTexts().projekt_valimata
             heading = Headings().warningSimple
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
         
         self.pbGenProjectFolder.blockSignals(False)
         gc.collect()  # Force garbage collection
@@ -591,7 +592,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         else:
             heading = pealkiri.warningCritical
             text = sisu.vigane_voti
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
 
     def set_start_page_based_on_toggle_and_preferred_settings(self):
         index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)            
@@ -794,27 +795,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
     def test_decision_tool(self):
-        from .widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
-        shp_layer_name ='kalver',
-            
-        choice = DecisionDialogHelper.ask_user(
-            title="Mõtte koht...",
-            message=f"Kas soovid {shp_layer_name} nimelise kihi \n oma Projektis veel kasutada? \n\n NB! Saad kihi alati ueesti laadida!",
-            parent=self
-        )
+        from .Functions.layer_generator import LayerManager
+        from qgis.core import  QgsProject
 
-        print("made choice to:", choice)
-        if choice is False:
-            print("cancelled whole thing")
-            return
-
-        if choice is None:
-            print(f"user pressed cancel")
-            return  # ❌ User closed dialog — cancel exit entirely
-
-        if choice is True:  # ✅ Only delete if explicitly confirmed
-            print ("confirmed deletion")
-
+        GroupName = "test_group"
+        GroupSubName = "sub_test_group"
+        LayerName = "Ala2"
+        layer = QgsProject.instance().mapLayersByName(LayerName)[0]
+ 
+        LayerManager.get_or_create_subgroup_NEEDS_IMLEMENTATION(main_group_name=GroupName, sub_group_name=GroupSubName, layer=layer)
         
 
     @staticmethod
@@ -836,13 +825,66 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def test_update_property(self) -> bool:
         #item_id: str, notes_text: str
         
-        item_id = "133842"
+        item_id = "134858"
         notes_text = "This is a test note."
-        old_name = "Õpetajate tee"
+        old_name = "Põllu"
+
+
         from .queries.python.property_data import UpdateData
 
-        UpdateData._update_archived_properies_data(item_id=item_id)
+        UpdateData._update_archived_properies_data(item_id=item_id, recovery_name=old_name)
+
+    @staticmethod
+    def testing_max_fids(self) -> bool:
+        
+        from .utils.fidOperationsHelper import fidOperations
+        from qgis.core import  QgsProject,  QgsFeatureRequest
+
+
+        from .utils.LayerFeaturehepers import LayerFeatureHelpers
+
+
+        target_layer = QgsProject.instance().mapLayersByName("Minu_arhiiv")[0]
+        input_layer = QgsProject.instance().mapLayersByName("Kalver_test")[0]
+        
+        
+
+        
+        feature_id = 14357
+        request = QgsFeatureRequest().setFilterFid(feature_id)
+        feature = next(input_layer.getFeatures(request), None)
+        
+        #max_fid = None
+        #
+        #for feature in target_layer.getFeatures():
+        #    fid_val = feature.attribute('fid')
+        #    if fid_val is not None and isinstance(fid_val, (int, float)):
+        #        max_fid = fid_val if max_fid is None else max(max_fid, fid_val)
+
+        #print(f"Max FID value: {max_fid}")
+        #if max_fid is None:
+        #    print("No features found with numeric FIDs.")
+        #    max_fid = 0
+
+
+        target_fields = target_layer.fields()
+
+        new_attrs = LayerFeatureHelpers._map_attributes_by_name(feature, target_fields)
+        
+
+        target_layer.startEditing()
 
 
 
+        fid_index = target_fields.indexOf("fid")
+
+        max_fid = fidOperations._get_layers_next_ids(target_layer=target_layer)
+
+        new_attrs[fid_index] = max_fid
+
+        feature.setAttributes(new_attrs)
+
+        if target_layer.isEditable():
+            target_layer.addFeatures([feature])
+            target_layer.commitChanges()
 

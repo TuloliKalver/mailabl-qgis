@@ -198,7 +198,7 @@ class Mailabl:
             text = HoiatusTexts().projekt_valimata
             heading = Headings().warningSimple
             from .utils.messagesHelper import ModernMessageDialog
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
 
             return
 

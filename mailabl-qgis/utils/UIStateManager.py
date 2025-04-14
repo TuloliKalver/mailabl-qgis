@@ -71,11 +71,24 @@ class UIStateManager:
         )
 
         if choice is False:
-            print("cancelled whole thing")
+            # Reset state regardless of choice
+            WorkSpaceHandler.swWorkSpace_Properties(self.dialog)
+            for button in self.main_buttons:
+                button.setEnabled(True)
+            WidgetAnimator.toggle_Frame_height_for_settings(self.dialog, self.dialog.pbSettings_SliderFrame)
+
+            # Refresh layer
+            layer_name = StoredLayers.users_properties_layer_name()
+            LayerFilterSetters._reset_layer(layer_name)
+            layers = QgsProject.instance().mapLayersByName(layer_name)
+            if layers:
+                iface.setActiveLayer(layers[0])
+
             return
 
         if choice is None:
-            print(f"user pressed cancel")
+            print("cancelled whole thing")
+
             return  # ❌ User closed dialog — cancel exit entirely
 
         if choice is True:  # ✅ Only delete if explicitly confirmed

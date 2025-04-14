@@ -30,6 +30,7 @@ class SHPLayerLoader:
         if file_dialog.exec_():
             file_path = file_dialog.selectedFiles()
             file_path = file_path[0]
+            layer_name = os.path.splitext(os.path.basename(file_path))[0]
             if file_path:
                 root = QgsProject.instance().layerTreeRoot()
                 imporditavad_group = root.findGroup(import_subgroup_layer_name)
@@ -39,7 +40,6 @@ class SHPLayerLoader:
                     root.insertChildNode(-1, imporditavad_group)
                 else:
                     existing_layers = imporditavad_group.findLayers()
-                    layer_name = os.path.splitext(os.path.basename(file_path))[0]
                     for existing_layer in existing_layers:
                         if existing_layer.layer().name() == layer_name:
                             QgsProject.instance().removeMapLayer(existing_layer.layer())

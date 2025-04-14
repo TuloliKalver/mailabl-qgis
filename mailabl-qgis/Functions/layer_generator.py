@@ -9,6 +9,8 @@ from qgis.core import (
     QgsWkbTypes,
     QgsCoordinateReferenceSystem,
     QgsLayerTreeGroup,
+    QgsLayerTreeLayer,
+    QgsMapLayer
 )
 
 from typing import Tuple, Optional, List
@@ -57,7 +59,7 @@ class LayerCopier():
             # User canceled the folder selection, handle accordingly
             text = HoiatusTexts().kasutaja_peatas_protsessi
             heading = pealkiri.infoSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             return  # or raise an exception or perform other actions as needed
         input_layer = QgsProject.instance().mapLayersByName(memory_layer_name)[0]
         #iface.activeLayer(input_layer)
@@ -75,11 +77,11 @@ class LayerCopier():
                 os.remove(output_file_path)
                 text = HoiatusTextsAuto.deleted_output_file_sucess(output_file_path)
                 heading = pealkiri.warningSimple
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             except OSError as e:
                 heading = Headings().warningCritical
                 text = HoiatusTextsAuto.unable_to_delete_output_file(output_file_path, e)
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
                 # Handle the error as needed
         else:
             #print("started generating file")
@@ -104,7 +106,7 @@ class LayerCopier():
             else:
                 heading = pealkiri.warningSimple
                 text = HoiatusTextsAuto.save_layer_error(error_message)
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
                 
             # Check if the GeoPackage file exists
             if os.path.exists(output_file_path):
@@ -124,7 +126,7 @@ class LayerCopier():
                 else:
                     text = HoiatusTextsAuto.load_layer_error(output_file_path)
                     heading = pealkiri.warningSimple
-                    ModernMessageDialog.Info_messages_modern(heading,text)
+                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             
                 #Remove layer if it exists
                 if QgsProject.instance().mapLayersByName(memory_layer_name):
@@ -144,17 +146,17 @@ class LayerCopier():
                 updated_layer.triggerRepaint()
                 text = HoiatusTextsAuto.layer_indexing(new_layer_name)
                 heading = pealkiri.infoSimple
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
                 updated_layer.dataProvider().createSpatialIndex()
     
                 text = HoiatusTextsAuto.generated_layer_in_subgroup(new_layer_name, group_layer_name)
                 heading = pealkiri.infoSimple
-                ModernMessageDialog.Info_messages_modern(heading,text)              
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)              
                 
             else:
                 text = HoiatusTextsAuto.load_gpkg_file_error(output_file_path)
                 heading = pealkiri.infoSimple
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
 
     @staticmethod
     def copy_virtual_layer_for_properties(new_layer_name, group_name):
@@ -205,7 +207,7 @@ class LayerCopier():
         else:
             text = HoiatusTexts().laadimine_error
             heading = pealkiri.infoSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
         return None
     
 
@@ -215,18 +217,7 @@ class LayerManager:
     in a QGIS project.
     """
 
-    @staticmethod
-    def get_or_create_group(group_name: str) -> QgsLayerTreeGroup:
-        """
-        Retrieve the group by name from the project's layer tree.
-        If the group doesn't exist, create it.
-        """
-        project = QgsProject.instance()
-        root = project.layerTreeRoot()
-        group = root.findGroup(group_name)
-        if group is None:
-            group = root.addGroup(group_name)
-        return group
+
 
     @staticmethod
     def remove_existing_layer(layer_name: str) -> bool:
@@ -303,7 +294,7 @@ class LayerManager:
         memory_layer.setExtent(base_layer.extent())
         memory_layer.setCrs(base_layer.crs())
 
-        nex_id=fidOperations._get_next_fid(target_layer=memory_layer)
+        nex_id=fidOperations._get_layers_next_ids(target_layer=memory_layer)
         LayerSetups.register_layer_configuration(memory_layer,max_fid=nex_id)
         
         return memory_layer
@@ -326,6 +317,52 @@ class LayerManager:
         project.addMapLayer(layer, False)
         # Insert the layer at the top of the group.
         group.insertLayer(0, layer)
+
+
+
+    @staticmethod
+    def get_or_create_group(group_name: str) -> QgsLayerTreeGroup:
+        """
+        Retrieve the group by name from the project's layer tree.
+        If the group doesn't exist, create it.
+        """
+        project = QgsProject.instance()
+        root = project.layerTreeRoot()
+        group = root.findGroup(group_name)
+        if group is None:
+            group = root.addGroup(group_name)
+        return group
+    @staticmethod
+    def get_or_create_subgroup_NEEDS_IMLEMENTATION(
+        main_group_name: str,
+        sub_group_name: Optional[str] = None,
+        layer: Optional[QgsMapLayer] = None
+    ) -> QgsLayerTreeGroup:
+        """
+        Ensures that a main group (and optionally a subgroup) exist in the layer tree.
+        If a layer is provided, it is safely moved (cloned) into the final group.
+        """
+        root = QgsProject.instance().layerTreeRoot()
+
+        # Ensure main group
+        main_group = root.findGroup(main_group_name)
+        if main_group is None:
+            main_group = QgsLayerTreeGroup(main_group_name)
+            root.insertChildNode(len(root.children()), main_group)
+
+        target_group = main_group
+
+        # Ensure sub group
+        if sub_group_name:
+            sub_group = main_group.findGroup(sub_group_name)
+            if sub_group is None:
+                sub_group = QgsLayerTreeGroup(sub_group_name)
+                main_group.insertChildNode(len(main_group.children()), sub_group)
+            target_group = sub_group
+
+        return target_group
+
+
 
     @staticmethod
     def _commit_to_archive(memory_layer: QgsVectorLayer, layer: QgsVectorLayer) -> Tuple[bool, Optional[List]]:

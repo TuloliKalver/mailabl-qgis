@@ -59,7 +59,7 @@ class SetupCadastralLayers:
                                                      lblProjectsTargetFolder_location, lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value)
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
-        ModernMessageDialog.Info_messages_modern(heading, text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
         # Additional logic if needed
 
         widget.accept()  # Close the dialog
@@ -68,7 +68,7 @@ class SetupCadastralLayers:
         # Handle logic when the cancel button is clicked
         text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.infoSimple
-        ModernMessageDialog.Info_messages_modern(heading, text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
         widget.reject()  # Close the dialog        
 
 

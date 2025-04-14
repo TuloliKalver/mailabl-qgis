@@ -294,12 +294,12 @@ class LayerChecker:
                 if feature_count > 0:
                     pass
                 else:
-                    ModernMessageDialog.Info_messages_modern(heading, text)
+                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
 
             else:
-                ModernMessageDialog.Info_messages_modern(heading, text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
         else:
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
 
 
 

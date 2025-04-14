@@ -17,7 +17,7 @@ class requestBuilder:
         if not access_token:
             text = ("Access token not found. Please connect first.")
             heading = pealkiri.infoSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             return None
 
         sanitized_variables = requestBuilder.sanitize_for_json(variables)
@@ -87,7 +87,7 @@ class RequestErrorHandler:
             error_message = '\n'.join(error_messages)
             text = (f"GraphQL request failed:\n{error_message}")
             heading = pealkiri.warningSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             #print(f"Error message: {text}")
             return True  # Indicate that an error occurred
         return False  # No error occurred

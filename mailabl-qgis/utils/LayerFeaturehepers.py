@@ -19,13 +19,13 @@ class LayerFeatureHelpers:
 
     @staticmethod
     def _get_layer_fetaures_by_id(layer: QgsVectorLayer, feature_id: int) -> QgsFeature:
-        print(f"🔍 Searching for feature ID {feature_id} in layer '{layer.name()}'.")
+        #print(f"🔍 Searching for feature ID {feature_id} in layer '{layer.name()}'.")
         request = QgsFeatureRequest().setFilterFids([feature_id])
         feature = next(layer.getFeatures(request), None)
 
         if feature and feature.isValid():
             return feature
-        print(f"⚠️ Feature ID {feature_id} not found.")
+        #print(f"⚠️ Feature ID {feature_id} not found.")
         return None
     
     @staticmethod
@@ -101,7 +101,7 @@ class LayerFeatureHelpers:
         search_value_fields = Katastriyksus().search_field_items
 
         if search_field not in layer.fields().names():
-            print(f"❌ Field '{search_field}' not found in layer.")
+            #print(f"❌ Field '{search_field}' not found in layer.")
             return
 
         # Build expression like: lower(field1) || ' ' || lower(field2) || ...
@@ -132,36 +132,41 @@ class LayerFeatureHelpers:
         """
         Safely adds a new feature to a layer, avoiding both internal FID and 'fid' field conflicts.
         """
-
+        #print("step 1 in add feature to layer")
         # Start editing if needed
         if layer.isEditable():
             layer.startEditing()
-            #print(f"✍️ Started editing layer '{layer.name()}'.")
+            print(f"✍️ Started editing layer '{layer.name()}'.")
         
         target_fields = layer.fields()  # Get the target layer's fields once.
+        #print("Step 2 in add feature to layer: attributes before map attributes by name")
         new_attrs = LayerFeatureHelpers._map_attributes_by_name(new_feature, target_fields)
-        #print(f"attributes before new max fid:")
-        #print(new_attrs)
-        
 
-        max_fid = fidOperations._get_next_fid(layer)
+        max_fid = fidOperations._get_layers_next_ids(layer)
+        #print(f"max fid for layer: {layer.name()} after get next fid:")
         #print(max_fid)
-        # Set the value for the 'fid' field if it exists
         fid_index = target_fields.indexOf("fid")
+        #print(f"fid index: {fid_index}")
+        
         new_attrs[fid_index] = max_fid
+        #print(f"attributes after new max fid:")
+        #print(new_attrs)
 
-
+        #print("Step 5 in add feature to layer: creating new feature")
+        # Create a new QgsFeature object using the mapped attributes
         # ✅ Update the feature *before* adding it
         new_feature.setAttributes(new_attrs)
         # Insert feature
+
+        #print("Step 6 in add feature to layer: adding feature to layer")
         res, _ = layer.dataProvider().addFeatures([new_feature])
         #print(f"✅ Feature added to layer '{layer.name()}': {res}")
 
         # Commit edits
         if commit:
             layer.commitChanges()
-            #print("💾 Changes committed.")
-
+            print("💾 Changes committed.")
+        #print("✅ Feature added successfully.")
         return res
 
     @staticmethod
@@ -170,7 +175,8 @@ class LayerFeatureHelpers:
         if delete is True:
             res = layer.dataProvider().deleteFeatures([feature_id])
             if res:
-                print(f"Successfully deleted features from input layer '{layer.name()}'.")
+                #print(f"Successfully deleted features from input layer '{layer.name()}'.")
+                pass
             else:
                 print(f"Failed to delete features from input layer '{layer.name()}'.")
             layer.triggerRepaint()

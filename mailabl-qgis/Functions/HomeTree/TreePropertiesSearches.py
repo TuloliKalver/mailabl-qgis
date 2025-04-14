@@ -61,7 +61,7 @@ class FeatureInfoTool:
         if len(selected_features) > 1:
             text = HoiatusTexts().Liiga_palju_kinnistuid
             heading = Headings().warningSimple
-            ModernMessageDialog.Info_messages_modern(heading=heading, message=text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading=heading, message=text)
             self.window_manager_minMax._restore_window()
             self.disconnect_signal()
             self.layer.removeSelection()

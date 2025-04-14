@@ -102,12 +102,12 @@ def get_access_token(self):
         else:
             text = "Autentimine ebaõnnestus.\nKontrolli kasutajanime ja parooli"
             heading = pealkiri.warningSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             return False  # Authentication failure
     else:
         text = "Autentimise pöördumine ebaõnnestus.\nProovi mõne hetke pärast uuesti"
         heading = pealkiri.warningSimple
-        ModernMessageDialog.Info_messages_modern(heading,text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
         return False  # Network or other error
 
 

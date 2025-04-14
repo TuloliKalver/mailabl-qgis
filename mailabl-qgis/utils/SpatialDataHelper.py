@@ -33,7 +33,7 @@ class ZoomForModuleData:
             print(f"❗ Module {module} not mapped to any table")
             heading = Headings().error_simple
             message = f"❗ Tabelit moodulile {module} ei leitud."
-            ModernMessageDialog.Info_messages_modern(heading,message)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,message)
             return
 
         layer_name = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -44,7 +44,7 @@ class ZoomForModuleData:
         )
 
         if not selected_features:
-            ModernMessageDialog.Info_messages_modern(Headings().warningSimple, HoiatusTexts().zoom_siin_ei_ole_midagi)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(Headings().warningSimple, HoiatusTexts().zoom_siin_ei_ole_midagi)
             return
 
         model = ProjectModelBuilders()._model_for_module_zoomed_map_properties(
@@ -53,7 +53,7 @@ class ZoomForModuleData:
 
         if model is None:
 
-            ModernMessageDialog.Info_messages_modern( Headings().warningSimple, "Mudeli loomine ebaõnnestus.")
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER( Headings().warningSimple, "Mudeli loomine ebaõnnestus.")
             return
 
         ModuleTableBuilder.setup(table, model, module, language)

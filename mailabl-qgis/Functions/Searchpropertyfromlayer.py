@@ -85,16 +85,16 @@ class SearchProperties:
             heading = Headings().infoSimple
             text = "Paistab, et kasutad otsingut esmakordselt."
             text_2 = "Teen vajalikud andmebaasi ettevalmistused."
-            ModernMessageDialog.Info_messages_modern(heading,text, text_2)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text, text_2)
             result = self.add_search_field()
             if result != True:
                 heading = Headings().warningCritical
                 text = HoiatusTexts().error
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             else:
                 heading = Headings().infoSimple
                 text = EdukuseTexts().tehtud
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
 
         # Get the label text value and convert it to lowercase
         label_text = label.text().lower() if hasattr(label, 'text') else str(label).lower()
@@ -172,7 +172,7 @@ class SearchProperties:
         if not features:
             heading = Headings().infoSimple
             text = HoiatusTextsAuto.no_match_for_this(label_text)
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
             #print(f"Label '{label_text}' not found in the search_field.")
             return None
 

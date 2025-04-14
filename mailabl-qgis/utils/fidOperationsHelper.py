@@ -9,23 +9,21 @@ class fidOperations:
     @staticmethod
     def _get_current_max_fid(target_layer: QgsVectorLayer) -> Optional[int]:
         """
-        Retrieves the current maximum 'fid' value from the attribute field,
-        ignoring any subset filters or layer-level filters.
+        Retrieves the current maximum value from the 'fid' attribute field.
+        Removes any subset string to access full data in the correct layer.
         """
-        if target_layer is None:
-            TracebackLogger.log_traceback(custom_message="Target layer is None.")
+        if not target_layer or not target_layer.isValid():
+            TracebackLogger.log_traceback(custom_message="Invalid or None target layer.")
             return None
 
-        # Get base data source WITHOUT the subset string
-        base_source = target_layer.dataProvider().dataSourceUri().split("|")[0]
-        provider_type = target_layer.providerType()
-
-        # Create clean layer without filters
-        raw_layer = QgsVectorLayer(base_source, "raw_layer", provider_type)
-
+        # Clone the same layer to preserve the correct data source and layer name
+        raw_layer = QgsVectorLayer(target_layer.source(), "raw_layer", target_layer.providerType())
         if not raw_layer.isValid():
-            TracebackLogger.log_traceback(custom_message="Could not load raw version of target layer.")
+            TracebackLogger.log_traceback(custom_message="Could not clone layer.")
             return None
+
+        # Remove any subset filter
+        raw_layer.setSubsetString("")  # this exposes all features
 
         fid_index = raw_layer.fields().indexOf('fid')
         if fid_index == -1:
@@ -34,14 +32,15 @@ class fidOperations:
 
         max_fid = None
         for feature in raw_layer.getFeatures():
-            fid = feature.attribute('fid')
-            if fid is not None and isinstance(fid, (int, float)):
-                max_fid = max(fid, max_fid) if max_fid is not None else fid
+            fid_val = feature.attribute('fid')
+            if fid_val is not None and isinstance(fid_val, (int, float)):
+                max_fid = fid_val if max_fid is None else max(max_fid, fid_val)
 
-        return int(max_fid) if max_fid is not None else None
+        print(f"🧬 Max FID in {target_layer.name()} (unfiltered): {max_fid}")
+        return int(max_fid) if max_fid is not None else 0
 
     @staticmethod
-    def _get_next_fid(target_layer: QgsVectorLayer, starting_fid: int = 1) -> int:
+    def _get_layers_next_ids(target_layer: QgsVectorLayer, starting_fid: int = 1) -> int:
         """
         Computes the next available unique feature ID for the target_layer using the
         current maximum fid. If no valid 'fid' values are found, returns starting_fid.

@@ -1,16 +1,11 @@
 
 
 from typing import List, Tuple, Optional
-from qgis.core import QgsVectorLayer, QgsVectorLayerExporter, QgsProject
-
-from qgis.utils import iface 
-from qgis.core import QgsVectorLayer
+from qgis.core import  QgsProject
 
 
-from ..KeelelisedMuutujad.FolderHelper import MailablGroupFolders
-from ..utils.LayerGroupHelpers import LayerGroupHelper
-from ..utils.Logging.Logger import TracebackLogger
 from ..utils.ArchiveLayerHandler import ArchiveLayerHandler
+from ..utils.LayerHelpers import LayerProcessHandlers
 
 
 class GeopakagegeHandler:
@@ -37,7 +32,6 @@ class GeopakagegeHandler:
             return
 
         # Zoom + select
-        from ..utils.LayerHelpers import LayerProcessHandlers
         LayerProcessHandlers._zoom_to_features_extent(matching_features)
         source_layer.selectByIds([f.id() for f in matching_features])
 

@@ -24,7 +24,7 @@ class TableSelections:
             #print("Andmeid ei ole valitud.")            
             text = ("Andmeid ei ole valitud")
             heading = pealkiri.warningSimple
-            ModernMessageDialog.Info_messages_modern(heading,text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
             return None
         
         selection_model = table.selectionModel()

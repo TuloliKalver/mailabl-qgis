@@ -146,7 +146,7 @@ class RemapPropertiesLayer:
         else:
             heading = Headings().warningSimple
             message = "Veeru nimede uuendamisel tekkis viga."
-            ModernMessageDialog.Info_messages_modern(heading, message )
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, message )
             print("Error committing changes.")
             return
         
@@ -190,13 +190,13 @@ class RemapPropertiesLayer:
         if self.layer.commitChanges():
             heading = Headings().infoSimple
             message = EdukuseTexts().salvestatud
-            ModernMessageDialog.Info_messages_modern(heading, message)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, message)
             print("Stage I committed successfully.")
             pass
         else:
             heading = Headings().infoSimple
             message = HoiatusTexts().error
-            ModernMessageDialog.Info_messages_modern(heading, message)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, message)
             print("Error committing changes.")
             return
 

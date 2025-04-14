@@ -186,32 +186,33 @@ class SelectionActions:
                 result = AddProperties.add_properties_final_flow_controller()
                 print(f"result is {result}")
                 if result == False:
-                    ModernMessageDialog.Info_messages_modern("Result", f"Nothing to update or to archive")
+                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Result", f"Nothing to update or to archive")
                     return
                 if result == True:
 
-                    ModernMessageDialog.Info_messages_modern("Result", f"All updatin processes handled succesfully")
+                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Result", f"All updatin processes handled succesfully")
+
                     SelectionActions.cancel_selection()
 
                     return
                 else:
-                    ModernMessageDialog.Info_messages_modern("Error", f"Something went wrong during {process} process")
+                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Error", f"Something went wrong during {process} process")
                     return
             if process == Processes.EDIT:
-                ModernMessageDialog.Info_messages_modern("Executing", f"Executing {process.capitalize()} Process...")
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Executing", f"Executing {process.capitalize()} Process...")
                 return
             if process == Processes.REMOVE:
                 if button:
                     button.setEnabled(False)
                     result = ReomoveProcessController.reomve_process_controller(delete_anyway=True)
                     if result == False:
-                        ModernMessageDialog.Info_messages_modern("Result", f"Nothing to delete")
+                        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Result", f"Nothing to delete")
                         return
                     if result == True:
-                        ModernMessageDialog.Info_messages_modern("Result", f"All deletion processes handled succesfully")
+                        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Result", f"All deletion processes handled succesfully")
                         SelectionActions.cancel_selection()
                     else:
-                        ModernMessageDialog.Info_messages_modern("Error", f"Something went wrong during {process} process")
+                        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Error", f"Something went wrong during {process} process")
                 return
         else:
             MessageLoaders.show_message("Error", "No action selected!")

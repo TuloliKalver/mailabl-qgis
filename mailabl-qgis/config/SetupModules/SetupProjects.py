@@ -124,7 +124,7 @@ class SetupProjects:
                               lblPreferredContractsTypes_value)
         text = edu.salvestatud
         heading = pealkiri.tubli
-        ModernMessageDialog.Info_messages_modern(heading, text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
         # Additional logic if needed
 
         widget.accept()  # Close the dialog
@@ -132,7 +132,7 @@ class SetupProjects:
         # Handle logic when the cancel button is clicked
         text = sisu.kasutaja_peatas_protsessi
         heading = pealkiri.warningSimple
-        ModernMessageDialog.Info_messages_modern(heading, text)
+        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
         widget.reject()  # Close the dialog        
     def addSelectedItem(widget):
         combo_box_name = widget.cmbNameElements
@@ -150,7 +150,7 @@ class SetupProjects:
                     label_symbol.setStyleSheet("border: 1px solid #D32F2F;")
                     heading = Headings.warningSimple
                     text = sisu.puudulikud_andmed
-                    ModernMessageDialog.Info_messages_modern(heading,text)
+                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
                     return
                                     # Check if the symbol_text contains disallowed characters
                 if re.search(r'[<>:"/\\|?*.]', symbol_text):
@@ -158,7 +158,7 @@ class SetupProjects:
                     label_symbol.setStyleSheet("border: 1px solid #D32F2F;")
                     pealkiri=Headings.warningSimple
                     text=sisu.korrigeeri_sümbolit
-                    ModernMessageDialog.Info_messages_modern(heading,text)
+                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
                     return
                 else:
                     # Add selected item to label with or without parentheses

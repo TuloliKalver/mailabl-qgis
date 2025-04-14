@@ -102,8 +102,8 @@ class TagsEngines:
         tags = result["data"]["tags"]["edges"]
         for tag in tags:
             if tag["node"]["name"].lower() == tag_name.lower():
-                print(f"Found tag '{tag_name}' -> ID: {tag['node']['id']}")
+                #print(f"Found tag '{tag_name}' -> ID: {tag['node']['id']}")
                 return tag["node"]["id"]
 
-        print(f"Tag '{tag_name}' not found in module '{module}'")
+        #print(f"Tag '{tag_name}' not found in module '{module}'")
         return None

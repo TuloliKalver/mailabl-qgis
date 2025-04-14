@@ -103,7 +103,7 @@ class PropertiesBaseMap:
         if not future_layer_name_text or len(future_layer_name_text) < 3:
             text = ("Nimetus on vigane või lisamata")    
             heading = pealkiri.warningSimple
-            ModernMessageDialog.Info_messages_modern(heading, text)
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
             # Set red background color for the label
             border = ("border: 1px solid #D32F2F; border-radius: 5px;")
             #background_red = "background-color: #D32F2F"

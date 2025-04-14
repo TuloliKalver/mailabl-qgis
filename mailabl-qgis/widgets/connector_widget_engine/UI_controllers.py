@@ -152,7 +152,7 @@ class PropertiesConnector(QObject):
                 total_returned_ids, total_ids_Table = result
                 text = InfoTexts().properties_successfully_added(element_name, total_returned_ids, total_ids_Table)
                 heading = Headings().infoSimple      
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
         else:
             if widget is not None:
                 self.unset_widget_actions(widget)
@@ -160,7 +160,7 @@ class PropertiesConnector(QObject):
                 self.ConnectorWidgetClosed.emit()
                 text = InfoTexts().error_adding_properties(element_name)
                 heading = Headings().infoSimple
-                ModernMessageDialog.Info_messages_modern(heading,text)
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
 
     def unset_widget_actions(self, widget):
         iface.actionPan().trigger()
