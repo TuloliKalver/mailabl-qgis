@@ -3,12 +3,12 @@ import os
 
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QFileDialog
-from qgis.core import QgsVectorLayer, QgsFeature, QgsLayerTreeGroup, QgsProject, QgsWkbTypes
+from qgis.core import QgsVectorLayer, QgsLayerTreeGroup, QgsProject, QgsWkbTypes
 
 from ...utils.ProgressHelper import ProgressDialogModern
 from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...KeelelisedMuutujad.messages import Headings
-from ...utils.messagesHelper import ModernMessageDialog
+
 from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 
 
@@ -46,7 +46,6 @@ class SHPLayerLoader:
 
                 ShapefileImporter.import_shp_file_as_memory_layer(file_path, imporditavad_group)
 
-       
 
                 text = (f"Fail {layer_name}.shp on imporditd\n\nLisasime selle gruppi \n\n{import_subgroup_layer_name}")
                 heading = pealkiri.infoSimple

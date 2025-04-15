@@ -358,6 +358,7 @@ class LayerFilterSetters:
             print("Error: No filter found on the input layer.")
             return
         target_layer.setSubsetString(expression)
+        return active_layer, target_layer
 
     @staticmethod
     def _reset_layer_filters():

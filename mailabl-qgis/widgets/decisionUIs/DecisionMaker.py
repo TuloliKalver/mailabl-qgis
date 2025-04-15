@@ -9,7 +9,7 @@ from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QColor
 from PyQt5.QtCore import QPropertyAnimation
 
-
+  
 class DecisionDialogHelper:
 
     def ask_user(title: str, message: str, options: dict=None, parent=None):

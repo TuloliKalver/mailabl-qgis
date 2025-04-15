@@ -14,6 +14,9 @@ from ..utils.MessagesHelpers import MessageLoaders
 from ..utils.messagesHelper import ModernMessageDialog
 from ..utils.LayerHelpers import LayerFilterSetters
 from ..config.settings import StoredLayers
+from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+from ..KeelelisedMuutujad.messages import Headings, EdukuseTexts
+
 
 class SelectionActions:
     """Class responsible for handling user selections and executing actions.""" 
@@ -176,45 +179,91 @@ class SelectionActions:
     @classmethod
     def execute_action(self):
         """Execute the selected action and perform cleanup."""
+        
+        buttons = {"keep": "Jätka",}
+
         if PropertiesProcessStage.active_process:
             process = PropertiesProcessStage.active_process.get("process")
             button = PropertiesProcessStage.active_process.get("button")
-            #print(f"process on execution {process} and button on process {button}")
+
             if process == Processes.ADD:
                 if button:
                     button.setEnabled(False)
+
                 result = AddProperties.add_properties_final_flow_controller()
                 print(f"result is {result}")
-                if result == False:
-                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Result", f"Nothing to update or to archive")
-                    return
-                if result == True:
 
-                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Result", f"All updatin processes handled succesfully")
-
+                if result is True:
+                    DecisionDialogHelper.ask_user(
+                        title=Headings.inFO_SIMPLE,
+                        message="Andmed edukalt uuendatud",
+                        options=buttons,
+                        parent=self.dialog
+                    )
                     SelectionActions.cancel_selection()
-
-                    return
+                elif result is False:
+                    DecisionDialogHelper.ask_user(
+                        title=Headings.inFO_SIMPLE,
+                        message="Selles piirkonnas ei ole midagi uuendada ega arhiveerida!",
+                        options=buttons,
+                        parent=self.dialog
+                    )
+                    SelectionActions.cancel_selection()
                 else:
-                    ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Error", f"Something went wrong during {process} process")
-                    return
-            if process == Processes.EDIT:
-                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Executing", f"Executing {process.capitalize()} Process...")
+                    DecisionDialogHelper.ask_user(
+                        title="Oi oi ....",
+                        message="Midagi läks valesti",
+                        options=buttons,
+                        parent=self.dialog
+                    )
+                    SelectionActions.cancel_selection()
                 return
-            if process == Processes.REMOVE:
+
+            elif process == Processes.EDIT:
+                DecisionDialogHelper.ask_user(
+                    title="Redigeerimine",
+                    message=f"Toimingut  {process.capitalize()} ei ole veel implementeeritud...",
+                    options=buttons,
+                    parent=self.dialog
+                )
+                return
+
+            elif process == Processes.REMOVE:
                 if button:
                     button.setEnabled(False)
-                    result = ReomoveProcessController.reomve_process_controller(delete_anyway=True)
-                    if result == False:
-                        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Result", f"Nothing to delete")
-                        return
-                    if result == True:
-                        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Result", f"All deletion processes handled succesfully")
-                        SelectionActions.cancel_selection()
-                    else:
-                        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Error", f"Something went wrong during {process} process")
+
+                result = ReomoveProcessController.reomve_process_controller(delete_anyway=True)
+
+                if result is True:
+                    DecisionDialogHelper.ask_user(
+                        title="Kustutamine",
+                        message="Kõik kustutusprotsessid edukalt lõpetatud",
+                        options=buttons,
+                        parent=self.dialog
+                    )
+                    SelectionActions.cancel_selection()
+                elif result is False:
+                    DecisionDialogHelper.ask_user(
+                        title="Tulemus",
+                        message="Midagi ei olnud kustutada",
+                        options=buttons,
+                        parent=self.dialog
+                    )
+                    SelectionActions.cancel_selection()
+                else:
+                    DecisionDialogHelper.ask_user(
+                        title="Viga",
+                        message=f"Midagi läks valesti {process} protsessi ajal",
+                        options=buttons,
+                        parent=self.dialog
+                    )
+                    SelectionActions.cancel_selection()
                 return
         else:
-            MessageLoaders.show_message("Error", "No action selected!")
-            #self.cleanup_map_and_functions()
-
+            DecisionDialogHelper.ask_user(
+                title="Viga",
+                message="Ühtegi tegevust ei ole valitud!",
+                options=buttons,
+                parent=self.dialog
+            )
+            return

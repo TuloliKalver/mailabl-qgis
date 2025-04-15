@@ -854,18 +854,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         request = QgsFeatureRequest().setFilterFid(feature_id)
         feature = next(input_layer.getFeatures(request), None)
         
-        #max_fid = None
-        #
-        #for feature in target_layer.getFeatures():
-        #    fid_val = feature.attribute('fid')
-        #    if fid_val is not None and isinstance(fid_val, (int, float)):
-        #        max_fid = fid_val if max_fid is None else max(max_fid, fid_val)
-
-        #print(f"Max FID value: {max_fid}")
-        #if max_fid is None:
-        #    print("No features found with numeric FIDs.")
-        #    max_fid = 0
-
 
         target_fields = target_layer.fields()
 

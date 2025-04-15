@@ -19,7 +19,7 @@ from PyQt5.QtCore import QVariant
 from PyQt5.QtWidgets import QFileDialog
 
 from ..utils.fidOperationsHelper import fidOperations
-
+from ..KeelelisedMuutujad.FolderHelper import MailablLayerNames
 from ..utils.LayerSetups import LayerSetups
 from ..config.settings import Filepaths, FilesByNames, StoredLayers
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts ,HoiatusTextsAuto, Salvestamisel
@@ -402,7 +402,7 @@ class LayerManager:
         
         LayerSetups.register_layer_configuration(
             layer, 
-            max_fid=fidOperations._get_current_max_fid(target_layer=layer)
+            max_fid=fidOperations._get_layers_current_max_fid_ignoring_filters(target_layer=layer)
         )
         
         # Check if the archiving (append) process was successful.

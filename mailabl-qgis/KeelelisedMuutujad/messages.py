@@ -1,4 +1,13 @@
 class Headings:
+    WARNING_SIMPLE = "Hoiatus!" 
+    WARNING_CRITICAL = "Oi Oi Oi!"
+    TUBLI = "Tubli!" 
+    inFO_SIMPLE = "Info"
+    ADDING_PROPERTIOES = "Lisan kinnistuid"
+    KATASTRID_LAETUD = "Katastrid laetud"
+    NIMEKIRJA_KOOSTAMINE = "Koostan linnade/külade nimekirja!"
+
+
     def __init__(self):
         self.warningSimple = "Hoiatus!" 
         self.warningCritical = "Oi Oi Oi!"
@@ -131,10 +140,14 @@ class KriitilisedTexts:
         self.error = "Midagi läks valesti.\nPöördu admini poole"
 
 class EdukuseTexts:
+    TEHTUD = "Toiming edukalt lõpetatud"
+    SALVESTATUD = "Kõik on salvestatud"
+    
 
     def __init__(self):
-        self.tehtud = "Toiming edukalt lõpetatud"
-        self.salvestatud = "Kõik on salvestatud"
+        self.tehtud = EdukuseTexts.TEHTUD
+        self.salvestatud = EdukuseTexts.SALVESTATUD
+        
 
 class Salvestamisel:
 
