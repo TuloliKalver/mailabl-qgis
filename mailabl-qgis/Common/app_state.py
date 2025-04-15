@@ -93,6 +93,21 @@ class FlowStages:
         #print(f"Planned next flow {next_flow}")        
         PropertiesProcessStage.current_flow_stage = next_flow
 
+    @classmethod
+    def set_stage(cls, stage: str, require_cache: bool = False):
+        if stage not in Expressions.FLOW_EXPRESSION_MAPPING:
+            print(f"⚠️ Attempted to set invalid flow stage: {stage}")
+            return
+
+        if require_cache:
+            required_attr = Expressions.FLOW_EXPRESSION_MAPPING[stage].get("attribute")
+            if required_attr and not PropertiesProcessStage.cache.get(required_attr):
+                print(f"❌ Cannot move to stage '{stage}' — missing cache for '{required_attr}'")
+                return
+
+        PropertiesProcessStage.current_flow_stage = stage
+        print(f"✅ Flow stage set manually to: {stage}")
+
 
 
 class Expressions:
@@ -201,7 +216,6 @@ class Expressions:
             'list_widget_input': 'lvState',
             'list_widget_target': 'lvSettlement',
         },
-
         FlowStages.MUNICIPALITY: {
             'field': Katastriyksus.ay_nimi,
             'target_field': Katastriyksus.ay_nimi,

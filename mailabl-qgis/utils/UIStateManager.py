@@ -42,6 +42,29 @@ class UIStateManager:
             dialog.lvSettlement: self.get_connected_signal
         }
 
+    def get_connected_signal(self):
+        for widget in self.list_views:
+            widget.setEnabled(False)
+
+        element = self.dialog.sender()
+        print(f"🔄 Signal triggered by: {element.objectName()}")
+
+        sender = self.dialog.sender()
+        widget_to_stage = {
+            self.dialog.lvCounty: FlowStages.PRE_STATE,
+            self.dialog.lvState: FlowStages.PRE_MUNICIPALITY,
+            self.dialog.lvSettlement: FlowStages.PREVIEW,
+        }
+        FlowStages.set_stage(widget_to_stage.get(sender))
+        self.flow_and_ui_controls()
+
+
+
+
+        for widget in self.list_views:
+            widget.setEnabled(True)
+
+
     def connect_list_signals(self):
         for widget, func in self.list_widgets_with_signals.items():
             widget.itemSelectionChanged.connect(func)
@@ -53,50 +76,42 @@ class UIStateManager:
             except TypeError:
                 pass
 
-    def get_connected_signal(self):
-        for widget in self.list_views:
-            widget.setEnabled(False)
-        element = self.dialog.sender()
-        CacheUpdater.update_slected_items_cache(element)
-        self.flow_and_ui_controls()
-        for widget in self.list_views:
-            widget.setEnabled(True)
-
     def exit_properties_process_flows(self):
         shp_layer_name = SettingsDataSaveAndLoad().load_SHP_inputLayer_name()
-        choice = DecisionDialogHelper.ask_user(
-            title="Mõtte koht...",
-            message=f"Kas soovid {shp_layer_name} nimelise \n alles jätta või eemaldada?",
-            parent=self.dialog
-        )
+        layer_shp = QgsProject.instance().mapLayersByName(shp_layer_name)
+        if layer_shp:
+            choice = DecisionDialogHelper.ask_user(
+                title="Mõtte koht...",
+                message=f"Kas soovid {shp_layer_name} nimelise \n alles jätta või eemaldada?",
+                parent=self.dialog
+            )
 
-        if choice is False:
-            # Reset state regardless of choice
-            WorkSpaceHandler.swWorkSpace_Properties(self.dialog)
-            for button in self.main_buttons:
-                button.setEnabled(True)
-            WidgetAnimator.toggle_Frame_height_for_settings(self.dialog, self.dialog.pbSettings_SliderFrame)
+            if choice is False:
+                # Reset state regardless of choice
+                WorkSpaceHandler.swWorkSpace_Properties(self.dialog)
+                for button in self.main_buttons:
+                    button.setEnabled(True)
+                WidgetAnimator.toggle_Frame_height_for_settings(self.dialog, self.dialog.pbSettings_SliderFrame)
 
-            # Refresh layer
-            layer_name = StoredLayers.users_properties_layer_name()
-            LayerFilterSetters._reset_layer(layer_name)
-            layers = QgsProject.instance().mapLayersByName(layer_name)
-            if layers:
-                iface.setActiveLayer(layers[0])
+                # Refresh layer
+                layer_name = StoredLayers.users_properties_layer_name()
+                LayerFilterSetters._reset_layer(layer_name)
+                layers = QgsProject.instance().mapLayersByName(layer_name)
+                if layers:
+                    iface.setActiveLayer(layers[0])
 
-            return
+                return
 
-        if choice is None:
-            print("cancelled whole thing")
+            if choice is None:
+                print("cancelled whole thing")
 
-            return  # ❌ User closed dialog — cancel exit entirely
+                return  # ❌ User closed dialog — cancel exit entirely
 
-        if choice is True:  # ✅ Only delete if explicitly confirmed
-            layer_shp = QgsProject.instance().mapLayersByName(shp_layer_name)
-            if layer_shp:
-                layer_s = layer_shp[0]
-                if layer_s and layer_s.isValid():
-                    QgsProject.instance().removeMapLayer(layer_s)
+            if choice is True:  # ✅ Only delete if explicitly confirmed
+                if layer_shp:
+                    layer_s = layer_shp[0]
+                    if layer_s and layer_s.isValid():
+                        QgsProject.instance().removeMapLayer(layer_s)
 
         # Reset state regardless of choice
         WorkSpaceHandler.swWorkSpace_Properties(self.dialog)
@@ -161,18 +176,20 @@ class UIStateManager:
         state = PropertiesProcessStage.current_flow_stage
         progress = ProgressDialogModern(title="Andmete laadimine...", value=0)
 
+        self.disconnect_list_signals()
+
         if state == FlowStages.COUNTY:
             progress.update(text1="Palun oota...", maximum=4)
+            WidgetAndWievHelpers.reset_and_set_data([lv_municipality, lv_state], data=[], state=False)
             WidgetAndWievHelpers.reset_and_set_data(lv_county, data=[], state=True)
             UIActions.disable_and_clear(all_checkboxes)
             progress.update(1)
-            WidgetAndWievHelpers.reset_and_set_data([lv_municipality, lv_state], data=[], state=False)
             progress.update(2)
             WidgetAndWievHelpers.reset_and_set_data(all_controls, data=[], state=False)
             progress.update(3)
             FlowStages.forward_stage()
             progress.close()
-
+#
         elif state == FlowStages.PRE_STATE:
             progress.update(text1="Palun oota...", maximum=3)
             UIActions.disable_and_clear(all_checkboxes)
@@ -210,6 +227,7 @@ class UIStateManager:
             WidgetAndWievHelpers.reset_and_set_data(all_controls + all_views, data=None, state=False)
             progress.close()
 
+        self.connect_list_signals()
 
 class UIActions:
     @classmethod

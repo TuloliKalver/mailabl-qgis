@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>930</width>
+    <width>1094</width>
     <height>1119</height>
    </rect>
   </property>
@@ -8178,7 +8178,7 @@ QTreeView::item:hover {
                         <property name="frameShadow">
                          <enum>QFrame::Raised</enum>
                         </property>
-                        <layout class="QHBoxLayout" name="horizontalLayout_37">
+                        <layout class="QHBoxLayout" name="horizontalLayout_9">
                          <property name="leftMargin">
                           <number>0</number>
                          </property>
@@ -8199,7 +8199,7 @@ QTreeView::item:hover {
                            <property name="frameShadow">
                             <enum>QFrame::Raised</enum>
                            </property>
-                           <layout class="QVBoxLayout" name="verticalLayout_196">
+                           <layout class="QHBoxLayout" name="horizontalLayout_4">
                             <property name="leftMargin">
                              <number>0</number>
                             </property>
@@ -8212,44 +8212,6 @@ QTreeView::item:hover {
                             <property name="bottomMargin">
                              <number>0</number>
                             </property>
-                            <item alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_26">
-                              <property name="text">
-                               <string>Eemalda kinnistuid</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_19">
-                              <property name="font">
-                               <font>
-                                <pointsize>10</pointsize>
-                               </font>
-                              </property>
-                              <property name="text">
-                               <string>Mul on &quot;Eesti.shp&quot; nimeline aluskaart</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_25">
-                              <property name="font">
-                               <font>
-                                <pointsize>10</pointsize>
-                               </font>
-                              </property>
-                              <property name="text">
-                               <string>Mul ei ole aluskaarti</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item alignment="Qt::AlignRight">
-                             <widget class="QLabel" name="label_12">
-                              <property name="text">
-                               <string>Sattusin valesse kohta</string>
-                              </property>
-                             </widget>
-                            </item>
                            </layout>
                           </widget>
                          </item>
@@ -8267,7 +8229,7 @@ QTreeView::item:hover {
                            <property name="frameShadow">
                             <enum>QFrame::Raised</enum>
                            </property>
-                           <layout class="QVBoxLayout" name="verticalLayout_195">
+                           <layout class="QVBoxLayout" name="verticalLayout_3">
                             <property name="leftMargin">
                              <number>0</number>
                             </property>
@@ -8281,71 +8243,222 @@ QTreeView::item:hover {
                              <number>0</number>
                             </property>
                             <item>
-                             <widget class="QPushButton" name="btnRemoveItems_noImport">
-                              <property name="text">
-                               <string>Eemalda kinnistuid</string>
+                             <widget class="QFrame" name="frame_8">
+                              <property name="frameShape">
+                               <enum>QFrame::StyledPanel</enum>
                               </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/delete.svg</normaloff>icons/Icons_hele/delete.svg</iconset>
+                              <property name="frameShadow">
+                               <enum>QFrame::Raised</enum>
                               </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QPushButton" name="pbLoaddShapeFile">
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string>Lae algandmed</string>
-                              </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/file-plus.svg</normaloff>icons/Icons_hele/file-plus.svg</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>20</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QPushButton" name="pbOpenMaAmet">
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>24</height>
-                               </size>
-                              </property>
-                              <property name="text">
-                               <string>Maa-ametisse</string>
-                              </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/external-link.svg</normaloff>icons/Icons_hele/external-link.svg</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>20</width>
-                                <height>20</height>
-                               </size>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QPushButton" name="pbCancelBeforeEntering">
-                              <property name="text">
-                               <string>Lahku</string>
-                              </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/log-out.svg</normaloff>icons/Icons_hele/log-out.svg</iconset>
-                              </property>
+                              <layout class="QVBoxLayout" name="verticalLayout_15">
+                               <item>
+                                <widget class="QFrame" name="frame_9">
+                                 <property name="styleSheet">
+                                  <string notr="true"/>
+                                 </property>
+                                 <property name="frameShape">
+                                  <enum>QFrame::StyledPanel</enum>
+                                 </property>
+                                 <property name="frameShadow">
+                                  <enum>QFrame::Raised</enum>
+                                 </property>
+                                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                                  <item>
+                                   <widget class="QFrame" name="frame_7">
+                                    <property name="frameShape">
+                                     <enum>QFrame::StyledPanel</enum>
+                                    </property>
+                                    <property name="frameShadow">
+                                     <enum>QFrame::Raised</enum>
+                                    </property>
+                                    <layout class="QVBoxLayout" name="verticalLayout_14">
+                                     <item alignment="Qt::AlignHCenter">
+                                      <widget class="QLabel" name="label_19">
+                                       <property name="font">
+                                        <font>
+                                         <pointsize>10</pointsize>
+                                        </font>
+                                       </property>
+                                       <property name="text">
+                                        <string>&quot;Eesti.shp&quot;
+on olemas</string>
+                                       </property>
+                                      </widget>
+                                     </item>
+                                     <item>
+                                      <widget class="QPushButton" name="pbLoaddShapeFile">
+                                       <property name="minimumSize">
+                                        <size>
+                                         <width>0</width>
+                                         <height>0</height>
+                                        </size>
+                                       </property>
+                                       <property name="text">
+                                        <string>Lae algandmed</string>
+                                       </property>
+                                       <property name="icon">
+                                        <iconset>
+                                         <normaloff>icons/Icons_hele/file-plus.svg</normaloff>icons/Icons_hele/file-plus.svg</iconset>
+                                       </property>
+                                       <property name="iconSize">
+                                        <size>
+                                         <width>20</width>
+                                         <height>20</height>
+                                        </size>
+                                       </property>
+                                      </widget>
+                                     </item>
+                                    </layout>
+                                   </widget>
+                                  </item>
+                                  <item>
+                                   <widget class="QFrame" name="frame_3">
+                                    <property name="frameShape">
+                                     <enum>QFrame::StyledPanel</enum>
+                                    </property>
+                                    <property name="frameShadow">
+                                     <enum>QFrame::Raised</enum>
+                                    </property>
+                                    <layout class="QVBoxLayout" name="verticalLayout_6">
+                                     <item alignment="Qt::AlignHCenter">
+                                      <widget class="QLabel" name="label_25">
+                                       <property name="font">
+                                        <font>
+                                         <pointsize>10</pointsize>
+                                        </font>
+                                       </property>
+                                       <property name="text">
+                                        <string>Mul ei ole
+aluskaarti</string>
+                                       </property>
+                                      </widget>
+                                     </item>
+                                     <item>
+                                      <widget class="QPushButton" name="pbOpenMaAmet">
+                                       <property name="minimumSize">
+                                        <size>
+                                         <width>0</width>
+                                         <height>0</height>
+                                        </size>
+                                       </property>
+                                       <property name="text">
+                                        <string>Maa-ametisse</string>
+                                       </property>
+                                       <property name="icon">
+                                        <iconset>
+                                         <normaloff>icons/Icons_hele/external-link.svg</normaloff>icons/Icons_hele/external-link.svg</iconset>
+                                       </property>
+                                       <property name="iconSize">
+                                        <size>
+                                         <width>20</width>
+                                         <height>20</height>
+                                        </size>
+                                       </property>
+                                      </widget>
+                                     </item>
+                                    </layout>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QFrame" name="frame_17">
+                                 <property name="frameShape">
+                                  <enum>QFrame::StyledPanel</enum>
+                                 </property>
+                                 <property name="frameShadow">
+                                  <enum>QFrame::Raised</enum>
+                                 </property>
+                                 <layout class="QVBoxLayout" name="verticalLayout_21">
+                                  <property name="leftMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <item alignment="Qt::AlignHCenter">
+                                   <widget class="QLabel" name="label_26">
+                                    <property name="text">
+                                     <string>Eemalda kinnistuid</string>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item alignment="Qt::AlignHCenter">
+                                   <widget class="QPushButton" name="btnRemoveItems_noImport">
+                                    <property name="text">
+                                     <string>Eemalda kinnistuid</string>
+                                    </property>
+                                    <property name="icon">
+                                     <iconset>
+                                      <normaloff>icons/Icons_hele/delete.svg</normaloff>icons/Icons_hele/delete.svg</iconset>
+                                    </property>
+                                    <property name="iconSize">
+                                     <size>
+                                      <width>20</width>
+                                      <height>20</height>
+                                     </size>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QFrame" name="frame_2">
+                                 <property name="frameShape">
+                                  <enum>QFrame::StyledPanel</enum>
+                                 </property>
+                                 <property name="frameShadow">
+                                  <enum>QFrame::Raised</enum>
+                                 </property>
+                                 <layout class="QVBoxLayout" name="verticalLayout_4">
+                                  <property name="leftMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>25</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>0</number>
+                                  </property>
+                                  <item alignment="Qt::AlignHCenter">
+                                   <widget class="QLabel" name="label_12">
+                                    <property name="text">
+                                     <string>Sattusin valesse kohta</string>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                  <item alignment="Qt::AlignHCenter">
+                                   <widget class="QPushButton" name="pbCancelBeforeEntering">
+                                    <property name="text">
+                                     <string>Lahku</string>
+                                    </property>
+                                    <property name="icon">
+                                     <iconset>
+                                      <normaloff>icons/Icons_hele/log-out.svg</normaloff>icons/Icons_hele/log-out.svg</iconset>
+                                    </property>
+                                    <property name="iconSize">
+                                     <size>
+                                      <width>20</width>
+                                      <height>20</height>
+                                     </size>
+                                    </property>
+                                   </widget>
+                                  </item>
+                                 </layout>
+                                </widget>
+                               </item>
+                              </layout>
                              </widget>
                             </item>
                            </layout>
@@ -8356,13 +8469,19 @@ QTreeView::item:hover {
                       </item>
                       <item alignment="Qt::AlignHCenter">
                        <widget class="QFrame" name="frPropertiFlowHolder">
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
                         <property name="frameShape">
                          <enum>QFrame::StyledPanel</enum>
                         </property>
                         <property name="frameShadow">
                          <enum>QFrame::Raised</enum>
                         </property>
-                        <layout class="QVBoxLayout" name="verticalLayout_190">
+                        <layout class="QVBoxLayout" name="verticalLayout_18">
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
                          <property name="leftMargin">
                           <number>0</number>
                          </property>
@@ -8373,104 +8492,223 @@ QTreeView::item:hover {
                           <number>0</number>
                          </property>
                          <property name="bottomMargin">
-                          <number>20</number>
+                          <number>0</number>
                          </property>
-                         <item>
-                          <widget class="QPushButton" name="pbAddElements">
-                           <property name="text">
-                            <string>Lisa ja arhiveeri</string>
+                         <item alignment="Qt::AlignHCenter">
+                          <widget class="QFrame" name="frame_10">
+                           <property name="styleSheet">
+                            <string notr="true"/>
                            </property>
-                           <property name="icon">
-                            <iconset>
-                             <normaloff>icons/Icons_hele/upload.svg</normaloff>icons/Icons_hele/upload.svg</iconset>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
                            </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_11">
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QFrame" name="frame_12">
+                              <property name="frameShape">
+                               <enum>QFrame::StyledPanel</enum>
+                              </property>
+                              <property name="frameShadow">
+                               <enum>QFrame::Raised</enum>
+                              </property>
+                              <layout class="QVBoxLayout" name="verticalLayout_19">
+                               <item>
+                                <widget class="QLabel" name="label_32">
+                                 <property name="text">
+                                  <string>Lisa ja arhiveeri</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QPushButton" name="pbAddElements">
+                                 <property name="text">
+                                  <string>Lisan</string>
+                                 </property>
+                                 <property name="icon">
+                                  <iconset>
+                                   <normaloff>icons/Icons_hele/upload.svg</normaloff>icons/Icons_hele/upload.svg</iconset>
+                                 </property>
+                                 <property name="iconSize">
+                                  <size>
+                                   <width>20</width>
+                                   <height>20</height>
+                                  </size>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QFrame" name="frame_13">
+                              <property name="frameShape">
+                               <enum>QFrame::StyledPanel</enum>
+                              </property>
+                              <property name="frameShadow">
+                               <enum>QFrame::Raised</enum>
+                              </property>
+                              <layout class="QVBoxLayout" name="verticalLayout_20">
+                               <item>
+                                <widget class="QLabel" name="label_38">
+                                 <property name="text">
+                                  <string>Eemadan kinnistui</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QPushButton" name="btnRemoveItems">
+                                 <property name="text">
+                                  <string>Eemaldan</string>
+                                 </property>
+                                 <property name="icon">
+                                  <iconset>
+                                   <normaloff>icons/Icons_hele/delete.svg</normaloff>icons/Icons_hele/delete.svg</iconset>
+                                 </property>
+                                 <property name="iconSize">
+                                  <size>
+                                   <width>20</width>
+                                   <height>20</height>
+                                  </size>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </item>
+                           </layout>
                           </widget>
                          </item>
-                         <item>
-                          <widget class="QPushButton" name="btnRemoveItems">
-                           <property name="text">
-                            <string>Eemalda kinnistuid</string>
+                         <item alignment="Qt::AlignHCenter">
+                          <widget class="QFrame" name="frSyncAndRenew">
+                           <property name="styleSheet">
+                            <string notr="true"/>
                            </property>
-                           <property name="icon">
-                            <iconset>
-                             <normaloff>icons/Icons_hele/delete.svg</normaloff>icons/Icons_hele/delete.svg</iconset>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
                            </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_12">
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QPushButton" name="pbSyncMailabl">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>Mailabliga sünkroniseerimine</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/cloud-lightning.svg</normaloff>icons/Icons_hele/cloud-lightning.svg</iconset>
+                              </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>20</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QPushButton" name="pbUpdateToNewDataframe">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>0</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>16777215</height>
+                               </size>
+                              </property>
+                              <property name="text">
+                               <string>Uuenda andmestruktuuri</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/tool.svg</normaloff>icons/Icons_hele/tool.svg</iconset>
+                              </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>20</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
                           </widget>
                          </item>
-                         <item>
-                          <widget class="QPushButton" name="pbSyncMailabl">
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>24</height>
-                            </size>
+                         <item alignment="Qt::AlignHCenter">
+                          <widget class="QFrame" name="frame_11">
+                           <property name="styleSheet">
+                            <string notr="true"/>
                            </property>
-                           <property name="text">
-                            <string>Mailabliga sünkroniseerimine</string>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
                            </property>
-                           <property name="icon">
-                            <iconset>
-                             <normaloff>icons/Icons_hele/cloud-lightning.svg</normaloff>icons/Icons_hele/cloud-lightning.svg</iconset>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
                            </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>20</width>
-                             <height>20</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <spacer name="verticalSpacer_5">
-                           <property name="orientation">
-                            <enum>Qt::Vertical</enum>
-                           </property>
-                           <property name="sizeHint" stdset="0">
-                            <size>
-                             <width>20</width>
-                             <height>40</height>
-                            </size>
-                           </property>
-                          </spacer>
-                         </item>
-                         <item>
-                          <widget class="QPushButton" name="pbUpdateToNewDataframe">
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>24</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16777215</width>
-                             <height>24</height>
-                            </size>
-                           </property>
-                           <property name="text">
-                            <string>Uuenda andmestruktuuri</string>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normaloff>icons/Icons_hele/tool.svg</normaloff>icons/Icons_hele/tool.svg</iconset>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>20</width>
-                             <height>20</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QPushButton" name="pbCancelPropertiesAction">
-                           <property name="text">
-                            <string>Lahku</string>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normaloff>icons/Icons_hele/log-out.svg</normaloff>icons/Icons_hele/log-out.svg</iconset>
-                           </property>
+                           <layout class="QVBoxLayout" name="verticalLayout_17">
+                            <item>
+                             <widget class="QLabel" name="label_28">
+                              <property name="text">
+                               <string>Kõik on tehtud aeg ...</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QPushButton" name="pbCancelPropertiesAction">
+                              <property name="text">
+                               <string>Lahkun</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/log-out.svg</normaloff>icons/Icons_hele/log-out.svg</iconset>
+                              </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>20</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
                           </widget>
                          </item>
                         </layout>

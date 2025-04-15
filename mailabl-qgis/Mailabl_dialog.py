@@ -185,6 +185,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         for button, function in self.test_buttons.items():
             button.clicked.connect(function)
+
+
+        self.frSyncAndRenew.setVisible(False)
 #############################TESTING AREA################################################################
 
 
