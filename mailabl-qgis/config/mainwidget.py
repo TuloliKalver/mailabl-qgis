@@ -63,7 +63,7 @@ class WidgetInfo:
             0: lambda: WorkSpaceHandler.swWorkSpace_Easements(self),
             1: None,
             2: lambda: WorkSpaceHandler.swWorkSpace_Contracts(self),
-            3: None,
+            3: lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self),
             4: None,
             5: lambda: WorkSpaceHandler.swWorkSpace_Home(self),
             6: None,

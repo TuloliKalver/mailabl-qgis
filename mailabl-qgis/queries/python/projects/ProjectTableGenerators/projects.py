@@ -20,6 +20,13 @@ class Projects:
         progress.update(1, purpouse="Projektide laadimine", text1="Palun oota...")
         
         model = ProjectModelBuilders()._model_for_projects_by_statuses(None, status_value, language)
+        if model == None:
+            text = "probleem projektide laadimisel"
+            heading = pealkiri.warningSimple
+            print(f"{heading}, {text}")
+            progress.close()
+            return
+        
         progress.update(50)
         if model is not None:
             module = Module.PROJECT

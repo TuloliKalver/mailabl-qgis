@@ -89,7 +89,10 @@ class ProjectsQueries:
             }
             
             response = requestBuilder.construct_and_send_request(query, variables)
-
+            
+            if response== None:
+                return None
+            
             if response.status_code != 200:
                 print(f"Error: {response.status_code}")
                 return None
@@ -161,7 +164,9 @@ class ProjectModelBuilders:
     def _model_for_projects_by_statuses(self, status_value, language):
         
         data = ProjectsQueries._fetch_active_main_projects_by_status(self, status_value)
-        
+        if data == None:
+            return None
+        # Set header labels
         headers = HeaderKeys.ALL_HEADER_KEYS
         display_headers = TableHeaders_new(language)
         df_data = []

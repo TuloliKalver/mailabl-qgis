@@ -29,6 +29,9 @@ class Statuses:
             }
         }
         response = requestBuilder.construct_and_send_request(query, variables)
+        if response is None:
+            return None
+        
         if response.status_code == 200:
             data = response.json()
             statuses_data = data.get('data', {}).get('statuses', {}).get('edges', [])

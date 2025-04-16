@@ -40,28 +40,44 @@ class requestBuilder:
             # Send the POST request to the GraphQL endpoint with timeout
             response = requests.post(graphql_url, headers=headers, json=payload, timeout=30)
             
+            print(f"response is_printed {response}")
         except requests.Timeout:
             print("Request timed out.")
             return None
+        
+        except requests.RequestException as e:
+            print(f"Request failed: {e}")
+            return None
+
+
+        # Handle HTTP status codes
+        if response.status_code == 502:
+            print("Received 502 Bad Gateway.")
+            return None
+        
         # Check for empty response
         if not response.content:
             print(f"Empty response received for query: {query}")
             return None
+
+        # Parse the JSON response
+        data = response.json()
+
 
         # Check if the response is empty
         if not data:
             print(f"Data returned empty - maybe need to check query: {query}")
             return None
 
-        # Parse the JSON response
-        data = response.json()
-
+        
         # Check for errors in the response
         errors = data.get('errors', [])
         #print(f"Errors: {errors}")
         if errors:
             #print(f"errors: errors")
             RequestErrorHandler.handle_error(errors)
+
+        
 
         return response
 

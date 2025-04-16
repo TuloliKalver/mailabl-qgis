@@ -60,9 +60,11 @@ class Startup:
         path = PathLoaderSimple.metadata()
         version_nr = Version.get_plugin_version(path)
         lblVersion = self.lblLoadVersion
+        cbDevMode = self.cbDevMode
         if version_nr == 'dev':
             lblVersion.setStyleSheet("color: #bc5152;")
+            cbDevMode.setVisible(True)
         else:
             lblVersion.setStyleSheet("")  # Reset to default style
-
+            cbDevMode.setVisible(False)
         lblVersion.setText(f"v.{version_nr}")

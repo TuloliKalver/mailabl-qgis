@@ -27,7 +27,7 @@ from .app.workspace_handler import WorkSpaceHandler
 from .app.ui_controllers import FrameHandler, WidgetAnimator, AlterContainers
 from .app.button_connector import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
 
-from .Common.app_state import PropertiesProcessStage, Processes
+from .Common.app_state import  Processes
 
 from .config.settings import SettingsDataSaveAndLoad, Version
 from .config.SetupModules.SetupMainLayers import SetupCadastralLayers
@@ -38,6 +38,8 @@ from .config.SetupModules.SetupProjects import SetupProjects
 from .config.SetupModules.SetupConrtacts import SetupConrtacts
 from .config.SetupModules.SetupEasments import SetupEasments
 from .config.SetupModules.SetupUsers import SetupUsers
+from .config.SetupModules.setupMainController import SetupController
+
 
 from .Functions.SearchEngines import ModularSearchEngine
 from .Functions.Easements.EasementsToolsHandler import EasementTools
@@ -77,6 +79,7 @@ from .utils.WidgetHelpers import WidgetAndWievHelpers, ListSelectionHandler
 from .utils.MapHelpers import MapDataFlowHelper
 from .utils.MapToolsHelper import MapToolsHelper
 from .utils.ListHelper import  ListSelections
+from .utils.MainMenuControlls import MainMenuControlls
 
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 
@@ -123,6 +126,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         CheckboxHelper.set_dialog(self)
         SelectionActions(self)
 
+
+        self.setup_controller = SetupController(self)
+        
+        self.MainControlls = MainMenuControlls(self)
+
         self.window_manager = WindowPositionHelper(self)
         self.return_pressed_manager = ReturnPressedManager(self)
         self.custom_event_filter = BlockButtonsToPreferLabelEventFilter(self)
@@ -155,7 +163,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.label_5.setVisible(False)
         self.wOlAndmed_LabelHolder.setVisible(False)
-
+        #self.pbAddDrawings.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self))
+        #self.pbAddDrawings.setEnabled(True)
             
         """Setup button-action mapping and connections."""
         self.properties_actions = {
@@ -168,11 +177,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             self.pbOpenMaAmet:partial(loadWebpage.open_maa_amet_webpage_new),            
             self.btnMapActions: UI.start_properti_flow_main,
             self.pbCancelPropertiesAction: UI.exit_properties_process_flows,
-            self.pbCancelBeforeEntering: UI.exit_properties_process_flows
+            self.pbCancelBeforeEntering: UI.exit_properties_process_flows,
         }
+
 
         for button, function in self.properties_actions.items():
             button.clicked.connect(function)
+
+
 
 ##############################TESTING AREA##############################################################
         self.test_buttons = {
@@ -199,21 +211,17 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.chkSelectAllSettlements.stateChanged.connect(self.on_toggle_all_with_list)
         self.chkToggleRoadSelection.stateChanged.connect(self.on_toggle_select_only_non_transport_properties)
 
-        self.pbeasements.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Easements(self))
+
         self.pbRefreshEasementTable.clicked.connect(lambda: WorkSpaceHandler.easements_reload(self))
-        self.pbContracts.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Contracts(self))
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
-        self.pbMapThemes.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self))
+        
         self.pbMapThemes.setEnabled(False)
-        self.pbAddDrawings.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self))
-        self.pbAddDrawings.setEnabled(False)
+
     
         self.pbSyncMailabl.clicked.connect(lambda: WorkSpaceHandler.Open_generate_mapLayer_synced_with_Mailabl_first_page(self))
         self.pbSync_start_sync.clicked.connect(self.generate_virtual_mapLayer_synced_with_Mailabl)
         
         self.pbSettings.clicked.connect(self.toggle_settings_main_view)
-        self.pbHome.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Properties(self))
-        self.pbProjects.clicked.connect(lambda: WorkSpaceHandler.swWorkspace_Projects(self))
         self.pbRefresh_tblMailabl_projects.clicked.connect(self.update_tblMailabl_projects)
         self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
         self.pbGreateEVEL.setEnabled(False)
@@ -546,56 +554,70 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 self.swWorkSpace,
                 self.lblUserAccessDenied
                 ]
-
-        save_user_name(self)
-        res = get_access_token(self)
-        if res:
-        
-            user_name, user_lastname, roles_text, has_qgis_access, propeties_create = UserSettings.user_data()
-            
-            #print(f"has properties rights: {propeties_create}")
-            if propeties_create == False:
-                self.btnMapActions.hide()
-
+        if self.cbDevMode.isChecked():
             # Get version number to check if it's "dev" mode
             path = PathLoaderSimple.metadata()
             version_nr = Version.get_plugin_version(path)
             lblVersion = self.lbVersionNumber
             if version_nr == 'dev':
                 lblVersion.setStyleSheet("color: #bc5152;")
-                lblVersion.setText(f"v.{version_nr}")
-                if has_qgis_access == False:
-                    self.lblUserAccessDenied.setVisible(True)
-                    self.lblUserAccessDenied.setText(sisu.kasutaja_oigused_puuduvad)
-                    self.lblUserAccessDenied.setStyleSheet("color: #bc5152;")
-                    self.lblUserAccessDenied.setAlignment(Qt.AlignCenter)
-                    self.pbLogin.setEnabled(False)
-                    self.pbLogin.setStyleSheet("background-color: #bc5152;")
-                    return  # Stop further execution
+                lblVersion.setText(f"v.{version_nr}")        
+                self.UC_Main_Frame.setVisible(False)
+                FrameHandler.show_multiple_frames(self, frames)
+                self.set_start_page_based_on_toggle_and_preferred_settings()
+                self.resize(1300, 700)
+                return  # Stop further execution            
+        
+        else:    
+            save_user_name(self)
+            res = get_access_token(self)
+            if res:
+            
+                user_name, user_lastname, roles_text, has_qgis_access, propeties_create = UserSettings.user_data()
+                
+                #print(f"has properties rights: {propeties_create}")
+                if propeties_create == False:
+                    self.btnMapActions.hide()
+
+                # Get version number to check if it's "dev" mode
+                path = PathLoaderSimple.metadata()
+                version_nr = Version.get_plugin_version(path)
+                lblVersion = self.lbVersionNumber
+                if version_nr == 'dev':
+                    lblVersion.setStyleSheet("color: #bc5152;")
+                    lblVersion.setText(f"v.{version_nr}")
+                    if has_qgis_access == False:
+                        self.lblUserAccessDenied.setVisible(True)
+                        self.lblUserAccessDenied.setText(sisu.kasutaja_oigused_puuduvad)
+                        self.lblUserAccessDenied.setStyleSheet("color: #bc5152;")
+                        self.lblUserAccessDenied.setAlignment(Qt.AlignCenter)
+                        self.pbLogin.setEnabled(False)
+                        self.pbLogin.setStyleSheet("background-color: #bc5152;")
+                        return  # Stop further execution
+                else:
+                    lblVersion.setStyleSheet("")  # Reset to default style
+                    lblVersion.setText(f"v.{version_nr}")
+                    if has_qgis_access == False:
+                        self.lblUserAccessDenied.setVisible(True)
+                        self.lblUserAccessDenied.setText(sisu.kasutaja_oigused_puuduvad)
+                        self.lblUserAccessDenied.setStyleSheet("color: #bc5152;")
+                        self.lblUserAccessDenied.setAlignment(Qt.AlignCenter)
+                        self.pbLogin.setEnabled(False)
+                        self.pbLogin.setStyleSheet("background-color: #bc5152;")
+                        return  # Stop further execution
+
+                self.lbNuserName.setText(user_name)
+                self.lblNUserSurename.setText(user_lastname)
+                self.lblUserRoles.setText(roles_text)
+                self.UC_Main_Frame.setVisible(False)
+                FrameHandler.show_multiple_frames(self, frames)
+                self.set_start_page_based_on_toggle_and_preferred_settings()
+                self.resize(1300, 700)
+
             else:
-                lblVersion.setStyleSheet("")  # Reset to default style
-                lblVersion.setText(f"v.{version_nr}")
-                if has_qgis_access == False:
-                    self.lblUserAccessDenied.setVisible(True)
-                    self.lblUserAccessDenied.setText(sisu.kasutaja_oigused_puuduvad)
-                    self.lblUserAccessDenied.setStyleSheet("color: #bc5152;")
-                    self.lblUserAccessDenied.setAlignment(Qt.AlignCenter)
-                    self.pbLogin.setEnabled(False)
-                    self.pbLogin.setStyleSheet("background-color: #bc5152;")
-                    return  # Stop further execution
-
-            self.lbNuserName.setText(user_name)
-            self.lblNUserSurename.setText(user_lastname)
-            self.lblUserRoles.setText(roles_text)
-            self.UC_Main_Frame.setVisible(False)
-            FrameHandler.show_multiple_frames(self, frames)
-            self.set_start_page_based_on_toggle_and_preferred_settings()
-            self.resize(1150, 700)
-
-        else:
-            heading = pealkiri.warningCritical
-            text = sisu.vigane_voti
-            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
+                heading = pealkiri.warningCritical
+                text = sisu.vigane_voti
+                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
 
     def set_start_page_based_on_toggle_and_preferred_settings(self):
         index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)            

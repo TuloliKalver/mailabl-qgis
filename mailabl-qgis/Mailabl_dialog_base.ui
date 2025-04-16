@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1094</width>
-    <height>1119</height>
+    <height>1195</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1645,7 +1645,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>9</number>
+                  <number>4</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -4128,9 +4128,9 @@ p, li { white-space: pre-wrap; }
                    </item>
                   </layout>
                  </widget>
-                 <widget class="QWidget" name="Help">
+                 <widget class="QWidget" name="Teostus">
                   <property name="accessibleName">
-                   <string>None</string>
+                   <string>Teostus joonised</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_40">
                    <property name="spacing">
@@ -4174,7 +4174,7 @@ p, li { white-space: pre-wrap; }
                          </font>
                         </property>
                         <property name="text">
-                         <string>Help</string>
+                         <string>Teostusjoonised</string>
                         </property>
                         <property name="alignment">
                          <set>Qt::AlignCenter</set>
@@ -4185,69 +4185,281 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item>
-                    <widget class="QWidget" name="HelpMainFrame" native="true">
-                     <layout class="QVBoxLayout" name="verticalLayout_42">
-                      <property name="spacing">
-                       <number>0</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
+                    <widget class="QFrame" name="frTeostusMain">
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_24">
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QTextEdit" name="textEdit">
-                        <property name="html">
-                         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Aluskihi struktuur peab vastama Maa-ameti katastri struktuurile.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Maa-ametist laaditakse pluginasse SHP-fail.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Katastri andmete uuendamise protsessi abil saab plugin värskendada olemasolevat katastriinformatsiooni - võimaldab sisestada uusi katastreid, muuta olemasolevaid andmeid või kustutada/arhiveerida vanu andmeid vastavalt vajadusele.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Selleks, et plugin saaks töötada, tuleb alguses importida Maa-ameti SHP-fail.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       <widget class="QFrame" name="frTeostusTools">
+                        <property name="styleSheet">
+                         <string notr="true"/>
                         </property>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_28">
+                         <property name="spacing">
+                          <number>10</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QFrame" name="frTeostusConnectProperties">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
+                           </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_32">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>10</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QPushButton" name="pbTeostusConnectproperties">
+                              <property name="font">
+                               <font>
+                                <pointsize>10</pointsize>
+                                <weight>50</weight>
+                                <bold>false</bold>
+                               </font>
+                              </property>
+                              <property name="toolTip">
+                               <string/>
+                              </property>
+                              <property name="statusTip">
+                               <string/>
+                              </property>
+                              <property name="whatsThis">
+                               <string/>
+                              </property>
+                              <property name="text">
+                               <string>Kinnistutega sidumine</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/iconoir--map-pin-plus_asukoht.svg</normaloff>icons/iconoir--map-pin-plus_asukoht.svg</iconset>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QFrame" name="frTeostusSearch">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
+                           </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_37">
+                            <property name="spacing">
+                             <number>10</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QLineEdit" name="le_searchTeostus">
+                              <property name="font">
+                               <font>
+                                <pointsize>10</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string/>
+                              </property>
+                              <property name="placeholderText">
+                               <string> Sisesta projekti number</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QPushButton" name="pbSearchTesotus">
+                              <property name="font">
+                               <font>
+                                <pointsize>10</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>Otsi</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/search.svg</normaloff>icons/Icons_hele/search.svg</iconset>
+                              </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
-                     </layout>
-                    </widget>
-                   </item>
-                   <item alignment="Qt::AlignBottom">
-                    <widget class="QWidget" name="HelpPageFooter" native="true">
-                     <layout class="QVBoxLayout" name="verticalLayout_43">
-                      <property name="spacing">
-                       <number>5</number>
-                      </property>
-                      <property name="leftMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="topMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="rightMargin">
-                       <number>0</number>
-                      </property>
-                      <property name="bottomMargin">
-                       <number>0</number>
-                      </property>
                       <item>
-                       <widget class="QLabel" name="label_21">
-                        <property name="text">
-                         <string>FOOTER</string>
+                       <widget class="QFrame" name="frTeostuParams">
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
                         </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_80">
+                         <property name="spacing">
+                          <number>10</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QgsCheckableComboBox" name="cmbTesotusTypes">
+                           <property name="minimumSize">
+                            <size>
+                             <width>250</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QComboBox" name="cmbTeostusStatuses">
+                           <property name="minimumSize">
+                            <size>
+                             <width>250</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_51">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="pbRefreshTesotusTable">
+                           <property name="text">
+                            <string/>
+                           </property>
+                           <property name="icon">
+                            <iconset>
+                             <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QFrame" name="frProjectsMainData_2">
+                        <property name="styleSheet">
+                         <string notr="true">QFrame{
+	background-color: #1a2026;
+
+}</string>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_184">
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QTableView" name="tblMailabl_projects_2">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
                      </layout>
@@ -4314,9 +4526,9 @@ p, li { white-space: pre-wrap; }
                       <property name="geometry">
                        <rect>
                         <x>0</x>
-                        <y>0</y>
-                        <width>650</width>
-                        <height>985</height>
+                        <y>-461</y>
+                        <width>914</width>
+                        <height>1178</height>
                        </rect>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_159">
@@ -4347,7 +4559,16 @@ p, li { white-space: pre-wrap; }
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">#lblnewCadastrals_input_layer_label, 
+                          <string notr="true">#SettingsPageMainFrame{
+background-color: rgb(170, 85, 127);
+}
+
+
+#lblTeostusMapLayerValue,
+#lblTeostusPreferredStatuses,
+#lblTesotusActionsValues,
+#lblTeostusFolderName,
+#lblnewCadastrals_input_layer_label, 
 #lblcurrent_main_layer_label, 
 #lbNuserName, 
 #lblUserRoles, 
@@ -4392,7 +4613,8 @@ p, li { white-space: pre-wrap; }
 #qwSU_Mailabl_Projects, 
 #qwSU_Layers, 
 #qwSU_Mailabl_Contracts, 
-#qwSU_Mailabl_Easements {
+#qwSU_Mailabl_Easements,
+#qwSU_Teostus {
     /* Apply a bottom border with a radial gradient matching the horizontal scroll handle */
     border-bottom: 3px solid qradialgradient(
         spread:pad, 
@@ -4418,8 +4640,11 @@ p, li { white-space: pre-wrap; }
                           <property name="topMargin">
                            <number>0</number>
                           </property>
-                          <property name="bottomMargin">
+                          <property name="rightMargin">
                            <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>20</number>
                           </property>
                           <item>
                            <widget class="QLabel" name="label_23">
@@ -4455,6 +4680,12 @@ p, li { white-space: pre-wrap; }
                             <layout class="QVBoxLayout" name="verticalLayout_45">
                              <item>
                               <widget class="QFrame" name="frame_25">
+                               <property name="maximumSize">
+                                <size>
+                                 <width>500</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
                                <property name="frameShape">
                                 <enum>QFrame::StyledPanel</enum>
                                </property>
@@ -4831,6 +5062,12 @@ p, li { white-space: pre-wrap; }
                              </property>
                              <item>
                               <widget class="QFrame" name="frame_26">
+                               <property name="maximumSize">
+                                <size>
+                                 <width>500</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
                                <property name="frameShape">
                                 <enum>QFrame::StyledPanel</enum>
                                </property>
@@ -5135,6 +5372,12 @@ p, li { white-space: pre-wrap; }
                              </property>
                              <item>
                               <widget class="QFrame" name="frame_27">
+                               <property name="maximumSize">
+                                <size>
+                                 <width>500</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
                                <property name="frameShape">
                                 <enum>QFrame::StyledPanel</enum>
                                </property>
@@ -5720,6 +5963,12 @@ p, li { white-space: pre-wrap; }
                                 </property>
                                 <item>
                                  <widget class="QFrame" name="frame_30">
+                                  <property name="maximumSize">
+                                   <size>
+                                    <width>500</width>
+                                    <height>16777215</height>
+                                   </size>
+                                  </property>
                                   <property name="frameShape">
                                    <enum>QFrame::StyledPanel</enum>
                                   </property>
@@ -5921,6 +6170,9 @@ p, li { white-space: pre-wrap; }
                                      <property name="text">
                                       <string>Määramata</string>
                                      </property>
+                                     <property name="openExternalLinks">
+                                      <bool>false</bool>
+                                     </property>
                                     </widget>
                                    </item>
                                    <item>
@@ -5989,6 +6241,12 @@ p, li { white-space: pre-wrap; }
                                 </property>
                                 <item>
                                  <widget class="QFrame" name="frame_35">
+                                  <property name="maximumSize">
+                                   <size>
+                                    <width>500</width>
+                                    <height>16777215</height>
+                                   </size>
+                                  </property>
                                   <property name="frameShape">
                                    <enum>QFrame::StyledPanel</enum>
                                   </property>
@@ -6531,28 +6789,154 @@ p, li { white-space: pre-wrap; }
                                </layout>
                               </widget>
                              </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QFrame" name="qwSU_Teostus">
+                            <property name="styleSheet">
+                             <string notr="true"/>
+                            </property>
+                            <property name="frameShape">
+                             <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                             <enum>QFrame::Raised</enum>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_26">
                              <item>
-                              <widget class="QFrame" name="frame">
+                              <widget class="QFrame" name="frTeostusControlls">
+                               <property name="maximumSize">
+                                <size>
+                                 <width>500</width>
+                                 <height>16777215</height>
+                                </size>
+                               </property>
                                <property name="frameShape">
                                 <enum>QFrame::StyledPanel</enum>
                                </property>
                                <property name="frameShadow">
                                 <enum>QFrame::Raised</enum>
                                </property>
-                               <layout class="QHBoxLayout" name="horizontalLayout_23">
+                               <layout class="QHBoxLayout" name="horizontalLayout">
+                                <property name="spacing">
+                                 <number>0</number>
+                                </property>
+                                <property name="leftMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>0</number>
+                                </property>
                                 <item>
-                                 <widget class="QFrame" name="frame_28">
-                                  <property name="frameShape">
-                                   <enum>QFrame::StyledPanel</enum>
+                                 <widget class="QLabel" name="frModuleNameTeostus">
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>75</weight>
+                                    <italic>false</italic>
+                                    <bold>true</bold>
+                                    <underline>false</underline>
+                                   </font>
                                   </property>
-                                  <property name="frameShadow">
-                                   <enum>QFrame::Raised</enum>
+                                  <property name="text">
+                                   <string>Teostusjooniste seaded</string>
                                   </property>
-                                  <layout class="QVBoxLayout" name="verticalLayout_189"/>
                                  </widget>
                                 </item>
                                 <item>
-                                 <spacer name="horizontalSpacer_48">
+                                 <spacer name="horizontalSpacer_52">
+                                  <property name="orientation">
+                                   <enum>Qt::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>567</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                                <item>
+                                 <widget class="QPushButton" name="pbTeostusSettings">
+                                  <property name="text">
+                                   <string/>
+                                  </property>
+                                  <property name="icon">
+                                   <iconset>
+                                    <normaloff>icons/Icons_hele/settings.svg</normaloff>icons/Icons_hele/settings.svg</iconset>
+                                  </property>
+                                  <property name="iconSize">
+                                   <size>
+                                    <width>16</width>
+                                    <height>16</height>
+                                   </size>
+                                  </property>
+                                 </widget>
+                                </item>
+                               </layout>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QFrame" name="frTeostusjoonisedMapLayer">
+                               <property name="frameShape">
+                                <enum>QFrame::StyledPanel</enum>
+                               </property>
+                               <property name="frameShadow">
+                                <enum>QFrame::Raised</enum>
+                               </property>
+                               <layout class="QHBoxLayout" name="horizontalLayout_93">
+                                <property name="spacing">
+                                 <number>10</number>
+                                </property>
+                                <property name="leftMargin">
+                                 <number>15</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>0</number>
+                                </property>
+                                <item>
+                                 <widget class="QLabel" name="lblTeostusMapLayer">
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>75</weight>
+                                    <bold>true</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Teostusjooniste kaardikiht</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="lblTeostusMapLayerValue">
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>50</weight>
+                                    <bold>false</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Määramata</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_55">
                                   <property name="orientation">
                                    <enum>Qt::Horizontal</enum>
                                   </property>
@@ -6564,14 +6948,262 @@ p, li { white-space: pre-wrap; }
                                   </property>
                                  </spacer>
                                 </item>
+                               </layout>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QFrame" name="frTeostusStatusesSettings">
+                               <property name="frameShape">
+                                <enum>QFrame::StyledPanel</enum>
+                               </property>
+                               <property name="frameShadow">
+                                <enum>QFrame::Raised</enum>
+                               </property>
+                               <layout class="QHBoxLayout" name="horizontalLayout_95">
+                                <property name="spacing">
+                                 <number>10</number>
+                                </property>
+                                <property name="leftMargin">
+                                 <number>15</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>0</number>
+                                </property>
                                 <item>
-                                 <widget class="QPushButton" name="pbGreateEVEL">
+                                 <widget class="QLabel" name="lblPreferredStatuses">
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>75</weight>
+                                    <bold>true</bold>
+                                   </font>
+                                  </property>
                                   <property name="text">
-                                   <string>EVEL</string>
+                                   <string>Eelistatud staatus</string>
                                   </property>
                                  </widget>
                                 </item>
+                                <item>
+                                 <widget class="QLabel" name="lblTeostusPreferredStatuses">
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>50</weight>
+                                    <bold>false</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Määramata</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_56">
+                                  <property name="orientation">
+                                   <enum>Qt::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
                                </layout>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QFrame" name="frTeostusActionsSetup">
+                               <property name="frameShape">
+                                <enum>QFrame::StyledPanel</enum>
+                               </property>
+                               <property name="frameShadow">
+                                <enum>QFrame::Raised</enum>
+                               </property>
+                               <layout class="QHBoxLayout" name="horizontalLayout_103">
+                                <property name="spacing">
+                                 <number>10</number>
+                                </property>
+                                <property name="leftMargin">
+                                 <number>15</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>0</number>
+                                </property>
+                                <item>
+                                 <widget class="QLabel" name="lblTeostusActions">
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>75</weight>
+                                    <bold>true</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Teostusjoonistega seotud tegevusliigid</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="lblTesotusActionsValues">
+                                  <property name="maximumSize">
+                                   <size>
+                                    <width>600</width>
+                                    <height>16777215</height>
+                                   </size>
+                                  </property>
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>50</weight>
+                                    <bold>false</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Määramata</string>
+                                  </property>
+                                  <property name="wordWrap">
+                                   <bool>true</bool>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_57">
+                                  <property name="orientation">
+                                   <enum>Qt::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                               </layout>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QFrame" name="frTeostusFolderSettings">
+                               <property name="frameShape">
+                                <enum>QFrame::StyledPanel</enum>
+                               </property>
+                               <property name="frameShadow">
+                                <enum>QFrame::Raised</enum>
+                               </property>
+                               <layout class="QHBoxLayout" name="horizontalLayout_82">
+                                <property name="spacing">
+                                 <number>10</number>
+                                </property>
+                                <property name="leftMargin">
+                                 <number>15</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>0</number>
+                                </property>
+                                <item>
+                                 <widget class="QLabel" name="lblTeostusFolder">
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>75</weight>
+                                    <bold>true</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Eelistatud teostusjooniste kaust</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QLabel" name="lblTeostusFolderName">
+                                  <property name="font">
+                                   <font>
+                                    <pointsize>10</pointsize>
+                                    <weight>50</weight>
+                                    <bold>false</bold>
+                                   </font>
+                                  </property>
+                                  <property name="text">
+                                   <string>Määramata</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QCheckBox" name="cbPartOfProject">
+                                  <property name="text">
+                                   <string>On projekti kaustas</string>
+                                  </property>
+                                  <property name="checkable">
+                                   <bool>false</bool>
+                                  </property>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <spacer name="horizontalSpacer_8">
+                                  <property name="orientation">
+                                   <enum>Qt::Horizontal</enum>
+                                  </property>
+                                  <property name="sizeHint" stdset="0">
+                                   <size>
+                                    <width>40</width>
+                                    <height>20</height>
+                                   </size>
+                                  </property>
+                                 </spacer>
+                                </item>
+                               </layout>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QFrame" name="frame">
+                            <property name="frameShape">
+                             <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                             <enum>QFrame::Raised</enum>
+                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_23">
+                             <item>
+                              <spacer name="horizontalSpacer_48">
+                               <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                               </property>
+                               <property name="sizeHint" stdset="0">
+                                <size>
+                                 <width>40</width>
+                                 <height>20</height>
+                                </size>
+                               </property>
+                              </spacer>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="pbGreateEVEL">
+                               <property name="text">
+                                <string>EVEL</string>
+                               </property>
                               </widget>
                              </item>
                             </layout>
@@ -6588,7 +7220,7 @@ p, li { white-space: pre-wrap; }
                  </widget>
                  <widget class="QWidget" name="Homepage">
                   <property name="accessibleName">
-                   <string>Avaleht</string>
+                   <string>None</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_13">
                    <property name="spacing">
@@ -6698,7 +7330,7 @@ p, li { white-space: pre-wrap; }
                  </widget>
                  <widget class="QWidget" name="PropertieOverview">
                   <property name="accessibleName">
-                   <string>None</string>
+                   <string>Kinnistud päring</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_160">
                    <property name="spacing">
@@ -8077,6 +8709,9 @@ QTreeView::item:hover {
                   </layout>
                  </widget>
                  <widget class="QWidget" name="PropertiesOperations">
+                  <property name="accessibleName">
+                   <string>None</string>
+                  </property>
                   <layout class="QVBoxLayout" name="verticalLayout_194">
                    <property name="spacing">
                     <number>0</number>
@@ -8162,7 +8797,7 @@ QTreeView::item:hover {
                        <widget class="QLabel" name="lblActionName">
                         <property name="font">
                          <font>
-                          <pointsize>10</pointsize>
+                          <pointsize>15</pointsize>
                          </font>
                         </property>
                         <property name="text">
@@ -10331,6 +10966,13 @@ QLineEdit:disabled {
                  </property>
                  <property name="text">
                   <string>...</string>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignHCenter">
+                <widget class="QCheckBox" name="cbDevMode">
+                 <property name="text">
+                  <string>DevMode</string>
                  </property>
                 </widget>
                </item>

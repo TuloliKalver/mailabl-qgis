@@ -7,10 +7,9 @@ from PyQt5.QtWidgets import QListView, QTableView, QTableWidget, QCheckBox
 from .WidgetHelpers import WidgetAndWievHelpers, ListSelectionHandler
 from ..config.settings import SettingsDataSaveAndLoad, StoredLayers
 from ..Common.app_state import PropertiesProcessStage, FlowStages
-from ..Common.ChaceHelpers import CacheUpdater
 from ..utils.ProgressHelper import ProgressDialogModern
 from ..utils.LayerHelpers import LayerFilterSetters
-from ..app.workspace_handler import CenterMainSliderIndexes, WorkSpaceHandler
+from ..app.workspace_handler import MenuModules, WorkSpaceHandler
 from ..app.ui_controllers import WidgetAnimator
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 
@@ -128,7 +127,7 @@ class UIStateManager:
 
 
     def start_properti_flow_main(self):
-        self.slider_ws.setCurrentIndex(CenterMainSliderIndexes.PROPERTIES_OPERATIONS)
+        self.slider_ws.setCurrentIndex(MenuModules.PROPERTIES_OPERATIONS)
         self.lbl_action.setText("Andmete laadimine")
 
         layer_name = SettingsDataSaveAndLoad().load_SHP_inputLayer_name()
@@ -159,7 +158,7 @@ class UIStateManager:
 
         self.dialog.frMaaAmetControlls.setVisible(False)
         self.dialog.frPropertiFlowHolder.setVisible(True)
-        self.lbl.setText('Vali mida sa kinnistutega teha tahad')
+        self.lbl.setText("Vali, mida kinnistutega teha tahad!")
         UIActions.hide(self.frames)
         WidgetAndWievHelpers.reset_and_set_data(lv_county, data=[], state=True)
         WidgetAndWievHelpers.reset_and_set_data([lv_municipality, lv_state], data=[], state=False)

@@ -94,6 +94,11 @@ class ComboBoxHelper:
         if test == True:
             print("Selected ID:", preferred_id)
         statuses = self.type_manager._get_all_statuses_for_module(module)
+        if statuses is None:
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(Headings().warningSimple, "Jätkamiseks seadista eelistatud liigid")
+            button.blockSignals(False)
+            return None
+        
         if test == True:
             print("All statuses:", statuses)
         for item_text, item_id in statuses:

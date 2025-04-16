@@ -8,46 +8,70 @@ from ..Functions.Easements.Easements import EasementssMain
 from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
-
+from ..config.SetupModules. setupMainController import SetupController, MenuModules
 from ..utils.ComboboxHelper import ComboBoxHelper
-from ..utils.messagesHelper import ModernMessageDialog
+from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 
 
 pealkiri = Headings()
 combo_handler = ComboBoxHelper()
 
-class CenterMainSliderIndexes():
-    EASEMENTS = 0
-    CADASTRALMOVES = 1
-    CONTRACTS = 2
-    HELP = 3
-    SETTINGS = 4
-    HOMEPAGE = 5
-    PROPERTIES = 6
-    PROJECTS = 7
-    REMOVEPROPERTIES = 8
-    PROPERTIES_OPERATIONS = 9
-
-    def swWorkSpace(self, index):
-        # This is a placeholder method to demonstrate how you might use the MyClassWithIndexes().
-        print(f"Switching to workspace index: {index}")
-        # Implement your actual workspace switching logic here
 
 class WorkSpaceHandler:
-    
+
+
+    @staticmethod
+    def swWorkSpace_AddDrawings_FrontPage(self):
+        
+        module = MenuModules.TEOSTUS
+        self.swWorkSpace.setCurrentIndex(module)
+        # 👇 Correct usage — use the stored instance!
+        controller = SetupController(self)
+        if controller.has_undefined_labels(module):
+            
+            buttons={"keep": "ok",}
+
+
+
+            res = DecisionDialogHelper.ask_user(
+                title=Headings.inFO_SIMPLE,
+                message="Puuduvad alg seaded,\nteeme kohe seadistuse",
+                options=buttons,
+                parent=self
+                    )
+
+            if res is False:
+                module = MenuModules.SETTINGS
+                self.swWorkSpace.setCurrentIndex(module)
+                return
+            else:
+                pass
+        else:
+            print("✅ Setup looks good.")
+
+
+
+
+    @staticmethod
+    def swWorkSpace_MapThemes_FrontPage(self):
+        self.swWorkSpace.setCurrentIndex(6)
+
+
+
+
     def swWorkSpace_Home(self):
         print("started 'swWorkspace_Home'")
-        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.HOMEPAGE)
+        self.swWorkSpace.setCurrentIndex(MenuModules.HOMEPAGE)
         
 
     def swWorkSpace_Properties(self):
         print("started 'swWorkspace_Properties'")
-        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.PROPERTIES)
+        self.swWorkSpace.setCurrentIndex(MenuModules.PROPERTIES)
         
 
     def swWorkspace_Projects(self):
         module = Module.PROJECT
-        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.PROJECTS)
+        self.swWorkSpace.setCurrentIndex(MenuModules.PROJECTS)
         
         button = self.pbProjects
         button.blockSignals(True)
@@ -67,7 +91,9 @@ class WorkSpaceHandler:
             context=self,
             preferred_items=False
         )
-         
+        if selected_status is None:
+            button.blockSignals(False)
+            return 
         Projects.load_projects_by_status(table, selected_status)
         button.blockSignals(False)
     
@@ -78,7 +104,7 @@ class WorkSpaceHandler:
         button.blockSignals(True)
         refresh_button.blockSignals(True)
 
-        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.CONTRACTS)
+        self.swWorkSpace.setCurrentIndex(MenuModules.CONTRACTS)
         table = self.ContractView
         model = table.model()
         if model:
@@ -134,7 +160,7 @@ class WorkSpaceHandler:
         module = Module.EASEMENT
         button = self.pbeasements
         button.blockSignals(True)
-        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.EASEMENTS)
+        self.swWorkSpace.setCurrentIndex(MenuModules.EASEMENTS)
         
         table = self.tweasementView
         # Assuming 'table' is your QTableView object
@@ -167,7 +193,7 @@ class WorkSpaceHandler:
     def easements_reload(self):
         button = self.pbeasements
         button.blockSignals(True)
-        self.swWorkSpace.setCurrentIndex(CenterMainSliderIndexes.EASEMENTS)
+        self.swWorkSpace.setCurrentIndex(MenuModules.EASEMENTS)
         
         table = self.tweasementView
         # Assuming 'table' is your QTableView object
@@ -181,14 +207,11 @@ class WorkSpaceHandler:
         EasementssMain.load_main_asements_by_type_and_status(self, table, selected_types_ids, statusValue)
         button.blockSignals(False)
 
-    @staticmethod
-    def swWorkSpace_MapThemes_FrontPage(self):
-        self.swWorkSpace.setCurrentIndex(6)
-        
-    @staticmethod
-    def swWorkSpace_AddDrawings_FrontPage(self):
-        self.swWorkSpace.setCurrentIndex(6)
-        
+
+
+
+
+
 
 
     @staticmethod
