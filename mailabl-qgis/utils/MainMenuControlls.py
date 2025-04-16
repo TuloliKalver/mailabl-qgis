@@ -1,4 +1,5 @@
 from ..app.workspace_handler import WorkSpaceHandler
+from ..config.SetupModules. setupMainController import MenuModules
 
 class MainMenuControlls:
     def __init__(self, dialog):
@@ -20,7 +21,7 @@ class MainMenuControlls:
             self.pbContracts: lambda: WorkSpaceHandler.swWorkSpace_Contracts(self.dialog),
             self.pbeasements: lambda: WorkSpaceHandler.swWorkSpace_Easements(self.dialog),
             self.pbMapThemes: lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self.dialog),
-            self.pbAddDrawings: lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self.dialog)
+            self.pbAddDrawings: lambda: WorkSpaceHandler.swWorkSpace_Controller(self.dialog, module=MenuModules.TEOSTUS)
         }
 
         # Connect each button to a wrapper that handles activation

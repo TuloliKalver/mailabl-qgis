@@ -21,28 +21,27 @@ class WorkSpaceHandler:
 
 
     @staticmethod
-    def swWorkSpace_AddDrawings_FrontPage(self):
+    def swWorkSpace_Controller(self, module):
         
-        module = MenuModules.TEOSTUS
         self.swWorkSpace.setCurrentIndex(module)
         # 👇 Correct usage — use the stored instance!
         controller = SetupController(self)
-        if controller.has_undefined_labels(module):
-            
+        res, labels = controller.has_undefined_labels(module)
+        if res is False:    
             buttons={"keep": "ok",}
-
-
-
-            res = DecisionDialogHelper.ask_user(
+            ret = DecisionDialogHelper.ask_user(
                 title=Headings.inFO_SIMPLE,
                 message="Puuduvad alg seaded,\nteeme kohe seadistuse",
                 options=buttons,
                 parent=self
                     )
+            #TODO afther dev is fone!
+            #res = True
 
-            if res is False:
+            if ret is False:
                 module = MenuModules.SETTINGS
                 self.swWorkSpace.setCurrentIndex(module)
+                controller.check_all_modules()
                 return
             else:
                 pass
@@ -53,17 +52,45 @@ class WorkSpaceHandler:
 
 
     @staticmethod
+    def swWorkSpace_Controller(self, module):
+        
+        self.swWorkSpace.setCurrentIndex(module)
+        # 👇 Correct usage — use the stored instance!
+        controller = SetupController(self)
+        res, labels = controller.has_undefined_labels(module)
+        if res is False:    
+            buttons={"keep": "ok",}
+            ret = DecisionDialogHelper.ask_user(
+                title=Headings.inFO_SIMPLE,
+                message="Puuduvad alg seaded,\nteeme kohe seadistuse",
+                options=buttons,
+                parent=self
+                    )
+            #TODO afther dev is fone!
+            #res = True
+
+            if ret is False:
+                module = MenuModules.SETTINGS
+                self.swWorkSpace.setCurrentIndex(module)
+                controller.check_all_modules()
+                return
+            else:
+                pass
+        else:
+            print("✅ Setup looks good.")
+
+
+
+
+
+    @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
         self.swWorkSpace.setCurrentIndex(6)
-
-
-
 
     def swWorkSpace_Home(self):
         print("started 'swWorkspace_Home'")
         self.swWorkSpace.setCurrentIndex(MenuModules.HOMEPAGE)
         
-
     def swWorkSpace_Properties(self):
         print("started 'swWorkspace_Properties'")
         self.swWorkSpace.setCurrentIndex(MenuModules.PROPERTIES)
@@ -206,12 +233,6 @@ class WorkSpaceHandler:
         statusValue = GetValuesFromComboBox._get_selected_status_id_from_combobox(combo_box)
         EasementssMain.load_main_asements_by_type_and_status(self, table, selected_types_ids, statusValue)
         button.blockSignals(False)
-
-
-
-
-
-
 
 
     @staticmethod

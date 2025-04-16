@@ -40,7 +40,7 @@ class requestBuilder:
             # Send the POST request to the GraphQL endpoint with timeout
             response = requests.post(graphql_url, headers=headers, json=payload, timeout=30)
             
-            print(f"response is_printed {response}")
+            #print(f"response is_printed {response}")
         except requests.Timeout:
             print("Request timed out.")
             return None

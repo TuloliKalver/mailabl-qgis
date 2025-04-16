@@ -719,7 +719,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def toggle_settings_main_view(self):
         self.swWorkSpace.setCurrentIndex(4)
 
-        
+        self.setup_controller.check_all_modules()
         
         lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
         lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label

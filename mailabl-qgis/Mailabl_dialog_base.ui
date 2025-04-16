@@ -4526,7 +4526,7 @@ p, li { white-space: pre-wrap; }
                       <property name="geometry">
                        <rect>
                         <x>0</x>
-                        <y>-461</y>
+                        <y>0</y>
                         <width>914</width>
                         <height>1178</height>
                        </rect>
@@ -4559,11 +4559,7 @@ p, li { white-space: pre-wrap; }
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">#SettingsPageMainFrame{
-background-color: rgb(170, 85, 127);
-}
-
-
+                          <string notr="true">
 #lblTeostusMapLayerValue,
 #lblTeostusPreferredStatuses,
 #lblTesotusActionsValues,

@@ -1,4 +1,5 @@
 from ..app.workspace_handler import WorkSpaceHandler
+from ..config.SetupModules. setupMainController import MenuModules
 
 class WidgetInfo:
     @staticmethod
@@ -63,7 +64,7 @@ class WidgetInfo:
             0: lambda: WorkSpaceHandler.swWorkSpace_Easements(self),
             1: None,
             2: lambda: WorkSpaceHandler.swWorkSpace_Contracts(self),
-            3: lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self),
+            3: lambda: WorkSpaceHandler.swWorkSpace_Controller(self, MenuModules.TEOSTUS),
             4: None,
             5: lambda: WorkSpaceHandler.swWorkSpace_Home(self),
             6: None,

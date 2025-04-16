@@ -15,10 +15,6 @@ class MenuModules():
     REMOVEPROPERTIES = 8
     PROPERTIES_OPERATIONS = 9
 
-    def swWorkSpace(self, index):
-        # This is a placeholder method to demonstrate how you might use the MyClassWithIndexes().
-        print(f"Switching to workspace index: {index}")
-        # Implement your actual workspace switching logic here
 
 
 class SetupController:
@@ -34,19 +30,35 @@ class SetupController:
             "users": dialog.qwSU_Mailabl_Users
         }
 
-    def has_undefined_labels(self, module_key: str) -> bool:
-        print(f"Checking module: {module_key}")
+    def has_undefined_labels(self, module_key: str):
+        #print(f"Checking module: {module_key}")
         module_widget = self.setup_modules.get(module_key)
-        print(f"Module widget: {module_widget}")
+        #print(f"Module widget: {module_widget}")
         if not module_widget:
             print(f"❌ Module '{module_key}' not found.")
-            return False
+            return True, []  # Treat as "valid" so it doesn't block others
 
+        no_value_labels = []
         labels = module_widget.findChildren(QLabel)
-        print(f"Found {len(labels)} labels in module.")
+        #print(f"Found {len(labels)} labels in module.")
         for label in labels:
             if label.text().strip() == "Määramata":
-                print(f"⚠️ Found undefined value in label: {label.objectName()}")
-                return True
+                no_value_labels.append(label)
+                #print(f"⚠️ Found undefined value in label: {label.objectName()}")
 
-        return False
+        return len(no_value_labels) == 0, no_value_labels  # ✅ True if nothing is wrong
+
+    def check_all_modules(self):
+        all_valid = True
+        undefined_labels_list = []
+
+        for key in self.setup_modules.keys():
+            valid, undefined_labels = self.has_undefined_labels(key)
+            all_valid &= valid  # Now this works as expected
+            undefined_labels_list.extend(undefined_labels)
+
+        for label in undefined_labels_list:
+            print(type(label))
+            label.setStyleSheet("background-color: red;")
+
+        return all_valid  # If needed
