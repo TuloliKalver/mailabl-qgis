@@ -64,7 +64,7 @@ class SHPLayerLoader:
                 self.dialog.frMaaAmetControlls.setVisible(False)
                 self.dialog.frPropertiFlowHolder.setVisible(True)
                 self.dialog.pbConfirmAction.setEnabled(False)
-                self.dialog.lblActionName.setText("Milliseid toiminguid sa täna teha tahad?")
+                self.dialog.lblActionName.setText("Milliseid toiminguid tahad täna teha?")
 
 class ShapefileImporter:
     @staticmethod
