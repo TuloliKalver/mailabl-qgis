@@ -1,5 +1,5 @@
 from ..app.workspace_handler import WorkSpaceHandler
-from ..config.SetupModules. setupMainController import MenuModules
+from ..app.MainMenuController import MenuModules
 
 class WidgetInfo:
     @staticmethod

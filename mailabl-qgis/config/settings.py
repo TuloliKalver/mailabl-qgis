@@ -3,6 +3,10 @@ import json
 from PyQt5.uic import loadUi
 from qgis.core import QgsSettings
 from ..KeelelisedMuutujad.modules import Module
+from ..config.QGISSettingPaths import SettingsLoader, LayerSettings
+from .settings_new import PluginSettings, SettingsBuilder
+
+
 
 PLUGIN_DIR = os.path.dirname(__file__)
 PLUGIN_DIR_MAIN = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -13,11 +17,13 @@ CONF_WIDGETS_FOLDER = "confWidgets"
 QGIS_STYLES_FOLDER = "QGIS_styles"
 ICONS_FOLDER = "icons/"
 WIDGETS_FOLDER = "widgets"
+
 WIDGET_MODULAR_FOLDER = "connector_widget_engine"
 CONFIG_FILE = "config.json"
 FUNCTIONS_FOLDER = "Functions"
 EASEMENTS_FOLDER = "Easements"
 EVEL_FOLDER = "EVEL"
+DECISIONS_FOLDER = "decisionUIs"
 
 
 # Load configuration
@@ -120,6 +126,10 @@ class IconsByName:
         self.icon_show_on_map = "oui--app-gis_kaart_asukoht.svg" #ikoonide testimiseks
 
 class FilesByNames:
+    TEOSTUS_SETUP = "TeostusJOONISED.UI"
+    DecisionMaker_UI = "DecicionMakerUI.ui"
+    
+
     def __init__(self):
 
         self.MaaAmet_import = "Properties_backgrund.qml"
@@ -143,14 +153,22 @@ class FilesByNames:
         self.contracts_setup_ui = "ContractsSetup.ui"
         self.easements_setup_ui = "EasementsSetup.ui"
         self.user_setup_ui = "UserSetup.ui"
+        self.Setup_ConfigUI = "ProjectSetup.ui"
+
+
         self.layer_compiler = "layer_compiler.ui"
         self.easement_tools_ui = "Servituut.ui"
-        self.Setup_ConfigUI = "ProjectSetup.ui"
         self.add_properties_to_module_ui = "Properties_connector_new.ui"
         self.EVEL_tools_ui = "EVEL.ui"
 
         self.WConfirmation = "Confirmation_list.ui"
         self.info_message_ui = "infoMessages.ui"
+        self.Projects_UI = "Projects.ui"
+        self.Contracts_UI = "Contracts.ui"
+        self.Easements_UI = "Easements.ui"
+        self.User_UI = "Users.ui"
+        self.Properties_UI = "Properties.ui"
+
         self.error_message_ui = "errorMessage.ui"  #planned
         self.warning_message_ui = "warningMessage.ui"  #planned
         self.success_message_ui = "successMessage.ui"   #planned
@@ -203,6 +221,9 @@ class Filepaths:
     def _get_widget_name(self, widget_name):
         return os.path.join(PLUGIN_DIR_MAIN, WIDGETS_FOLDER, widget_name)
 
+    @classmethod
+    def get_decision_widget(cls, widget_name):
+        return os.path.join(PLUGIN_DIR_MAIN, WIDGETS_FOLDER, DECISIONS_FOLDER, widget_name)
     
     @staticmethod
     def load_ui_file(ui_file_path):
@@ -412,14 +433,14 @@ class SettingsDataSaveAndLoad:
         settings.setValue(user_page_index_setting, user_page_index)
         settings.setValue(user_page_name_setting, user_page_name)
 
-    def save_FolderValues(self, lblProjectsFolder_location, lblProjectsTargetFolder_location, copy_folder, target_folder):
+    def save_FolderValues(self, lblProjectsFolderValue, lblProjectsTargetFolderValue, copy_folder, target_folder):
         settings = QgsSettings()
         copy_folder_settings_address = SettingsDataSaveAndLoad.projects_copyFolderPath(self)
         target_folder_settings_address = SettingsDataSaveAndLoad.projects_targetFolderPath(self)
         settings.setValue(copy_folder_settings_address, copy_folder)
         settings.setValue(target_folder_settings_address, target_folder)
-        lblProjectsFolder_location.setText(copy_folder)
-        lblProjectsTargetFolder_location.setText(target_folder)
+        lblProjectsFolderValue.setText(copy_folder)
+        lblProjectsTargetFolderValue.setText(target_folder)
 
     def save_preferred_projects_status_id(self, project_id, status_name, label):
         settings = QgsSettings()
@@ -437,46 +458,39 @@ class SettingsDataSaveAndLoad:
         contract_status_ids_int = int(contract_status_ids[0]) if contract_status_ids else None
         #print(f"id_s: {contract_status_ids_int}")
         #print(f"contract types: {contract_type_names}")
+
         contrcts_status_ids_path = SettingsDataSaveAndLoad.contracts_preferred_status_ids(self)
         contracts_status_name_path = SettingsDataSaveAndLoad.contracts_preferred_status_name(self)
         contract_name_paths = SettingsDataSaveAndLoad.contracts_preferred_type_name(self)
         settings.setValue(contrcts_status_ids_path, contract_status_ids_int)
         settings.setValue(contracts_status_name_path, contratc_status_names)
         settings.setValue(contract_name_paths, contract_type_names)
+
+
     def save_easements_settings(self, easements_type_names, contratc_status_names, easements_status_ids):
         settings = QgsSettings()
         easements_status_ids_int = int(easements_status_ids[0]) if easements_status_ids else None
+        
         print(f"id_s: {easements_status_ids_int}")
         print(f"easements types: {easements_type_names}")
-        easments_status_ids_path = SettingsDataSaveAndLoad.easements_preferred_status_ids(self)
+        
+        PluginSettings.save_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            value = easements_type_names
+            )
+        
+
+        #easments_status_ids_path = SettingsDataSaveAndLoad.easements_preferred_status_ids(self)
         easements_status_name_path = SettingsDataSaveAndLoad.easements_preferred_status_name(self)
         easements_name_paths = SettingsDataSaveAndLoad.easements_preferred_type_name(self)
-        settings.setValue(easments_status_ids_path, easements_status_ids_int)
+        
+        #settings.setValue(easments_status_ids_path, easements_status_ids_int)
         settings.setValue(easements_status_name_path, contratc_status_names)
         settings.setValue(easements_name_paths, easements_type_names)
 
-    def startup_label_loader (self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems, 
-                              lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
-                              lbl_preferred_project_status, lbl_preferred_contract_status, lblPreferredContractsTypes_value):
-        current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
-        create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
-        SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
-        projects_label_value = SettingsDataSaveAndLoad.load_projects_properties_layer_name(self)
-        input_folder_value = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
-        output_folder_value = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
-        projects_status_name_value = SettingsDataSaveAndLoad.load_projects_status_name(self)
-        contracts_type_names = SettingsDataSaveAndLoad.load_contracts_type_names(self)
-        contracts_status_names = SettingsDataSaveAndLoad.load_contract_status_names(self)
-
-        lblcurrent_main_layer_label.setText(current_label_value)
-        lblnewCadastrals_input_layer_label.setText(create_new_layer_label_value)
-        lblSHPNewItems.setText(SHP_layer_label_value)
-        lblLayerProjects_Properties.setText(projects_label_value)
-        lblProjectsFolder_location.setText(input_folder_value)
-        lblProjectsTargetFolder_location.setText(output_folder_value)
-        lbl_preferred_project_status.setText(projects_status_name_value)
-        lblPreferredContractsTypes_value.setText(contracts_type_names)
-        lbl_preferred_contract_status.setText(contracts_status_names)
         
     def on_save_button_clicked_cadastrals(self, input_layer_combo_box, target_layer_combo_box):
         #print("started to save")
@@ -485,14 +499,14 @@ class SettingsDataSaveAndLoad:
         SettingsDataSaveAndLoad.save_target_cadastral(self,input_value, target_value)
         #print(f"Data saved {input_layer_combo_box} and {target_layer_combo_box}")
         
-    def on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location, lblProjectsFolder_location, target_value, input_value):
+    def on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolderValue, lblProjectsFolderValue, target_value, input_value):
         #print("started to save")
         copy_folder = input_value.text()
         target_folder = target_value.text()
         project_value = cmb_layers.currentText()
         #SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, input_value)
         SettingsDataSaveAndLoad.save_target_projects(self, project_value)
-        SettingsDataSaveAndLoad.save_FolderValues(self,lblProjectsFolder_location, lblProjectsTargetFolder_location, copy_folder, target_folder)
+        SettingsDataSaveAndLoad.save_FolderValues(self,lblProjectsFolderValue, lblProjectsTargetFolderValue, copy_folder, target_folder)
 
     def load_projcets_copy_folder_path_value(self):
         settings_address = SettingsDataSaveAndLoad.projects_copyFolderPath(self)
@@ -615,3 +629,97 @@ class StoredLayers:
         active_layer = settings_loader.load_SHP_inputLayer_name()
         return active_layer
     
+
+class StartupSettingsLoader:
+    def __init__(self, dialog):
+        self.dialog = dialog    
+    def startup_label_loader (self):
+
+        SettingsBuilder.initialize_settings()
+        prefEasementTypeName = PluginSettings.load_setting(module = Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME
+        )
+        prefContractTypeName = PluginSettings.load_setting(module = Module.CONTRACT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME
+        )
+        prefABuiltTypeName = PluginSettings.load_setting(module = Module.TASK,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME
+        )
+
+        self.dialog.lblPreferredEasementsTypesValue.setText(prefEasementTypeName)
+        self.dialog.lblPreferredContractsTypesValue.setText(prefContractTypeName)
+        self.dialog.lblTesotusActionsValue.setText(prefABuiltTypeName)
+
+        prefEasementStatusName = PluginSettings.load_setting(module = Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME
+        )
+
+        prefProjectStatusName = PluginSettings.load_setting(module = Module.PROJECT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME
+        )
+
+        prefContractsStatusName = PluginSettings.load_setting(module = Module.PROJECT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME
+        )
+        prefAsbuiltStatusName = PluginSettings.load_setting(module = Module.TASK,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME
+        )
+
+        self.dialog.lblPreferredProjectStatusValue.setText(prefProjectStatusName)
+        self.dialog.lblPreferredContractStatusValue.setText(prefContractsStatusName)
+        self.dialog.lblTeostusPreferredStatusesValue.setText(prefAsbuiltStatusName)
+        self.dialog.lblPreferredEasementsStatusValue.setText(prefEasementStatusName)
+
+
+        water_layer_name = SettingsLoader.get_setting( LayerSettings.WATER_LAYER)
+        sewer_layer_name = SettingsLoader.get_setting( LayerSettings.SEWER_LAYER)
+        pressure_sewer_layer_name = SettingsLoader.get_setting( LayerSettings.PRESSURE_SEWER_LAYER)
+        drainage_layer_name = SettingsLoader.get_setting( LayerSettings.DRAINAGE_LAYER)
+
+        
+
+
+        prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
+        current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
+        create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
+        SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
+        projects_label_value = SettingsDataSaveAndLoad.load_projects_properties_layer_name(self)
+        input_folder_value = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
+        output_folder_value = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
+ 
+        prefered_homepage_name_value = SettingsDataSaveAndLoad.load_user_prefered_startpage_name(self)
+ 
+        if prefered_homepage_name_value == "":
+            self.dialog.lblSPreferedHomeValue.setText("Määramata")
+        else:
+            self.dialog.lblSPreferedHomeValue.setText(prefered_homepage_name_value)
+
+
+        self.dialog.lblPreferredFolderNameValue.setText(prefered_folder_structure_value)
+
+        self.dialog.lblWaterPipesValue.setText(water_layer_name)
+        self.dialog.lblSewerPipesValue.setText(sewer_layer_name)
+        self.dialog.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)
+        self.dialog.lblDrainagePipesValue.setText(drainage_layer_name)
+
+        self.dialog.lblMainLayerValue.setText(current_label_value)
+        self.dialog.lblMainTargetLayerValue.setText(create_new_layer_label_value)
+        self.dialog.lblSHPLayerValue.setText(SHP_layer_label_value)
+        self.dialog.lblLayerProjectsValue.setText(projects_label_value)
+        self.dialog.lblProjectsFolderValue.setText(input_folder_value)
+        self.dialog.lblProjectsTargetFolderValue.setText(output_folder_value)
+

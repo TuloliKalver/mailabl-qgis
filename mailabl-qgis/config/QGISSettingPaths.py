@@ -13,6 +13,7 @@ class LayerSettings:
     RAINWATER_LAYER = 'labels/rainwater_layer'
     DRAINAGE_LAYER = 'labels/drainage_layer'
     PUMPINGSTATION_LAYER = 'labels/pumpingstation_layer'
+    TEOSTUSJOONISED = 'labels/teostusjoonised_layer'
 
 class ProjectSettings:
     PROJECTS_COPY_FOLDER_PATH = 'labels/projects_copyFolder'

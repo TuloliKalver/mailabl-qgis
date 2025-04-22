@@ -45,13 +45,13 @@ class SetupProjects:
 
         copy_folder_path = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
         if copy_folder_path:
-            lblProjectsFolder_location = widget.leProjectsFolder_location
-            lblProjectsFolder_location.setText(copy_folder_path)
+            lblProjectsFolderValue = widget.leProjectsFolder_location
+            lblProjectsFolderValue.setText(copy_folder_path)
 
         target_folder_path = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
         if target_folder_path:
-            lblProjectsTargetFolder_location = widget.leProjectsTargetFolder_location
-            lblProjectsTargetFolder_location.setText(target_folder_path)
+            lblProjectsTargetFolderValue = widget.leProjectsTargetFolder_location
+            lblProjectsTargetFolderValue.setText(target_folder_path)
 
         folder_structure_text = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
         if folder_structure_text:
@@ -93,19 +93,19 @@ class SetupProjects:
         cancel_button.clicked.connect(lambda: SetupProjects.on_cancel_button_clicked(self, widget))
     def on_save_button_clicked(self, widget, cmb_layers, combo_box):
         # Handle logic when the save button is clicked
-        lblLayerProjects_Properties = self.lblLayerProjects_Properties # pylint: disable=no-member
-        lblcurrent_main_layer_label = self.lblcurrent_main_layer_label # pylint: disable=no-member
-        lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label # pylint: disable=no-member
-        project_status_label = self.lbl_preferred_project_status
-        lblSHPNewItems = self.lblSHPNewItems # pylint: disable=no-member
-        lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
-        lblProjectsFolder_location = self.lblProjectsFolder_location
-        lbl_preferred_project_status = self.lbl_preferred_project_status
+        lblLayerProjectsValue = self.lblLayerProjectsValue # pylint: disable=no-member
+        lblMainLayerValue = self.lblMainLayerValue # pylint: disable=no-member
+        lblMainTargetLayerValue = self.lblMainTargetLayerValue # pylint: disable=no-member
+        project_status_label = self.lblPreferredProjectStatusValue
+        lblSHPLayerValue = self.lblSHPLayerValue # pylint: disable=no-member
+        lblProjectsTargetFolderValue = self.lblProjectsTargetFolderValue
+        lblProjectsFolderValue = self.lblProjectsFolderValue
+        lblPreferredProjectStatusValue = self.lblPreferredProjectStatusValue
         input_value = widget.leProjectsFolder_location
         target_value = widget.leProjectsTargetFolder_location
-        lbl_preferred_contract_status = self.lbl_preferred_contract_status
-        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
-        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
+        lblPreferredContractStatusValue = self.lblPreferredContractStatusValue
+        lblPreferredContractsTypesValue = self.lblPreferredContractsTypesValue
+        lblPreferredFolderNameValue = self.lblPreferredFolderNameValue
 
 
 
@@ -114,14 +114,14 @@ class SetupProjects:
         SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value_id, status_value_name, project_status_label)
         prefered_folder_name_structure = widget.lblPreferedFolderNamStructure.text()
         SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, prefered_folder_name_structure)
-        lblPreferredFolderName_structure.setText(prefered_folder_name_structure)
-        SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolder_location,
-                                                                lblProjectsFolder_location, target_value,
+        lblPreferredFolderNameValue.setText(prefered_folder_name_structure)
+        SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolderValue,
+                                                                lblProjectsFolderValue, target_value,
                                                                 input_value)
-        SettingsDataSaveAndLoad.startup_label_loader(self,lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems,
-                              lblLayerProjects_Properties, lblProjectsFolder_location, lblProjectsTargetFolder_location,
-                              lbl_preferred_project_status, lbl_preferred_contract_status,
-                              lblPreferredContractsTypes_value)
+        SettingsDataSaveAndLoad.startup_label_loader(self,lblMainLayerValue,lblMainTargetLayerValue,lblSHPLayerValue,
+                              lblLayerProjectsValue, lblProjectsFolderValue, lblProjectsTargetFolderValue,
+                              lblPreferredProjectStatusValue, lblPreferredContractStatusValue,
+                              lblPreferredContractsTypesValue)
         text = edu.salvestatud
         heading = pealkiri.tubli
         ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)

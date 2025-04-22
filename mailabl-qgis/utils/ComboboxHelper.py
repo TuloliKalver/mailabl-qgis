@@ -1,7 +1,10 @@
+#ComboBoxHelper.py
+
 from PyQt5.QtWidgets import QListView, QComboBox, QPushButton
 from typing import Any
 from ..KeelelisedMuutujad.messages import Headings
-from ..core.module.TypeManager import TypeManager
+from ..core.module.TypeManager import TypeModuleSetup
+from ..core.module.TypeManager import ModuleStatuses
 from ..utils.messagesHelper import ModernMessageDialog
 
 class ComboBoxHelper:
@@ -21,7 +24,7 @@ class ComboBoxHelper:
 
     def __init__(self):
         """Initialize the helper with a fresh instance of TypeManager."""
-        self.type_manager = TypeManager()
+        pass
 
     def populate_comboBox_smart(self, module: str =None, context: Any =None, button: QPushButton =None, comboBox: QComboBox=None, preferred_items: bool=False, simple_fill: bool=True):
         test = False
@@ -56,48 +59,40 @@ class ComboBoxHelper:
                 comboBox.addItem(item_text)
                 comboBox.setItemData(comboBox.count() - 1, item_id)
             comboBox.setView(QListView())
-            return None  # or [] if you prefer consistency
+            return None 
 
         # --- Case 2: Preferred types (multi-check combo) ---
 
         if preferred_items:
-            types = self.type_manager._get_types_for_module(
-                module, 
-                context)
+            type_manager = TypeModuleSetup(module)
+            types = type_manager._get_types_for_module(module)
+            #print(f"Types from {module}: ", types)
+        
             if test == True:
                 print(f"Types from {module}: ", types)
             
-            if not types:
-                ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(Headings().warningSimple, "Jätkamiseks seadista eelistatud liigid")
-                button.blockSignals(False)
-                return None
-
             for item_text, item_id in types:
                 comboBox.addItem(item_text)
                 comboBox.setItemData(comboBox.count() - 1, item_id)
             comboBox.setView(QListView())
+            
+            preferred_items_raw = type_manager._get_preferred_item_ids(module)
+            #print(f"preferred_items_raw: {preferred_items_raw}")            
+            if not preferred_items_raw:
+                print("no preferred items")
+            else:
+                #print("Raw preferred items:", preferred_items_raw)
+                selected_types = []
+                for line in preferred_items_raw.split('\n'):
+                    selected_types.extend(item.strip() for item in line.split(',') if item.strip())
 
-            preferred_items_raw = self.type_manager._get_preferred_item_ids(module)
-            selected_types = []
-            for line in preferred_items_raw.split('\n'):
-                selected_types.extend(item.strip() for item in line.split(',') if item.strip())
+                comboBox.setCheckedItems(selected_types)
+                return selected_types  # 🔥 Return list of selected IDs
 
-            comboBox.setCheckedItems(selected_types)
-            return selected_types  # 🔥 Return list of selected IDs
 
         # --- Case 3: Status mode (single select) ---
-        preferred_statuses = self.type_manager._get_preferred_statuses_for_module(module)
-        if test ==True:
-            print("Prefered statuses:", preferred_statuses)
-            print("Preferred statuses:", preferred_statuses)
-        preferred_id = preferred_statuses[0] if preferred_statuses else None
-        if test == True:
-            print("Selected ID:", preferred_id)
-        statuses = self.type_manager._get_all_statuses_for_module(module)
-        if statuses is None:
-            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(Headings().warningSimple, "Jätkamiseks seadista eelistatud liigid")
-            button.blockSignals(False)
-            return None
+        status_manager = ModuleStatuses(module)
+        statuses = status_manager._get_all_statuses_for_module(module)
         
         if test == True:
             print("All statuses:", statuses)
@@ -105,6 +100,21 @@ class ComboBoxHelper:
             comboBox.addItem(item_text)
             comboBox.setItemData(comboBox.count() - 1, item_id)
         comboBox.setView(QListView())
+
+        preferred_status = status_manager._get_preferred_status(module)
+        if test ==True:
+            print("Preferred status:", preferred_status)
+        #preferred_id = preferred_statuses[1] if preferred_statuses else None
+        # Match label to get the ID
+        preferred_id = None
+        for name, status_id in statuses:
+            if name.strip() == preferred_status.strip():
+                preferred_id = status_id
+                break
+
+
+        if test == True:
+            print("Selected ID:", preferred_id)
 
         if preferred_id:
             for index in range(comboBox.count()):

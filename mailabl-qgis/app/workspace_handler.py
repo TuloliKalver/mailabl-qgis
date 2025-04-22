@@ -8,9 +8,11 @@ from ..Functions.Easements.Easements import EasementssMain
 from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
-from ..config.SetupModules. setupMainController import SetupController, MenuModules
+from .MainMenuController import SetupController, MenuModules
 from ..utils.ComboboxHelper import ComboBoxHelper
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
+
 
 
 pealkiri = Headings()
@@ -20,68 +22,15 @@ combo_handler = ComboBoxHelper()
 class WorkSpaceHandler:
 
 
-    @staticmethod
     def swWorkSpace_Controller(self, module):
         
         self.swWorkSpace.setCurrentIndex(module)
         # 👇 Correct usage — use the stored instance!
-        controller = SetupController(self)
-        res, labels = controller.has_undefined_labels(module)
-        if res is False:    
-            buttons={"keep": "ok",}
-            ret = DecisionDialogHelper.ask_user(
-                title=Headings.inFO_SIMPLE,
-                message="Puuduvad alg seaded,\nteeme kohe seadistuse",
-                options=buttons,
-                parent=self
-                    )
-            #TODO afther dev is fone!
-            #res = True
-
-            if ret is False:
-                module = MenuModules.SETTINGS
-                self.swWorkSpace.setCurrentIndex(module)
-                controller.check_all_modules()
-                return
-            else:
-                pass
+        res = WorkSpaceHandler.check_if_settings_are_set(self, module)
+        if res is False:
+            return
         else:
-            print("✅ Setup looks good.")
-
-
-
-
-    @staticmethod
-    def swWorkSpace_Controller(self, module):
-        
-        self.swWorkSpace.setCurrentIndex(module)
-        # 👇 Correct usage — use the stored instance!
-        controller = SetupController(self)
-        res, labels = controller.has_undefined_labels(module)
-        if res is False:    
-            buttons={"keep": "ok",}
-            ret = DecisionDialogHelper.ask_user(
-                title=Headings.inFO_SIMPLE,
-                message="Puuduvad alg seaded,\nteeme kohe seadistuse",
-                options=buttons,
-                parent=self
-                    )
-            #TODO afther dev is fone!
-            #res = True
-
-            if ret is False:
-                module = MenuModules.SETTINGS
-                self.swWorkSpace.setCurrentIndex(module)
-                controller.check_all_modules()
-                return
-            else:
-                pass
-        else:
-            print("✅ Setup looks good.")
-
-
-
-
+            pass
 
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
@@ -98,8 +47,12 @@ class WorkSpaceHandler:
 
     def swWorkspace_Projects(self):
         module = Module.PROJECT
-        self.swWorkSpace.setCurrentIndex(MenuModules.PROJECTS)
-        
+        menu_module = MenuModules.PROJECTS
+        self.swWorkSpace.setCurrentIndex(menu_module)
+        res = WorkSpaceHandler.check_if_settings_are_set(self,menu_module)
+        if res is False:
+            return
+    
         button = self.pbProjects
         button.blockSignals(True)
         table = self.tblMailabl_projects
@@ -118,6 +71,7 @@ class WorkSpaceHandler:
             context=self,
             preferred_items=False
         )
+        print(f"selected_status on projcets load: {selected_status}")
         if selected_status is None:
             button.blockSignals(False)
             return 
@@ -126,12 +80,16 @@ class WorkSpaceHandler:
     
     def swWorkSpace_Contracts(self):
         module = Module.CONTRACT
+        menu_module = MenuModules.CONTRACTS
+        self.swWorkSpace.setCurrentIndex(menu_module)
+        res = WorkSpaceHandler.check_if_settings_are_set(self,menu_module)
+        if res is False:
+            return
         button = self.pbContracts
         refresh_button = self.pbRefresh_tblMailabl_contracts
         button.blockSignals(True)
         refresh_button.blockSignals(True)
 
-        self.swWorkSpace.setCurrentIndex(MenuModules.CONTRACTS)
         table = self.ContractView
         model = table.model()
         if model:
@@ -148,6 +106,8 @@ class WorkSpaceHandler:
             preferred_items=False
         )
 
+        print(f"Selected status: {selected_status}")
+
         # Add types to the combobox and set the preferred     
         types_combo_box = self.cmbcontractTypes_checkable
         combo_handler.populate_comboBox_smart(
@@ -159,7 +119,22 @@ class WorkSpaceHandler:
         )
         
         selected_type_ids = types_combo_box.checkedItemsData()
-        
+
+        print(f"selected type ids: {selected_type_ids}")
+        # 🔁 If none selected, fall back to the first item in the combo box
+        if not selected_type_ids:
+            if types_combo_box.count() > 0:
+                first_item_data = types_combo_box.itemData(0)
+                selected_type_ids = [first_item_data]
+                types_combo_box.setCheckedItems([types_combo_box.itemText(0)])  # Optional: visually reflect selection
+            else:
+                # 🚫 Nothing to use – early return or warning
+                print(
+                    "Tüüpide seadistus puudub",
+                    "Kontrolli, et oleks vähemalt üks tüüp seadistatud."
+                )
+            return
+
         ContractsMain.load_main_contracts_by_type_and_status(self,
                                                              table=table,
                                                              types=selected_type_ids,
@@ -187,8 +162,12 @@ class WorkSpaceHandler:
         module = Module.EASEMENT
         button = self.pbeasements
         button.blockSignals(True)
-        self.swWorkSpace.setCurrentIndex(MenuModules.EASEMENTS)
-        
+        menu_module = MenuModules.EASEMENTS
+        self.swWorkSpace.setCurrentIndex(menu_module)
+        res = WorkSpaceHandler.check_if_settings_are_set(self,menu_module)
+        if res is False:
+            return
+
         table = self.tweasementView
         # Assuming 'table' is your QTableView object
         model = table.model()
@@ -260,3 +239,29 @@ class WorkSpaceHandler:
         self.swCadastral_sub_processes.setCurrentIndex(0)
 
         
+    def check_if_settings_are_set(self, menu_module):
+        controller = SetupController(self)
+        res, labels = controller.has_undefined_labels(menu_module)
+        if res is False:    
+            buttons={"keep": "Edasi",}
+            ret = DecisionDialogHelper.ask_user(
+                title=Headings.inFO_SIMPLE,
+                message="Puuduvad alg seaded,\nteeme kohe seadistuse",
+                options=buttons,
+                parent=self,
+                type= AnimatedGradientBorderFrame.WARNING
+                    )
+            #TODO afther dev is fone!
+            #res = True
+
+            if ret is False:
+                settings_module = MenuModules.SETTINGS
+                self.swWorkSpace.setCurrentIndex(settings_module)
+                controller.check_all_modules()
+                return False 
+            else:
+                pass
+        else:
+            print("✅ Setup looks good.")
+            return True
+            

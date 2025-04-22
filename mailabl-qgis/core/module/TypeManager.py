@@ -1,67 +1,104 @@
+#TypeManager.py
+from PyQt5.QtCore import QCoreApplication
+
 from ...config.settings import SettingsDataSaveAndLoad
+from ...config.settings_new import PluginSettings
 from ...KeelelisedMuutujad.modules import Module
-from ...queries.python.statuses.statusManager import Statuses, ContractTypes, EasementTypes
+from .statusManager import ModuleStatuses
+
+from PyQt5.QtCore import QCoreApplication
+from ...queries.python.FileLoaderHelper import GraphQLQueryLoader, GraphqlContracts, GraphqlEasements, GraphqlTasks
+from ...queries.python.query_tools import requestBuilder
 
 
-class TypeManager:
-    def __init__(self):
-        self.type_sources = {
-            Module.CONTRACT: ContractTypes.get_contract_types,
-            Module.EASEMENT: EasementTypes.get_easement_types,
+
+class TypeModuleSetup:
+    def __init__(self, module):
+        self.module = module
+        self.graphql_queries = {
+            Module.CONTRACT: lambda: GraphqlTasks.TYPES,
+            Module.EASEMENT: lambda: GraphqlTasks.TYPES,
+            Module.TASK: lambda: GraphqlTasks.TYPES
             # Add more as needed
         }
 
         self.preferred_item_ids = {
             Module.CONTRACT: lambda: SettingsDataSaveAndLoad().load_contracts_type_names(),    
             Module.EASEMENT: lambda: SettingsDataSaveAndLoad().load_easements_type_names(),
+            Module.TASK: lambda: PluginSettings.load_setting(module=Module.TASK, option_type=PluginSettings.OPTION_TYPE_STATUS, use_ids=True)
         }
 
-        self.status_sources = {
-            Module.PROJECT: lambda: SettingsDataSaveAndLoad().load_projects_status_id(),
-            Module.CONTRACT: lambda:SettingsDataSaveAndLoad().load_contract_status_ids(),
-            Module.EASEMENT: lambda:SettingsDataSaveAndLoad().load_easements_status_ids(),
-            # Add more as needed
+
+    @staticmethod
+    def build_type_query_string(module):
+        return f"""
+        query {module}Types($first: Int, $after: String) {{
+            {module}Types(first: $first, after: $after) {{
+                pageInfo {{
+                    hasNextPage
+                    endCursor
+                    currentPage
+                    total
+                }}
+                edges {{
+                    node {{
+                        id
+                        name
+                    }}
+                }}
+            }}
+        }}
+        """
+    @staticmethod
+    def build_type_query_variables(after_cursor=None, items_per_page=50):
+        return {
+            "first": items_per_page,
+            "after": after_cursor if after_cursor else None
         }
 
-        self.module_statuses_sources = {
-            module: lambda m=module: Statuses().get_all_statuses_by_module(m)
-            for module in [Module.PROJECT, 
-                           Module.CONTRACT, 
-                           Module.EASEMENT]
-        }
 
 
     def _get_preferred_item_ids(self, module):
         """Return a set of preferred item IDs for the given module."""
         fn = self.preferred_item_ids.get(module, [])
         if not fn:
-            return []
-        return fn() if callable(fn) else fn
-     
-    def _get_preferred_statuses_for_module(self, module):
-        fn = self.status_sources.get(module)
-        if not fn:
-            return []
-
-        result = fn() if callable(fn) else fn
-        return result if isinstance(result, list) else [result]
-
-    def _get_all_statuses_for_module(self, module):
-        print("Getting all statuses for module:", module)
-        fn = self.module_statuses_sources.get(module)
-        if not fn:
-            return []
+            return None
         return fn() if callable(fn) else fn
 
-    def _get_types_for_module(self, module, context):
-        """
-        Calls the correct type provider based on the module.
-        Passes `context` (usually `self` from calling class).
-        """
-        if module not in self.type_sources:
-            raise ValueError(f"No type source registered for module: {module}")
+    def get_type_query(self, module):
+        """Returns the GraphQL query string for a given module."""
+        fn = self.graphql_queries.get(module)
+        return fn() if fn else None 
+    
+    def _get_types_for_module(self, module=None):
+        module = module or self.module
+        print("Getting all types for module:", module)
+        return self.get_module_types(module)
 
-        provider_fn = self.type_sources[module]
-        return provider_fn(context)
 
+    def get_module_types(self, module):
         
+        query = self.build_type_query_string(module)
+        end_cursor = None
+        variables = self.build_type_query_variables(end_cursor)
+
+        response = requestBuilder.construct_and_send_request(query, variables)
+        types = []
+        if response.status_code == 200:
+            data = response.json()
+            QCoreApplication.processEvents()
+
+            easement_types_data = data.get("data", {}).get(f"{module}Types", {}).get("edges", [])
+            pageInfo = data.get("data", {}).get(f"{module}Types", {}).get("pageInfo", {})
+            end_cursor = pageInfo.get("endCursor")
+            for easement_type_info in easement_types_data:
+                node_info = easement_type_info.get('node', {})
+                type_name = node_info.get('name',"")
+                type_id = node_info.get('id',"")
+                types.append((type_name, type_id))
+                
+            return types
+        else:
+            print(f"Error: {response.status_code}")
+            return None
+

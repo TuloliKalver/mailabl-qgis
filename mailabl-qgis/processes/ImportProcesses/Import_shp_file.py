@@ -10,6 +10,7 @@ from ...config.settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...KeelelisedMuutujad.messages import Headings
 
 from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 
 
 pealkiri = Headings()
@@ -21,7 +22,7 @@ import_subgroup_layer_name = 'Imporditavad kinnistud'
 class SHPLayerLoader:
     def __init__(self, dialog):
         self.dialog = dialog
-        self.label = self.dialog.lblSHPNewItems
+        self.label = self.dialog.lblSHPLayerValue
     
     def load_shp_layer(self):
         file_dialog = QFileDialog()
@@ -54,7 +55,8 @@ class SHPLayerLoader:
                     message=text,
                     options={"keep": "Jätka"
                     },
-                    parent=self.dialog
+                    parent=self.dialog, 
+                    type= AnimatedGradientBorderFrame.WARNING
                 )
             
                 

@@ -116,7 +116,7 @@ class EasementsQueries:
 
         module = Module.EASEMENT
 
-        query_name = GraphqlEasements.WHERE_EASEMENTS_TYPE_STATUS
+        query_name = GraphqlEasements.STATUS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
 
         # Set the desired total number of items to fetch
@@ -188,7 +188,7 @@ class EasementsQueries:
 
         module = Module.EASEMENT
 
-        query_name = GraphqlEasements.WHERE_EASEMENTS_TYPE_STATUS
+        query_name = GraphqlEasements.STATUS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
 
         # Set the desired total number of items to fetch

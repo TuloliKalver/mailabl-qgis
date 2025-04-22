@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import QLineEdit
 from .CloseUnload import Unload
 from .AddSetupLayers import SetupLayers
-from ...config.settings import Devuser
+from ...config.settings import Devuser, Version, StartupSettingsLoader
 from ...utils.messagesHelper import ModernMessageDialog
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...app.ui_controllers import FrameHandler
 from ...config.ui_directories import PathLoaderSimple
-from ...config.settings import Version
+
 
 
 setup_layers = SetupLayers()
@@ -15,6 +15,7 @@ unload_events = Unload ()
 class Startup:
     def __init__(self):
         self.dialog=self
+
     def FirstLoad(self):
     
         #loda setup layers to project
@@ -50,6 +51,10 @@ class Startup:
                     self.lblUserAccessDenied
                     ]
         FrameHandler.hide_multiple_frames(self, frames)
+        
+        loader = StartupSettingsLoader(self)    
+        loader.startup_label_loader()
+
 
         initial_size = self.UC_Main_Frame.size()
         self.resize(initial_size.width()+5, initial_size.height()+5)

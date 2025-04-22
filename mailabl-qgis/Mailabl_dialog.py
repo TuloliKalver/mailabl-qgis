@@ -25,20 +25,22 @@ from functools import partial
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler
 from .app.ui_controllers import FrameHandler, WidgetAnimator, AlterContainers
-from .app.button_connector import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
+from .app.ProrpertiesConnectorContreollr import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
 
 from .Common.app_state import  Processes
 
-from .config.settings import SettingsDataSaveAndLoad, Version
+from .config.settings import SettingsDataSaveAndLoad, Version, StartupSettingsLoader
+from .config.settings_new import PluginSettings
 from .config.SetupModules.SetupMainLayers import SetupCadastralLayers
-from .config.QGISSettingPaths import LayerSettings, SettingsLoader
 from .config.ui_directories import PathLoaderSimple
 from .config.mainwidget import WidgetInfo
 from .config.SetupModules.SetupProjects import SetupProjects
 from .config.SetupModules.SetupConrtacts import SetupConrtacts
 from .config.SetupModules.SetupEasments import SetupEasments
 from .config.SetupModules.SetupUsers import SetupUsers
-from .config.SetupModules.setupMainController import SetupController
+from .config.SetupModules.AsBultSetup import SetupASBuilt
+
+from .app.MainMenuController import SetupController
 
 
 from .Functions.SearchEngines import ModularSearchEngine
@@ -155,7 +157,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
         self.setup_timer()
-        self.set_layer_settings_labels()
+
 
 
         # Install event filter on the main window
@@ -188,8 +190,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 ##############################TESTING AREA##############################################################
         self.test_buttons = {
-            self.pbtest_2: self.testing_max_fids,
-            self.pushButton: self.test_update_property
+            self.pbtest_2: self.view_all_plugin_settings,
+            self.pushButton: self.reset_new_settings
         }
 
         for button,_ in self.test_buttons.items():
@@ -238,15 +240,15 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSettingsSetupEasements.clicked.connect(lambda: SetupEasments.load_easements_settings_widget(self))
         self.pbUserSettings.clicked.connect(lambda: SetupUsers.load_user_settings_widget(self))
 
-        self.lblPhotos.setEnabled(False)
+        asBuiltLoader = SetupASBuilt(parent=self)  # Assuming `self` is a QDialog or QWidget
+        self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_settings_widget())
+
+        self.lblPhotosValue.setEnabled(False)
         self.lblPhtosText.setEnabled(False)
         
         self.pbSearchProjects.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.PROJECT))
         self.pbSearchContracts.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.CONTRACT))
         self.pbSearcheasements.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.EASEMENT))
-        
-    #Adding and removing        
-        #self.pbSearch_Add.clicked.connect(lambda: searchGeneral.search_cadastral_items_by_values(self))
         
 
         self.pbMainMenu.clicked.connect(self.handleSidebar_leftButtons)
@@ -565,7 +567,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 self.UC_Main_Frame.setVisible(False)
                 FrameHandler.show_multiple_frames(self, frames)
                 self.set_start_page_based_on_toggle_and_preferred_settings()
-                self.resize(1300, 700)
+                self.resize(1000, 700)
                 return  # Stop further execution            
         
         else:    
@@ -606,9 +608,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         self.pbLogin.setStyleSheet("background-color: #bc5152;")
                         return  # Stop further execution
 
-                self.lbNuserName.setText(user_name)
-                self.lblNUserSurename.setText(user_lastname)
-                self.lblUserRoles.setText(roles_text)
+                self.lbNuserNameValue.setText(user_name)
+                self.lblNUserSurenameValue.setText(user_lastname)
+                self.lblUserRolesValue.setText(roles_text)
                 self.UC_Main_Frame.setVisible(False)
                 FrameHandler.show_multiple_frames(self, frames)
                 self.set_start_page_based_on_toggle_and_preferred_settings()
@@ -620,14 +622,14 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
 
     def set_start_page_based_on_toggle_and_preferred_settings(self):
+        
         index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)            
         # Convert index to integer, handling potential exceptions
         index_int = int(index)
 
-            # Get the mapped functions dictionary from WidgetInfo
+        # Get the mapped functions dictionary from WidgetInfo
         mapped_functions = WidgetInfo.mapped_indexes_functions(self)
-            #print(f"mapped_functions:  {mapped_functions}")
-            # Check if mapped_functions is not None before iterating
+
         if mapped_functions is not None and index_int in mapped_functions:
             function = mapped_functions.get(index_int)
             if function:
@@ -648,27 +650,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     def layer_setup(self):
         #print("started 'layer_setup'")
-        lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
-        lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
-        lblSHPNewItems = self.lblSHPNewItems
-        SetupCadastralLayers.load_layer_settings_widget(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,lblSHPNewItems)
+        lblMainLayerValue = self.lblMainLayerValue
+        lblMainTargetLayerValue = self.lblMainTargetLayerValue
+        lblSHPLayerValue = self.lblSHPLayerValue
+        SetupCadastralLayers.load_layer_settings_widget(self, lblMainLayerValue,lblMainTargetLayerValue,lblSHPLayerValue)
         
-    def set_layer_settings_labels(self):
-        #load = SettingsDataSaveAndLoad()
-        lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
-        lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
-        lblSHPNewItems = self.lblSHPNewItems
-        lblLayerProjects_Properties = self.lblLayerProjects_Properties
-        lblProjectsFolder_location = self.lblProjectsFolder_location
-        lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
-        lbl_preferred_project_status = self.lbl_preferred_project_status
-        lbl_preferred_contract_status = self.lbl_preferred_contract_status
-        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
-
-        load.startup_label_loader(lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
-                                    lblSHPNewItems, lblLayerProjects_Properties, lblProjectsFolder_location,
-                                    lblProjectsTargetFolder_location, lbl_preferred_project_status, 
-                                    lbl_preferred_contract_status, lblPreferredContractsTypes_value)        
 
     def generate_virtual_mapLayer_synced_with_Mailabl(self):
         # Create an instance of YourClas
@@ -718,52 +704,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
     def toggle_settings_main_view(self):
         self.swWorkSpace.setCurrentIndex(4)
-
-        self.setup_controller.check_all_modules()
-        
-        lblcurrent_main_layer_label = self.lblcurrent_main_layer_label
-        lblnewCadastrals_input_layer_label = self.lblnewCadastrals_input_layer_label
-        lblSHPNewItems = self.lblSHPNewItems
-        lblLayerProjects_Properties = self.lblLayerProjects_Properties
-        lblProjectsFolder_location = self.lblProjectsFolder_location 
-        lblProjectsTargetFolder_location = self.lblProjectsTargetFolder_location
-        lbl_preferred_project_status = self.lbl_preferred_project_status
-        lbl_user_name = self.lbNuserName
-        lbl_preferred_contract_status = self.lbl_preferred_contract_status 
-        lblPreferredContractsTypes_value = self.lblPreferredContractsTypes_value
-        lblPreferredFolderName_structure = self.lblPreferredFolderName_structure
-        prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
-        lblPreferredFolderName_structure.setText(prefered_folder_structure_value)
-        lblPreferredEasementsStatus = self.lblPreferredEasementsStatus
-        PreferredEasementsStatus_Value = SettingsDataSaveAndLoad.load_easements_status_names(self)
-        lblPreferredEasementsStatus.setText(PreferredEasementsStatus_Value)
-        lblPreferredEasementsTypes_value = self.lblPreferredEasementsTypes_value
-        PreferredEasementsTypes_values = SettingsDataSaveAndLoad.load_easements_type_names(self)
-        lblPreferredEasementsTypes_value.setText(PreferredEasementsTypes_values)
-        prefered_homepage_name_value = SettingsDataSaveAndLoad.load_user_prefered_startpage_name(self)
-        if prefered_homepage_name_value == "":
-            self.lblSettings_preferedHomePage.setText("Määramata")
-        else:
-            self.lblSettings_preferedHomePage.setText(prefered_homepage_name_value)
-        
-        water_layer_name = SettingsLoader.get_setting( LayerSettings.WATER_LAYER)
-        sewer_layer_name = SettingsLoader.get_setting( LayerSettings.SEWER_LAYER)
-        pressure_sewer_layer_name = SettingsLoader.get_setting( LayerSettings.PRESSURE_SEWER_LAYER)
-        drainage_layer_name = SettingsLoader.get_setting( LayerSettings.DRAINAGE_LAYER)
-        
-        self.lblWaterPipesValue.setText(water_layer_name)
-        self.lblSewerPipesValue.setText(sewer_layer_name)
-        self.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)
-        self.lblDrainagePipesValue.setText(drainage_layer_name)
-
-        SettingsDataSaveAndLoad.startup_label_loader(self, lblcurrent_main_layer_label,lblnewCadastrals_input_layer_label,
-                                                        lblSHPNewItems, lblLayerProjects_Properties,lblProjectsFolder_location, 
-                                                        lblProjectsTargetFolder_location, lbl_preferred_project_status, 
-                                                        lbl_preferred_contract_status, lblPreferredContractsTypes_value)
-
-        
-
+        loader = StartupSettingsLoader(self)
+        loader.startup_label_loader()
         widget = self.pbSettings_SliderFrame   
+        self.setup_controller.check_all_modules()
         WidgetAnimator.toggle_Frame_height_for_settings(self, widget)
 
 
@@ -901,3 +845,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             target_layer.addFeatures([feature])
             target_layer.commitChanges()
 
+    def view_all_plugin_settings(self):
+        PluginSettings.print_all_mailabl_settings()
+
+    def reset_new_settings(self):
+        from .config.settings_new import SettingsBuilder
+        SettingsBuilder.reset_initialization_flag()

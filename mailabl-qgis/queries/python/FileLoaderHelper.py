@@ -17,7 +17,8 @@ class GraphQLQueryLoader:
             Module.PROJECT: QueryFolders.PROJECTS_FOLDER,
             Module.CONTRACT: QueryFolders.CONTRACTS_FOLDER,
             Module.TAGS: QueryFolders.TAGS_FOLDER,
-            Module.STATUSES: QueryFolders.STATUS_FOLDERS
+            Module.STATUSES: QueryFolders.STATUS_FOLDERS,
+            Module.TASK: QueryFolders.TASK_FOLDER,
         }
 
         folder = folders.get(module)
@@ -39,6 +40,7 @@ class QueryFolders:
     CONTRACTS_FOLDER = 'queries/graphql/contracts'
     TAGS_FOLDER = 'queries/graphql/tags'
     STATUS_FOLDERS = 'queries/graphql/statuses'
+    TASK_FOLDER = 'queries/graphql/tasks'
 
 class GraphqlProjects:
 
@@ -83,11 +85,11 @@ class GraphqlContracts:
     BY_CADASTRAL = 'propertiesrelated_contracts.graphql'
     UPDATE_CONTRACT_PROPERTIES = 'update_contract_properties.graphql'
     CONTRACT_TYPES = 'contract_types.graphql'
-    WHERE_CONTRACTS_TYPE_STATUS = 'contracts_type_status.graphql'
+    STATUS = 'contracts_type_status.graphql'
 
 class GraphqlEasements:
     EASMENT_TYPES = 'easements_types.graphql'
-    WHERE_EASEMENTS_TYPE_STATUS = 'easements_type_status.graphql'
+    STATUS = 'easements_type_status.graphql'
     UPDATE_EASEMENTS_PROPERTIES = 'update_easements_properties.graphql'
     Q_WHERE_EASEMENT_RELATED_PROPERTYS = 'W_easement_id.graphql'
     Q_All_EASEMENTS = 'easements.graphql'
@@ -97,6 +99,9 @@ class GraphqlTags:
     CREATE_TAG = 'CreateTag.graphql'
     TAGS_BY_MODULE = 'TagsByModule.graphql'
     TAGS_ID_BY_MODULE_AND_NAME = 'IDByModuleAndName.graphql'
+
+class GraphqlTasks:
+    TYPES = 'task_types.graphql'
 
 class GraphqlStatuses:
     STATUSES = 'statuses.graphql'

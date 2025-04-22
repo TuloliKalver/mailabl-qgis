@@ -49,7 +49,7 @@ class SetupUsers:
         SettingsDataSaveAndLoad.save_user_prefered_startpage(self,selected_index, page_name)
         print(f"Nimetus: {page_name}")
         print(f"selected_index: {selected_index}")
-        label = self.lblSettings_preferedHomePage
+        label = self.lblSPreferedHomeValue
 
         label.setText(page_name)
 

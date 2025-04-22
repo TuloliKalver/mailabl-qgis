@@ -6,7 +6,7 @@ import pandas as pd
 from typing import List
 from PyQt5.QtCore import QCoreApplication
 
-from ...queries.python.FileLoaderHelper import GraphqlContracts, GraphQLQueryLoader
+from ...queries.python.FileLoaderHelper import GraphqlStatuses, GraphqlContracts, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...KeelelisedMuutujad.modules import Module
@@ -142,7 +142,7 @@ class ContractsQueries:
         # Load the project query using the loader instance
 
         module = Module.CONTRACT
-        query_name =  GraphqlContracts.WHERE_CONTRACTS_TYPE_STATUS
+        query_name =  GraphqlContracts.STATUS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
      
@@ -171,13 +171,11 @@ class ContractsQueries:
                         "column": "TYPE",
                         "operator": "IN",
                         "value": type_values
-                        #"value": ["1", "2", "3"]
                         },
                         {
                         "column": "STATUS",
                         "operator": "IN",
                         "value": statuses
-                        #"value": ["62"]
                         }
                     ]
                     },

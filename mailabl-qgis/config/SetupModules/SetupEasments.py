@@ -1,5 +1,5 @@
 from ...KeelelisedMuutujad.modules import Module
-from ...app.ComboBoxTools import ComboBoxTools
+from ...utils.ComboBoxHelperX import ComboBoxTools
 from ...config.QGISSettingPaths import LayerSettings, SettingsLoader
 from ...config.SetupModules.SetupMainLayers import QGIS_items
 from ...config.settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad
@@ -40,10 +40,10 @@ class SetupEasments:
         drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)
 
 
-        QGIS_items.clear_and_add_layerNames_selected(self, water_cb, water_layer_name)
-        QGIS_items.clear_and_add_layerNames_selected(self, sewer_cb, sewer_layer_name)
-        QGIS_items.clear_and_add_layerNames_selected(self, sewer_pressure_cb, pressure_sewer_layer_name)
-        QGIS_items.clear_and_add_layerNames_selected(self, drainage_cb, drainage_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(water_cb, water_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(sewer_cb, sewer_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(sewer_pressure_cb, pressure_sewer_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(drainage_cb, drainage_layer_name)
 
         # Populate the combo boxes using the populate_comboBox_smart method for statuses
         statuses_combo_box = widget.cmbPreferredEasementStatuses
@@ -93,7 +93,7 @@ class SetupEasments:
             elif i > 0:
                 selected_types_text += ', '
             selected_types_text += item
-        label = self.lblPreferredEasementsTypes_value
+        label = self.lblPreferredEasementsTypesValue
         label.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         label.setAlignment(Qt.AlignBottom | Qt.AlignLeft)
 
@@ -110,7 +110,7 @@ class SetupEasments:
 
 
         label.setText(selected_types_text)
-        self.lblPreferredEasementsStatus.setText(status_value_name)
+        self.lblPreferredEasementsStatusValue.setText(status_value_name)
         self.lblWaterPipesValue.setText(water_layer_name)
         self.lblSewerPipesValue.setText(sewer_layer_name)
         self.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)

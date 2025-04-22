@@ -62,14 +62,14 @@ class SetupConrtacts:
             elif i > 0:
                 selected_types_text += ', '
             selected_types_text += item
-        label = self.lblPreferredContractsTypes_value
+        label = self.lblPreferredContractsTypesValue
         label.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         label.setAlignment(Qt.AlignBottom | Qt.AlignLeft)
 
         SettingsDataSaveAndLoad.save_contract_settings(self, selected_types_text, status_value_name, status_value_ids)
 
         label.setText(selected_types_text)
-        self.lbl_preferred_contract_status.setText(status_value_name)
+        self.lblPreferredContractStatusValue.setText(status_value_name)
 
         text = edu.salvestatud
         heading = pealkiri.tubli
