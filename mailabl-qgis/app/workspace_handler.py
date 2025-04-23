@@ -8,6 +8,7 @@ from ..Functions.Easements.Easements import EasementssMain
 from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ..config.SetupModules.SetupEasments import SetupEasments
 from .MainMenuController import SetupController, MenuModules
 from ..utils.ComboboxHelper import ComboBoxHelper
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
@@ -166,6 +167,10 @@ class WorkSpaceHandler:
         self.swWorkSpace.setCurrentIndex(menu_module)
         res = WorkSpaceHandler.check_if_settings_are_set(self,menu_module)
         if res is False:
+            setupEasments = SetupEasments(self)
+            setupEasments.load_easements_settings_widget()
+            button.setEnabled(True)
+            button.blockSignals(False)
             return
 
         table = self.tweasementView
