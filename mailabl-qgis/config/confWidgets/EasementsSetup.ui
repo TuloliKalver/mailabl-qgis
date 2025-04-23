@@ -895,9 +895,6 @@ QTableView::item:disabled {
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QComboBox" name="cmbPreferedTypes"/>
-            </item>
            </layout>
           </widget>
          </item>

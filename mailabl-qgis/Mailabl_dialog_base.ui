@@ -1316,7 +1316,7 @@ QProgressBar::chunk {
                   <item>
                    <widget class="QPushButton" name="pushButton">
                     <property name="text">
-                     <string>Testi Arhiiv kihi eemaldamist</string>
+                     <string>Tühjenda uued seaded</string>
                     </property>
                    </widget>
                   </item>
@@ -4526,7 +4526,7 @@ p, li { white-space: pre-wrap; }
                       <property name="geometry">
                        <rect>
                         <x>0</x>
-                        <y>-409</y>
+                        <y>-219</y>
                         <width>914</width>
                         <height>1124</height>
                        </rect>
