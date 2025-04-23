@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
+    <width>700</width>
     <height>200</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>900</width>
+    <width>700</width>
     <height>200</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>900</width>
+    <width>700</width>
     <height>200</height>
    </size>
   </property>
@@ -39,17 +39,27 @@
    <string>Lepingute seaded</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-/* ====================================================== */
-/* 🎨 Global Theme - Base Colors, Background &amp; Typography */
-/* ====================================================== */
-* {
+   <string notr="true">* {
     border: transparent;
-    background-color: #1d252b; /* Updated background */
+    boreder-radius: 10px;
+	background-color: rgba(29, 37, 43, 0.78);  /* 10% transparency */
     padding: 0;
     margin: 0;
-    color: #c5c5d2; /* Default light gray text */
+    color: #ececf1; /* Brighter default text */
 }
+
+#FrameMain{
+    border-radius: 10px;
+	border: 1px solid #4d4d4d;
+	background-color: rgba(29, 37, 43, 0.89);  /* 10% transparency */
+}
+
+
+QLabel, QFrame{
+	background: None;
+	}
+
+
 
 
 /* ------------------------------------------------------ */
@@ -81,9 +91,9 @@ QLineEdit:focus, QTextEdit:focus, QComboBox:focus,   QTabBar::tab:selected {
 QLineEdit {
     background-color: #303a42;   /* Matches the global dark background */
     color: #c5c5d2;              /* Default light gray text */
-    border: 1px solid #4d4d4d;   /* Subtle default border */
+    border: 1px solid #6f7f87;
     border-radius: 4px;          /* Rounded corners for a smooth look */
-    padding: 6px;                /* Adequate padding for text clarity */
+    padding: 4px;                /* Adequate padding for text clarity */
 }
 
 /* 
@@ -199,58 +209,6 @@ QPushButton:focus{
 }
 
 
-/* General QCheckBox styles */
-QCheckBox {
-    color: #ececf1; /* Text color */
-    spacing: 5px; /* Space between checkbox and text */
-}
-
-/* Style the indicator (checkbox) */
-QCheckBox::indicator {
-    width: 12px;
-    height: 12px;
-    background-color: #40414f; /* Background color for unchecked state */
-    border: 1px solid #565869; /* Border for unchecked state */
-    border-radius: 3px;
-}
-
-/* Style the indicator when checked */
-QCheckBox::indicator:checked {
-    background-color: rgba(70, 70, 85, 0.5); /* Semi-transparent gray background color for checked state */
-    border: 1px solid #acacbe;
-    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
-}
-
-/* Style the indicator when unchecked */
-QCheckBox::indicator:unchecked {
-    background-color: #40414f; /* Background color for unchecked state */
-    border: 1px solid #565869; /* Border for unchecked state */
-}
-
-/* Style the indicator when hovered */
-QCheckBox::indicator:hover {
-    background-color: #565869;
-}
-
-/* Style the indicator when disabled */
-QCheckBox::indicator:disabled {
-    background-color: #30303a; /* Darker background color for disabled state */
-    border: 1px solid #40414f; /* Darker border for disabled state */
-}
-
-/* Style the indicator when checked and disabled */
-QCheckBox::indicator:checked:disabled {
-    background-color: rgba(50, 50, 60, 0.5); /* Semi-transparent darker gray background color for checked and disabled state */
-    border: 1px solid #40414f;
-    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;); /* Using QGIS built-in icon */
-    opacity: 0.5; /* Make the icon appear disabled */
-}
-
-/* Style the checkbox text when disabled */
-QCheckBox:disabled {
-    color: #6a6a75; /* Darker text color for disabled state */
-}
-
 /* ══════════════════════════════════════════════════════ */
 /*                 ✅ QCheckBox Styling                   */
 /* ══════════════════════════════════════════════════════ */
@@ -258,41 +216,51 @@ QCheckBox:disabled {
 QCheckBox {
     color: #d1d1e0;
     spacing: 5px;
-    font-size: 14px;
+    font-size: 12px;
+	 background: transparent; /* This removes any background */
 }
 
-/* Base indicator styling */
+/* Default indicator box */
 QCheckBox::indicator {
     width: 16px;
     height: 16px;
+    background-color: #40414f;
     border: 1px solid #1f5d5c;
     border-radius: 3px;
-    background: #597278
 }
 
-/* Hover effect for indicator */
+/* Hovered box */
 QCheckBox::indicator:hover {
     border: 1px solid #0b4544;
+    background-color: #565869;
 }
 
-/* Checked state with a custom image for the check mark */
+/* Checked state */
 QCheckBox::indicator:checked {
-    background: rgb(9,144,143);
+    background-color: rgb(9, 144, 143);
     border: 1px solid #565869;
+    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;);
 }
 
+/* Checked + Hover */
+QCheckBox::indicator:checked:hover {
+    background-color: rgba(9, 144, 143, 0.8);
+    border: 1px solid #acacbe;
+}
 
-/* ⚫ Disabled State - More Noticeable */
+/* Disabled */
+QCheckBox:disabled {
+    color: #6a6a75;
+}
 QCheckBox::indicator:disabled {
-    background-color: #1d252b;
-    border: 1px dashed rgba(120, 120, 130, 0.5); /* **Dashed, faded border** */
-    color: rgba(170, 170, 180, 0.5); /* **Faded text color** */
-    opacity: 0.5; /* **Lower opacity to indicate inactive state** */
+    background-color: #2c2c35;
+    border: 1px dashed rgba(120, 120, 130, 0.5);
 }
-
-
-QGroupBox{
-	color: #ececf1;
+QCheckBox::indicator:checked:disabled {
+    background-color: rgba(50, 50, 60, 0.5);
+    border: 1px solid #40414f;
+    image: url(&quot;:/images/themes/default/algorithms/mAlgorithmCheckGeometry.svg&quot;);
+    opacity: 0.5;
 }
 
 
@@ -303,9 +271,9 @@ QGroupBox{
 QComboBox {
     background-color: #2e2f38;
     color: #c5c5d2;
-    border: 1px solid #565869;
-    border-radius: 3px;
-    padding-left: 5px;
+	border: 1px solid #7b8a95;    
+	border-radius: 4px;
+    padding: 4px;
 }
 
 QComboBox::drop-down {
@@ -389,292 +357,18 @@ QComboBox:disabled {
 }
 
 
-
-
-/* ══════════════════════════════════════════════════════ */
-/* 🧭 Global Vertical ScrollBar - Core UI Scroll Styling  */
-/* ══════════════════════════════════════════════════════ */
-
-QScrollBar:vertical {
-    border: none;
-    background: #2e2f38;  /* Match background color */
-    width: 8px;
-    margin: 0px;  /* Remove spacing */
-    border-radius: 4px;
-}
-
-QScrollBar::handle:vertical {
-    background-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
-        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 255), stop:1 rgba(46, 47, 56, 253));
-    min-height: 25px;
-    border-radius: 4px;
-}
-
-QScrollBar::handle:vertical:hover {
-    background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:1.24, 
-        fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 255), stop:0.920455 rgba(46, 47, 56, 253));
-}
-
-/* Hide Up/Down Buttons */
-QScrollBar::add-line:vertical, 
-QScrollBar::sub-line:vertical {
-    background: none;
-    height: 0px;
-}
-
-/* Make the unused track area blend with background */
-QScrollBar::add-page:vertical, 
-QScrollBar::sub-page:vertical {
-    background: #2e2f38;
-}
-
-/* ════════════════════════════════════════════════════════ */
-/* 🧭 Global Horisontal ScrollBar - Core UI Scroll Styling  */
-/* ════════════════════════════════════════════════════════ */
-
-
-QScrollBar:horizontal {
-    border: none;
-    background: #2e2f38;  /* Match background color */
-    height: 8px;
-    margin: 0px;
-    border-radius: 4px;
-}
-
-QScrollBar::handle:horizontal {
-    background-color: qradialgradient(spread:pad, cx:1, cy:0.728, radius:0.826, 
-        fx:0.498455, fy:0.95, stop:0.125 rgba(9, 144, 143, 255), stop:1 rgba(46, 47, 56, 253));
-    min-width: 25px;
-    border-radius: 4px;
-}
-
-QScrollBar::handle:horizontal:hover {
-    background-color: qradialgradient(spread:pad, cx:1, cy:0.995, radius:1.24, 
-        fx:1, fy:0.988, stop:0 rgba(9, 144, 143, 255), stop:0.920455 rgba(46, 47, 56, 253));
-}
-
-/* Hide Left/Right Buttons */
-QScrollBar::add-line:horizontal, 
-QScrollBar::sub-line:horizontal {
-    background: none;
-    width: 0px;
-}
-
-/* Make the unused track area blend with background */
-QScrollBar::add-page:horizontal, 
-QScrollBar::sub-page:horizontal {
-    background: #2e2f38;
+#dragFrame {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: rgba(9, 144, 143, 1.0);
+    cursor: move;
+    color: #ececf1; /* Brighter default text */
 }
 
 
-/* ====================================================== */
-/* 📊 QTableView - Layout, Colors, and Interaction Styles */
-/* ====================================================== */
-
-QTableView {
-    background-color: #2e2f38; /* Consistent dark gray base */
-    border: 1px solid #4d4d4d;
-    border-radius: 5px;
-    gridline-color: #565869;
-    /* Updated selection gradient using teal accent */
-    selection-background-color: qlineargradient(
-        x1: 0, y1: 0, x2: 0, y2: 1,
-        stop: 0 rgba(9,144,143,10),
-        stop: 1 rgba(9,144,143,50)
-    );
-    selection-color: #ececf1;
-}
-
-
-/* Adjust header style with white text */
-QHeaderView::section {
-    background-color: #35353f;
-    color: #ececf1; 
-    border-top: 0.5px solid #323232;
-    border-left: 0.5px solid #323232;
-    border-right: 0.5px solid #323232;
-    border-bottom: 1px solid #4d4d4d;
-    padding: 1px 3px;
-    font-size: 12px;
-}
-
-/* Entire table disabled state */
-QTableView:disabled {
-    background-color: rgba(30,30,35,180);
-    color: rgba(150,150,160,120);
-    border: 1px solid rgba(100,100,110,80);
-    gridline-color: rgba(80,80,90,80);
-    cursor: not-allowed;
-}
-
-/* Make headers look disabled */
-QTableView:disabled QHeaderView::section {
-    background-color: rgba(50,50,58,150);
-    
-    border-bottom: 1px solid rgba(80,80,90,100);
-}
-
-/* Remove focus outline when disabled */
-QTableView:disabled:focus {
-    outline: none;
-}
-
-/* Corner widget (where row/column headers meet) */
-QTableCornerButton::section {
-    background: #35353f;
-    border: 1px solid #4d4d4d;
-}
-
-/* Disabled corner styling */
-QTableView:disabled QTableCornerButton::section {
-    background: rgba(50,50,58,150);
-    border: 1px solid rgba(80,80,90,100);
-}
-
-/* Disable selection effect when the table is disabled */
-QTableView:disabled QTableView::item:selected {
-    background-color: rgba(50,50,58,100);
-    color: rgba(150,150,160,100);
-}
-
-/* Hovered rows for better contrast */
-QTableView::item:hover {
-    background-color: #3a3f4b;
-    color: #ececf1;
-    min-height: 16px;  /* Decreased row height */
-}
-
-/* Selected rows using the same teal gradient as QTableView selection */
-QTableView::item:selected {
-    background-color: qlineargradient(
-        x1: 0, y1: 0, x2: 0, y2: 1,
-        stop: 0 rgba(9,144,143,10),
-        stop: 1 rgba(9,144,143,50)
-    );
-    /*color: #ececf1;*/
-    min-height: 16px;  /* Decreased row height */
-}
-
-/* Non-selected rows with a subtle gradient for depth */
-QTableView::item {
-    background-color: qlineargradient(
-        x1: 0, y1: 0, x2: 0, y2: 1,
-        stop: 0 rgba(46,47,56,25),
-        stop: 1 rgba(46,47,56,255)
-    );
-    color: #d1d1e0;
-    min-height: 16px;  /* Decreased row height */
-}
-
-/* Ensure deselected rows return to their default style */
-QTableView::item:!selected {
-    background-color: qlineargradient(
-        x1: 0, y1: 0, x2: 0, y2: 1,
-        stop: 0 rgba(46,47,56,25),
-        stop: 1 rgba(46,47,56,255)
-    );
-    color: #d1d1e0;
-    min-height: 16px;  /* Decreased row height */
-}
-
-/* Disabled item styling */
-QTableView::item:disabled {
-    background-color: rgba(50,50,58,100);
-    color: rgba(150,150,160,100);
-    font-style: italic;
-    border: 1px dashed rgba(100,100,110,80);
-    min-height: 16px;  /* Decreased row height */
-}
-
-
-
-
-
-/* ====================================================== */
-/* 🧩 Targeted UI Elements - ID-Based Custom Styling      */
-/* ====================================================== */
-
-#Sevituudid{
-    background-color: #343b47;
-}
-
-#leftMenuContainer {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #202123, stop:1 #18191d);
-    border-right: 1px solid #3a3a3a;
-    padding-right: 2px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-#rightFrame {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #202123, stop:1 #18191d);
-    border-left: 1px solid #3a3a3a;
-    padding-lef: 2px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-#SetupLayers, #SetupLayers_2, #SetupUserData {
-border: none;
-border-bottom: 1px solid rgb(131, 142, 162);
-}
-
-#UC_Main_Frame QPushButton,#pbChoose_Properties_for_Projects{
-	padding: 1px 8px;
-    border-radiusr: 6px;
-}
-
-#UC_Main_Frame QPushButton:hover{
-
-	padding: 1px 8px;
-    border-radius: 6px;
-}
-
-
-#wOl_Settings QPushButton{
-	padding: 1px 8px;
-    border-radius: 6px;
-}
-
-#wOl_Settings QPushButton:hover{
-	padding: 1px 8px;
-    border-radius: 6px;
-}
-
-#rightMenuContainer QPushButton{
-	text-align: right;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
-    
-}
-
-#rightMenuContainer QPushButton:hover{
-    text-align: right;
-    border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;  
-}
-
-
-#leftMenuContainer QPushButton{
-	text-align: left;
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;	
-}
-#leftMenuContainer QPushButton:hover{
-    text-align: left;
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
-
-}
-
-#MailablDialogBase{
-    border: 1px solid #4d4d4d;
-	border-top-left-radius: 7px;     /* Rounded top-left corner */
-    border-top-right-radius: 7px;    /* Rounded top-right corner */
-    border-right-radius: 7px;        /* No rounding on right side */
-    border-left-radius: 7px;    
-	background: None;  /* 10% transparency */
-}</string>
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -693,7 +387,7 @@ border-bottom: 1px solid rgb(131, 142, 162);
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="fContent">
+    <widget class="QFrame" name="FrameMain">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -706,308 +400,81 @@ border-bottom: 1px solid rgb(131, 142, 162);
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <item>
-       <widget class="QFrame" name="fSettingsMain">
+       <widget class="QFrame" name="dragFrame">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>1000000</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
          <property name="spacing">
-          <number>10</number>
+          <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>10</number>
+          <number>20</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>10</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
-          <widget class="QFrame" name="fSettingsPreferrences">
-           <property name="styleSheet">
-            <string notr="true"/>
+          <widget class="QLabel" name="lblTitle">
+           <property name="text">
+            <string>Title</string>
            </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <property name="spacing">
-             <number>5</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>5</number>
-            </property>
-            <item>
-             <widget class="QFrame" name="f_Main_5">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
-               <property name="spacing">
-                <number>10</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item alignment="Qt::AlignLeft">
-                <widget class="QLabel" name="lblCurrect_Cadastral_3">
-                 <property name="font">
-                  <font>
-                   <family>Tahoma</family>
-                   <pointsize>10</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Eelistatud staatus</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="cmbPreferredContractStatuses">
-                 <property name="baseSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                  </font>
-                 </property>
-                 <property name="sizeAdjustPolicy">
-                  <enum>QComboBox::AdjustToContents</enum>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>6</width>
-                   <height>6</height>
-                  </size>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="f_Main_4">
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <property name="spacing">
-                <number>10</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item alignment="Qt::AlignLeft">
-                <widget class="QLabel" name="lblPreferedContractTypes_2">
-                 <property name="font">
-                  <font>
-                   <family>Tahoma</family>
-                   <pointsize>10</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Eelistatud lepingu liik</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QgsCheckableComboBox" name="cbcb_PreferredContractTypes"/>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QFrame" name="f_Buttons">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <property name="spacing">
-             <number>10</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>10</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>411</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pbCancel">
-              <property name="text">
-               <string>Tühista</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>../../icons/Icons_hele/x-circle.svg</normaloff>../../icons/Icons_hele/x-circle.svg</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pbSave">
-              <property name="font">
-               <font>
-                <family>Tahoma</family>
-               </font>
-              </property>
-              <property name="text">
-               <string>Salvesta</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>../../icons/Icons_hele/save.svg</normaloff>../../icons/Icons_hele/save.svg</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>18</width>
-                <height>18</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item>
-       <widget class="QFrame" name="fHelpMenu">
+       <widget class="QFrame" name="f_Main_5">
         <property name="minimumSize">
          <size>
-          <width>200</width>
+          <width>500</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>200</width>
+          <width>500</width>
           <height>16777215</height>
          </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -1015,15 +482,15 @@ border-bottom: 1px solid rgb(131, 142, 162);
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_10">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
-          <number>5</number>
+          <number>10</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>5</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -1031,35 +498,207 @@ border-bottom: 1px solid rgb(131, 142, 162);
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QLabel" name="label_2">
+         <item alignment="Qt::AlignRight">
+          <widget class="QLabel" name="lblCurrect_Cadastral_3">
            <property name="font">
             <font>
+             <family>Tahoma</family>
              <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
             </font>
            </property>
            <property name="text">
-            <string>Seadete selgitused</string>
+            <string>Eelistatud staatus</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QTextEdit" name="textEdit">
+          <widget class="QComboBox" name="cmbPreferredContractStatuses">
+           <property name="baseSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
             </font>
            </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Eelistatud staatus&lt;/span&gt;&lt;br /&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Saad teha valiku, millise staatusega lepinguid lehe avamisel kuvatakse.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Eelistatud lepingu liigid&lt;/span&gt;&lt;br /&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Saad teha valiku, milliste liikidega lepinguid lehe avamisel kuvatakse.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToContents</enum>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>6</width>
+             <height>6</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="f_Main_4">
+        <property name="minimumSize">
+         <size>
+          <width>500</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>500</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item alignment="Qt::AlignRight">
+          <widget class="QLabel" name="lblPreferedContractTypes_2">
+           <property name="font">
+            <font>
+             <family>Tahoma</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Eelistatud lepingu liik</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QgsCheckableComboBox" name="cbcb_PreferredContractTypes">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QFrame" name="f_Buttons">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>50</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>411</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbCancel">
+           <property name="text">
+            <string>Tühista</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../icons/Icons_hele/x-circle.svg</normaloff>../../icons/Icons_hele/x-circle.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbSave">
+           <property name="font">
+            <font>
+             <family>Tahoma</family>
+            </font>
+           </property>
+           <property name="text">
+            <string>Salvesta</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../icons/Icons_hele/save.svg</normaloff>../../icons/Icons_hele/save.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>18</width>
+             <height>18</height>
+            </size>
            </property>
           </widget>
          </item>

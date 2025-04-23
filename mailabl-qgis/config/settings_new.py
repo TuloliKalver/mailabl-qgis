@@ -20,6 +20,7 @@ class PluginSettings:
     SEWER = "sewer"
     PRESSURE_SEWER = "pressureSewer"
     DRAINAGE = "drainage"
+    PROJECTS_LAYER = "projects"
 
     #Sample name logicks 
     #/Mailabl/Setting/labels/specification/preferred/status/names
@@ -89,7 +90,12 @@ class SettingsBuilder:
     keys = {
         PluginSettings.OPTION_STATUS: [PluginSettings.SUB_CONTEXT_NAME, PluginSettings.SUB_CONTEXT_IDs],
         PluginSettings.OPTION_TYPE: [PluginSettings.SUB_CONTEXT_NAME, PluginSettings.SUB_CONTEXT_IDs],
-        PluginSettings.OPTION_LAYER: [PluginSettings.WATER, PluginSettings.SEWER, PluginSettings.PRESSURE_SEWER, PluginSettings.DRAINAGE],
+        PluginSettings.OPTION_LAYER: [PluginSettings.WATER, 
+                                      PluginSettings.SEWER, 
+                                      PluginSettings.PRESSURE_SEWER, 
+                                      PluginSettings.DRAINAGE,
+                                      PluginSettings.PROJECTS_LAYER
+                                      ],
         PluginSettings.CONTEXT_FOLDER: [PluginSettings.SUB_CONTEXT_PATH]
     }
 

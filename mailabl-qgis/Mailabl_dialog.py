@@ -142,6 +142,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.smbc = SettingsModuleButtonConnector(self)
 
         setupEasments = SetupEasments(self)
+        setupContracts = SetupConrtacts(self)
+        setupProjects = SetupProjects(self)
+
 
         UI = UIStateManager(self)
         loader = SHPLayerLoader(self)
@@ -237,8 +240,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 
         #Setting workspace buttons and functions
         self.pbLayerSettings.clicked.connect(self.layer_setup)
-        self.pbSettings_Setup_Projects.clicked.connect(lambda: SetupProjects.load_project_settings_widget(self))
-        self.pbSettings_Setup_Contracts.clicked.connect(lambda: SetupConrtacts.load_contract_settings_widget(self))
+        self.pbSettings_Setup_Projects.clicked.connect(lambda: setupProjects.load_project_settings_widget())
+        self.pbSettings_Setup_Contracts.clicked.connect(lambda: setupContracts.load_contract_settings_widget())
         self.pbSettingsSetupEasements.clicked.connect(lambda:setupEasments.load_easements_settings_widget())
         self.pbUserSettings.clicked.connect(lambda: SetupUsers.load_user_settings_widget(self))
 

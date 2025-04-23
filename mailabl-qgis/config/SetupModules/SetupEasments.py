@@ -3,8 +3,9 @@ from PyQt5.QtCore import QPropertyAnimation
 from PyQt5.uic import loadUi
 from types import MethodType
 from PyQt5.QtWidgets import (
-    QDialog, QFrame,QListView,  QAbstractItemView
+    QDialog, QFrame
     )
+
 
 from ...KeelelisedMuutujad.modules import Module
 from ...utils.ComboBoxHelperX import ComboBoxTools
@@ -31,9 +32,9 @@ class SetupEasments:
     def __init__(self, parent) -> None:
         self.dialog = parent
 
-        pass
     def load_easements_settings_widget(self):
-
+        
+        module = Module.EASEMENT
         ui_file_path = Filepaths.get_conf_widget(FilesByNames().easements_setup_ui)
         widget = loadUi(ui_file_path)
 
@@ -55,8 +56,6 @@ class SetupEasments:
                                                         style=AnimatedGradientBorderFrame.MODERN)
         )
 
-
-
         # 🔄 Promote dragFrame to custom draggable logic
         drag_frame = widget.dragFrame
         if drag_frame:
@@ -67,7 +66,7 @@ class SetupEasments:
             drag_frame.setCursor(Qt.OpenHandCursor)
 
 
-        module = Module.EASEMENT
+
 
         water_layer_name = PluginSettings.load_setting(
             module=Module.EASEMENT,
@@ -97,8 +96,6 @@ class SetupEasments:
             key_type=PluginSettings.DRAINAGE
         )
 
-
-
         QGIS_items.clear_and_add_layerNames_selected(widget.cbWater_Pipes, water_layer_name)
         QGIS_items.clear_and_add_layerNames_selected(widget.cbSewer_pipes, sewer_layer_name)
         QGIS_items.clear_and_add_layerNames_selected(widget.cbSewer_Pressure_pipes, pressure_sewer_layer_name)
@@ -120,7 +117,6 @@ class SetupEasments:
             preferred_items=True
         )
 
-
         # Connect buttons to dialog accept/reject
         widget.pbSave.clicked.connect(lambda: SetupEasments._handle_save(widget))
         widget.pbCancel.clicked.connect(lambda: SetupEasments._handle_cancel(widget))
@@ -138,9 +134,6 @@ class SetupEasments:
             status_name = GetValuesFromComboBox._get_selected_name_from_combobox(widget.cmbPreferredEasementStatuses)
             status_ids = GetValuesFromComboBox._get_selected_id_from_combobox(widget.cmbPreferredEasementStatuses)
 
-
-            print(f"status name: {status_name}")
-            print(f"status ids: {status_ids}")
 
             types_names = widget.cbcb_PreferredEasementTypes.checkedItems()
             types_ids = []
@@ -169,8 +162,6 @@ class SetupEasments:
         else:
             widget.setAttribute(Qt.WA_DeleteOnClose)
             return None
-
-
 
 
     def save_easements_settings(self, type_names, types_ids, status_name, status_ids, water_layer_name, sewer_layer_name, pressure_sewer_layer_name, drainage_layer_name):

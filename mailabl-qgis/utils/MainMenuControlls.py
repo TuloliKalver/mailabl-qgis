@@ -16,7 +16,7 @@ class MainMenuControlls:
 
         # Map buttons to actions
         self.MenuButtons = {
-            self.pbHome: lambda: WorkSpaceHandler.swWorkSpace_Home(self.dialog),
+            self.pbHome: lambda: WorkSpaceHandler.swWorkSpace_Properties(self.dialog),
             self.pbProjects: lambda: WorkSpaceHandler.swWorkspace_Projects(self.dialog),
             self.pbContracts: lambda: WorkSpaceHandler.swWorkSpace_Contracts(self.dialog),
             self.pbeasements: lambda: WorkSpaceHandler.swWorkSpace_Easements(self.dialog),

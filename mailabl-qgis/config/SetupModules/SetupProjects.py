@@ -1,16 +1,25 @@
+import re
+from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QPropertyAnimation
+from PyQt5.uic import loadUi
+from types import MethodType
+from PyQt5.QtWidgets import (
+    QDialog, QFrame
+    )
+from PyQt5.QtGui import QIcon
+
+
+
 from ...KeelelisedMuutujad.modules import Module
 from ...config.SetupModules.SetupMainLayers import QGIS_items
-from ...config.settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad
+from ...config.settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad, StartupSettingsLoader
 from ...utils.ComboboxHelper import GetValuesFromComboBox
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...utils.ComboboxHelper import ComboBoxHelper
 from ...utils.messagesHelper import ModernMessageDialog
-
-from PyQt5.QtGui import QIcon
-from PyQt5.uic import loadUi
-
-
-import re
+from ...app.MainMenuController import SetupController
+from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
+from ...config.settings_new import PluginSettings
 
 
 pealkiri = Headings()
@@ -20,37 +29,75 @@ combo_handler = ComboBoxHelper()
 
 
 class SetupProjects:
+
+    def __init__(self, parent) -> None:
+        self.dialog = parent
     def load_project_settings_widget(self):
         module = Module.PROJECT
         ui_file_path = Filepaths.get_conf_widget(FilesByNames().projects_setup_ui)
         widget = loadUi(ui_file_path)
+
+        widget.lblTitle.setText("Servituutide mooduli seadistamine...")
+
+        widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
+        widget.setAttribute(Qt.WA_TranslucentBackground)
+
+        animation = QPropertyAnimation(widget, b"windowOpacity")
+        animation.setDuration(300)
+        animation.setStartValue(0.0)
+        animation.setEndValue(1.0)
+        animation.start()
+
+        SetupProjects.replace_frame(
+            widget, 
+            "FrameMain", 
+            lambda parent: AnimatedGradientBorderFrame(parent,
+                                                        style=AnimatedGradientBorderFrame.MODERN)
+        )
+
+        # 🔄 Promote dragFrame to custom draggable logic
+        drag_frame = widget.dragFrame
+        if drag_frame:
+            # Inject drag behavior via method patching
+            drag_frame.mousePressEvent = MethodType(DraggableFrame.mousePressEvent, drag_frame)
+            drag_frame.mouseMoveEvent = MethodType(DraggableFrame.mouseMoveEvent, drag_frame)
+            drag_frame._drag_pos = None
+            drag_frame.setCursor(Qt.OpenHandCursor)
+
         save_button = widget.pbSave
         cancel_button = widget.pbCancel
-
-        widget.show()
+        lblProjectsFolderValue = widget.leProjectsFolder_location
+        lblProjectsTargetFolderValue = widget.leProjectsTargetFolder_location
 
         widget.lblPhtoslabel.setEnabled(False)
         widget.lePhotos.setEnabled(False)
 
+
+        projects_layer_name = PluginSettings.load_setting(
+            module=Module.PROJECT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.PROJECTS_LAYER
+        )
+
         cmb_layers  = widget.cmbProjects_Layer
-        QGIS_items.clear_and_add_layerNames(cmb_layers)
+        QGIS_items.clear_and_add_layerNames_selected(cmb_layers, projects_layer_name)
+
 
         statuses_combo_box = widget.cmbPreferred_Project_status
         combo_handler.populate_comboBox_smart(
             comboBox=statuses_combo_box,
             module=module,
             context=self,
-            preferred_items=True
+            preferred_items=False
         )
 
         copy_folder_path = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
         if copy_folder_path:
-            lblProjectsFolderValue = widget.leProjectsFolder_location
             lblProjectsFolderValue.setText(copy_folder_path)
 
         target_folder_path = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
         if target_folder_path:
-            lblProjectsTargetFolderValue = widget.leProjectsTargetFolder_location
             lblProjectsTargetFolderValue.setText(target_folder_path)
 
         folder_structure_text = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
@@ -89,51 +136,59 @@ class SetupProjects:
         reset_button.clicked.connect(lambda: SetupProjects.reset_setup_of_folder_setup(widget))
 
         # Connect signals to functions
-        save_button.clicked.connect(lambda: SetupProjects.on_save_button_clicked(self, widget, cmb_layers, statuses_combo_box))
-        cancel_button.clicked.connect(lambda: SetupProjects.on_cancel_button_clicked(self, widget))
-    def on_save_button_clicked(self, widget, cmb_layers, combo_box):
-        # Handle logic when the save button is clicked
-        lblLayerProjectsValue = self.lblLayerProjectsValue # pylint: disable=no-member
-        lblMainLayerValue = self.lblMainLayerValue # pylint: disable=no-member
-        lblMainTargetLayerValue = self.lblMainTargetLayerValue # pylint: disable=no-member
-        project_status_label = self.lblPreferredProjectStatusValue
-        lblSHPLayerValue = self.lblSHPLayerValue # pylint: disable=no-member
-        lblProjectsTargetFolderValue = self.lblProjectsTargetFolderValue
-        lblProjectsFolderValue = self.lblProjectsFolderValue
-        lblPreferredProjectStatusValue = self.lblPreferredProjectStatusValue
-        input_value = widget.leProjectsFolder_location
-        target_value = widget.leProjectsTargetFolder_location
-        lblPreferredContractStatusValue = self.lblPreferredContractStatusValue
-        lblPreferredContractsTypesValue = self.lblPreferredContractsTypesValue
-        lblPreferredFolderNameValue = self.lblPreferredFolderNameValue
+        save_button.clicked.connect(lambda: SetupProjects._handle_save(widget))
+        cancel_button.clicked.connect(lambda: SetupProjects._handle_cancel(widget))
+
+        result = widget.exec_()
+        if result == QDialog.Accepted:
+            # Handle logic when the save button is clicked
+            #lblProjectsTargetFolderValue = self.lblProjectsTargetFolderValue
+            #lblProjectsFolderValue = self.lblProjectsFolderValue
+            #lblPreferredFolderNameValue = self.lblPreferredFolderNameValue
 
 
+            status_ids = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
+            status_name = GetValuesFromComboBox._get_selected_name_from_combobox(statuses_combo_box)
+            layer_name = GetValuesFromComboBox._get_selected_name_from_combobox(cmb_layers)
 
-        status_value_id = GetValuesFromComboBox._get_selected_id_from_combobox(combo_box)
-        status_value_name = GetValuesFromComboBox._get_selected_name_from_combobox(combo_box)
-        SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value_id, status_value_name, project_status_label)
-        prefered_folder_name_structure = widget.lblPreferedFolderNamStructure.text()
-        SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, prefered_folder_name_structure)
-        lblPreferredFolderNameValue.setText(prefered_folder_name_structure)
-        SettingsDataSaveAndLoad.on_save_button_clicked_projects(self, cmb_layers, lblProjectsTargetFolderValue,
-                                                                lblProjectsFolderValue, target_value,
-                                                                input_value)
-        SettingsDataSaveAndLoad.startup_label_loader(self,lblMainLayerValue,lblMainTargetLayerValue,lblSHPLayerValue,
-                              lblLayerProjectsValue, lblProjectsFolderValue, lblProjectsTargetFolderValue,
-                              lblPreferredProjectStatusValue, lblPreferredContractStatusValue,
-                              lblPreferredContractsTypesValue)
-        text = edu.salvestatud
-        heading = pealkiri.tubli
-        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
-        # Additional logic if needed
+            prefered_folder_name_structure = widget.lblPreferedFolderNamStructure.text()
+            SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, prefered_folder_name_structure)
+            #lblPreferredFolderNameValue.setText(prefered_folder_name_structure)
+            
+            copy_folder = widget.leProjectsFolder_location.text()
+            target_folder = widget.leProjectsTargetFolder_location.text()
+            
+            SettingsDataSaveAndLoad.save_FolderValues(self,lblProjectsFolderValue, lblProjectsTargetFolderValue, copy_folder, target_folder)
 
-        widget.accept()  # Close the dialog
-    def on_cancel_button_clicked(self, widget):
-        # Handle logic when the cancel button is clicked
-        text = sisu.kasutaja_peatas_protsessi
-        heading = pealkiri.warningSimple
-        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
-        widget.reject()  # Close the dialog        
+            
+            self.save_projects_settings(
+                        status_name,
+                        status_ids,
+                        layer_name
+                        )
+            
+            controller = SetupController(self.dialog)
+            controller.check_all_modules()
+
+            widget.setAttribute(Qt.WA_DeleteOnClose)
+            text = edu.salvestatud
+            heading = pealkiri.tubli
+            ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
+            # Additional logic if needed
+
+            return True
+        else:
+            widget.setAttribute(Qt.WA_DeleteOnClose)
+            return None
+
+            
+            
+            
+            
+            
+            
+
+
     def addSelectedItem(widget):
         combo_box_name = widget.cmbNameElements
         label_prefered_name = widget.lblPreferedFolderNamStructure
@@ -230,3 +285,84 @@ class SetupProjects:
                 line_edit.setVisible(True)
             else:
                 line_edit.setVisible(False)
+
+
+
+    def save_projects_settings(self,
+                        status_name,
+                        status_ids,
+                        layer_name
+                        ):
+        module = Module.PROJECT
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_IDs,
+            value = status_ids
+            )
+
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            value = status_name
+            )
+
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.PROJECTS_LAYER,
+            value = layer_name
+        )
+
+        StartupSettingsLoader.startup_label_loader(self)
+
+
+
+
+    @staticmethod
+    def replace_frame(widget, old_name: str, new_frame_cls: type, *args, **kwargs) -> QFrame:
+        old = widget.findChild(QFrame, old_name)
+        if old is None:
+            raise ValueError(f"Could not find frame named '{old_name}'.")
+
+        layout = old.parentWidget().layout()
+        index = layout.indexOf(old)
+        layout.removeWidget(old)
+        old.deleteLater()
+
+        new_frame = new_frame_cls(widget, *args, **kwargs)
+        new_frame.setObjectName(old_name)
+        new_frame.setLayout(old.layout())  # reuse inner layout if needed
+        layout.insertWidget(index, new_frame)
+        return new_frame
+
+
+
+    @staticmethod
+    def _handle_save(dialog):
+        dialog.accept()
+
+    @staticmethod
+    def _handle_cancel(dialog):
+        dialog.reject()
+
+
+class DraggableFrame(QFrame):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._drag_pos = None
+        self.setCursor(Qt.OpenHandCursor)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self._drag_pos = event.globalPos() - self.window().frameGeometry().topLeft()
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() & Qt.LeftButton and self._drag_pos:
+            self.window().move(event.globalPos() - self._drag_pos)
+            event.accept()

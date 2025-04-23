@@ -9,6 +9,8 @@ from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..config.SetupModules.SetupEasments import SetupEasments
+from ..config.SetupModules.SetupConrtacts import SetupConrtacts
+from ..config.SetupModules.SetupProjects import SetupProjects
 from .MainMenuController import SetupController, MenuModules
 from ..utils.ComboboxHelper import ComboBoxHelper
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
@@ -49,13 +51,17 @@ class WorkSpaceHandler:
     def swWorkspace_Projects(self):
         module = Module.PROJECT
         menu_module = MenuModules.PROJECTS
+        button = self.pbProjects
+        button.blockSignals(True)
         self.swWorkSpace.setCurrentIndex(menu_module)
         res = WorkSpaceHandler.check_if_settings_are_set(self,menu_module)
         if res is False:
+            setup = SetupProjects(self)
+            setup.load_project_settings_widget()
+            button.setEnabled(True)
+            button.blockSignals(False)
             return
     
-        button = self.pbProjects
-        button.blockSignals(True)
         table = self.tblMailabl_projects
         model = table.model()
         if model:
@@ -64,18 +70,18 @@ class WorkSpaceHandler:
 
         combo_handler = ComboBoxHelper()
 
-        combo_box = self.cmbProjectStatuses
-        selected_status = combo_handler.populate_comboBox_smart(
-            comboBox=combo_box,
+        statuses_combo_box = self.cmbProjectStatuses
+        combo_handler.populate_comboBox_smart(
+            comboBox=statuses_combo_box,
             button=button,
             module=module,
             context=self,
             preferred_items=False
         )
-        print(f"selected_status on projcets load: {selected_status}")
-        if selected_status is None:
-            button.blockSignals(False)
-            return 
+
+        selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
+
+
         Projects.load_projects_by_status(table, selected_status)
         button.blockSignals(False)
     
@@ -83,10 +89,16 @@ class WorkSpaceHandler:
         module = Module.CONTRACT
         menu_module = MenuModules.CONTRACTS
         self.swWorkSpace.setCurrentIndex(menu_module)
+        button = self.pbContracts
+
         res = WorkSpaceHandler.check_if_settings_are_set(self,menu_module)
         if res is False:
+            setup = SetupConrtacts(self)
+            setup.load_contract_settings_widget()
+            button.setEnabled(True)
+            button.blockSignals(False)
             return
-        button = self.pbContracts
+
         refresh_button = self.pbRefresh_tblMailabl_contracts
         button.blockSignals(True)
         refresh_button.blockSignals(True)
@@ -98,16 +110,14 @@ class WorkSpaceHandler:
 
         combo_handler = ComboBoxHelper()
         # Add statuses to the combobox and set the preferred status
-        combo_box = self.cmbcontractStatuses
+        statuses_combo_box = self.cmbcontractStatuses
         selected_status = combo_handler.populate_comboBox_smart(
-            comboBox=combo_box,
+            comboBox=statuses_combo_box,
             button=button,
             module=module,
             context=self,
             preferred_items=False
         )
-
-        print(f"Selected status: {selected_status}")
 
         # Add types to the combobox and set the preferred     
         types_combo_box = self.cmbcontractTypes_checkable
@@ -119,26 +129,13 @@ class WorkSpaceHandler:
             preferred_items=True
         )
         
-        selected_type_ids = types_combo_box.checkedItemsData()
+        selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
+        prefered_types_ids = types_combo_box.checkedItemsData()
 
-        print(f"selected type ids: {selected_type_ids}")
-        # 🔁 If none selected, fall back to the first item in the combo box
-        if not selected_type_ids:
-            if types_combo_box.count() > 0:
-                first_item_data = types_combo_box.itemData(0)
-                selected_type_ids = [first_item_data]
-                types_combo_box.setCheckedItems([types_combo_box.itemText(0)])  # Optional: visually reflect selection
-            else:
-                # 🚫 Nothing to use – early return or warning
-                print(
-                    "Tüüpide seadistus puudub",
-                    "Kontrolli, et oleks vähemalt üks tüüp seadistatud."
-                )
-            return
 
         ContractsMain.load_main_contracts_by_type_and_status(self,
                                                              table=table,
-                                                             types=selected_type_ids,
+                                                             types=prefered_types_ids,
                                                              statuses=selected_status
                                                              )
                 
@@ -198,7 +195,6 @@ class WorkSpaceHandler:
         )
 
         selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
-        print(f"selected status before load: {selected_status}")
         prefered_types_ids = types_combo_box.checkedItemsData()
 
         print(f"prefered types ids before load: {prefered_types_ids}")
