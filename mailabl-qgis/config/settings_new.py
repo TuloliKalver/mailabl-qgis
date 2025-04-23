@@ -7,6 +7,7 @@ class PluginSettings:
 
     OPTION_STATUS = "status"
     OPTION_TYPE = "type"
+    OPTION_LAYER = "layer"
 
     CONTEXT_PREFERRED = "preferred"
     CONTEXT_FOLDER = "folder"
@@ -70,12 +71,15 @@ class SettingsBuilder:
 
     # For nested contexts like "preferred" → we want both status and type (names/ids)
     subcontexts = {
-        "preferred": [PluginSettings.OPTION_STATUS, PluginSettings.OPTION_TYPE]
+        PluginSettings.CONTEXT_PREFERRED: [PluginSettings.OPTION_STATUS, 
+                                           PluginSettings.OPTION_TYPE,
+                                           PluginSettings.OPTION_LAYER]
     }
 
     keys = {
         PluginSettings.OPTION_STATUS: [PluginSettings.SUB_CONTEXT_NAME, PluginSettings.SUB_CONTEXT_IDs],
         PluginSettings.OPTION_TYPE: [PluginSettings.SUB_CONTEXT_NAME, PluginSettings.SUB_CONTEXT_IDs],
+        PluginSettings.OPTION_LAYER: [PluginSettings.WATER, PluginSettings.SEWER, PluginSettings.PRESSURE_SEWER, PluginSettings.DRAINAGE],
         PluginSettings.CONTEXT_FOLDER: [PluginSettings.SUB_CONTEXT_PATH]
     }
 

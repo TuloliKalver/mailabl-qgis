@@ -141,6 +141,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pmbc = PropertiesModuleButtonConnector(self)
         self.smbc = SettingsModuleButtonConnector(self)
 
+        setupEasments = SetupEasments(self)
+
         UI = UIStateManager(self)
         loader = SHPLayerLoader(self)
         self.mse = ModularSearchEngine(self)
@@ -237,10 +239,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbLayerSettings.clicked.connect(self.layer_setup)
         self.pbSettings_Setup_Projects.clicked.connect(lambda: SetupProjects.load_project_settings_widget(self))
         self.pbSettings_Setup_Contracts.clicked.connect(lambda: SetupConrtacts.load_contract_settings_widget(self))
-        self.pbSettingsSetupEasements.clicked.connect(lambda: SetupEasments.load_easements_settings_widget(self))
+        self.pbSettingsSetupEasements.clicked.connect(lambda:setupEasments.load_easements_settings_widget())
         self.pbUserSettings.clicked.connect(lambda: SetupUsers.load_user_settings_widget(self))
 
-        asBuiltLoader = SetupASBuilt(parent=self)  # Assuming `self` is a QDialog or QWidget
+        asBuiltLoader = SetupASBuilt(self)  # Assuming `self` is a QDialog or QWidget
         self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_settings_widget())
 
         self.lblPhotosValue.setEnabled(False)

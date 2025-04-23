@@ -45,8 +45,6 @@ class Ui_ConsturctionDrawings:
         module = Module.TASK
 
         ui_file_path = Filepaths.get_conf_widget(FilesByNames.TEOSTUS_SETUP)
-        #print(f"path: {ui_file_path}")
-        # Load the UI from the specified .ui file
         widget = loadUi(ui_file_path)
 
 
@@ -60,7 +58,7 @@ class Ui_ConsturctionDrawings:
             drag_frame.mousePressEvent = MethodType(DraggableFrame.mousePressEvent, drag_frame)
             drag_frame.mouseMoveEvent = MethodType(DraggableFrame.mouseMoveEvent, drag_frame)
             drag_frame._drag_pos = None
-            drag_frame.setCursor(Qt.OpenHandCursor)        
+            drag_frame.setCursor(Qt.OpenHandCursor)   
 
 
         # Connect buttons to dialog accept/reject
@@ -114,7 +112,6 @@ class Ui_ConsturctionDrawings:
             status_value = GetValuesFromComboBox._get_selected_status_name_from_combobox(cmbPreferred_status)
             status_value_ids = GetValuesFromComboBox._get_selected_status_id_from_combobox(cmbPreferred_status)
             layer_value = GetValuesFromComboBox._get_selected_status_name_from_combobox(cmbPreferred_status)
-
 
 
             TesotusChace.locatioNameValue = label.text()

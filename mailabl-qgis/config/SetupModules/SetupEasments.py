@@ -1,16 +1,26 @@
+from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QPropertyAnimation
+from PyQt5.uic import loadUi
+from types import MethodType
+from PyQt5.QtWidgets import (
+    QDialog, QFrame,QListView,  QAbstractItemView
+    )
+
 from ...KeelelisedMuutujad.modules import Module
 from ...utils.ComboBoxHelperX import ComboBoxTools
 from ...config.QGISSettingPaths import LayerSettings, SettingsLoader
 from ...config.SetupModules.SetupMainLayers import QGIS_items
-from ...config.settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad
+from ...config.settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad, SaveSettings, StartupSettingsLoader
+from ...config.settings_new import PluginSettings
 from ...utils.ComboboxHelper import GetValuesFromComboBox
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...utils.ComboboxHelper import ComboBoxHelper
 from ...utils.messagesHelper import ModernMessageDialog
+from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
+from ...core.module.TypeManager import TypeModuleSetup
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFrame
-from PyQt5.uic import loadUi
+
+
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -19,115 +29,269 @@ combo_handler = ComboBoxHelper()
 
 
 class SetupEasments:
+    def __init__(self, parent) -> None:
+        self.dialog = parent
+        self.loader = SaveSettings(parent)
+        pass
     def load_easements_settings_widget(self):
 
         ui_file_path = Filepaths.get_conf_widget(FilesByNames().easements_setup_ui)
         widget = loadUi(ui_file_path)
-        save_button = widget.pbSave
-        cancel_button = widget.pbCancel
 
-        widget.show()
+        widget.lblTitle.setText("Servituutide mooduli seadistamine...")
+
+        widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
+        widget.setAttribute(Qt.WA_TranslucentBackground)
+
+        animation = QPropertyAnimation(widget, b"windowOpacity")
+        animation.setDuration(300)
+        animation.setStartValue(0.0)
+        animation.setEndValue(1.0)
+        animation.start()
+
+        SetupEasments.replace_frame(
+            widget, 
+            "FrameMain", 
+            lambda parent: AnimatedGradientBorderFrame(parent,
+                                                        style=AnimatedGradientBorderFrame.MODERN)
+        )
+
+
+
+        # 🔄 Promote dragFrame to custom draggable logic
+        drag_frame = widget.dragFrame
+        if drag_frame:
+            # Inject drag behavior via method patching
+            drag_frame.mousePressEvent = MethodType(DraggableFrame.mousePressEvent, drag_frame)
+            drag_frame.mouseMoveEvent = MethodType(DraggableFrame.mouseMoveEvent, drag_frame)
+            drag_frame._drag_pos = None
+            drag_frame.setCursor(Qt.OpenHandCursor)
+
 
         module = Module.EASEMENT
-        water_cb = widget.cbWater_Pipes
-        sewer_cb = widget.cbSewer_pipes
-        sewer_pressure_cb = widget.cbSewer_Pressure_pipes
-        drainage_cb = widget.cbDrainage_Pipes
 
-        water_layer_name = SettingsLoader.get_setting(LayerSettings.WATER_LAYER)
-        sewer_layer_name = SettingsLoader.get_setting(LayerSettings.SEWER_LAYER)
-        pressure_sewer_layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)
-        drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)
+        water_layer_name = PluginSettings.load_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WATER        )
 
+        sewer_layer_name = PluginSettings.load_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.SEWER
+        )
 
-        QGIS_items.clear_and_add_layerNames_selected(water_cb, water_layer_name)
-        QGIS_items.clear_and_add_layerNames_selected(sewer_cb, sewer_layer_name)
-        QGIS_items.clear_and_add_layerNames_selected(sewer_pressure_cb, pressure_sewer_layer_name)
-        QGIS_items.clear_and_add_layerNames_selected(drainage_cb, drainage_layer_name)
+        pressure_sewer_layer_name = PluginSettings.load_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.PRESSURE_SEWER
+        )
+        
+        drainage_layer_name = PluginSettings.load_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.DRAINAGE
+        )
+
+        QGIS_items.clear_and_add_layerNames_selected(widget.cbWater_Pipes, water_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(widget.cbSewer_pipes, sewer_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(widget.cbSewer_Pressure_pipes, pressure_sewer_layer_name)
+        QGIS_items.clear_and_add_layerNames_selected(widget.cbDrainage_Pipes, drainage_layer_name)
 
         # Populate the combo boxes using the populate_comboBox_smart method for statuses
-        statuses_combo_box = widget.cmbPreferredEasementStatuses
         combo_handler.populate_comboBox_smart(
-            comboBox=statuses_combo_box,
+            comboBox=widget.cmbPreferredEasementStatuses,
             module=module,
             context=self,
             preferred_items=False
         )
 
         # Populate the combo boxes using the populate_comboBox_smart method for types
-        types_combo_box = widget.cbcb_PreferredEasementTypes
         combo_handler.populate_comboBox_smart(
-            comboBox=types_combo_box,
+            comboBox=widget.cbcb_PreferredEasementTypes,
             module=module,
             context=self,
             preferred_items=True
         )
 
-        # Connect signals to functions
-        save_button.clicked.connect(lambda: SetupEasments.on_save_button_clicked(self, widget, statuses_combo_box, types_combo_box, water_cb, sewer_cb, sewer_pressure_cb, drainage_cb))
-        cancel_button.clicked.connect(lambda: SetupEasments.on_cancel_button_clicked(self, widget))
-    def on_save_button_clicked(self, widget, statuses_combo_box, combo_box_checkable, water_cb, sewer_cb, sewer_pressure_cb, drainage_cb):
-        # Handle logic when the save button is clicked
+    
+    
 
-        water_layer_name = ComboBoxTools.get_selected_item_name(water_cb)
-        sewer_layer_name = ComboBoxTools.get_selected_item_name(sewer_cb)
-        pressure_sewer_layer_name = ComboBoxTools.get_selected_item_name(sewer_pressure_cb)
-        drainage_layer_name = ComboBoxTools.get_selected_item_name(drainage_cb)
+        # Connect buttons to dialog accept/reject
+        widget.pbSave.clicked.connect(lambda: SetupEasments._handle_save(widget))
+        widget.pbCancel.clicked.connect(lambda: SetupEasments._handle_cancel(widget))
 
-        SettingsLoader.save_setting(LayerSettings().WATER_LAYER,water_layer_name)
-        SettingsLoader.save_setting(LayerSettings().SEWER_LAYER, sewer_layer_name)
-        SettingsLoader.save_setting(LayerSettings().PRESSURE_SEWER_LAYER, pressure_sewer_layer_name)
-        SettingsLoader.save_setting(LayerSettings().DRAINAGE_LAYER, drainage_layer_name)
+        result = widget.exec_()
+
+        if result == QDialog.Accepted:
+            # ✅ Extract values *before* the dialog is deleted
+
+            water_layer_name = ComboBoxTools.get_selected_item_name(widget.cbWater_Pipes)
+            sewer_layer_name = ComboBoxTools.get_selected_item_name(widget.cbSewer_pipes)
+            pressure_sewer_layer_name = ComboBoxTools.get_selected_item_name(widget.cbSewer_Pressure_pipes)
+            drainage_layer_name = ComboBoxTools.get_selected_item_name(widget.cbDrainage_Pipes)
+
+            status_name = GetValuesFromComboBox._get_selected_status_name_from_combobox(widget.cmbPreferredEasementStatuses)
+            status_ids = GetValuesFromComboBox._get_selected_status_id_from_combobox(widget.cmbPreferredEasementStatuses)
+            
+            type_names = widget.cbcb_PreferredEasementTypes.checkedItems()
+            
+            types_text = ''
+            types_ids = ''
+            for i, item in enumerate(type_names):
+                if i % 1 == 0 and i > 0:
+                    types_text += ',\n'
+                    types_ids += ',\n'
+                elif i > 0:
+                    types_text += ', '
+                    types_ids += ','
+                types_text += item
+                types_ids += str(i)
+
+            self.save_easements_settings( 
+                                        types_text,
+                                        types_ids, 
+                                        status_name, 
+                                        status_ids,
+                                        water_layer_name,
+                                        sewer_layer_name,
+                                        pressure_sewer_layer_name,
+                                        drainage_layer_name
+                                        )
 
 
-        status_value_name = GetValuesFromComboBox._get_selected_status_name_from_combobox(statuses_combo_box)
-        status_value_ids = GetValuesFromComboBox._get_selected_status_id_from_combobox(statuses_combo_box)
-        checked_indexes = combo_box_checkable.checkedItemsData()
-        #print(checked_indexes)
-        selected_types = combo_box_checkable.checkedItems()
 
-        selected_types_text = ''
-        for i, item in enumerate(selected_types):
-            if i % 1 == 0 and i > 0:
-                selected_types_text += ',\n'
-            elif i > 0:
-                selected_types_text += ', '
-            selected_types_text += item
-        label = self.lblPreferredEasementsTypesValue
-        label.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        label.setAlignment(Qt.AlignBottom | Qt.AlignLeft)
+            widget.setAttribute(Qt.WA_DeleteOnClose)
+            
+            return True
+        else:
+            widget.setAttribute(Qt.WA_DeleteOnClose)
+            return None
 
 
 
-        water_layer_name = SettingsLoader.get_setting(LayerSettings().WATER_LAYER)
-        sewer_layer_name = SettingsLoader.get_setting(LayerSettings().SEWER_LAYER)
-        pressure_sewer_layer_name = SettingsLoader.get_setting(LayerSettings().PRESSURE_SEWER_LAYER)
-        drainage_layer_name = SettingsLoader.get_setting(LayerSettings().DRAINAGE_LAYER)
+
+    def save_easements_settings(self, type_names, types_ids, status_name, status_ids, water_layer_name, sewer_layer_name, pressure_sewer_layer_name, drainage_layer_name):
+        
+        module = Module.EASEMENT
+        status_ids_int = int(status_ids[0]) if status_ids else None
+
+        print(f"id_s: {status_ids_int}")
+        print(f"easements types: {type_names}")
+        
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            value = type_names
+            )
+        
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_IDs,
+            value = types_ids
+            )
 
 
-        SettingsDataSaveAndLoad.save_easements_settings(self, selected_types_text, status_value_name, status_value_ids)
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_IDs,
+            value = status_ids_int
+            )
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            value = status_name
+            )
+        
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WATER,
+            value = water_layer_name
+        )
+
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.SEWER,
+            value = sewer_layer_name
+        )
+
+
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.PRESSURE_SEWER,
+            value = pressure_sewer_layer_name
+        )
+        
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.DRAINAGE,
+            value = drainage_layer_name
+        )
+
+        StartupSettingsLoader.startup_label_loader(self)
 
 
 
-        label.setText(selected_types_text)
-        self.lblPreferredEasementsStatusValue.setText(status_value_name)
-        self.lblWaterPipesValue.setText(water_layer_name)
-        self.lblSewerPipesValue.setText(sewer_layer_name)
-        self.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)
-        self.lblDrainagePipesValue.setText(drainage_layer_name)
+    @staticmethod
+    def replace_frame(widget, old_name: str, new_frame_cls: type, *args, **kwargs) -> QFrame:
+        old = widget.findChild(QFrame, old_name)
+        if old is None:
+            raise ValueError(f"Could not find frame named '{old_name}'.")
 
-        text = edu.salvestatud
-        heading = pealkiri.tubli
-        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
+        layout = old.parentWidget().layout()
+        index = layout.indexOf(old)
+        layout.removeWidget(old)
+        old.deleteLater()
 
-        # Additional logic if needed
-        print("saved")
+        new_frame = new_frame_cls(widget, *args, **kwargs)
+        new_frame.setObjectName(old_name)
+        new_frame.setLayout(old.layout())  # reuse inner layout if needed
+        layout.insertWidget(index, new_frame)
+        return new_frame
 
-        widget.accept()  # Close the dialog
-    def on_cancel_button_clicked(self, widget):
-        # Handle logic when the cancel button is clicked
 
-        text = sisu.kasutaja_peatas_protsessi
-        heading = pealkiri.warningSimple
-        ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
-        widget.reject()  # Close the dialog       
+    @staticmethod
+    def _handle_save(dialog):
+        dialog.accept()
+
+    @staticmethod
+    def _handle_cancel(dialog):
+        dialog.reject()
+
+
+class DraggableFrame(QFrame):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._drag_pos = None
+        self.setCursor(Qt.OpenHandCursor)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self._drag_pos = event.globalPos() - self.window().frameGeometry().topLeft()
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() & Qt.LeftButton and self._drag_pos:
+            self.window().move(event.globalPos() - self._drag_pos)
+            event.accept()
+

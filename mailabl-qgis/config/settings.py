@@ -467,29 +467,7 @@ class SettingsDataSaveAndLoad:
         settings.setValue(contract_name_paths, contract_type_names)
 
 
-    def save_easements_settings(self, easements_type_names, contratc_status_names, easements_status_ids):
-        settings = QgsSettings()
-        easements_status_ids_int = int(easements_status_ids[0]) if easements_status_ids else None
-        
-        print(f"id_s: {easements_status_ids_int}")
-        print(f"easements types: {easements_type_names}")
-        
-        PluginSettings.save_setting(
-            module=Module.EASEMENT,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_TYPE,
-            key_type=PluginSettings.SUB_CONTEXT_NAME,
-            value = easements_type_names
-            )
-        
 
-        #easments_status_ids_path = SettingsDataSaveAndLoad.easements_preferred_status_ids(self)
-        easements_status_name_path = SettingsDataSaveAndLoad.easements_preferred_status_name(self)
-        easements_name_paths = SettingsDataSaveAndLoad.easements_preferred_type_name(self)
-        
-        #settings.setValue(easments_status_ids_path, easements_status_ids_int)
-        settings.setValue(easements_status_name_path, contratc_status_names)
-        settings.setValue(easements_name_paths, easements_type_names)
 
         
     def on_save_button_clicked_cadastrals(self, input_layer_combo_box, target_layer_combo_box):
@@ -630,10 +608,79 @@ class StoredLayers:
         return active_layer
     
 
-class StartupSettingsLoader:
+class SaveSettings:
     def __init__(self, dialog):
-        self.dialog = dialog    
-    def startup_label_loader (self):
+        self.dialog = dialog
+        
+    def save_easements_settings(self, type_names, status_name, status_ids, water_layer_name, sewer_layer_name, pressure_sewer_layer_name, drainage_layer_name):
+        
+        module = Module.EASEMENT
+        status_ids_int = int(status_ids[0]) if status_ids else None
+        
+        print(f"id_s: {status_ids_int}")
+        print(f"easements types: {type_names}")
+        
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            value = type_names
+            )
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            value = status_ids_int
+            )
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            value = status_name
+            )
+        
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WATER,
+            value = water_layer_name
+        )
+
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.SEWER,
+            value = sewer_layer_name
+        )
+
+
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.PRESSURE_SEWER,
+            value = pressure_sewer_layer_name
+        )
+        
+        PluginSettings.save_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.DRAINAGE,
+            value = drainage_layer_name
+        )
+
+        StartupSettingsLoader.startup_label_loader(self)
+
+class StartupSettingsLoader:
+    def __init__(cls, dialog):
+        cls.dialog = dialog    
+    def startup_label_loader(self):
 
         SettingsBuilder.initialize_settings()
         prefEasementTypeName = PluginSettings.load_setting(module = Module.EASEMENT,
@@ -658,24 +705,24 @@ class StartupSettingsLoader:
 
         prefEasementStatusName = PluginSettings.load_setting(module = Module.EASEMENT,
             context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_TYPE,
+            subcontext=PluginSettings.OPTION_STATUS,
             key_type=PluginSettings.SUB_CONTEXT_NAME
         )
 
         prefProjectStatusName = PluginSettings.load_setting(module = Module.PROJECT,
             context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_TYPE,
+            subcontext=PluginSettings.OPTION_STATUS,
             key_type=PluginSettings.SUB_CONTEXT_NAME
         )
 
         prefContractsStatusName = PluginSettings.load_setting(module = Module.PROJECT,
             context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_TYPE,
+            subcontext=PluginSettings.OPTION_STATUS,
             key_type=PluginSettings.SUB_CONTEXT_NAME
         )
         prefAsbuiltStatusName = PluginSettings.load_setting(module = Module.TASK,
             context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_TYPE,
+            subcontext=PluginSettings.OPTION_STATUS,
             key_type=PluginSettings.SUB_CONTEXT_NAME
         )
 
@@ -685,12 +732,39 @@ class StartupSettingsLoader:
         self.dialog.lblPreferredEasementsStatusValue.setText(prefEasementStatusName)
 
 
-        water_layer_name = SettingsLoader.get_setting( LayerSettings.WATER_LAYER)
-        sewer_layer_name = SettingsLoader.get_setting( LayerSettings.SEWER_LAYER)
-        pressure_sewer_layer_name = SettingsLoader.get_setting( LayerSettings.PRESSURE_SEWER_LAYER)
-        drainage_layer_name = SettingsLoader.get_setting( LayerSettings.DRAINAGE_LAYER)
+        water_layer_name = PluginSettings.load_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WATER        )
 
+        sewer_layer_name = PluginSettings.load_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.SEWER
+        )
+
+
+        pressure_sewer_layer_name = PluginSettings.load_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.PRESSURE_SEWER
+        )
         
+        drainage_layer_name = PluginSettings.load_setting(
+            module=Module.EASEMENT,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.DRAINAGE
+        )
+        self.dialog.lblWaterPipesValue.setText(water_layer_name)
+        self.dialog.lblSewerPipesValue.setText(sewer_layer_name)
+        self.dialog.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)
+        self.dialog.lblDrainagePipesValue.setText(drainage_layer_name)
+
+
 
 
         prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
@@ -711,10 +785,6 @@ class StartupSettingsLoader:
 
         self.dialog.lblPreferredFolderNameValue.setText(prefered_folder_structure_value)
 
-        self.dialog.lblWaterPipesValue.setText(water_layer_name)
-        self.dialog.lblSewerPipesValue.setText(sewer_layer_name)
-        self.dialog.lblPrSewagePipesValue.setText(pressure_sewer_layer_name)
-        self.dialog.lblDrainagePipesValue.setText(drainage_layer_name)
 
         self.dialog.lblMainLayerValue.setText(current_label_value)
         self.dialog.lblMainTargetLayerValue.setText(create_new_layer_label_value)

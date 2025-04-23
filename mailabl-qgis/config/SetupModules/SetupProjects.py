@@ -33,7 +33,7 @@ class SetupProjects:
         widget.lePhotos.setEnabled(False)
 
         cmb_layers  = widget.cmbProjects_Layer
-        QGIS_items.clear_and_add_layerNames(self, cmb_layers)
+        QGIS_items.clear_and_add_layerNames(cmb_layers)
 
         statuses_combo_box = widget.cmbPreferred_Project_status
         combo_handler.populate_comboBox_smart(

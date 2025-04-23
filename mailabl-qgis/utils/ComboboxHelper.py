@@ -74,7 +74,7 @@ class ComboBoxHelper:
             for item_text, item_id in types:
                 comboBox.addItem(item_text)
                 comboBox.setItemData(comboBox.count() - 1, item_id)
-            comboBox.setView(QListView())
+            #comboBox.setView(QListView())
             
             preferred_items_raw = type_manager._get_preferred_item_ids(module)
             #print(f"preferred_items_raw: {preferred_items_raw}")            

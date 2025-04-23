@@ -5,6 +5,7 @@
 
 # Related Third-Party Imports
 from qgis.core import QgsMapLayer, QgsProject
+from PyQt5.QtWidgets import QListView, QComboBox, QPushButton
 from PyQt5.uic import loadUi
 from ..settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
@@ -32,8 +33,8 @@ class SetupCadastralLayers:
         save_button = widget.pbSaveLayerSettings
         cancel_button = widget.pbCancelSave
 
-        QGIS_items.clear_and_add_layerNames(self, cmbCurrent_Layer)
-        QGIS_items.clear_and_add_layerNames(self, cmbTarget_layer)
+        QGIS_items.clear_and_add_layerNames(cmbCurrent_Layer)
+        QGIS_items.clear_and_add_layerNames(cmbTarget_layer)
 
         
         # Access the variables through the instance
@@ -76,17 +77,20 @@ class QGIS_items:
     def __init__(self):
         pass
     #//TODO: refactor this class into a ComboBox helper module
-    def clear_and_add_layerNames(self, combo_box):
+    def clear_and_add_layerNames(combo_box: QComboBox):
         combo_box.clear()
         layer_names = QGIS_items._get_sorted_layer_names()
         combo_box.addItems(layer_names)
-    def clear_and_add_layerNames_selected(combo_box, layer_name: str = None):
+        combo_box.setView(QListView())
+
+    def clear_and_add_layerNames_selected(combo_box: QComboBox, layer_name: str = None):
         combo_box.clear()
         layer_names = QGIS_items._get_sorted_layer_names()
         combo_box.addItems(layer_names)   
         # Set the current text of the combo box to the layer name if it exists
         if layer_name:
             combo_box.setCurrentText(layer_name)
+        combo_box.setView(QListView())
     
     @staticmethod
     def _get_sorted_layer_names():

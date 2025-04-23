@@ -15,6 +15,8 @@ from ...queries.python.query_tools import requestBuilder
 class TypeModuleSetup:
     def __init__(self, module):
         self.module = module
+        s = PluginSettings()
+
         self.graphql_queries = {
             Module.CONTRACT: lambda: GraphqlTasks.TYPES,
             Module.EASEMENT: lambda: GraphqlTasks.TYPES,
@@ -24,7 +26,10 @@ class TypeModuleSetup:
 
         self.preferred_item_ids = {
             Module.CONTRACT: lambda: SettingsDataSaveAndLoad().load_contracts_type_names(),    
-            Module.EASEMENT: lambda: SettingsDataSaveAndLoad().load_easements_type_names(),
+            Module.EASEMENT: lambda: PluginSettings.load_setting(module=Module.EASEMENT,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE, 
+                                                                key_type=s.SUB_CONTEXT_IDs),
             Module.TASK: lambda: PluginSettings.load_setting(module=Module.TASK, option_type=PluginSettings.OPTION_TYPE_STATUS, use_ids=True)
         }
 
