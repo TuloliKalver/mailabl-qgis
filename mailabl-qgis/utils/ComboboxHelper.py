@@ -67,64 +67,37 @@ class ComboBoxHelper:
             type_manager = TypeModuleSetup(module)
             types = type_manager._get_types_for_module(module)
             #print(f"Types from {module}: ", types)
-        
-            if test == True:
-                print(f"Types from {module}: ", types)
-            
+                    
             for item_text, item_id in types:
                 comboBox.addItem(item_text)
                 comboBox.setItemData(comboBox.count() - 1, item_id)
-            #comboBox.setView(QListView())
             
-            preferred_items_raw = type_manager._get_preferred_item_ids(module)
+            preferred = type_manager._get_preferred_item_ids_or_names(module, name=True)
             #print(f"preferred_items_raw: {preferred_items_raw}")            
-            if not preferred_items_raw:
+            if preferred == "Määramata":
                 print("no preferred items")
             else:
-                #print("Raw preferred items:", preferred_items_raw)
-                selected_types = []
-                for line in preferred_items_raw.split('\n'):
-                    selected_types.extend(item.strip() for item in line.split(',') if item.strip())
-
-                comboBox.setCheckedItems(selected_types)
-                return selected_types  # 🔥 Return list of selected IDs
+                comboBox.setCheckedItems(preferred)
+                return preferred
 
 
         # --- Case 3: Status mode (single select) ---
-        status_manager = ModuleStatuses(module)
-        statuses = status_manager._get_all_statuses_for_module(module)
-        
-        if test == True:
-            print("All statuses:", statuses)
-        for item_text, item_id in statuses:
-            comboBox.addItem(item_text)
-            comboBox.setItemData(comboBox.count() - 1, item_id)
-        comboBox.setView(QListView())
+        else:
+            status_manager = ModuleStatuses(module)
+            statuses = status_manager._get_all_statuses_for_module(module)
+            
+            if test == True:
+                print("All statuses:", statuses)
+            for item_text, item_id in statuses:
+                comboBox.addItem(item_text)
+                comboBox.setItemData(comboBox.count() - 1, item_id)
+            comboBox.setView(QListView())
 
-        preferred_status = status_manager._get_preferred_status(module)
-        if test ==True:
-            print("Preferred status:", preferred_status)
-        #preferred_id = preferred_statuses[1] if preferred_statuses else None
-        # Match label to get the ID
-        preferred_id = None
-        for name, status_id in statuses:
-            if name.strip() == preferred_status.strip():
-                preferred_id = status_id
-                break
-
-
-        if test == True:
-            print("Selected ID:", preferred_id)
-
-        if preferred_id:
-            for index in range(comboBox.count()):
-                if comboBox.itemData(index) == preferred_id:
-                    comboBox.setCurrentIndex(index)
-                    break
-            return [preferred_id] if preferred_id else []
-        
+            preferred_status = status_manager._get_preferred_item_ids_or_names(module, name=True)
+            comboBox.setCurrentText (preferred_status)          
+            
 class GetValuesFromComboBox:
-    def _get_selected_status_id_from_combobox(comboBox):
+    def _get_selected_id_from_combobox(comboBox):
         selected_index = comboBox.currentIndex()
         id_s = []
         if selected_index != -1:
@@ -135,7 +108,7 @@ class GetValuesFromComboBox:
 
 
     # Retrieving the selected item's value
-    def _get_selected_status_name_from_combobox(comboBox):
+    def _get_selected_name_from_combobox(comboBox):
         selected_index = comboBox.currentIndex()
         if selected_index != -1:
             selected_text = comboBox.currentText()

@@ -700,7 +700,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         if model is not None:
             model.removeRows(0, model.rowCount())
         comboBox = self.cmbProjectStatuses
-        statusValue = GetValuesFromComboBox._get_selected_status_id_from_combobox(comboBox)
+        statusValue = GetValuesFromComboBox._get_selected_id_from_combobox(comboBox)
         Projects.load_projects_by_status(table, statusValue)
         button.blockSingnals = False
         

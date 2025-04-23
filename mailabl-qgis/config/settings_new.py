@@ -33,9 +33,19 @@ class PluginSettings:
         QgsSettings().setValue(key, value)
 
     @staticmethod
-    def load_setting(module: str, context: str, subcontext: str = None, key_type: str =None) -> str:
+    def load_setting(module: str, context: str, subcontext: str = None, key_type: str =None, text_fomated=False) -> str:
         key = SettingsBuilder.build_key(module, context, subcontext, key_type)
-        return QgsSettings().value(key, '', type=str)    
+        settings_list = QgsSettings().value(key, '', type=str)
+        #print(f"load settings settings list: {settings_list}")
+        if text_fomated == True:
+            string = ""
+            if settings_list == "Määramata":
+                return settings_list
+            for item in settings_list:
+                string += f"{item}, "
+            settings_list = string.rstrip(", ")
+        return settings_list 
+    
     @staticmethod
     def clear_setting(module):
         for option_type in [PluginSettings.OPTION_TYPE_STATUS, PluginSettings.OPTION_TYPE]:

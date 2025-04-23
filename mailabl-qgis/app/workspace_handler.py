@@ -154,7 +154,7 @@ class WorkSpaceHandler:
         comboBox = self.cmbcontractStatuses
         types_combo_box = self.cmbcontractTypes_checkable
         selected_types_ids = types_combo_box.checkedItemsData()
-        statusValue = GetValuesFromComboBox._get_selected_status_id_from_combobox(comboBox)  
+        statusValue = GetValuesFromComboBox._get_selected_id_from_combobox(comboBox)  
         ContractsMain.load_main_contracts_by_type_and_status(self, table, selected_types_ids, statusValue)
         refresh_button.blockSignals(False)
 
@@ -175,7 +175,7 @@ class WorkSpaceHandler:
             model.removeRows(0, model.rowCount())
 
         statuses_combo_box = self.cmbeasementStatuses
-        selected_status = combo_handler.populate_comboBox_smart(
+        combo_handler.populate_comboBox_smart(
             comboBox=statuses_combo_box,
             button=button,
             module=module,
@@ -192,8 +192,12 @@ class WorkSpaceHandler:
             preferred_items=True
         )
 
+        selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
+        print(f"selected status before load: {selected_status}")
         prefered_types_ids = types_combo_box.checkedItemsData()
-        EasementssMain.load_main_asements_by_type_and_status(self, table, prefered_types_ids, selected_status)
+
+        print(f"prefered types ids before load: {prefered_types_ids}")
+        EasementssMain.load_main_easements_by_type_and_status(self, table, prefered_types_ids, selected_status)
         button.blockSignals(False)
 
     def easements_reload(self):
@@ -209,8 +213,8 @@ class WorkSpaceHandler:
         combo_box = self.cmbeasementStatuses
         types_combo_box = self.cmbeasementTypesCheckable
         selected_types_ids = types_combo_box.checkedItemsData()
-        statusValue = GetValuesFromComboBox._get_selected_status_id_from_combobox(combo_box)
-        EasementssMain.load_main_asements_by_type_and_status(self, table, selected_types_ids, statusValue)
+        statusValue = GetValuesFromComboBox._get_selected_id_from_combobox(combo_box)
+        EasementssMain.load_main_easements_by_type_and_status(self, table, selected_types_ids, statusValue)
         button.blockSignals(False)
 
 

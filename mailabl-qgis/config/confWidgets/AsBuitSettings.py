@@ -109,9 +109,9 @@ class Ui_ConsturctionDrawings:
         if result == QDialog.Accepted:
             # ✅ Extract values *before* the dialog is deleted
 
-            status_value = GetValuesFromComboBox._get_selected_status_name_from_combobox(cmbPreferred_status)
-            status_value_ids = GetValuesFromComboBox._get_selected_status_id_from_combobox(cmbPreferred_status)
-            layer_value = GetValuesFromComboBox._get_selected_status_name_from_combobox(cmbPreferred_status)
+            status_value = GetValuesFromComboBox._get_selected_name_from_combobox(cmbPreferred_status)
+            status_value_ids = GetValuesFromComboBox._get_selected_id_from_combobox(cmbPreferred_status)
+            layer_value = GetValuesFromComboBox._get_selected_name_from_combobox(cmbPreferred_status)
 
 
             TesotusChace.locatioNameValue = label.text()

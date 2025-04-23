@@ -38,7 +38,7 @@ header_statuses = 'Staatus'
 
 class EasementssMain:
     @staticmethod
-    def load_main_asements_by_type_and_status (self, table, types, statuses, language="et"):
+    def load_main_easements_by_type_and_status (self, table, types, statuses, language="et"):
 
         #Adding progress
         progress = ProgressDialogModern(title="Katastri laadimine", value=0)

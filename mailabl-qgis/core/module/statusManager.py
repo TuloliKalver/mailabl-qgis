@@ -15,8 +15,6 @@ class ModuleStatuses:
             Module.TASK: GraphqlStatuses.STATUSES,
         }
 
-    
-
         self.preferred_ids = {
             Module.PROJECT: lambda:  PluginSettings.load_setting(module = Module.PROJECT, context=PluginSettings.CONTEXT_PREFERRED, key_type=PluginSettings.SUB_CONTEXT_IDs),
             Module.CONTRACT: lambda: PluginSettings.load_setting(module = Module.CONTRACT, context=PluginSettings.CONTEXT_PREFERRED, key_type=PluginSettings.SUB_CONTEXT_IDs),    
@@ -25,10 +23,35 @@ class ModuleStatuses:
         }
 
 
-    def _get_preferred_status(self, module):
+        self.preferred_names = {
+            Module.PROJECT: lambda:  PluginSettings.load_setting(module = Module.PROJECT, 
+                                                                context=PluginSettings.CONTEXT_PREFERRED,
+                                                                subcontext=PluginSettings.OPTION_STATUS,
+                                                                key_type=PluginSettings.SUB_CONTEXT_NAME),
+            Module.CONTRACT: lambda: PluginSettings.load_setting(module = Module.CONTRACT, 
+                                                                context=PluginSettings.CONTEXT_PREFERRED,
+                                                                subcontext=PluginSettings.OPTION_STATUS,
+                                                                key_type=PluginSettings.SUB_CONTEXT_NAME),    
+            Module.EASEMENT: lambda: PluginSettings.load_setting(module = Module.EASEMENT, 
+                                                                context=PluginSettings.CONTEXT_PREFERRED,
+                                                                subcontext=PluginSettings.OPTION_STATUS,
+                                                                key_type=PluginSettings.SUB_CONTEXT_NAME),
+            Module.TASK: lambda: PluginSettings.load_setting(module = Module.TASK, 
+                                                                context=PluginSettings.CONTEXT_PREFERRED,
+                                                                subcontext=PluginSettings.OPTION_STATUS,
+                                                                key_type=PluginSettings.SUB_CONTEXT_NAME)
+        }
+
+
+
+    def _get_preferred_item_ids_or_names(self, module, name=False):
         """Return a set of preferred item IDs for the given module."""
-        fn = self.preferred_ids.get(module, [])
         
+        if name:
+            fn = self.preferred_names.get(module, [])
+        else:
+            fn = self.preferred_ids.get(module, [])
+    
         if not fn:
             return None
         return fn() if callable(fn) else fn

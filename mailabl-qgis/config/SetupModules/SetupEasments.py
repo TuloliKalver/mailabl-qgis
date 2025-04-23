@@ -8,9 +8,8 @@ from PyQt5.QtWidgets import (
 
 from ...KeelelisedMuutujad.modules import Module
 from ...utils.ComboBoxHelperX import ComboBoxTools
-from ...config.QGISSettingPaths import LayerSettings, SettingsLoader
 from ...config.SetupModules.SetupMainLayers import QGIS_items
-from ...config.settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad, SaveSettings, StartupSettingsLoader
+from ...config.settings import Filepaths, FilesByNames, StartupSettingsLoader
 from ...config.settings_new import PluginSettings
 from ...utils.ComboboxHelper import GetValuesFromComboBox
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
@@ -18,7 +17,7 @@ from ...utils.ComboboxHelper import ComboBoxHelper
 from ...utils.messagesHelper import ModernMessageDialog
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ...core.module.TypeManager import TypeModuleSetup
-
+from ...app.MainMenuController import SetupController
 
 
 
@@ -31,7 +30,7 @@ combo_handler = ComboBoxHelper()
 class SetupEasments:
     def __init__(self, parent) -> None:
         self.dialog = parent
-        self.loader = SaveSettings(parent)
+
         pass
     def load_easements_settings_widget(self):
 
@@ -74,7 +73,8 @@ class SetupEasments:
             module=Module.EASEMENT,
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_LAYER,
-            key_type=PluginSettings.WATER        )
+            key_type=PluginSettings.WATER        
+            )
 
         sewer_layer_name = PluginSettings.load_setting(
             module=Module.EASEMENT,
@@ -97,12 +97,14 @@ class SetupEasments:
             key_type=PluginSettings.DRAINAGE
         )
 
+
+
         QGIS_items.clear_and_add_layerNames_selected(widget.cbWater_Pipes, water_layer_name)
         QGIS_items.clear_and_add_layerNames_selected(widget.cbSewer_pipes, sewer_layer_name)
         QGIS_items.clear_and_add_layerNames_selected(widget.cbSewer_Pressure_pipes, pressure_sewer_layer_name)
         QGIS_items.clear_and_add_layerNames_selected(widget.cbDrainage_Pipes, drainage_layer_name)
 
-        # Populate the combo boxes using the populate_comboBox_smart method for statuses
+        # set statuses
         combo_handler.populate_comboBox_smart(
             comboBox=widget.cmbPreferredEasementStatuses,
             module=module,
@@ -110,7 +112,7 @@ class SetupEasments:
             preferred_items=False
         )
 
-        # Populate the combo boxes using the populate_comboBox_smart method for types
+        # set types
         combo_handler.populate_comboBox_smart(
             comboBox=widget.cbcb_PreferredEasementTypes,
             module=module,
@@ -118,8 +120,6 @@ class SetupEasments:
             preferred_items=True
         )
 
-    
-    
 
         # Connect buttons to dialog accept/reject
         widget.pbSave.clicked.connect(lambda: SetupEasments._handle_save(widget))
@@ -135,25 +135,23 @@ class SetupEasments:
             pressure_sewer_layer_name = ComboBoxTools.get_selected_item_name(widget.cbSewer_Pressure_pipes)
             drainage_layer_name = ComboBoxTools.get_selected_item_name(widget.cbDrainage_Pipes)
 
-            status_name = GetValuesFromComboBox._get_selected_status_name_from_combobox(widget.cmbPreferredEasementStatuses)
-            status_ids = GetValuesFromComboBox._get_selected_status_id_from_combobox(widget.cmbPreferredEasementStatuses)
-            
-            type_names = widget.cbcb_PreferredEasementTypes.checkedItems()
-            
-            types_text = ''
-            types_ids = ''
-            for i, item in enumerate(type_names):
-                if i % 1 == 0 and i > 0:
-                    types_text += ',\n'
-                    types_ids += ',\n'
-                elif i > 0:
-                    types_text += ', '
-                    types_ids += ','
-                types_text += item
-                types_ids += str(i)
+            status_name = GetValuesFromComboBox._get_selected_name_from_combobox(widget.cmbPreferredEasementStatuses)
+            status_ids = GetValuesFromComboBox._get_selected_id_from_combobox(widget.cmbPreferredEasementStatuses)
+
+
+            print(f"status name: {status_name}")
+            print(f"status ids: {status_ids}")
+
+            types_names = widget.cbcb_PreferredEasementTypes.checkedItems()
+            types_ids = []
+            comboBox = widget.cbcb_PreferredEasementTypes
+            for index in range(comboBox.count()):
+                if comboBox.itemCheckState(index) == Qt.Checked:
+                    types_ids.append(comboBox.itemData(index))
+
 
             self.save_easements_settings( 
-                                        types_text,
+                                        types_names,
                                         types_ids, 
                                         status_name, 
                                         status_ids,
@@ -162,8 +160,8 @@ class SetupEasments:
                                         pressure_sewer_layer_name,
                                         drainage_layer_name
                                         )
-
-
+            controller = SetupController(self.dialog)
+            controller.check_all_modules()
 
             widget.setAttribute(Qt.WA_DeleteOnClose)
             
@@ -178,10 +176,6 @@ class SetupEasments:
     def save_easements_settings(self, type_names, types_ids, status_name, status_ids, water_layer_name, sewer_layer_name, pressure_sewer_layer_name, drainage_layer_name):
         
         module = Module.EASEMENT
-        status_ids_int = int(status_ids[0]) if status_ids else None
-
-        print(f"id_s: {status_ids_int}")
-        print(f"easements types: {type_names}")
         
         PluginSettings.save_setting(
             module=module,
@@ -205,7 +199,7 @@ class SetupEasments:
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_STATUS,
             key_type=PluginSettings.SUB_CONTEXT_IDs,
-            value = status_ids_int
+            value = status_ids
             )
         PluginSettings.save_setting(
             module=module,
@@ -249,6 +243,7 @@ class SetupEasments:
         )
 
         StartupSettingsLoader.startup_label_loader(self)
+
 
 
 

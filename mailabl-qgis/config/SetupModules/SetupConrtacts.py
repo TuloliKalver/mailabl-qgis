@@ -49,8 +49,8 @@ class SetupConrtacts:
     def on_save_button_clicked(self, widget, statuses_combo_box, combo_box_checkable):
         # Handle logic when the save button is clicked
 
-        status_value_name = GetValuesFromComboBox._get_selected_status_name_from_combobox(statuses_combo_box)
-        status_value_ids = GetValuesFromComboBox._get_selected_status_id_from_combobox(statuses_combo_box)
+        status_value_name = GetValuesFromComboBox._get_selected_name_from_combobox(statuses_combo_box)
+        status_value_ids = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
         checked_indexes = combo_box_checkable.checkedItemsData()
         print(checked_indexes)
         selected_types = combo_box_checkable.checkedItems()

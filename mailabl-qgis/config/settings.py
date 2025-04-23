@@ -608,74 +608,6 @@ class StoredLayers:
         return active_layer
     
 
-class SaveSettings:
-    def __init__(self, dialog):
-        self.dialog = dialog
-        
-    def save_easements_settings(self, type_names, status_name, status_ids, water_layer_name, sewer_layer_name, pressure_sewer_layer_name, drainage_layer_name):
-        
-        module = Module.EASEMENT
-        status_ids_int = int(status_ids[0]) if status_ids else None
-        
-        print(f"id_s: {status_ids_int}")
-        print(f"easements types: {type_names}")
-        
-        PluginSettings.save_setting(
-            module=module,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_TYPE,
-            key_type=PluginSettings.SUB_CONTEXT_NAME,
-            value = type_names
-            )
-        PluginSettings.save_setting(
-            module=module,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_STATUS,
-            key_type=PluginSettings.SUB_CONTEXT_NAME,
-            value = status_ids_int
-            )
-        PluginSettings.save_setting(
-            module=module,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_STATUS,
-            key_type=PluginSettings.SUB_CONTEXT_NAME,
-            value = status_name
-            )
-        
-        PluginSettings.save_setting(
-            module=module,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_LAYER,
-            key_type=PluginSettings.WATER,
-            value = water_layer_name
-        )
-
-        PluginSettings.save_setting(
-            module=module,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_LAYER,
-            key_type=PluginSettings.SEWER,
-            value = sewer_layer_name
-        )
-
-
-        PluginSettings.save_setting(
-            module=module,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_LAYER,
-            key_type=PluginSettings.PRESSURE_SEWER,
-            value = pressure_sewer_layer_name
-        )
-        
-        PluginSettings.save_setting(
-            module=module,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_LAYER,
-            key_type=PluginSettings.DRAINAGE,
-            value = drainage_layer_name
-        )
-
-        StartupSettingsLoader.startup_label_loader(self)
 
 class StartupSettingsLoader:
     def __init__(cls, dialog):
@@ -683,15 +615,22 @@ class StartupSettingsLoader:
     def startup_label_loader(self):
 
         SettingsBuilder.initialize_settings()
+
         prefEasementTypeName = PluginSettings.load_setting(module = Module.EASEMENT,
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_TYPE,
-            key_type=PluginSettings.SUB_CONTEXT_NAME
+            key_type=PluginSettings.SUB_CONTEXT_NAME, 
+            text_fomated=True
         )
+        print(f"Easement Type Name of Names: {prefEasementTypeName}")
+        self.dialog.lblPreferredEasementsTypesValue.setText(prefEasementTypeName)
+
+
+
         prefContractTypeName = PluginSettings.load_setting(module = Module.CONTRACT,
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_TYPE,
-            key_type=PluginSettings.SUB_CONTEXT_NAME
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
         )
         prefABuiltTypeName = PluginSettings.load_setting(module = Module.TASK,
             context=PluginSettings.CONTEXT_PREFERRED,

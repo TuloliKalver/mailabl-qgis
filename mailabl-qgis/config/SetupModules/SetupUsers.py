@@ -43,7 +43,7 @@ class SetupUsers:
         cancel_button.clicked.connect(lambda: SetupUsers.on_cancel_button_clicked(self, widget))
     def on_save_button_clicked(self, widget, combobox):
 
-        page_name = GetValuesFromComboBox._get_selected_status_name_from_combobox(combobox)
+        page_name = GetValuesFromComboBox._get_selected_name_from_combobox(combobox)
         selected_index = WidgetInfo.get_selected_index(combobox)
 
         SettingsDataSaveAndLoad.save_user_prefered_startpage(self,selected_index, page_name)

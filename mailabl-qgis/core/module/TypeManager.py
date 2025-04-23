@@ -25,13 +25,39 @@ class TypeModuleSetup:
         }
 
         self.preferred_item_ids = {
-            Module.CONTRACT: lambda: SettingsDataSaveAndLoad().load_contracts_type_names(),    
+            Module.CONTRACT: lambda: PluginSettings.load_setting(module=Module.CONTRACT,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE, 
+                                                                key_type=s.SUB_CONTEXT_IDs),    
             Module.EASEMENT: lambda: PluginSettings.load_setting(module=Module.EASEMENT,
                                                                 context=s.CONTEXT_PREFERRED,
                                                                 subcontext=s.OPTION_TYPE, 
                                                                 key_type=s.SUB_CONTEXT_IDs),
-            Module.TASK: lambda: PluginSettings.load_setting(module=Module.TASK, option_type=PluginSettings.OPTION_TYPE_STATUS, use_ids=True)
+            Module.TASK: lambda: PluginSettings.load_setting(module=Module.TASK,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE, 
+                                                                key_type=s.SUB_CONTEXT_IDs)
         }
+
+        self.preferred_item_names = {
+            Module.CONTRACT: lambda: PluginSettings.load_setting(module=Module.CONTRACT,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE, 
+                                                                key_type=s.SUB_CONTEXT_NAME,
+                                                                ),    
+    
+            Module.EASEMENT: lambda: PluginSettings.load_setting(module=Module.EASEMENT,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE, 
+                                                                key_type=s.SUB_CONTEXT_NAME,
+                                                                ),
+            Module.TASK: lambda: PluginSettings.load_setting(module=Module.TASK,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE, 
+                                                                key_type=s.SUB_CONTEXT_NAME,
+                                                                )
+        }
+
 
 
     @staticmethod
@@ -63,9 +89,14 @@ class TypeModuleSetup:
 
 
 
-    def _get_preferred_item_ids(self, module):
+    def _get_preferred_item_ids_or_names(self, module, name=False):
         """Return a set of preferred item IDs for the given module."""
-        fn = self.preferred_item_ids.get(module, [])
+        
+        if name:
+            fn = self.preferred_item_names.get(module, [])
+        else:
+            fn = self.preferred_item_ids.get(module, [])
+    
         if not fn:
             return None
         return fn() if callable(fn) else fn

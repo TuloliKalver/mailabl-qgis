@@ -109,8 +109,8 @@ class SetupProjects:
 
 
 
-        status_value_id = GetValuesFromComboBox._get_selected_status_id_from_combobox(combo_box)
-        status_value_name = GetValuesFromComboBox._get_selected_status_name_from_combobox(combo_box)
+        status_value_id = GetValuesFromComboBox._get_selected_id_from_combobox(combo_box)
+        status_value_name = GetValuesFromComboBox._get_selected_name_from_combobox(combo_box)
         SettingsDataSaveAndLoad.save_preferred_projects_status_id(self, status_value_id, status_value_name, project_status_label)
         prefered_folder_name_structure = widget.lblPreferedFolderNamStructure.text()
         SettingsDataSaveAndLoad.save_projects_folder_preferred_name_structure(self, prefered_folder_name_structure)
