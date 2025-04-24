@@ -170,8 +170,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.label_5.setVisible(False)
         self.wOlAndmed_LabelHolder.setVisible(False)
-        #self.pbAddDrawings.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_AddDrawings_FrontPage(self))
-        #self.pbAddDrawings.setEnabled(True)
+        self.pbAddDrawings.setEnabled(False)
+
+        
             
         """Setup button-action mapping and connections."""
         self.properties_actions = {
@@ -200,7 +201,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         }
 
         for button,_ in self.test_buttons.items():
-            button.setVisible(True)
+            button.setVisible(False)
 
         for button, function in self.test_buttons.items():
             button.clicked.connect(function)
@@ -235,6 +236,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
+        self.pbMailabl.setVisible(False)
+        self.label_5.setVisible(False)
+        self.pushButton.setVisible(False)
+
         self.pbUserPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_terms_of_use))
         self.pbPrivacyPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_privacy_policy))
                 
