@@ -21,6 +21,8 @@ class PluginSettings:
     PRESSURE_SEWER = "pressureSewer"
     DRAINAGE = "drainage"
     PROJECTS_LAYER = "projects"
+    ASBUILT_LAYER = "asbuilt"
+    CHECKBOXVALUE = "checkboxValue"
 
     #Sample name logicks 
     #/Mailabl/Setting/labels/specification/preferred/status/names
@@ -49,7 +51,7 @@ class PluginSettings:
     
     @staticmethod
     def clear_setting(module):
-        for option_type in [PluginSettings.OPTION_TYPE_STATUS, PluginSettings.OPTION_TYPE]:
+        for option_type in [PluginSettings.OPTION_STATUS, PluginSettings.OPTION_TYPE]:
             key = PluginSettings.settings_address(module, option_type)
             QgsSettings().remove(key)
 

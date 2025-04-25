@@ -1,5 +1,6 @@
 from ..app.workspace_handler import WorkSpaceHandler
 from ..app.MainMenuController import MenuModules
+from ..KeelelisedMuutujad.modules import Module
 
 class WidgetInfo:
     @staticmethod
@@ -64,7 +65,7 @@ class WidgetInfo:
             0: lambda: WorkSpaceHandler.swWorkSpace_Easements(self),
             1: None,
             2: lambda: WorkSpaceHandler.swWorkSpace_Contracts(self),
-            3: lambda: WorkSpaceHandler.swWorkSpace_Controller(self, MenuModules.TEOSTUS),
+            3: lambda: WorkSpaceHandler.swWorkSpace_Controller(self, menu_module=MenuModules.TEOSTUS, module=Module.ASBUILT),
             4: None,
             5: lambda: WorkSpaceHandler.swWorkSpace_Home(self),
             6: None,

@@ -463,6 +463,8 @@ class SettingsDataSaveAndLoad:
         return value
     
 
+
+
 class StoredLayers:    
     def users_properties_layer_name():
         active_layer = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -482,6 +484,9 @@ class StartupSettingsLoader:
 
         SettingsBuilder.initialize_settings()
 
+        StartupSettingsLoader.load_drawings_settings(self)
+
+
         prefEasementTypeName = PluginSettings.load_setting(module = Module.EASEMENT,
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_TYPE,
@@ -498,15 +503,8 @@ class StartupSettingsLoader:
             text_fomated=True
         )
 
-        prefABuiltTypeName = PluginSettings.load_setting(module = Module.TASK,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_TYPE,
-            key_type=PluginSettings.SUB_CONTEXT_NAME
-        )
-
         self.dialog.lblPreferredEasementsTypesValue.setText(prefEasementTypeName)
         self.dialog.lblPreferredContractsTypesValue.setText(prefContractTypeName)
-        self.dialog.lblTesotusActionsValue.setText(prefABuiltTypeName)
 
         prefEasementStatusName = PluginSettings.load_setting(module = Module.EASEMENT,
             context=PluginSettings.CONTEXT_PREFERRED,
@@ -533,7 +531,6 @@ class StartupSettingsLoader:
 
         self.dialog.lblPreferredProjectStatusValue.setText(prefProjectStatusName)
         self.dialog.lblPreferredContractStatusValue.setText(prefContractsStatusName)
-        self.dialog.lblTeostusPreferredStatusesValue.setText(prefAsbuiltStatusName)
         self.dialog.lblPreferredEasementsStatusValue.setText(prefEasementStatusName)
 
 
@@ -576,6 +573,8 @@ class StartupSettingsLoader:
             subcontext=PluginSettings.OPTION_LAYER,
             key_type=PluginSettings.PROJECTS_LAYER,
         )
+
+
         self.dialog.lblLayerProjectsValue.setText(projects_label_value)
 
         current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
@@ -610,3 +609,65 @@ class StartupSettingsLoader:
         self.dialog.lblLayerProjectsBaseValue.setText("Määramata*")
         self.dialog.lblLayerProjectsBaseValue.setEnabled(False)
 
+
+
+    def load_drawings_settings(self):
+        module = Module.ASBUILT
+
+        status_name = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            )
+
+        AsbuiltLayer = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.ASBUILT_LAYER
+        )
+
+        types_names = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            text_fomated=True
+        )
+
+
+        folder = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.CONTEXT_FOLDER,
+        )
+
+        value = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.CONTEXT_FOLDER,
+            key_type=PluginSettings.CHECKBOXVALUE,
+        )
+
+
+        if value == "false":
+            value = False
+        elif value == "true":
+            value = True
+
+
+        print(f"status name {status_name}")
+        print(f"Asbuilt Layer {AsbuiltLayer}")
+
+        self.dialog.cbPartOfProject.setChecked(value)
+
+        
+        self.dialog.lblTeostusPreferredStatusesValue.setText(status_name)
+        self.dialog.lblTeostusMapLayerValue.setText(AsbuiltLayer)
+       
+        self.dialog.lblTesotusActionsValue.setText(types_names)
+        self.dialog.lblTeostusFolderNameValue.setText(folder)
+        
+
+        

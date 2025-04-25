@@ -29,7 +29,6 @@ combo_handler = ComboBoxHelper()
 
 
 class SetupProjects:
-
     def __init__(self, parent) -> None:
         self.dialog = parent
     def load_project_settings_widget(self):
@@ -141,10 +140,6 @@ class SetupProjects:
 
         result = widget.exec_()
         if result == QDialog.Accepted:
-            # Handle logic when the save button is clicked
-            #lblProjectsTargetFolderValue = self.lblProjectsTargetFolderValue
-            #lblProjectsFolderValue = self.lblProjectsFolderValue
-            #lblPreferredFolderNameValue = self.lblPreferredFolderNameValue
 
 
             status_ids = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)

@@ -4526,7 +4526,7 @@ p, li { white-space: pre-wrap; }
                       <property name="geometry">
                        <rect>
                         <x>0</x>
-                        <y>-219</y>
+                        <y>-407</y>
                         <width>914</width>
                         <height>1124</height>
                        </rect>
@@ -6397,6 +6397,9 @@ p, li { white-space: pre-wrap; }
                                      </property>
                                      <property name="text">
                                       <string>Määramata</string>
+                                     </property>
+                                     <property name="wordWrap">
+                                      <bool>true</bool>
                                      </property>
                                     </widget>
                                    </item>

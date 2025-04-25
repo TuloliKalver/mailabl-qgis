@@ -38,7 +38,7 @@ from .config.SetupModules.SetupProjects import SetupProjects
 from .config.SetupModules.SetupConrtacts import SetupConrtacts
 from .config.SetupModules.SetupEasments import SetupEasments
 from .config.SetupModules.SetupUsers import SetupUsers
-from .config.SetupModules.AsBultSetup import SetupASBuilt
+from .config.SetupModules.AsBuitSettings import AsBuiltDrawings
 
 from .app.MainMenuController import SetupController
 
@@ -170,9 +170,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         
         self.label_5.setVisible(False)
         self.wOlAndmed_LabelHolder.setVisible(False)
-        self.pbAddDrawings.setEnabled(False)
-
         
+
+
             
         """Setup button-action mapping and connections."""
         self.properties_actions = {
@@ -250,8 +250,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSettingsSetupEasements.clicked.connect(lambda:setupEasments.load_easements_settings_widget())
         self.pbUserSettings.clicked.connect(lambda: SetupUsers.load_user_settings_widget(self))
 
-        asBuiltLoader = SetupASBuilt(self)  # Assuming `self` is a QDialog or QWidget
-        self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_settings_widget())
+        asBuiltLoader = AsBuiltDrawings(self)  # Assuming `self` is a QDialog or QWidget
+        self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_construction_drawings_setup_widget())
 
         self.lblPhotosValue.setEnabled(False)
         self.lblPhtosText.setEnabled(False)

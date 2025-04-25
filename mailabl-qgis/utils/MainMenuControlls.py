@@ -9,7 +9,7 @@ class MainMenuControlls:
         self.pbContracts = dialog.pbContracts
         self.pbeasements = dialog.pbeasements
         self.pbMapThemes = dialog.pbMapThemes
-        #self.pbAddDrawings = dialog.pbAddDrawings
+        self.pbAddDrawings = dialog.pbAddDrawings
 
         # Keep track of last clicked button
         self.active_button = None
@@ -21,7 +21,7 @@ class MainMenuControlls:
             self.pbContracts: lambda: WorkSpaceHandler.swWorkSpace_Contracts(self.dialog),
             self.pbeasements: lambda: WorkSpaceHandler.swWorkSpace_Easements(self.dialog),
             self.pbMapThemes: lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self.dialog),
-            #self.pbAddDrawings: lambda: WorkSpaceHandler.swWorkSpace_Controller(self.dialog, module=MenuModules.TEOSTUS)
+            self.pbAddDrawings: lambda: WorkSpaceHandler.swWorkSpace_Controller(self.dialog, menu_module=MenuModules.TEOSTUS)
         }
 
         # Connect each button to a wrapper that handles activation

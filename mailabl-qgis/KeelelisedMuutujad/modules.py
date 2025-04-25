@@ -13,9 +13,11 @@ class Module:
     USER = "me"
     TAGS = "tags"
     STATUSES = "statuses"
+    ASBUILT = "task"
+
 
     all_modules = [CONTRACT, PROJECT, TASK, COORDINATION, LETTER,
-                    SPECIFICATION, EASEMENT, ORDINANCE, SUBMISSION]
+                    SPECIFICATION, EASEMENT, ORDINANCE, SUBMISSION, ASBUILT]
 
 class Languages:
     ESTONIA = "Eesti"

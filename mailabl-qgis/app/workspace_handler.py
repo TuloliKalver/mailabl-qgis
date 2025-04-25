@@ -25,15 +25,20 @@ combo_handler = ComboBoxHelper()
 class WorkSpaceHandler:
 
 
-    def swWorkSpace_Controller(self, module):
+    def swWorkSpace_Controller(self, menu_module, module):
+        #menu_module controlls menu and flows between modules
+        #Module is to load the data from the 
         
-        self.swWorkSpace.setCurrentIndex(module)
+        self.swWorkSpace.setCurrentIndex(menu_module)
         # 👇 Correct usage — use the stored instance!
-        res = WorkSpaceHandler.check_if_settings_are_set(self, module)
+        res = WorkSpaceHandler.check_if_settings_are_set(self, menu_module)
         if res is False:
             return
-        else:
-            pass
+        
+        
+        
+
+
 
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
