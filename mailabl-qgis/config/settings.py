@@ -656,13 +656,8 @@ class StartupSettingsLoader:
         elif value == "true":
             value = True
 
-
-        print(f"status name {status_name}")
-        print(f"Asbuilt Layer {AsbuiltLayer}")
-
         self.dialog.cbPartOfProject.setChecked(value)
 
-        
         self.dialog.lblTeostusPreferredStatusesValue.setText(status_name)
         self.dialog.lblTeostusMapLayerValue.setText(AsbuiltLayer)
        

@@ -102,7 +102,7 @@ class GraphqlTags:
 
 class GraphqlTasks:
     TYPES = 'task_types.graphql'
-
+    AsBUILT = "AsBuiltTasks.graphql"
 class GraphqlStatuses:
     STATUSES = 'statuses.graphql'
 

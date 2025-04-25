@@ -5,12 +5,14 @@
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from ..Functions.Contracts.Contracts import ContractsMain
 from ..Functions.Easements.Easements import EasementssMain
+from ..Functions.AsBuilt.ASBuilt import AsBuiltMain
 from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..config.SetupModules.SetupEasments import SetupEasments
 from ..config.SetupModules.SetupConrtacts import SetupConrtacts
 from ..config.SetupModules.SetupProjects import SetupProjects
+from ..config.SetupModules.AsBuitSettings import AsBuiltDrawings
 from .MainMenuController import SetupController, MenuModules
 from ..utils.ComboboxHelper import ComboBoxHelper
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
@@ -27,15 +29,50 @@ class WorkSpaceHandler:
 
     def swWorkSpace_Controller(self, menu_module, module):
         #menu_module controlls menu and flows between modules
-        #Module is to load the data from the 
-        
+        #Module is to load the data from the
+        button = self.pbAddDrawings
+        table = self.tblAsBuilt
+
         self.swWorkSpace.setCurrentIndex(menu_module)
-        # 👇 Correct usage — use the stored instance!
         res = WorkSpaceHandler.check_if_settings_are_set(self, menu_module)
         if res is False:
+            setupEasments = AsBuiltDrawings(self)
+            setupEasments.load_construction_drawings_setup_widget()
+            button.setEnabled(True)
+            button.blockSignals(False)
             return
-        
-        
+
+
+        # Add statuses to the combobox and set the preferred status
+        statuses_combo_box = self.cmbTeostusStatuses
+        combo_handler.populate_comboBox_smart(
+            comboBox=statuses_combo_box,
+            button=button,
+            module=module,
+            context=self,
+            preferred_items=False
+        )
+
+        # Add types to the combobox and set the preferred     
+        types_combo_box = self.cmbTesotusTypes
+        combo_handler.populate_comboBox_smart(
+            comboBox=types_combo_box,
+            button=button,
+            module=module,
+            context=self,
+            preferred_items=True
+        )                
+
+        selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
+        prefered_types_ids = types_combo_box.checkedItemsData()
+
+        AsBuiltMain.load_main_AsBuilt_by_type_and_status(self,
+                                                             table=table,
+                                                             types=prefered_types_ids,
+                                                             statuses=selected_status
+                                                             )
+                
+        button.blockSignals(False)
         
 
 
@@ -202,7 +239,6 @@ class WorkSpaceHandler:
         selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
         prefered_types_ids = types_combo_box.checkedItemsData()
 
-        print(f"prefered types ids before load: {prefered_types_ids}")
         EasementssMain.load_main_easements_by_type_and_status(self, table, prefered_types_ids, selected_status)
         button.blockSignals(False)
 

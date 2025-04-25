@@ -1645,7 +1645,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>4</number>
+                  <number>3</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -4432,7 +4432,7 @@ p, li { white-space: pre-wrap; }
                        </widget>
                       </item>
                       <item>
-                       <widget class="QFrame" name="frProjectsMainData_2">
+                       <widget class="QFrame" name="frAsbuitTable">
                         <property name="styleSheet">
                          <string notr="true">QFrame{
 	background-color: #1a2026;
@@ -4453,7 +4453,7 @@ p, li { white-space: pre-wrap; }
                           <number>0</number>
                          </property>
                          <item>
-                          <widget class="QTableView" name="tblMailabl_projects_2">
+                          <widget class="QTableView" name="tblAsBuilt">
                            <property name="styleSheet">
                             <string notr="true"/>
                            </property>
