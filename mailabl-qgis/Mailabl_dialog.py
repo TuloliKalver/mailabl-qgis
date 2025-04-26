@@ -201,7 +201,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         }
 
         for button,_ in self.test_buttons.items():
-            button.setVisible(False)
+            button.setVisible(True)
 
         for button, function in self.test_buttons.items():
             button.clicked.connect(function)
@@ -240,7 +240,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
         self.pbMailabl.setVisible(False)
         self.label_5.setVisible(False)
-        self.pushButton.setVisible(False)
 
         self.pbUserPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_terms_of_use))
         self.pbPrivacyPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_privacy_policy))

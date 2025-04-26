@@ -655,6 +655,9 @@ class StartupSettingsLoader:
             value = False
         elif value == "true":
             value = True
+        elif   value == "Määramata":
+            value = False
+
 
         self.dialog.cbPartOfProject.setChecked(value)
 
