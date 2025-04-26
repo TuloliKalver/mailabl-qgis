@@ -15,6 +15,9 @@ from ...config.iconHandler import iconHandler
 from ...config.settings import Filepaths, IconsByName, OpenLink, MailablWebModules
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...KeelelisedMuutujad.modules import Module
+from ..TableUtilys.FlagIconHelper import FlagIconHelper
+
+
 class CustomRoles:
     # custom roles for the delegate to use in the view
     BackgroundColor = Qt.UserRole + 10
@@ -143,7 +146,8 @@ class SelectByModuleElementsOnMapDelegate(QStyledItemDelegate):
                 if id_value is not None and self.module in {
                                                 Module.PROJECT, 
                                                 Module.CONTRACT, 
-                                                Module.EASEMENT
+                                                Module.EASEMENT,
+                                                Module.ASBUILT
                                             }:
                     fetcher = PropertiesModuleFetcher(id_value=id_value, module=self.module)
                     values = fetcher._fetch_properties_cadastral_numbers()
@@ -187,11 +191,60 @@ class OpenMailablItemByModule(QStyledItemDelegate):
         response = requests.get(link, verify=False)
         webbrowser.open(response.url)
 
+
+class FlagsDelegate(QStyledItemDelegate):
+    def __init__(self, file_column_index, parent=None):
+        super().__init__(parent)
+        self.file_column_index = file_column_index
+
+    def get_priority_color(self, priority: str) -> str:
+        """
+        Map priority values to colors.
+        """
+        priority = (priority or "").lower()  # Safe handling
+        mapping = {
+            "urgent": "#FF0000",   # Red
+            "high": "#FF8000",     # Orange
+            "medium": "#FFD700",   # Gold / Yellow
+            "low": "#00CC00",      # Green
+        }
+        return mapping.get(priority, "#CCCCCC")  # Default gray if unknown
+
+    def paint(self, painter, option, index):
+        file_index = index.model().index(index.row(), self.file_column_index)
+        priority = file_index.data()  # 🔥 Fetch the priority value
+        color = self.get_priority_color(priority)  # 🔥 Decide color dynamically
+
+        icon = FlagIconHelper.generate_icon(color=color, size=18)  # 🔥 Create fresh with correct color!
+
+        painter.save()
+        painter.setRenderHint(painter.Antialiasing)
+
+        # Icon size and position
+        icon_size = min(option.rect.width(), option.rect.height()) - 4
+        x = option.rect.x() + (option.rect.width() - icon_size) // 2
+        y = option.rect.y() + (option.rect.height() - icon_size) // 2
+        icon_rect = QRect(x, y, icon_size, icon_size)
+
+        icon.paint(painter, icon_rect, Qt.AlignCenter)
+
+        painter.restore()
+
+
+
+
+
 class DelegatesForTables():
     @staticmethod
     def setup_delegates_by_module(table, header_labels, module, language="et"):
         display_headers = TableHeaders_new(language)
-    
+
+        if module == Module.ASBUILT:
+            flagColumnIndex = header_labels.index(display_headers[HeaderKeys.HEADER_FLAG])
+            flag_delegate = FlagsDelegate(flagColumnIndex, table)
+            table.setItemDelegateForColumn(flagColumnIndex, flag_delegate)
+
+
         ID_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_ID])
         webButton_Column_index = header_labels.index(display_headers[HeaderKeys.HEADER_WEB_LINK_BUTTON])
         dokAddress_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_DOCUMENTS])
@@ -211,3 +264,5 @@ class DelegatesForTables():
         table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
 
         table.setItemDelegateForColumn(status_column_index, FancyStatusDelegate(color_column_index))
+
+

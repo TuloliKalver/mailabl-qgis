@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QCoreApplication
-from ..FileLoaderHelper import GraphqlProjects, GraphQLQueryLoader, GraphqlContracts, GraphqlEasements
+from ..FileLoaderHelper import GraphqlProjects, GraphQLQueryLoader, GraphqlContracts, GraphqlEasements, GraphqlTasks
 from ..query_tools import requestBuilder
 from ...python.responses import JsonResponseHandler, GetValuFromEdge
 from ...python.responses import HandlePropertiesResponses
@@ -41,6 +41,9 @@ class PropertiesModuleFetcher:
         self.items_to_fetch = "properties"
         self.path = [module, self.items_to_fetch]
 
+        print(f"id_value: {id_value}, module: {module}")
+        print(f"query: {self.query}")
+
     def _load_query_by_module_for_froperties(self):
         """
         Loads the appropriate GraphQL query based on the selected module.
@@ -61,9 +64,15 @@ class PropertiesModuleFetcher:
             query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)
             return query
         elif self.module == Module.EASEMENT:
-            query_name = GraphqlEasements.Q_WHERE_EASEMENT_RELATED_PROPERTYS
+            query_name = GraphqlEasements.RELATED_PROPERTIES
             query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)  
             return query
+        
+        elif self.module == Module.ASBUILT:
+            query_name = GraphqlTasks.RELATED_PROPERTIES
+            query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)  
+            return query
+
         else:
             raise ValueError(f"Invalid module: {self.module}")
 
@@ -88,7 +97,7 @@ class PropertiesModuleFetcher:
                 "propertiesAfter": end_cursor if end_cursor else None,
                 "id": self.id_value
             }
-
+            #print(f"query before send: {self.query}")
             response = requestBuilder.construct_and_send_request(self.query, variables)
             QCoreApplication.processEvents()
 

@@ -12,7 +12,7 @@ class getEasementsWhere:
 
         module = Module.EASEMENT
 
-        query_name = GraphqlEasements.Q_WHERE_EASEMENT_RELATED_PROPERTYS
+        query_name = GraphqlEasements.RELATED_PROPERTIES
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)  
 
         

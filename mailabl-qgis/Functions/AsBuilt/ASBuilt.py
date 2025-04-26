@@ -30,7 +30,7 @@ class AsBuiltMain:
     @staticmethod
     def load_main_AsBuilt_by_type_and_status (self, table, types, statuses, language="et"):
         #Adding progress
-        module = Module.CONTRACT
+        module = Module.ASBUILT
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
         progress.update(1, purpouse="Teostuste laadimine", text1="Palun oota...")
         model = AsBuiltModels._model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language=language)
@@ -46,12 +46,12 @@ class AsBuiltMain:
         progress.close()
         
     @staticmethod
-    def load_AsBuilt_by_query (query, table, language="et"):
-        module = Module.CONTRACT
+    def load_asBuilt_by_query (query, table, language="et"):
+        module = Module.ASBUILT
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
         progress.update(1, purpouse="Lepingute laadimine", text1="Palun oota...")
 
-        model = AsBuiltModels._model_for_contract_search_results(query, language)
+        model = AsBuiltModels._model_for_asBuilt_search_results(query, language)
 
         if model is not None:
             progress.update(50)
@@ -68,24 +68,24 @@ class AsBuiltModels:
     def _model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language):
 
         data = AsBuiltQueries._query_AsBuilt_by_type_status_elements(self, types, statuses)
-        model = DataModelBuilder.build_model_from_records(data, language)
+        model = DataModelBuilder.build_model_from_records(data, language, module = Module.ASBUILT)
         return model
 
     @staticmethod
-    def _model_for_contract_search_results(contract_number, language):
+    def _model_for_asBuilt_search_results(name, language):
         # Set header labels
        
-        data = AsBuiltQueries._query_AsBuilt_by_number(contract_number)
-        model = DataModelBuilder.build_model_from_records(data, language)
+        data = AsBuiltQueries._query_AsBuilt_by_name(name)
+        model = DataModelBuilder.build_model_from_records(data, language, module = Module.ASBUILT)
         return model
 
 
 class AsBuiltQueries:
 
     @staticmethod
-    def _query_AsBuilt_by_number(contract_number):
-        module = Module.CONTRACT
-        query_name =  None
+    def _query_AsBuilt_by_name(name):
+        module = Module.ASBUILT
+        query_name =  GraphqlTasks.AsBUILT
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
         desired_total_items = None  # Adjust this to your desired value
         items_for_page = 50  # Adjust this to your desired value
@@ -100,7 +100,7 @@ class AsBuiltQueries:
                 "after": end_cursor if end_cursor else None,
                 "where": {
                     "AND": [
-                        {"column": "NUMBER", "operator": "IN", "value": [contract_number]}
+                        {"column": "TITLE", "operator": "LIKE", "value": [f"{name}%"]}
                     ]
                 }
             }
@@ -109,10 +109,10 @@ class AsBuiltQueries:
 
             if response.status_code == 200:
                 data = response.json()
-                #print("data")
-                #print(data)
-                fetched_data = data.get("data", {}).get("AsBuilt", {}).get("edges", [])
-                pageInfo = data.get("data", {}).get("AsBuilt", {}).get("pageInfo", {})
+                print("data")
+                print(data)
+                fetched_data = data.get("data", {}).get(f"{module}s", {}).get("edges", [])
+                pageInfo = data.get("data", {}).get(f"{module}s", {}).get("pageInfo", {})
                 #print(f"propesties_end_cursor: '{properties_end_cursor}'")
                 end_cursor = pageInfo.get("endCursor")
                 hasNextPage = pageInfo.get("hasNextPage")

@@ -6,7 +6,7 @@ from ....utils.messagesHelper import ModernMessageDialog
 from ....KeelelisedMuutujad.messages import Headings, InfoTexts
 from ....KeelelisedMuutujad.modules import Module
 from ....utils.ProgressHelper import ProgressDialogModern
-from ..FileLoaderHelper import GraphqlEasements, GraphQLQueryLoader, GraphqlContracts, GraphqlProjects
+from ..FileLoaderHelper import GraphqlEasements, GraphQLQueryLoader, GraphqlContracts, GraphqlProjects, GraphqlTasks
 
 
 
@@ -30,6 +30,8 @@ class ConnectElementWithPropertysties:
             query_name = GraphqlContracts.UPDATE_CONTRACT_PROPERTIES
         elif module == Module.EASEMENT:
             query_name = GraphqlEasements.UPDATE_EASEMENTS_PROPERTIES
+        elif module == Module.ASBUILT:
+            query_name = GraphqlTasks.UPDATE_TASK_PROPERTIES
         else:
             ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER("Viga", "Moodulile {moddule}")
             return
@@ -93,7 +95,7 @@ class ConnectElementWithPropertysties:
             return [{
                 "id": property_id,
                     }]
-        elif module in (Module.PROJECT, Module.CONTRACT):
+        elif module in (Module.PROJECT, Module.CONTRACT, Module.ASBUILT):
             return [property_id]
         else:
             raise ValueError(f"Unsupported module type: {module}")

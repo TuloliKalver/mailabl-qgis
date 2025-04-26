@@ -33,7 +33,8 @@ class ModuleTranslation:
         Module.SPECIFICATION: {Languages.ESTONIA: "Tingimused", Languages.LATVIA: "Specifikācijas"},
         Module.EASEMENT: {Languages.ESTONIA: "Servituudid", Languages.LATVIA: "Apgrūtinājumi"},
         Module.ORDINANCE: {Languages.ESTONIA: "Käskkirjad", Languages.LATVIA: "Rīkojumi"},
-        Module.SUBMISSION: {Languages.ESTONIA: "Avaldused", Languages.LATVIA: "Iesniegumi"}
+        Module.SUBMISSION: {Languages.ESTONIA: "Avaldused", Languages.LATVIA: "Iesniegumi"},
+        Module.ASBUILT: {Languages.ESTONIA: "Teostusjoonised", Languages.LATVIA: "Asbuilt"}
     }
 
     translations_singular = {
@@ -45,7 +46,8 @@ class ModuleTranslation:
         Module.SPECIFICATION: {Languages.ESTONIA: "Tingimuse", Languages.LATVIA: "Specifikācija"},
         Module.EASEMENT: {Languages.ESTONIA: "Servituudi", Languages.LATVIA: "Apgrūtinājums"},
         Module.ORDINANCE: {Languages.ESTONIA: "Käskkirja", Languages.LATVIA: "Rīkojums"},
-        Module.SUBMISSION: {Languages.ESTONIA: "Avalduse", Languages.LATVIA: "Iesniegums"}
+        Module.SUBMISSION: {Languages.ESTONIA: "Avalduse", Languages.LATVIA: "Iesniegums"},
+        Module.ASBUILT: {Languages.ESTONIA: "Teostusjoonis", Languages.LATVIA: "Asbuilt"}
     }
 
     @staticmethod

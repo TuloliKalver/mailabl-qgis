@@ -269,7 +269,7 @@ class ProjectModelBuilders:
         df_data = []
         for project_data in data_optimal:
             node = project_data #seams that we are gettin edges as nodes here
-            df_data.append(DataExtractor.extract_row_data_from_node(node, language=language))
+            df_data.append(DataExtractor.extract_row_data_from_node(node, language=language, module=module))
 
             QCoreApplication.processEvents()
             df = pd.DataFrame(df_data)

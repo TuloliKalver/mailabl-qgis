@@ -222,7 +222,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         self.pbRefreshEasementTable.clicked.connect(lambda: WorkSpaceHandler.easements_reload(self))
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
-        
+        self.pbRefreshTesotusTable.clicked.connect(lambda: WorkSpaceHandler.asBuilt_reload(self))
+
+
         self.pbMapThemes.setEnabled(False)
 
     
@@ -259,7 +261,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSearchProjects.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.PROJECT))
         self.pbSearchContracts.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.CONTRACT))
         self.pbSearcheasements.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.EASEMENT))
-        
+        self.pbSearchTesotus.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.ASBUILT))
 
         self.pbMainMenu.clicked.connect(self.handleSidebar_leftButtons)
         

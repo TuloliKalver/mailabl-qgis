@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QItemSelectionModel, QCoreApplication
 from PyQt5.QtGui import QFontMetrics, QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QTableView
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
-from .TableHEaderIndexMap import HeaderIndexMap
+from .TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap
 from ...utils.ProgressHelper import ProgressDialogModern
 
 class TableHelper:
@@ -311,6 +311,20 @@ class TableUtils:
             reziser.resizeColumnByIndex(col)
         reziser.resizeColumnByIndex(index_map[HeaderKeys.HEADER_STATUSES], status=True)
 
+
+    @staticmethod
+    def _resize_asBuilt_columns(resizer, index_map: AsBuiltHeaderIndexMap,  language: str="et"):
+        TableHeaders_new(language)
+        for col in [
+            index_map[HeaderKeys.HEADER_DEADLINE],
+            index_map[HeaderKeys.HEADER_RESPONSIBLE],
+        ]:
+            resizer.resizeColumnByIndex(col)
+        resizer.resizeColumnByIndex(index_map[HeaderKeys.HEADER_STATUSES], status=True)
+
+
+
+
     @staticmethod
     def _resize_icon_columns(resizer, index_map: HeaderIndexMap, language: str="et"):
         TableHeaders_new(language)
@@ -325,6 +339,24 @@ class TableUtils:
         widths = [0, 250, 0, 10, 10, 10]
         indexes = [index_map[key] for key in columns]
         resizer.setColumnWidths(indexes, widths)
+
+    @staticmethod
+    def _resize_asBuilt_icon_columns(resizer, index_map: HeaderIndexMap, language: str="et"):
+        TableHeaders_new(language)
+        columns = [
+            HeaderKeys.HEADER_ID,
+            HeaderKeys.HEADER_FLAG,
+            HeaderKeys.HEADER_TYPE,
+            HeaderKeys.HEADER_NAME,
+            HeaderKeys.HEADER_PROPERTY_NUMBER,
+            HeaderKeys.HEADER_WEB_LINK_BUTTON,
+            HeaderKeys.HEADER_FILE_PATH,
+            HeaderKeys.HEADER_PROPERTIES_ICON,
+        ]
+        widths = [0, 10, 150, 250, 0, 10, 10, 10]
+        indexes = [index_map[key] for key in columns]
+        resizer.setColumnWidths(indexes, widths)
+
 
 class TableExtractor:
     def __init__(self) -> None:
@@ -345,7 +377,7 @@ class TableExtractor:
         table_headers = []
         if model is not None:
             for column in range(model.columnCount()):
-                header_label = model.headerData(column, Qt.Horizontal, Qt.DisplayRole)
+                header_label = model.headerData(column, Qt.Horizontal, Qt.DisplayRole) 
                 table_headers.append(header_label)
         return table_headers
     

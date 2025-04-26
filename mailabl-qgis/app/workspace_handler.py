@@ -75,6 +75,43 @@ class WorkSpaceHandler:
         button.blockSignals(False)
         
 
+    def asBuilt_reload(self):
+        button = self.pbRefreshTesotusTable
+        button.blockSignals(True)
+        
+        table = self.tblAsBuilt       # Assuming 'table' is your QTableView object
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
+        cmb_status = self.cmbTeostusStatuses
+        statusValue = GetValuesFromComboBox._get_selected_id_from_combobox(cmb_status)
+
+        cmb_types = self.cmbTesotusTypes
+        selected_types_ids = cmb_types.checkedItemsData()
+        
+        AsBuiltMain.load_main_AsBuilt_by_type_and_status(self,
+                                                             table=table,
+                                                             types=selected_types_ids,
+                                                             statuses=statusValue
+                                                             )
+                
+        button.blockSignals(False)
+
+    def asBuilt_search(self):
+        button = self.pbSearchTesotus
+        button.blockSignals(True)
+        search_text = self.le_searchTesotus.text().strip()
+        table = self.tblAsBuilt
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
+
+        AsBuiltMain.load_asBuilt_by_query(self, table, search_text)
+
+        button.blockSignals(False)
+
+
+
 
 
     @staticmethod

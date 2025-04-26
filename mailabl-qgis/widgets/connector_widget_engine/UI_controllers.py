@@ -13,6 +13,8 @@ from ...KeelelisedMuutujad.modules import Module, ModuleTranslation, Languages
 from ...KeelelisedMuutujad.messages import InfoTexts, Headings
 from ...utils.messagesHelper import ModernMessageDialog
 from ...queries.python.update_relations.updateElementProperties import ConnectElementWithPropertysties
+from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
+from ...utils.TableUtilys.TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap
 
 language = Languages.ESTONIA
 
@@ -35,16 +37,16 @@ class PropertiesConnector(QObject):
         self.widget = None
 
         global selection_monitor
+
         widget_file = FilesByNames().add_properties_to_module_ui
         ui_file_path = Filepaths._get_widget_name(widget_file)
-        print(f"UI file path: {ui_file_path}")
+
         widget = loadUi(ui_file_path)
         
         widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
         widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
         widget.setAttribute(Qt.WA_TranslucentBackground)
         widget.setAttribute(Qt.WA_DeleteOnClose)
-
 
 
         drag_frame = widget.findChild(QFrame, "dragFrame")  # if it's a QFrame
@@ -69,6 +71,10 @@ class PropertiesConnector(QObject):
             if module == Module.EASEMENT:
                 self.module = Module.CONTRACT
                 module_text = ModuleTranslation.module_name(module,language, plural=False)
+            if module == Module.ASBUILT:
+                self.module = Module.ASBUILT
+                module_text = ModuleTranslation.module_name(module, language, plural=False)
+
 
         selection_monitor = None
         flag = True
@@ -95,14 +101,9 @@ class PropertiesConnector(QObject):
                 #widget.showMinimized()  
 
 
-        input_headers, module_headers = WidgetLabels.widget_label_elements(widget, self.table, module_text)    
-        name_column_index = input_headers.index(module_headers.header_name)
-        element_name = TableExtractor._value_from_selected_row_by_column(self.table, name_column_index)
-
-        id_column_index = input_headers.index(module_headers.header_id)
-        element_id = TableExtractor._value_from_selected_row_by_column(self.table, id_column_index)
-        
-        PropertiesConnector.button_controller(self, widget, module, element_id, element_name)
+        object_name, object_id = WidgetLabels.widget_label_elements(widget, self.table, module, language="et")
+    
+        PropertiesConnector.button_controller(self, widget, module, object_id, object_name)
                                              
         widget.closeEvent = self.closeEvent
     def closeEvent(self, event):
@@ -243,27 +244,44 @@ class WidgetTools:
                 widget.setWindowState(widget.windowState() & ~Qt.WindowMinimized | Qt.WindowActive)
 
 class WidgetLabels:
-    def widget_label_elements(widget, table, module_text):
+    def widget_label_elements(widget, table, module, language="et"):
+        
         label_descripton = widget.lblDescription
         line_element_number = widget.leElementNumber
         line_element_name = widget.leElementName
 
         input_headers = TableExtractor._table_header_extractor(table)
-        module_headers = TableHeaders()
-        
-        name_colum_index = input_headers.index(module_headers.header_name)
-        number_column_index = input_headers.index(module_headers.header_number)
+        TableHeaders_new(language)
 
-        object_number = TableExtractor._value_from_selected_row_by_column(table, number_column_index)
-        object_name = TableExtractor._value_from_selected_row_by_column(table, name_colum_index)
+        if module == Module.ASBUILT:
+            line_element_number.setVisible(False)
 
-        line_element_name.setText(object_name)
-        line_element_number.setText(object_number)
+            index_map = AsBuiltHeaderIndexMap(input_headers, language=language)
 
-        text = LabelsTexts.name_number_by_module(module_text)
+            object_name = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_TYPE])
+            line_element_name.setText(object_name)
+
+            object_id = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_ID])
+
+
+        else: 
+            line_element_number.setVisible(True)
+
+            index_map = HeaderIndexMap(input_headers, language=language)
+            
+            object_name = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_NAME])
+            line_element_name.setText(object_name)
+
+            object_number = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_NUMBER])
+            line_element_number.setText(object_number)
+
+            object_id = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_ID])
+
+
+        text = LabelsTexts.name_number_by_module(module)
         label_descripton.setText(text)
 
-        return input_headers, module_headers
+        return object_name, object_id
 
 class ConnectorFunctions:
     @staticmethod
@@ -275,5 +293,8 @@ class ConnectorFunctions:
             result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
             return result
         if module == Module.EASEMENT:
+            result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
+            return result
+        if module == Module.ASBUILT:
             result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
             return result

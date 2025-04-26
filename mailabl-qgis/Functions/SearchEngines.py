@@ -2,6 +2,7 @@
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .Contracts.Contracts import ContractsMain
 from .Easements.Easements import EasementssMain
+from ..Functions.AsBuilt.ASBuilt import AsBuiltMain
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..KeelelisedMuutujad.modules import Module
 from ..utils.messagesHelper import ModernMessageDialog
@@ -16,7 +17,8 @@ class ModularSearchEngine:
         self.search_functions = {
             Module.PROJECT: Projects.load_projects_by_number,
             Module.CONTRACT: ContractsMain.load_contracts_by_query,
-            Module.EASEMENT: EasementssMain.load_easemenets_by_number
+            Module.EASEMENT: EasementssMain.load_easemenets_by_number,
+            Module.ASBUILT: AsBuiltMain.load_asBuilt_by_query
         }
 
     def universalSearch(self, module_name):
@@ -24,13 +26,15 @@ class ModularSearchEngine:
         line_edits = {
             Module.PROJECT: self.dialog.le_searchProjects,
             Module.CONTRACT: self.dialog.le_searchContracts,
-            Module.EASEMENT: self.dialog.leSearcheasements
+            Module.EASEMENT: self.dialog.leSearcheasements,
+            Module.ASBUILT: self.dialog.le_searchTeostus
         }
 
         tables = {
             Module.PROJECT: self.dialog.tblMailabl_projects,
             Module.CONTRACT: self.dialog.ContractView,
-            Module.EASEMENT: self.dialog.tweasementView
+            Module.EASEMENT: self.dialog.tweasementView,
+            Module.ASBUILT: self.dialog.tblAsBuilt
         }
 
         lineEdit = line_edits[module_name]

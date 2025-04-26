@@ -40,19 +40,24 @@ class PropertiesModuleButtonConnector:
         table_projects = self.dialog.tblMailabl_projects
         table_contracts = self.dialog.ContractView
         table_easements = self.dialog.tweasementView
+        table_asBuilt = self.dialog.tblAsBuilt
 
         button_contracts = self.dialog.pbContracts_Connect_properties
         button_projects = self.dialog.pbProjects_Connect_properties
         button_easements = self.dialog.pbEasementsConnectProperties
+        button_asBuilt = self.dialog.pbTeostusConnectproperties
+
+
 
         button_functions = {
             button_contracts: lambda: execute_with_block(button_contracts, PropertiesConnectorUIController.load_properties_connector, self.dialog,  Module.CONTRACT, table_contracts, button_contracts),
             button_projects: lambda: execute_with_block(button_projects, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.PROJECT, table_projects, button_projects),
             button_easements: lambda: execute_with_block(button_easements, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.EASEMENT, table_easements, button_easements),
+            button_asBuilt: lambda: execute_with_block(button_asBuilt, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.ASBUILT, table_asBuilt, button_asBuilt)
         }
 
         for button, function in button_functions.items():
             PropertiesConnector.connect_button(button, function)
 
-        return [button_contracts, button_easements, button_projects]
+        return [button_contracts, button_easements, button_projects, button_asBuilt]
 

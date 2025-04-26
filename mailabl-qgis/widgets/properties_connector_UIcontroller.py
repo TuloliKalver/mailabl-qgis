@@ -22,7 +22,8 @@ class PropertiesConnectorUIController:
         button_names = [
             'pbContracts_Connect_properties',
             'pbProjects_Connect_properties',
-            'pbEasementsConnectProperties'
+            'pbEasementsConnectProperties',
+            'pbTeostusConnectproperties'
         ]
 
         # Disable buttons to allow selection time

@@ -4318,7 +4318,7 @@ p, li { white-space: pre-wrap; }
                                <string/>
                               </property>
                               <property name="placeholderText">
-                               <string> Sisesta projekti number</string>
+                               <string>Otsi nime järgi</string>
                               </property>
                              </widget>
                             </item>

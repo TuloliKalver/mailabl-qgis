@@ -19,6 +19,7 @@ class GraphQLQueryLoader:
             Module.TAGS: QueryFolders.TAGS_FOLDER,
             Module.STATUSES: QueryFolders.STATUS_FOLDERS,
             Module.TASK: QueryFolders.TASK_FOLDER,
+            Module.ASBUILT: QueryFolders.TASK_FOLDER
         }
 
         folder = folders.get(module)
@@ -91,7 +92,7 @@ class GraphqlEasements:
     EASMENT_TYPES = 'easements_types.graphql'
     STATUS = 'easements_type_status.graphql'
     UPDATE_EASEMENTS_PROPERTIES = 'update_easements_properties.graphql'
-    Q_WHERE_EASEMENT_RELATED_PROPERTYS = 'W_easement_id.graphql'
+    RELATED_PROPERTIES = 'W_easement_id.graphql'
     Q_All_EASEMENTS = 'easements.graphql'
 
 
@@ -103,6 +104,8 @@ class GraphqlTags:
 class GraphqlTasks:
     TYPES = 'task_types.graphql'
     AsBUILT = "AsBuiltTasks.graphql"
+    UPDATE_TASK_PROPERTIES = "update_task_properties.graphql"
+    RELATED_PROPERTIES = "tasks_related_properties.graphql"
 class GraphqlStatuses:
     STATUSES = 'statuses.graphql'
 

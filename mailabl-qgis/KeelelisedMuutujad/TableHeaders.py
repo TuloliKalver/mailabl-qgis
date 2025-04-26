@@ -4,6 +4,8 @@ from typing import ClassVar, List, Dict
 class HeaderKeys:
     HEADER_ID = "id"
     HEADER_NUMBER = "number"
+    HEADER_TYPE = "type"
+    HEADER_FLAG = "flag"
     HEADER_NAME = "name"
     HEADER_DEADLINE = "tähtaeg"
     COLOR_NAME = "color"
@@ -33,6 +35,24 @@ class HeaderKeys:
         HEADER_STATUSES,
     ]
 
+    TASKS_HEADER_KEYS: ClassVar[List[str]] = [
+        HEADER_ID,
+        HEADER_FLAG,
+        HEADER_TYPE,
+        HEADER_NAME,
+        HEADER_DEADLINE,
+        COLOR_NAME,
+        HEADER_RESPONSIBLE,
+        HEADER_PROPERTY_NUMBER,
+        HEADER_PROPERTIES_ICON,
+        HEADER_PARENT_ID,
+        HEADER_WEB_LINK_BUTTON,
+        HEADER_DOCUMENTS,
+        HEADER_FILE_PATH,
+        HEADER_STATUSES,
+    ]
+
+
 class QueryHeaders:
     """
     Keys used to extract data from query results (e.g., GraphQL node dicts).
@@ -41,6 +61,8 @@ class QueryHeaders:
     QUERY_ID = HeaderKeys.HEADER_ID
     QUERY_NUMBER = HeaderKeys.HEADER_NUMBER
     QUERY_NAME = HeaderKeys.HEADER_NAME
+    QUERY_FLAG = HeaderKeys.HEADER_FLAG
+    QUERY_TYPE = HeaderKeys.HEADER_TYPE
     QUERY_DEADLINE = HeaderKeys.HEADER_DEADLINE
     QUERY_COLOR = HeaderKeys.COLOR_NAME
     QUERY_RESPONSIBLE = HeaderKeys.HEADER_RESPONSIBLE
@@ -67,6 +89,22 @@ class QueryHeaders:
         QUERY_STATUSES,
     ]
 
+    TASKS_QUERY_KEYS: ClassVar[List] = [
+        QUERY_ID,
+        QUERY_FLAG,
+        QUERY_TYPE,
+        QUERY_NAME,
+        QUERY_DEADLINE,
+        QUERY_COLOR,
+        QUERY_RESPONSIBLE,
+        QUERY_PROPERTY_NUMBER,
+        QUERY_PROPERTIES_ICON,
+        QUERY_WEB_LINK_BUTTON,
+        QUERY_DOCUMENTS,
+        QUERY_FILE_PATH,
+        QUERY_STATUSES,
+    ]
+
 
 class TableHeaders_new:
     """
@@ -81,6 +119,8 @@ class TableHeaders_new:
             return {
                 HeaderKeys.HEADER_ID: "ID",
                 HeaderKeys.HEADER_NUMBER: "Number",
+                HeaderKeys.HEADER_TYPE: "Liik",
+                HeaderKeys.HEADER_FLAG: "",
                 HeaderKeys.HEADER_NAME: "Nimetus",
                 HeaderKeys.HEADER_DEADLINE: "Tähtaeg",
                 HeaderKeys.COLOR_NAME: "Color_name",
@@ -97,6 +137,8 @@ class TableHeaders_new:
             return {
                 HeaderKeys.HEADER_ID: "ID",
                 HeaderKeys.HEADER_NUMBER: "Number",
+                HeaderKeys.HEADER_TYPE: "Type",
+                HeaderKeys.HEADER_FLAG: "",
                 HeaderKeys.HEADER_NAME: "Name",
                 HeaderKeys.HEADER_DEADLINE: "Deadline",
                 HeaderKeys.COLOR_NAME: "Color name",
@@ -114,6 +156,8 @@ class TableHeaders_new:
                 HeaderKeys.HEADER_ID: HeaderKeys.HEADER_ID,
                 HeaderKeys.HEADER_NUMBER: HeaderKeys.HEADER_NUMBER,
                 HeaderKeys.HEADER_NAME: HeaderKeys.HEADER_NAME,
+                HeaderKeys.HEADER_TYPE: HeaderKeys.HEADER_TYPE,
+                HeaderKeys.HEADER_FLAG: HeaderKeys.HEADER_FLAG,
                 HeaderKeys.HEADER_DEADLINE: HeaderKeys.HEADER_DEADLINE,
                 HeaderKeys.COLOR_NAME: HeaderKeys.COLOR_NAME,
                 HeaderKeys.HEADER_RESPONSIBLE: HeaderKeys.HEADER_RESPONSIBLE,

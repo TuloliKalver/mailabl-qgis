@@ -1,4 +1,13 @@
-query tasks($first: Int, $after: String, $search: String, $where: QueryTasksWhereWhereConditions, $orderBy: [QueryTasksOrderByOrderByClause!], $trashed: Trashed) {
+query tasks(
+      $first: Int, 
+      $after: String, 
+      $propertiesFirst:Int, 
+      $propertiesAfter: String, 
+      $search: String, 
+      $where: QueryTasksWhereWhereConditions, 
+      $orderBy: [QueryTasksOrderByOrderByClause!], 
+      $trashed: Trashed
+      ) {
   tasks(
     first: $first
     after: $after
@@ -56,6 +65,27 @@ query tasks($first: Int, $after: String, $search: String, $where: QueryTasksWher
         type {
           name
         }
+                  properties(
+              first: $propertiesFirst 
+              after: $propertiesAfter
+                      ) {
+                      pageInfo {
+                          count
+                          currentPage
+                          startCursor
+                          endCursor
+                          hasNextPage
+                          hasPreviousPage
+                          lastPage
+                          total
+                      }
+                      edges {
+                          node {
+                              id,
+                              cadastralUnitNumber
+                              }
+                          }
+                      }
       }
     }
   }
