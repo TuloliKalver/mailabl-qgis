@@ -77,6 +77,7 @@ class AsBuiltModels:
        
         data = AsBuiltQueries._query_AsBuilt_by_name(name)
         model = DataModelBuilder.build_model_from_records(data, language, module = Module.ASBUILT)
+        
         return model
 
 

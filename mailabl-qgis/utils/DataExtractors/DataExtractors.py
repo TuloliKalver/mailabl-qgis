@@ -1,4 +1,8 @@
 #utils/DataExtractors/DataExtractor.py
+
+import re
+
+
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...KeelelisedMuutujad.modules import Module
 
@@ -21,6 +25,7 @@ class DataExtractor:
         if module == Module.ASBUILT:
             #print("node data:")
             #print(node)
+            description = node.get("description", "")
             headers = {
             HeaderKeys.HEADER_ID: node.get("id", ""),
             HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
@@ -33,13 +38,14 @@ class DataExtractor:
             HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
             HeaderKeys.HEADER_PROPERTIES_ICON: "",
             HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
-            HeaderKeys.HEADER_DOCUMENTS: node.get("filesPath", "") or "",
+            HeaderKeys.HEADER_DOCUMENTS: DataExtractor.extract_links_from_description(description) or "",
             HeaderKeys.HEADER_FILE_PATH: "",
             HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
             }
-            description = node.get("description", "")
-            print(f"Description:")
-            print(description)
+            #print(f"Description:")
+            #print(description)
+            return headers
+
 
         else:
             headers = {            
@@ -56,6 +62,43 @@ class DataExtractor:
             HeaderKeys.HEADER_DOCUMENTS: node.get("filesPath", "") or "",
             HeaderKeys.HEADER_FILE_PATH: "",
             HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
-            }
-        
-        return headers
+            }    
+            return headers
+    
+    @staticmethod
+
+
+    def extract_links_from_description(description: str) -> list:
+        """
+        Extract links or file paths from a <table> containing 'Joonised' using only built-in tools.
+
+        Args:
+            description (str): HTML content (raw)
+
+        Returns:
+            list[str]: Extracted file paths and URLs
+        """
+        if not description or "Joonised" not in description:
+            return []
+
+        links = []
+
+        # Find the "Joonised" table using simple regex
+        table_pattern = re.compile(r'<table.*?>.*?Joonised.*?</table>', re.DOTALL | re.IGNORECASE)
+        match = table_pattern.search(description)
+        if not match:
+            return []
+
+        table_html = match.group()
+
+        # Find all <td> inside that table
+        td_pattern = re.compile(r'<td.*?>(.*?)</td>', re.DOTALL)
+        td_matches = td_pattern.findall(table_html)
+
+        for td in td_matches:
+            # Remove possible <p> inside <td>
+            clean_text = re.sub(r'<.*?>', '', td).strip()
+            if clean_text:
+                links.append(clean_text)
+
+        return links

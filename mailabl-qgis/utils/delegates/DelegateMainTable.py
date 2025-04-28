@@ -40,6 +40,109 @@ class DelegateHelpers:
         icon.paint(painter, icon_rect, Qt.AlignCenter)
         painter.restore()
 
+
+
+class FileDelegate(QStyledItemDelegate):
+    def __init__(self, file_column_index, module, parent=None):
+        super().__init__(parent)
+        self.module = module
+        self.file_column_index = file_column_index
+        self.icon_size = 18  # px
+
+    def paint(self, painter, option, index):
+        file_index = index.model().index(index.row(), self.file_column_index)
+        file_path = file_index.data(Qt.DisplayRole)
+
+
+        if self.module == Module.ASBUILT:
+            if file_path:
+                # Try parsing if string
+                if isinstance(file_path, str):
+                    import ast
+                    try:
+                        file_path = ast.literal_eval(file_path)
+                    except Exception as e:
+                        print("⚠️ Failed to parse file_path:", e)
+                        file_path = []
+
+                if isinstance(file_path, list):
+                    painter.save()
+                    painter.setRenderHint(painter.Antialiasing)
+
+                    spacing = 4
+                    x = option.rect.x() + 2
+                    y = option.rect.y() + (option.rect.height() - self.icon_size) // 2
+
+                    for file in file_path:
+                        icon = QIcon(iconHandler.set_document_icon_based_on_item(file))
+                        icon_rect = QRect(x, y, self.icon_size, self.icon_size)
+                        icon.paint(painter, icon_rect, Qt.AlignCenter)
+                        x += self.icon_size + spacing  # move right for next icon
+
+                    painter.restore()
+                else:
+                    icon = QIcon(iconHandler.set_document_icon_based_on_item(file_path))
+                    DelegateHelpers.icon_setter_for_delegate(painter, icon, option)
+            else:
+                super().paint(painter, option, index)
+        else:
+            if file_path:
+                icon = QIcon(iconHandler.set_document_icon_based_on_item(file_path))
+                DelegateHelpers.icon_setter_for_delegate(painter, icon, option)
+            else:
+                super().paint(painter, option, index)
+
+
+    def editorEvent(self, event, model, option, index):
+        if event.type() == event.MouseButtonRelease and event.button() == Qt.LeftButton:
+            file_index = model.index(index.row(), self.file_column_index)
+            file_path = file_index.data(Qt.DisplayRole)
+
+            if not file_path:
+                return super().editorEvent(event, model, option, index)
+
+            if self.module == Module.ASBUILT:
+                # special list/multi-icons case
+                if isinstance(file_path, str):
+                    import ast
+                    try:
+                        file_path = ast.literal_eval(file_path)
+                    except Exception as e:
+                        print("⚠️ Failed to parse file_path:", e)
+                        file_path = []
+
+                if isinstance(file_path, list):
+                    spacing = 4
+                    x = option.rect.x() + 2
+                    y = option.rect.y() + (option.rect.height() - self.icon_size) // 2
+                    click_pos = event.pos()
+
+                    for file in file_path:
+                        icon_rect = QRect(x, y, self.icon_size, self.icon_size)
+                        if icon_rect.contains(click_pos):
+                            self.open_folder_in_local_file_browser(file)
+                            return True
+                        x += self.icon_size + spacing
+                else:
+                    # fallback: treat as single file
+                    self.open_folder_in_local_file_browser(file_path)
+                    return True
+
+            else:
+                # Normal modules: click anywhere triggers file open
+                self.open_folder_in_local_file_browser(file_path)
+                return True
+
+        return super().editorEvent(event, model, option, index)
+
+    def open_folder_in_local_file_browser(self, file_path):
+        import subprocess
+        if file_path.startswith("http"):
+            subprocess.Popen(["start", "", file_path], shell=True)  # Open link in browser
+        else:
+            subprocess.Popen(['explorer', file_path.replace('/', '\\')], shell=True)
+
+
 class FancyStatusDelegate(QStyledItemDelegate):
     def __init__(self, color_column_index, parent=None):
         super().__init__(parent)
@@ -92,33 +195,6 @@ class FancyStatusDelegate(QStyledItemDelegate):
             painter.restore()
         else:
             super().paint(painter, option, index)
-
-class FileDelegate(QStyledItemDelegate):
-    def __init__(self, file_column_index, parent=None):
-        super().__init__(parent)
-        self.file_column_index = file_column_index
-
-    def paint(self, painter, option, index):
-        # Get file path from data source column
-        file_index = index.model().index(index.row(), self.file_column_index)
-        file_path = file_index.data(Qt.DisplayRole)
-
-        if file_path:
-            icon = QIcon(iconHandler.set_document_icon_based_on_item(file_path))
-            DelegateHelpers.icon_setter_for_delegate(painter, icon, option)
-        else:
-            super().paint(painter, option, index)
-    def editorEvent(self, event, model, option, index):
-        if event.type() == event.MouseButtonRelease and event.button() == Qt.LeftButton:
-            file_index = model.index(index.row(), self.file_column_index)
-            file_path = file_index.data(Qt.DisplayRole)
-            if file_path:
-                self.open_folder_in_local_file_browser(file_path)
-                return True
-        return super().editorEvent(event, model, option, index)
-    def open_folder_in_local_file_browser(self, file_path):
-        import subprocess
-        subprocess.Popen(['explorer', file_path.replace('/', '\\')], shell=True)
 
 class SelectByModuleElementsOnMapDelegate(QStyledItemDelegate):
     def __init__(self, ID_column_index, parent=None, module=None, properties_column_index=None):
@@ -260,7 +336,7 @@ class DelegatesForTables():
         web_link_delegate = OpenMailablItemByModule(ID_column_index, table, module)
         table.setItemDelegateForColumn(webButton_Column_index, web_link_delegate)
 
-        file_delegate = FileDelegate(dokAddress_column_index, table)
+        file_delegate = FileDelegate(dokAddress_column_index, module, table)
         table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
 
         table.setItemDelegateForColumn(status_column_index, FancyStatusDelegate(color_column_index))

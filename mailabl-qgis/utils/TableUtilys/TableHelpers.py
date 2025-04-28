@@ -1,4 +1,6 @@
 # TableHelpers.py
+import ast
+
 from typing import List
 from PyQt5.QtCore import Qt, QItemSelectionModel, QCoreApplication
 from PyQt5.QtGui import QFontMetrics, QStandardItem, QStandardItemModel
@@ -341,7 +343,7 @@ class TableUtils:
         resizer.setColumnWidths(indexes, widths)
 
     @staticmethod
-    def _resize_asBuilt_icon_columns(resizer, index_map: HeaderIndexMap, language: str="et"):
+    def _resize_asBuilt_icon_columns_old(resizer, index_map: HeaderIndexMap, language: str="et"):
         TableHeaders_new(language)
         columns = [
             HeaderKeys.HEADER_ID,
@@ -356,6 +358,71 @@ class TableUtils:
         widths = [0, 10, 150, 250, 0, 10, 10, 10]
         indexes = [index_map[key] for key in columns]
         resizer.setColumnWidths(indexes, widths)
+
+
+
+    @staticmethod
+    def _resize_asBuilt_icon_columns(resizer, index_map, table, language: str = "et"):
+        passed_language = language
+        print(f"Language: {passed_language}")
+        TableHeaders_new(language)
+
+        columns = [
+            HeaderKeys.HEADER_ID,
+            HeaderKeys.HEADER_FLAG,
+            HeaderKeys.HEADER_TYPE,
+            HeaderKeys.HEADER_NAME,
+            HeaderKeys.HEADER_PROPERTY_NUMBER,
+            HeaderKeys.HEADER_WEB_LINK_BUTTON,
+            HeaderKeys.HEADER_FILE_PATH,
+            HeaderKeys.HEADER_PROPERTIES_ICON,
+        ]
+        widths = [0, 10, 150, 250, 0, 10, 10, 10]  # default widths
+
+        print(f"index_map: {index_map}")
+        indexes = [index_map[key] for key in columns]
+        print(f"indexes: {indexes}")
+
+        try:
+            print(f"Trying to find 'Dok_icon'")
+            file_path_col = index_map[HeaderKeys.HEADER_FILE_PATH]
+            print(f"Found 'Dok_icon': {file_path_col}")
+            dok_icon_col = index_map[HeaderKeys.HEADER_DOCUMENTS]
+        except KeyError:
+            print(f"'Dok_icon' not found.")
+            file_path_col = None
+
+        if dok_icon_col is not None:
+            print(f"File path column exists at index: {dok_icon_col}")
+            max_icons = 0
+            for row in range(table.model().rowCount()):
+                index = table.model().index(row, dok_icon_col)
+                value = index.data(Qt.DisplayRole)
+
+                if value:
+                    if isinstance(value, str):
+                        try:
+                            value = ast.literal_eval(value)
+                        except Exception:
+                            value = []
+                    
+                    if isinstance(value, list):
+                        max_icons = max(max_icons, len(value))
+                    else:
+                        max_icons = max(max_icons, 1)
+            print(f"Max icons: {max_icons}")
+            print(f"Value: {value}")
+            icon_size = 18  # px (same as in FileDelegate)
+            spacing = 4
+            dynamic_width = (icon_size + spacing) * max_icons + 6
+            print(f"🛠 Calculated file column width: {dynamic_width}px")
+
+            file_path_idx = columns.index(HeaderKeys.HEADER_FILE_PATH)
+            widths[file_path_idx] = dynamic_width
+
+        resizer.setColumnWidths(indexes, widths)
+
+
 
 
 class TableExtractor:

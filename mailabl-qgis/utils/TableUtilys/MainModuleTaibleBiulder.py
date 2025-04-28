@@ -24,9 +24,10 @@ class ModuleTableBuilder:
 
         resizer = ColumnResizer(table)
         if module == Module.ASBUILT:
+            print(f"Resizing columns for {module}")
             index_map = AsBuiltHeaderIndexMap(header_labels, language=language)
             TableUtils._resize_asBuilt_columns(resizer, index_map)
-            TableUtils._resize_asBuilt_icon_columns(resizer, index_map)
+            TableUtils._resize_asBuilt_icon_columns(resizer, index_map, table)
     
         else:
             index_map = HeaderIndexMap(header_labels, language=language)

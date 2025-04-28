@@ -50,4 +50,5 @@ class DataModelBuilder:
             ]
             model.appendRow(row_items)
 
+
         return model
