@@ -589,7 +589,7 @@ class StartupSettingsLoader:
         output_folder_value = SettingsDataSaveAndLoad.load_target_Folder_path_value(self)
  
         prefered_homepage_name_value = SettingsDataSaveAndLoad.load_user_prefered_startpage_name(self)
- 
+
         if prefered_homepage_name_value == "":
             self.dialog.lblSPreferedHomeValue.setText("Määramata")
         else:
@@ -650,14 +650,10 @@ class StartupSettingsLoader:
             key_type=PluginSettings.CHECKBOXVALUE,
         )
 
-
-        if value == "false":
-            value = False
-        elif value == "true":
+        if value == "true":
             value = True
-        elif   value == "Määramata":
+        else:
             value = False
-
 
         self.dialog.cbPartOfProject.setChecked(value)
 

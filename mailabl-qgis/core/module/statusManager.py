@@ -60,7 +60,7 @@ class ModuleStatuses:
 
     def _get_all_statuses_for_module(self, module=None):
         module = module or self.module
-        print("Getting all statuses for module:", module)
+        #print("Getting all statuses for module:", module)
         return self.get_module_statuses(module)
 
 

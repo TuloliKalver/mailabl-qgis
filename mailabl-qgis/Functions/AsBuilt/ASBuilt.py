@@ -109,8 +109,8 @@ class AsBuiltQueries:
 
             if response.status_code == 200:
                 data = response.json()
-                print("data")
-                print(data)
+                #print("data")
+                #print(data)
                 fetched_data = data.get("data", {}).get(f"{module}s", {}).get("edges", [])
                 pageInfo = data.get("data", {}).get(f"{module}s", {}).get("pageInfo", {})
                 #print(f"propesties_end_cursor: '{properties_end_cursor}'")
@@ -190,8 +190,8 @@ class AsBuiltQueries:
 
             if response.status_code == 200:
                 data = response.json()
-                print("data")
-                print(data)
+                #print("data")
+                #print(data)
                 fetched_data = data.get("data", {}).get(f"{module}s", {}).get("edges", [])
                 pageInfo = data.get("data", {}).get(f"{module}s", {}).get("pageInfo", {})
                 #print(f"propesties_end_cursor: '{properties_end_cursor}'")

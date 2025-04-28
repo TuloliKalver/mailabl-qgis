@@ -195,16 +195,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
 
 ##############################TESTING AREA##############################################################
-        self.test_buttons = {
-            self.pbtest_2: self.view_all_plugin_settings,
-            self.pushButton: self.reset_new_settings
-        }
-
-        for button,_ in self.test_buttons.items():
-            button.setVisible(True)
-
-        for button, function in self.test_buttons.items():
-            button.clicked.connect(function)
+ 
 
 
         self.frSyncAndRenew.setVisible(False)
@@ -578,7 +569,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 self.UC_Main_Frame.setVisible(False)
                 FrameHandler.show_multiple_frames(self, frames)
                 self.set_start_page_based_on_toggle_and_preferred_settings()
-                self.resize(1000, 700)
+                self.resize(1000, 650)
                 return  # Stop further execution            
         
         else:    
@@ -597,6 +588,17 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 version_nr = Version.get_plugin_version(path)
                 lblVersion = self.lbVersionNumber
                 if version_nr == 'dev':
+                    self.test_buttons = {
+                            self.pbtest_2: self.view_all_plugin_settings,
+                            self.pushButton: self.reset_new_settings
+                        }
+
+                    for button,_ in self.test_buttons.items():
+                        button.setVisible(True)
+
+                    for button, function in self.test_buttons.items():
+                        button.clicked.connect(function)
+
                     lblVersion.setStyleSheet("color: #bc5152;")
                     lblVersion.setText(f"v.{version_nr}")
                     if has_qgis_access == False:
@@ -608,6 +610,13 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         self.pbLogin.setStyleSheet("background-color: #bc5152;")
                         return  # Stop further execution
                 else:
+                    self.test_buttons = {
+                            self.pbtest_2: self.view_all_plugin_settings,
+                            self.pushButton: self.reset_new_settings
+                        }
+                    for button,_ in self.test_buttons.items():
+                        button.setVisible(False)
+
                     lblVersion.setStyleSheet("")  # Reset to default style
                     lblVersion.setText(f"v.{version_nr}")
                     if has_qgis_access == False:
@@ -625,7 +634,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 self.UC_Main_Frame.setVisible(False)
                 FrameHandler.show_multiple_frames(self, frames)
                 self.set_start_page_based_on_toggle_and_preferred_settings()
-                self.resize(1300, 700)
+                self.resize(1000, 650)
 
             else:
                 heading = pealkiri.warningCritical
@@ -635,6 +644,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def set_start_page_based_on_toggle_and_preferred_settings(self):
         
         index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)            
+        if index == "Määramata":
+            index = "6"
         # Convert index to integer, handling potential exceptions
         index_int = int(index)
 

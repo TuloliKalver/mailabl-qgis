@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1094</width>
+    <width>1000</width>
     <height>1195</height>
    </rect>
   </property>
@@ -1247,16 +1247,16 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pbMapThemes">
+                   <widget class="QPushButton" name="pbAddDrawings">
                     <property name="styleSheet">
                      <string notr="true"/>
                     </property>
                     <property name="text">
-                     <string>Teemakaardid*</string>
+                     <string>Teostusjoonised</string>
                     </property>
                     <property name="icon">
                      <iconset>
-                      <normaloff>icons/Icons_hele/image.svg</normaloff>icons/Icons_hele/image.svg</iconset>
+                      <normaloff>icons/Icons_hele/pen-tool.svg</normaloff>icons/Icons_hele/pen-tool.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -1267,16 +1267,16 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pbAddDrawings">
+                   <widget class="QPushButton" name="pbMapThemes">
                     <property name="styleSheet">
                      <string notr="true"/>
                     </property>
                     <property name="text">
-                     <string>Teostusjoonised*</string>
+                     <string>Teemakaardid*</string>
                     </property>
                     <property name="icon">
                      <iconset>
-                      <normaloff>icons/Icons_hele/pen-tool.svg</normaloff>icons/Icons_hele/pen-tool.svg</iconset>
+                      <normaloff>icons/Icons_hele/image.svg</normaloff>icons/Icons_hele/image.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>

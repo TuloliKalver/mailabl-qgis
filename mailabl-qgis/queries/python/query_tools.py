@@ -27,7 +27,7 @@ class requestBuilder:
             "query": query,
             "variables": sanitized_variables
         }
-        print(f"payload is_printed {payload}")
+
         # Construct the HTTP headers with the access token
         headers = {
             "Authorization": f"Bearer {access_token}",
