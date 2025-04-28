@@ -115,7 +115,7 @@ class AsBuiltDrawings:
         print("value:", value)
         if value == "true":
             value = True
-        if value == "false":
+        else:
             value = False
 
         cb1.setChecked(value)

@@ -91,7 +91,7 @@ class JsonResponseHandler:
     @staticmethod
     def get_edges_from_path(response: requests.Response, path: List[str]) -> List[Dict[str, Any]]:
         data = JsonResponseHandler.get_raw_json(response)
-        print(f"data = {data}")
+        #print(f"data = {data}")
         module_data = JsonResponseHandler.walk_path(data.get("data", {}), path)
         return module_data.get("edges", [])
 

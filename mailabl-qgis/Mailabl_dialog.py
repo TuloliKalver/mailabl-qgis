@@ -490,8 +490,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         button1 = self.pbSettings
         button10 = self.pbAddDrawings
         button11 = self.pbContracts
-        button12 = self.pbMainContract
-        button13 = self.pbPreContacts
         button14 = self.pbHome
         button15 = self.pbMapThemes
         button16 = self.pbProjects
@@ -505,8 +503,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         buttons = [button1, 
                 button10,
                 button11,
-                button12,
-                button13,
                 button14,
                 button15,
                 button16,
@@ -516,8 +512,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         original_texts = {button1: "Sätted",
                             button10: "Teostusjoonised",
                             button11: "Lepingud",
-                            button12: "Teenuslepingud",
-                            button13: "Liitumislepingud",
                             button14: "Kinnistud",
                             button15: "Teemakaardid",
                             button16: "Projektid",
@@ -528,8 +522,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         new_texts = {button1: "",
                     button10: "",
                     button11: "",
-                    button12: "",
-                    button13: "",
                     button14: "",
                     button15: "",
                     button16: "",
@@ -592,6 +584,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                             self.pbtest_2: self.view_all_plugin_settings,
                             self.pushButton: self.reset_new_settings
                         }
+                    self.pbtest_2.setText("Vaata settinguid")
+                    self.pushButton.setText("kustuta settingud")
 
                     for button,_ in self.test_buttons.items():
                         button.setVisible(True)

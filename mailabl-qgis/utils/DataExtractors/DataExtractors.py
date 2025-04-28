@@ -19,6 +19,8 @@ class DataExtractor:
         status = node.get("status", {})
         
         if module == Module.ASBUILT:
+            #print("node data:")
+            #print(node)
             headers = {
             HeaderKeys.HEADER_ID: node.get("id", ""),
             HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
@@ -35,7 +37,10 @@ class DataExtractor:
             HeaderKeys.HEADER_FILE_PATH: "",
             HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
             }
-            
+            description = node.get("description", "")
+            print(f"Description:")
+            print(description)
+
         else:
             headers = {            
             HeaderKeys.HEADER_ID: node.get("id", ""),
@@ -50,5 +55,7 @@ class DataExtractor:
             HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
             HeaderKeys.HEADER_DOCUMENTS: node.get("filesPath", "") or "",
             HeaderKeys.HEADER_FILE_PATH: "",
-            HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",}
+            HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
+            }
+        
         return headers

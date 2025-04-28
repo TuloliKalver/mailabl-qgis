@@ -66,7 +66,7 @@ class requestBuilder:
 
         # Check if the response is empty
         if not data:
-            print(f"Data returned empty - maybe need to check query: {query}")
+            #print(f"Data returned empty - maybe need to check query: {query}")
             return None
 
         
