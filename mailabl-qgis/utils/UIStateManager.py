@@ -150,6 +150,7 @@ class UIStateManager:
 
         if not layer:
             self.dialog.frMaaAmetControlls.setVisible(True)
+            self.dialog.frCacelBeforeEntering.setVisible(True)
             self.dialog.frPropertiFlowHolder.setVisible(False)
             self.dialog.frCancelWhenPropertysLoaded.setVisible(False)
             UIActions.hide(self.frames)
@@ -160,6 +161,7 @@ class UIStateManager:
             return
 
         self.dialog.frMaaAmetControlls.setVisible(False)
+        self.dialog.frCacelBeforeEntering.setVisible(False)
         self.dialog.frPropertiFlowHolder.setVisible(True)
         self.dialog.frCancelWhenPropertysLoaded.setVisible(True)
         self.lbl.setText("Vali, mida kinnistutega teha tahad!")

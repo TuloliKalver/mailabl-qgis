@@ -8937,7 +8937,7 @@ aluskaarti</string>
                        </spacer>
                       </item>
                       <item alignment="Qt::AlignRight">
-                       <widget class="QFrame" name="frame_2">
+                       <widget class="QFrame" name="frCacelBeforeEntering">
                         <property name="frameShape">
                          <enum>QFrame::StyledPanel</enum>
                         </property>
