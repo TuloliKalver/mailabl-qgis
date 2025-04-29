@@ -1563,7 +1563,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>3</number>
+                  <number>6</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -7904,11 +7904,6 @@ QHeaderView::section {
                         <attribute name="headerMinimumSectionSize">
                          <number>20</number>
                         </attribute>
-                        <column>
-                         <property name="text">
-                          <string notr="true">1</string>
-                         </property>
-                        </column>
                        </widget>
                       </item>
                       <item>

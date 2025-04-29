@@ -114,7 +114,7 @@ class FeatureInfoTool:
 
                 self.window_manager_minMax._restore_window()
                 
-                MyTreeHome.update_tree_with_modules(self.lbltreewidget, tunnus_value)
+                MyTreeHome.update_tree_with_modules(self, self.lbltreewidget, tunnus_value)
                 #TODO - This version works but it's not possible to color cells based on the search results.
                 #MyTreeHomeView.update_tree_with_modules(self.tree_View, tunnus_value)
                 # This is possible if cell coloring can be implemented
@@ -311,7 +311,7 @@ class FeatureInfoToolSearch:
         if feature_data:
             # Extract values into variables
             tunnus_value = self.set_values_to_labels(feature_data)
-            MyTreeHome.update_tree_with_modules(self.lbltreewidget, tunnus_value)
+            MyTreeHome.update_tree_with_modules(self, self.lbltreewidget, tunnus_value)
             # This is possible if cell coloring can be implemented
         QCoreApplication.processEvents()
         self.property_button.setEnabled(True)

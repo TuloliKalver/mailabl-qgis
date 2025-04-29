@@ -68,7 +68,7 @@ class WidgetInfo:
             3: lambda: WorkSpaceHandler.swWorkSpace_Controller(self, menu_module=MenuModules.TEOSTUS, module=Module.ASBUILT),
             4: None,
             5: lambda: WorkSpaceHandler.swWorkSpace_Home(self),
-            6: None,
+            6: lambda: WorkSpaceHandler.swWorkSpace_Properties(self),
             7: lambda: WorkSpaceHandler.swWorkspace_Projects(self),
             8: None
         }

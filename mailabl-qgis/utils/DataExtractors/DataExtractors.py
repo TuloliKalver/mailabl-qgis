@@ -42,8 +42,12 @@ class DataExtractor:
             HeaderKeys.HEADER_FILE_PATH: "",
             HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
             }
-            #print(f"Description:")
-            #print(description)
+
+            due_at = node.get("dueAt", "") or "",
+            print("due_at:")
+            print(due_at)
+
+
             return headers
 
 

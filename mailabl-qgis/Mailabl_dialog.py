@@ -272,7 +272,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbDisconnect.clicked.connect(self.stop_feature_info_tool)
         self.pbDisconnect.setEnabled(False)
 
-        self.pbOpenProperty.clicked.connect(self.open_properties_item_in_mylabl)
+        self.pbOpenProperty.clicked.connect(lambda: MyTreeHome.open_property(self))
         self.pbOpenProperty.setEnabled(False)
 
         self.pbCadastralSearch.clicked.connect(self.start_propertie_search)
@@ -322,8 +322,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
             tool_feature.for_search_results()
 
-    def open_properties_item_in_mylabl(self):
-        MyTreeHome.open_property()
     
     def load_propertieID_from_memory (self):
         value = self.propertyID_location
@@ -637,7 +635,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     def set_start_page_based_on_toggle_and_preferred_settings(self):
         
-        index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)            
+        index = SettingsDataSaveAndLoad.load_user_prefered_startpage_index(self)
+        #print(f"start page index: {index}")        
         if index == "Määramata":
             index = "6"
         # Convert index to integer, handling potential exceptions

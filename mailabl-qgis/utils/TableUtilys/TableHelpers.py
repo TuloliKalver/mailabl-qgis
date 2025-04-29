@@ -364,7 +364,7 @@ class TableUtils:
     @staticmethod
     def _resize_asBuilt_icon_columns(resizer, index_map, table, language: str = "et"):
         passed_language = language
-        print(f"Language: {passed_language}")
+        #print(f"Language: {passed_language}")
         TableHeaders_new(language)
 
         columns = [
@@ -379,21 +379,21 @@ class TableUtils:
         ]
         widths = [0, 10, 150, 250, 0, 10, 10, 10]  # default widths
 
-        print(f"index_map: {index_map}")
+        #print(f"index_map: {index_map}")
         indexes = [index_map[key] for key in columns]
-        print(f"indexes: {indexes}")
+        #print(f"indexes: {indexes}")
 
         try:
-            print(f"Trying to find 'Dok_icon'")
+            #print(f"Trying to find 'Dok_icon'")
             file_path_col = index_map[HeaderKeys.HEADER_FILE_PATH]
-            print(f"Found 'Dok_icon': {file_path_col}")
+            #print(f"Found 'Dok_icon': {file_path_col}")
             dok_icon_col = index_map[HeaderKeys.HEADER_DOCUMENTS]
         except KeyError:
-            print(f"'Dok_icon' not found.")
+            #print(f"'Dok_icon' not found.")
             file_path_col = None
 
         if dok_icon_col is not None:
-            print(f"File path column exists at index: {dok_icon_col}")
+            #print(f"File path column exists at index: {dok_icon_col}")
             max_icons = 0
             for row in range(table.model().rowCount()):
                 index = table.model().index(row, dok_icon_col)
@@ -410,12 +410,12 @@ class TableUtils:
                         max_icons = max(max_icons, len(value))
                     else:
                         max_icons = max(max_icons, 1)
-            print(f"Max icons: {max_icons}")
-            print(f"Value: {value}")
+            #print(f"Max icons: {max_icons}")
+            #print(f"Value: {value}")
             icon_size = 18  # px (same as in FileDelegate)
             spacing = 4
             dynamic_width = (icon_size + spacing) * max_icons + 6
-            print(f"🛠 Calculated file column width: {dynamic_width}px")
+            #print(f"🛠 Calculated file column width: {dynamic_width}px")
 
             file_path_idx = columns.index(HeaderKeys.HEADER_FILE_PATH)
             widths[file_path_idx] = dynamic_width

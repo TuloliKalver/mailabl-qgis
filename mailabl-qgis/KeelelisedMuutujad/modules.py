@@ -34,7 +34,9 @@ class ModuleTranslation:
         Module.EASEMENT: {Languages.ESTONIA: "Servituudid", Languages.LATVIA: "Apgrūtinājumi"},
         Module.ORDINANCE: {Languages.ESTONIA: "Käskkirjad", Languages.LATVIA: "Rīkojumi"},
         Module.SUBMISSION: {Languages.ESTONIA: "Avaldused", Languages.LATVIA: "Iesniegumi"},
-        Module.ASBUILT: {Languages.ESTONIA: "Teostusjoonised", Languages.LATVIA: "Asbuilt"}
+        Module.ASBUILT: {Languages.ESTONIA: "Teostusjoonised", Languages.LATVIA: "Asbuilt"},
+        "teostusjoonised": {Languages.ESTONIA: "Teostusjoonised", Languages.LATVIA: "Asbuilt"},
+        "tegevused": {Languages.ESTONIA: "Tegevused", Languages.LATVIA: "Darbi"}
     }
 
     translations_singular = {
@@ -47,7 +49,9 @@ class ModuleTranslation:
         Module.EASEMENT: {Languages.ESTONIA: "Servituudi", Languages.LATVIA: "Apgrūtinājums"},
         Module.ORDINANCE: {Languages.ESTONIA: "Käskkirja", Languages.LATVIA: "Rīkojums"},
         Module.SUBMISSION: {Languages.ESTONIA: "Avalduse", Languages.LATVIA: "Iesniegums"},
-        Module.ASBUILT: {Languages.ESTONIA: "Teostusjoonis", Languages.LATVIA: "Asbuilt"}
+        Module.ASBUILT: {Languages.ESTONIA: "Teostusjoonis", Languages.LATVIA: "Asbuilt"},
+        "teostusjoonised": {Languages.ESTONIA: "Teostusjoonis", Languages.LATVIA: "Asbuilt"},
+        "tegevused": {Languages.ESTONIA: "Tegevus", Languages.LATVIA: "Darbi"}
     }
 
     @staticmethod

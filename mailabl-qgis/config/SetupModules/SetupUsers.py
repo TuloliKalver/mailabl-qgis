@@ -45,10 +45,9 @@ class SetupUsers:
 
         page_name = GetValuesFromComboBox._get_selected_name_from_combobox(combobox)
         selected_index = WidgetInfo.get_selected_index(combobox)
-
+        #print(f"Page name: {page_name}")
+        #print(f"Index: {selected_index}")
         SettingsDataSaveAndLoad.save_user_prefered_startpage(self,selected_index, page_name)
-        print(f"Nimetus: {page_name}")
-        print(f"selected_index: {selected_index}")
         label = self.lblSPreferedHomeValue
 
         label.setText(page_name)
@@ -57,7 +56,7 @@ class SetupUsers:
         heading = pealkiri.tubli
         ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading,text)
         # Additional logic if needed
-        print("saved")
+        #print("saved")
         widget.accept()  # Close the dialog
     def on_cancel_button_clicked(self, widget):
         # Handle logic when the cancel button is clicked

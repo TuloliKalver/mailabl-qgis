@@ -14,7 +14,8 @@ class PropertiesConnectedElementsQueries:
         Module.PROJECT: "connected_projects.graphql",
         Module.SPECIFICATION: "connected_specifications.graphql",
         Module.SUBMISSION: "connected_submissions.graphql",
-        Module.TASK: "connected_tasks.graphql"
+        Module.TASK: "connected_tasks.graphql", 
+        Module.ASBUILT: "connected_tasks.graphql", 
     }
 
     def __init__(self):
@@ -29,11 +30,12 @@ class PropertiesConnectedElementsQueries:
         GraphqlProperties().load_query_properties_connected_elements(module_file)
 
 
-    def fetch_module_data(self, module_name, propertie_id):
+    def fetch_module_data(self, module_name, propertie_id, index):
         module_file = self.module_to_filename.get(module_name)
         #print(f"module_name: {module_name}")
         #print(f"file_name: {module_file}")
-
+        if index == 10:
+                print(f"Probable asBuilt module data fetch")
 
         if not module_file:
             return
@@ -44,7 +46,7 @@ class PropertiesConnectedElementsQueries:
         first_value = 30
 
         #print(f"guery: {query}")
-        if module_name == Module.TASK:
+        if index == 10 or index == 3:
             variables = {
                 "id": propertie_id,
                 "first": first_value,
@@ -76,7 +78,7 @@ class PropertiesConnectedElementsQueries:
         if response.status_code == 200:
             data = response.json()
             result = ProcessElementData().process_response_data(module_name, data)
-            #print(f"returned data: {data}")
+
             return result
         else:
             #print(f"Failed to fetch data: {response.status_code}")
@@ -85,6 +87,7 @@ class PropertiesConnectedElementsQueries:
 class ProcessElementData:
     def process_response_data(self, module_name, data):
         result = []
+        #print(f"data for module named: {module_name}")
         #print(f"data: {data}")
 
         # Identify the module name by checking which key exists in the response data
@@ -100,18 +103,22 @@ class ProcessElementData:
         elif module_name == Module.EASEMENT:
             values = data['data']['property'][f"{Module.EASEMENT}s"]['edges']
             result.append(values)
-
         elif module_name == Module.SPECIFICATION:
             values = data['data']['property'][f"{Module.SPECIFICATION}s"]['edges']
             result.append(values)
-
         elif module_name == Module.SUBMISSION:
             values = data['data']['property'][f"{Module.SUBMISSION}s"]['edges']
             result.append(values)
-
         elif module_name == Module.TASK:
             values = data['data']['property'][f"{Module.TASK}s"]['edges']
             result.append(values)
+        elif module_name == Module.ASBUILT:
+            values = data['data']['property'][f"{Module.TASK}s"]['edges']
+            print (f"values in as built: {values}")
+            edge = values.get['edges', {}]
+            print(edge)
+            result.append(values)
+
 
         #print(f"result: {result}")
         return result

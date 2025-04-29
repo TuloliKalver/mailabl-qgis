@@ -75,7 +75,7 @@ class MailablWebModules:
 
 #/TODO: rebuild link services to Delegate based services as in other views
     def get_web_link(self, module_name):
-        
+        print(f"Module Name in web links: {module_name}")
         web_links_by_module = {
             Module.PROJECT: MailablWebModules.PROJECTS,
             Module.CONTRACT: MailablWebModules.CONTRACTS,
@@ -85,7 +85,8 @@ class MailablWebModules:
             Module.COORDINATION: MailablWebModules.COORDINATIONS,
             Module.ORDINANCE: MailablWebModules.ORDINANCES,
             Module.SUBMISSION: MailablWebModules.SUBMISSIONS,
-            Module.PROPRETIE: MailablWebModules.PROPERTIES
+            Module.PROPRETIE: MailablWebModules.PROPERTIES,
+            Module.ASBUILT:MailablWebModules.TASKS
         }
 
         if module_name not in web_links_by_module:
