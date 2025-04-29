@@ -11,6 +11,8 @@ from ..settings import Filepaths, SettingsDataSaveAndLoad, FilesByNames
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
 from ...utils.ComboboxHelper import ComboBoxHelper
 from ...utils.messagesHelper import ModernMessageDialog
+from ..settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad, StartupSettingsLoader
+
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -18,6 +20,8 @@ edu = EdukuseTexts()
 combo_handler = ComboBoxHelper()
 
 class SetupCadastralLayers:
+    def __init__(self, parent) -> None:
+        self.dialog = parent
 
     def load_layer_settings_widget(self, lblMainLayerValue,lblMainTargetLayerValue,lblSHPLayerValue):
         # Get the file path for the Layer Settings Widget .ui file
@@ -54,10 +58,9 @@ class SetupCadastralLayers:
         lblPreferredProjectStatusValue = self.lblPreferredProjectStatusValue
         lblPreferredContractStatusValue = self.lblPreferredContractStatusValue
         lblPreferredContractsTypesValue = self.lblPreferredContractsTypesValue
-
-        SettingsDataSaveAndLoad.startup_label_loader(self, lblMainLayerValue,lblMainTargetLayerValue,
-                                                     lblSHPLayerValue, lblLayerProjectsValue, lblProjectsFolderValue, 
-                                                     lblProjectsTargetFolderValue, lblPreferredProjectStatusValue, lblPreferredContractStatusValue, lblPreferredContractsTypesValue)
+        loader = StartupSettingsLoader(self)
+        loader.startup_label_loader()
+        
         text = "Kõik sai salvestatud"
         heading = pealkiri.tubli
         ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)

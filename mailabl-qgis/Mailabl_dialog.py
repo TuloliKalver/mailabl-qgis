@@ -144,7 +144,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         setupEasments = SetupEasments(self)
         setupContracts = SetupConrtacts(self)
         setupProjects = SetupProjects(self)
-
+        setupCadastrallayers = SetupCadastralLayers(self)
 
         UI = UIStateManager(self)
         loader = SHPLayerLoader(self)
