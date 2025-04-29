@@ -141,9 +141,6 @@ class MyTreeHome:
                                 # Remove the last character from typename
                             child_data[typename].append(node_data)
             QCoreApplication.processEvents()
-
-        #print(f"child_data: {child_data}")
-        #print(f"child data: {child_data}")
  
         length = len(child_data.keys())
         progress.update(50, "uuesti")

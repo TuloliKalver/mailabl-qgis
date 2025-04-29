@@ -5,7 +5,7 @@ import re
 
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...KeelelisedMuutujad.modules import Module
-
+from datetime import datetime
 
 class DataExtractor:
     def __init__(self):
@@ -26,13 +26,15 @@ class DataExtractor:
             #print("node data:")
             #print(node)
             description = node.get("description", "")
+            due_at = DataExtractor.date_converter(node)
+
             headers = {
             HeaderKeys.HEADER_ID: node.get("id", ""),
             HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
             HeaderKeys.HEADER_TYPE: (node.get("type", {}).get("name")) or "",
             HeaderKeys.HEADER_FLAG: (node.get("priority") or "").lower(),
             HeaderKeys.HEADER_NAME: node.get("name") or node.get("title") or "",
-            HeaderKeys.HEADER_DEADLINE: node.get("dueAt", "") or "",
+            HeaderKeys.HEADER_DEADLINE: due_at,
             HeaderKeys.HEADER_STATUSES: status.get("name", "") if status else "",
             HeaderKeys.COLOR_NAME: status.get("color", "") if status else "",
             HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
@@ -43,21 +45,19 @@ class DataExtractor:
             HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
             }
 
-            due_at = node.get("dueAt", "") or "",
-            print("due_at:")
-            print(due_at)
-
 
             return headers
 
-
+            
         else:
+            due_at = DataExtractor.date_converter(node)
             headers = {            
             HeaderKeys.HEADER_ID: node.get("id", ""),
             HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
             HeaderKeys.HEADER_NUMBER: node.get("number", "") or (node.get("type", {}).get("name")) or "",
             HeaderKeys.HEADER_NAME: node.get("name") or node.get("title") or "",
-            HeaderKeys.HEADER_DEADLINE: node.get("dueAt", "") or "",
+            
+            HeaderKeys.HEADER_DEADLINE: due_at,
             HeaderKeys.HEADER_STATUSES: status.get("name", "") if status else "",
             HeaderKeys.COLOR_NAME: status.get("color", "") if status else "",
             HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
@@ -67,8 +67,10 @@ class DataExtractor:
             HeaderKeys.HEADER_FILE_PATH: "",
             HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
             }    
+            
+            
             return headers
-    
+
     @staticmethod
 
 
@@ -106,3 +108,20 @@ class DataExtractor:
                 links.append(clean_text)
 
         return links
+
+
+    def date_converter(node:dict):
+        print("date converter:", node)
+        raw_due_at = node.get("dueAt", "")
+        # Unpack if it's a tuple like ('2022-07-21',)
+        if isinstance(raw_due_at, tuple) and raw_due_at:
+            raw_due_at = raw_due_at[0]
+
+        # Try to format if it's a valid date string
+        try:
+            due_at = datetime.strptime(raw_due_at, "%Y-%m-%d").strftime("%d.%m.%Y")
+        except Exception:
+            due_at = ""  # fallback if invalid or missing
+
+        print("due_at:", due_at)
+        return due_at

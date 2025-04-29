@@ -341,4 +341,3 @@ class DelegatesForTables():
 
         table.setItemDelegateForColumn(status_column_index, FancyStatusDelegate(color_column_index))
 
-
