@@ -111,7 +111,7 @@ class DataExtractor:
 
 
     def date_converter(node:dict):
-        print("date converter:", node)
+        #print("date converter:", node)
         raw_due_at = node.get("dueAt", "")
         # Unpack if it's a tuple like ('2022-07-21',)
         if isinstance(raw_due_at, tuple) and raw_due_at:
@@ -123,5 +123,5 @@ class DataExtractor:
         except Exception:
             due_at = ""  # fallback if invalid or missing
 
-        print("due_at:", due_at)
+        #print("due_at:", due_at)
         return due_at

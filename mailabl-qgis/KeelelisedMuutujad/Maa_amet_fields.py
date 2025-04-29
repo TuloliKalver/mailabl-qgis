@@ -1,9 +1,12 @@
 from qgis.utils import iface
 from qgis.core import QgsVectorLayer, QgsProject, QgsField
-from PyQt5.QtCore import QVariant
+from PyQt5.QtCore import QVariant, QCoreApplication
+
+
 from ..config.settings import SettingsDataSaveAndLoad
 from ..utils.messagesHelper import ModernMessageDialog
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
+from ..utils.ProgressHelper import ProgressDialogModern
 
 class Katastriyksus:
     #fid = "fid"               # Baasis olev id
@@ -132,14 +135,42 @@ class RemapPropertiesLayer:
             raise ValueError("Expected a QgsVectorLayer object.")
 
     def update_attribute_table(self):
+        
+        progress = ProgressDialogModern(title="Andmestruktuuri uuendamine", value=0)
+        progress.update(1, purpouse=f"{self.layer.name()} andmete struktuuri uuendateakse", text1="Palun oota...", maximum=3)
+        
         self.validate_layer()
         iface.setActiveLayer(self.layer)
-        print(f"Layer_name: {self.layer.name()}")
+        #print(f"Layer_name: {self.layer.name()}")
         self.layer.startEditing()
         layer_fields = self.layer.fields()
         temp_field_mapping = self.rename_fields_temporarily(layer_fields)
         self.rename_fields_to_final(layer_fields, temp_field_mapping)
+        progress.update(2)
+
+        # Apply the change using the field calculator
         
+        features = list(self.layer.getFeatures())
+        total = len(features)
+        progress.update(maximum=total)
+        for i, feature in enumerate(features, start=1):
+            modified = False  # Track if we change anything
+
+            for field_name in [Katastriyksus.siht1, Katastriyksus.siht2, Katastriyksus.siht3]:
+                value = feature[field_name]
+                if value is not None:
+                    value_str = str(value).upper().replace(" ", "_")
+                    if value_str != value:
+                        feature[field_name] = value_str
+                        modified = True
+
+            if modified:
+                self.layer.updateFeature(feature)
+
+            # Update progress
+            progress.update(value=i, text2=f"{i} / {total}")
+            QCoreApplication.processEvents()
+            
         if self.layer.commitChanges():
             #print("Stage I committed successfully.")
             pass
@@ -148,10 +179,13 @@ class RemapPropertiesLayer:
             message = "Veeru nimede uuendamisel tekkis viga."
             ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, message )
             print("Error committing changes.")
+            progress.close()
             return
         
         self.remove_temp_suffix()
         self.add_missing_fields()
+        
+        progress.close()
 
 
     def rename_fields_temporarily(self, layer_fields):

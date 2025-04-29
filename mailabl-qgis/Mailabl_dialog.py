@@ -198,7 +198,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
  
 
 
-        self.frSyncAndRenew.setVisible(False)
+        self.frSyncAndRenew.setVisible(True)
 #############################TESTING AREA################################################################
 
 
