@@ -22,6 +22,7 @@ class UIStateManager:
         self.list_views = [dialog.lvCounty, dialog.lvState, dialog.lvSettlement]
         self.frames = [dialog.FrMunicipality, dialog.FrState, dialog.FRCounty,
                        dialog.frResultViewer, dialog.frControllButtons]
+
         self.table = [dialog.tvSelectedMapItems]
 
         self.main_frame_buttons = [dialog.pbAddElements, dialog.btnRemoveItems]
@@ -33,7 +34,7 @@ class UIStateManager:
         self.lbl = dialog.lblActionName
         self.main_buttons = [dialog.pbHome, dialog.pbProjects, dialog.pbContracts, 
                              dialog.pbeasements, dialog.btnMapActions,
-                             dialog.pbMainMenu,dialog.pbSettings ]
+                             dialog.pbMainMenu,dialog.pbSettings, dialog.pbAddDrawings]
 
         self.list_widgets_with_signals = {
             dialog.lvCounty: self.get_connected_signal,
@@ -138,6 +139,7 @@ class UIStateManager:
         lv_municipality = self.dialog.lvSettlement
         cb_municipality = self.dialog.chkSelectAllSettlements
         cb_roads = self.dialog.chkToggleRoadSelection
+        
 
         all_checkboxes = self.check_boxes + [cb_municipality, cb_roads]
         all_tables = self.table
@@ -149,6 +151,7 @@ class UIStateManager:
         if not layer:
             self.dialog.frMaaAmetControlls.setVisible(True)
             self.dialog.frPropertiFlowHolder.setVisible(False)
+            self.dialog.frCancelWhenPropertysLoaded.setVisible(False)
             UIActions.hide(self.frames)
             WidgetAndWievHelpers.reset_and_set_data(lv_county, data=[], state=True)
             WidgetAndWievHelpers.reset_and_set_data([lv_municipality, lv_state], data=[], state=False)
@@ -158,6 +161,7 @@ class UIStateManager:
 
         self.dialog.frMaaAmetControlls.setVisible(False)
         self.dialog.frPropertiFlowHolder.setVisible(True)
+        self.dialog.frCancelWhenPropertysLoaded.setVisible(True)
         self.lbl.setText("Vali, mida kinnistutega teha tahad!")
         UIActions.hide(self.frames)
         WidgetAndWievHelpers.reset_and_set_data(lv_county, data=[], state=True)

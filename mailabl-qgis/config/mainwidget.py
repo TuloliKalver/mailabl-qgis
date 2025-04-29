@@ -26,7 +26,7 @@ class WidgetInfo:
                 'accessibleName': accessible_name
             })
 
-        print(f"widget_info: {widget_info}")
+        #print(f"widget_info: {widget_info}")
         return widget_info
             
     @staticmethod

@@ -155,7 +155,7 @@ class MyTreeHome:
             subcontext=PluginSettings.OPTION_TYPE,
             key_type=PluginSettings.SUB_CONTEXT_NAME,
         )
-        print(f"Loaded Asbuilttypes: {Asbuilttypes}")
+        #print(f"Loaded Asbuilttypes: {Asbuilttypes}")
         if isinstance(Asbuilttypes, str):
             import ast
             try:
@@ -164,7 +164,7 @@ class MyTreeHome:
                 Asbuilttypes = []
 
         Asbuilttypes = [str(t).strip() for t in Asbuilttypes]  # sanitize
-        print (f"Asbuilttypes: {Asbuilttypes}")
+        #print (f"Asbuilttypes: {Asbuilttypes}")
         #print (f"child_data: {child_data}")
         if child_data:
             for typename, items in child_data.items():
