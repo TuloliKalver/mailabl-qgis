@@ -1580,7 +1580,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>9</number>
+                  <number>8</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -8595,7 +8595,16 @@ QTreeView::item:hover {
                           </widget>
                          </item>
                          <item>
-                          <widget class="QTextBrowser" name="textBrowser"/>
+                          <widget class="QTextBrowser" name="textBrowser">
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                           <property name="acceptDrops">
+                            <bool>false</bool>
+                           </property>
+                          </widget>
                          </item>
                          <item>
                           <spacer name="verticalSpacer_6">
@@ -9091,7 +9100,7 @@ QTreeView::item:hover {
                                <item>
                                 <widget class="QPushButton" name="btnRemoveItems">
                                  <property name="text">
-                                  <string>Eemaldan</string>
+                                  <string>Eemalda</string>
                                  </property>
                                  <property name="icon">
                                   <iconset>
@@ -9156,7 +9165,7 @@ QTreeView::item:hover {
                                   </size>
                                  </property>
                                  <property name="text">
-                                  <string>sünkrooni Mailabliga</string>
+                                  <string>Sünkrooni Mailabliga</string>
                                  </property>
                                  <property name="icon">
                                   <iconset>
