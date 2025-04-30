@@ -24,7 +24,7 @@ class MenuModules():
     HOMEPAGE = 5
     PROPERTIES = 6
     PROJECTS = 7
-    REMOVEPROPERTIES = 8
+    ARCHIVE_HELP_PROPERTIES = 8
     PROPERTIES_OPERATIONS = 9
     USERS = 10
 
@@ -115,6 +115,15 @@ class SetupController:
                     dialog.lblUserRolesValue,
                     dialog.lblSPreferedHomeValue
                 ],
+                ModuleKey.CHECKBOXES: [],
+                ModuleKey.SETTINGS_BUTTON: None,
+                ModuleKey.VISIBLE: True
+            },
+            MenuModules.ARCHIVE_HELP_PROPERTIES: {
+                ModuleKey.ID: MenuModules.ARCHIVE_HELP_PROPERTIES,
+                ModuleKey.WIDGET: None,
+                ModuleKey.TITLE: "Arhiivitavate kinnistuste seaded",
+                ModuleKey.LABELS: [],
                 ModuleKey.CHECKBOXES: [],
                 ModuleKey.SETTINGS_BUTTON: None,
                 ModuleKey.VISIBLE: True

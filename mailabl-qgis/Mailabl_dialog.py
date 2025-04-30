@@ -215,8 +215,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbRefreshTesotusTable.clicked.connect(lambda: WorkSpaceHandler.asBuilt_reload(self))
 
-
         self.pbMapThemes.setEnabled(False)
+
+        self.pbArhciveHelperStart.clicked.connect(lambda: WorkSpaceHandler.archive_helper(self))
+        self.pbArchivValueReset.clicked.connect(lambda: WorkSpaceHandler.archive_reset(self))
 
     
         self.pbSyncMailabl.clicked.connect(lambda: WorkSpaceHandler.Open_generate_mapLayer_synced_with_Mailabl_first_page(self))
@@ -572,7 +574,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 #print(f"has properties rights: {propeties_create}")
                 if propeties_create == False:
                     self.btnMapActions.hide()
-
+                    self.pbArchiveHelper.hide()
                 # Get version number to check if it's "dev" mode
                 path = PathLoaderSimple.metadata()
                 version_nr = Version.get_plugin_version(path)
@@ -652,12 +654,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 function()
             else:
                     # Handle the case where the mapped function is None
-                print(f"No function mapped for index {index_int}. Setting default to page 5.")
+                #print(f"No function mapped for index {index_int}. Setting default to page 5.")
                 self.swWorkSpace.setCurrentIndex(5)
                 
         else:
                 # Handle the case where index is not a valid page index (e.g., set a default)
-            print(f"Invalid page index: {index_int} or mapped_functions is None. Setting default to page 5.")
+            #print(f"Invalid page index: {index_int} or mapped_functions is None. Setting default to page 5.")
             self.swWorkSpace.setCurrentIndex(5)
             
     def print_UC_data(self):

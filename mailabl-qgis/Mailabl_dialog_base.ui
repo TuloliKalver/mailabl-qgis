@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>1238</height>
+    <height>1256</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1438,13 +1438,13 @@ QProgressBar::chunk {
                        </property>
                        <layout class="QVBoxLayout" name="verticalLayout_9">
                         <property name="spacing">
-                         <number>0</number>
+                         <number>6</number>
                         </property>
                         <property name="leftMargin">
-                         <number>8</number>
+                         <number>6</number>
                         </property>
                         <property name="topMargin">
-                         <number>8</number>
+                         <number>6</number>
                         </property>
                         <property name="rightMargin">
                          <number>0</number>
@@ -1472,6 +1472,23 @@ QProgressBar::chunk {
                           <property name="icon">
                            <iconset>
                             <normaloff>icons/Icons_hele/map.svg</normaloff>icons/Icons_hele/map.svg</iconset>
+                          </property>
+                          <property name="iconSize">
+                           <size>
+                            <width>20</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="pbArchiveHelper">
+                          <property name="text">
+                           <string>Hooldus</string>
+                          </property>
+                          <property name="icon">
+                           <iconset>
+                            <normaloff>icons/Icons_hele/archive.svg</normaloff>icons/Icons_hele/archive.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -1563,7 +1580,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>9</number>
+                  <number>8</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -4445,7 +4462,7 @@ p, li { white-space: pre-wrap; }
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>820</width>
+                        <width>822</width>
                         <height>1124</height>
                        </rect>
                       </property>
@@ -8445,7 +8462,7 @@ QTreeView::item:hover {
                    </item>
                   </layout>
                  </widget>
-                 <widget class="QWidget" name="RemoveProperties">
+                 <widget class="QWidget" name="ArchiveProperties">
                   <property name="accessibleName">
                    <string>None</string>
                   </property>
@@ -8466,18 +8483,18 @@ QTreeView::item:hover {
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QFrame" name="Prygikast">
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(131, 142, 162);</string>
-                     </property>
+                    <widget class="QFrame" name="frame_28">
                      <property name="frameShape">
                       <enum>QFrame::StyledPanel</enum>
                      </property>
                      <property name="frameShadow">
                       <enum>QFrame::Raised</enum>
                      </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_166">
-                      <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_31">
+                      <property name="topMargin">
+                       <number>200</number>
+                      </property>
+                      <item alignment="Qt::AlignHCenter">
                        <widget class="QFrame" name="frame_32">
                         <property name="frameShape">
                          <enum>QFrame::StyledPanel</enum>
@@ -8485,76 +8502,100 @@ QTreeView::item:hover {
                         <property name="frameShadow">
                          <enum>QFrame::Raised</enum>
                         </property>
-                        <layout class="QVBoxLayout" name="verticalLayout_165">
-                         <item>
-                          <widget class="QLabel" name="label_7">
-                           <property name="styleSheet">
-                            <string notr="true">background-color: rgb(31, 35, 42);</string>
-                           </property>
-                           <property name="text">
-                            <string>Värv 1: #1f232a </string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_30">
+                         <item alignment="Qt::AlignHCenter">
                           <widget class="QLabel" name="label">
-                           <property name="styleSheet">
-                            <string notr="true">background-color: #272c35;</string>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
                            </property>
                            <property name="text">
-                            <string>Värv_u_1 #272c35</string>
+                            <string>Korrastab arhiveerimismärketa kinnistud Mailablis</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item alignment="Qt::AlignHCenter">
+                          <widget class="QLineEdit" name="ledCadastralnumbers">
+                           <property name="minimumSize">
+                            <size>
+                             <width>400</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>400</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                           <property name="inputMask">
+                            <string notr="true"/>
+                           </property>
+                           <property name="text">
+                            <string notr="true"/>
+                           </property>
+                           <property name="placeholderText">
+                            <string>Kataster millele soovid arhiveerimis märget</string>
                            </property>
                           </widget>
                          </item>
                          <item>
-                          <widget class="QLabel" name="label_8">
+                          <widget class="QFrame" name="frame_29">
                            <property name="styleSheet">
-                            <string notr="true">background-color: rgb(44, 49, 60);</string>
+                            <string notr="true"/>
                            </property>
-                           <property name="text">
-                            <string>Värv 2: #2c313c</string>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
                            </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_13">
+                            <item>
+                             <widget class="QPushButton" name="pbArhciveHelperStart">
+                              <property name="text">
+                               <string>Lisa arhiveerimise tunnused</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/archive.svg</normaloff>icons/Icons_hele/archive.svg</iconset>
+                              </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>20</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QPushButton" name="pbArchivValueReset">
+                              <property name="text">
+                               <string>Eemalda arhiveerimise tunnused</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
+                              </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>20</width>
+                                <height>20</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
                           </widget>
                          </item>
                          <item>
-                          <widget class="QLabel" name="label_9">
-                           <property name="styleSheet">
-                            <string notr="true">background-color: rgb(52, 59, 71);</string>
-                           </property>
-                           <property name="text">
-                            <string>Värv 3: #343b47</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="label_4">
-                           <property name="styleSheet">
-                            <string notr="true">background-color: #404957;</string>
-                           </property>
-                           <property name="text">
-                            <string>Vär_u_2  #404957</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="label_24">
-                           <property name="styleSheet">
-                            <string notr="true">background-color: #626e84;</string>
-                           </property>
-                           <property name="text">
-                            <string>TextLabel</string>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="label_17">
-                           <property name="styleSheet">
-                            <string notr="true">background-color: rgb(131, 142, 162);</string>
-                           </property>
-                           <property name="text">
-                            <string>Värv 4: #838ea2</string>
-                           </property>
-                          </widget>
+                          <widget class="QTextBrowser" name="textBrowser"/>
                          </item>
                          <item>
                           <spacer name="verticalSpacer_6">
@@ -8564,7 +8605,7 @@ QTreeView::item:hover {
                            <property name="sizeHint" stdset="0">
                             <size>
                              <width>20</width>
-                             <height>1207</height>
+                             <height>40</height>
                             </size>
                            </property>
                           </spacer>
@@ -8589,10 +8630,10 @@ QTreeView::item:hover {
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>10</number>
+                    <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>5</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -8977,7 +9018,7 @@ aluskaarti</string>
                         </layout>
                        </widget>
                       </item>
-                      <item>
+                      <item alignment="Qt::AlignHCenter">
                        <widget class="QFrame" name="frPropertiFlowHolder">
                         <property name="styleSheet">
                          <string notr="true"/>
@@ -9128,55 +9169,85 @@ aluskaarti</string>
                              <number>0</number>
                             </property>
                             <item>
-                             <widget class="QPushButton" name="pbSyncMailabl">
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>0</height>
-                               </size>
+                             <widget class="QFrame" name="frame_2">
+                              <property name="styleSheet">
+                               <string notr="true"/>
                               </property>
-                              <property name="text">
-                               <string>Mailabliga sünkroniseerimine</string>
+                              <property name="frameShape">
+                               <enum>QFrame::StyledPanel</enum>
                               </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/cloud-lightning.svg</normaloff>icons/Icons_hele/cloud-lightning.svg</iconset>
+                              <property name="frameShadow">
+                               <enum>QFrame::Raised</enum>
                               </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>20</width>
-                                <height>20</height>
-                               </size>
-                              </property>
+                              <layout class="QVBoxLayout" name="verticalLayout_28">
+                               <item>
+                                <widget class="QPushButton" name="pbSyncMailabl">
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>0</width>
+                                   <height>0</height>
+                                  </size>
+                                 </property>
+                                 <property name="text">
+                                  <string>Mailabliga sünkroniseerimine</string>
+                                 </property>
+                                 <property name="icon">
+                                  <iconset>
+                                   <normaloff>icons/Icons_hele/cloud-lightning.svg</normaloff>icons/Icons_hele/cloud-lightning.svg</iconset>
+                                 </property>
+                                 <property name="iconSize">
+                                  <size>
+                                   <width>20</width>
+                                   <height>20</height>
+                                  </size>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
                              </widget>
                             </item>
                             <item>
-                             <widget class="QPushButton" name="pbUpdateToNewDataframe">
-                              <property name="minimumSize">
-                               <size>
-                                <width>0</width>
-                                <height>0</height>
-                               </size>
+                             <widget class="QFrame" name="frame_18">
+                              <property name="styleSheet">
+                               <string notr="true"/>
                               </property>
-                              <property name="maximumSize">
-                               <size>
-                                <width>16777215</width>
-                                <height>16777215</height>
-                               </size>
+                              <property name="frameShape">
+                               <enum>QFrame::StyledPanel</enum>
                               </property>
-                              <property name="text">
-                               <string>Uuenda andmestruktuuri</string>
+                              <property name="frameShadow">
+                               <enum>QFrame::Raised</enum>
                               </property>
-                              <property name="icon">
-                               <iconset>
-                                <normaloff>icons/Icons_hele/tool.svg</normaloff>icons/Icons_hele/tool.svg</iconset>
-                              </property>
-                              <property name="iconSize">
-                               <size>
-                                <width>20</width>
-                                <height>20</height>
-                               </size>
-                              </property>
+                              <layout class="QVBoxLayout" name="verticalLayout_29">
+                               <item>
+                                <widget class="QPushButton" name="pbUpdateToNewDataframe">
+                                 <property name="minimumSize">
+                                  <size>
+                                   <width>0</width>
+                                   <height>0</height>
+                                  </size>
+                                 </property>
+                                 <property name="maximumSize">
+                                  <size>
+                                   <width>16777215</width>
+                                   <height>16777215</height>
+                                  </size>
+                                 </property>
+                                 <property name="text">
+                                  <string>Uuenda andmestruktuuri</string>
+                                 </property>
+                                 <property name="icon">
+                                  <iconset>
+                                   <normaloff>icons/Icons_hele/tool.svg</normaloff>icons/Icons_hele/tool.svg</iconset>
+                                 </property>
+                                 <property name="iconSize">
+                                  <size>
+                                   <width>20</width>
+                                   <height>20</height>
+                                  </size>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
                              </widget>
                             </item>
                            </layout>

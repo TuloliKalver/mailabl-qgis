@@ -2,6 +2,8 @@
 # pylint: disable=relative-beyond-top-level
 # pylint: disable=no-name-in-module
 
+import re
+from PyQt5.QtCore import QCoreApplication
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from ..Functions.Contracts.Contracts import ContractsMain
 from ..Functions.Easements.Easements import EasementssMain
@@ -17,6 +19,7 @@ from .MainMenuController import SetupController, MenuModules
 from ..utils.ComboboxHelper import ComboBoxHelper
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
+from ..queries.python.property_data import MyLablChecker, UpdateData
 
 
 
@@ -74,7 +77,6 @@ class WorkSpaceHandler:
                 
         button.blockSignals(False)
         
-
     def asBuilt_reload(self):
         button = self.pbRefreshTesotusTable
         button.blockSignals(True)
@@ -110,8 +112,68 @@ class WorkSpaceHandler:
 
         button.blockSignals(False)
 
+    def swWorkspace_arhive_helper(self, menu_module):
+        self.ledCadastralnumbers.clear() 
+        self.textBrowser.clear()
+        self.swWorkSpace.setCurrentIndex(menu_module)
 
 
+    def archive_helper(self):
+        text = self.ledCadastralnumbers.text()
+        browser = self.textBrowser
+        browser.clear()
+
+        numbers = [n.strip() for n in text.split(",") if n.strip()]
+        pattern = re.compile(r"^\d{5}:\d{3}:\d{4}$")
+
+        for tunnus in numbers:
+            browser.append(f"<b>➡ Töötlen</b> {tunnus}")
+
+            if pattern.match(tunnus):
+                browser.append(f"<span style='color: green;'>✅ Vorming OK</span>")
+
+                res, id = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
+
+                if res is True:
+                    browser.append(f"<span style='color: orange;'>ℹ Kinnistu ID <b>{id}</b> EI LEITUD. Andmeid ei uuendata.</span>")
+                else:
+                    browser.append(f"<span style='color: teal;'>🔄 Uuendan arhiveerimisandmeid ID-le: <b>{id}</b></span>")
+                    UpdateData._update_archived_properies_data(id)
+
+            else:
+                browser.append(f"<span style='color: red;'>❌ Vigane vorming: {tunnus}. Jätan vahele.</span>")
+
+            browser.append("<hr>")  # separator line
+            QCoreApplication.processEvents()
+
+    def archive_reset(self):
+        text = self.ledCadastralnumbers.text()
+        browser = self.textBrowser
+        browser.clear()
+
+        numbers = [n.strip() for n in text.split(",") if n.strip()]
+        pattern = re.compile(r"^\d{5}:\d{3}:\d{4}$")
+
+        for tunnus in numbers:
+            browser.append(f"<b>➡ Töötlen</b> {tunnus}")
+
+            if pattern.match(tunnus):
+                browser.append(f"<span style='color: green;'>✅ Vorming OK</span>")
+
+                res, id = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
+
+                if res is True:
+                    browser.append(f"<span style='color: orange;'>ℹ Kinnistut {tunnus} EI LEITUD. Andmeid ei uuendata.</span>")
+                else:
+                    browser.append(f"<span style='color: teal;'>🔄 Eemaldan arhhiveerimise tunnused kinnistule {tunnus}</b></span>")
+                    UpdateData._unarchive_property_data(id)
+
+
+            else:
+                    browser.append(f"<span style='color: red;'>❌ Vigane vorming: {tunnus}. Jätan vahele.</span>")
+
+        browser.append("<hr>")  # separator line
+        QCoreApplication.processEvents()
 
 
     @staticmethod

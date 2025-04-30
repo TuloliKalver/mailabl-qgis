@@ -758,6 +758,44 @@ class UpdateData:
         #print(f"Updated tags for property {property_id}: {', '.join(tag_names)}")
         return True
 
+
+    @staticmethod
+    def _remove_property_tag(property_id: str, module: str, tag_id: str) -> bool:
+        update_query_file = GraphqlProperties.UPDATE_TAGS
+        update_mutation = GraphQLQueryLoader.load_query_by_module(module=module, filename=update_query_file)
+
+        update_variables = {
+            "input": {
+                "id": property_id,
+                "tags": {
+                    "dissociate": [tag_id]
+                }
+            }
+        }
+
+        print(f"🚀 Sending dissociate mutation: {update_variables}")
+
+        update_response = requestBuilder.construct_and_send_request(update_mutation, update_variables)
+        if not update_response:
+            print("❌ Failed to update tags")
+            return False
+
+        updated_data = update_response.json()
+        if "errors" in updated_data:
+            print("❌ Tag removal error:", updated_data["errors"])
+            return False
+
+        updated_tags = updated_data["data"]["updateProperty"]["tags"]["edges"]
+        updated_tag_names = [tag["node"]["name"] for tag in updated_tags]
+        print(f"✅ Tags after dissociation: {updated_tag_names}")
+
+        return True
+
+
+
+
+
+
     @staticmethod
     def _update_archived_properies_data(item_id: str, recovery_name: str = None) -> bool:
         if isinstance(item_id, list):
@@ -788,4 +826,25 @@ class UpdateData:
         
         UpdateData._update_properties_name(propertie_id=item_id, new_name=new_name, module=module)
 
- 
+    @staticmethod
+    def _unarchive_property_data(item_id: str) -> bool:
+        if isinstance(item_id, list):
+            item_id = item_id[0]["node"]["id"]
+        elif isinstance(item_id, dict):
+            item_id = item_id["node"]["id"]
+        
+        module = Module.PROPRETIE
+        tag_name = "Arhiveeritud"
+        
+        # Get the ID of the tag to remove (no need to create if missing!)
+        tag_id = TagsEngines.get_modules_tag_id_by_name(tag_name=tag_name, module=module)
+        if tag_id:
+            # Remove the tag
+            UpdateData._remove_property_tag(property_id=item_id, module=module, tag_id=tag_id)
+
+        # Restore original name (remove prefix if it exists)
+        current_name = PropertiesGeneralQueries._get_properties_street_name_to_achived(property_id=item_id)
+
+        if current_name.startswith("ARHIIVEERITUD - "):
+            new_name = current_name.replace("ARHIIVEERITUD - ", "", 1)
+            UpdateData._update_properties_name(propertie_id=item_id, new_name=new_name, module=module)

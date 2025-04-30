@@ -52,12 +52,6 @@ class SetupCadastralLayers:
     def on_save_button_clicked(self, widget, cmbCurrent_Layer, cmbTarget_layer,lblMainLayerValue,lblMainTargetLayerValue,lblSHPLayerValue):
         # Handle logic when the save button is clicked
         SettingsDataSaveAndLoad.on_save_button_clicked_cadastrals(self, cmbCurrent_Layer, cmbTarget_layer)
-        lblLayerProjectsValue = self.lblLayerProjectsValue # pylint: disable=no-member
-        lblProjectsFolderValue = self.lblProjectsFolderValue 
-        lblProjectsTargetFolderValue = self.lblProjectsTargetFolderValue
-        lblPreferredProjectStatusValue = self.lblPreferredProjectStatusValue
-        lblPreferredContractStatusValue = self.lblPreferredContractStatusValue
-        lblPreferredContractsTypesValue = self.lblPreferredContractsTypesValue
         loader = StartupSettingsLoader(self)
         loader.startup_label_loader()
         
