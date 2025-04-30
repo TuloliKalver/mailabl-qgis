@@ -1580,7 +1580,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>8</number>
+                  <number>9</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -1597,10 +1597,10 @@ QProgressBar::chunk {
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>10</number>
+                    <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>5</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -2092,7 +2092,7 @@ QProgressBar::chunk {
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>10</number>
+                    <number>0</number>
                    </property>
                    <property name="rightMargin">
                     <number>0</number>
@@ -3664,10 +3664,10 @@ p, li { white-space: pre-wrap; }
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>10</number>
+                    <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>5</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -4075,10 +4075,10 @@ p, li { white-space: pre-wrap; }
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>10</number>
+                    <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>5</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -4411,10 +4411,10 @@ p, li { white-space: pre-wrap; }
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>10</number>
+                    <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>5</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -4462,7 +4462,7 @@ p, li { white-space: pre-wrap; }
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>822</width>
+                        <width>827</width>
                         <height>1124</height>
                        </rect>
                       </property>
@@ -7121,7 +7121,7 @@ p, li { white-space: pre-wrap; }
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>10</number>
+                    <number>0</number>
                    </property>
                    <property name="rightMargin">
                     <number>0</number>
@@ -7231,7 +7231,7 @@ p, li { white-space: pre-wrap; }
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>10</number>
+                    <number>0</number>
                    </property>
                    <property name="rightMargin">
                     <number>0</number>
@@ -7996,7 +7996,7 @@ QTreeView::item:hover {
                     <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>5</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -8817,19 +8817,6 @@ QTreeView::item:hover {
                                      <enum>QFrame::Raised</enum>
                                     </property>
                                     <layout class="QVBoxLayout" name="verticalLayout_14">
-                                     <item alignment="Qt::AlignHCenter">
-                                      <widget class="QLabel" name="label_19">
-                                       <property name="font">
-                                        <font>
-                                         <pointsize>10</pointsize>
-                                        </font>
-                                       </property>
-                                       <property name="text">
-                                        <string>&quot;Eesti.shp&quot;
-on olemas</string>
-                                       </property>
-                                      </widget>
-                                     </item>
                                      <item>
                                       <widget class="QPushButton" name="pbLoaddShapeFile">
                                        <property name="minimumSize">
@@ -8839,7 +8826,7 @@ on olemas</string>
                                         </size>
                                        </property>
                                        <property name="text">
-                                        <string>Lae algandmed</string>
+                                        <string>Lae aluskaart</string>
                                        </property>
                                        <property name="icon">
                                         <iconset>
@@ -8865,19 +8852,6 @@ on olemas</string>
                                      <enum>QFrame::Raised</enum>
                                     </property>
                                     <layout class="QVBoxLayout" name="verticalLayout_6">
-                                     <item alignment="Qt::AlignHCenter">
-                                      <widget class="QLabel" name="label_25">
-                                       <property name="font">
-                                        <font>
-                                         <pointsize>10</pointsize>
-                                        </font>
-                                       </property>
-                                       <property name="text">
-                                        <string>Mul ei ole
-aluskaarti</string>
-                                       </property>
-                                      </widget>
-                                     </item>
                                      <item>
                                       <widget class="QPushButton" name="pbOpenMaAmet">
                                        <property name="minimumSize">
@@ -8887,7 +8861,7 @@ aluskaarti</string>
                                         </size>
                                        </property>
                                        <property name="text">
-                                        <string>Maa-ametisse</string>
+                                        <string>Lae aluskaart maaametist</string>
                                        </property>
                                        <property name="icon">
                                         <iconset>
@@ -8928,13 +8902,6 @@ aluskaarti</string>
                                   <property name="bottomMargin">
                                    <number>0</number>
                                   </property>
-                                  <item alignment="Qt::AlignHCenter">
-                                   <widget class="QLabel" name="label_26">
-                                    <property name="text">
-                                     <string>Eemalda kinnistuid</string>
-                                    </property>
-                                   </widget>
-                                  </item>
                                   <item alignment="Qt::AlignHCenter">
                                    <widget class="QPushButton" name="btnRemoveItems_noImport">
                                     <property name="text">
@@ -9001,7 +8968,7 @@ aluskaarti</string>
                          <item alignment="Qt::AlignHCenter">
                           <widget class="QPushButton" name="pbCancelBeforeEntering">
                            <property name="text">
-                            <string>Lahku</string>
+                            <string>Välju</string>
                            </property>
                            <property name="icon">
                             <iconset>
@@ -9081,14 +9048,14 @@ aluskaarti</string>
                                <item>
                                 <widget class="QLabel" name="label_32">
                                  <property name="text">
-                                  <string>Lisa ja arhiveeri</string>
+                                  <string/>
                                  </property>
                                 </widget>
                                </item>
                                <item>
                                 <widget class="QPushButton" name="pbAddElements">
                                  <property name="text">
-                                  <string>Lisan</string>
+                                  <string>Lisa ja arhiveeri</string>
                                  </property>
                                  <property name="icon">
                                   <iconset>
@@ -9117,7 +9084,7 @@ aluskaarti</string>
                                <item>
                                 <widget class="QLabel" name="label_38">
                                  <property name="text">
-                                  <string>Eemadan kinnistui</string>
+                                  <string/>
                                  </property>
                                 </widget>
                                </item>
@@ -9189,7 +9156,7 @@ aluskaarti</string>
                                   </size>
                                  </property>
                                  <property name="text">
-                                  <string>Mailabliga sünkroniseerimine</string>
+                                  <string>sünkrooni Mailabliga</string>
                                  </property>
                                  <property name="icon">
                                   <iconset>
@@ -9233,7 +9200,7 @@ aluskaarti</string>
                                   </size>
                                  </property>
                                  <property name="text">
-                                  <string>Uuenda andmestruktuuri</string>
+                                  <string>Värskenda andmeid</string>
                                  </property>
                                  <property name="icon">
                                   <iconset>
@@ -9323,7 +9290,7 @@ aluskaarti</string>
                             <item>
                              <widget class="QPushButton" name="pbCancelPropertiesAction">
                               <property name="text">
-                               <string>Lahkun</string>
+                               <string>Välju</string>
                               </property>
                               <property name="icon">
                                <iconset>

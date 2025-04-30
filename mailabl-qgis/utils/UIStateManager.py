@@ -164,7 +164,7 @@ class UIStateManager:
         self.dialog.frCacelBeforeEntering.setVisible(False)
         self.dialog.frPropertiFlowHolder.setVisible(True)
         self.dialog.frCancelWhenPropertysLoaded.setVisible(True)
-        self.lbl.setText("Vali, mida kinnistutega teha tahad!")
+        self.lbl.setText("Vali toiming kinnistutega")
         UIActions.hide(self.frames)
         WidgetAndWievHelpers.reset_and_set_data(lv_county, data=[], state=True)
         WidgetAndWievHelpers.reset_and_set_data([lv_municipality, lv_state], data=[], state=False)

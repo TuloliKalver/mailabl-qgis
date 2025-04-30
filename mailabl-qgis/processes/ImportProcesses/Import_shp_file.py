@@ -66,7 +66,7 @@ class SHPLayerLoader:
                 self.dialog.frMaaAmetControlls.setVisible(False)
                 self.dialog.frPropertiFlowHolder.setVisible(True)
                 self.dialog.pbConfirmAction.setEnabled(False)
-                self.dialog.lblActionName.setText("Vali, mida kinnistutega teha tahad!")
+                self.dialog.lblActionName.setText("Vali toiming kinnistutega")
 
 class ShapefileImporter:
     @staticmethod

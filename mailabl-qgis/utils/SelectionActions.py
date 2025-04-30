@@ -50,7 +50,7 @@ class SelectionActions:
         PropertiesProcessStage.current_flow_stage = FlowStages.COMPLETE
 
         PropertiesProcessStage.clear_all_app_states()
-        cls.dialog.lblActionName.setText("Vali, mida kinnistutega teha tahad!")
+        cls.dialog.lblActionName.setText("Vali toiming kinnistutega")
         
         # Cleanup layers and reset states.
         layer_name =  StoredLayers.users_properties_layer_name()
