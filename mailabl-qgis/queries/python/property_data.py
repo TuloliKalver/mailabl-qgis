@@ -817,7 +817,7 @@ class UpdateData:
 
         UpdateData._update_property_tags(property_id=item_id, module=module, tag_id=tag_id)
 
-        current_name = PropertiesGeneralQueries._get_properties_street_name_to_achived(property_id=item_id)
+        current_name = str(PropertiesGeneralQueries._get_properties_street_name_to_achived(property_id=item_id))
         if recovery_name:
             new_name = recovery_name
         else:
@@ -843,8 +843,9 @@ class UpdateData:
             UpdateData._remove_property_tag(property_id=item_id, module=module, tag_id=tag_id)
 
         # Restore original name (remove prefix if it exists)
-        current_name = PropertiesGeneralQueries._get_properties_street_name_to_achived(property_id=item_id)
 
+        current_name = str(PropertiesGeneralQueries._get_properties_street_name_to_achived(property_id=item_id))
+        
         if current_name.startswith("ARHIIVEERITUD - "):
             new_name = current_name.replace("ARHIIVEERITUD - ", "", 1)
             UpdateData._update_properties_name(propertie_id=item_id, new_name=new_name, module=module)
