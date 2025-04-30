@@ -157,7 +157,7 @@ class UIStateManager:
             WidgetAndWievHelpers.reset_and_set_data(lv_county, data=[], state=True)
             WidgetAndWievHelpers.reset_and_set_data([lv_municipality, lv_state], data=[], state=False)
             WidgetAndWievHelpers.reset_and_set_data(all_controls, data=[], state=False)
-            self.lbl.setText('Aluskaart on laadimata, lae eelnevalt aluskaart')
+            self.lbl.setText('Aluskaart on laadimata. Lae eelnevalt aluskaart')
             return
 
         self.dialog.frMaaAmetControlls.setVisible(False)

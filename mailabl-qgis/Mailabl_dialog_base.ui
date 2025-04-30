@@ -1580,7 +1580,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>8</number>
+                  <number>9</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -8870,7 +8870,7 @@ QTreeView::item:hover {
                                         </size>
                                        </property>
                                        <property name="text">
-                                        <string>Lae aluskaart maaametist</string>
+                                        <string>Lae aluskaart Maa-Aametist</string>
                                        </property>
                                        <property name="icon">
                                         <iconset>
@@ -11063,7 +11063,7 @@ QLineEdit:disabled {
                <item>
                 <widget class="QLabel" name="lblAllRights">
                  <property name="text">
-                  <string>© 2024 Mailabl. Kõik õigused kaitstud</string>
+                  <string>© 2025 Mailabl. Kõik õigused kaitstud</string>
                  </property>
                 </widget>
                </item>
