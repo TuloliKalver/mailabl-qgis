@@ -129,7 +129,8 @@ class IconsByName:
 class FilesByNames:
     TEOSTUS_SETUP = "TeostusJOONISED.UI"
     DecisionMaker_UI = "DecicionMakerUI.ui"
-    
+    asBuitTools_UI = "asBuiltTools.ui"
+
 
     def __init__(self):
 

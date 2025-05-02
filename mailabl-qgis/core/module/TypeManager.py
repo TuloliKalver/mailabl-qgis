@@ -113,28 +113,31 @@ class TypeModuleSetup:
 
 
     def get_module_types(self, module):
-        
         query = self.build_type_query_string(module)
-        end_cursor = None
-        variables = self.build_type_query_variables(end_cursor)
-
-        response = requestBuilder.construct_and_send_request(query, variables)
         types = []
-        if response.status_code == 200:
-            data = response.json()
-            QCoreApplication.processEvents()
+        end_cursor = None
 
-            easement_types_data = data.get("data", {}).get(f"{module}Types", {}).get("edges", [])
-            pageInfo = data.get("data", {}).get(f"{module}Types", {}).get("pageInfo", {})
-            end_cursor = pageInfo.get("endCursor")
-            for easement_type_info in easement_types_data:
-                node_info = easement_type_info.get('node', {})
-                type_name = node_info.get('name',"")
-                type_id = node_info.get('id',"")
-                types.append((type_name, type_id))
-                
-            return types
-        else:
-            print(f"Error: {response.status_code}")
-            return None
+        while True:
+            variables = {"first": 50, "after": end_cursor}
+            response = requestBuilder.construct_and_send_request(query, variables)
+
+            if response.status_code != 200:
+                print(f"Error: {response.status_code}")
+                return None
+
+            data = response.json()
+            edges = data.get("data", {}).get(f"{module}Types", {}).get("edges", [])
+            page_info = data.get("data", {}).get(f"{module}Types", {}).get("pageInfo", {})
+            #print(f"page info is: {page_info}")
+            for edge in edges:
+                node = edge.get("node", {})
+                types.append((node.get("name", ""), node.get("id", "")))
+            #print(f"types are: {types}")
+            if not page_info.get("hasNextPage"):
+                break
+
+            end_cursor = page_info.get("endCursor")
+
+        return types
+
 

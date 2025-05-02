@@ -181,20 +181,31 @@ class AsBuiltDrawings:
             return None
 
     @staticmethod
-    def replace_frame(widget, old_name: str, new_frame_cls: type, *args, **kwargs) -> QFrame:
+    def replace_frame(widget, old_name: str, style: str, new_frame_cls: type = AnimatedGradientBorderFrame, *args, **kwargs) -> QFrame:
         old = widget.findChild(QFrame, old_name)
         if old is None:
             raise ValueError(f"Could not find frame named '{old_name}'.")
 
-        layout = old.parentWidget().layout()
-        index = layout.indexOf(old)
-        layout.removeWidget(old)
-        old.deleteLater()
+        parent_layout = old.parentWidget().layout()
+        index = parent_layout.indexOf(old)
 
-        new_frame = new_frame_cls(widget, *args, **kwargs)
+        # Grab the layout *before* we detach
+        inner_layout = old.layout()
+
+        # Detach widget safely
+        parent_layout.removeWidget(old)
+        old.setParent(None)
+        old.deleteLater()  # schedule safe cleanup
+
+        # Create new styled frame
+        new_frame = new_frame_cls(widget, style=style, *args, **kwargs)
         new_frame.setObjectName(old_name)
-        new_frame.setLayout(old.layout())  # reuse inner layout if needed
-        layout.insertWidget(index, new_frame)
+
+        if inner_layout:
+            new_frame.setLayout(inner_layout)
+
+        parent_layout.insertWidget(index, new_frame)
+
         return new_frame
 
 

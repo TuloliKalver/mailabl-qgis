@@ -391,7 +391,7 @@ class WidgetTools:
             style_name = FilesByNames().Easement_style
             BufferTools.generate_buffer_around_selected_item(widget, TempBufferLayerNames.buffer_layer_name, active_layer_name, style_name)
             labels = EasementTools.widget_line_edits(self.widget_EasmentTools)[1] #acces first item set returned by function
-            print(f"lineEdist: {labels}")
+            #print(f"lineEdits: {labels}")
             EasementTools.enable_UIelements(labels)
 
             checkbox_info = EasementTools.get_checkbox_info(widget)
@@ -655,7 +655,7 @@ class cbMapSelectors:
             style_name = FilesByNames().Easement_Water
 
             distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
-            print(f"Applicable restriction: {distance}")
+            #print(f"Applicable restriction: {distance}")
 
             checkbox.setText(f"Torud ({distance}m)")
             #distance = WaterWorks.vabavoolsed_torustikud_1
@@ -673,7 +673,7 @@ class cbMapSelectors:
         inner_diameter = widget.lblDeK.text()
 
         distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
-        print(f"Applicable restriction: {distance}")
+        #print(f"Applicable restriction: {distance}")
 
         checkbox.setText(f"Torud ({distance}m)")
 
@@ -682,7 +682,7 @@ class cbMapSelectors:
             UseQGISNative.select_elements_from_layer(sewer_layer_name, properties_buffer, widget)
             style_name = FilesByNames().Easement_sewage
             distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
-            print(f"Applicable restriction: {distance}")
+            #print(f"Applicable restriction: {distance}")
 
             #distance = WaterWorks.vabavoolsed_torustikud_1
             BufferTools.generate_buffer_around_selected_item(widget, temp_layer_name, sewer_layer_name, style_name, checkbox, distance)
@@ -690,7 +690,7 @@ class cbMapSelectors:
             MapCleaners.clear_selection_and_delete_temp_layer(sewer_layer_name, temp_layer_name)
     
     def selectprSewer_pipes(widget, checkbox):
-        print(f"ccheckbox: {checkbox}")
+        #print(f"ccheckbox: {checkbox}")
         prSerer_layer_name = SettingsLoader.get_setting(LayerSettings.PRESSURE_SEWER_LAYER)        
         temp_layer_name = TempBufferLayerNames.prSewer_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
@@ -699,7 +699,7 @@ class cbMapSelectors:
         inner_diameter = widget.lblDeK.text()
 
         distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
-        print(f"Applicable restriction: {distance}")
+        #print(f"Applicable restriction: {distance}")
 
         checkbox.setText(f"Surve torud ({distance}m)")
 
@@ -713,7 +713,7 @@ class cbMapSelectors:
             MapCleaners.clear_selection_and_delete_temp_layer(prSerer_layer_name, temp_layer_name)
     
     def selectDrainage_pipes(widget, checkbox):
-        print(f"ccheckbox: {checkbox}")
+        #print(f"ccheckbox: {checkbox}")
         drainage_layer_name = SettingsLoader.get_setting(LayerSettings.DRAINAGE_LAYER)        
         temp_layer_name = TempBufferLayerNames.drainage_temp_name
         properties_buffer = TempBufferLayerNames.buffer_layer_name
@@ -722,7 +722,7 @@ class cbMapSelectors:
         inner_diameter = widget.lblDeK.text()
 
         distance = GetRuledRestriction.check_waterworks_rule(inner_diameter, depth)
-        print(f"Applicable restriction: {distance}")
+        #print(f"Applicable restriction: {distance}")
 
         checkbox.setText(f"Drenaaž ({distance}m)")
 
@@ -819,8 +819,8 @@ class GenerateEasement:
  
         # Check the number of intersect layers found
         num_intersect_layers = len(intersect_layer_names)
-        print("num_intersect_layers:")
-        print(num_intersect_layers)
+        #print("num_intersect_layers:")
+        #print(num_intersect_layers)
         join_layer_name = "Joined_layer"
         while num_intersect_layers >= 1:
             JoinLayers.join_all_layers(intersect_layer_names, num_intersect_layers, join_layer_name)
@@ -854,7 +854,7 @@ class GenerateEasement:
         
         joined_layers = QgsProject.instance().mapLayers().values()
         joined_layer_name = [layer.name() for layer in joined_layers if layer.name().startswith(final_layer_name)]
-        print(f"joined_layer_name: {joined_layer_name}")        
+        #print(f"joined_layer_name: {joined_layer_name}")        
         Union.make_unioned_layer(joined_layer_name)
 
         working_layers = WorkingLayers.list_of_workinglayers() 

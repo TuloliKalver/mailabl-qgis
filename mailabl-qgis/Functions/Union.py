@@ -9,9 +9,6 @@ class  Union:
     UnionLayer = 'Kitsenduse_skeem'
         
     def make_unioned_layer(input_layers):
-        existing_layers = QgsProject.instance().mapLayersByName(Union.UnionLayer)
-        for existing_layer in existing_layers:
-            QgsProject.instance().removeMapLayer(existing_layer)
 
         # Set input layer variables
         for layer_name in input_layers:
@@ -27,37 +24,38 @@ class  Union:
                     'OUTPUT': 'memory:'
                 })
 
-                style_name = FilesByNames().Easement_unioned
 
-                QGIS_Layer_style = Filepaths().get_style(style_name)
+        existing_layers = QgsProject.instance().mapLayersByName(Union.UnionLayer)
+        print("UnionLayer:", Union.UnionLayer)
+        print("existing_layers:", existing_layers)
+        #print("type(existing_layers[0]):", type(existing_layers[0]))
 
-                # Get the group layer name
+        if existing_layers:
+            # Remove the existing layer before continuing
+            QgsProject.instance().removeMapLayer(existing_layers[0])
+        else:
+            print("Error: One or both layers failed to load.")
+            # Add the buffer layer to the group layer
+            group_layer_name = MailablGroupFolders().SANDBOXING
 
-                group_layer_name = MailablGroupFolders().SANDBOXING
+            # Get the group layer or create it if it doesn't exist
+            root = QgsProject.instance().layerTreeRoot()
+            group = root.findGroup(group_layer_name)
 
-                # Get the group layer or create it if it doesn't exist
-                root = QgsProject.instance().layerTreeRoot()
-                group = root.findGroup(group_layer_name)
-                if group is None:
-                    group = root.addGroup(group_layer_name)
 
-                # Check if a layer with the same name already exists
-                existing_layers = QgsProject.instance().mapLayersByName(Union.UnionLayer)
-                if existing_layers:
-                    # Remove the existing layer before continuing
-                    QgsProject.instance().removeMapLayer(existing_layers[0])
-                else:
-                    print("Error: One or both layers failed to load.")
-                    pass
-                # Add the buffer layer to the group layer
-                buffer_layer = QgsProject.instance().addMapLayer(result['OUTPUT'], False)
-                buffer_layer.setName(Union.UnionLayer)
-                group.addLayer(buffer_layer)
-                
-                # Apply the layer style
-                buffer_layer.loadNamedStyle(QGIS_Layer_style)
+            buffer_layer = QgsProject.instance().addMapLayer(result['OUTPUT'], False)
+            buffer_layer.setName(Union.UnionLayer)
+            group.addLayer(buffer_layer)
+            style_name = FilesByNames().Easement_unioned
 
-                buffer_layer.triggerRepaint()
+            QGIS_Layer_style = Filepaths().get_style(style_name)
+            
+            # Apply the layer style
+            buffer_layer.loadNamedStyle(QGIS_Layer_style)
+
+            buffer_layer.triggerRepaint()
+
+
 
 
         for layer_name in input_layers:

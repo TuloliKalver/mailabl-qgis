@@ -84,13 +84,20 @@ class DataExtractor:
         Returns:
             list[str]: Extracted file paths and URLs
         """
-        if not description or "Joonised" not in description:
+        #print(f"description: {description}")
+        if not description or "<!-- mailabl:type=joonised -->" not in description:
             return []
 
         links = []
+        #print("Description:", description)
 
-        # Find the "Joonised" table using simple regex
-        table_pattern = re.compile(r'<table.*?>.*?Joonised.*?</table>', re.DOTALL | re.IGNORECASE)
+        #<!-- mailabl:type=joonised -->
+        table_pattern = re.compile(
+            r'<table.*?>.*?<!--\s*mailabl:type=joonised\s*-->.*?</table>',
+            re.DOTALL | re.IGNORECASE
+        )
+
+        #table_pattern = re.compile(r'<table.*?>.*?Joonised.*?</table>', re.DOTALL | re.IGNORECASE)
         match = table_pattern.search(description)
         if not match:
             return []

@@ -10,7 +10,8 @@ class MailablGroupFolders:
 
 
 
-    GropupLayers = {IMPORT,
+    GropupLayers = {SANDBOXING,
+                    IMPORT,
                     NEW_PROPERTIES,
                     ARCHIVE,
                     ARCHIVED_PROPERTIES}

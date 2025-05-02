@@ -6,7 +6,18 @@ from qgis.PyQt.QtWidgets import QFileDialog
 class FileLoader:
     def __init__(self):
         pass
-    
+
+
+    def load_shp_layer(self):
+        file_dialog = QFileDialog()
+        file_dialog.setFileMode(QFileDialog.ExistingFiles)
+        file_dialog.setNameFilter("Shapefiles (*.shp)")
+        if file_dialog.exec_():
+            file_path = file_dialog.selectedFiles()
+            file_path = file_path[0]
+            layer_name = os.path.splitext(os.path.basename(file_path))[0]
+
+
     @staticmethod
     def open_with_default_application(file_path):
         try:
@@ -49,3 +60,6 @@ class FileLoader:
             # Open the folder with the default file manager
             FileLoader.open_with_default_application(selected_folder)
             # You can return the folder path or any relevant information
+
+
+

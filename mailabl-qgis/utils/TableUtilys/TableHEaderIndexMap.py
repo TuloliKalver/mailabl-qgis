@@ -37,9 +37,9 @@ class AsBuiltHeaderIndexMap:
     def __init__(self, header_labels: List[str], language: str = "et"):
 
         self._tbl = TableHeaders_new(language)
-        print(f"_tbl: {self._tbl} for language: {language}")
+        #print(f"_tbl: {self._tbl} for language: {language}")
         self._map: Dict[str, int] = {}
-        print(f"header_labels in asBuit class: {header_labels}")
+        #print(f"header_labels in asBuit class: {header_labels}")
 
         for key in HeaderKeys.TASKS_HEADER_KEYS:
             #print(f"Key: {key}")

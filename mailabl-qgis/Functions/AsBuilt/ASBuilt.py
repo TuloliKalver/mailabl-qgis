@@ -214,3 +214,46 @@ class AsBuiltQueries:
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
 
+
+    @staticmethod
+    def _query_AsBuilt_by_id( property_id):
+
+        module = Module.TASK
+        query_name =  GraphqlTasks.TaskById
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+            
+        variables = {"id": property_id, 
+                    }
+
+
+        response = requestBuilder.construct_and_send_request(query, variables)
+
+        if response.status_code == 200:
+            data = response.json()
+            #print("data")
+            #print(data)
+            task = data.get("data", {}).get("task", {})
+            description = task.get("description", "")
+
+            QCoreApplication.processEvents()
+            return description
+            
+    def  _update_AsBuilt_by_id(property_id, description):
+        
+        module = Module.TASK
+        query_name =  GraphqlTasks.updatedescription
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+
+        variables = {
+                "input": {
+                    "id": property_id,
+                    "description": description
+                }
+                }
+        
+        response = requestBuilder.construct_and_send_request(query, variables)
+
+        if response.status_code == 200:
+            return True
+        else:
+            return False

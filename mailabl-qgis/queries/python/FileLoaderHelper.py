@@ -106,6 +106,9 @@ class GraphqlTasks:
     AsBUILT = "AsBuiltTasks.graphql"
     UPDATE_TASK_PROPERTIES = "update_task_properties.graphql"
     RELATED_PROPERTIES = "tasks_related_properties.graphql"
+    TaskById = "TaskById.graphql"
+    updatedescription ="update_task_properties.graphql"
+
 class GraphqlStatuses:
     STATUSES = 'statuses.graphql'
 

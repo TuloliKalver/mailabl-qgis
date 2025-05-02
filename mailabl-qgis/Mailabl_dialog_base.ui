@@ -1580,7 +1580,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>9</number>
+                  <number>3</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -4362,6 +4362,13 @@ p, li { white-space: pre-wrap; }
                             </size>
                            </property>
                           </spacer>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="pbAsBuiltTools">
+                           <property name="text">
+                            <string>PushButton</string>
+                           </property>
+                          </widget>
                          </item>
                         </layout>
                        </widget>

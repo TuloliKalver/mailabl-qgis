@@ -7,11 +7,15 @@ class AnimatedGradientBorderFrame(QFrame):
     WHITE = "white"
     MODERN = "modern"
     INSPIRE = "inspire"
+    PROLOOK = "prolook"
+    GENTLEMAN = "gentleman"
 
     def __init__(self, parent=None,  style=WARNING):
         super().__init__(parent)
         self._angle = 0
         self._style = style
+
+
 
         self.setObjectName("glowFrame")
         self.setMinimumSize(100, 100)
@@ -21,7 +25,7 @@ class AnimatedGradientBorderFrame(QFrame):
         self._timer.start(10)
 
     def _rotate_gradient(self):
-        self._angle = (self._angle + 2) % 360
+        self._angle = (self._angle + 1) % 360
         self.update()
 
     def _get_gradient(self, center):
@@ -45,6 +49,21 @@ class AnimatedGradientBorderFrame(QFrame):
             gradient.setColorAt(0.5, QColor(46, 47, 56, 60))
             gradient.setColorAt(0.75, QColor(255, 105, 180, 160))
             gradient.setColorAt(1.0, QColor(9, 144, 143, 255))
+        elif self._style == AnimatedGradientBorderFrame.PROLOOK:
+            # 🎨 PROLOOK: Clean teal-magenta fade with soft transparency
+            gradient.setColorAt(0.0, QColor(0, 200, 200, 180))     # soft cyan
+            gradient.setColorAt(0.3, QColor(255, 105, 180, 130))   # pink highlight
+            gradient.setColorAt(0.6, QColor(50, 50, 50, 60))       # shadow tint
+            gradient.setColorAt(0.9, QColor(0, 200, 200, 180))     # return to teal
+            gradient.setColorAt(1.0, QColor(255, 255, 255, 40))    # soft white edge
+        elif self._style == AnimatedGradientBorderFrame.GENTLEMAN:
+            # 🕴️ GENTLEMAN: Dark suit tones with deep blues and elegant silver shimmer
+            gradient.setColorAt(0.0, QColor(30, 30, 30, 220))       # deep charcoal
+            gradient.setColorAt(0.2, QColor(40, 70, 110, 160))      # navy shimmer
+            gradient.setColorAt(0.5, QColor(90, 90, 90, 100))       # mid-gray
+            gradient.setColorAt(0.8, QColor(60, 90, 130, 160))      # classy blue tint
+            gradient.setColorAt(1.0, QColor(220, 220, 220, 80))     # silver highlight
+        
         else:
             gradient.setColorAt(0.0, QColor(100, 100, 100, 120))
             gradient.setColorAt(1.0, QColor(100, 100, 100, 120))

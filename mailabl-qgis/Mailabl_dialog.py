@@ -42,7 +42,7 @@ from .config.SetupModules.AsBuitSettings import AsBuiltDrawings
 
 from .app.MainMenuController import SetupController
 
-
+from .Functions.AsBuilt.AsBuiltTools import AsBuiltTools
 from .Functions.SearchEngines import ModularSearchEngine
 from .Functions.Easements.EasementsToolsHandler import EasementTools
 from .Functions.Folders.folders import copy_and_rename_folder
@@ -246,6 +246,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
         asBuiltLoader = AsBuiltDrawings(self)  # Assuming `self` is a QDialog or QWidget
         self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_construction_drawings_setup_widget())
+
+
+        #asBuiltTools = AsBuiltTools(self)
+        #self.pbAsBuiltTools.clicked.connect(lambda:asBuiltTools.load_asBuiltTools())
 
         self.lblPhotosValue.setEnabled(False)
         self.lblPhtosText.setEnabled(False)
@@ -604,9 +608,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         self.pbLogin.setStyleSheet("background-color: #bc5152;")
                         return  # Stop further execution
                 else:
+                    asBuiltTools = AsBuiltTools(self)
                     self.test_buttons = {
                             self.pbtest_2: self.view_all_plugin_settings,
-                            self.pushButton: self.reset_new_settings
+                            self.pushButton: self.reset_new_settings,
+                            self.pbAsBuiltTools: lambda:asBuiltTools.load_asBuiltTools()
                         }
                     for button,_ in self.test_buttons.items():
                         button.setVisible(False)
