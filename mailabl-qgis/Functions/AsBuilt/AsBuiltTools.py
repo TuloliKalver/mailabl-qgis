@@ -14,12 +14,14 @@ from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorder
 from ...config.settings import Filepaths, FilesByNames
 from ...config.SetupModules.AsBuitSettings import AsBuiltDrawings, DraggableFrame
 from ...Functions.AsBuilt.ASBuilt import AsBuiltQueries
+from ...utils.DataExtractors.DataExtractors import DataExtractor
 from PyQt5.QtCore import QPropertyAnimation
 
 class AsBuiltTools():
 
     def __init__(self, parent) -> None:
         self.dialog = parent
+        self.html = ""
 
     def load_asBuiltTools(self):
         widget_name = Filepaths._get_widget_name(FilesByNames().asBuitTools_UI)
@@ -60,23 +62,17 @@ class AsBuiltTools():
             #print("Accepted")
             property_id = "30"
             # 1. Get current QTextBrowser content (your file table)
-            prepared_text = somethinghere.prepare_description_from_textbrowser(widget.textBrowser)
+            prepared_text = AsBuiltTools.html
             #print(f"Textbrowser content: {prepared_text}")
             # 2. Fetch descriptions from Mailabl (already done)
             existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
             #print(f"Existing descriptions: {existing_descriptions}")
             # 3. Merge: put file table first, then append all descriptions
-            #combined_html = prepared_text.strip()
-            combined_html = prepared_text + "\n\n" + existing_descriptions
-            #combined_html = somethinghere.merge_file_table_with_existing(prepared_text, existing_descriptions)
-
+            combined_html = somethinghere.merge_file_table_with_existing(prepared_text, existing_descriptions)
 
             res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
-            # 4. Preview the result
-            #print("✅ Final prepared HTML to save:\n")
-            #print(combined_html)
-
-
+            
+            AsBuiltTools.html = ""
 
             widget.setAttribute(Qt.WA_DeleteOnClose)
             
@@ -100,71 +96,113 @@ class somethinghere:
         #file_dialog.setNameFilter("Shapefiles (*.shp)")
         if file_dialog.exec_():
                 file_paths = file_dialog.selectedFiles()
-                text_browser = self.textBrowser
-                text_browser.clear()
+                #text_browser = self.textBrowser
+                #text_browser.clear()
+
 
 
         html = """
-        <!-- mailabl:type=joonised -->
-        <table border="0" cellspacing="0" cellpadding="3" width="100%">
-            <thead>
-                <tr>
-                    <th align="left"><p>Faili nimi</p></th>
-                    <th align="left"><p></p></th>
-                    <th align="left"><p>Asukoht</p></th>
-                </tr>
-            </thead>
-            <tbody>
+        <div style="width: 100%; display: flex; justify-content: center; margin: 10px 0;">
+        <table style="
+            border-collapse: collapse;
+            width: 90%;
+            background: linear-gradient(to bottom, #47a5b1, #feffff);
+            border-radius: 6px;
+            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease-in-out;
+            font-family: Roboto;
+            text-align: left;
+        ">
+            <tr>
+            <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: 35%; color: white; background: #47a5b1;">
+                <p><strong>📄 Faili nimi</strong></p>
+            </td>
+            <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: 50%; color: white; background: #47a5b1;">
+                <p><strong>📁 Asukoht</strong></p>
+            </td>
+            <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: 15%; color: white; background: #47a5b1;">
+                <p><strong>📝 Märkused</strong></p>
+            </td>
+            </tr>
         """
 
-
         for file_path in file_paths:
-            file_name = os.path.splitext(os.path.basename(file_path))[0]
+            file_name = os.path.basename(file_path)
             html += f"""
             <tr>
-                <td><p><b>{file_name}</b></p></td>
-                <td><p>📁</p></td>
-                <td><p><a href="file:///{file_path}">{file_path}</a></p></td>
+            <td style="padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">
+                <p>{file_name}</p>
+            </td>
+            <td style="padding: 1px 10px; background-color: #dfe3e1;">
+                <p><a href="file:///{file_path}" style="style="font-weight: italic; color: #243a4e; text-decoration: none;">{file_path}</a></p>
+            </td>
+            <td style="padding: 1px 10px; background-color: #dfe3e1; color: #4f636f;">
+                <p>–</p>
+            </td>
             </tr>
             """
 
         html += """
-            </tbody>
         </table>
+        </div>
         <p></p>
         """
-        text_browser.setHtml(html)
 
 
 
-    @staticmethod
-    def prepare_description_from_textbrowser(text_browser: QTextBrowser) -> str:
-        """
-        Extracts and cleans inner HTML content from QTextBrowser (no <html><body> wrapper).
-        Safe for saving in QGIS environments.
-        """
-        raw_html = text_browser.toHtml().strip()
+        #text_browser.setHtml(html)
+        AsBuiltTools.html = html
+        #print("🧾 HTML stored:", AsBuiltTools.html[:200])
 
-        # Try to extract only what’s inside <body> if it exists
-        body_match = re.search(r"<body[^>]*>(.*?)</body>", raw_html, re.DOTALL | re.IGNORECASE)
-        if body_match:
-            inner_html = body_match.group(1).strip()
+
+    def merge_file_table_with_existing(file_table_html: str, existing_html: str) -> str:
+        #print("🔍 Merging file table with existing content...")
+
+        table_pattern = re.compile(
+            r'(<table[^>]*>.*?<tr[^>]*>.*?Faili nimi.*?Asukoht.*?</tr>)(.*?)(</table>)',
+            re.DOTALL | re.IGNORECASE
+        )
+
+        match = table_pattern.search(existing_html)
+        if match:
+            #print("✅ Existing table found (flexible header match), injecting rows...")
+
+            table_start, existing_rows, table_end = match.groups()
+         
+            # ✅ Correct link extraction
+            existing_links = set(DataExtractor.extract_links_from_description(existing_html))
+            #print(f"🔎 Existing links: {existing_links}")
+
+
+            # Try <tbody> first
+            new_rows_match = re.search(r"<tbody[^>]*?>(.*?)</tbody>", file_table_html, re.DOTALL | re.IGNORECASE)
+            if new_rows_match:
+                candidate_rows = re.findall(r"<tr[^>]*>.*?</tr>", new_rows_match.group(1), re.DOTALL)
+            else:
+                candidate_rows = re.findall(r"<tr[^>]*>.*?</tr>", file_table_html, re.DOTALL)[1:]  # skip header
+
+            unique_rows = []
+            for row in candidate_rows:
+                link_match = re.search(r'href="file:///([^"]+)"', row, re.IGNORECASE)
+                if not link_match:
+                    continue
+                file_path = link_match.group(1)
+                if file_path not in existing_links:
+                    unique_rows.append(row)
+
+            if not unique_rows:
+                print("⚠️ No unique rows to merge.")
+                return existing_html
+
+            new_rows_html = "\n".join(unique_rows)
+            print(f"📥 Injecting {len(unique_rows)} new rows.")
+
+            updated_table = f"{table_start}{existing_rows}{new_rows_html}{table_end}"
+            updated_html = table_pattern.sub(updated_table, existing_html, count=1)
+            return updated_html
         else:
-            inner_html = raw_html  # fallback
+            print("➕ No matching table found, inserting full new table on top.")
+            return f"{file_table_html.strip()}\n\n{existing_html.strip()}"
 
-        return inner_html
 
-    @staticmethod
-    def merge_file_table_with_existing(prepared_text: str, existing_descriptions: list[str]) -> str:
-        # Clean leading/trailing whitespace from browser content
-        prepared_html = prepared_text.strip()
-        merged_parts = [prepared_html]
 
-        for desc in existing_descriptions:
-            desc_clean = desc.strip()
-
-            if desc_clean and desc_clean != prepared_html:
-                # Don't add empty or duplicate descriptions
-                merged_parts.append(desc_clean)
-
-        return "\n\n".join(merged_parts)

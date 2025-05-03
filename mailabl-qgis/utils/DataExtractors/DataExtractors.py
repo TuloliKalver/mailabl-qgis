@@ -72,49 +72,43 @@ class DataExtractor:
             return headers
 
     @staticmethod
-
-
     def extract_links_from_description(description: str) -> list:
         """
-        Extract links or file paths from a <table> containing 'Joonised' using only built-in tools.
-
-        Args:
-            description (str): HTML content (raw)
-
-        Returns:
-            list[str]: Extracted file paths and URLs
+        Extract links from a <table> that contains headers 'Faili nimi' and 'Asukoht'.
+        It works even if the tags use <td> or have nested elements like <strong> or <span>.
         """
-        #print(f"description: {description}")
-        if not description or "<!-- mailabl:type=joonised -->" not in description:
+        #print("===== START EXTRACTING LINKS =====")
+        if not description or "Faili nimi" not in description or "Asukoht" not in description:
+            print("❌ Header markers not found.")
             return []
 
-        links = []
-        #print("Description:", description)
+        print("✅ Recognized table header structure...")
+        print(f"Description: {description[:300]}...")  # trimmed for readability
 
-        #<!-- mailabl:type=joonised -->
-        table_pattern = re.compile(
-            r'<table.*?>.*?<!--\s*mailabl:type=joonised\s*-->.*?</table>',
-            re.DOTALL | re.IGNORECASE
-        )
+        # Find all tables
+        table_blocks = re.findall(r"<table.*?>.*?</table>", description, re.DOTALL | re.IGNORECASE)
 
-        #table_pattern = re.compile(r'<table.*?>.*?Joonised.*?</table>', re.DOTALL | re.IGNORECASE)
-        match = table_pattern.search(description)
-        if not match:
-            return []
+        for table in table_blocks:
+            if "Faili nimi" in table and "Asukoht" in table:
+                print("✅ Matched a valid table.")
+                td_pattern = re.compile(r"<td[^>]*>(.*?)</td>", re.DOTALL | re.IGNORECASE)
+                td_matches = td_pattern.findall(table)
 
-        table_html = match.group()
+                links = []
+                for td in td_matches:
+                    # Strip HTML tags inside the <td> cell
+                    clean_text = re.sub(r"<.*?>", "", td).strip()
+                    if clean_text and ("file:///" in clean_text or "\\" in clean_text or "/" in clean_text):
+                        links.append(clean_text)
 
-        # Find all <td> inside that table
-        td_pattern = re.compile(r'<td.*?>(.*?)</td>', re.DOTALL)
-        td_matches = td_pattern.findall(table_html)
+                print(f"✅ Extracted links: {links}")
+                return links
 
-        for td in td_matches:
-            # Remove possible <p> inside <td>
-            clean_text = re.sub(r'<.*?>', '', td).strip()
-            if clean_text:
-                links.append(clean_text)
+        print("❌ Matching table not found.")
+        return []
 
-        return links
+
+
 
 
     def date_converter(node:dict):

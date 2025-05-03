@@ -28,6 +28,46 @@ combo_handler = ComboBoxHelper()
 
 
 class WorkSpaceHandler:
+    dialog = None  # Class-level storage
+
+    def __init__(self, parent=None) -> None:
+        WorkSpaceHandler.dialog = parent
+        self.dialog = parent
+
+    @staticmethod
+    def set_dialog(dialog):
+        WorkSpaceHandler.dialog = dialog
+
+    @staticmethod
+    def asBuilt_reload(_):  # Ignore incoming self
+        dialog = WorkSpaceHandler.dialog
+        if dialog is None:
+            print("❌ No dialog stored in WorkSpaceHandler.")
+            return
+
+        button = dialog.pbRefreshTesotusTable
+        table = dialog.tblAsBuilt
+        cmb_types = dialog.cmbTesotusTypes
+        cmb_status = dialog.cmbTeostusStatuses
+
+        button.blockSignals(True)
+
+        model = table.model()
+        if model is not None:
+            model.removeRows(0, model.rowCount())
+
+        statusValue = GetValuesFromComboBox._get_selected_id_from_combobox(cmb_status)
+        selected_types_ids = cmb_types.checkedItemsData()
+
+        AsBuiltMain.load_main_AsBuilt_by_type_and_status(
+            dialog,
+            table=table,
+            types=selected_types_ids,
+            statuses=statusValue
+        )
+
+        button.blockSignals(False)
+
 
 
     def swWorkSpace_Controller(self, menu_module, module):
@@ -77,27 +117,6 @@ class WorkSpaceHandler:
                 
         button.blockSignals(False)
         
-    def asBuilt_reload(self):
-        button = self.pbRefreshTesotusTable
-        button.blockSignals(True)
-        
-        table = self.tblAsBuilt       # Assuming 'table' is your QTableView object
-        model = table.model()
-        if model is not None:
-            model.removeRows(0, model.rowCount())
-        cmb_status = self.cmbTeostusStatuses
-        statusValue = GetValuesFromComboBox._get_selected_id_from_combobox(cmb_status)
-
-        cmb_types = self.cmbTesotusTypes
-        selected_types_ids = cmb_types.checkedItemsData()
-        
-        AsBuiltMain.load_main_AsBuilt_by_type_and_status(self,
-                                                             table=table,
-                                                             types=selected_types_ids,
-                                                             statuses=statusValue
-                                                             )
-                
-        button.blockSignals(False)
 
     def asBuilt_search(self):
         button = self.pbSearchTesotus

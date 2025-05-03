@@ -6,13 +6,13 @@ import requests
 from PyQt5.QtGui import QColor, QBrush, QPen, QIcon
 from PyQt5.QtCore import Qt, QRect, QRectF
 from PyQt5.QtWidgets import QStyledItemDelegate
-from ...queries.python.projects_pandas import  ProjectsQueries
 from ...queries.python.fetchers.ModulePropertiesFetcher import PropertiesModuleFetcher
-from ...Functions.Easements.EasementsWhere import getEasementsWhere
 from ...Functions.item_selector_tools import properties_selectors
-from ...queries.python.ContractWhere import getContractsWhere                    
+from ...Functions.AsBuilt.AsBuiltTools import somethinghere
+from ...Functions.AsBuilt.AsBuiltTools import AsBuiltTools
+
 from ...config.iconHandler import iconHandler
-from ...config.settings import Filepaths, IconsByName, OpenLink, MailablWebModules
+from ...config.settings import Filepaths, IconsByName, OpenLink
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...KeelelisedMuutujad.modules import Module
 from ..TableUtilys.FlagIconHelper import FlagIconHelper
@@ -62,6 +62,7 @@ class FileDelegate(QStyledItemDelegate):
                     try:
                         file_path = ast.literal_eval(file_path)
                     except Exception as e:
+                        
                         print("⚠️ Failed to parse file_path:", e)
                         file_path = []
 
@@ -83,8 +84,27 @@ class FileDelegate(QStyledItemDelegate):
                 else:
                     icon = QIcon(iconHandler.set_document_icon_based_on_item(file_path))
                     DelegateHelpers.icon_setter_for_delegate(painter, icon, option)
+            #else:
+            #    super().paint(painter, option, index)
             else:
-                super().paint(painter, option, index)
+                painter.save()
+                painter.setRenderHint(painter.Antialiasing)
+
+                # Use your desired fallback icon here (for example, downloaded from Flaticon)
+                fallback_icon_path = iconHandler.set_no_file_icon()  # Or full path if local file
+                icon = QIcon(fallback_icon_path)
+                icon_size = self.icon_size
+
+                icon_rect = QRect(
+                    option.rect.x() + 2,
+                    option.rect.y() + (option.rect.height() - icon_size) // 2,
+                    icon_size,
+                    icon_size
+                )
+
+                icon.paint(painter, icon_rect, Qt.AlignCenter)
+                painter.restore()
+
         else:
             if file_path:
                 icon = QIcon(iconHandler.set_document_icon_based_on_item(file_path))
@@ -99,7 +119,27 @@ class FileDelegate(QStyledItemDelegate):
             file_path = file_index.data(Qt.DisplayRole)
 
             if not file_path:
-                return super().editorEvent(event, model, option, index)
+                property_id = model.data(model.index(index.row(),0), Qt.DisplayRole)
+                
+                somethinghere._handle_drawTool(self)
+                prepared_text = AsBuiltTools.html
+                #print(f"Textbrowser content: {prepared_text}")
+                # 2. Fetch descriptions from Mailabl (already done)
+                from ...Functions.AsBuilt.ASBuilt import AsBuiltQueries
+                existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
+                #print(f"Existing descriptions: {existing_descriptions}")
+                # 3. Merge: put file table first, then append all descriptions
+                combined_html = somethinghere.merge_file_table_with_existing(prepared_text, existing_descriptions)
+
+                res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
+            
+                if res:
+                    from ...app.workspace_handler import WorkSpaceHandler
+                    WorkSpaceHandler.asBuilt_reload(None)
+                
+                AsBuiltTools.html = ""
+
+                return res
 
             if self.module == Module.ASBUILT:
                 # special list/multi-icons case

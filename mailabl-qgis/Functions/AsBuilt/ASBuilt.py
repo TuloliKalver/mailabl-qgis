@@ -11,7 +11,7 @@ from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...KeelelisedMuutujad.modules import Module
 from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
-from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
+#from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
 from ...utils.ProgressHelper import ProgressDialogModern    
 
 class Constants:
@@ -30,6 +30,7 @@ class AsBuiltMain:
     @staticmethod
     def load_main_AsBuilt_by_type_and_status (self, table, types, statuses, language="et"):
         #Adding progress
+        from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
         module = Module.ASBUILT
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
         progress.update(1, purpouse="Teostuste laadimine", text1="Palun oota...")
@@ -47,6 +48,7 @@ class AsBuiltMain:
         
     @staticmethod
     def load_asBuilt_by_query (query, table, language="et"):
+        from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
         module = Module.ASBUILT
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
         progress.update(1, purpouse="Lepingute laadimine", text1="Palun oota...")

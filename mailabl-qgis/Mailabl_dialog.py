@@ -145,6 +145,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         setupContracts = SetupConrtacts(self)
         setupProjects = SetupProjects(self)
         setupCadastrallayers = SetupCadastralLayers(self)
+        WorkSpaceHandler.set_dialog(self)
 
         UI = UIStateManager(self)
         loader = SHPLayerLoader(self)
@@ -248,8 +249,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_construction_drawings_setup_widget())
 
 
-        #asBuiltTools = AsBuiltTools(self)
-        #self.pbAsBuiltTools.clicked.connect(lambda:asBuiltTools.load_asBuiltTools())
+        asBuiltTools = AsBuiltTools(self)
+        self.pbAsBuiltTools.clicked.connect(lambda:asBuiltTools.load_asBuiltTools())
 
         self.lblPhotosValue.setEnabled(False)
         self.lblPhtosText.setEnabled(False)
@@ -271,7 +272,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.leSearch_Add.setEnabled(False)
         self.pbSearch_Add.setEnabled(False)
         self.pbCooseFromMap_Add.setEnabled(False)
-        self.pbCompiler.clicked.connect(self.start_compielre)
+        #self.pbCompiler.clicked.connect(self.start_compielre)
 
         self.pbSelecPrpertiesOveral.clicked.connect(self.start_feature_info_tool)
 
@@ -396,11 +397,11 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def reset_timer(self):
         self.timer.start()
 
-    def start_compielre(self):
-        from .processes.SyncProperties.CompyleOldPropertyModel import LayerCompilerSetup
-        print("button clicked")
-        LayerCompilerSetup.load_layer_compiler_widget(self)
-        gc.collect()  # Force garbage collection
+    #def start_compielre(self):
+    #    from .processes.SyncProperties.CompyleOldPropertyModel import LayerCompilerSetup
+    #    print("button clicked")
+    #    LayerCompilerSetup.load_layer_compiler_widget(self)
+    #    gc.collect()  # Force garbage collection
             
     def log_out(self):
         Unload.log_out(self)
@@ -612,7 +613,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                     self.test_buttons = {
                             self.pbtest_2: self.view_all_plugin_settings,
                             self.pushButton: self.reset_new_settings,
-                            self.pbAsBuiltTools: lambda:asBuiltTools.load_asBuiltTools()
+                            #self.pbAsBuiltTools: lambda:asBuiltTools.load_asBuiltTools()
                         }
                     for button,_ in self.test_buttons.items():
                         button.setVisible(False)

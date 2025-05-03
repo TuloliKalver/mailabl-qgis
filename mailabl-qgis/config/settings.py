@@ -125,6 +125,15 @@ class IconsByName:
         self.icon_unknown = 'unknown-type.png'
         self.icon_folder = 'folder.png'
         self.icon_show_on_map = "oui--app-gis_kaart_asukoht.svg" #ikoonide testimiseks
+        self.no_files = "plus.png"
+        self.icon_autocad = "dwg-file.png"
+        self.icon_dgn = "ggn-file.png"
+        self.icon_text = 'text.png'
+        self.icon_image = "picture.png"
+        self.icon_video = "mp4.png"
+        self.icon_archive = "zip.png"
+        self.icon_html =  "html.png"
+        self.icon_gis = "gis.png"
 
 class FilesByNames:
     TEOSTUS_SETUP = "TeostusJOONISED.UI"
