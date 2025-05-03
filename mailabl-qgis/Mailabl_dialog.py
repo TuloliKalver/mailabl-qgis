@@ -248,8 +248,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         asBuiltLoader = AsBuiltDrawings(self)  # Assuming `self` is a QDialog or QWidget
         self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_construction_drawings_setup_widget())
 
-
-        asBuiltTools = AsBuiltTools(self)
+        table = self.tblAsBuilt
+        asBuiltTools = AsBuiltTools(self, table)
         self.pbAsBuiltTools.clicked.connect(lambda:asBuiltTools.load_asBuiltTools())
 
         self.lblPhotosValue.setEnabled(False)

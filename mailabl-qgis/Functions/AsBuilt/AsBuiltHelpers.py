@@ -102,8 +102,8 @@ class AsBuiltHelpers:
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: {date_column}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;"></td>
-                    <td style="width: {notes_column}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;"></td>
+                    <td style="width: {date_column}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">01.01.2022</td>
+                    <td style="width: {notes_column}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">Suur märkus, sest siin on jama</td>
                     <td style="width: {checkbox_column}; padding: 1px 10px; background-color: #dfe3e1;">
                         <ul data-type="taskList">
                             <li data-checked="false" data-type="taskItem">
@@ -189,3 +189,8 @@ class AsBuiltHelpers:
         else:
             print("➕ No matching table found, inserting full new table on top.")
             return f"{file_table_html.strip()}\n\n{existing_html.strip()}"
+
+
+
+
+

@@ -359,9 +359,6 @@ class FlagsDelegate(QStyledItemDelegate):
         painter.restore()
 
 
-
-
-
 class DelegatesForTables():
     @staticmethod
     def setup_delegates_by_module(table, header_labels, module, language="et"):

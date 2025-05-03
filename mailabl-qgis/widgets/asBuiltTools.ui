@@ -88,7 +88,7 @@ QLineEdit:focus, QTextEdit:focus, QComboBox:focus,   QTabBar::tab:selected {
 /* ---------------------------- */
 /* 📝 QLineEdit Styling */
 /* ---------------------------- */
-QLineEdit {
+QLineEdit, QTextEdit {
     background-color: #303a42;   /* Matches the global dark background */
     color: #c5c5d2;              /* Default light gray text */
     border: 1px solid #6f7f87;
@@ -105,7 +105,7 @@ QLineEdit {
 /* ---------------------------- */
 /* 🔘 Disabled State for QLineEdit */
 /* ---------------------------- */
-QLineEdit:disabled {
+QLineEdit:disabled, QTextEdit {
     background-color: #24252e;  /* A slightly darker tone for disabled state */
     border: 1px dashed rgba(120, 120, 130, 0.5);  /* Dashed and faded border */
     color: rgba(170, 170, 180, 0.5);  /* Muted text color */
@@ -511,17 +511,49 @@ QTextBrowser QScrollBar::sub-page:vertical {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QPushButton" name="Drawingtool">
-           <property name="text">
-            <string>PushButton</string>
+          <layout class="QVBoxLayout" name="Notes">
+           <property name="spacing">
+            <number>0</number>
            </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="Notes"/>
+          </layout>
          </item>
         </layout>
        </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_2">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="rightMargin">
+          <number>50</number>
+         </property>
+         <item alignment="Qt::AlignRight">
+          <widget class="QPushButton" name="pbAddNote">
+           <property name="text">
+            <string>Lisa märkus</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item alignment="Qt::AlignBottom">
        <widget class="QFrame" name="fButtons">
