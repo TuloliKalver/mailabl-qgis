@@ -517,11 +517,11 @@ QTextBrowser QScrollBar::sub-page:vertical {
            </property>
           </widget>
          </item>
+         <item>
+          <layout class="QVBoxLayout" name="Notes"/>
+         </item>
         </layout>
        </widget>
-      </item>
-      <item>
-       <widget class="QTextBrowser" name="textBrowser"/>
       </item>
       <item alignment="Qt::AlignBottom">
        <widget class="QFrame" name="fButtons">

@@ -8,15 +8,17 @@ from PyQt5.QtCore import Qt, QRect, QRectF
 from PyQt5.QtWidgets import QStyledItemDelegate
 from ...queries.python.fetchers.ModulePropertiesFetcher import PropertiesModuleFetcher
 from ...Functions.item_selector_tools import properties_selectors
-from ...Functions.AsBuilt.AsBuiltTools import somethinghere
 from ...Functions.AsBuilt.AsBuiltTools import AsBuiltTools
+from ...Functions.AsBuilt.AsBuiltHelpers import AsBuiltHelpers
 
 from ...config.iconHandler import iconHandler
 from ...config.settings import Filepaths, IconsByName, OpenLink
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ...KeelelisedMuutujad.modules import Module
 from ..TableUtilys.FlagIconHelper import FlagIconHelper
-
+from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 
 class CustomRoles:
     # custom roles for the delegate to use in the view
@@ -121,15 +123,25 @@ class FileDelegate(QStyledItemDelegate):
             if not file_path:
                 property_id = model.data(model.index(index.row(),0), Qt.DisplayRole)
                 
-                somethinghere._handle_drawTool(self)
-                prepared_text = AsBuiltTools.html
+                buttons={"keep": "Ei ole vaja", "delete": "Jah"}
+                ret = DecisionDialogHelper.ask_user(
+                    title=Headings.inFO_SIMPLE,
+                    message="Kas loon kohe ka Konttrolli tabeli?",
+                    options=buttons,
+                    parent=self,
+                    type= AnimatedGradientBorderFrame.PROLOOK
+                        )
+
+
+                AsBuiltHelpers._handle_drawTool(self, notes_table=ret)
+                prepared_text = AsBuiltHelpers.html
                 #print(f"Textbrowser content: {prepared_text}")
                 # 2. Fetch descriptions from Mailabl (already done)
                 from ...Functions.AsBuilt.ASBuilt import AsBuiltQueries
                 existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
                 #print(f"Existing descriptions: {existing_descriptions}")
                 # 3. Merge: put file table first, then append all descriptions
-                combined_html = somethinghere.merge_file_table_with_existing(prepared_text, existing_descriptions)
+                combined_html = AsBuiltHelpers.merge_file_table_with_existing(prepared_text, existing_descriptions)
 
                 res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
             

@@ -21,7 +21,7 @@ class AsBuiltTools():
 
     def __init__(self, parent) -> None:
         self.dialog = parent
-        self.html = ""
+        
 
     def load_asBuiltTools(self):
         widget_name = Filepaths._get_widget_name(FilesByNames().asBuitTools_UI)
@@ -61,16 +61,11 @@ class AsBuiltTools():
         if result == QDialog.Accepted:
             #print("Accepted")
             property_id = "30"
-            # 1. Get current QTextBrowser content (your file table)
-            prepared_text = AsBuiltTools.html
-            #print(f"Textbrowser content: {prepared_text}")
-            # 2. Fetch descriptions from Mailabl (already done)
             existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
             #print(f"Existing descriptions: {existing_descriptions}")
             # 3. Merge: put file table first, then append all descriptions
-            combined_html = somethinghere.merge_file_table_with_existing(prepared_text, existing_descriptions)
-
-            res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
+        
+            #res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
             
             AsBuiltTools.html = ""
 
@@ -90,71 +85,6 @@ class AsBuiltTools():
         dialog.reject()
 
 class somethinghere:
-    def _handle_drawTool(self):
-        file_dialog = QFileDialog()
-        file_dialog.setFileMode(QFileDialog.ExistingFiles)
-        #file_dialog.setNameFilter("Shapefiles (*.shp)")
-        if file_dialog.exec_():
-                file_paths = file_dialog.selectedFiles()
-                #text_browser = self.textBrowser
-                #text_browser.clear()
-
-
-
-        html = """
-        <div style="width: 100%; display: flex; justify-content: center; margin: 10px 0;">
-        <table style="
-            border-collapse: collapse;
-            width: 90%;
-            background: linear-gradient(to bottom, #47a5b1, #feffff);
-            border-radius: 6px;
-            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease-in-out;
-            font-family: Roboto;
-            text-align: left;
-        ">
-            <tr>
-            <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: 35%; color: white; background: #47a5b1;">
-                <p><strong>📄 Faili nimi</strong></p>
-            </td>
-            <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: 50%; color: white; background: #47a5b1;">
-                <p><strong>📁 Asukoht</strong></p>
-            </td>
-            <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: 15%; color: white; background: #47a5b1;">
-                <p><strong>📝 Märkused</strong></p>
-            </td>
-            </tr>
-        """
-
-        for file_path in file_paths:
-            file_name = os.path.basename(file_path)
-            html += f"""
-            <tr>
-            <td style="padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">
-                <p>{file_name}</p>
-            </td>
-            <td style="padding: 1px 10px; background-color: #dfe3e1;">
-                <p><a href="file:///{file_path}" style="style="font-weight: italic; color: #243a4e; text-decoration: none;">{file_path}</a></p>
-            </td>
-            <td style="padding: 1px 10px; background-color: #dfe3e1; color: #4f636f;">
-                <p>–</p>
-            </td>
-            </tr>
-            """
-
-        html += """
-        </table>
-        </div>
-        <p></p>
-        """
-
-
-
-        #text_browser.setHtml(html)
-        AsBuiltTools.html = html
-        #print("🧾 HTML stored:", AsBuiltTools.html[:200])
-
-
     def merge_file_table_with_existing(file_table_html: str, existing_html: str) -> str:
         #print("🔍 Merging file table with existing content...")
 

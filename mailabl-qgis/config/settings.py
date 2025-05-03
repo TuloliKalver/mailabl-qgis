@@ -130,7 +130,7 @@ class IconsByName:
         self.icon_dgn = "ggn-file.png"
         self.icon_text = 'text.png'
         self.icon_image = "picture.png"
-        self.icon_video = "mp4.png"
+        self.icon_video = "video.png"
         self.icon_archive = "zip.png"
         self.icon_html =  "html.png"
         self.icon_gis = "gis.png"
