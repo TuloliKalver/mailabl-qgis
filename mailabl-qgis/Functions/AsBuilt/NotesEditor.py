@@ -10,7 +10,7 @@ from datetime import datetime
 class NotesEditor:
     NOTE_COL_WIDTHS = {
         "note": 500,
-        "checkbox": 70,
+        "checkbox": 25,
         "resolved_date": 100
     }
 
@@ -50,9 +50,9 @@ class NotesEditor:
 
         frame = QFrame()
         layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
-
+        layout.setContentsMargins(2, 0, 2, 0)  # ⬅️ More breathing room around the row
+        layout.setSpacing(2)  # Add horizontal space between elements
+        
         row_data = row_data or {
             "note": "", "resolved": False, "resolved_date": ""
         }
@@ -61,21 +61,27 @@ class NotesEditor:
         note_edit = QTextEdit()
         note_edit.setText(row_data["note"])
         note_edit.setFixedWidth(self.NOTE_COL_WIDTHS["note"])
-        note_edit.setFixedHeight(40)  # 2-line height
+        note_edit.setFixedHeight(40)  # Slightly increased for comfort
+        note_edit.setContentsMargins(2, 2, 2, 2)  # Padding inside the QTextEdit
         note_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        note_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        note_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         note_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
-        # ✅ Centered checkbox
+        # ✅ Centered checkbox (both vertically and horizontally)
         checkbox_container = QFrame()
         checkbox_container.setFixedWidth(self.NOTE_COL_WIDTHS["checkbox"])
+        checkbox_container.setFixedHeight(40)  # Match QTextEdit height exactly
+
         checkbox_layout = QHBoxLayout(checkbox_container)
-        checkbox_layout.setContentsMargins(0, 0, 0, 0)
-        checkbox_layout.setAlignment(Qt.AlignHCenter)
+        checkbox_layout.setContentsMargins(0, 2, 0, 2)  # Add vertical padding
+        checkbox_layout.setAlignment(Qt.AlignCenter)
 
         checkbox = QCheckBox()
         checkbox.setChecked(row_data["resolved"])
+        checkbox.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+
         checkbox_layout.addWidget(checkbox)
+
 
         # 📅 Resolved date
         resolved_date_edit = QLineEdit(row_data["resolved_date"])
@@ -111,7 +117,7 @@ class NotesEditor:
             group_box = QGroupBox()
             group_box.setTitle(date.strip() if date.strip() else "📅 Kuupäev puudub")
             group_layout = QVBoxLayout()
-            group_layout.setSpacing(8)
+            group_layout.setSpacing(4)
 
             self._add_note_table_headers(group_layout)
 
@@ -121,10 +127,29 @@ class NotesEditor:
             group_box.setLayout(group_layout)
             layout.addWidget(group_box)
 
+
     def add_note_row_from_button(self, widget):
         layout = self._get_notes_layout(widget)
-        if layout:
-            group_box = QGroupBox("📅 Uus märkus")
+        if not layout:
+            return
+
+        today = datetime.today().strftime("%d.%m.%Y")
+        target_group_box = None
+
+        # Check for existing group box with today's date
+        for i in range(layout.count()):
+            item = layout.itemAt(i).widget()
+            if isinstance(item, QGroupBox) and item.title().strip() == today:
+                target_group_box = item
+                break
+
+        if target_group_box:
+            group_layout = target_group_box.layout()
+            if group_layout:
+                group_layout.addWidget(self._create_note_row())
+        else:
+            # Create new group box with today's date
+            group_box = QGroupBox(today)
             group_layout = QVBoxLayout()
             group_layout.setSpacing(8)
 
@@ -133,3 +158,5 @@ class NotesEditor:
 
             group_box.setLayout(group_layout)
             layout.addWidget(group_box)
+        widget.adjustSize()
+

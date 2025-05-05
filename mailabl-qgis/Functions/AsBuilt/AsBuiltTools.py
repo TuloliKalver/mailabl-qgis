@@ -44,8 +44,9 @@ class AsBuiltTools():
         res = self.make_Notes(widget)
         if res == False:
             return 
+        widget.adjustSize()
 
-        widget.pbAddNote.clicked.connect(lambda: NotesEditor.add_note_row_from_button(widget))
+        widget.pbAddNote.clicked.connect(lambda: self.notes_editor.add_note_row_from_button(widget))
 
         widget.pbSave.clicked.connect(lambda: AsBuiltTools._handle_save(widget))
         widget.pbCancel.clicked.connect(lambda: AsBuiltTools._handle_cancel(widget))
@@ -67,7 +68,7 @@ class AsBuiltTools():
         if result == QDialog.Accepted:
             notes = self.collect_note_data(widget)
             html_notes = NotesTableGenerator.update_notes_table(notes)
-            print(f"Updated HTML:\n{html_notes}")
+            #print(f"Updated HTML:\n{html_notes}")
             selected_indexes = self.table.selectionModel().selectedRows()
             if not selected_indexes:
                 print("❌ No row selected.")
@@ -78,11 +79,11 @@ class AsBuiltTools():
             
             property_id = model.data(model.index(selected_row, 0), Qt.DisplayRole)
             existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
-            print(f"Existing descriptions are:")
-            print(existing_descriptions)
+            #print(f"Existing descriptions are:")
+            #print(existing_descriptions)
 
             combined_html = self.patch_notes_table_in_html(existing_descriptions, html_notes)
-            print(f"Combined HTML:\n{combined_html}")
+            #print(f"Combined HTML:\n{combined_html}")
 
             res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
 

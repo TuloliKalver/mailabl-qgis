@@ -79,18 +79,18 @@ class DataExtractor:
         """
         #print("===== START EXTRACTING LINKS =====")
         if not description or "Faili nimi" not in description or "Asukoht" not in description:
-            print("❌ Header markers not found.")
+            #print("❌ Header markers not found.")
             return []
 
-        print("✅ Recognized table header structure...")
-        print(f"Description: {description[:300]}...")  # trimmed for readability
+        #print("✅ Recognized table header structure...")
+        #print(f"Description: {description[:300]}...")  # trimmed for readability
 
         # Find all tables
         table_blocks = re.findall(r"<table.*?>.*?</table>", description, re.DOTALL | re.IGNORECASE)
 
         for table in table_blocks:
             if "Faili nimi" in table and "Asukoht" in table:
-                print("✅ Matched a valid table.")
+                #print("✅ Matched a valid table.")
                 td_pattern = re.compile(r"<td[^>]*>(.*?)</td>", re.DOTALL | re.IGNORECASE)
                 td_matches = td_pattern.findall(table)
 
@@ -101,10 +101,10 @@ class DataExtractor:
                     if clean_text and ("file:///" in clean_text or "\\" in clean_text or "/" in clean_text):
                         links.append(clean_text)
 
-                print(f"✅ Extracted links: {links}")
+                #print(f"✅ Extracted links: {links}")
                 return links
 
-        print("❌ Matching table not found.")
+        #print("❌ Matching table not found.")
         return []
 
 
