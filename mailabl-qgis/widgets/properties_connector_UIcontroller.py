@@ -12,7 +12,7 @@ class PropertiesConnectorUIController:
         This function updates map selections, manages UI button states, and controls the PropertiesConnector widget.
         Prevents opening multiple instances of the Properties Connector.
         """
-
+        print("load_properties_connector")
         # Check if the Properties Connector is already open
         if PropertiesConnectorUIController._is_open:
             return  # Exit early if it's already open

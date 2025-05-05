@@ -134,7 +134,11 @@ class IconsByName:
         self.icon_archive = "zip.png"
         self.icon_html =  "html.png"
         self.icon_gis = "gis.png"
-        self.edit_data = "exclamation.png"
+        self.edit_data = "note.png"
+        self.folder_empty_add = "folder_empty_add.png"
+        self.folder_add = "folder_add.png"
+        self.pin_add = "pin_add.png"
+        
 
 class FilesByNames:
     TEOSTUS_SETUP = "TeostusJOONISED.UI"

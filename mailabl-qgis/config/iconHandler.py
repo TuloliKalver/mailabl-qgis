@@ -18,6 +18,9 @@ archive_file = Filepaths.get_icon(IconsByName().icon_archive)
 html_file = Filepaths.get_icon(IconsByName().icon_html)
 gis_file = Filepaths.get_icon(IconsByName().icon_gis)
 edit_data = Filepaths.get_icon(IconsByName().edit_data)
+folder_epty_add = Filepaths.get_icon(IconsByName().folder_empty_add)
+folder_add = Filepaths.get_icon(IconsByName().folder_add)
+pin_add = Filepaths.get_icon(IconsByName().pin_add)
 
 
 
@@ -65,10 +68,21 @@ class iconHandler:
 
     @staticmethod
     def set_no_file_icon():
-        folder_icon_path = no_file
+        folder_icon_path = folder_epty_add
         return folder_icon_path
+    
+    @staticmethod
+    def add_more_files():
+        folder_icon_path = folder_add
+        return folder_icon_path
+
     @staticmethod
     def edit_data():
         open_folder = edit_data
         return open_folder
     
+
+    @staticmethod
+    def pin_add():
+        open_folder = pin_add
+        return open_folder

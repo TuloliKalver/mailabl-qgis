@@ -8,7 +8,8 @@ from ..KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
-
+from ..widgets.properties_connector_UIcontroller import PropertiesConnectorUIController
+from ..KeelelisedMuutujad.modules import Module
 
 class RightClickHelper:
     dialog = None  # Class variable
@@ -37,32 +38,40 @@ class RightClickHelper:
 
         menu = QMenu(table)
 
-        icon = iconHandler.set_no_file_icon()
+        icon = iconHandler.add_more_files()
         icon_edit = iconHandler.edit_data()
+        pin_add = iconHandler.pin_add()
 
-        action_hello = QAction(QIcon(icon), "Lisa fail", table)
+        actio_add_files = QAction(QIcon(icon), "Lisa faile", table)
         helper = RightClickHelper(cls.dialog)
-        action_hello.triggered.connect(lambda: helper._handle_file_add(table,row))
+        actio_add_files.triggered.connect(lambda: helper._handle_file_add(table,row))
         
 
-
         asBuiltTools = AsBuiltTools(cls.dialog, table)
-        action_try_better = QAction(QIcon(icon_edit), "Halda märkusi", table)
-        action_try_better.triggered.connect(lambda:asBuiltTools.load_asBuiltTools())
+        action_edit_notes = QAction(QIcon(icon_edit), "Halda märkusi", table)
+        action_edit_notes.triggered.connect(lambda:asBuiltTools.load_asBuiltTools())
 
-        menu.addAction(action_hello)
-        menu.addAction(action_try_better)
+
+        button_asBuilt = cls.dialog.pbTeostusConnectproperties
+        action_add_properties = QAction(QIcon(pin_add), "Seosta kinnistuid", table)
+        
+        action_add_properties.triggered.connect(
+            lambda: PropertiesConnectorUIController.load_properties_connector(
+                cls.dialog, Module.ASBUILT, table, button_asBuilt
+            )
+        )
+
+
+        menu.addAction(actio_add_files)
+        menu.addAction(action_edit_notes)
+        menu.addAction(action_add_properties)
 
         menu.exec_(table.viewport().mapToGlobal(pos))
 
 
     def _handle_file_add(self,table:QTableView, row) -> bool:
-        language = "et"
         model = table.model()
        
-
-
-
         property_id = model.data(model.index(row,0), Qt.DisplayRole)
         
         buttons={"keep": "Ei ole vaja", "delete": "Jah"}
@@ -73,7 +82,6 @@ class RightClickHelper:
             parent=self,
             type= AnimatedGradientBorderFrame.PROLOOK
                 )
-
 
         AsBuiltHelpers._handle_drawTool(notes_table=ret)
         prepared_text = AsBuiltHelpers.html
