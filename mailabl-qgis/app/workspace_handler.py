@@ -20,7 +20,7 @@ from ..utils.ComboboxHelper import ComboBoxHelper
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ..queries.python.property_data import MyLablChecker, UpdateData
-
+from ..utils.rightClickHelper import RightClickHelper
 
 
 pealkiri = Headings()
@@ -116,7 +116,7 @@ class WorkSpaceHandler:
                                                              )
                 
         button.blockSignals(False)
-        
+        RightClickHelper.ASBuilt_right_click_action()
 
     def asBuilt_search(self):
         button = self.pbSearchTesotus

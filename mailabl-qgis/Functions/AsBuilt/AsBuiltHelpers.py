@@ -16,8 +16,8 @@ from ...utils.DataExtractors.DataExtractors import DataExtractor
 class AsBuiltHelpers:
     html = ""
 
-
-    def _handle_drawTool(self, notes_table=True):
+    @staticmethod
+    def _handle_drawTool(notes_table=True):
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.ExistingFiles)
         if file_dialog.exec_():

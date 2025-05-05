@@ -22,6 +22,9 @@ from PyQt5.QtCore import QTimer, Qt
 from qgis.PyQt import QtWidgets, uic
 from functools import partial
 
+
+
+
 from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler
 from .app.ui_controllers import FrameHandler, WidgetAnimator, AlterContainers
@@ -82,6 +85,7 @@ from .utils.MapHelpers import MapDataFlowHelper
 from .utils.MapToolsHelper import MapToolsHelper
 from .utils.ListHelper import  ListSelections
 from .utils.MainMenuControlls import MainMenuControlls
+from .utils.rightClickHelper import RightClickHelper
 
 from .widgets.connector_widget_engine.UI_controllers import PropertiesConnector
 
@@ -127,7 +131,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         WidgetAndWievHelpers.set_dialog(self)
         CheckboxHelper.set_dialog(self)
         SelectionActions(self)
-
+        RightClickHelper(self)
 
         self.setup_controller = SetupController(self)
         
@@ -248,9 +252,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         asBuiltLoader = AsBuiltDrawings(self)  # Assuming `self` is a QDialog or QWidget
         self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_construction_drawings_setup_widget())
 
-        table = self.tblAsBuilt
-        asBuiltTools = AsBuiltTools(self, table)
-        self.pbAsBuiltTools.clicked.connect(lambda:asBuiltTools.load_asBuiltTools())
+        self.pbAsBuiltTools.setVisible(False)
+        #table = self.tblAsBuilt
+        #asBuiltTools = AsBuiltTools(self, table)
+        #self.pbAsBuiltTools.clicked.connect(lambda:asBuiltTools.load_asBuiltTools())
+
+
 
         self.lblPhotosValue.setEnabled(False)
         self.lblPhtosText.setEnabled(False)
@@ -875,3 +882,4 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
     def reset_new_settings(self):
         from .config.settings_new import SettingsBuilder
         SettingsBuilder.reset_initialization_flag()
+

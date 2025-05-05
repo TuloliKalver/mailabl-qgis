@@ -17,6 +17,7 @@ video_file = Filepaths.get_icon(IconsByName().icon_video)
 archive_file = Filepaths.get_icon(IconsByName().icon_archive)
 html_file = Filepaths.get_icon(IconsByName().icon_html)
 gis_file = Filepaths.get_icon(IconsByName().icon_gis)
+edit_data = Filepaths.get_icon(IconsByName().edit_data)
 
 
 
@@ -66,3 +67,8 @@ class iconHandler:
     def set_no_file_icon():
         folder_icon_path = no_file
         return folder_icon_path
+    @staticmethod
+    def edit_data():
+        open_folder = edit_data
+        return open_folder
+    
