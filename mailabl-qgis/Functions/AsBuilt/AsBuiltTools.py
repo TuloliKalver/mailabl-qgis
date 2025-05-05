@@ -3,11 +3,12 @@ import re
 
 from PyQt5.QtCore import Qt
 
-from PyQt5.QtWidgets import QDialog, QTextEdit, QFrame
 from types import MethodType
 from .NotesEditor import NotesEditor
-from qgis.PyQt.QtWidgets import QFileDialog
-
+from PyQt5.QtWidgets import (
+    QDialog,QCheckBox, QFrame, QHBoxLayout, QLabel,
+    QLineEdit, QTextEdit, QVBoxLayout, QGroupBox
+)
 
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ...config.settings import Filepaths, FilesByNames
@@ -66,7 +67,7 @@ class AsBuiltTools():
         if result == QDialog.Accepted:
             notes = self.collect_note_data(widget)
             html_notes = NotesTableGenerator.update_notes_table(notes)
-
+            print(f"Updated HTML:\n{html_notes}")
             selected_indexes = self.table.selectionModel().selectedRows()
             if not selected_indexes:
                 print("❌ No row selected.")
@@ -79,6 +80,13 @@ class AsBuiltTools():
             existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
             print(f"Existing descriptions are:")
             print(existing_descriptions)
+
+            combined_html = self.patch_notes_table_in_html(existing_descriptions, html_notes)
+            print(f"Combined HTML:\n{combined_html}")
+
+            res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
+
+
 
             widget.setAttribute(Qt.WA_DeleteOnClose)
             
@@ -149,9 +157,9 @@ class AsBuiltTools():
         def clean_cell(cell_html):
             return re.sub(r'<[^>]+>', '', cell_html).strip()
 
-        def checkbox_checked(cell_html):
-            return 'checked' in cell_html.lower()
-
+        def checkbox_checked(cell_html: str) -> bool:
+            return 'checked="checked"' in cell_html.lower()
+        
         parsed_rows = []
         for row_html in data_rows:
             cells = td_pattern.findall(row_html)
@@ -181,38 +189,69 @@ class AsBuiltTools():
         collected_notes = []
 
         for i in range(notes_layout.count()):
-            row_frame = notes_layout.itemAt(i).widget()
-            if not isinstance(row_frame, QFrame):
+            group_box = notes_layout.itemAt(i).widget()
+            if not isinstance(group_box, QGroupBox):
                 continue
 
-            row_layout = row_frame.layout()
-            if not row_layout or row_layout.count() < 4:
+            date_title = group_box.title().strip()
+            note_date = date_title if date_title != "📅 Kuupäev puudub" else ""
+
+            group_layout = group_box.layout()
+            if not group_layout:
                 continue
 
-            # Check if second item is a QTextEdit — only valid data rows have this
-            second_widget = row_layout.itemAt(1).widget()
-            if not isinstance(second_widget, QTextEdit):
-                continue  # Skip header or malformed row
+            for j in range(group_layout.count()):
+                row_frame = group_layout.itemAt(j).widget()
+                if not isinstance(row_frame, QFrame):
+                    continue
 
-            date_edit = row_layout.itemAt(0).widget()
-            note_edit = second_widget
-            checkbox = row_layout.itemAt(2).widget()
-            resolved_date_edit = row_layout.itemAt(3).widget()
+                row_layout = row_frame.layout()
+                if not row_layout or row_layout.count() < 3:
+                    continue
 
-            if not all([date_edit, note_edit, checkbox, resolved_date_edit]):
-                continue
+                note_edit = row_layout.itemAt(0).widget()
+                checkbox_container = row_layout.itemAt(1).widget()
+                resolved_date_edit = row_layout.itemAt(2).widget()
 
-            row_data = {
-                "date": date_edit.text().strip(),
-                "note": note_edit.toPlainText().strip(),
-                "resolved": checkbox.isChecked(),
-                "resolved_date": resolved_date_edit.text().strip()
-            }
+                if not all([note_edit, checkbox_container, resolved_date_edit]):
+                    continue
 
-            collected_notes.append(row_data)
+                # Extract QCheckBox from checkbox_container frame
+                checkbox = checkbox_container.findChild(QCheckBox)
+                if not checkbox:
+                    continue
 
+                row_data = {
+                    "date": note_date,
+                    "note": note_edit.toPlainText().strip(),
+                    "resolved": checkbox.isChecked(),
+                    "resolved_date": resolved_date_edit.text().strip()
+                }
+
+                collected_notes.append(row_data)
 
         return collected_notes
 
 
+    @staticmethod
+    def patch_notes_table_in_html(existing_html: str, new_notes_html: str) -> str:
+        """
+        Replaces the full 'Märkused ja kommentaarid' section, no matter how it's styled.
+        Ensures only one block exists.
+        """
+        pattern = re.compile(
+            r"""
+            <p[^>]*?>\s*(<strong>)?🗒️\s*Märkused\s+ja\s+kommentaarid(</strong>)?\s*</p>  # header line
+            \s*<div[^>]*?>\s*<table.*?</table>\s*</div>\s*<p>\s*</p>   # full table block
+            """,
+            re.DOTALL | re.IGNORECASE | re.VERBOSE
+        )
 
+        if pattern.search(existing_html):
+            updated_html = pattern.sub(new_notes_html.strip(), existing_html)
+            print("🔁 Replaced existing notes section.")
+        else:
+            updated_html = existing_html.strip() + "\n" + new_notes_html.strip()
+            print("➕ Appended new notes section.")
+
+        return updated_html

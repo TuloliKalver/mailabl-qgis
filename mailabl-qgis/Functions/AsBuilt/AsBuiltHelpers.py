@@ -38,8 +38,6 @@ class AsBuiltHelpers:
             AsBuiltHelpers.html = html
 
 
-
-
     def merge_file_table_with_existing(file_table_html: str, existing_html: str) -> str:
         #print("🔍 Merging file table with existing content...")
 
@@ -104,6 +102,7 @@ class AsBuiltHelpers:
             border-collapse: collapse;
             width: 90%;
             background-color: #dfe3e1;
+            color: #243a4e;
             border-radius: 6px;
             box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease-in-out;
@@ -149,6 +148,11 @@ class NotesTableGenerator:
     CHECKBOX_COLUMN_WIDTH = "5%"
     RESOLVED_COLUMN_WIDTH = "15%"
 
+    @staticmethod
+    def _strip_html_tags(text: str) -> str:
+        return re.sub(r'</?strong>', '', text, flags=re.IGNORECASE)
+
+
     @classmethod
     def _render_checkbox_html(cls, is_checked: bool) -> str:
         checked_attr = 'checked="checked"' if is_checked else ""
@@ -161,26 +165,28 @@ class NotesTableGenerator:
             </li>
         </ul>
         """
-
     @classmethod
     def _render_table_row(cls, note: dict) -> str:
+        clean_date = cls._strip_html_tags(note["date"])
+        clean_note = cls._strip_html_tags(note["note"])
+        clean_resolved_date = cls._strip_html_tags(note["resolved_date"])
+
         return f"""
         <tr>
-            <td style="width: {cls.DATE_COLUMN_WIDTH}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">
-                <p>{note["date"]}</p>
+            <td style="width: {cls.DATE_COLUMN_WIDTH}; padding: 1px 10px;">
+                <p style="font-weight: normal;">{clean_date}</p>
             </td>
-            <td style="width: {cls.NOTES_COLUMN_WIDTH}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">
-                <p>{note["note"]}</p>
+            <td style="width: {cls.NOTES_COLUMN_WIDTH}; padding: 1px 10px;">
+                <p style="font-weight: normal;">{clean_note}</p>
             </td>
-            <td style="width: {cls.CHECKBOX_COLUMN_WIDTH}; padding: 1px 10px; background-color: #dfe3e1;">
+            <td style="width: {cls.CHECKBOX_COLUMN_WIDTH}; padding: 1px 10px;">
                 {cls._render_checkbox_html(note["resolved"])}
             </td>
-            <td style="width: {cls.RESOLVED_COLUMN_WIDTH}; padding: 1px 10px; background-color: #dfe3e1; color: #4f636f;">
-                <p>{note["resolved_date"]}</p>
+            <td style="width: {cls.RESOLVED_COLUMN_WIDTH}; padding: 1px 10px;">
+                <p style="font-weight: normal;">{clean_resolved_date}</p>
             </td>
         </tr>
         """
-
     @classmethod
     def _render_table_header(cls) -> str:
         return f"""
@@ -223,6 +229,8 @@ class NotesTableGenerator:
 
     @classmethod
     def generate_notes_table_from_data(cls, notes: list) -> str:
+
+
         if not notes:
             notes = [{
                 "date": "",
