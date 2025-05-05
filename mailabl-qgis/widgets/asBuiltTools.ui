@@ -105,7 +105,7 @@ QLineEdit, QTextEdit {
 /* ---------------------------- */
 /* 🔘 Disabled State for QLineEdit */
 /* ---------------------------- */
-QLineEdit:disabled, QTextEdit {
+QLineEdit:disabled, QTextEdit:disabled {
     background-color: #24252e;  /* A slightly darker tone for disabled state */
     border: 1px dashed rgba(120, 120, 130, 0.5);  /* Dashed and faded border */
     color: rgba(170, 170, 180, 0.5);  /* Muted text color */
@@ -394,6 +394,24 @@ QTextBrowser QScrollBar::sub-page:vertical {
     background: none;
 }
 
+QGroupBox {
+    border: 1px solid rgba(9, 144, 143, 80); /* Teal glow border */
+    border-radius: 8px;
+    margin-top: 6px; /* Space above group */
+    background-color: rgba(29, 37, 43, 0.75); /* Slightly transparent background */
+    padding: 6px;
+}
+
+QGroupBox:title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 6px;
+    margin-left: 10px;
+    color: #ececf1;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: transparent;
+}
 
 
 #dragFrame {

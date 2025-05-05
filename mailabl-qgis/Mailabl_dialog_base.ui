@@ -4366,7 +4366,7 @@ p, li { white-space: pre-wrap; }
                          <item>
                           <widget class="QPushButton" name="pbAsBuiltTools">
                            <property name="text">
-                            <string>PushButton</string>
+                            <string>Halda märkuseid</string>
                            </property>
                           </widget>
                          </item>
@@ -4468,7 +4468,7 @@ p, li { white-space: pre-wrap; }
                       <property name="geometry">
                        <rect>
                         <x>0</x>
-                        <y>0</y>
+                        <y>-374</y>
                         <width>827</width>
                         <height>1124</height>
                        </rect>

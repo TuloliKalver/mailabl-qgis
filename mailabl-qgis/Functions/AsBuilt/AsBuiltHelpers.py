@@ -16,107 +16,6 @@ from ...utils.DataExtractors.DataExtractors import DataExtractor
 class AsBuiltHelpers:
     html = ""
 
-    @staticmethod
-    def generate_file_table_section(file_paths):
-        name_col = "35%"
-        path_col = "30%"
-        note_col = "35%"
-
-        html = f"""
-        <p style="font-size: 14px; font-weight: bold; color: #243a4e; margin: 10px 0 4px 6px;">📂 Seotud materjalid</p>
-        <div style="display: flex; justify-content: center;">
-        <table style="
-            border-collapse: collapse;
-            width: 90%;
-            background-color: #dfe3e1;
-            border-radius: 6px;
-            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease-in-out;
-            text-align: left;">
-            <tr>
-                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {name_col}; color: white; background: #47a5b1;">
-                    <p><strong>📄 Faili nimi</strong></p>
-                </td>
-                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {path_col}; color: white; background: #47a5b1;">
-                    <p><strong>📁 Asukoht</strong></p>
-                </td>
-                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {note_col}; color: white; background: #47a5b1;">
-                    <p><strong>📝 Märkused</strong></p>
-                </td>
-            </tr>
-        """
-        for file_path in file_paths:
-            file_name = os.path.basename(file_path)
-            html += f"""
-            <tr>
-                <td style="padding: 1px 10px; background-color: #dfe3e1; color: #243a4e; width: {name_col};">
-                    <p>{file_name}</p>
-                </td>
-                <td style="padding: 1px 10px; background-color: #dfe3e1; width: {path_col};">
-                    <p><a href="file:///{file_path}" style="font-weight: italic; color: #243a4e; text-decoration: none;">{file_path}</a></p>
-                </td>
-                <td style="padding: 1px 10px; background-color: #dfe3e1; color: #4f636f; width: {note_col};">
-                    <p>–</p>
-                </td>
-            </tr>
-            """
-        html += """
-        </table>
-        </div>
-        <p style="height: 14px;"></p>
-        """
-        return html
-
-
-    @staticmethod
-    def generate_notes_table():
-        date_column = "15%"
-        notes_column = "65%"
-        checkbox_column = "5%"
-        resolved_column = "15%"
-
-        return f"""
-        <p style="font-size: 13px; font-weight: bold; color: #243a4e; margin: 14px 0 4px 6px;">🗒️ Märkused ja kommentaarid</p>
-        <div style="display: flex; justify-content: center;">
-            <table style="
-                border-collapse: collapse;
-                width: 90%;
-                table-layout: fixed;
-                background-color: #dfe3e1;
-                border-radius: 6px;
-                box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
-                transition: all 0.3s ease-in-out;
-                text-align: left;">
-                <tr>
-                    <td style="width: {date_column}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
-                        <p><strong>📅</strong></p>
-                    </td>
-                    <td style="width: {notes_column}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
-                        <p><strong>🗒️ Märkus</strong></p>
-                    </td>
-                    <td style="width: {checkbox_column}; padding: 2px 3px; background: #47a5b1;">
-                        <p>✅</p>
-                    </td>
-                    <td style="width: {resolved_column}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
-                        <p><strong>📅 Lahendatud</strong></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: {date_column}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">01.01.2022</td>
-                    <td style="width: {notes_column}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">Suur märkus, sest siin on jama</td>
-                    <td style="width: {checkbox_column}; padding: 1px 10px; background-color: #dfe3e1;">
-                        <ul data-type="taskList">
-                            <li data-checked="false" data-type="taskItem">
-                                <label><input type="checkbox"><span></span></label>
-                            </li>
-                        </ul>
-                    </td>
-                    <td style="width: {resolved_column}; padding: 1px 10px; background-color: #dfe3e1; color: #4f636f;"></td>
-                </tr>
-            </table>
-        </div>
-        <p></p>
-        """
 
     def _handle_drawTool(self, notes_table=True):
         file_dialog = QFileDialog()
@@ -129,7 +28,7 @@ class AsBuiltHelpers:
             """ + AsBuiltHelpers.generate_file_table_section(file_paths)
 
             if notes_table:
-                html += AsBuiltHelpers.generate_notes_table()
+                html += NotesTableGenerator.generate_empty_table()
 
             html += """
             </div>
@@ -192,5 +91,154 @@ class AsBuiltHelpers:
 
 
 
+    @staticmethod
+    def generate_file_table_section(file_paths):
+        name_col = "35%"
+        path_col = "30%"
+        note_col = "35%"
 
+        html = f"""
+        <p style="font-size: 14px; font-weight: bold; color: #243a4e; margin: 10px 0 4px 6px;">📂 Seotud materjalid</p>
+        <div style="display: flex; justify-content: center;">
+        <table style="
+            border-collapse: collapse;
+            width: 90%;
+            background-color: #dfe3e1;
+            border-radius: 6px;
+            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease-in-out;
+            text-align: left;">
+            <tr>
+                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {name_col}; color: white; background: #47a5b1;">
+                    <p><strong>📄 Faili nimi</strong></p>
+                </td>
+                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {path_col}; color: white; background: #47a5b1;">
+                    <p><strong>📁 Asukoht</strong></p>
+                </td>
+                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {note_col}; color: white; background: #47a5b1;">
+                    <p><strong>📝 Märkused</strong></p>
+                </td>
+            </tr>
+        """
+        for file_path in file_paths:
+            file_name = os.path.basename(file_path)
+            html += f"""
+            <tr>
+                <td style="padding: 1px 10px; background-color: #dfe3e1; color: #243a4e; width: {name_col};">
+                    <p>{file_name}</p>
+                </td>
+                <td style="padding: 1px 10px; background-color: #dfe3e1; width: {path_col};">
+                    <p><a href="file:///{file_path}" style="font-weight: italic; color: #243a4e; text-decoration: none;">{file_path}</a></p>
+                </td>
+                <td style="padding: 1px 10px; background-color: #dfe3e1; color: #4f636f; width: {note_col};">
+                    <p>–</p>
+                </td>
+            </tr>
+            """
+        html += """
+        </table>
+        </div>
+        <p style="height: 14px;"></p>
+        """
+        return html
+
+
+class NotesTableGenerator:
+    DATE_COLUMN_WIDTH = "15%"
+    NOTES_COLUMN_WIDTH = "65%"
+    CHECKBOX_COLUMN_WIDTH = "5%"
+    RESOLVED_COLUMN_WIDTH = "15%"
+
+    @classmethod
+    def _render_checkbox_html(cls, is_checked: bool) -> str:
+        checked_attr = 'checked="checked"' if is_checked else ""
+        data_checked = str(is_checked).lower()
+        return f"""
+        <ul data-type="taskList">
+            <li data-checked="{data_checked}" data-type="taskItem">
+                <label><input type="checkbox" {checked_attr}><span></span></label>
+                <div><p></p></div>
+            </li>
+        </ul>
+        """
+
+    @classmethod
+    def _render_table_row(cls, note: dict) -> str:
+        return f"""
+        <tr>
+            <td style="width: {cls.DATE_COLUMN_WIDTH}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">
+                <p>{note["date"]}</p>
+            </td>
+            <td style="width: {cls.NOTES_COLUMN_WIDTH}; padding: 1px 10px; background-color: #dfe3e1; color: #243a4e;">
+                <p>{note["note"]}</p>
+            </td>
+            <td style="width: {cls.CHECKBOX_COLUMN_WIDTH}; padding: 1px 10px; background-color: #dfe3e1;">
+                {cls._render_checkbox_html(note["resolved"])}
+            </td>
+            <td style="width: {cls.RESOLVED_COLUMN_WIDTH}; padding: 1px 10px; background-color: #dfe3e1; color: #4f636f;">
+                <p>{note["resolved_date"]}</p>
+            </td>
+        </tr>
+        """
+
+    @classmethod
+    def _render_table_header(cls) -> str:
+        return f"""
+        <tr>
+            <td style="width: {cls.DATE_COLUMN_WIDTH}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
+                <p><strong>📅</strong></p>
+            </td>
+            <td style="width: {cls.NOTES_COLUMN_WIDTH}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
+                <p><strong>🗒️ Märkus</strong></p>
+            </td>
+            <td style="width: {cls.CHECKBOX_COLUMN_WIDTH}; padding: 2px 3px; background: #47a5b1;">
+                <p>✅</p>
+            </td>
+            <td style="width: {cls.RESOLVED_COLUMN_WIDTH}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
+                <p><strong>📅 Lahendatud</strong></p>
+            </td>
+        </tr>
+        """
+
+    @classmethod
+    def _wrap_table(cls, body: str) -> str:
+        return f"""
+        <!-- mailabl:type=notes -->
+        <p style="font-size: 13px; font-weight: bold; color: #243a4e; margin: 14px 0 4px 6px;">🗒️ Märkused ja kommentaarid</p>
+        <div style="display: flex; justify-content: center;">
+            <table style="
+                border-collapse: collapse;
+                width: 90%;
+                table-layout: fixed;
+                background-color: #dfe3e1;
+                border-radius: 6px;
+                box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
+                transition: all 0.3s ease-in-out;
+                text-align: left;">
+                {body}
+            </table>
+        </div>
+        <p></p>
+        """
+
+    @classmethod
+    def generate_notes_table_from_data(cls, notes: list) -> str:
+        if not notes:
+            notes = [{
+                "date": "",
+                "note": "",
+                "resolved": False,
+                "resolved_date": ""
+            }]
+        rows_html = "".join([cls._render_table_row(note) for note in notes])
+        full_table = cls._render_table_header() + rows_html
+        return cls._wrap_table(full_table)
+
+    @classmethod
+    def generate_empty_table(cls) -> str:
+        return cls.generate_notes_table_from_data([])
+
+    @classmethod
+    def update_notes_table(cls, notes: list) -> str:
+        return cls.generate_notes_table_from_data(notes)
 

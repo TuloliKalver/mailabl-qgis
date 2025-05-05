@@ -3,8 +3,9 @@ import re
 
 from PyQt5.QtCore import Qt
 
-from PyQt5.QtWidgets import QDialog, QLabel, QCheckBox, QTextEdit, QHBoxLayout, QFrame, QLineEdit
+from PyQt5.QtWidgets import QDialog, QTextEdit, QFrame
 from types import MethodType
+from .NotesEditor import NotesEditor
 from qgis.PyQt.QtWidgets import QFileDialog
 
 
@@ -14,13 +15,14 @@ from ...config.SetupModules.AsBuitSettings import AsBuiltDrawings, DraggableFram
 from ...Functions.AsBuilt.ASBuilt import AsBuiltQueries
 from ...utils.DataExtractors.DataExtractors import DataExtractor
 from PyQt5.QtCore import QPropertyAnimation
+from .AsBuiltHelpers import AsBuiltHelpers, NotesTableGenerator
 
 class AsBuiltTools():
 
     def __init__(self, parent, table) -> None:
         self.dialog = parent
         self.table = table
-        
+        self.notes_editor = NotesEditor()        
 
     def load_asBuiltTools(self):
         widget_name = Filepaths._get_widget_name(FilesByNames().asBuitTools_UI)
@@ -42,7 +44,7 @@ class AsBuiltTools():
         if res == False:
             return 
 
-        widget.pbAddNote.clicked.connect(lambda: self.add_note_row_from_button(widget))
+        widget.pbAddNote.clicked.connect(lambda: NotesEditor.add_note_row_from_button(widget))
 
         widget.pbSave.clicked.connect(lambda: AsBuiltTools._handle_save(widget))
         widget.pbCancel.clicked.connect(lambda: AsBuiltTools._handle_cancel(widget))
@@ -62,6 +64,21 @@ class AsBuiltTools():
         result = widget.exec_()
 
         if result == QDialog.Accepted:
+            notes = self.collect_note_data(widget)
+            html_notes = NotesTableGenerator.update_notes_table(notes)
+
+            selected_indexes = self.table.selectionModel().selectedRows()
+            if not selected_indexes:
+                print("❌ No row selected.")
+                return False
+
+            selected_row = selected_indexes[0].row()
+            model = self.table.model()
+            
+            property_id = model.data(model.index(selected_row, 0), Qt.DisplayRole)
+            existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
+            print(f"Existing descriptions are:")
+            print(existing_descriptions)
 
             widget.setAttribute(Qt.WA_DeleteOnClose)
             
@@ -101,24 +118,36 @@ class AsBuiltTools():
         data = self.extract_notes_table_data(existing_descriptions)
         print("Notes data returned!")
         print(data)
-        self.add_frame(widget, data)
+
+        self.notes_editor.add_frame(widget, data)
+
     def extract_notes_table_data(self, existing_html: str) -> list:
+        #print("🔎 Scanning incoming HTML for notes...")
+        #print(f"HTML:\n{existing_html}")
+        # Match the full notes table HTML block based on section title + <table>
         notes_table_pattern = re.compile(
-            r'<p[^>]*?>\s*🗒️ Märkused ja kommentaarid\s*</p>\s*<div[^>]*?>\s*<table[^>]*?>(.*?)</table>',
+            r'🗒️\s*Märkused\s+ja\s+kommentaarid.*?<table[^>]*?>(.*?)</table>',
             re.DOTALL | re.IGNORECASE
         )
         match = notes_table_pattern.search(existing_html)
         if not match:
+            print("❌ Notes table not found.")
             return []
 
         table_html = match.group(1)
+
+        # Match all <tr> blocks (rows)
         rows = re.findall(r'<tr[^>]*?>(.*?)</tr>', table_html, re.DOTALL)
-        data_rows = rows[1:]  # skip header
+        if not rows or len(rows) <= 1:
+            print("⚠️ No note rows found in table.")
+            return []
+
+        data_rows = rows[1:]  # skip header row
 
         td_pattern = re.compile(r'<td[^>]*?>(.*?)</td>', re.DOTALL)
 
         def clean_cell(cell_html):
-            return re.sub(r'<.*?>', '', cell_html).strip()
+            return re.sub(r'<[^>]+>', '', cell_html).strip()
 
         def checkbox_checked(cell_html):
             return 'checked' in cell_html.lower()
@@ -131,96 +160,59 @@ class AsBuiltTools():
                     "date": clean_cell(cells[0]),
                     "note": clean_cell(cells[1]),
                     "resolved": checkbox_checked(cells[2]),
-                    "resolved_date": clean_cell(cells[3])
+                    "resolved_date": clean_cell(cells[3]),
                 })
 
+        #print(f"✅ Parsed {len(parsed_rows)} notes from HTML.")
         return parsed_rows
     
-    
 
-    def add_frame(self, widget, data):
-        notes_frame = widget.findChild(QFrame, "frame")
-        notes_layout = notes_frame.layout()
-        if not notes_layout:
-            print("❌ 'Notes' layout not found!")
-            return
-
-        # Header row
-        headings_frame = QFrame()
-        headings_layout = QHBoxLayout()
-        headings_layout.setContentsMargins(0, 0, 0, 0)
-        headings_layout.setSpacing(10)
-
-        heading_date_label = QLabel("📅 Kuupäev")
-        heading_note_label = QLabel("🗒️ Märkus")
-        heading_resolved_label = QLabel("✅ Staatus")
-        heading_resolved_date_label = QLabel("📅 Lahendatud")
-
-        # Fixed widths for alignment
-        heading_date_label.setFixedWidth(100)
-        heading_note_label.setFixedWidth(300)
-        heading_resolved_label.setFixedWidth(60)
-        heading_resolved_date_label.setFixedWidth(100)
-
-        headings_layout.addWidget(heading_date_label)
-        headings_layout.addWidget(heading_note_label)
-        headings_layout.addWidget(heading_resolved_label)
-        headings_layout.addWidget(heading_resolved_date_label)
-
-        headings_frame.setLayout(headings_layout)
-        notes_layout.addWidget(headings_frame)
-
-        # Data rows
-        for row in data:
-            self.add_note_row(notes_layout, row)
-
-
-    def add_note_row(self, notes_layout, row_data=None):
-        frame = QFrame()
-        layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(10)
-
-        date_text = row_data["date"] if row_data else ""
-        note_text = row_data["note"] if row_data else ""
-        resolved = row_data["resolved"] if row_data else False
-        resolved_date_text = row_data["resolved_date"] if row_data else ""
-
-        date_edit = QLineEdit(date_text)
-        date_edit.setFixedWidth(100)
-
-        note_edit = QTextEdit()
-        note_edit.setText(note_text)
-        note_edit.setFixedWidth(300)
-        note_edit.setFixedHeight(50)
-        note_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        note_edit.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-
-        checkbox = QCheckBox()
-        checkbox.setChecked(resolved)
-        checkbox.setFixedWidth(60)
-        checkbox.setStyleSheet("margin-left: 8px;")
-
-        resolved_date_edit = QLineEdit(resolved_date_text)
-        resolved_date_edit.setFixedWidth(100)
-
-        layout.addWidget(date_edit)
-        layout.addWidget(note_edit)
-        layout.addWidget(checkbox)
-        layout.addWidget(resolved_date_edit)
-
-        frame.setLayout(layout)
-        notes_layout.addWidget(frame)
-
-    def add_note_row_from_button(self, widget):
+    def collect_note_data(self, widget) -> list:
         notes_frame = widget.findChild(QFrame, "frame")
         if not notes_frame:
-            print("❌ 'frame' container not found!")
-            return
+            print("❌ Notes frame not found!")
+            return []
 
         notes_layout = notes_frame.layout()
         if not notes_layout:
-            print("❌ 'Notes' layout not found!")
-            return
+            print("❌ Notes layout not found!")
+            return []
 
-        self.add_note_row(notes_layout)  # Adds an empty row
+        collected_notes = []
+
+        for i in range(notes_layout.count()):
+            row_frame = notes_layout.itemAt(i).widget()
+            if not isinstance(row_frame, QFrame):
+                continue
+
+            row_layout = row_frame.layout()
+            if not row_layout or row_layout.count() < 4:
+                continue
+
+            # Check if second item is a QTextEdit — only valid data rows have this
+            second_widget = row_layout.itemAt(1).widget()
+            if not isinstance(second_widget, QTextEdit):
+                continue  # Skip header or malformed row
+
+            date_edit = row_layout.itemAt(0).widget()
+            note_edit = second_widget
+            checkbox = row_layout.itemAt(2).widget()
+            resolved_date_edit = row_layout.itemAt(3).widget()
+
+            if not all([date_edit, note_edit, checkbox, resolved_date_edit]):
+                continue
+
+            row_data = {
+                "date": date_edit.text().strip(),
+                "note": note_edit.toPlainText().strip(),
+                "resolved": checkbox.isChecked(),
+                "resolved_date": resolved_date_edit.text().strip()
+            }
+
+            collected_notes.append(row_data)
+
+
+        return collected_notes
+
+
+

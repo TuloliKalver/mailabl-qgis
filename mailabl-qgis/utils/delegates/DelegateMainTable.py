@@ -149,7 +149,7 @@ class FileDelegate(QStyledItemDelegate):
                     from ...app.workspace_handler import WorkSpaceHandler
                     WorkSpaceHandler.asBuilt_reload(None)
                 
-                AsBuiltTools.html = ""
+                AsBuiltHelpers.html = ""
 
                 return res
 
