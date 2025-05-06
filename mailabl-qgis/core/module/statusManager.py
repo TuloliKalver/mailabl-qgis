@@ -13,13 +13,15 @@ class ModuleStatuses:
             Module.CONTRACT: GraphqlStatuses.STATUSES,
             Module.EASEMENT: GraphqlStatuses.STATUSES,
             Module.TASK: GraphqlStatuses.STATUSES,
+            Module.COORDINATION: GraphqlStatuses.STATUSES
         }
 
         self.preferred_ids = {
             Module.PROJECT: lambda:  PluginSettings.load_setting(module = Module.PROJECT, context=PluginSettings.CONTEXT_PREFERRED, key_type=PluginSettings.SUB_CONTEXT_IDs),
             Module.CONTRACT: lambda: PluginSettings.load_setting(module = Module.CONTRACT, context=PluginSettings.CONTEXT_PREFERRED, key_type=PluginSettings.SUB_CONTEXT_IDs),    
             Module.EASEMENT: lambda: PluginSettings.load_setting(module = Module.EASEMENT, context=PluginSettings.CONTEXT_PREFERRED, key_type=PluginSettings.SUB_CONTEXT_IDs),
-            Module.TASK: lambda: PluginSettings.load_setting(module = Module.TASK, context=PluginSettings.CONTEXT_PREFERRED, key_type=PluginSettings.SUB_CONTEXT_IDs)
+            Module.TASK: lambda: PluginSettings.load_setting(module = Module.TASK, context=PluginSettings.CONTEXT_PREFERRED, key_type=PluginSettings.SUB_CONTEXT_IDs),
+            Module.COORDINATION: lambda: PluginSettings.load_setting(module = Module.COORDINATION, context=PluginSettings.CONTEXT_PREFERRED, key_type=PluginSettings.SUB_CONTEXT_IDs)
         }
 
 
@@ -37,6 +39,10 @@ class ModuleStatuses:
                                                                 subcontext=PluginSettings.OPTION_STATUS,
                                                                 key_type=PluginSettings.SUB_CONTEXT_NAME),
             Module.TASK: lambda: PluginSettings.load_setting(module = Module.TASK, 
+                                                                context=PluginSettings.CONTEXT_PREFERRED,
+                                                                subcontext=PluginSettings.OPTION_STATUS,
+                                                                key_type=PluginSettings.SUB_CONTEXT_NAME),
+            Module.COORDINATION: lambda: PluginSettings.load_setting(module = Module.COORDINATION,
                                                                 context=PluginSettings.CONTEXT_PREFERRED,
                                                                 subcontext=PluginSettings.OPTION_STATUS,
                                                                 key_type=PluginSettings.SUB_CONTEXT_NAME)

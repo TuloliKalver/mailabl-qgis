@@ -7,7 +7,7 @@ from ...KeelelisedMuutujad.modules import Module
 from .statusManager import ModuleStatuses
 
 from PyQt5.QtCore import QCoreApplication
-from ...queries.python.FileLoaderHelper import GraphQLQueryLoader, GraphqlContracts, GraphqlEasements, GraphqlTasks
+from ...queries.python.FileLoaderHelper import  GraphqlTasks
 from ...queries.python.query_tools import requestBuilder
 
 
@@ -20,7 +20,8 @@ class TypeModuleSetup:
         self.graphql_queries = {
             Module.CONTRACT: lambda: GraphqlTasks.TYPES,
             Module.EASEMENT: lambda: GraphqlTasks.TYPES,
-            Module.TASK: lambda: GraphqlTasks.TYPES
+            Module.TASK: lambda: GraphqlTasks.TYPES,
+            Module.COORDINATION: lambda: GraphqlTasks.TYPES,
             # Add more as needed
         }
 
@@ -36,6 +37,11 @@ class TypeModuleSetup:
             Module.TASK: lambda: PluginSettings.load_setting(module=Module.TASK,
                                                                 context=s.CONTEXT_PREFERRED,
                                                                 subcontext=s.OPTION_TYPE, 
+                                                                key_type=s.SUB_CONTEXT_IDs),
+
+            Module.COORDINATION: lambda: PluginSettings.load_setting(module=Module.COORDINATION,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE,
                                                                 key_type=s.SUB_CONTEXT_IDs)
         }
 
@@ -55,7 +61,11 @@ class TypeModuleSetup:
                                                                 context=s.CONTEXT_PREFERRED,
                                                                 subcontext=s.OPTION_TYPE, 
                                                                 key_type=s.SUB_CONTEXT_NAME,
-                                                                )
+                                                                ),
+            Module.COORDINATION: lambda: PluginSettings.load_setting(module=Module.COORDINATION,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE,
+                                                                key_type=s.SUB_CONTEXT_IDs)
         }
 
 

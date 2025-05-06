@@ -18,7 +18,7 @@ archive_file = Filepaths.get_icon(IconsByName().icon_archive)
 html_file = Filepaths.get_icon(IconsByName().icon_html)
 gis_file = Filepaths.get_icon(IconsByName().icon_gis)
 edit_data = Filepaths.get_icon(IconsByName().edit_data)
-folder_epty_add = Filepaths.get_icon(IconsByName().folder_empty_add)
+folder_epty_add = Filepaths.get_icon(IconsByName().no_files)
 folder_add = Filepaths.get_icon(IconsByName().folder_add)
 pin_add = Filepaths.get_icon(IconsByName().pin_add)
 

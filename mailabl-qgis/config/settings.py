@@ -71,8 +71,7 @@ class MailablWebModules:
     ORDINANCES = '/ordinances/'
     SUBMISSIONS = '/submissions/'
     PROPERTIES = '/properties/'
-
-
+    
 #/TODO: rebuild link services to Delegate based services as in other views
     def get_web_link(self, module_name):
         print(f"Module Name in web links: {module_name}")
@@ -119,21 +118,21 @@ class IconsByName:
     def __init__(self):
         self.Mailabl_icon_name = "icon_Mailabl.png"
         self.icon_digi_doc_name = "Digidoc_512.png"
-        self.icon_word = 'doc.png'
-        self.icon_xls = 'xls.png'
+        self.icon_word = 'docx.png'
+        self.icon_xls = 'xlsx.png'
         self.icon_pdf = 'pdf-file-format.png'
         self.icon_unknown = 'unknown-type.png'
         self.icon_folder = 'folder.png'
         self.icon_show_on_map = "oui--app-gis_kaart_asukoht.svg" #ikoonide testimiseks
         self.no_files = "plus.png"
-        self.icon_autocad = "dwg-file.png"
-        self.icon_dgn = "ggn-file.png"
-        self.icon_text = 'text.png'
-        self.icon_image = "picture.png"
-        self.icon_video = "video.png"
+        self.icon_autocad = "cad.png"
+        self.icon_dgn = "sheet.png"
+        self.icon_text = 'txt.png'
+        self.icon_image = "jpg.png"
+        self.icon_video = "mov.png"
         self.icon_archive = "zip.png"
         self.icon_html =  "html.png"
-        self.icon_gis = "gis.png"
+        self.icon_gis = "3gis.png"
         self.edit_data = "note.png"
         self.folder_empty_add = "folder_empty_add.png"
         self.folder_add = "folder_add.png"
@@ -144,6 +143,7 @@ class FilesByNames:
     TEOSTUS_SETUP = "TeostusJOONISED.UI"
     DecisionMaker_UI = "DecicionMakerUI.ui"
     asBuitTools_UI = "asBuiltTools.ui"
+    COORDINATIONS_UI = "CoordinationsSetup.ui"
 
 
     def __init__(self):

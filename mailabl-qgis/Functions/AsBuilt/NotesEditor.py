@@ -1,7 +1,8 @@
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QPoint
 from PyQt5.QtWidgets import (
     QCheckBox, QFrame, QHBoxLayout, QLabel,
-    QLineEdit, QTextEdit, QVBoxLayout, QGroupBox
+    QLineEdit, QTextEdit, QVBoxLayout, QGroupBox, QMenu, QAction, QWidget
 )
 from PyQt5.QtWidgets import QSizePolicy
 from datetime import datetime
@@ -101,7 +102,30 @@ class NotesEditor:
         layout.addWidget(resolved_date_edit)
 
         frame.setLayout(layout)
+
+        # ✅ Add right-click context menu to delete this row
+        frame.setContextMenuPolicy(Qt.CustomContextMenu)
+        frame.customContextMenuRequested.connect(
+            lambda pos, w=frame: self._show_note_row_context_menu(w, pos)
+        )
         return frame
+
+    def _show_note_row_context_menu(self, row_widget: QWidget, pos: QPoint):
+        menu = QMenu(row_widget)
+        delete_action = QAction("🗑️ Kustuta märkus", row_widget)  # ✅ Corrected
+        delete_action.triggered.connect(lambda: self._delete_note_row(row_widget))
+        menu.addAction(delete_action)
+        menu.exec_(row_widget.mapToGlobal(pos))
+
+
+    def _delete_note_row(self, row_widget: QWidget):
+        parent_layout = row_widget.parentWidget().layout()
+        if parent_layout:
+            parent_layout.removeWidget(row_widget)
+            row_widget.setParent(None)
+            row_widget.deleteLater()
+
+
 
 
     def add_frame(self, widget, data):
@@ -120,6 +144,8 @@ class NotesEditor:
             group_layout.setSpacing(4)
 
             self._add_note_table_headers(group_layout)
+
+            
 
             for note in notes:
                 group_layout.addWidget(self._create_note_row(note))
@@ -159,4 +185,5 @@ class NotesEditor:
             group_box.setLayout(group_layout)
             layout.addWidget(group_box)
         widget.adjustSize()
+
 

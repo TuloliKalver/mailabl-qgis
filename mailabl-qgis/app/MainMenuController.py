@@ -12,6 +12,7 @@ class ModuleKey(str, Enum):
     VISIBLE = "visible"
     STARTPAGE = "startPage"
     USERS = "users"
+
     
 
 
@@ -27,6 +28,7 @@ class MenuModules():
     ARCHIVE_HELP_PROPERTIES = 8
     PROPERTIES_OPERATIONS = 9
     USERS = 10
+    COOPERATION = 11
 
 
 class SetupController:
@@ -127,7 +129,21 @@ class SetupController:
                 ModuleKey.CHECKBOXES: [],
                 ModuleKey.SETTINGS_BUTTON: None,
                 ModuleKey.VISIBLE: True
-            }
+            },
+            MenuModules.COOPERATION: {
+                ModuleKey.ID: MenuModules.COOPERATION,
+                ModuleKey.WIDGET: dialog.gwSU_Mailabl_Coordinations,
+                ModuleKey.TITLE: "Kooskõlastused",
+                ModuleKey.LABELS: [
+                    dialog.lblCoordinationsActionsValue,
+                    dialog.lblCoordinationsPreferredStatusesValue,
+                    dialog.lblCoordinationsMapLayerValue,
+                ],
+                ModuleKey.CHECKBOXES: [],
+                ModuleKey.SETTINGS_BUTTON: None,
+                ModuleKey.VISIBLE: True
+            },
+
         }
 
     def has_undefined_labels(self, module_key: str):

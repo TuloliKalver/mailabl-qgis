@@ -42,6 +42,7 @@ from .config.SetupModules.SetupConrtacts import SetupConrtacts
 from .config.SetupModules.SetupEasments import SetupEasments
 from .config.SetupModules.SetupUsers import SetupUsers
 from .config.SetupModules.AsBuitSettings import AsBuiltDrawings
+from .config.SetupModules.SetupCoordinations import CoordinationsSetup
 
 from .app.MainMenuController import SetupController
 
@@ -148,6 +149,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         setupEasments = SetupEasments(self)
         setupContracts = SetupConrtacts(self)
         setupProjects = SetupProjects(self)
+        setupAsBuiltLoader = AsBuiltDrawings(self)  # Assuming `self` is a QDialog or QWidget
+        setupCoordinations = CoordinationsSetup(self)
         setupCadastrallayers = SetupCadastralLayers(self)
         WorkSpaceHandler.set_dialog(self)
 
@@ -248,9 +251,9 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSettings_Setup_Contracts.clicked.connect(lambda: setupContracts.load_contract_settings_widget())
         self.pbSettingsSetupEasements.clicked.connect(lambda:setupEasments.load_easements_settings_widget())
         self.pbUserSettings.clicked.connect(lambda: SetupUsers.load_user_settings_widget(self))
+        self.pbTeostusSettings.clicked.connect(lambda: setupAsBuiltLoader.load_construction_drawings_setup_widget())
+        self.pbCoordinationsSettings.clicked.connect(lambda: setupCoordinations.load_coordinations_settings_widget())
 
-        asBuiltLoader = AsBuiltDrawings(self)  # Assuming `self` is a QDialog or QWidget
-        self.pbTeostusSettings.clicked.connect(lambda: asBuiltLoader.load_construction_drawings_setup_widget())
 
         self.pbAsBuiltTools.setVisible(False)
         #table = self.tblAsBuilt

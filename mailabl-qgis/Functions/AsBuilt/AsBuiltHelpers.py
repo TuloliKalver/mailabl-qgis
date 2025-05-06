@@ -1,16 +1,12 @@
 import os
 import re
 
-from PyQt5.QtCore import Qt
 
-from PyQt5.QtWidgets import (
-    QDialog, QFrame, QLabel, QCheckBox, QLineEdit, QTextBrowser
-    )
 from qgis.PyQt.QtWidgets import QFileDialog
 
 
 from ...utils.DataExtractors.DataExtractors import DataExtractor
-
+from .TableStyle import TableStyle
 
 
 class AsBuiltHelpers:
@@ -96,56 +92,42 @@ class AsBuiltHelpers:
         note_col = "35%"
 
         html = f"""
-        <p style="font-size: 14px; font-weight: bold; color: #243a4e; margin: 10px 0 4px 6px;">📂 Seotud materjalid</p>
-        <div style="display: flex; justify-content: center;">
-        <table style="
-            border-collapse: collapse;
-            width: 90%;
-            background-color: #dfe3e1;
-            color: #243a4e;
-            border-radius: 6px;
-            box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease-in-out;
-            text-align: left;">
-            <tr>
-                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {name_col}; color: white; background: #47a5b1;">
-                    <p><strong>📄 Faili nimi</strong></p>
-                </td>
-                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {path_col}; color: white; background: #47a5b1;">
-                    <p><strong>📁 Asukoht</strong></p>
-                </td>
-                <td style="font-weight: bold; font-size: 12px; padding: 2px 3px; width: {note_col}; color: white; background: #47a5b1;">
-                    <p><strong>📝 Märkused</strong></p>
-                </td>
-            </tr>
+        <p style="font-size: 14px; font-weight: bold; color: {TableStyle.text_color}; margin: 10px 0 4px 6px;">📂 Seotud materjalid</p>
         """
+
+        header = f"""
+        <tr>
+            {TableStyle.build_header_cell("Faili nimi", name_col, "📄")}
+            {TableStyle.build_header_cell("Asukoht", path_col, "📁")}
+            {TableStyle.build_header_cell("Märkused", note_col, "📝")}
+        </tr>
+        """
+
+        rows = ""
         for file_path in file_paths:
             file_name = os.path.basename(file_path)
-            html += f"""
+            rows += f"""
             <tr>
-                <td style="padding: 1px 10px; background-color: #dfe3e1; color: #243a4e; width: {name_col};">
+                <td style="width: {name_col};">
                     <p>{file_name}</p>
                 </td>
-                <td style="padding: 1px 10px; background-color: #dfe3e1; width: {path_col};">
-                    <p><a href="file:///{file_path}" style="font-weight: italic; color: #243a4e; text-decoration: none;">{file_path}</a></p>
+                <td style="width: {path_col};">
+                    <p><a href="file:///{file_path}" style="font-weight: italic; color: {TableStyle.text_color}; text-decoration: none;">{file_path}</a></p>
                 </td>
-                <td style="padding: 1px 10px; background-color: #dfe3e1; color: #4f636f; width: {note_col};">
+                <td style="width: {note_col};">
                     <p>–</p>
                 </td>
             </tr>
             """
-        html += """
-        </table>
-        </div>
-        <p style="height: 14px;"></p>
-        """
-        return html
 
+        html += TableStyle.shared_table_wrapper(header + rows)
+        html += "<p style='height: 14px;'></p>"
+        return html
 
 class NotesTableGenerator:
     DATE_COLUMN_WIDTH = "15%"
     NOTES_COLUMN_WIDTH = "65%"
-    CHECKBOX_COLUMN_WIDTH = "5%"
+    CHECKBOX_COLUMN_WIDTH = "5px"
     RESOLVED_COLUMN_WIDTH = "15%"
 
     @staticmethod
@@ -173,16 +155,16 @@ class NotesTableGenerator:
 
         return f"""
         <tr>
-            <td style="width: {cls.DATE_COLUMN_WIDTH}; padding: 1px 10px;">
+            <td style="width: {cls.DATE_COLUMN_WIDTH}; padding: {TableStyle.cell_padding}; text-align: center;">
                 <p style="font-weight: normal;">{clean_date}</p>
             </td>
-            <td style="width: {cls.NOTES_COLUMN_WIDTH}; padding: 1px 10px;">
+            <td style="width: {cls.NOTES_COLUMN_WIDTH}; padding:{TableStyle.cell_padding}"; text-align: left;>
                 <p style="font-weight: normal;">{clean_note}</p>
             </td>
-            <td style="width: {cls.CHECKBOX_COLUMN_WIDTH}; padding: 1px 10px;">
+            <td style="width: {cls.CHECKBOX_COLUMN_WIDTH}; padding: {TableStyle.cell_padding}; text-align: center; vertical-align: middle;">
                 {cls._render_checkbox_html(note["resolved"])}
             </td>
-            <td style="width: {cls.RESOLVED_COLUMN_WIDTH}; padding: 1px 10px;">
+            <td style="width: {cls.RESOLVED_COLUMN_WIDTH}; padding: {TableStyle.cell_padding}; text-align: center;">
                 <p style="font-weight: normal;">{clean_resolved_date}</p>
             </td>
         </tr>
@@ -191,18 +173,12 @@ class NotesTableGenerator:
     def _render_table_header(cls) -> str:
         return f"""
         <tr>
-            <td style="width: {cls.DATE_COLUMN_WIDTH}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
-                <p><strong>📅</strong></p>
-            </td>
-            <td style="width: {cls.NOTES_COLUMN_WIDTH}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
-                <p><strong>🗒️ Märkus</strong></p>
-            </td>
-            <td style="width: {cls.CHECKBOX_COLUMN_WIDTH}; padding: 2px 3px; background: #47a5b1;">
+            {TableStyle.build_header_cell("", cls.DATE_COLUMN_WIDTH, "📅")}
+            {TableStyle.build_header_cell("Märkus", cls.NOTES_COLUMN_WIDTH, "🗒️")}
+            <td style="width: {cls.CHECKBOX_COLUMN_WIDTH}; padding: {TableStyle.header_padding}; background: {TableStyle.header_background}; text-align: center;">
                 <p>✅</p>
             </td>
-            <td style="width: {cls.RESOLVED_COLUMN_WIDTH}; font-weight: bold; font-size: 12px; padding: 2px 3px; color: white; background: #47a5b1;">
-                <p><strong>📅 Lahendatud</strong></p>
-            </td>
+            {TableStyle.build_header_cell("Lahendatud", cls.RESOLVED_COLUMN_WIDTH, "📅")}
         </tr>
         """
 
@@ -210,20 +186,8 @@ class NotesTableGenerator:
     def _wrap_table(cls, body: str) -> str:
         return f"""
         <!-- mailabl:type=notes -->
-        <p style="font-size: 13px; font-weight: bold; color: #243a4e; margin: 14px 0 4px 6px;">🗒️ Märkused ja kommentaarid</p>
-        <div style="display: flex; justify-content: center;">
-            <table style="
-                border-collapse: collapse;
-                width: 90%;
-                table-layout: fixed;
-                background-color: #dfe3e1;
-                border-radius: 6px;
-                box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.15);
-                transition: all 0.3s ease-in-out;
-                text-align: left;">
-                {body}
-            </table>
-        </div>
+        <p style="font-size: 13px; font-weight: bold; color: {TableStyle.text_color}; margin: 14px 0 4px 6px;">🗒️ Märkused ja kommentaarid</p>
+        {TableStyle.shared_table_wrapper(body)}
         <p></p>
         """
 

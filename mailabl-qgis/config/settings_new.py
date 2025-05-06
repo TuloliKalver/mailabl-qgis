@@ -22,6 +22,7 @@ class PluginSettings:
     DRAINAGE = "drainage"
     PROJECTS_LAYER = "projects"
     ASBUILT_LAYER = "asbuilt"
+    COORDINATIONS_LAYER = "coordination"
     CHECKBOXVALUE = "checkboxValue"
 
     #Sample name logicks 
