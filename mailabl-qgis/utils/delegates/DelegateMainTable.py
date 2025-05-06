@@ -133,8 +133,9 @@ class FileDelegate(QStyledItemDelegate):
                         type= AnimatedGradientBorderFrame.PROLOOK
                             )
 
+                    print(f"notes table values: ", ret)
 
-                    AsBuiltHelpers._handle_drawTool(self, notes_table=ret)
+                    AsBuiltHelpers._handle_drawTool(notes_table=ret)
                     prepared_text = AsBuiltHelpers.html
                     #print(f"Textbrowser content: {prepared_text}")
                     # 2. Fetch descriptions from Mailabl (already done)
