@@ -9,10 +9,11 @@ from PyQt5.QtCore import QCoreApplication
 from ...queries.python.FileLoaderHelper import GraphqlStatuses, GraphqlTasks, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
-from ...KeelelisedMuutujad.modules import Module
+from ...KeelelisedMuutujad.modules import Module, ModuleTranslation
 from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
 #from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
 from ...utils.ProgressHelper import ProgressDialogModern    
+
 
 class Constants:
     package_size = 25
@@ -32,7 +33,9 @@ class AsBuiltMain:
         #Adding progress
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
         module = Module.ASBUILT
-        progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
+        #module_text = ModuleTranslation.module_name(module, language, plural=False)
+        module_text = "Teostusjooniste"
+        progress = ProgressDialogModern(title=f"{module_text} laadimine", value=0)
         progress.update(1, purpouse="Teostuste laadimine", text1="Palun oota...")
         model = AsBuiltModels._model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language=language)
 
@@ -44,7 +47,7 @@ class AsBuiltMain:
             heading = Headings().warningSimple
             print(f"{heading}, {text}")
         progress.update(98)
-        
+
         progress.close()
         
     @staticmethod

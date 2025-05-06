@@ -128,7 +128,7 @@ class InfoTexts:
             end_text = "1 kinnistu"
         else:
             end_text = f"{total_returned_ids}/{total_ids_table} kinnistut"
-        text = f"Projektile  <b>{project_name}</b> \n lisatud {end_text}!"
+        text = f"<b>{project_name}</b> \n lisatud {end_text}!"
         return text
 
     @staticmethod

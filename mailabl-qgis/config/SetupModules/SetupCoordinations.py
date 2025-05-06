@@ -64,6 +64,9 @@ class CoordinationsSetup:
             drag_frame.setCursor(Qt.OpenHandCursor)   
 
 
+        widget.lblTitle.setText("Kooskõlastuste mooduli seadistamine...")
+
+
         # Connect buttons to dialog accept/reject
         widget.pbSave.clicked.connect(lambda: CoordinationsSetup._handle_save(widget))
         widget.pbCancel.clicked.connect(lambda: CoordinationsSetup._handle_cancel(widget))

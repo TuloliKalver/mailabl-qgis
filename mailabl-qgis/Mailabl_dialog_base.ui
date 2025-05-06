@@ -1613,7 +1613,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>10</number>
+                  <number>8</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -8855,7 +8855,7 @@ QTreeView::item:hover {
                             </font>
                            </property>
                            <property name="text">
-                            <string>Korrastab arhiveerimismärketa kinnistud Mailablis</string>
+                            <string>Korrasta arhiveerimise tunnusteta kinnistud Mailablis</string>
                            </property>
                           </widget>
                          </item>
@@ -8885,7 +8885,7 @@ QTreeView::item:hover {
                             <string notr="true"/>
                            </property>
                            <property name="placeholderText">
-                            <string>Kataster millele soovid arhiveerimis märget</string>
+                            <string>Kataster, millele soovid arhiveerimise tunnust</string>
                            </property>
                           </widget>
                          </item>

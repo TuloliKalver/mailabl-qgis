@@ -82,7 +82,7 @@ class UIStateManager:
         if layer_shp:
             choice = DecisionDialogHelper.ask_user(
                 title="Mõtte koht...",
-                message=f"Kas soovid {shp_layer_name} nimelise \n alles jätta või eemaldada?",
+                message=f"Kas soovid {shp_layer_name} nimelise kaardikihi \n alles jätta või eemaldada?",
                 parent=self.dialog
             )
 

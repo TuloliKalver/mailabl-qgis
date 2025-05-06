@@ -467,7 +467,7 @@ class WorkSpaceHandler:
             buttons={"keep": "Edasi",}
             ret = DecisionDialogHelper.ask_user(
                 title=Headings.inFO_SIMPLE,
-                message="Puuduvad alg seaded,\nteeme kohe seadistuse",
+                message="Puuduvad algseaded.\nTeeme kohe seadistuse",
                 options=buttons,
                 parent=self,
                 type= AnimatedGradientBorderFrame.WARNING
