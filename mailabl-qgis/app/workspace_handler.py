@@ -81,7 +81,7 @@ class WorkSpaceHandler:
         le_searchCooperation = self.le_searchCooperation
         pbCooperation_free = self.pbCooperation_free
 
-        proprtiest_connect.setEnabled(False)
+        #proprtiest_connect.setEnabled(False)
         pbSearchCooperation.setEnabled(False)
         le_searchCooperation.setEnabled(False)
         pbCooperation_free.setEnabled(False)

@@ -278,7 +278,8 @@ class SelectByModuleElementsOnMapDelegate(QStyledItemDelegate):
                                                 Module.PROJECT, 
                                                 Module.CONTRACT, 
                                                 Module.EASEMENT,
-                                                Module.ASBUILT
+                                                Module.ASBUILT,
+                                                Module.COORDINATION
                                             }:
                     fetcher = PropertiesModuleFetcher(id_value=id_value, module=self.module)
                     values = fetcher._fetch_properties_cadastral_numbers()

@@ -23,7 +23,8 @@ class PropertiesConnectorUIController:
             'pbContracts_Connect_properties',
             'pbProjects_Connect_properties',
             'pbEasementsConnectProperties',
-            'pbTeostusConnectproperties'
+            'pbTeostusConnectproperties',
+            'pbCooperations_Connect_properties'
         ]
 
         # Disable buttons to allow selection time

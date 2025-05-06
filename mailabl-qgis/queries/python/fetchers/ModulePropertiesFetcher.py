@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QCoreApplication
-from ..FileLoaderHelper import GraphqlProjects, GraphQLQueryLoader, GraphqlContracts, GraphqlEasements, GraphqlTasks
+from ..FileLoaderHelper import GraphqlProjects, GraphQLQueryLoader, GraphqlContracts, GraphqlEasements, GraphqlTasks, GraphqlCoordinations
 from ..query_tools import requestBuilder
 from ...python.responses import JsonResponseHandler, GetValuFromEdge
 from ...python.responses import HandlePropertiesResponses
@@ -70,6 +70,10 @@ class PropertiesModuleFetcher:
         
         elif self.module == Module.ASBUILT:
             query_name = GraphqlTasks.RELATED_PROPERTIES
+            query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)  
+            return query
+        elif self.module == Module.COORDINATION:
+            query_name = GraphqlCoordinations.RELATED_PROPERTIES
             query = GraphQLQueryLoader.load_query_by_module(self.module, query_name)  
             return query
 

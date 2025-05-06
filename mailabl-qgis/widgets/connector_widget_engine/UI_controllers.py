@@ -74,7 +74,9 @@ class PropertiesConnector(QObject):
             if module == Module.ASBUILT:
                 self.module = Module.ASBUILT
                 module_text = ModuleTranslation.module_name(module, language, plural=False)
-
+            if module == Module.COORDINATION:
+                self.module = Module.COORDINATION
+                module_text = ModuleTranslation.module_name(module, language, plural=False)
 
         selection_monitor = None
         flag = True
@@ -296,5 +298,8 @@ class ConnectorFunctions:
             result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
             return result
         if module == Module.ASBUILT:
+            result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
+            return result
+        if module == Module.COORDINATION:
             result = ConnectElementWithPropertysties._add_properties_to_module_item( element_id, widget, module)
             return result

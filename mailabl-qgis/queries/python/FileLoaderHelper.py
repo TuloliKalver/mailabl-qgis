@@ -113,7 +113,8 @@ class GraphqlTasks:
 
 class GraphqlCoordinations:
     COORDINATIONS = 'coordinations_type_status.graphql'
-
+    UPDATE_PROPERTIES ="update_coordination_properties.graphql"
+    RELATED_PROPERTIES = "coordination_related_properties.graphql"
 
 class GraphqlStatuses:
     STATUSES = 'statuses.graphql'
