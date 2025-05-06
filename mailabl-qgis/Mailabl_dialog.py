@@ -625,7 +625,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         self.pbLogin.setStyleSheet("background-color: #bc5152;")
                         return  # Stop further execution
                 else:
-                    asBuiltTools = AsBuiltTools(self)
+                    asBuiltTools = AsBuiltTools(self, self.tblAsBuilt)
                     self.test_buttons = {
                             self.pbtest_2: self.view_all_plugin_settings,
                             self.pushButton: self.reset_new_settings,
