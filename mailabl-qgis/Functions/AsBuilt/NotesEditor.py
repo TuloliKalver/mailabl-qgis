@@ -121,9 +121,16 @@ class NotesEditor:
     def _delete_note_row(self, row_widget: QWidget):
         parent_layout = row_widget.parentWidget().layout()
         if parent_layout:
+            parent = row_widget.parentWidget()
+            layout = parent.layout()
             parent_layout.removeWidget(row_widget)
             row_widget.setParent(None)
             row_widget.deleteLater()
+            if layout.count() <= 1:  # Only header left
+                grand_layout = parent.parentWidget().layout()
+                grand_layout.removeWidget(parent)
+                parent.setParent(None)
+                parent.deleteLater()
 
 
 
