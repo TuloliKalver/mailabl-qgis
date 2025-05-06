@@ -29,6 +29,7 @@ from .app.web import loadWebpage, WebLinks
 from .app.workspace_handler import WorkSpaceHandler
 from .app.ui_controllers import FrameHandler, WidgetAnimator, AlterContainers
 from .app.ProrpertiesConnectorContreollr import SettingsModuleButtonConnector, PropertiesModuleButtonConnector
+from .app.MainMenuController import MenuModules
 
 from .Common.app_state import  Processes
 
@@ -222,7 +223,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbRefreshEasementTable.clicked.connect(lambda: WorkSpaceHandler.easements_reload(self))
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbRefreshTesotusTable.clicked.connect(lambda: WorkSpaceHandler.asBuilt_reload(self))
-
+        self.pbRefresh_tblMailabl_Cooperation.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Coordinations(self, menu_module=MenuModules.COORDINATIONS, module=Module.COORDINATION, refresh=True))
+        
         self.pbMapThemes.setEnabled(False)
 
         self.pbArhciveHelperStart.clicked.connect(lambda: WorkSpaceHandler.archive_helper(self))
@@ -503,6 +505,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     def handleSidebar_leftButtons(self):
         button1 = self.pbSettings
+        button2 = self.pbCooperations
         button10 = self.pbAddDrawings
         button11 = self.pbContracts
         button14 = self.pbHome
@@ -515,7 +518,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         container_width = container.width()
         #print(container_width)
         
-        buttons = [button1, 
+        buttons = [button1,
+                   button2, 
                 button10,
                 button11,
                 button14,
@@ -525,6 +529,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                 button18]
 
         original_texts = {button1: "Sätted",
+                           button2: "Kooskõlastused",
                             button10: "Teostusjoonised",
                             button11: "Lepingud",
                             button14: "Kinnistud",
@@ -535,6 +540,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         }
 
         new_texts = {button1: "",
+                     button2: "",
                     button10: "",
                     button11: "",
                     button14: "",

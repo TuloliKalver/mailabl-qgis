@@ -121,38 +121,41 @@ class FileDelegate(QStyledItemDelegate):
             file_path = file_index.data(Qt.DisplayRole)
 
             if not file_path:
-                property_id = model.data(model.index(index.row(),0), Qt.DisplayRole)
+                if self.module == Module.ASBUILT:
+                    property_id = model.data(model.index(index.row(),0), Qt.DisplayRole)
+                    
+                    buttons={"keep": "Ei ole vaja", "delete": "Jah"}
+                    ret = DecisionDialogHelper.ask_user(
+                        title=Headings.inFO_SIMPLE,
+                        message="Kas loon kohe ka Konttrolli tabeli?",
+                        options=buttons,
+                        parent=self,
+                        type= AnimatedGradientBorderFrame.PROLOOK
+                            )
+
+
+                    AsBuiltHelpers._handle_drawTool(self, notes_table=ret)
+                    prepared_text = AsBuiltHelpers.html
+                    #print(f"Textbrowser content: {prepared_text}")
+                    # 2. Fetch descriptions from Mailabl (already done)
+                    from ...Functions.AsBuilt.ASBuilt import AsBuiltQueries
+                    existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
+                    #print(f"Existing descriptions: {existing_descriptions}")
+                    # 3. Merge: put file table first, then append all descriptions
+                    combined_html = AsBuiltHelpers.merge_file_table_with_existing(prepared_text, existing_descriptions)
+
+                    res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
                 
-                buttons={"keep": "Ei ole vaja", "delete": "Jah"}
-                ret = DecisionDialogHelper.ask_user(
-                    title=Headings.inFO_SIMPLE,
-                    message="Kas loon kohe ka Konttrolli tabeli?",
-                    options=buttons,
-                    parent=self,
-                    type= AnimatedGradientBorderFrame.PROLOOK
-                        )
+                    if res:
+                        from ...app.workspace_handler import WorkSpaceHandler
+                        WorkSpaceHandler.asBuilt_reload(None)
+                    
+                    AsBuiltHelpers.html = ""
 
-
-                AsBuiltHelpers._handle_drawTool(self, notes_table=ret)
-                prepared_text = AsBuiltHelpers.html
-                #print(f"Textbrowser content: {prepared_text}")
-                # 2. Fetch descriptions from Mailabl (already done)
-                from ...Functions.AsBuilt.ASBuilt import AsBuiltQueries
-                existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
-                #print(f"Existing descriptions: {existing_descriptions}")
-                # 3. Merge: put file table first, then append all descriptions
-                combined_html = AsBuiltHelpers.merge_file_table_with_existing(prepared_text, existing_descriptions)
-
-                res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
+                    return res
+                else:
+                    pass
             
-                if res:
-                    from ...app.workspace_handler import WorkSpaceHandler
-                    WorkSpaceHandler.asBuilt_reload(None)
-                
-                AsBuiltHelpers.html = ""
-
-                return res
-
             if self.module == Module.ASBUILT:
                 # special list/multi-icons case
                 if isinstance(file_path, str):

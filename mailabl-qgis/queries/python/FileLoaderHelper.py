@@ -19,7 +19,8 @@ class GraphQLQueryLoader:
             Module.TAGS: QueryFolders.TAGS_FOLDER,
             Module.STATUSES: QueryFolders.STATUS_FOLDERS,
             Module.TASK: QueryFolders.TASK_FOLDER,
-            Module.ASBUILT: QueryFolders.TASK_FOLDER
+            Module.ASBUILT: QueryFolders.TASK_FOLDER,
+            Module.COORDINATION: QueryFolders.COORDINATIONS_FOLDER
         }
 
         folder = folders.get(module)
@@ -42,6 +43,7 @@ class QueryFolders:
     TAGS_FOLDER = 'queries/graphql/tags'
     STATUS_FOLDERS = 'queries/graphql/statuses'
     TASK_FOLDER = 'queries/graphql/tasks'
+    COORDINATIONS_FOLDER = 'queries/graphql/coordinations'
 
 class GraphqlProjects:
 
@@ -108,6 +110,10 @@ class GraphqlTasks:
     RELATED_PROPERTIES = "tasks_related_properties.graphql"
     TaskById = "TaskById.graphql"
     updatedescription ="update_task_properties.graphql"
+
+class GraphqlCoordinations:
+    COORDINATIONS = 'coordinations_type_status.graphql'
+
 
 class GraphqlStatuses:
     STATUSES = 'statuses.graphql'

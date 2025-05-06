@@ -73,7 +73,7 @@ class ComboBoxHelper:
                 comboBox.setItemData(comboBox.count() - 1, item_id)
             
             preferred = type_manager._get_preferred_item_ids_or_names(module, name=True)
-            #print(f"preferred_items_raw: {preferred_items_raw}")            
+            #print(f"preferred_items_raw: {preferred}")            
             if preferred == "Määramata":
                 print("no preferred items")
             else:

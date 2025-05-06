@@ -28,7 +28,7 @@ class MenuModules():
     ARCHIVE_HELP_PROPERTIES = 8
     PROPERTIES_OPERATIONS = 9
     USERS = 10
-    COOPERATION = 11
+    COORDINATIONS = 10
 
 
 class SetupController:
@@ -130,8 +130,8 @@ class SetupController:
                 ModuleKey.SETTINGS_BUTTON: None,
                 ModuleKey.VISIBLE: True
             },
-            MenuModules.COOPERATION: {
-                ModuleKey.ID: MenuModules.COOPERATION,
+            MenuModules.COORDINATIONS: {
+                ModuleKey.ID: MenuModules.COORDINATIONS,
                 ModuleKey.WIDGET: dialog.gwSU_Mailabl_Coordinations,
                 ModuleKey.TITLE: "Kooskõlastused",
                 ModuleKey.LABELS: [

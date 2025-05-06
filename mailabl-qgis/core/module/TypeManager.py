@@ -65,7 +65,7 @@ class TypeModuleSetup:
             Module.COORDINATION: lambda: PluginSettings.load_setting(module=Module.COORDINATION,
                                                                 context=s.CONTEXT_PREFERRED,
                                                                 subcontext=s.OPTION_TYPE,
-                                                                key_type=s.SUB_CONTEXT_IDs)
+                                                                key_type=s.SUB_CONTEXT_NAME)
         }
 
 

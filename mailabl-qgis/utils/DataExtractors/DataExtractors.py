@@ -48,7 +48,31 @@ class DataExtractor:
 
             return headers
 
+        if module == Module.COORDINATION:
+            print("node data:")
+            print(node)
+            due_at = DataExtractor.date_converter(node)
+            names = DataExtractor.get_responsible_for_coordinations(node)
+            headers = {            
+            HeaderKeys.HEADER_ID: node.get("id", ""),
+            HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
+            HeaderKeys.HEADER_NUMBER: node.get("number", "") or (node.get("type", {}).get("name")) or "",
+            HeaderKeys.HEADER_NAME: node.get("jobName") or node.get("title") or "",            
+            HeaderKeys.HEADER_DEADLINE: due_at,
+            HeaderKeys.HEADER_STATUSES: status.get("name", "") if status else "",
+            HeaderKeys.COLOR_NAME: status.get("color", "") if status else "",
+            HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
+            HeaderKeys.HEADER_PROPERTIES_ICON: "",
+            HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
+            HeaderKeys.HEADER_DOCUMENTS: node.get("filesPath", "") or "",
+            HeaderKeys.HEADER_FILE_PATH: "",
+            HeaderKeys.HEADER_RESPONSIBLE: ", ".join(names) if names else "",
+            }    
             
+            
+            return headers
+
+
         else:
             due_at = DataExtractor.date_converter(node)
             headers = {            
@@ -126,3 +150,13 @@ class DataExtractor:
 
         #print("due_at:", due_at)
         return due_at
+
+    def get_responsible_for_coordinations(node:dict):
+        responsible_edges = node.get("members", {}).get("edges", [])
+        responsible_names = [
+            edge["node"]["displayName"]
+            for edge in responsible_edges
+            if edge.get("isResponsible") and edge.get("node")
+        ]
+
+        return responsible_names

@@ -502,6 +502,7 @@ class StartupSettingsLoader:
 
         StartupSettingsLoader.load_drawings_settings(self)
 
+        StartupSettingsLoader.load_coordination_settings(self)
 
         prefEasementTypeName = PluginSettings.load_setting(module = Module.EASEMENT,
             context=PluginSettings.CONTEXT_PREFERRED,
@@ -509,7 +510,6 @@ class StartupSettingsLoader:
             key_type=PluginSettings.SUB_CONTEXT_NAME, 
             text_fomated=True
         )
-
 
 
         prefContractTypeName = PluginSettings.load_setting(module = Module.CONTRACT,
@@ -680,4 +680,31 @@ class StartupSettingsLoader:
         self.dialog.lblTeostusFolderNameValue.setText(folder)
         
 
-        
+    def load_coordination_settings(self):
+        module = Module.COORDINATION
+
+        status_name = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            )
+
+        CooperationsLayer = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.ASBUILT_LAYER
+        )
+
+        types_names = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            text_fomated=True
+        )
+
+        self.dialog.lblCoordinationsActionsValue.setText(types_names)
+        self.dialog.lblCoordinationsPreferredStatusesValue.setText(status_name)
+        self.dialog.lblCoordinationsMapLayerValue.setText(CooperationsLayer)

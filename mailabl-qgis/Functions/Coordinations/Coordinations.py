@@ -1,12 +1,8 @@
-# pylint: disable=missing-class-docstring
-# pylint: disable=relative-beyond-top-level
-# pylint: disable=no-name-in-module
-
 import pandas as pd
 from typing import List
 from PyQt5.QtCore import QCoreApplication
 
-from ...queries.python.FileLoaderHelper import GraphqlStatuses, GraphqlTasks, GraphQLQueryLoader
+from ...queries.python.FileLoaderHelper import GraphqlStatuses, GraphqlCoordinations, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ...KeelelisedMuutujad.modules import Module
@@ -26,15 +22,15 @@ class Constants:
 
 
 
-class AsBuiltMain:
+class CoordinationsMain:
     @staticmethod
-    def load_main_AsBuilt_by_type_and_status (self, table, types, statuses, language="et"):
+    def load_main_Coordinations_by_type_and_status (self, table, types, statuses, language="et"):
         #Adding progress
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
-        module = Module.ASBUILT
+        module = Module.COORDINATION
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
-        progress.update(1, purpouse="Teostuste laadimine", text1="Palun oota...")
-        model = AsBuiltModels._model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language=language)
+        progress.update(1, purpouse="Kooskõlastuste laadimine", text1="Palun oota...")
+        model = CoordinationsModels._model_for_Coordinations_by_types_and_statuses(self, types, statuses, language=language)
 
         if model is not None:
             progress.update(50)
@@ -46,48 +42,28 @@ class AsBuiltMain:
         progress.update(98)
         
         progress.close()
-        
+
+class CoordinationsModels: 
     @staticmethod
-    def load_asBuilt_by_query (query, table, language="et"):
-        from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
-        module = Module.ASBUILT
-        progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
-        progress.update(1, purpouse="Lepingute laadimine", text1="Palun oota...")
+    def _model_for_Coordinations_by_types_and_statuses(self, types, statuses, language):
 
-        model = AsBuiltModels._model_for_asBuilt_search_results(query, language)
-
-        if model is not None:
-            progress.update(50)
-            ModuleTableBuilder.setup(table, model, module, language)
-        else:            
-            text = HoiatusTexts().ostingu_tulemused_puuduvad
-            heading = Headings().warningSimple
-            print(f"{heading}, {text}")
-        progress.update(98)
-        progress.close()
-
-class AsBuiltModels: 
-    @staticmethod
-    def _model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language):
-
-        data = AsBuiltQueries._query_AsBuilt_by_type_status_elements(self, types, statuses)
-        model = DataModelBuilder.build_model_from_records(data, language, module = Module.ASBUILT)
+        data = CoordinationsQueries._query_Coordinations_by_type_status_elements(types, statuses)
+        model = DataModelBuilder.build_model_from_records(data, language, module = Module.COORDINATION)
         return model
 
     @staticmethod
-    def _model_for_asBuilt_search_results(name, language):
+    def _model_for_Coordinations_search_results(name, language):
         # Set header labels
        
-        data = AsBuiltQueries._query_AsBuilt_by_name(name)
-        model = DataModelBuilder.build_model_from_records(data, language, module = Module.ASBUILT)
+        data = CoordinationsQueries._query_Coordinations_by_name(name)
+        model = DataModelBuilder.build_model_from_records(data, language, module = Module.COORDINATION)
         
         return model
 
-
-class AsBuiltQueries:
+class CoordinationsQueries:
 
     @staticmethod
-    def _query_AsBuilt_by_name(name):
+    def _query_Coordinations_by_name(name):
         module = Module.ASBUILT
         query_name =  GraphqlTasks.AsBUILT
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
@@ -136,13 +112,13 @@ class AsBuiltQueries:
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
     @staticmethod
-    def _query_AsBuilt_by_type_status_elements(self, type_values, statuses):
+    def _query_Coordinations_by_type_status_elements(type_values, statuses):
 
         #print(statuses)
         # Load the project query using the loader instance
 
-        module = Module.TASK
-        query_name =  GraphqlTasks.AsBUILT
+        module = Module.COORDINATION
+        query_name =  GraphqlCoordinations.COORDINATIONS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
 
      
@@ -217,46 +193,3 @@ class AsBuiltQueries:
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
 
-
-    @staticmethod
-    def _query_AsBuilt_by_id( property_id):
-
-        module = Module.TASK
-        query_name =  GraphqlTasks.TaskById
-        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
-            
-        variables = {"id": property_id, 
-                    }
-
-
-        response = requestBuilder.construct_and_send_request(query, variables)
-
-        if response.status_code == 200:
-            data = response.json()
-            #print("data")
-            #print(data)
-            task = data.get("data", {}).get("task", {})
-            description = task.get("description", "")
-
-            QCoreApplication.processEvents()
-            return description
-            
-    def  _update_AsBuilt_by_id(property_id, description):
-        
-        module = Module.TASK
-        query_name =  GraphqlTasks.updatedescription
-        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
-
-        variables = {
-                "input": {
-                    "id": property_id,
-                    "description": description
-                }
-                }
-        
-        response = requestBuilder.construct_and_send_request(query, variables)
-
-        if response.status_code == 200:
-            return True
-        else:
-            return False

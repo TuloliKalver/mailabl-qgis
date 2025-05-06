@@ -1201,6 +1201,23 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
+                   <widget class="QPushButton" name="pbCooperations">
+                    <property name="text">
+                     <string>Kooskõlastused</string>
+                    </property>
+                    <property name="icon">
+                     <iconset>
+                      <normaloff>icons/Icons_hele/book.svg</normaloff>icons/Icons_hele/book.svg</iconset>
+                    </property>
+                    <property name="iconSize">
+                     <size>
+                      <width>20</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
                    <widget class="QPushButton" name="pbMapThemes">
                     <property name="styleSheet">
                      <string notr="true"/>

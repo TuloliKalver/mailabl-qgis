@@ -8,6 +8,7 @@ from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from ..Functions.Contracts.Contracts import ContractsMain
 from ..Functions.Easements.Easements import EasementssMain
 from ..Functions.AsBuilt.ASBuilt import AsBuiltMain
+from ..Functions.Coordinations.Coordinations import CoordinationsMain
 from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
@@ -15,6 +16,7 @@ from ..config.SetupModules.SetupEasments import SetupEasments
 from ..config.SetupModules.SetupConrtacts import SetupConrtacts
 from ..config.SetupModules.SetupProjects import SetupProjects
 from ..config.SetupModules.AsBuitSettings import AsBuiltDrawings
+from ..config.SetupModules.SetupCoordinations import CoordinationsSetup
 from .MainMenuController import SetupController, MenuModules
 from ..utils.ComboboxHelper import ComboBoxHelper
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
@@ -68,6 +70,61 @@ class WorkSpaceHandler:
 
         button.blockSignals(False)
 
+
+    def swWorkSpace_Coordinations(self, menu_module, module, refresh=False):
+        button = self.pbCooperations
+        table = self.tblMailabl_Cooperation
+        statuses_combo_box = self.cmbCooperationStatuses
+        types_combo_box = self.cmbCooperationTypes
+        proprtiest_connect = self.pbCooperations_Connect_properties
+        pbSearchCooperation  = self.pbSearchCooperation
+        le_searchCooperation = self.le_searchCooperation
+        pbCooperation_free = self.pbCooperation_free
+
+        proprtiest_connect.setEnabled(False)
+        pbSearchCooperation.setEnabled(False)
+        le_searchCooperation.setEnabled(False)
+        pbCooperation_free.setEnabled(False)
+
+        if refresh is False:
+            self.swWorkSpace.setCurrentIndex(menu_module)
+            res = WorkSpaceHandler.check_if_settings_are_set(self, menu_module)
+            if res is False:
+                setupEasments = CoordinationsSetup(self)
+                setupEasments.load_coordinations_settings_widget()
+                button.setEnabled(True)
+                button.blockSignals(False)
+                return
+
+            combo_handler.populate_comboBox_smart(
+                comboBox=statuses_combo_box,
+                button=button,
+                module=module,
+                context=self,
+                preferred_items=False
+            )
+
+            # Add types to the combobox and set the preferred     
+            combo_handler.populate_comboBox_smart(
+                comboBox=types_combo_box,
+                button=button,
+                module=module,
+                context=self,
+                preferred_items=True
+            )                
+        selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
+        prefered_types_ids = types_combo_box.checkedItemsData()
+        #print(f"selected status: {selected_status}")
+        #print(f"selected types: {prefered_types_ids}")
+
+        CoordinationsMain.load_main_Coordinations_by_type_and_status(self,
+                                                             table=table,
+                                                             types=prefered_types_ids,
+                                                             statuses=selected_status
+                                                             )
+
+
+        button.blockSignals(False)
 
 
     def swWorkSpace_Controller(self, menu_module, module):
