@@ -57,7 +57,9 @@ class DataExtractor:
             HeaderKeys.HEADER_ID: node.get("id", ""),
             HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
             HeaderKeys.HEADER_NUMBER: node.get("number", "") or (node.get("type", {}).get("name")) or "",
-            HeaderKeys.HEADER_NAME: node.get("jobName") or node.get("title") or "",            
+            HeaderKeys.HEADER_TYPE: (node.get("type", {}).get("name")) or "",
+            HeaderKeys.HEADER_JOB_NUMBER: node.get("jobNumber", ""),
+            HeaderKeys.HEADER_JOB_NAME: node.get("jobName") or "", 
             HeaderKeys.HEADER_DEADLINE: due_at,
             HeaderKeys.HEADER_STATUSES: status.get("name", "") if status else "",
             HeaderKeys.COLOR_NAME: status.get("color", "") if status else "",
@@ -80,7 +82,6 @@ class DataExtractor:
             HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
             HeaderKeys.HEADER_NUMBER: node.get("number", "") or (node.get("type", {}).get("name")) or "",
             HeaderKeys.HEADER_NAME: node.get("name") or node.get("title") or "",
-            
             HeaderKeys.HEADER_DEADLINE: due_at,
             HeaderKeys.HEADER_STATUSES: status.get("name", "") if status else "",
             HeaderKeys.COLOR_NAME: status.get("color", "") if status else "",

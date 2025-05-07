@@ -23,7 +23,7 @@ from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ..queries.python.property_data import MyLablChecker, UpdateData
 from ..utils.rightClickHelper import RightClickHelper
-
+from ..utils.TableUtilys.TableHoverHelper import TableHoverWatcher
 
 pealkiri = Headings()
 combo_handler = ComboBoxHelper()
@@ -71,7 +71,7 @@ class WorkSpaceHandler:
         button.blockSignals(False)
 
 
-    def swWorkSpace_Coordinations(self, menu_module, module, refresh=False):
+    def swWorkSpace_Coordinations(self, menu_module, module, refresh=False, language = "et"):
         button = self.pbCooperations
         table = self.tblMailabl_Cooperation
         statuses_combo_box = self.cmbCooperationStatuses
@@ -122,7 +122,8 @@ class WorkSpaceHandler:
                                                              types=prefered_types_ids,
                                                              statuses=selected_status
                                                              )
-
+        
+        TableHoverWatcher(self.tblMailabl_Cooperation)
 
         button.blockSignals(False)
 

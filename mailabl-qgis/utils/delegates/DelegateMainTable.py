@@ -343,7 +343,7 @@ class DelegatesForTables():
             flagColumnIndex = header_labels.index(display_headers[HeaderKeys.HEADER_FLAG])
             flag_delegate = FlagsDelegate(flagColumnIndex, table)
             table.setItemDelegateForColumn(flagColumnIndex, flag_delegate)
-
+       
 
         ID_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_ID])
         webButton_Column_index = header_labels.index(display_headers[HeaderKeys.HEADER_WEB_LINK_BUTTON])

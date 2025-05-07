@@ -260,7 +260,6 @@ class AsBuiltQueries:
                 }
         
         response = requestBuilder.construct_and_send_request(query, variables)
-
         
         if response.status_code == 200:
             return True

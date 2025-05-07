@@ -26,8 +26,11 @@ class DataModelBuilder:
         """
         if module == Module.ASBUILT:
             headers = HeaderKeys.TASKS_HEADER_KEYS
+        elif module == Module.COORDINATION:
+            headers = HeaderKeys.COORDINATIONS_HEADER_KEYS
         else:
             headers = HeaderKeys.ALL_HEADER_KEYS
+
         display_headers = TableHeaders_new(language)
 
         df_data = []

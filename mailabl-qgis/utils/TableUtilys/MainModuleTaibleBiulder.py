@@ -1,14 +1,16 @@
 from PyQt5.QtWidgets import QTableView
-from .TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap
+from .TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap, CoordinationsIndexMap
 from .TableHelpers import ColumnResizer, TableUtils, TableExtractor
 from ..delegates.DelegateMainTable import DelegatesForTables
 from ...KeelelisedMuutujad.modules import Module
+from ...KeelelisedMuutujad.TableHeaders import HeaderKeys
 
 
 class ModuleTableBuilder:
     @staticmethod
     def setup(table, model, module, language="et", row_height=25):
         header_labels = TableExtractor._extract_headers_from_model(model)
+        index_map = HeaderIndexMap(header_labels, language)
 
 
         table.setModel(model)
@@ -24,15 +26,17 @@ class ModuleTableBuilder:
 
         resizer = ColumnResizer(table)
         if module == Module.ASBUILT:
-            #print(f"Resizing columns for {module}")
             index_map = AsBuiltHeaderIndexMap(header_labels, language=language)
+            #print(f"Resizing columns for {module}")
             TableUtils._resize_asBuilt_columns(resizer, index_map)
             TableUtils._resize_asBuilt_icon_columns(resizer, index_map, table)
     
+        elif module == Module.COORDINATION:
+            index_map = CoordinationsIndexMap(header_labels, language=language)
+            TableUtils._resize_coordinations_columns(resizer, index_map)
         else:
-            index_map = HeaderIndexMap(header_labels, language=language)
             TableUtils._resize_main_columns(resizer, index_map)
-            TableUtils._resize_icon_columns(resizer, index_map)
+            TableUtils._resize_standard_columns(resizer, index_map)
         TableUtils._hide_default_columns(table, index_map)
         TableUtils._set_icon_column_labels(model, index_map)
 

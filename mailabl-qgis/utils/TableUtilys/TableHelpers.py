@@ -6,7 +6,7 @@ from PyQt5.QtCore import Qt, QItemSelectionModel, QCoreApplication
 from PyQt5.QtGui import QFontMetrics, QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QTableView
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
-from .TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap
+from .TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap, CoordinationsIndexMap
 from ...utils.ProgressHelper import ProgressDialogModern
 
 class TableHelper:
@@ -328,7 +328,7 @@ class TableUtils:
 
 
     @staticmethod
-    def _resize_icon_columns(resizer, index_map: HeaderIndexMap, language: str="et"):
+    def _resize_standard_columns(resizer, index_map: HeaderIndexMap, language: str="et"):
         TableHeaders_new(language)
         columns = [
             HeaderKeys.HEADER_ID,
@@ -343,19 +343,21 @@ class TableUtils:
         resizer.setColumnWidths(indexes, widths)
 
     @staticmethod
-    def _resize_asBuilt_icon_columns_old(resizer, index_map: HeaderIndexMap, language: str="et"):
+    def _resize_coordinations_columns(resizer, index_map: CoordinationsIndexMap, language: str="et"):
         TableHeaders_new(language)
+        print(f"Coordinations Index Map: {index_map}")
         columns = [
             HeaderKeys.HEADER_ID,
-            HeaderKeys.HEADER_FLAG,
-            HeaderKeys.HEADER_TYPE,
-            HeaderKeys.HEADER_NAME,
+            HeaderKeys.HEADER_NUMBER,
+            HeaderKeys.HEADER_JOB_NAME,
             HeaderKeys.HEADER_PROPERTY_NUMBER,
             HeaderKeys.HEADER_WEB_LINK_BUTTON,
             HeaderKeys.HEADER_FILE_PATH,
             HeaderKeys.HEADER_PROPERTIES_ICON,
+            HeaderKeys.HEADER_DEADLINE,
+            HeaderKeys.HEADER_RESPONSIBLE
         ]
-        widths = [0, 10, 150, 250, 0, 10, 10, 10]
+        widths = [0,0, 250, 0, 10, 10, 10, 0, 0]
         indexes = [index_map[key] for key in columns]
         resizer.setColumnWidths(indexes, widths)
 

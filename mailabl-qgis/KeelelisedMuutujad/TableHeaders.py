@@ -4,9 +4,11 @@ from typing import ClassVar, List, Dict
 class HeaderKeys:
     HEADER_ID = "id"
     HEADER_NUMBER = "number"
+    HEADER_JOB_NUMBER = "jobNumber"
     HEADER_TYPE = "type"
     HEADER_FLAG = "flag"
     HEADER_NAME = "name"
+    HEADER_JOB_NAME = "jobName"
     HEADER_DEADLINE = "tähtaeg"
     COLOR_NAME = "color"
     HEADER_RESPONSIBLE = "responsible"
@@ -17,7 +19,7 @@ class HeaderKeys:
     HEADER_DOCUMENTS = "documents"
     HEADER_FILE_PATH = "file_path"
     HEADER_STATUSES = "statuses"
-
+    
 
     ALL_HEADER_KEYS: ClassVar[List[str]] = [
         HEADER_ID,
@@ -52,6 +54,24 @@ class HeaderKeys:
         HEADER_STATUSES,
     ]
 
+    COORDINATIONS_HEADER_KEYS: ClassVar[List[str]] = [
+        HEADER_ID,
+        HEADER_NUMBER,
+        HEADER_TYPE,
+        HEADER_JOB_NAME,
+        HEADER_JOB_NUMBER,
+        HEADER_DEADLINE,
+        COLOR_NAME,
+        HEADER_RESPONSIBLE,
+        HEADER_PROPERTY_NUMBER,
+        HEADER_PROPERTIES_ICON,
+        HEADER_PARENT_ID,
+        HEADER_WEB_LINK_BUTTON,
+        HEADER_DOCUMENTS,
+        HEADER_FILE_PATH,
+        HEADER_STATUSES,
+    ]
+
 
 class QueryHeaders:
     """
@@ -60,7 +80,9 @@ class QueryHeaders:
     """
     QUERY_ID = HeaderKeys.HEADER_ID
     QUERY_NUMBER = HeaderKeys.HEADER_NUMBER
+    QUERY_JOB_NUMBER = HeaderKeys.HEADER_JOB_NUMBER
     QUERY_NAME = HeaderKeys.HEADER_NAME
+    QUERY_JOB_NAME = HeaderKeys.HEADER_JOB_NAME
     QUERY_FLAG = HeaderKeys.HEADER_FLAG
     QUERY_TYPE = HeaderKeys.HEADER_TYPE
     QUERY_DEADLINE = HeaderKeys.HEADER_DEADLINE
@@ -105,6 +127,21 @@ class QueryHeaders:
         QUERY_STATUSES,
     ]
 
+    COORDINATIONS_QUERY_KEYS: ClassVar[List] = [
+        QUERY_ID,
+        QUERY_JOB_NUMBER,
+        QUERY_NAME,
+        QUERY_JOB_NAME,
+        QUERY_DEADLINE,
+        QUERY_COLOR,
+        QUERY_RESPONSIBLE,
+        QUERY_PROPERTY_NUMBER,
+        QUERY_PROPERTIES_ICON,
+        QUERY_WEB_LINK_BUTTON,
+        QUERY_DOCUMENTS,
+        QUERY_FILE_PATH,
+        QUERY_STATUSES,
+    ]
 
 class TableHeaders_new:
     """
@@ -119,8 +156,10 @@ class TableHeaders_new:
             return {
                 HeaderKeys.HEADER_ID: "ID",
                 HeaderKeys.HEADER_NUMBER: "Number",
+                HeaderKeys.HEADER_JOB_NUMBER: "Töö number",
                 HeaderKeys.HEADER_TYPE: "Liik",
                 HeaderKeys.HEADER_FLAG: "",
+                HeaderKeys.HEADER_JOB_NAME: "Töö nimetus",
                 HeaderKeys.HEADER_NAME: "Nimetus",
                 HeaderKeys.HEADER_DEADLINE: "Tähtaeg",
                 HeaderKeys.COLOR_NAME: "Color_name",
@@ -137,9 +176,11 @@ class TableHeaders_new:
             return {
                 HeaderKeys.HEADER_ID: "ID",
                 HeaderKeys.HEADER_NUMBER: "Number",
+                HeaderKeys.HEADER_JOB_NUMBER: "Job Number",
                 HeaderKeys.HEADER_TYPE: "Type",
                 HeaderKeys.HEADER_FLAG: "",
                 HeaderKeys.HEADER_NAME: "Name",
+                HeaderKeys.HEADER_JOB_NAME: "Job Name",
                 HeaderKeys.HEADER_DEADLINE: "Deadline",
                 HeaderKeys.COLOR_NAME: "Color name",
                 HeaderKeys.HEADER_RESPONSIBLE: "Responsible",
@@ -155,7 +196,9 @@ class TableHeaders_new:
             return {
                 HeaderKeys.HEADER_ID: HeaderKeys.HEADER_ID,
                 HeaderKeys.HEADER_NUMBER: HeaderKeys.HEADER_NUMBER,
+                HeaderKeys.HEADER_JOB_NUMBER: HeaderKeys.HEADER_JOB_NUMBER,
                 HeaderKeys.HEADER_NAME: HeaderKeys.HEADER_NAME,
+                HeaderKeys.HEADER_JOB_NAME: HeaderKeys.HEADER_JOB_NAME,
                 HeaderKeys.HEADER_TYPE: HeaderKeys.HEADER_TYPE,
                 HeaderKeys.HEADER_FLAG: HeaderKeys.HEADER_FLAG,
                 HeaderKeys.HEADER_DEADLINE: HeaderKeys.HEADER_DEADLINE,
