@@ -123,9 +123,7 @@ class FileDelegate(QStyledItemDelegate):
 
             if not file_path:
                 if self.module == Module.ASBUILT:
-
                     RightClickHelper._handle_file_add(self, table=self.table, row=index.row())
-
                 else:
                     pass
             

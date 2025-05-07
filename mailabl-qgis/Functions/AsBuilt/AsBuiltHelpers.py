@@ -1,7 +1,7 @@
 import os
 import re
 from typing import Optional
-
+from datetime import datetime
 
 from qgis.PyQt.QtWidgets import QFileDialog
 
@@ -248,9 +248,17 @@ class NotesTableGenerator:
 
         print("✅ Notes table generated.")
         return final_html
+  
     @classmethod
     def generate_empty_table(cls) -> str:
-        return cls.generate_notes_table_from_data([])
+        today = datetime.today().strftime("%d.%m.%Y")
+        placeholder_note = [{
+            "date": today,
+            "note": "",
+            "resolved": False,
+            "resolved_date": ""
+        }]
+        return cls.generate_notes_table_from_data(placeholder_note)
 
     @classmethod
     def update_notes_table(cls, notes: list) -> str:
