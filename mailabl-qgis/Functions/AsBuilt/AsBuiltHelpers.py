@@ -36,6 +36,11 @@ class AsBuiltHelpers:
 
     def merge_file_table_with_existing(file_table_html: str, existing_html: str) -> str:
         #print("🔍 Merging file table with existing content...")
+        print(f"Existing_html value: {existing_html}")
+        if existing_html == None:
+            print("➕ No matching table found, inserting full new table on top.")
+            return f"{file_table_html.strip()}"
+
 
         table_pattern = re.compile(
             r'(<table[^>]*>.*?<tr[^>]*>.*?Faili nimi.*?Asukoht.*?</tr>)(.*?)(</table>)',

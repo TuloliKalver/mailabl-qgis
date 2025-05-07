@@ -44,7 +44,7 @@ class RightClickHelper:
 
         actio_add_files = QAction(QIcon(icon), "Lisa faile", table)
         helper = RightClickHelper(cls.dialog)
-        actio_add_files.triggered.connect(lambda: helper._handle_file_add(table,row))
+        actio_add_files.triggered.connect(lambda: helper._handle_file_add(table, row))
         
 
         asBuiltTools = AsBuiltTools(cls.dialog, table)
