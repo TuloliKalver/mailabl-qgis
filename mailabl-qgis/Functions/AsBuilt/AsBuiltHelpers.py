@@ -14,6 +14,7 @@ class AsBuiltHelpers:
 
     @staticmethod
     def _handle_drawTool(notes_table=True):
+        print(f"Notes table value: {notes_table}")
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.ExistingFiles)
         if file_dialog.exec_():
