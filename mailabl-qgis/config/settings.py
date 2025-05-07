@@ -296,10 +296,6 @@ class SettingsDataSaveAndLoad:
         ARCHIVED_LAYER = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{archived_layers}"
         return ARCHIVED_LAYER
 
-    def target_cadastral (self):
-        self.setup_label_cadastral_current = 'labels/cadastralCurrent'
-        TARGET_CADASTRAL = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
-        return TARGET_CADASTRAL
 
 
     def input_cadastral (self):
@@ -349,6 +345,7 @@ class SettingsDataSaveAndLoad:
         USER_PREFERRED_PAGE_INDEX = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{user_pr_page_index}"
         return USER_PREFERRED_PAGE_INDEX
 
+
     def target_cadastral (self):
         self.setup_label_cadastral_current = 'labels/cadastralCurrent'
         TARGET_CADASTRAL = f"{SettingsDataSaveAndLoad.setup_main_path(self)}{self.setup_label_cadastral_current}"
@@ -369,12 +366,12 @@ class SettingsDataSaveAndLoad:
         if label is not None:
             label.setText(layers)
     
-    def save_target_cadastral(self, input_value, target_value):
+    def save_target_cadastral(self, input_value ):#, target_value):
         settings = QgsSettings()
         target_settings_address = SettingsDataSaveAndLoad.target_cadastral(self)
         settings.setValue(target_settings_address, input_value)
-        input_setting_address = SettingsDataSaveAndLoad.input_cadastral(self)
-        settings.setValue(input_setting_address, target_value)
+        #input_setting_address = SettingsDataSaveAndLoad.input_cadastral(self)
+        #settings.setValue(input_setting_address, target_value)
         
 
 
@@ -411,12 +408,7 @@ class SettingsDataSaveAndLoad:
         lblProjectsTargetFolderValue.setText(target_folder)
 
 
-    def on_save_button_clicked_cadastrals(self, input_layer_combo_box, target_layer_combo_box):
-        #print("started to save")
-        input_value = input_layer_combo_box.currentText()
-        target_value = target_layer_combo_box.currentText()
-        SettingsDataSaveAndLoad.save_target_cadastral(self,input_value, target_value)
-        #print(f"Data saved {input_layer_combo_box} and {target_layer_combo_box}")
+
         
 
     def load_projcets_copy_folder_path_value(self):
@@ -598,7 +590,6 @@ class StartupSettingsLoader:
 
         prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
         
-        create_new_layer_label_value = SettingsDataSaveAndLoad.load_input_cadastral_name(self)
         SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
 
         input_folder_value = SettingsDataSaveAndLoad.load_projcets_copy_folder_path_value(self)
@@ -611,12 +602,8 @@ class StartupSettingsLoader:
         else:
             self.dialog.lblSPreferedHomeValue.setText(prefered_homepage_name_value)
 
-
         self.dialog.lblPreferredFolderNameValue.setText(prefered_folder_structure_value)
 
-
-
-        self.dialog.lblMainTargetLayerValue.setText(create_new_layer_label_value)
         self.dialog.lblSHPLayerValue.setText(SHP_layer_label_value)
 
         self.dialog.lblProjectsFolderValue.setText(input_folder_value)

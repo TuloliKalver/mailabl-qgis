@@ -29,8 +29,8 @@ class CoordinationsMain:
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
         module = Module.COORDINATION
         module_text = "Kooskõlastuste"
-        progress = ProgressDialogModern(title=f"{module_text} laadimine", value=0)
-        progress.update(1, purpouse="Kooskõlastuste laadimine", text1="Palun oota...")
+        progress = ProgressDialogModern(title=f"Andmete laadimine", value=0)
+        progress.update(1, purpouse="{module_text} laadimine", text1="Palun oota...")
         model = CoordinationsModels._model_for_Coordinations_by_types_and_statuses(self, types, statuses, language=language)
 
         if model is not None:

@@ -690,10 +690,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
 
     def layer_setup(self):
         #print("started 'layer_setup'")
-        lblMainLayerValue = self.lblMainLayerValue
-        lblMainTargetLayerValue = self.lblMainTargetLayerValue
-        lblSHPLayerValue = self.lblSHPLayerValue
-        SetupCadastralLayers.load_layer_settings_widget(self, lblMainLayerValue,lblMainTargetLayerValue,lblSHPLayerValue)
+
+        SetupCadastralLayers.load_layer_settings_widget(self)
         
 
     def generate_virtual_mapLayer_synced_with_Mailabl(self):

@@ -99,8 +99,8 @@ class SetupController:
                 ModuleKey.TITLE: "Kinnistud",
                 ModuleKey.LABELS: [
                     dialog.lblSHPLayerValue,
-                    dialog.lblMainLayerValue,
-                    dialog.lblMainTargetLayerValue
+                    dialog.lblMainLayerValue
+                    
                 ],
                 ModuleKey.CHECKBOXES: [],
                 ModuleKey.SETTINGS_BUTTON: None,

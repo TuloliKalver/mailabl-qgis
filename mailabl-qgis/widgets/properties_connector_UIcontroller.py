@@ -45,7 +45,7 @@ class PropertiesConnectorUIController:
         selection_model = table.selectionModel()
         return selection_model.hasSelection()
 
-    @staticmethod
+
     def _initialize_properties_connector(self, module, table, button, button_names):
         """
         Initializes and loads the properties connector widget.
