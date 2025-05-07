@@ -13,6 +13,8 @@ from ...KeelelisedMuutujad.modules import Module, ModuleTranslation
 from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
 #from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
 from ...utils.ProgressHelper import ProgressDialogModern    
+from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 
 
 class Constants:
@@ -258,7 +260,17 @@ class AsBuiltQueries:
                 }
         
         response = requestBuilder.construct_and_send_request(query, variables)
-
+        print("Response is")
+        print(response.status_code)
+        buttons={"keep": "Selge"}
+        ret = DecisionDialogHelper.ask_user(
+            title=Headings.inFO_SIMPLE,
+            message=f"Saadud serveri vastus kood\n{response.status_code}",
+            options=buttons,
+            parent=None,
+            type= AnimatedGradientBorderFrame.PROLOOK
+                )
+        
         if response.status_code == 200:
             return True
         else:
