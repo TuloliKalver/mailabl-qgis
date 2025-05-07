@@ -3,7 +3,7 @@ from ..config.iconHandler import iconHandler
 from PyQt5.QtWidgets import QMenu, QAction, QTableView
 from PyQt5.QtCore import Qt, QPoint, QSize
 from ..Functions.AsBuilt.AsBuiltTools import AsBuiltTools
-from ..Functions.AsBuilt.AsBuiltHelpers import AsBuiltHelpers
+from ..Functions.AsBuilt.AsBuiltHelpers import AsBuiltHelpers, NotesTableGenerator
 from ..KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
@@ -69,34 +69,47 @@ class RightClickHelper:
         menu.exec_(table.viewport().mapToGlobal(pos))
 
 
-    def _handle_file_add(self,table:QTableView, row) -> bool:
+    def _handle_file_add(self, table: QTableView, row) -> bool:
         model = table.model()
-       
-        property_id = model.data(model.index(row,0), Qt.DisplayRole)
-        
-        buttons={"keep": "Ei ole vaja", "delete": "Jah"}
-        ret = DecisionDialogHelper.ask_user(
-            title=Headings.inFO_SIMPLE,
-            message="Kas loon kohe ka Konttrolli tabeli?",
-            options=buttons,
-            parent=self,
-            type= AnimatedGradientBorderFrame.PROLOOK
-                )
+        property_id = model.data(model.index(row, 0), Qt.DisplayRole)
 
-        AsBuiltHelpers._handle_drawTool(notes_table=ret)
-        prepared_text = AsBuiltHelpers.html
-        #print(f"Textbrowser content: {prepared_text}")
-        # 2. Fetch descriptions from Mailabl (already done)
         from ..Functions.AsBuilt.ASBuilt import AsBuiltQueries
         existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
-        #print(f"Existing descriptions: {existing_descriptions}")
-        # 3. Merge: put file table first, then append all descriptions
+
+        table_check = AsBuiltHelpers.find_existing_notes_table_in_html(existing_descriptions)
+
+        if  table_check is False:
+            buttons = {"keep": "Ei ole vaja", "delete": "Jah"}
+            ret = DecisionDialogHelper.ask_user(
+                title=Headings.inFO_SIMPLE,
+                message="Kontrolli tabel puudub. \n\nKas loon kohe ka Konttrolli tabeli?",
+                options=buttons,
+                parent=self,
+                type=AnimatedGradientBorderFrame.PROLOOK
+            )
+            notes_bool = ret 
+        else:
+            notes_bool = True
+
+        # Generate file table (and optionally notes block)
+        AsBuiltHelpers._handle_drawTool(notes_table=notes_bool)
+        prepared_text = AsBuiltHelpers.html
+
+        # Merge file rows only
         combined_html = AsBuiltHelpers.merge_file_table_with_existing(prepared_text, existing_descriptions)
 
+        # Inject/replace notes section if needed
+        if notes_bool:
+            notes_html = NotesTableGenerator.generate_empty_table()
+            combined_html = AsBuiltTools.patch_notes_table_in_html(combined_html, notes_html)
+
+        # Save updated HTML
         res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
-    
+
         if res:
             from ..app.workspace_handler import WorkSpaceHandler
             WorkSpaceHandler.asBuilt_reload(None)
-        
+
+        # Reset temp state
         AsBuiltHelpers.html = ""
+

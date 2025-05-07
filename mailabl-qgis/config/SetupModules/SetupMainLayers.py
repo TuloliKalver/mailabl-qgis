@@ -52,7 +52,7 @@ class SetupCadastralLayers:
             drag_frame.setCursor(Qt.OpenHandCursor)   
 
 
-        widget.lblTitle.setText("Kooskõlastuste mooduli seadistamine...")
+        widget.lblTitle.setText("Kinnistute mooduli seadistamine")
 
         animation = QPropertyAnimation(widget, b"windowOpacity")
         animation.setDuration(300)

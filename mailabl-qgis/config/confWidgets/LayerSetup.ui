@@ -510,7 +510,7 @@ QComboBox:disabled {
                </font>
               </property>
               <property name="text">
-               <string>Peamine kinnistute aluskiht</string>
+               <string>Peamine aluskiht</string>
               </property>
              </widget>
             </item>
@@ -605,14 +605,14 @@ QComboBox:disabled {
                </font>
               </property>
               <property name="text">
-               <string>Kujundus faili kasutamine*</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="pbChangLayerStyle">
               <property name="text">
-               <string>PushButton</string>
+               <string>Vali stiil</string>
               </property>
              </widget>
             </item>

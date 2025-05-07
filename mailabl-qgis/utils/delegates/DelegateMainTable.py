@@ -19,6 +19,7 @@ from ..TableUtilys.FlagIconHelper import FlagIconHelper
 from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ...utils.rightClickHelper import RightClickHelper
 
 class CustomRoles:
     # custom roles for the delegate to use in the view
@@ -50,7 +51,7 @@ class FileDelegate(QStyledItemDelegate):
         self.module = module
         self.file_column_index = file_column_index
         self.icon_size = 18  # px
-
+        self.table = parent
     def paint(self, painter, option, index):
         file_index = index.model().index(index.row(), self.file_column_index)
         file_path = file_index.data(Qt.DisplayRole)
@@ -122,38 +123,9 @@ class FileDelegate(QStyledItemDelegate):
 
             if not file_path:
                 if self.module == Module.ASBUILT:
-                    property_id = model.data(model.index(index.row(),0), Qt.DisplayRole)
-                    
-                    buttons={"keep": "Ei ole vaja", "delete": "Jah"}
-                    ret = DecisionDialogHelper.ask_user(
-                        title=Headings.inFO_SIMPLE,
-                        message="Kas loon kohe ka Konttrolli tabeli?",
-                        options=buttons,
-                        parent=self,
-                        type= AnimatedGradientBorderFrame.PROLOOK
-                            )
 
-                    print(f"notes table values: ", ret)
+                    RightClickHelper._handle_file_add(self, table=self.table, row=index.row())
 
-                    AsBuiltHelpers._handle_drawTool(notes_table=ret)
-                    prepared_text = AsBuiltHelpers.html
-                    #print(f"Textbrowser content: {prepared_text}")
-                    # 2. Fetch descriptions from Mailabl (already done)
-                    from ...Functions.AsBuilt.ASBuilt import AsBuiltQueries
-                    existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
-                    #print(f"Existing descriptions: {existing_descriptions}")
-                    # 3. Merge: put file table first, then append all descriptions
-                    combined_html = AsBuiltHelpers.merge_file_table_with_existing(prepared_text, existing_descriptions)
-
-                    res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
-                
-                    if res:
-                        from ...app.workspace_handler import WorkSpaceHandler
-                        WorkSpaceHandler.asBuilt_reload(None)
-                    
-                    AsBuiltHelpers.html = ""
-
-                    return res
                 else:
                     pass
             

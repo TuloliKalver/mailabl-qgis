@@ -260,18 +260,20 @@ class AsBuiltQueries:
                 }
         
         response = requestBuilder.construct_and_send_request(query, variables)
-        print("Response is")
-        print(response.status_code)
-        buttons={"keep": "Selge"}
-        ret = DecisionDialogHelper.ask_user(
-            title=Headings.inFO_SIMPLE,
-            message=f"Saadud serveri vastus kood\n{response.status_code}",
-            options=buttons,
-            parent=None,
-            type= AnimatedGradientBorderFrame.PROLOOK
-                )
+
         
         if response.status_code == 200:
             return True
         else:
+            print("Response is")
+            print(response.status_code)
+            buttons={"keep": "Selge"}
+            ret = DecisionDialogHelper.ask_user(
+                title=Headings.inFO_SIMPLE,
+                message=f"Saadud serveri vastus kood\n{response.status_code}",
+                options=buttons,
+                parent=None,
+                type= AnimatedGradientBorderFrame.PROLOOK
+                    )
+
             return False

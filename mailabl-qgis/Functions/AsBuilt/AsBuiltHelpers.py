@@ -1,5 +1,6 @@
 import os
 import re
+from typing import Optional
 
 
 from qgis.PyQt.QtWidgets import QFileDialog
@@ -24,70 +25,98 @@ class AsBuiltHelpers:
             <div style="width: 100%; font-family: Roboto, Arial, sans-serif;">
             """ + AsBuiltHelpers.generate_file_table_section(file_paths)
 
-            if notes_table:
+            if notes_table is True:
+                print("Adding notes table")
                 html += NotesTableGenerator.generate_empty_table()
 
             html += """
             </div>
-            <p></p>
             """
 
             AsBuiltHelpers.html = html
 
 
-    def merge_file_table_with_existing(file_table_html: str, existing_html: str) -> str:
-        #print("🔍 Merging file table with existing content...")
-        #print(f"Existing_html value: {existing_html}")
-        if existing_html == None:
-            print("➕ No matching table found, inserting full new table on top.")
-            return f"{file_table_html.strip()}"
 
+
+    def find_existing_file_table(existing_html: str) -> Optional[re.Match]:
+        """
+        Searches for a table that includes 'Faili nimi' and 'Asukoht' headers.
+        Returns the match object or None if no such table is found.
+        """
+        if not existing_html:
+            return None
 
         table_pattern = re.compile(
             r'(<table[^>]*>.*?<tr[^>]*>.*?Faili nimi.*?Asukoht.*?</tr>)(.*?)(</table>)',
             re.DOTALL | re.IGNORECASE
         )
+        return table_pattern.search(existing_html)
+    
+    @staticmethod
+    def find_existing_notes_table_in_html(existing_html: str) -> bool:
+        """
+        Searches for a table that includes 'Märkused' and 'Kommentaarid' headers.
+        Returns the match object or None if no such table is found.
+        """
+        pattern = re.compile(
+            r"""
+            <p[^>]*?>\s*(<strong>)?🗒️\s*Märkused\s+ja\s+kommentaarid(</strong>)?\s*</p>  # header line
+            \s*<div[^>]*?>\s*<table.*?</table>\s*</div>\s*<p>\s*</p>   # full table block
+            """,
+            re.DOTALL | re.IGNORECASE | re.VERBOSE
+        )
 
-        match = table_pattern.search(existing_html)
-        if match:
-            #print("✅ Existing table found (flexible header match), injecting rows...")
-
-            table_start, existing_rows, table_end = match.groups()
-         
-            # ✅ Correct link extraction
-            existing_links = set(DataExtractor.extract_links_from_description(existing_html))
-            #print(f"🔎 Existing links: {existing_links}")
-
-
-            # Try <tbody> first
-            new_rows_match = re.search(r"<tbody[^>]*?>(.*?)</tbody>", file_table_html, re.DOTALL | re.IGNORECASE)
-            if new_rows_match:
-                candidate_rows = re.findall(r"<tr[^>]*>.*?</tr>", new_rows_match.group(1), re.DOTALL)
-            else:
-                candidate_rows = re.findall(r"<tr[^>]*>.*?</tr>", file_table_html, re.DOTALL)[1:]  # skip header
-
-            unique_rows = []
-            for row in candidate_rows:
-                link_match = re.search(r'href="file:///([^"]+)"', row, re.IGNORECASE)
-                if not link_match:
-                    continue
-                file_path = link_match.group(1)
-                if file_path not in existing_links:
-                    unique_rows.append(row)
-
-            if not unique_rows:
-                print("⚠️ No unique rows to merge.")
-                return existing_html
-
-            new_rows_html = "\n".join(unique_rows)
-            print(f"📥 Injecting {len(unique_rows)} new rows.")
-
-            updated_table = f"{table_start}{existing_rows}{new_rows_html}{table_end}"
-            updated_html = table_pattern.sub(updated_table, existing_html, count=1)
-            return updated_html
+        if pattern.search(existing_html):
+            ret = True
         else:
+            ret = False
+        return ret
+
+
+
+    def merge_file_table_with_existing(file_table_html: str, existing_html: str, notes_table=False) -> str:
+        if existing_html is None:
+            print("➕ No existing HTML — inserting new table.")
+            return file_table_html.strip()
+
+        match = AsBuiltHelpers.find_existing_file_table(existing_html)
+
+        if not match:
             print("➕ No matching table found, inserting full new table on top.")
             return f"{file_table_html.strip()}\n\n{existing_html.strip()}"
+
+        table_start, existing_rows, table_end = match.groups()
+
+        existing_links = set(DataExtractor.extract_links_from_description(existing_html))
+
+        new_rows_match = re.search(r"<tbody[^>]*?>(.*?)</tbody>", file_table_html, re.DOTALL | re.IGNORECASE)
+        if new_rows_match:
+            candidate_rows = re.findall(r"<tr[^>]*>.*?</tr>", new_rows_match.group(1), re.DOTALL)
+        else:
+            candidate_rows = re.findall(r"<tr[^>]*>.*?</tr>", file_table_html, re.DOTALL)[1:]
+
+        unique_rows = []
+        for row in candidate_rows:
+            link_match = re.search(r'href="file:///([^"]+)"', row, re.IGNORECASE)
+            if not link_match:
+                continue
+            file_path = link_match.group(1)
+            if file_path not in existing_links:
+                unique_rows.append(row)
+
+        if not unique_rows:
+            print("⚠️ No unique rows to merge.")
+            
+            return existing_html
+
+        new_rows_html = "\n".join(unique_rows)
+        print(f"📥 Injecting {len(unique_rows)} new rows.")
+
+        updated_table = f"{table_start}{existing_rows}{new_rows_html}{table_end}"
+        updated_html = re.sub(re.escape(match.group(0)), updated_table, existing_html, count=1)
+
+        return updated_html
+
 
 
 
@@ -199,19 +228,26 @@ class NotesTableGenerator:
 
     @classmethod
     def generate_notes_table_from_data(cls, notes: list) -> str:
-
+        print("📋 Generating notes table from data...")
+        print("📄 Notes passed in:", notes)
 
         if not notes:
+            print("📝 No notes provided — creating placeholder empty note row.")
             notes = [{
                 "date": "",
                 "note": "",
                 "resolved": False,
                 "resolved_date": ""
             }]
+        else:
+            print(f"✅ {len(notes)} notes found.")
+
         rows_html = "".join([cls._render_table_row(note) for note in notes])
         full_table = cls._render_table_header() + rows_html
-        return cls._wrap_table(full_table)
+        final_html = cls._wrap_table(full_table)
 
+        print("✅ Notes table generated.")
+        return final_html
     @classmethod
     def generate_empty_table(cls) -> str:
         return cls.generate_notes_table_from_data([])
