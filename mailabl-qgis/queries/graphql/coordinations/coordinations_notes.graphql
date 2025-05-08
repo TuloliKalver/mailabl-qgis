@@ -1,0 +1,8 @@
+query coordination($id: ID!) {
+  coordination(id: $id) {
+    __typename
+    id
+    description
+    terms 
+  }
+}

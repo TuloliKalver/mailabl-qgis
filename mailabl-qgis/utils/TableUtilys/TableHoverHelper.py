@@ -1,11 +1,11 @@
 from PyQt5.QtCore import QObject, QTimer, Qt, QPoint
-from PyQt5.QtGui import QCursor
+from PyQt5.QtGui import QCursor, QTextOption
 from PyQt5.QtWidgets import QTableView
 from PyQt5.QtWidgets import QDialog, QLabel, QVBoxLayout, QTextBrowser
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys
 from ...utils.TableUtilys.TableHelpers import  TableExtractor
 from .TableHEaderIndexMap import HeaderIndexMap
-
+from ...Functions.Coordinations.Coordinations import CoordinationsMain
 
 class TableHoverWatcher(QObject):
     def __init__(self, table: QTableView, delay_ms=500):
@@ -52,6 +52,7 @@ class TableHoverWatcher(QObject):
             language = "et"
             index_map = HeaderIndexMap(header_labels, language)
 
+            id_index = self.table.model().index(self.last_row, index_map[HeaderKeys.HEADER_ID])
             number_index = self.table.model().index(self.last_row, index_map[HeaderKeys.HEADER_NUMBER])
             deadline_index = self.table.model().index(self.last_row, index_map[HeaderKeys.HEADER_DEADLINE])
             responsible_index = self.table.model().index(self.last_row, index_map[HeaderKeys.HEADER_RESPONSIBLE])
@@ -62,6 +63,10 @@ class TableHoverWatcher(QObject):
             return
 
         # Extract the data from model
+        id_value = self.table.model().data(id_index, Qt.DisplayRole)
+        notes_text, terms_text = CoordinationsMain.load_coordinations_details(id_value)
+        #print (f"notes_text: {notes_text}")
+        #print(f" terms_text: {terms_text}")
         number = self.table.model().data(number_index, Qt.DisplayRole)
         deadline = self.table.model().data(deadline_index, Qt.DisplayRole)
         responsible = self.table.model().data(responsible_index, Qt.DisplayRole)
@@ -94,18 +99,26 @@ class TableHoverWatcher(QObject):
             <div style="margin-top: 4px;">
                 <b>👤 Vastutaja:</b> <span style="color: #f5f5f5;">{responsible}</span>
             </div>
+            <div>
+                <b>📝 Märkused:</b><br/>
+                <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">{notes_text}</div>
+            </div>
+            <div>
+                <b>📚 Eri tingimused:</b><br/>
+                <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">{terms_text}</div>
+            </div>
         </div>
         """
 
 
-        print("📌 Hover Info:\n", message)
+        #print("📌 Hover Info:\n", message)
 
         global_pos = QCursor.pos()
         self._close_popup()
         self.active_popup = HoverPopup(message, self.table)
         self.active_popup.move(global_pos + QPoint(12, 12))  # slight offset to avoid overlapping
         self.active_popup.show()
-
+        
     def _close_popup(self):
         if self.active_popup:
             self.active_popup.close()
@@ -122,8 +135,11 @@ class HoverPopup(QDialog):
         layout.setContentsMargins(8, 4, 8, 4)
 
         self.browser = QTextBrowser()
-        self.browser.setHtml(message)
-        self.browser.setOpenExternalLinks(True)  # Optional
+        self.browser.setFocusPolicy(Qt.NoFocus)
+        self.browser.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.browser.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.browser.setOpenExternalLinks(True)
+
         self.browser.setStyleSheet("""
             QTextBrowser {
                 background-color: #2c2c2c;
@@ -134,9 +150,24 @@ class HoverPopup(QDialog):
                 font-size: 12px;
             }
         """)
-        self.browser.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.browser.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.browser.setFocusPolicy(Qt.NoFocus)
 
+        self.browser.setHtml(message)
         layout.addWidget(self.browser)
 
+        # ✅ Force layout update
+        self.browser.document().setTextWidth(self.browser.viewport().width())
+        self.browser.document().adjustSize()
+
+        # Get document height and add a small buffer
+        doc_height = self.browser.document().size().height()
+        buffer = 20  # adjust as needed for safety margin
+        total_height = int(doc_height + buffer)
+
+        # Optionally print it
+        print(f"Doc Height: {doc_height} → Total: {total_height}")
+
+        # Set minimum/maximum heights based on calculated value
+        self.browser.setMinimumHeight(total_height)
+        self.browser.setMinimumWidth(600)
+        
+        self.adjustSize()

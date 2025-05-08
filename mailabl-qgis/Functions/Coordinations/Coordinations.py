@@ -43,6 +43,14 @@ class CoordinationsMain:
         progress.update(98)
         
         progress.close()
+    @staticmethod
+    def load_coordinations_details(id):
+
+        module = Module.COORDINATION
+        module_text = "Kooskõlastuste"
+        data = CoordinationsQueries._query_Coordinations_notes(id)
+
+        return data
 
 class CoordinationsModels: 
     @staticmethod
@@ -194,3 +202,35 @@ class CoordinationsQueries:
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
 
+    def _query_Coordinations_notes(id):
+        module = Module.COORDINATION
+        query_name =  GraphqlCoordinations.RELATED_NOTES
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+        variables = {
+            "id": id
+        }
+        response = requestBuilder.construct_and_send_request(query, variables)
+
+        if response.status_code == 200:
+            
+            notes_text, terms_text = CoordinationsQueries.extract_notes_and_terms(response.json())
+            return notes_text, terms_text
+        else:
+            #print(f"Error: {response.status_code}")
+            return None
+       
+    def extract_notes_and_terms(node: dict) -> tuple[str, str]:
+        # Fallback lorem-style placeholder
+        default_poem = (
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 🌿\n"
+            "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"
+            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. ✨"
+        )
+
+        description = node.get("data", {}).get("coordination", {}).get("description")
+        terms = node.get("data", {}).get("coordination", {}).get("terms")
+
+        notes_text = description if description else default_poem
+        terms_text = terms if terms else default_poem
+
+        return notes_text, terms_text
