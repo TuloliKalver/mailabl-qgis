@@ -64,12 +64,15 @@ class TableHoverWatcher(QObject):
 
         # Extract the data from model
         id_value = self.table.model().data(id_index, Qt.DisplayRole)
-        notes_text, terms_text = CoordinationsMain.load_coordinations_details(id_value)
+
         #print (f"notes_text: {notes_text}")
         #print(f" terms_text: {terms_text}")
         number = self.table.model().data(number_index, Qt.DisplayRole)
         deadline = self.table.model().data(deadline_index, Qt.DisplayRole)
         responsible = self.table.model().data(responsible_index, Qt.DisplayRole)
+
+
+        table_rows, desc_and_terms = CoordinationsMain.load_coordinations_details(id_value)
 
         message = f"""
         <div style="
@@ -89,23 +92,10 @@ class TableHoverWatcher(QObject):
             <hr style="border: 0; height: 1px; background: #4a90e2; margin: 6px 0;" />
             
             <div style="margin-top: 6px;">
-                <b>📄 Nr:</b> <span style="color: #f5f5f5;">{number}</span>
-            </div>
-
-            <div style="margin-top: 4px;">
-                <b>📅 Tähtaeg:</b> <span style="color: #f5f5f5;">{deadline}</span>
-            </div>
-
-            <div style="margin-top: 4px;">
-                <b>👤 Vastutaja:</b> <span style="color: #f5f5f5;">{responsible}</span>
+                 {table_rows}
             </div>
             <div>
-                <b>📝 Märkused:</b><br/>
-                <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">{notes_text}</div>
-            </div>
-            <div>
-                <b>📚 Eri tingimused:</b><br/>
-                <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">{terms_text}</div>
+                {desc_and_terms}
             </div>
         </div>
         """

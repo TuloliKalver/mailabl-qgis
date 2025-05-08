@@ -1,6 +1,8 @@
 import pandas as pd
 from typing import List
 from PyQt5.QtCore import QCoreApplication
+from datetime import datetime
+
 
 from ...queries.python.FileLoaderHelper import GraphqlStatuses, GraphqlCoordinations, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
@@ -213,24 +215,69 @@ class CoordinationsQueries:
 
         if response.status_code == 200:
             
-            notes_text, terms_text = CoordinationsQueries.extract_notes_and_terms(response.json())
-            return notes_text, terms_text
+            table_rows, desc_and_terms = CoordinationsQueries.extract_all_coordination_details(response.json())
+            return table_rows, desc_and_terms
         else:
             #print(f"Error: {response.status_code}")
             return None
        
-    def extract_notes_and_terms(node: dict) -> tuple[str, str]:
-        # Fallback lorem-style placeholder
+
+
+    def extract_all_coordination_details(node: dict) -> tuple[str, str]:
+        fallback = "—"
+        fallback_date = "01.01.2022"
         default_poem = (
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 🌿\n"
             "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"
             "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. ✨"
         )
 
-        description = node.get("data", {}).get("coordination", {}).get("description")
-        terms = node.get("data", {}).get("coordination", {}).get("terms")
+        c = node.get("data", {}).get("coordination", {})
 
-        notes_text = description if description else default_poem
-        terms_text = terms if terms else default_poem
+        # Handle due date formatting and day difference
+        raw_due = c.get("dueAt")
+        if raw_due:
+            try:
+                due_dt = datetime.strptime(raw_due, "%Y-%m-%d")
+                today = datetime.today()
+                days_remaining = (due_dt - today).days
+                dueAt = due_dt.strftime("%d.%m.%Y")
+            except Exception:
+                dueAt = fallback_date
+                days_remaining = "?"
+        else:
+            dueAt = fallback_date
+            days_remaining = "?"
 
-        return notes_text, terms_text
+        table_rows = f"""
+        <table style="margin-top: 10px; border-collapse: collapse; width: 100%;">
+            <tr><td><b>📁 Töö nr:</b></td><td>{c.get("jobNumber", "2390")}</td></tr>
+            <tr><td><b>🔤 Töö nimetus:</b></td><td>{c.get("jobName", "Asd")}</td></tr>
+            <tr><td><b>🏷️ Väline kood:</b></td><td>{c.get("externalCode", "902902")}</td></tr>
+            <tr><td><b>📅 Algus:</b></td><td>{c.get("startAt", fallback_date)}</td></tr>
+            <tr><td><b>📩 Vastuvõtt:</b></td><td>{c.get("receivedAt", fallback_date)}</td></tr>
+            <tr><td><b>✅ Kooskõlastatud:</b></td><td>{c.get("agreedAt", fallback_date)}</td></tr>
+            <tr style="background-color: rgba(255,255,255,0.06); font-weight: bold;">
+                <td>📆 Tähtaeg:</td><td>{dueAt} ({days_remaining} päeva)</td>
+            </tr>
+            <tr><td><b>⚙️ Etapp:</b></td><td>{c.get("stage", "Kavandamisel")}</td></tr>
+            <tr><td><b>🏷️ Märgised:</b></td><td>{c.get("tags", {}).get("pageInfo", {}).get("total", 2)} tk</td></tr>
+        </table>
+        """
+
+        desc_and_terms = f"""
+        <div style="margin-top: 8px;">
+            <b>📝 Märkused:</b><br/>
+            <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">
+                {c.get("description") or default_poem}
+            </div>
+        </div>
+        <div style="margin-top: 6px;">
+            <b>📚 Eri tingimused:</b><br/>
+            <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">
+                {c.get("terms") or default_poem}
+            </div>
+        </div>
+        """
+
+        return table_rows, desc_and_terms
