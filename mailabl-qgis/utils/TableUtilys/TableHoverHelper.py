@@ -107,8 +107,23 @@ class TableHoverWatcher(QObject):
         self._close_popup()
         self.active_popup = HoverPopup(message, self.table)
         self.active_popup.move(global_pos + QPoint(12, 12))  # slight offset to avoid overlapping
+        # Show first to get height (QDialog must calculate layout)
         self.active_popup.show()
-        
+        self.active_popup.adjustSize()
+
+        popup_size = self.active_popup.size()
+        mouse_pos = QCursor.pos()
+
+        # Position: center horizontally, slightly below the mouse
+        x = mouse_pos.x() - (popup_size.width() // 2)
+        y = mouse_pos.y() + 16  # slight offset downward
+
+        screen_geometry = self.table.screen().geometry()
+        if y + popup_size.height() > screen_geometry.bottom():
+            y = mouse_pos.y() - popup_size.height() - 16  # flip above
+
+        self.active_popup.move(QPoint(x, y))
+
     def _close_popup(self):
         if self.active_popup:
             self.active_popup.close()

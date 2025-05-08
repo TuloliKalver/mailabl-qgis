@@ -251,19 +251,48 @@ class CoordinationsQueries:
 
         table_rows = f"""
         <table style="margin-top: 10px; border-collapse: collapse; width: 100%;">
-            <tr><td><b>📁 Töö nr:</b></td><td>{c.get("jobNumber", "2390")}</td></tr>
-            <tr><td><b>🔤 Töö nimetus:</b></td><td>{c.get("jobName", "Asd")}</td></tr>
-            <tr><td><b>🏷️ Väline kood:</b></td><td>{c.get("externalCode", "902902")}</td></tr>
-            <tr><td><b>📅 Algus:</b></td><td>{c.get("startAt", fallback_date)}</td></tr>
-            <tr><td><b>📩 Vastuvõtt:</b></td><td>{c.get("receivedAt", fallback_date)}</td></tr>
-            <tr><td><b>✅ Kooskõlastatud:</b></td><td>{c.get("agreedAt", fallback_date)}</td></tr>
-            <tr style="background-color: rgba(255,255,255,0.06); font-weight: bold;">
-                <td>📆 Tähtaeg:</td><td>{dueAt} ({days_remaining} päeva)</td>
+            <style>
+                td {{
+                    padding: 6px 10px;
+                    vertical-align: middle;
+                }}
+                td.label {{
+                    text-align: left;
+                    color: #ccc;
+                    width: 25%;
+                }}
+                td.value {{
+                    text-align: center;
+                    color: #f5f5f5;
+                    font-weight: 500;
+                    background-color: rgba(255,255,255,0.03);
+                }}
+            </style>
+            <tr>
+                <td class="label">📁 Töö nr:</td><td class="value">{c.get("jobNumber", "2390")}</td>
+                <td class="label">🔤 Töö nimetus:</td><td class="value">{c.get("jobName", "Asd")}</td>
             </tr>
-            <tr><td><b>⚙️ Etapp:</b></td><td>{c.get("stage", "Kavandamisel")}</td></tr>
-            <tr><td><b>🏷️ Märgised:</b></td><td>{c.get("tags", {}).get("pageInfo", {}).get("total", 2)} tk</td></tr>
+            <tr>
+                <td class="label">🏷️ Väline kood:</td><td class="value">{c.get("externalCode", "902902")}</td>
+                <td class="label">⚙️ Etapp:</td><td class="value">{c.get("stage", "Kavandamisel")}</td>
+            </tr>
+            <tr>
+                <td colspan="4"><hr style="border: 0; height: 1px; background: #444; margin: 6px 0;" /></td>
+            </tr>
+            <tr>
+                <td class="label">📅 Algus:</td><td class="value">{c.get("startAt", fallback_date)}</td>
+                <td class="label">📩 Vastuvõtt:</td><td class="value">{c.get("receivedAt", fallback_date)}</td>
+            </tr>
+            <tr>
+                <td class="label">✅ Kooskõlastatud:</td><td class="value">{c.get("agreedAt", fallback_date)}</td>
+                <td class="label">📆 Tähtaeg:</td><td class="value"><b>{dueAt}</b> ({days_remaining} päeva)</td>
+            </tr>
+            <tr>
+                <td class="label">🏷️ Märgised:</td><td class="value" colspan="3">{c.get("tags", {}).get("pageInfo", {}).get("total", 2)} tk</td>
+            </tr>
         </table>
         """
+
 
         desc_and_terms = f"""
         <div style="margin-top: 8px;">
