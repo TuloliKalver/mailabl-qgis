@@ -11,6 +11,8 @@ from ...KeelelisedMuutujad.modules import Module
 from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
 #from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
 from ...utils.ProgressHelper import ProgressDialogModern    
+from ...Functions.AsBuilt.TableStyle import TableStyle  # adjust path if needed
+
 
 class Constants:
     package_size = 25
@@ -249,25 +251,53 @@ class CoordinationsQueries:
             dueAt = fallback_date
             days_remaining = "?"
 
+        background_color = "#dfe3e1"
+        text_color = "#243a4e"
+        header_background = "#47a5b1"
+        header_text_color = "white"
+        shadow = "4px 4px 6px rgba(0, 0, 0, 0.15)"
+
+        # Shared layout styles
+        border_radius = "6px"
+        transition = "all 0.3s ease-in-out"
+        table_width = "90%"
+        cell_padding = "2px 3px"
+        header_padding = "2px 5px"
+        font_size = "12px"
+        font_family = "Roboto, Arial, sans-serif"
+
         table_rows = f"""
-        <table style="margin-top: 10px; border-collapse: collapse; width: 100%;">
+        <table style="margin-top: 3px; border-collapse: collapse; width: 100%;">
             <style>
                 td {{
-                    padding: 6px 10px;
+                    padding: 3px 3px;
                     vertical-align: middle;
+                    font-size: 13px;
+                    font-family: 'Segoe UI', Roboto, sans-serif;
                 }}
                 td.label {{
                     text-align: left;
-                    color: #ccc;
-                    width: 25%;
+                    color: {header_text_color};
+                    font-weight: bold;
+                    background: {header_background};
+                    border-radius: 4px;
+                    white-space: nowrap;
                 }}
                 td.value {{
                     text-align: center;
-                    color: #f5f5f5;
+                    color: {text_color};
                     font-weight: 500;
-                    background-color: rgba(255,255,255,0.03);
+                    background-color: {background_color};
+                    border-radius: 4px;
+                }}
+                hr.row-divider {{
+                    border: 0;
+                    height: 1px;
+                    background: {header_background};
+                    margin: 6px 0;
                 }}
             </style>
+
             <tr>
                 <td class="label">📁 Töö nr:</td><td class="value">{c.get("jobNumber", "2390")}</td>
                 <td class="label">🔤 Töö nimetus:</td><td class="value">{c.get("jobName", "Asd")}</td>
@@ -276,9 +306,7 @@ class CoordinationsQueries:
                 <td class="label">🏷️ Väline kood:</td><td class="value">{c.get("externalCode", "902902")}</td>
                 <td class="label">⚙️ Etapp:</td><td class="value">{c.get("stage", "Kavandamisel")}</td>
             </tr>
-            <tr>
-                <td colspan="4"><hr style="border: 0; height: 1px; background: #444; margin: 6px 0;" /></td>
-            </tr>
+            <tr><td colspan="4"><hr class="row-divider" /></td></tr>
             <tr>
                 <td class="label">📅 Algus:</td><td class="value">{c.get("startAt", fallback_date)}</td>
                 <td class="label">📩 Vastuvõtt:</td><td class="value">{c.get("receivedAt", fallback_date)}</td>
@@ -294,15 +322,29 @@ class CoordinationsQueries:
         """
 
 
+
         desc_and_terms = f"""
         <div style="margin-top: 8px;">
-            <b>📝 Märkused:</b><br/>
+            <div style="
+                text-align: left;
+                color: {header_text_color};
+                font-weight: bold;
+                background: {header_background};
+                border-radius: 4px;
+                white-space: nowrap;            
+            ">📝 Märkused:</div>
             <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">
                 {c.get("description") or default_poem}
             </div>
         </div>
-        <div style="margin-top: 6px;">
-            <b>📚 Eri tingimused:</b><br/>
+                    <div style="
+                text-align: left;
+                color: {header_text_color};
+                font-weight: bold;
+                background: {header_background};
+                border-radius: 4px;
+                white-space: nowrap;
+            ">📚 Eri tingimused:</div>
             <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">
                 {c.get("terms") or default_poem}
             </div>
