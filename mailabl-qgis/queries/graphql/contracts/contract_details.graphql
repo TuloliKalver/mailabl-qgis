@@ -2,13 +2,7 @@ query contract($id: ID!) {
   contract(id: $id) {
     __typename
     id
-    status {
-      id
-      name
-      color
-      type
-    }
-    number
+        number
     name
     type {
       id
@@ -86,13 +80,7 @@ query contract($id: ID!) {
               }
             }
           }
-          websites(first: 1, where: {column: IS_DEFAULT, operator: EQ, value: true}) {
-            edges {
-              node {
-                value
-              }
-            }
-          }
+          
         }
         notes
         isContractPartner
@@ -101,27 +89,7 @@ query contract($id: ID!) {
         isInvoiceRecipient
       }
     }
-    files(first: 5, after: "", orderBy: [{column: FILE_NAME, order: ASC}]) {
-      pageInfo {
-        hasNextPage
-        endCursor
-        total
-      }
-      edges {
-        node {
-          __typename
-          uuid
-          fileName
-          ext
-          size
-          humanReadableSize
-          uploader {
-            displayName
-          }
-          createdAt
-        }
-      }
-    }
+    
     tags(first: 50) {
       pageInfo {
         total
@@ -133,26 +101,6 @@ query contract($id: ID!) {
         }
       }
     }
-    properties(
-      first: 5
-      after: ""
-      orderBy: [{column: DISPLAY_ADDRESS, order: ASC}]
-    ) {
-      pageInfo {
-        hasNextPage
-        endCursor
-        total
-      }
-      edges {
-        node {
-          id
-          displayAddress
-          cadastralUnitNumber
-        }
-      }
-    }
-    followers {
-      id
-    }
+    
   }
 }

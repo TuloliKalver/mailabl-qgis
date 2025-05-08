@@ -52,6 +52,7 @@ class GraphqlProjects:
     UPDATE_project_properties = 'update_project_properties.graphql'
     Projects_tags = 'projects_tags.graphql'
     Q_Properties_related_projects = 'propertiesrelated_projects.graphql'
+    PROJECT_DETAILS = "project_details.graphql"
 
 class GraphqlProperties:
     PROPERTIES_TAGS = 'Tags.graphql'
@@ -89,13 +90,15 @@ class GraphqlContracts:
     UPDATE_CONTRACT_PROPERTIES = 'update_contract_properties.graphql'
     CONTRACT_TYPES = 'contract_types.graphql'
     STATUS = 'contracts_type_status.graphql'
+    CONTRACT_DETAILS = "contract_details.graphql"
 
 class GraphqlEasements:
-    EASMENT_TYPES = 'easements_types.graphql'
+    EASEMENT_TYPES = 'easements_types.graphql'
     STATUS = 'easements_type_status.graphql'
     UPDATE_EASEMENTS_PROPERTIES = 'update_easements_properties.graphql'
     RELATED_PROPERTIES = 'W_easement_id.graphql'
     Q_All_EASEMENTS = 'easements.graphql'
+    EASEMENT_DETAILS = "easement_details.graphql"
 
 
 class GraphqlTags:
@@ -110,6 +113,7 @@ class GraphqlTasks:
     RELATED_PROPERTIES = "tasks_related_properties.graphql"
     TaskById = "TaskById.graphql"
     updatedescription ="update_task_properties.graphql"
+    TASK_DETAILS =  "task_details.graphql"
 
 class GraphqlCoordinations:
     COORDINATIONS = 'coordinations_type_status.graphql'
@@ -125,4 +129,8 @@ class GraphqlUser:
     Q_Where_user = 'users_where.graphql'
     Q_me = 'me.graphql'
 
+class GraphqlSubmissions:
+    SUBMISSION_DETAILS = "submission_details.graphql"
 
+class GraphqlSpecifications:
+    SPETCIFICATIONS_DETAILS = "specification_details.graphql" 
