@@ -122,7 +122,7 @@ class TableHoverWatcher(QObject):
             line-height: 1.6;
         ">
             <div style="font-size: 15px; font-weight: bold; color: #4ecdc4;">
-                👀 Mis siin peidus on
+                👀 Mis siin peidus on?
             </div>
         """
         print(f"Setting overall colsmap to {colspan}")

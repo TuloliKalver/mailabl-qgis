@@ -144,7 +144,7 @@ class FilesByNames:
     DecisionMaker_UI = "DecicionMakerUI.ui"
     asBuitTools_UI = "asBuiltTools.ui"
     COORDINATIONS_UI = "CoordinationsSetup.ui"
-
+    WORKS_UI = "WorksSetup.ui"
 
     def __init__(self):
 
