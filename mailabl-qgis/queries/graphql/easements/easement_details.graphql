@@ -33,29 +33,6 @@ query easement($id: ID!) {
         }
       }
     }
-    files(first: 5, after: "", orderBy: [{column: FILE_NAME, order: ASC}]) {
-      pageInfo {
-        hasNextPage
-        endCursor
-        total
-      }
-      edges {
-        node {
-          __typename
-          uuid
-          fileName
-          ext
-          size
-          humanReadableSize
-          uploader {
-            displayName
-          }
-          createdAt
-        }
-      }
-    }
-    followers {
-      id
-    }
+    
   }
 }

@@ -61,13 +61,7 @@ query project($id: ID!) {
               }
             }
           }
-          websites(first: 1, where: {column: IS_DEFAULT, operator: EQ, value: true}) {
-            edges {
-              node {
-                value
-              }
-            }
-          }
+          
         }
         notes
       }
