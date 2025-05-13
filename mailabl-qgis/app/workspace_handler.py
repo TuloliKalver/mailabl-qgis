@@ -80,7 +80,7 @@ class WorkSpaceHandler:
         pbSearchCooperation  = self.pbSearchCooperation
         le_searchCooperation = self.le_searchCooperation
         pbCooperation_free = self.pbCooperation_free
-
+        
         #proprtiest_connect.setEnabled(False)
         pbSearchCooperation.setEnabled(False)
         le_searchCooperation.setEnabled(False)
@@ -123,7 +123,7 @@ class WorkSpaceHandler:
                                                              statuses=selected_status
                                                              )
         
-        TableHoverWatcher(self.tblMailabl_Cooperation)
+        TableHoverWatcher(module, table)
 
         button.blockSignals(False)
 
@@ -174,6 +174,10 @@ class WorkSpaceHandler:
                                                              )
                 
         button.blockSignals(False)
+
+        TableHoverWatcher(module, table)
+
+
         RightClickHelper.ASBuilt_right_click_action()
 
     def asBuilt_search(self):
@@ -252,7 +256,6 @@ class WorkSpaceHandler:
         browser.append("<hr>")  # separator line
         QCoreApplication.processEvents()
 
-
     @staticmethod
     def swWorkSpace_MapThemes_FrontPage(self):
         self.swWorkSpace.setCurrentIndex(6)
@@ -301,6 +304,9 @@ class WorkSpaceHandler:
 
 
         Projects.load_projects_by_status(table, selected_status)
+
+        TableHoverWatcher(module, table)
+
         button.blockSignals(False)
     
     def swWorkSpace_Contracts(self):
@@ -360,6 +366,8 @@ class WorkSpaceHandler:
         button.blockSignals(False)
         refresh_button.blockSignals(False)
 
+        TableHoverWatcher(module, table)
+
     def contracts_reload(self):
         refresh_button = self.pbRefresh_tblMailabl_contracts
         refresh_button.blockSignals(True)
@@ -416,6 +424,9 @@ class WorkSpaceHandler:
         prefered_types_ids = types_combo_box.checkedItemsData()
 
         EasementssMain.load_main_easements_by_type_and_status(self, table, prefered_types_ids, selected_status)
+
+        TableHoverWatcher(module, table)
+
         button.blockSignals(False)
 
     def easements_reload(self):

@@ -2,8 +2,8 @@
 # pylint: disable=relative-beyond-top-level
 # pylint: disable=no-name-in-module
 
-import pandas as pd
-from typing import List
+
+from typing import Tuple, Dict
 from PyQt5.QtCore import QCoreApplication
 
 from ...queries.python.FileLoaderHelper import GraphqlStatuses, GraphqlTasks, GraphQLQueryLoader
@@ -15,6 +15,9 @@ from ...utils.DataExtractors.DataModelHelpers import DataModelBuilder
 from ...utils.ProgressHelper import ProgressDialogModern    
 from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
+from ...utils.TableUtilys.htmlConverter import HtmlConverter
+from ...utils.TableUtilys.FlagIconHelper import FlagIconHelper
+
 
 
 class Constants:
@@ -70,6 +73,15 @@ class AsBuiltMain:
             print(f"{heading}, {text}")
         progress.update(98)
         progress.close()
+
+    @staticmethod
+    def load_asBuilt_details(id):
+
+        module = Module.TASK
+
+        table_rows = AsBuiltQueries._query_asBuilt_details(id, module)
+
+        return table_rows
 
 class AsBuiltModels: 
     @staticmethod
@@ -276,3 +288,66 @@ class AsBuiltQueries:
                     )
 
             return False
+        
+    def _query_asBuilt_details(id, module):
+        
+        query_name =  GraphqlTasks.TASK_DETAILS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+        variables = {
+            "id": id
+        }
+        response = requestBuilder.construct_and_send_request(query, variables)
+
+        if response.status_code == 200:
+            table_rows = AsBuiltQueries._extract_all_asBuilt_details(response.json())
+            return table_rows
+        
+
+
+
+
+    def _extract_all_asBuilt_details(node: Dict) -> Tuple[str, str]:
+        """
+        Extracts HTML fragments for ASBUILT details from a Task node, styled to match the original hover design.
+
+        Returns:
+            table_rows: HTML string containing a centered, styled table of key fields.
+            desc_and_terms: HTML string wrapping the raw description/details.
+        """
+        c = node.get("data", {}).get("task", {})
+
+        print(f"Task values: {c}")
+
+        label_color = "#BBB"
+        value_color = "#EEE"
+
+        label_width = "25%"
+        value_width = "30%"
+
+
+        # Build the general data table (Üldandmed) with original inline styles
+        table_rows = f"""
+            <tr>
+                <td width="{label_width}"><font color="{label_color}"><b>📝 Pealkiri: </b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{c.get("title", "")}</b></font></td>
+            </tr>
+        
+            <tr>
+                <td width="{label_width}"><font color="{label_color}"><b>🏷️ Liik:</b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{c.get("type", {}).get("name", "")}</b></font></td>
+
+            </tr>
+            <tr>
+                <td width="{label_width}"><font color="{label_color}"><b>📅 Alguskuupäev:</b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{c.get("startAt", )}</b></font></td>
+                <td width="{label_width}"><font color="{label_color}"><b>⏰ Tähtaeg:</b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{c.get("dueAt", )}</b></font></td>
+            </tr>
+
+            <tr>
+                <td width="{label_width}"><font color="{label_color}"><b>✅ Lõpetatud:</b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{c.get("completedAt", )}</b></font></td>
+            </tr>
+        """
+        #print (desc_and_terms)
+        return table_rows

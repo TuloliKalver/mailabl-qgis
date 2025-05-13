@@ -345,7 +345,6 @@ class TableUtils:
     @staticmethod
     def _resize_coordinations_columns(resizer, index_map: CoordinationsIndexMap, language: str="et"):
         TableHeaders_new(language)
-        print(f"Coordinations Index Map: {index_map}")
         columns = [
             HeaderKeys.HEADER_ID,
             HeaderKeys.HEADER_NUMBER,
@@ -365,8 +364,7 @@ class TableUtils:
 
     @staticmethod
     def _resize_asBuilt_icon_columns(resizer, index_map, table, language: str = "et"):
-        passed_language = language
-        #print(f"Language: {passed_language}")
+        print(f"AsBuilt Index Map keys: {index_map.keys()}")
         TableHeaders_new(language)
 
         columns = [

@@ -1,13 +1,13 @@
-
+from PyQt5.QtWidgets import QApplication
 from ..config.iconHandler import iconHandler
 from PyQt5.QtWidgets import QMenu, QAction, QTableView
-from PyQt5.QtCore import Qt, QPoint, QSize
+from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtGui import QIcon
 from ..Functions.AsBuilt.AsBuiltTools import AsBuiltTools
 from ..Functions.AsBuilt.AsBuiltHelpers import AsBuiltHelpers, NotesTableGenerator
-from ..KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
-from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
+from ..KeelelisedMuutujad.messages import Headings
 from ..widgets.properties_connector_UIcontroller import PropertiesConnectorUIController
 from ..KeelelisedMuutujad.modules import Module
 
@@ -28,46 +28,61 @@ class RightClickHelper:
 
     @classmethod
     def AsBuilt_table_right_click_menu(cls, pos: QPoint):
-        from PyQt5.QtGui import QIcon
         table = cls.dialog.tblAsBuilt
-        index = table.indexAt(pos)
-        if not index.isValid():
-            return
+        print(f" click on position: {pos}")
+        if QApplication.mouseButtons() != Qt.RightButton:
+            print("a right-click.")
+            
+            
+            index = table.indexAt(pos)
+            
+            col = index.column()
+            if col in [0, 1, 5, 7, 8, 9, 10, 11, 12, 13]:  # ⛔ Block right-click on columns 0 and 1
+                return
 
-        row = index.row()
+            #[0 'id', 1 'flag', 2'type', 3'name', 4'tähtaeg', 5'color', 6'responsible', 7'property_number', 
+            # 8 'properties_icon', 
+            # 9'parent_id', 10 'web_link_button', 11'documents', 12'file_path',13 'statuses']
+            
+            if not index.isValid():
+                return
 
-        menu = QMenu(table)
+            row = index.row()
 
-        icon = iconHandler.add_more_files()
-        icon_edit = iconHandler.edit_data()
-        pin_add = iconHandler.pin_add()
+            menu = QMenu(table)
 
-        actio_add_files = QAction(QIcon(icon), "Lisa faile", table)
-        helper = RightClickHelper(cls.dialog)
-        actio_add_files.triggered.connect(lambda: helper._handle_file_add(table, row))
-        
+            icon = iconHandler.add_more_files()
+            icon_edit = iconHandler.edit_data()
+            pin_add = iconHandler.pin_add()
 
-        asBuiltTools = AsBuiltTools(cls.dialog, table)
-        action_edit_notes = QAction(QIcon(icon_edit), "Halda märkusi", table)
-        action_edit_notes.triggered.connect(lambda:asBuiltTools.load_asBuiltTools())
+            actio_add_files = QAction(QIcon(icon), "Lisa faile", table)
+            helper = RightClickHelper(cls.dialog)
+            actio_add_files.triggered.connect(lambda: helper._handle_file_add(table, row))
+            
+
+            asBuiltTools = AsBuiltTools(cls.dialog, table)
+            action_edit_notes = QAction(QIcon(icon_edit), "Halda märkusi", table)
+            action_edit_notes.triggered.connect(lambda:asBuiltTools.load_asBuiltTools())
 
 
-        button_asBuilt = cls.dialog.pbTeostusConnectproperties
-        action_add_properties = QAction(QIcon(pin_add), "Seosta kinnistuid", table)
-        
-        action_add_properties.triggered.connect(
-            lambda: PropertiesConnectorUIController.load_properties_connector(
-                cls.dialog, Module.ASBUILT, table, button_asBuilt
+            button_asBuilt = cls.dialog.pbTeostusConnectproperties
+            action_add_properties = QAction(QIcon(pin_add), "Seosta kinnistuid", table)
+            
+            action_add_properties.triggered.connect(
+                lambda: PropertiesConnectorUIController.load_properties_connector(
+                    cls.dialog, Module.ASBUILT, table, button_asBuilt
+                )
             )
-        )
 
 
-        menu.addAction(actio_add_files)
-        menu.addAction(action_edit_notes)
-        menu.addAction(action_add_properties)
+            menu.addAction(actio_add_files)
+            menu.addAction(action_edit_notes)
+            menu.addAction(action_add_properties)
 
-        menu.exec_(table.viewport().mapToGlobal(pos))
-
+            menu.exec_(table.viewport().mapToGlobal(pos))
+        else:
+            print("not a right-click.")
+            return
 
     def _handle_file_add(self, table: QTableView, row) -> bool:
         model = table.model()

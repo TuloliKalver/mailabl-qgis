@@ -34,6 +34,8 @@ class ModuleTableBuilder:
         elif module == Module.COORDINATION:
             index_map = CoordinationsIndexMap(header_labels, language=language)
             TableUtils._resize_coordinations_columns(resizer, index_map)
+            ColumnResizer.resizeColumnByIndex(resizer, 14, status=True)
+            ColumnResizer.resizeColumnByIndex(resizer, 2)
         else:
             TableUtils._resize_main_columns(resizer, index_map)
             TableUtils._resize_standard_columns(resizer, index_map)

@@ -217,24 +217,26 @@ class CoordinationsQueries:
 
         if response.status_code == 200:
             
-            table_rows, desc_and_terms = CoordinationsQueries.extract_all_coordination_details(response.json())
-            return table_rows, desc_and_terms
+            table_rows = CoordinationsQueries.extract_all_coordination_details(response.json())
+            return table_rows
         else:
             #print(f"Error: {response.status_code}")
             return None
        
 
+    @staticmethod
+    def extract_all_coordination_details(node: dict) -> str:
 
-    def extract_all_coordination_details(node: dict) -> tuple[str, str]:
-        fallback = "—"
-        fallback_date = "01.01.2022"
-        default_poem = (
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 🌿\n"
-            "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. ✨"
-        )
+        label_color = "#BBB"
+        value_color = "#EEE"
+
+        label_width = "25%"
+        value_width = "30%"
 
         c = node.get("data", {}).get("coordination", {})
+
+        def safe(key: str) -> str:
+            return c.get(key) or ""
 
         # Handle due date formatting and day difference
         raw_due = c.get("dueAt")
@@ -243,112 +245,55 @@ class CoordinationsQueries:
                 due_dt = datetime.strptime(raw_due, "%Y-%m-%d")
                 today = datetime.today()
                 days_remaining = (due_dt - today).days
-                dueAt = due_dt.strftime("%d.%m.%Y")
+                dueAt_display = f"{due_dt.strftime('%d.%m.%Y')} \n({days_remaining} päeva)"
             except Exception:
-                dueAt = fallback_date
-                days_remaining = "?"
+                dueAt_display = ""
         else:
-            dueAt = fallback_date
-            days_remaining = "?"
+            dueAt_display = ""
+            
+        tags = c.get("tags", {})
+        tunnused = [edge["node"]["name"] for edge in tags.get("edges", [])]
+        tunnused_str = ", ".join(tunnused) if tunnused else ""
 
-        background_color = "#dfe3e1"
-        text_color = "#243a4e"
-        header_background = "#47a5b1"
-        header_text_color = "white"
-        shadow = "4px 4px 6px rgba(0, 0, 0, 0.15)"
-
-        # Shared layout styles
-        border_radius = "6px"
-        transition = "all 0.3s ease-in-out"
-        table_width = "90%"
-        cell_padding = "2px 3px"
-        header_padding = "2px 5px"
-        font_size = "12px"
-        font_family = "Roboto, Arial, sans-serif"
 
         table_rows = f"""
-        <table style="margin-top: 3px; border-collapse: collapse; width: 100%;">
-            <style>
-                td {{
-                    padding: 3px 3px;
-                    vertical-align: middle;
-                    font-size: 13px;
-                    font-family: 'Segoe UI', Roboto, sans-serif;
-                }}
-                td.label {{
-                    text-align: left;
-                    color: {header_text_color};
-                    font-weight: bold;
-                    background: {header_background};
-                    border-radius: 4px;
-                    white-space: nowrap;
-                }}
-                td.value {{
-                    text-align: center;
-                    color: {text_color};
-                    font-weight: 500;
-                    background-color: {background_color};
-                    border-radius: 4px;
-                }}
-                hr.row-divider {{
-                    border: 0;
-                    height: 1px;
-                    background: {header_background};
-                    margin: 6px 0;
-                }}
-            </style>
+        <tr>
+            <!-- [1][1][1][3] = 6 -->
+            <td width="{label_width}"><font color="{label_color}"><b>📁 Töö nr:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("jobNumber")}</b></font></td>
+            <td width="{label_width}"><font color="{label_color}"><b>🔤 Töö nimetus:</b></font></td>
+            <td colspan="3"><font color="{value_color}"><b>{safe("jobName")}</b></font></td>
+        </tr>
+        <tr>
+            <!-- [1][1][1][1][1][1] = 6 -->
+            <td width="{label_width}"><font color="{label_color}"><b>🏷️ EHR kood:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("externalCode")}</b></font></td>
+            <td width="{label_width}"><font color="{label_color}"><b>⚙️ Etapp:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("stage")}</b></font></td>
+            <td width="{label_width}"></td>
+            <td width="{value_width}"></td>
+        </tr>
+        <tr>
+            <!-- [1][1][1][1][1][1] = 6 -->
+            <td width="{label_width}"><font color="{label_color}"><b>📩 Saabunud:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("receivedAt")}</b></font></td>
+            <td width="{label_width}"><font color="{label_color}"><b>🟢 Alustatud:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("startAt")}</b></font></td>
+        </tr>
+        <tr>
 
-            <tr>
-                <td class="label">📁 Töö nr:</td><td class="value">{c.get("jobNumber", "2390")}</td>
-                <td class="label">🔤 Töö nimetus:</td><td class="value">{c.get("jobName", "Asd")}</td>
-            </tr>
-            <tr>
-                <td class="label">🏷️ Väline kood:</td><td class="value">{c.get("externalCode", "902902")}</td>
-                <td class="label">⚙️ Etapp:</td><td class="value">{c.get("stage", "Kavandamisel")}</td>
-            </tr>
-            <tr><td colspan="4"><hr class="row-divider" /></td></tr>
-            <tr>
-                <td class="label">📅 Algus:</td><td class="value">{c.get("startAt", fallback_date)}</td>
-                <td class="label">📩 Vastuvõtt:</td><td class="value">{c.get("receivedAt", fallback_date)}</td>
-            </tr>
-            <tr>
-                <td class="label">✅ Kooskõlastatud:</td><td class="value">{c.get("agreedAt", fallback_date)}</td>
-                <td class="label">📆 Tähtaeg:</td><td class="value"><b>{dueAt}</b> ({days_remaining} päeva)</td>
-            </tr>
-            <tr>
-                <td class="label">🏷️ Märgised:</td><td class="value" colspan="3">{c.get("tags", {}).get("pageInfo", {}).get("total", 2)} tk</td>
-            </tr>
-        </table>
+            <td width="{label_width}"><font color="{label_color}"><b>📆 Tähtaeg:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{dueAt_display}</b></font></td>
+        </tr>
+        <tr>
+            <!-- [2][4] = 6 -->
+            <td width="{label_width}" colspan="2"><font color="{label_color}"><b>✅ Kooskõlastatud:</b></font></td>
+            <td width="80%" colspan="4"><font color="{value_color}"><b>{safe("agreedAt")}</b></font></td>
+        </tr>
+        <tr>
+            <!-- [1][5] = 6 -->
+            <td width="{label_width}"><font color="{label_color}"><b>🏷️ Tunnused:</b></font></td>
+            <td width="80%" colspan="5"><font color="{value_color}"><b>{tunnused_str}</b></font></td>
+        </tr>
         """
-
-
-
-        desc_and_terms = f"""
-        <div style="margin-top: 8px;">
-            <div style="
-                text-align: left;
-                color: {header_text_color};
-                font-weight: bold;
-                background: {header_background};
-                border-radius: 4px;
-                white-space: nowrap;            
-            ">📝 Märkused:</div>
-            <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">
-                {c.get("description") or default_poem}
-            </div>
-        </div>
-                    <div style="
-                text-align: left;
-                color: {header_text_color};
-                font-weight: bold;
-                background: {header_background};
-                border-radius: 4px;
-                white-space: nowrap;
-            ">📚 Eri tingimused:</div>
-            <div style="white-space: pre-wrap; word-break: break-word; color: #f5f5f5;">
-                {c.get("terms") or default_poem}
-            </div>
-        </div>
-        """
-
-        return table_rows, desc_and_terms
+        return table_rows

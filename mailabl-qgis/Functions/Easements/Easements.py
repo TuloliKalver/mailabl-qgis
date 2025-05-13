@@ -4,6 +4,7 @@
 
 
 from PyQt5.QtCore import QCoreApplication
+from datetime import datetime
 from ...queries.python.FileLoaderHelper import GraphqlEasements, GraphQLQueryLoader
 from ...queries.python.query_tools import requestBuilder
 from ...KeelelisedMuutujad.modules import Module
@@ -76,6 +77,24 @@ class EasementssMain:
             print(f"{heading}, {text}")
         progress.close()
         
+    def load_easements_details(id):
+        module = Module.EASEMENT
+        query_name =  GraphqlEasements.EASEMENT_DETAILS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+        variables = {
+            "id": id
+        }
+        response = requestBuilder.construct_and_send_request(query, variables)
+
+        if response.status_code == 200:
+            
+            table_rows = EasementsQueries.extract_Easements_details(response.json())
+            return table_rows
+        else:
+            #print(f"Error: {response.status_code}")
+            return None
+
+    
 
 class queryHandling:
     def __init__(self):
@@ -237,3 +256,78 @@ class EasementsQueries:
 
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
+
+    @staticmethod
+    def extract_Easements_details(node: dict) -> str:
+        label_color = "#BBB"
+        value_color = "#EEE"
+
+        label_width = "25%"
+        value_width = "30%"
+
+        c = node.get("data", {}).get("easement", {})
+
+        def safe(key: str) -> str:
+            return c.get(key) or ""
+
+        # Status + color label
+        status_data = c.get("status", {})
+        status_name = status_data.get("name", "")
+        status_color = status_data.get("color", "#CCC")
+        status_display = f'<span style="background-color:#{status_color}; padding:2px 6px; border-radius:4px;">{status_name}</span>' if status_name else ""
+
+        # Type
+        type_name = c.get("type", {}).get("name", "")
+
+        # Notarized
+        notarized = "Jah" if c.get("isNotarized") else "Ei"
+
+        # Dates
+        def fmt_date(date_str: str) -> str:
+            try:
+                return datetime.strptime(date_str, "%Y-%m-%d").strftime("%d.%m.%Y")
+            except Exception:
+                return ""
+
+        effective_date = fmt_date(c.get("effectiveAt", ""))
+        due_date = ""
+        raw_due = c.get("dueAt")
+        if raw_due:
+            try:
+                due_dt = datetime.strptime(raw_due, "%Y-%m-%d")
+                days_remaining = (due_dt - datetime.today()).days
+                due_date = f"{due_dt.strftime('%d.%m.%Y')} ({days_remaining} päeva)"
+            except Exception:
+                due_date = ""
+
+        # File link (optional fallback if empty)
+        files_link = c.get("filesPath", "")
+        file_html = f'<a href="{files_link}" style="color:{value_color}; text-decoration:underline;">Ava dokumendid</a>' if files_link else ""
+
+        table_rows = f"""
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>📁 Easement nr:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("number")}</b></font></td>
+        </tr>
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>🔤 Nimetus:</b></font></td>
+            <td width="80%" colspan="3"><font color="{value_color}"><b>{safe("name")}</b></font></td>        
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>📂 Tüüp:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{type_name}</b></font></td>
+        </tr>
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>✍️ Notariaalne:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{notarized}</b></font></td>
+            <td width="{label_width}"><font color="{label_color}"><b>📄 Notari nr:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("notarialNumber")}</b></font></td>
+        </tr>
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>🟢 Kehtib alates:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{effective_date}</b></font></td>
+            <td width="{label_width}"><font color="{label_color}"><b>📆 Tähtaeg:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{due_date}</b></font></td>
+        </tr>
+        """
+        return table_rows
+

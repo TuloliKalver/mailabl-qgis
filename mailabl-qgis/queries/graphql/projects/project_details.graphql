@@ -2,29 +2,15 @@ query project($id: ID!) {
   project(id: $id) {
     __typename
     id
-    status {
-      id
-      name
-      color
-      type
-    }
     name
     number
     client {
       id
       displayName
     }
-    parentId
-    parent {
-      id
-      name
-    }
     isPublic
-    isMember
     startAt
     dueAt
-    filesPath
-    description
     createdAt
     updatedAt
     members(first: 50, orderBy: [{column: DISPLAY_NAME, order: ASC}]) {
@@ -86,24 +72,6 @@ query project($id: ID!) {
         notes
       }
     }
-    properties(
-      first: 5
-      after: ""
-      orderBy: [{column: DISPLAY_ADDRESS, order: ASC}]
-    ) {
-      pageInfo {
-        hasNextPage
-        endCursor
-        total
-      }
-      edges {
-        node {
-          id
-          displayAddress
-          cadastralUnitNumber
-        }
-      }
-    }
     tags(first: 50) {
       pageInfo {
         total
@@ -115,7 +83,7 @@ query project($id: ID!) {
         }
       }
     }
-    files(first: 5, after: "", orderBy: [{column: FILE_NAME, order: ASC}]) {
+    contracts(first: 50, after: "", orderBy: [{column: NUMBER, order: ASC}]) {
       pageInfo {
         hasNextPage
         endCursor
@@ -124,20 +92,33 @@ query project($id: ID!) {
       edges {
         node {
           __typename
-          uuid
-          fileName
-          ext
-          size
-          humanReadableSize
-          uploader {
-            displayName
+          id
+          number
+          name
+          sum {
+            amount
+            currencyCode
           }
-          createdAt
+          dueAt
+          status {
+            id
+            name
+            color
+            type
+          }
+          type {
+            name
+          }
         }
       }
     }
-    followers {
-      id
-    }
+
+
   }
 }
+
+
+
+
+
+

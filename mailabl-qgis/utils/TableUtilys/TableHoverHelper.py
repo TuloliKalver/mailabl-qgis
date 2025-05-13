@@ -1,22 +1,29 @@
 from PyQt5.QtCore import QObject, QTimer, Qt, QPoint
-from PyQt5.QtGui import QCursor, QTextOption
-from PyQt5.QtWidgets import QTableView
-from PyQt5.QtWidgets import QDialog, QLabel, QVBoxLayout, QTextBrowser
+from PyQt5.QtGui import QCursor
+from PyQt5.QtWidgets import QTableView, QDialog, QVBoxLayout, QTextBrowser, QToolTip
+
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys
-from ...utils.TableUtilys.TableHelpers import  TableExtractor
+from ...utils.TableUtilys.TableHelpers import TableExtractor
 from .TableHEaderIndexMap import HeaderIndexMap
 from ...Functions.Coordinations.Coordinations import CoordinationsMain
+from ...queries.python.projects_pandas import ProjectsQueries
+from ...Functions.AsBuilt.ASBuilt import AsBuiltMain
+from ...Functions.Contracts.Contracts import ContractsMain
+from ...Functions.Easements.Easements import EasementssMain
+from ...KeelelisedMuutujad.modules import Module
+
 
 class TableHoverWatcher(QObject):
-    def __init__(self, table: QTableView, delay_ms=500):
+    def __init__(self, module, table: QTableView, delay_ms=500):
         super().__init__(table)
         self.table = table
+        self.module = module
         self.timer = QTimer()
         self.timer.setInterval(delay_ms)
         self.timer.setSingleShot(True)
         self.timer.timeout.connect(self._on_hover_triggered)
         self.last_row = None
-        self.active_popup = None  # 👈 Track the currently shown popup
+        self.active_popup = None
 
         table.viewport().installEventFilter(self)
 
@@ -28,7 +35,7 @@ class TableHoverWatcher(QObject):
                 if row != self.last_row:
                     self.last_row = row
                     self.timer.start()
-                    self._close_popup()  # 👈 close old popup on new move
+                    self._close_popup()
             else:
                 self.timer.stop()
                 self._close_popup()
@@ -45,35 +52,63 @@ class TableHoverWatcher(QObject):
         if self.last_row is None:
             return
 
-        # Get indexes of the fields we want to show
-        try:
-            model = self.table.model()
-            header_labels = TableExtractor._extract_headers_from_model(model)
-            language = "et"
-            index_map = HeaderIndexMap(header_labels, language)
+        model = self.table.model()
+        headers = TableExtractor._extract_headers_from_model(model)
+        language = "et"
+        idx_map = HeaderIndexMap(headers, language)
 
-            id_index = self.table.model().index(self.last_row, index_map[HeaderKeys.HEADER_ID])
-            number_index = self.table.model().index(self.last_row, index_map[HeaderKeys.HEADER_NUMBER])
-            deadline_index = self.table.model().index(self.last_row, index_map[HeaderKeys.HEADER_DEADLINE])
-            responsible_index = self.table.model().index(self.last_row, index_map[HeaderKeys.HEADER_RESPONSIBLE])
+        # pick which headers to show based on module
+        if self.module == Module.COORDINATION:
+            keys = {
+                "id": HeaderKeys.HEADER_ID,
+                "number": HeaderKeys.HEADER_NUMBER,
+                "deadline": HeaderKeys.HEADER_DEADLINE,
+                "responsible": HeaderKeys.HEADER_RESPONSIBLE,
+            }
 
+        else:
+            # fallback minimal display
+            keys = {
+                "id": HeaderKeys.HEADER_ID,
+                "title": HeaderKeys.HEADER_NAME,
+                "start": HeaderKeys.HEADER_DEADLINE,
+                "manager": HeaderKeys.HEADER_RESPONSIBLE,
+            }
+
+        # build index lookup
+        index_dict = {
+            name: model.index(self.last_row, idx_map[hk])
+            for name, hk in keys.items()
+        }
+        data = {
+            name: model.data(idx) or ""
+            for name, idx in index_dict.items()
+        }
+
+        # Now pull in the detail rows + terms
+        id_value = data.get("id")
         
-        except Exception as e:
-            print(f"⚠️ Failed to get index map values: {e}")
-            return
+        if self.module == Module.COORDINATION:
+            table_rows = CoordinationsMain.load_coordinations_details(id_value)
+            colspan = "6"
+        elif self.module == Module.ASBUILT:
+            colspan = "4"
+            table_rows = AsBuiltMain.load_asBuilt_details(id_value)
+        elif self.module == Module.PROJECT:
+            table_rows = ProjectsQueries._fetch_projects_details(id_value)
+            colspan = "6"
+        elif self.module == Module.CONTRACT:
+            table_rows = ContractsMain._query_contract_details(id_value)
+            colspan = "6"
+        elif self.module == Module.EASEMENT:
+            table_rows = EasementssMain.load_easements_details(id_value)
+            colspan = "4"
+        else:
+            print("Unknown module:", self.module)
+            colspan = "2"
+            table_rows = "", ""
 
-        # Extract the data from model
-        id_value = self.table.model().data(id_index, Qt.DisplayRole)
-
-        #print (f"notes_text: {notes_text}")
-        #print(f" terms_text: {terms_text}")
-        number = self.table.model().data(number_index, Qt.DisplayRole)
-        deadline = self.table.model().data(deadline_index, Qt.DisplayRole)
-        responsible = self.table.model().data(responsible_index, Qt.DisplayRole)
-
-
-        table_rows, desc_and_terms = CoordinationsMain.load_coordinations_details(id_value)
-
+        # Build HTML message
         message = f"""
         <div style="
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -89,38 +124,38 @@ class TableHoverWatcher(QObject):
             <div style="font-size: 15px; font-weight: bold; color: #4ecdc4;">
                 👀 Mis siin peidus on
             </div>
-            <hr style="border: 0; height: 1px; background: #4a90e2; margin: 6px 0;" />
-            
-            <div style="margin-top: 6px;">
-                 {table_rows}
-            </div>
-            <div>
-                {desc_and_terms}
-            </div>
+        """
+        print(f"Setting overall colsmap to {colspan}")
+        message += f"""
+        <div style="margin-top:6px;">
+        <table border="0" cellspacing="0" cellpadding="4" width="100%"
+            style="border-color:#444;
+                    font-family:'Segoe UI';
+                    font-size:12px;">
+        <tr>
+            <td colspan="{colspan}" style="height:1px; background-color:#444; padding:0; cellpadding:0;"></td>
+        </tr>
+        {table_rows}
+        </table>
         </div>
         """
 
-
-        #print("📌 Hover Info:\n", message)
-
+        # show the popup
         global_pos = QCursor.pos()
         self._close_popup()
         self.active_popup = HoverPopup(message, self.table)
-        self.active_popup.move(global_pos + QPoint(12, 12))  # slight offset to avoid overlapping
-        # Show first to get height (QDialog must calculate layout)
+        self.active_popup.move(global_pos + QPoint(12, 12))
         self.active_popup.show()
         self.active_popup.adjustSize()
 
         popup_size = self.active_popup.size()
         mouse_pos = QCursor.pos()
-
-        # Position: center horizontally, slightly below the mouse
         x = mouse_pos.x() - (popup_size.width() // 2)
-        y = mouse_pos.y() + 16  # slight offset downward
+        y = mouse_pos.y() + 16
 
-        screen_geometry = self.table.screen().geometry()
-        if y + popup_size.height() > screen_geometry.bottom():
-            y = mouse_pos.y() - popup_size.height() - 16  # flip above
+        screen_geom = self.table.screen().geometry()
+        if y + popup_size.height() > screen_geom.bottom():
+            y = mouse_pos.y() - popup_size.height() - 16
 
         self.active_popup.move(QPoint(x, y))
 
@@ -128,6 +163,7 @@ class TableHoverWatcher(QObject):
         if self.active_popup:
             self.active_popup.close()
             self.active_popup = None
+
 
 class HoverPopup(QDialog):
     def __init__(self, message: str, parent=None):
@@ -144,7 +180,6 @@ class HoverPopup(QDialog):
         self.browser.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.browser.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.browser.setOpenExternalLinks(True)
-
         self.browser.setStyleSheet("""
             QTextBrowser {
                 background-color: #2c2c2c;
@@ -155,24 +190,16 @@ class HoverPopup(QDialog):
                 font-size: 12px;
             }
         """)
-
         self.browser.setHtml(message)
         layout.addWidget(self.browser)
 
-        # ✅ Force layout update
+        # force reflow to compute height
         self.browser.document().setTextWidth(self.browser.viewport().width())
-        self.browser.document().adjustSize()
-
-        # Get document height and add a small buffer
         doc_height = self.browser.document().size().height()
-        buffer = 20  # adjust as needed for safety margin
+        buffer = 20
         total_height = int(doc_height + buffer)
 
-        # Optionally print it
-        print(f"Doc Height: {doc_height} → Total: {total_height}")
-
-        # Set minimum/maximum heights based on calculated value
+        #print(f"Doc Height: {doc_height} → Total: {total_height}")
         self.browser.setMinimumHeight(total_height)
         self.browser.setMinimumWidth(600)
-        
         self.adjustSize()

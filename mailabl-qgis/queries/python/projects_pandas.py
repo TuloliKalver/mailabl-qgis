@@ -5,6 +5,7 @@
 
 
 import pandas as pd
+from datetime import datetime
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from .FileLoaderHelper import GraphqlProjects, GraphQLQueryLoader
@@ -159,6 +160,29 @@ class ProjectsQueries:
             QCoreApplication.processEvents()
         return fetched_items[:desired_total_items]            
 
+
+
+    @staticmethod
+    def _fetch_projects_details(id):
+        
+        # Load the project query using the loader instance
+        module = Module.PROJECT
+        query_name = GraphqlProjects.PROJECT_DETAILS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+        variables = {
+                "id": id
+                }
+        response = requestBuilder.construct_and_send_request(query, variables)
+
+        if response.status_code == 200:
+            table_rows = ProjectModelBuilders.extract_project_details(response.json())
+            return table_rows
+        else:
+            #print(f"Error: {response.status_code}")
+            return None    
+
+
+
 class ProjectModelBuilders:
     @staticmethod
     def _model_for_projects_by_statuses(self, status_value, language):
@@ -283,3 +307,133 @@ class ProjectModelBuilders:
             data_items = [QStandardItem(str(row_data[label])) for label in headers]
             model.appendRow(data_items)
         return model
+
+    @staticmethod
+    def extract_project_details(node: dict) -> str:
+        label_color = "#BBB"
+        value_color = "#EEE"
+
+        label_width = "25%"
+        value_width = "30%"
+
+        c = node.get("data", {}).get("project", {})
+    
+        def safe(key: str) -> str:
+            return c.get(key) or ""
+
+        # Format due date and show (X päeva) if possible
+        raw_due = c.get("dueAt")
+        if raw_due:
+            try:
+                due_dt = datetime.strptime(raw_due, "%Y-%m-%d")
+                today = datetime.today()
+                days_remaining = (due_dt - today).days
+                dueAt_display = f"{due_dt.strftime('%d.%m.%Y')} ({days_remaining} päeva)"
+            except Exception:
+                dueAt_display = ""
+        else:
+            dueAt_display = ""
+
+        # Extract responsible members
+        members = c.get("members", {}).get("edges", [])
+        responsible_members = [
+            edge["node"]["displayName"]
+            for edge in members
+            if edge.get("isResponsible")
+        ]
+        responsible_str = ", ".join(responsible_members) if responsible_members else ""
+
+        # Extract tags
+        tags = c.get("tags", {}).get("edges", [])
+        tag_names = [edge["node"]["name"] for edge in tags if edge.get("node")]
+        tags_str = ", ".join(tag_names) if tag_names else ""
+
+        table_rows = f"""
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>📁 Projekti nr:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("number")}</b></font></td>
+        </tr>
+        <tr>
+            <td width="{label_width}" colspan="1"><font color="{label_color}"><b>🔤 Nimetus:</b></font></td>
+            <td width="80%" colspan="3"><font color="{value_color}"><b>{safe("name")}</b></font></td>
+        </tr>
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>👤 Vastutaja:</b></font></td>
+            <td width="{value_width}" colspan="5"><font color="{value_color}"><b>{responsible_str}</b></font></td>
+        </tr>
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>🟢 Algus:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{safe("startAt")}</b></font></td>
+            <td width="{label_width}"><font color="{label_color}"><b>📆 Tähtaeg:</b></font></td>
+            <td width="{value_width}"><font color="{value_color}"><b>{dueAt_display}</b></font></td>
+        </tr>
+        <tr>
+            <td width="{label_width}"><font color="{label_color}"><b>🏷️ Tunnused:</b></font></td>
+            <td width="80%" colspan="5"><font color="{value_color}"><b>{tags_str}</b></font></td>
+        </tr>
+        """
+
+        contracts = c.get("contracts", {}).get("edges", [])
+        contract_rows = ""
+
+        def fmt_date(date_str: str) -> str:
+            try:
+                return datetime.strptime(date_str, "%Y-%m-%d").strftime("%d.%m.%Y")
+            except Exception:
+                return ""
+
+        for edge in contracts:
+            contract = edge.get("node", {})
+
+            number = contract.get("number", "")
+            start = contract.get("startAt", "")
+            due = fmt_date(contract.get("dueAt", ""))
+            warranty = fmt_date(contract.get("warrantyDueAt", ""))
+
+            sum_data = contract.get("sum", {})
+            amount = sum_data.get("amount")
+            currency = sum_data.get("currencyCode", "")
+            contract_sum = f"{amount} {currency}" if amount else ""
+
+            status = contract.get("status", {}).get("name", "")
+
+            contract_rows += f"""
+            <tr>
+                <td width="{label_width}"><font color="{label_color}"><b>📁 Leping nr:</b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{number}</b></font></td>
+                <td width="{label_width}"><font color="{label_color}"><b>📌 Staatus:</b></font></td>
+                <td width={value_width}><font color="{value_color}"><b>{status}</b></font></td>
+
+            </tr>
+            <tr>
+        
+                <td width="{label_width}"><font color="{label_color}"><b>📆 Periood:</b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{start} - {due}</b></font></td>
+                <td width="{label_width}"><font color="{label_color}"><b>🛡️ Garantii lõpp:</b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{warranty}</b></font></td>
+            </tr>
+            <tr>
+                <td width="{label_width}"><font color="{label_color}"><b>💰 Summa:</b></font></td>
+                <td width="{value_width}"><font color="{value_color}"><b>{contract_sum}</b></font></td>
+            </tr>
+            """
+
+        if contract_rows:
+            contract_block = f"""
+            <tr><td colspan="4" style="height:1px; background-color:#444; padding:0; cellpadding:0;"></td></tr>
+
+            <tr>
+                <td colspan="4"><font color="{label_color}"><b>Lepingud:</b></font></td>
+            </tr>
+            {contract_rows}
+            """
+        else:
+            contract_block = ""
+
+        # Final output
+        table_rows += contract_block
+
+
+
+
+        return table_rows

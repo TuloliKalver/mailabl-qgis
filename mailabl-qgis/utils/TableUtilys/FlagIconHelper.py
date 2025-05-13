@@ -13,7 +13,8 @@ class FlagIconHelper:
     """
 
     @staticmethod
-    def generate_icon(color: str = "#FF0000", size: int = 24) -> QIcon:
+    def generate_icon(priority: str = None, size: int = 24) -> QIcon:
+        color = FlagIconHelper.get_priority_color(priority)
         svg_colored = FlagIconHelper._svg_template.replace('currentColor', color)
         svg_data = QByteArray(svg_colored.encode('utf-8'))
 
@@ -26,3 +27,17 @@ class FlagIconHelper:
         painter.end()
 
         return QIcon(pixmap)
+
+    @staticmethod
+    def get_priority_color(priority: str) -> str:
+        """
+        Map priority values to colors.
+        """
+        priority = (priority or "").lower()  # Safe handling
+        mapping = {
+            "urgent": "#FF0000",   # Red
+            "high": "#FF8000",     # Orange
+            "medium": "#FFD700",   # Gold / Yellow
+            "low": "#00CC00",      # Green
+        }
+        return mapping.get(priority, "#CCCCCC")  # Default gray if unknown

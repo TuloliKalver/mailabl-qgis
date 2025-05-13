@@ -300,25 +300,11 @@ class FlagsDelegate(QStyledItemDelegate):
         super().__init__(parent)
         self.file_column_index = file_column_index
 
-    def get_priority_color(self, priority: str) -> str:
-        """
-        Map priority values to colors.
-        """
-        priority = (priority or "").lower()  # Safe handling
-        mapping = {
-            "urgent": "#FF0000",   # Red
-            "high": "#FF8000",     # Orange
-            "medium": "#FFD700",   # Gold / Yellow
-            "low": "#00CC00",      # Green
-        }
-        return mapping.get(priority, "#CCCCCC")  # Default gray if unknown
-
     def paint(self, painter, option, index):
         file_index = index.model().index(index.row(), self.file_column_index)
         priority = file_index.data()  # 🔥 Fetch the priority value
-        color = self.get_priority_color(priority)  # 🔥 Decide color dynamically
-
-        icon = FlagIconHelper.generate_icon(color=color, size=18)  # 🔥 Create fresh with correct color!
+        
+        icon = FlagIconHelper.generate_icon(priority=priority, size=18)  # 🔥 Create fresh with correct color!
 
         painter.save()
         painter.setRenderHint(painter.Antialiasing)
