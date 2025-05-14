@@ -273,10 +273,10 @@ class WidgetLabels:
             
             object_name = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_JOB_NAME])
             line_element_name.setText(object_name)
-            print(object_name)
+            
             object_number = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_JOB_NUMBER])
             line_element_number.setText(object_number)
-            print(object_number)
+            
             
             object_id = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_ID])
 

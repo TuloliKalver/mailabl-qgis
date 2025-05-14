@@ -74,15 +74,10 @@ class SetupCadastralLayers:
         )
         
         cmbCurrent_Layer = widget.cbCurrent_Cadastral
-        cmbWorks = widget.cbWorksLayer
         button = widget.pbChangLayerStyle
 
-
         layer = SettingsDataSaveAndLoad.load_target_cadastral_name(self)
-        works_layer = StartupSettingsLoader.load_works_settings()
-        
         QGIS_items.clear_and_add_layerNames_selected(cmbCurrent_Layer, layer)
-        QGIS_items.clear_and_add_layerNames_selected(cmbWorks, works_layer)
 
         button.clicked.connect(lambda: SetupCadastralLayers.change_layer_style(widget))
 
@@ -94,15 +89,6 @@ class SetupCadastralLayers:
         if result == QDialog.Accepted:
             input_value = cmbCurrent_Layer.currentText()
             SettingsDataSaveAndLoad.save_target_cadastral(self,input_value)  #, target_value)
-            works_layer_name = GetValuesFromComboBox._get_selected_name_from_combobox(cmbWorks)
-
-            PluginSettings.save_setting(
-                module=Module.WORKS,
-                context=PluginSettings.CONTEXT_PREFERRED,
-                subcontext=PluginSettings.OPTION_LAYER,
-                key_type=PluginSettings.WORKS_LAYER,
-                value = works_layer_name
-            )
 
             loader = StartupSettingsLoader(self)
             loader.startup_label_loader()

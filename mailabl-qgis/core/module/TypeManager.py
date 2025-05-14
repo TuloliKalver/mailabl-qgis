@@ -14,6 +14,8 @@ from ...queries.python.query_tools import requestBuilder
 
 class TypeModuleSetup:
     def __init__(self, module):
+        if module == Module.WORKS:
+            module = Module.TASK
         self.module = module
         s = PluginSettings()
 
@@ -22,6 +24,7 @@ class TypeModuleSetup:
             Module.EASEMENT: lambda: GraphqlTasks.TYPES,
             Module.TASK: lambda: GraphqlTasks.TYPES,
             Module.COORDINATION: lambda: GraphqlTasks.TYPES,
+            Module.WORKS: lambda: GraphqlTasks.TYPES,
             # Add more as needed
         }
 
@@ -40,6 +43,10 @@ class TypeModuleSetup:
                                                                 key_type=s.SUB_CONTEXT_IDs),
 
             Module.COORDINATION: lambda: PluginSettings.load_setting(module=Module.COORDINATION,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE,
+                                                                key_type=s.SUB_CONTEXT_IDs),
+            Module.WORKS: lambda: PluginSettings.load_setting(module=Module.WORKS,
                                                                 context=s.CONTEXT_PREFERRED,
                                                                 subcontext=s.OPTION_TYPE,
                                                                 key_type=s.SUB_CONTEXT_IDs)
@@ -65,6 +72,11 @@ class TypeModuleSetup:
             Module.COORDINATION: lambda: PluginSettings.load_setting(module=Module.COORDINATION,
                                                                 context=s.CONTEXT_PREFERRED,
                                                                 subcontext=s.OPTION_TYPE,
+                                                                key_type=s.SUB_CONTEXT_NAME),
+
+            Module.WORKS: lambda: PluginSettings.load_setting(module=Module.WORKS,
+                                                                context=s.CONTEXT_PREFERRED,
+                                                                subcontext=s.OPTION_TYPE,
                                                                 key_type=s.SUB_CONTEXT_NAME)
         }
 
@@ -72,6 +84,9 @@ class TypeModuleSetup:
 
     @staticmethod
     def build_type_query_string(module):
+        if module == Module.WORKS:
+            module= Module.TASK
+        print("Building type query string for module:", module)
         return f"""
         query {module}Types($first: Int, $after: String) {{
             {module}Types(first: $first, after: $after) {{
@@ -118,11 +133,14 @@ class TypeModuleSetup:
     
     def _get_types_for_module(self, module=None):
         module = module or self.module
-        #print("Getting all types for module:", module)
+        if module == Module.WORKS:
+            module = Module.TASK
+        print("Getting all types for module:", module)
         return self.get_module_types(module)
 
 
     def get_module_types(self, module):
+        
         query = self.build_type_query_string(module)
         types = []
         end_cursor = None

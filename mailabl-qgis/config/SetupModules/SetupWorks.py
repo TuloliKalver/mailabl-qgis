@@ -53,7 +53,7 @@ class SetupWorks:
             drag_frame.setCursor(Qt.OpenHandCursor)   
 
 
-        widget.lblTitle.setText("Kinnistute mooduli seadistamine")
+        widget.lblTitle.setText("Tööde mooduli seadistamine")
 
         animation = QPropertyAnimation(widget, b"windowOpacity")
         animation.setDuration(300)
@@ -70,9 +70,32 @@ class SetupWorks:
         )
         
         cmbWorks = widget.cbWorksLayer
-        works_layer = StartupSettingsLoader.load_works_settings()
+        cmbstatus = widget.cmbPreferred_status
+        cmbtypes = widget.cmbPreferredTypes
+
+        works_layer = PluginSettings.load_setting(
+            module=Module.WORKS,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WORKS_LAYER
+        )
+
         QGIS_items.clear_and_add_layerNames_selected(cmbWorks, works_layer)
 
+        combo_handler.populate_comboBox_smart(
+            comboBox=cmbtypes,
+            module=Module.WORKS,
+            context=widget,
+            preferred_items=True
+        )
+
+
+        combo_handler.populate_comboBox_smart(
+            comboBox=cmbstatus,
+            module=Module.WORKS,
+            context=widget,
+            preferred_items=False
+        )
 
         widget.pbSaveLayerSettings.clicked.connect(lambda: SetupWorks.on_save_button_clicked(widget))
         widget.pbCancelSave.clicked.connect(lambda: SetupWorks.on_cancel_button_clicked(widget))
@@ -82,15 +105,59 @@ class SetupWorks:
         if result == QDialog.Accepted:
             works_layer_name = GetValuesFromComboBox._get_selected_name_from_combobox(cmbWorks)
 
+            status_name = GetValuesFromComboBox._get_selected_name_from_combobox(cmbstatus)
+            status_ids = GetValuesFromComboBox._get_selected_id_from_combobox(cmbstatus)
+
+            types_names =cmbtypes.checkedItems()
+            types_ids = []
+            
+            for index in range(cmbtypes.count()):
+                if cmbtypes.itemCheckState(index) == Qt.Checked:
+                    types_ids.append(cmbtypes.itemData(index))
+
+            module = Module.WORKS
+
             PluginSettings.save_setting(
-                module=Module.WORKS,
+                module=module,
                 context=PluginSettings.CONTEXT_PREFERRED,
                 subcontext=PluginSettings.OPTION_LAYER,
                 key_type=PluginSettings.WORKS_LAYER,
                 value = works_layer_name
             )
 
-            loader = StartupSettingsLoader(self)
+            PluginSettings.save_setting(
+                module=module,
+                context=PluginSettings.CONTEXT_PREFERRED,
+                subcontext=PluginSettings.OPTION_STATUS,
+                key_type=PluginSettings.SUB_CONTEXT_IDs,
+                value = status_ids
+                )
+
+            PluginSettings.save_setting(
+                module=module,
+                context=PluginSettings.CONTEXT_PREFERRED,
+                subcontext=PluginSettings.OPTION_STATUS,
+                key_type=PluginSettings.SUB_CONTEXT_NAME,
+                value = status_name
+                )
+
+            PluginSettings.save_setting(
+                module=module,
+                context=PluginSettings.CONTEXT_PREFERRED,
+                subcontext=PluginSettings.OPTION_TYPE,
+                key_type=PluginSettings.SUB_CONTEXT_NAME,
+                value = types_names
+            )
+
+            PluginSettings.save_setting(
+                module=module,
+                context=PluginSettings.CONTEXT_PREFERRED,
+                subcontext=PluginSettings.OPTION_TYPE,
+                key_type=PluginSettings.SUB_CONTEXT_IDs,
+                value = types_ids
+            )
+            
+            loader = StartupSettingsLoader(self.dialog)
             loader.startup_label_loader()
 
             # ✅ Apply selected style if we have one

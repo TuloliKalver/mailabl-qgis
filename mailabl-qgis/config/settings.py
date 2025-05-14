@@ -589,17 +589,7 @@ class StartupSettingsLoader:
         current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
         self.dialog.lblMainLayerValue.setText(current_label_value)
 
-        works_layer_name = PluginSettings.load_setting(
-            module=Module.WORKS,
-            context=PluginSettings.CONTEXT_PREFERRED,
-            subcontext=PluginSettings.OPTION_LAYER,
-            key_type=PluginSettings.WORKS_LAYER
-        )
-        if works_layer_name == "":
-            self.dialog.lblWorksLayerValue.setText("Määramata")
-        else:
-            self.dialog.lblWorksLayerValue.setText(works_layer_name)
-        
+        StartupSettingsLoader.load_works_settings(self)
 
 
         prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
@@ -627,17 +617,47 @@ class StartupSettingsLoader:
         self.dialog.lblLayerProjectsBaseValue.setEnabled(False)
 
 
-    @staticmethod
-    def load_works_settings():
+    def load_works_settings(self):
         module = Module.WORKS
-        worksLayer = PluginSettings.load_setting(
+
+        works_layer_name = PluginSettings.load_setting(
             module=module,
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_LAYER,
             key_type=PluginSettings.WORKS_LAYER
         )
 
-        return worksLayer
+        status_name = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_STATUS,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            )
+        
+        types_names = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_NAME,
+            text_fomated=True
+        )
+
+        if works_layer_name == "":
+            self.dialog.lblWorksLayerValue.setText("Määramata")
+        else:
+            self.dialog.lblWorksLayerValue.setText(works_layer_name)
+
+        if status_name == "":
+            self.dialog.lblworksPreferredStatusesValue.setText("Määramata")
+        else:
+            self.dialog.lblworksPreferredStatusesValue.setText(status_name)
+
+        if types_names == "":
+            self.dialog.lblWorksActionsValue.setText("Määramata")
+        else:
+            self.dialog.lblWorksActionsValue.setText(types_names)
+
+
 
 
     def load_drawings_settings(self):
