@@ -44,6 +44,7 @@ from .config.SetupModules.SetupEasments import SetupEasments
 from .config.SetupModules.SetupUsers import SetupUsers
 from .config.SetupModules.AsBuitSettings import AsBuiltDrawings
 from .config.SetupModules.SetupCoordinations import CoordinationsSetup
+from .config.SetupModules.SetupWorks import SetupWorks
 
 from .app.MainMenuController import SetupController
 
@@ -152,6 +153,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         setupProjects = SetupProjects(self)
         setupAsBuiltLoader = AsBuiltDrawings(self)  # Assuming `self` is a QDialog or QWidget
         setupCoordinations = CoordinationsSetup(self)
+        setupWorks = SetupWorks(self)
         setupCadastrallayers = SetupCadastralLayers(self)
         WorkSpaceHandler.set_dialog(self)
 
@@ -255,7 +257,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbUserSettings.clicked.connect(lambda: SetupUsers.load_user_settings_widget(self))
         self.pbTeostusSettings.clicked.connect(lambda: setupAsBuiltLoader.load_construction_drawings_setup_widget())
         self.pbCoordinationsSettings.clicked.connect(lambda: setupCoordinations.load_coordinations_settings_widget())
-
+        self.pbWorksSettings.clicked.connect(lambda: setupWorks.load_works_settings_widget())
 
         self.pbAsBuiltTools.setVisible(False)
         #table = self.tblAsBuilt

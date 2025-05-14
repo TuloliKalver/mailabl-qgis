@@ -14,7 +14,7 @@ from ...KeelelisedMuutujad.messages import InfoTexts, Headings
 from ...utils.messagesHelper import ModernMessageDialog
 from ...queries.python.update_relations.updateElementProperties import ConnectElementWithPropertysties
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
-from ...utils.TableUtilys.TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap
+from ...utils.TableUtilys.TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap, CoordinationsIndexMap
 
 language = Languages.ESTONIA
 
@@ -254,7 +254,7 @@ class WidgetLabels:
 
         input_headers = TableExtractor._table_header_extractor(table)
         TableHeaders_new(language)
-
+        
         if module == Module.ASBUILT:
             line_element_number.setVisible(False)
 
@@ -266,6 +266,22 @@ class WidgetLabels:
             object_id = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_ID])
 
 
+        elif module == Module.COORDINATION:
+            line_element_number.setVisible(True)
+
+            index_map = CoordinationsIndexMap(input_headers, language=language)
+            
+            object_name = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_JOB_NAME])
+            line_element_name.setText(object_name)
+            print(object_name)
+            object_number = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_JOB_NUMBER])
+            line_element_number.setText(object_number)
+            print(object_number)
+            
+            object_id = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_ID])
+
+
+
         else: 
             line_element_number.setVisible(True)
 
@@ -273,14 +289,14 @@ class WidgetLabels:
             
             object_name = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_NAME])
             line_element_name.setText(object_name)
-
+        
             object_number = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_NUMBER])
             line_element_number.setText(object_number)
 
             object_id = TableExtractor._value_from_selected_row_by_column(table, index_map[HeaderKeys.HEADER_ID])
 
-
-        text = LabelsTexts.name_number_by_module(module)
+        module_name = ModuleTranslation.module_name(module, language, plural=False)
+        text = LabelsTexts.name_number_by_module(module_name)
         label_descripton.setText(text)
 
         return object_name, object_id

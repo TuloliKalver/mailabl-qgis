@@ -21,78 +21,77 @@ class DataExtractor:
         responsibles = node.get("responsible", {}).get("edges", [])
         responsible_names = [r["node"].get("displayName", "") for r in responsibles]
         status = node.get("status", {})
-        
+
+        def safe(value):
+            return value if value is not None else ""
+
+
         if module == Module.ASBUILT:
-            #print("node data:")
-            #print(node)
-            description = node.get("description", "")
+            description = safe(node.get("description"))
             due_at = DataExtractor.date_converter(node)
 
             headers = {
-            HeaderKeys.HEADER_ID: node.get("id", ""),
-            HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
-            HeaderKeys.HEADER_TYPE: (node.get("type", {}).get("name")) or "",
-            HeaderKeys.HEADER_FLAG: (node.get("priority") or "").lower(),
-            HeaderKeys.HEADER_NAME: node.get("name") or node.get("title") or "",
-            HeaderKeys.HEADER_DEADLINE: due_at,
-            HeaderKeys.HEADER_STATUSES: status.get("name", "") if status else "",
-            HeaderKeys.COLOR_NAME: status.get("color", "") if status else "",
-            HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
-            HeaderKeys.HEADER_PROPERTIES_ICON: "",
-            HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
-            HeaderKeys.HEADER_DOCUMENTS: DataExtractor.extract_links_from_description(description) or "",
-            HeaderKeys.HEADER_FILE_PATH: "",
-            HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
+                HeaderKeys.HEADER_ID: safe(node.get("id")),
+                HeaderKeys.HEADER_PARENT_ID: safe(node.get("parentID")),
+                HeaderKeys.HEADER_TYPE: safe(node.get("type", {}).get("name")),
+                HeaderKeys.HEADER_FLAG: safe((node.get("priority") or "").lower()),
+                HeaderKeys.HEADER_NAME: safe(node.get("name") or node.get("title")),
+                HeaderKeys.HEADER_DEADLINE: safe(due_at),
+                HeaderKeys.HEADER_STATUSES: safe(status.get("name")) if status else "",
+                HeaderKeys.COLOR_NAME: safe(status.get("color")) if status else "",
+                HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
+                HeaderKeys.HEADER_PROPERTIES_ICON: "",
+                HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
+                HeaderKeys.HEADER_DOCUMENTS: safe(DataExtractor.extract_links_from_description(description)),
+                HeaderKeys.HEADER_FILE_PATH: "",
+                HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
             }
-
 
             return headers
 
         if module == Module.COORDINATION:
-            print("node data:")
-            print(node)
+            
             due_at = DataExtractor.date_converter(node)
             names = DataExtractor.get_responsible_for_coordinations(node)
-            headers = {            
-            HeaderKeys.HEADER_ID: node.get("id", ""),
-            HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
-            HeaderKeys.HEADER_NUMBER: node.get("number", "") or (node.get("type", {}).get("name")) or "",
-            HeaderKeys.HEADER_TYPE: (node.get("type", {}).get("name")) or "",
-            HeaderKeys.HEADER_JOB_NUMBER: node.get("jobNumber", ""),
-            HeaderKeys.HEADER_JOB_NAME: node.get("jobName") or "", 
-            HeaderKeys.HEADER_DEADLINE: due_at,
-            HeaderKeys.HEADER_STATUSES: status.get("name", "") if status else "",
-            HeaderKeys.COLOR_NAME: status.get("color", "") if status else "",
-            HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
-            HeaderKeys.HEADER_PROPERTIES_ICON: "",
-            HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
-            HeaderKeys.HEADER_DOCUMENTS: node.get("filesPath", "") or "",
-            HeaderKeys.HEADER_FILE_PATH: "",
-            HeaderKeys.HEADER_RESPONSIBLE: ", ".join(names) if names else "",
-            }    
-            
+            headers = {
+                    HeaderKeys.HEADER_ID: safe(node.get("id")),
+                    HeaderKeys.HEADER_PARENT_ID: safe(node.get("parentID")),
+                    HeaderKeys.HEADER_NUMBER: safe(node.get("number")) or safe(node.get("type", {}).get("name")),
+                    HeaderKeys.HEADER_TYPE: safe(node.get("type", {}).get("name")),
+                    HeaderKeys.HEADER_JOB_NUMBER: safe(node.get("jobNumber")),
+                    HeaderKeys.HEADER_JOB_NAME: safe(node.get("jobName")),
+                    HeaderKeys.HEADER_DEADLINE: safe(due_at),
+                    HeaderKeys.HEADER_STATUSES: safe(status.get("name")) if status else "",
+                    HeaderKeys.COLOR_NAME: safe(status.get("color")) if status else "",
+                    HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
+                    HeaderKeys.HEADER_PROPERTIES_ICON: "",
+                    HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
+                    HeaderKeys.HEADER_DOCUMENTS: safe(node.get("filesPath")),
+                    HeaderKeys.HEADER_FILE_PATH: "",
+                    HeaderKeys.HEADER_RESPONSIBLE: ", ".join(names) if names else "",
+                }
             
             return headers
 
 
         else:
-            due_at = DataExtractor.date_converter(node)
-            headers = {            
-            HeaderKeys.HEADER_ID: node.get("id", ""),
-            HeaderKeys.HEADER_PARENT_ID: node.get("parentID", ""),
-            HeaderKeys.HEADER_NUMBER: node.get("number", "") or (node.get("type", {}).get("name")) or "",
-            HeaderKeys.HEADER_NAME: node.get("name") or node.get("title") or "",
-            HeaderKeys.HEADER_DEADLINE: due_at,
-            HeaderKeys.HEADER_STATUSES: status.get("name", "") if status else "",
-            HeaderKeys.COLOR_NAME: status.get("color", "") if status else "",
-            HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
-            HeaderKeys.HEADER_PROPERTIES_ICON: "",
-            HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
-            HeaderKeys.HEADER_DOCUMENTS: node.get("filesPath", "") or "",
-            HeaderKeys.HEADER_FILE_PATH: "",
-            HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
-            }    
-            
+            due_at = safe(DataExtractor.date_converter(node))
+
+            headers = {
+                HeaderKeys.HEADER_ID: safe(node.get("id")),
+                HeaderKeys.HEADER_PARENT_ID: safe(node.get("parentID")),
+                HeaderKeys.HEADER_NUMBER: safe(node.get("number")) or safe(node.get("type", {}).get("name")),
+                HeaderKeys.HEADER_NAME: safe(node.get("name")) or safe(node.get("title")),
+                HeaderKeys.HEADER_DEADLINE: due_at,
+                HeaderKeys.HEADER_STATUSES: safe(status.get("name")) if status else "",
+                HeaderKeys.COLOR_NAME: safe(status.get("color")) if status else "",
+                HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
+                HeaderKeys.HEADER_PROPERTIES_ICON: "",
+                HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
+                HeaderKeys.HEADER_DOCUMENTS: safe(node.get("filesPath")),
+                HeaderKeys.HEADER_FILE_PATH: "",
+                HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
+            }
             
             return headers
 

@@ -23,6 +23,7 @@ class PluginSettings:
     PROJECTS_LAYER = "projects"
     ASBUILT_LAYER = "asbuilt"
     COORDINATIONS_LAYER = "coordination"
+    WORKS_LAYER = "works"
     CHECKBOXVALUE = "checkboxValue"
 
     #Sample name logicks 

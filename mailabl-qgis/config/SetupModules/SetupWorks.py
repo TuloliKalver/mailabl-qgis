@@ -7,16 +7,13 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QPropertyAnimation
 from types import MethodType
-from qgis.utils import iface
-from qgis.core import QgsMapLayer, QgsProject
-from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtWidgets import QListView, QComboBox, QDialog, QFrame
+from PyQt5.QtWidgets import QDialog, QFrame
 
 from PyQt5.uic import loadUi
 
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 
-from ..settings import Filepaths, FilesByNames, SettingsDataSaveAndLoad, StartupSettingsLoader
+from ..settings import Filepaths, FilesByNames, StartupSettingsLoader
 from ..settings_new import PluginSettings
 
 
@@ -26,22 +23,21 @@ from ...KeelelisedMuutujad.modules import Module
 from ...utils.ComboboxHelper import ComboBoxHelper
 from ...utils.messagesHelper import ModernMessageDialog
 from ...utils.ComboboxHelper import GetValuesFromComboBox
-
+from .SetupMainLayers import QGIS_items
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
 edu = EdukuseTexts()
 combo_handler = ComboBoxHelper()
 
-class SetupCadastralLayers:
-    selected_style_path = None  # class-level variable, optional
+class SetupWorks:
 
     def __init__(self, parent) -> None:
         self.dialog = parent
 
-    def load_layer_settings_widget(self):
+    def load_works_settings_widget(self):
 
-        ui_file_path = Filepaths.get_conf_widget(FilesByNames().layer_setup_ui)
+        ui_file_path = Filepaths.get_conf_widget(FilesByNames().works_setup_ui)
         widget = loadUi(ui_file_path)
         
         widget.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnTopHint)
@@ -66,34 +62,24 @@ class SetupCadastralLayers:
         animation.start()
 
 
-        SetupCadastralLayers.replace_frame(
+        SetupWorks.replace_frame(
             widget, 
             "FrameMain", 
             lambda parent: AnimatedGradientBorderFrame(parent,
                                                         style=AnimatedGradientBorderFrame.INSPIRE)
         )
         
-        cmbCurrent_Layer = widget.cbCurrent_Cadastral
         cmbWorks = widget.cbWorksLayer
-        button = widget.pbChangLayerStyle
-
-
-        layer = SettingsDataSaveAndLoad.load_target_cadastral_name(self)
         works_layer = StartupSettingsLoader.load_works_settings()
-        
-        QGIS_items.clear_and_add_layerNames_selected(cmbCurrent_Layer, layer)
         QGIS_items.clear_and_add_layerNames_selected(cmbWorks, works_layer)
 
-        button.clicked.connect(lambda: SetupCadastralLayers.change_layer_style(widget))
 
-        widget.pbSaveLayerSettings.clicked.connect(lambda: SetupCadastralLayers.on_save_button_clicked(widget))
-        widget.pbCancelSave.clicked.connect(lambda: SetupCadastralLayers.on_cancel_button_clicked(widget))
+        widget.pbSaveLayerSettings.clicked.connect(lambda: SetupWorks.on_save_button_clicked(widget))
+        widget.pbCancelSave.clicked.connect(lambda: SetupWorks.on_cancel_button_clicked(widget))
 
         result = widget.exec_()
 
         if result == QDialog.Accepted:
-            input_value = cmbCurrent_Layer.currentText()
-            SettingsDataSaveAndLoad.save_target_cadastral(self,input_value)  #, target_value)
             works_layer_name = GetValuesFromComboBox._get_selected_name_from_combobox(cmbWorks)
 
             PluginSettings.save_setting(
@@ -108,24 +94,6 @@ class SetupCadastralLayers:
             loader.startup_label_loader()
 
             # ✅ Apply selected style if we have one
-            if SetupCadastralLayers.selected_style_path:
-                #print(f"Applying style: {SetupCadastralLayers.selected_style_path}")
-                layer = QgsProject.instance().mapLayersByName(input_value)
-                if layer:
-                    layer_obj = layer[0]
-                    success = layer_obj.loadNamedStyle(SetupCadastralLayers.selected_style_path)
-
-                    if success[0]:
-                        layer_obj.reload()  # 🔧 Force full style reload
-                        layer_obj.triggerRepaint()
-                        iface.mapCanvas().refresh()
-                        print(f"✅ Applied style to layer '{input_value}'")
-                    else:
-                        print(f"⚠️ Failed to apply style: {success[1]}")
-                else:
-                    print(f"❌ Layer '{input_value}' not found in map.")                
-                SetupCadastralLayers.selected_style_path = None
-            
             text = "Kõik sai salvestatud"
             heading = pealkiri.tubli
             ModernMessageDialog.Info_messages_modern_REPLACE_WITH_DECISIONMAKER(heading, text)
@@ -140,22 +108,6 @@ class SetupCadastralLayers:
         # Handle logic when the cancel button is clicked
         widget.reject()  # Close the dialog        
 
-
-    @staticmethod
-    def change_layer_style(widget) -> None:
-        file_path, _ = QFileDialog.getOpenFileName(
-            widget,
-            "Vali stiilifail",
-            "",  # starting directory
-            "QGIS Layer Style (*.qml);;All Files (*)"
-        )
-
-        if file_path:
-            print(f"✅ Style file selected: {file_path}")
-            SetupCadastralLayers.selected_style_path = file_path
-            # Optionally call another method to apply it now
-        else:
-            print("⚠️ User canceled style file selection.")
 
 
     @staticmethod
@@ -186,45 +138,6 @@ class SetupCadastralLayers:
 
         return new_frame
 
-
-
-
-
-class QGIS_items:
-    def __init__(self):
-        pass
-    #//TODO: refactor this class into a ComboBox helper module
-    def clear_and_add_layerNames(combo_box: QComboBox):
-        combo_box.clear()
-        layer_names = QGIS_items._get_sorted_layer_names()
-        combo_box.addItems(layer_names)
-        combo_box.setView(QListView())
-
-    def clear_and_add_layerNames_selected(combo_box: QComboBox, layer_name: str = None):
-        combo_box.clear()
-        layer_names = QGIS_items._get_sorted_layer_names()
-        combo_box.addItems(layer_names)   
-        # Set the current text of the combo box to the layer name if it exists
-        if layer_name:
-            combo_box.setCurrentText(layer_name)
-        combo_box.setView(QListView())
-    
-    @staticmethod
-    def _get_sorted_layer_names():
-        excluded_group = 'Imporditavad kinnistud' 
-        layers = []
-        for layer_id, layer in QgsProject.instance().mapLayers().items():
-            if isinstance(layer, QgsMapLayer) and layer.type() == QgsMapLayer.VectorLayer:
-                layer_node = QgsProject.instance().layerTreeRoot().findLayer(layer_id)
-                if layer_node is not None and layer_node.parent() is not None and layer_node.parent().name() != excluded_group:
-                    layers.append(layer)
-
-        # Get the names of the layers
-        layer_names = [layer.name() for layer in layers]
-
-        # Sort layer names alphabetically
-        sorted_layer_names = sorted(layer_names)
-        return sorted_layer_names
         
 
 class DraggableFrame(QFrame):

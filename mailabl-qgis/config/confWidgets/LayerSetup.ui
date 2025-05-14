@@ -462,21 +462,6 @@ QComboBox:disabled {
       <item>
        <widget class="QWidget" name="fSettingsProperties" native="true">
         <layout class="QVBoxLayout" name="verticalLayout">
-         <property name="spacing">
-          <number>10</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>20</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
          <item alignment="Qt::AlignHCenter">
           <widget class="QFrame" name="frame_2">
            <property name="frameShape">
@@ -567,7 +552,7 @@ QComboBox:disabled {
            </layout>
           </widget>
          </item>
-         <item alignment="Qt::AlignHCenter">
+         <item>
           <widget class="QFrame" name="frame_3">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -591,9 +576,62 @@ QComboBox:disabled {
             <property name="bottomMargin">
              <number>0</number>
             </property>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QPushButton" name="pbChangLayerStyle">
+              <property name="text">
+               <string>Vali stiil</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QFrame" name="WorksElements">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item alignment="Qt::AlignLeft">
-             <widget class="QLabel" name="lblTarget_Cadastral">
+             <widget class="QLabel" name="lblWorksLayer">
+              <property name="font">
+               <font>
+                <family>Tahoma</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Tööde kaardikiht</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="cbWorksLayer">
               <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="baseSize">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -604,16 +642,35 @@ QComboBox:disabled {
                 <pointsize>10</pointsize>
                </font>
               </property>
-              <property name="text">
-               <string/>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContents</enum>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pbChangLayerStyle">
-              <property name="text">
-               <string>Vali stiil</string>
+              <property name="iconSize">
+               <size>
+                <width>6</width>
+                <height>6</height>
+               </size>
               </property>
+              <item>
+               <property name="text">
+                <string/>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string/>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string/>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string/>
+               </property>
+              </item>
              </widget>
             </item>
            </layout>

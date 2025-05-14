@@ -29,6 +29,7 @@ class MenuModules():
     PROPERTIES_OPERATIONS = 9
     USERS = 10
     COORDINATIONS = 10
+    WORKS = 11
 
 
 class SetupController:
@@ -138,6 +139,19 @@ class SetupController:
                     dialog.lblCoordinationsActionsValue,
                     dialog.lblCoordinationsPreferredStatusesValue,
                     dialog.lblCoordinationsMapLayerValue,
+                ],
+                ModuleKey.CHECKBOXES: [],
+                ModuleKey.SETTINGS_BUTTON: None,
+                ModuleKey.VISIBLE: True
+            },
+            MenuModules.WORKS: {
+                ModuleKey.ID: MenuModules.WORKS,
+                ModuleKey.WIDGET: dialog.gwSU_Works,
+                ModuleKey.TITLE: "Hooldustööd",
+                ModuleKey.LABELS: [
+                    dialog.lblWorksLayerValue,
+                    dialog.lblWorksActionsValue,
+                    dialog.lblworksPreferredStatusesValue,
                 ],
                 ModuleKey.CHECKBOXES: [],
                 ModuleKey.SETTINGS_BUTTON: None,

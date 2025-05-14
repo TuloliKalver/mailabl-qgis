@@ -14,13 +14,13 @@ class Module:
     TAGS = "tags"
     STATUSES = "statuses"
     ASBUILT = "task"
-
+    WORKS = "works"
 
     all_modules = [CONTRACT, PROJECT, TASK, COORDINATION, LETTER,
                     SPECIFICATION, EASEMENT, ORDINANCE, SUBMISSION, ASBUILT]
 
 class Languages:
-    ESTONIA = "Eesti"
+    ESTONIA = "et"
     LATVIA = "Latviesu"
 
 class ModuleTranslation:

@@ -144,7 +144,8 @@ class FilesByNames:
     DecisionMaker_UI = "DecicionMakerUI.ui"
     asBuitTools_UI = "asBuiltTools.ui"
     COORDINATIONS_UI = "CoordinationsSetup.ui"
-    WORKS_UI = "WorksSetup.ui"
+   
+    
 
     def __init__(self):
 
@@ -170,7 +171,7 @@ class FilesByNames:
         self.easements_setup_ui = "EasementsSetup.ui"
         self.user_setup_ui = "UserSetup.ui"
         self.Setup_ConfigUI = "ProjectSetup.ui"
-
+        self.works_setup_ui = "worksSetup.ui"
 
         self.layer_compiler = "layer_compiler.ui"
         self.easement_tools_ui = "Servituut.ui"
@@ -588,6 +589,19 @@ class StartupSettingsLoader:
         current_label_value = SettingsDataSaveAndLoad().load_target_cadastral_name()
         self.dialog.lblMainLayerValue.setText(current_label_value)
 
+        works_layer_name = PluginSettings.load_setting(
+            module=Module.WORKS,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WORKS_LAYER
+        )
+        if works_layer_name == "":
+            self.dialog.lblWorksLayerValue.setText("Määramata")
+        else:
+            self.dialog.lblWorksLayerValue.setText(works_layer_name)
+        
+
+
         prefered_folder_structure_value = SettingsDataSaveAndLoad.load_projects_prefered_folder_name_structure(self)
         
         SHP_layer_label_value = SettingsDataSaveAndLoad.load_SHP_inputLayer_name(self)
@@ -612,6 +626,18 @@ class StartupSettingsLoader:
         self.dialog.lblLayerProjectsBaseValue.setText("Määramata*")
         self.dialog.lblLayerProjectsBaseValue.setEnabled(False)
 
+
+    @staticmethod
+    def load_works_settings():
+        module = Module.WORKS
+        worksLayer = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WORKS_LAYER
+        )
+
+        return worksLayer
 
 
     def load_drawings_settings(self):
