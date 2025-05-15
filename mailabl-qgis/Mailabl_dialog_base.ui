@@ -1630,7 +1630,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>10</number>
+                  <number>4</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -7449,7 +7449,7 @@ p, li { white-space: pre-wrap; }
                                    </font>
                                   </property>
                                   <property name="text">
-                                   <string>Kooskõlastuste seaded</string>
+                                   <string>Võrgu tööde seaded</string>
                                   </property>
                                  </widget>
                                 </item>
@@ -7656,7 +7656,7 @@ p, li { white-space: pre-wrap; }
                                    </font>
                                   </property>
                                   <property name="text">
-                                   <string>Teostusjoonistega seotud tegevusliigid</string>
+                                   <string>Võrgutöödega seotud tegevusliigid</string>
                                   </property>
                                  </widget>
                                 </item>
