@@ -73,7 +73,7 @@ class MyTreeHome:
         }
 
         
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_number_improwed
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -318,7 +318,7 @@ class MyTreeHome:
                     )
             return
         else:    
-            module = Module.PROPRETIE
+            module = Module.PROPERTIE
             web_module = MailablWebModules().get_web_link(module)
             web_link = OpenLink.weblink_by_module(web_module)
             link = f"{web_link}{link_id}"

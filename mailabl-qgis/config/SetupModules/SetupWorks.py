@@ -23,7 +23,7 @@ from ...KeelelisedMuutujad.modules import Module
 from ...utils.ComboboxHelper import ComboBoxHelper
 from ...utils.messagesHelper import ModernMessageDialog
 from ...utils.ComboboxHelper import GetValuesFromComboBox
-from .SetupMainLayers import QGIS_items
+from .SetupMainLayers import QGIS_items, DraggableFrame
 
 pealkiri = Headings()
 sisu = HoiatusTexts()
@@ -71,6 +71,7 @@ class SetupWorks:
         
         cmbWorks = widget.cbWorksLayer
         cmbstatus = widget.cmbPreferred_status
+        cmbtypesgroups = widget.cmbPreferredTypesGroup
         cmbtypes = widget.cmbPreferredTypes
 
         works_layer = PluginSettings.load_setting(
@@ -81,6 +82,14 @@ class SetupWorks:
         )
 
         QGIS_items.clear_and_add_layerNames_selected(cmbWorks, works_layer)
+
+        combo_handler.populate_comboBox_smart(
+            groupComboBox=cmbtypesgroups,
+            module=Module.WORKS,
+            context=widget,
+            preferred_items=True,
+            group_value=True
+        )
 
         combo_handler.populate_comboBox_smart(
             comboBox=cmbtypes,
@@ -99,6 +108,12 @@ class SetupWorks:
 
         widget.pbSaveLayerSettings.clicked.connect(lambda: SetupWorks.on_save_button_clicked(widget))
         widget.pbCancelSave.clicked.connect(lambda: SetupWorks.on_cancel_button_clicked(widget))
+
+        combo_handler.setup_group_to_type_filtering(
+            cmbtypesgroups = cmbtypesgroups,
+            cmbtypes = cmbtypes,
+            module = Module.WORKS,
+        )
 
         result = widget.exec_()
 
@@ -176,7 +191,6 @@ class SetupWorks:
         widget.reject()  # Close the dialog        
 
 
-
     @staticmethod
     def replace_frame(widget, old_name: str, style: str, new_frame_cls: type = AnimatedGradientBorderFrame, *args, **kwargs) -> QFrame:
         old = widget.findChild(QFrame, old_name)
@@ -206,21 +220,3 @@ class SetupWorks:
         return new_frame
 
         
-
-class DraggableFrame(QFrame):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self._drag_pos = None
-        self.setCursor(Qt.OpenHandCursor)
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self._drag_pos = event.globalPos() - self.window().frameGeometry().topLeft()
-            event.accept()
-
-    def mouseMoveEvent(self, event):
-        if event.buttons() & Qt.LeftButton and self._drag_pos:
-            self.window().move(event.globalPos() - self._drag_pos)
-            event.accept()
-
-

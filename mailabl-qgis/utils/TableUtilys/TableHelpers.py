@@ -6,6 +6,7 @@ from PyQt5.QtCore import Qt, QItemSelectionModel, QCoreApplication
 from PyQt5.QtGui import QFontMetrics, QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QTableView, QHeaderView, QAbstractItemView, QTableView
 from ...KeelelisedMuutujad.TableHeaders import HeaderKeys, TableHeaders_new
+from ...KeelelisedMuutujad.modules import Module
 from .TableHEaderIndexMap import HeaderIndexMap, AsBuiltHeaderIndexMap, CoordinationsIndexMap
 from ...utils.ProgressHelper import ProgressDialogModern
 
@@ -280,25 +281,40 @@ class TableUtils:
         return HeaderIndexMap(header_labels, language)
 
     @staticmethod
-    def _hide_default_columns(table, index_map: HeaderIndexMap, language: str ="et"):
+    def _hide_default_columns(table, index_map: HeaderIndexMap, language: str ="et", module=None):
         TableHeaders_new(language)
-        to_hide = [
+        print(f"Module: {module}")
+        if module == Module.WORKS:
+            to_hide = [
             index_map[HeaderKeys.COLOR_NAME],
             index_map[HeaderKeys.HEADER_PARENT_ID],
-            index_map[HeaderKeys.HEADER_DOCUMENTS],
-        ]
+            ]
+        else:
+            to_hide = [
+                index_map[HeaderKeys.COLOR_NAME],
+                index_map[HeaderKeys.HEADER_PARENT_ID],
+                index_map[HeaderKeys.HEADER_DOCUMENTS],
+            ]
         for col in to_hide:
             table.hideColumn(col)
 
     @staticmethod
-    def _set_icon_column_labels(model, index_map: HeaderIndexMap, language: str="et"):
+    def _set_icon_column_labels(model, index_map: HeaderIndexMap, language: str="et", module=None):
         TableHeaders_new(language)
-        for key in [
+        if module == Module.WORKS:
+            re_label = [
+            HeaderKeys.HEADER_PROPERTY_NUMBER,
+            HeaderKeys.HEADER_WEB_LINK_BUTTON,
+            HeaderKeys.HEADER_PROPERTIES_ICON,
+            ]
+        else:
+            re_label = [
             HeaderKeys.HEADER_PROPERTY_NUMBER,
             HeaderKeys.HEADER_FILE_PATH,
             HeaderKeys.HEADER_WEB_LINK_BUTTON,
-            HeaderKeys.HEADER_PROPERTIES_ICON,
-        ]:
+            HeaderKeys.HEADER_PROPERTIES_ICON,            ]
+
+        for key in re_label:
             model.setHorizontalHeaderItem(index_map[key], QStandardItem(""))
 
     #/TODO this method date column need to be removed from all functions
@@ -362,9 +378,31 @@ class TableUtils:
 
 
 
+
+    @staticmethod
+    def _resize_works_columns(resizer, index_map, language: str = "et"):
+        #print(f"AsBuilt Index Map keys: {index_map.keys()}")
+        TableHeaders_new(language)
+
+        columns = [
+            HeaderKeys.HEADER_ID,
+            HeaderKeys.HEADER_FLAG,
+            HeaderKeys.HEADER_TYPE,
+            HeaderKeys.HEADER_NAME,
+            HeaderKeys.HEADER_PROPERTY_NUMBER,
+            HeaderKeys.HEADER_WEB_LINK_BUTTON,
+            HeaderKeys.HEADER_PROPERTIES_ICON,
+        ]
+        widths = [0, 10, 150, 250, 0, 10,  10]  # default widths
+
+        #print(f"index_map: {index_map}")
+        indexes = [index_map[key] for key in columns]
+        resizer.setColumnWidths(indexes, widths)
+
+
     @staticmethod
     def _resize_asBuilt_icon_columns(resizer, index_map, table, language: str = "et"):
-        print(f"AsBuilt Index Map keys: {index_map.keys()}")
+        #print(f"AsBuilt Index Map keys: {index_map.keys()}")
         TableHeaders_new(language)
 
         columns = [

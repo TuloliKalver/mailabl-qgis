@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>241</height>
+    <height>355</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -503,6 +503,12 @@ QComboBox:disabled {
             </property>
             <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="lblWorksLayer">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Tahoma</family>
@@ -562,6 +568,83 @@ QComboBox:disabled {
                 <string/>
                </property>
               </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Tööde grupp moodustatakse ülesannetest kus on kasutatud sõnade vahel &quot; - &quot; märgistust. *</string>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QFrame" name="frame">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lblPreferredGroups">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Tahoma</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Tööde grupp</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QgsCheckableComboBox" name="cmbPreferredTypesGroup">
+              <property name="minimumSize">
+               <size>
+                <width>350</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>350</width>
+                <height>16777215</height>
+               </size>
+              </property>
              </widget>
             </item>
            </layout>

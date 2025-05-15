@@ -59,8 +59,30 @@ class OpenLink:
             OpenLink.weblink_by_module(MailablWebModules.PROJECTS)
         """
         return f"{OpenLink().main}{module_path}"
+    @staticmethod
+    def get_module_link(module_name):
+        #print(f"Module Name in web links: {module_name}")
+        web_links_by_module = {
+            Module.PROJECT: Module.PROJECT,
+            Module.CONTRACT: Module.CONTRACT,
+            Module.EASEMENT: Module.EASEMENT,
+            Module.TASK: Module.TASK,
+            Module.LETTER: Module.LETTER,
+            Module.COORDINATION: Module.COORDINATION,
+            Module.ORDINANCE: Module.ORDINANCE,
+            Module.SUBMISSION: Module.SUBMISSION,
+            Module.PROPERTIE: Module.PROPERTIE,
+            Module.ASBUILT: Module.TASK,
+            Module.WORKS: Module.TASK
+        }
+        return web_links_by_module.get(module_name, "")
+
 
 class MailablWebModules:
+#/TODO: rebuild link services to Delegate based services as in other views
+
+    #TODO: Trash this class!!! 
+
     # ✅ Class-level constants (recommended for future use)
     PROJECTS = '/projects/'
     CONTRACTS = '/contracts/'
@@ -84,9 +106,11 @@ class MailablWebModules:
             Module.COORDINATION: MailablWebModules.COORDINATIONS,
             Module.ORDINANCE: MailablWebModules.ORDINANCES,
             Module.SUBMISSION: MailablWebModules.SUBMISSIONS,
-            Module.PROPRETIE: MailablWebModules.PROPERTIES,
-            Module.ASBUILT:MailablWebModules.TASKS
+            Module.PROPERTIE: MailablWebModules.PROPERTIES,
+            Module.ASBUILT:MailablWebModules.TASKS,
+            Module.WORKS: MailablWebModules.TASKS
         }
+
 
         if module_name not in web_links_by_module:
             raise ValueError(f"Invalid module name: {module_name}")

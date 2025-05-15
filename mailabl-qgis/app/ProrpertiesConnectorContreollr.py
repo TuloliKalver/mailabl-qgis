@@ -42,12 +42,14 @@ class PropertiesModuleButtonConnector:
         table_easements = self.dialog.tweasementView
         table_asBuilt = self.dialog.tblAsBuilt
         table_coordinations = self.dialog.tblMailabl_Cooperation
+        table_works = self.dialog.tblWorks
 
         button_contracts = self.dialog.pbContracts_Connect_properties
         button_projects = self.dialog.pbProjects_Connect_properties
         button_easements = self.dialog.pbEasementsConnectProperties
         button_asBuilt = self.dialog.pbTeostusConnectproperties
         button_coordinations = self.dialog.pbCooperations_Connect_properties
+        button_works = self.dialog.pbWorksConnectproperties
 
 
         button_functions = {
@@ -55,7 +57,8 @@ class PropertiesModuleButtonConnector:
             button_projects: lambda: execute_with_block(button_projects, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.PROJECT, table_projects, button_projects),
             button_easements: lambda: execute_with_block(button_easements, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.EASEMENT, table_easements, button_easements),
             button_asBuilt: lambda: execute_with_block(button_asBuilt, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.ASBUILT, table_asBuilt, button_asBuilt),
-            button_coordinations: lambda: execute_with_block(button_coordinations, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.COORDINATION, table_coordinations, button_coordinations)
+            button_coordinations: lambda: execute_with_block(button_coordinations, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.COORDINATION, table_coordinations, button_coordinations),
+            button_works: lambda: execute_with_block(button_asBuilt, PropertiesConnectorUIController.load_properties_connector, self.dialog, Module.ASBUILT, table_works, button_works),
         }
 
         for button, function in button_functions.items():

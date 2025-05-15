@@ -226,7 +226,8 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbRefresh_tblMailabl_contracts.clicked.connect(lambda: WorkSpaceHandler.contracts_reload(self))
         self.pbRefreshTesotusTable.clicked.connect(lambda: WorkSpaceHandler.asBuilt_reload(self))
         self.pbRefresh_tblMailabl_Cooperation.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Coordinations(self, menu_module=MenuModules.COORDINATIONS, module=Module.COORDINATION, refresh=True))
-        
+        self.pbRefreshWorksTable.clicked.connect(lambda: WorkSpaceHandler.swWorkSpace_Works(self, menu_module=MenuModules.WORKS, module=Module.WORKS, refresh=True))
+
         self.pbMapThemes.setEnabled(False)
 
         self.pbArhciveHelperStart.clicked.connect(lambda: WorkSpaceHandler.archive_helper(self))
@@ -273,6 +274,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSearchContracts.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.CONTRACT))
         self.pbSearcheasements.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.EASEMENT))
         self.pbSearchTesotus.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.ASBUILT))
+        self.pbWorksSearch.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.WORKS))
 
         self.pbMainMenu.clicked.connect(self.handleSidebar_leftButtons)
         

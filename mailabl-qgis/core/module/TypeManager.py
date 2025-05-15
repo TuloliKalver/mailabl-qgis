@@ -86,7 +86,7 @@ class TypeModuleSetup:
     def build_type_query_string(module):
         if module == Module.WORKS:
             module= Module.TASK
-        print("Building type query string for module:", module)
+        #print("Building type query string for module:", module)
         return f"""
         query {module}Types($first: Int, $after: String) {{
             {module}Types(first: $first, after: $after) {{
@@ -135,7 +135,7 @@ class TypeModuleSetup:
         module = module or self.module
         if module == Module.WORKS:
             module = Module.TASK
-        print("Getting all types for module:", module)
+        #print("Getting all types for module:", module)
         return self.get_module_types(module)
 
 

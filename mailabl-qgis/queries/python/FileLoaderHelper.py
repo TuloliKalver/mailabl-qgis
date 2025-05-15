@@ -11,7 +11,7 @@ class GraphQLQueryLoader:
     def load_query_by_module(module: Module, filename: str) -> str:
 
         folders = {
-            Module.PROPRETIE: QueryFolders.PROPERTIES_FOLDER,
+            Module.PROPERTIE: QueryFolders.PROPERTIES_FOLDER,
             Module.USER: QueryFolders.USER_FOLDER,
             Module.EASEMENT: QueryFolders.EASEMENTS_FOLDER,
             Module.PROJECT: QueryFolders.PROJECTS_FOLDER,

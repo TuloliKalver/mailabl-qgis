@@ -34,15 +34,18 @@ class Constants:
 
 class AsBuiltMain:
     @staticmethod
-    def load_main_AsBuilt_by_type_and_status (self, table, types, statuses, language="et"):
+    def load_main_AsBuilt_by_type_and_status (self, table, types, statuses, language="et", module=None):
         #Adding progress
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
-        module = Module.ASBUILT
+        if module is None:
+            module = Module.ASBUILT
+        elif module == Module.WORKS:
+            module = Module.WORKS
         #module_text = ModuleTranslation.module_name(module, language, plural=False)
         module_text = "Teostusjooniste"
         progress = ProgressDialogModern(title=f"{module_text} laadimine", value=0)
         progress.update(1, purpouse="Teostuste laadimine", text1="Palun oota...")
-        model = AsBuiltModels._model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language=language)
+        model = AsBuiltModels._model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language=language, module=module)
 
         if model is not None:
             progress.update(50)
@@ -56,13 +59,16 @@ class AsBuiltMain:
         progress.close()
         
     @staticmethod
-    def load_asBuilt_by_query (query, table, language="et"):
+    def load_asBuilt_by_query (query, table, language="et", module=None):
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
-        module = Module.ASBUILT
+        if module is None:
+            module = Module.ASBUILT
+        elif module == Module.WORKS:
+            module = Module.WORKS
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
         progress.update(1, purpouse="Lepingute laadimine", text1="Palun oota...")
 
-        model = AsBuiltModels._model_for_asBuilt_search_results(query, language)
+        model = AsBuiltModels._model_for_asBuilt_search_results(query, language, module=module)
 
         if model is not None:
             progress.update(50)
@@ -85,18 +91,18 @@ class AsBuiltMain:
 
 class AsBuiltModels: 
     @staticmethod
-    def _model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language):
+    def _model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language, module):
 
         data = AsBuiltQueries._query_AsBuilt_by_type_status_elements(self, types, statuses)
-        model = DataModelBuilder.build_model_from_records(data, language, module = Module.ASBUILT)
+        model = DataModelBuilder.build_model_from_records(data, language, module = module)
         return model
 
     @staticmethod
-    def _model_for_asBuilt_search_results(name, language):
+    def _model_for_asBuilt_search_results(name, language, module):
         # Set header labels
        
         data = AsBuiltQueries._query_AsBuilt_by_name(name)
-        model = DataModelBuilder.build_model_from_records(data, language, module = Module.ASBUILT)
+        model = DataModelBuilder.build_model_from_records(data, language, module = module)
         
         return model
 

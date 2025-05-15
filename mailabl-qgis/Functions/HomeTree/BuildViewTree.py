@@ -71,7 +71,7 @@ class MyTreeHomeView:
         }
 
 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_number_improwed
         query = GraphQLQueryLoader.load_query_by_module(module, file)

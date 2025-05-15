@@ -18,7 +18,8 @@ class ModularSearchEngine:
             Module.PROJECT: Projects.load_projects_by_number,
             Module.CONTRACT: ContractsMain.load_contracts_by_query,
             Module.EASEMENT: EasementssMain.load_easemenets_by_number,
-            Module.ASBUILT: AsBuiltMain.load_asBuilt_by_query
+            Module.ASBUILT: AsBuiltMain.load_asBuilt_by_query,
+            Module.WORKS: AsBuiltMain.load_asBuilt_by_query
         }
 
     def universalSearch(self, module_name):
@@ -27,14 +28,16 @@ class ModularSearchEngine:
             Module.PROJECT: self.dialog.le_searchProjects,
             Module.CONTRACT: self.dialog.le_searchContracts,
             Module.EASEMENT: self.dialog.leSearcheasements,
-            Module.ASBUILT: self.dialog.le_searchTeostus
+            Module.ASBUILT: self.dialog.le_searchTeostus,
+            Module.WORKS: self.dialog.leWorksSearch
         }
 
         tables = {
             Module.PROJECT: self.dialog.tblMailabl_projects,
             Module.CONTRACT: self.dialog.ContractView,
             Module.EASEMENT: self.dialog.tweasementView,
-            Module.ASBUILT: self.dialog.tblAsBuilt
+            Module.ASBUILT: self.dialog.tblAsBuilt,
+            Module.WORKS: self.dialog.tblWorks
         }
 
         lineEdit = line_edits[module_name]

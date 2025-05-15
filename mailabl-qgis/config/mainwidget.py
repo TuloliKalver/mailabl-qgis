@@ -72,4 +72,5 @@ class WidgetInfo:
             7: lambda: WorkSpaceHandler.swWorkspace_Projects(self),
             8: None,
             10: lambda: WorkSpaceHandler.swWorkSpace_Coordinations(self, menu_module=MenuModules.COORDINATIONS, module=Module.COORDINATION),
+            11: None,
         }

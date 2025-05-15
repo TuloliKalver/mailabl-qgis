@@ -72,6 +72,20 @@ class HeaderKeys:
         HEADER_STATUSES,
     ]
 
+    WORKS_HEADER_KEYS: ClassVar[List[str]] = [
+        HEADER_ID,
+        HEADER_FLAG,
+        HEADER_TYPE,
+        HEADER_NAME,
+        HEADER_DEADLINE,
+        COLOR_NAME,
+        HEADER_RESPONSIBLE,
+        HEADER_PROPERTY_NUMBER,
+        HEADER_PROPERTIES_ICON,
+        HEADER_PARENT_ID,
+        HEADER_WEB_LINK_BUTTON,
+        HEADER_STATUSES,
+    ]
 
 class QueryHeaders:
     """
@@ -140,6 +154,20 @@ class QueryHeaders:
         QUERY_WEB_LINK_BUTTON,
         QUERY_DOCUMENTS,
         QUERY_FILE_PATH,
+        QUERY_STATUSES,
+    ]
+
+    WORKS_QUERY_KEYS: ClassVar[List] = [
+        QUERY_ID,
+        QUERY_JOB_NUMBER,
+        QUERY_NAME,
+        QUERY_JOB_NAME,
+        QUERY_DEADLINE,
+        QUERY_COLOR,
+        QUERY_RESPONSIBLE,
+        QUERY_PROPERTY_NUMBER,
+        QUERY_PROPERTIES_ICON,
+        QUERY_WEB_LINK_BUTTON,
         QUERY_STATUSES,
     ]
 

@@ -9,7 +9,7 @@ class Module:
     EASEMENT = "easement"
     ORDINANCE = "ordinance"
     SUBMISSION = "submission"
-    PROPRETIE = "propertie"
+    PROPERTIE = "propertie"
     USER = "me"
     TAGS = "tags"
     STATUSES = "statuses"

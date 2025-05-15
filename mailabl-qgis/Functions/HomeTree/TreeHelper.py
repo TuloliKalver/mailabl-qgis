@@ -127,7 +127,7 @@ class TreeHelper:
     @staticmethod
     def open_property():
         link_id = StoreValues().return_prperties_id()
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
         web_module = MailablWebModules().get_web_link(module)
         #print(f"web_module: {web_module}")
         web_link = OpenLink.weblink_by_module(web_module)

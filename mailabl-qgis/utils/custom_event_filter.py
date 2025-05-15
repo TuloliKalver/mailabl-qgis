@@ -39,7 +39,7 @@ class ReturnPressedManager:
             self.dialog.le_searchProjects: lambda: self.mse.universalSearch(Module.PROJECT),
             self.dialog.leSearcheasements: lambda: self.mse.universalSearch(Module.EASEMENT),
             self.dialog.le_searchTeostus: lambda: self.mse.universalSearch(Module.ASBUILT),
-            self.dialog.leText_For_Sync_GreateLayerName: self.dialog.generate_virtual_mapLayer_synced_with_Mailabl
+            self.dialog.leWorksSearch: lambda: self.mse.universalSearch(Module.WORKS),
         }
 
     def setup_connections_to_handle_return(self):

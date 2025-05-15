@@ -1238,7 +1238,7 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pushButton_2">
+                   <widget class="QPushButton" name="pbWorksMain">
                     <property name="text">
                      <string>Võrgu tööd</string>
                     </property>
@@ -1630,7 +1630,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>4</number>
+                  <number>10</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -11751,6 +11751,349 @@ QTableView:disabled QTableCornerButton::section {
                              </widget>
                             </item>
                            </layout>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                 <widget class="QWidget" name="works">
+                  <layout class="QVBoxLayout" name="verticalLayout_47">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QWidget" name="WorksPageName" native="true">
+                     <layout class="QVBoxLayout" name="verticalLayout_43">
+                      <property name="spacing">
+                       <number>5</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>10</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>10</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="lblWorksTitle">
+                        <property name="font">
+                         <font>
+                          <pointsize>13</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Võrgu tööd</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QFrame" name="frWorksMain">
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_42">
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QFrame" name="frWorksTools">
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_44">
+                         <property name="spacing">
+                          <number>10</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QFrame" name="frWorksConnectProperties">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
+                           </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_45">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>10</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QPushButton" name="pbWorksConnectproperties">
+                              <property name="font">
+                               <font>
+                                <pointsize>10</pointsize>
+                                <weight>50</weight>
+                                <bold>false</bold>
+                               </font>
+                              </property>
+                              <property name="toolTip">
+                               <string/>
+                              </property>
+                              <property name="statusTip">
+                               <string/>
+                              </property>
+                              <property name="whatsThis">
+                               <string/>
+                              </property>
+                              <property name="text">
+                               <string>Kinnistutega sidumine</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/iconoir--map-pin-plus_asukoht.svg</normaloff>icons/iconoir--map-pin-plus_asukoht.svg</iconset>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QFrame" name="frWorksSearch">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
+                           </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_109">
+                            <property name="spacing">
+                             <number>10</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QLineEdit" name="leWorksSearch">
+                              <property name="font">
+                               <font>
+                                <pointsize>10</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string/>
+                              </property>
+                              <property name="placeholderText">
+                               <string>Otsi nime järgi</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QPushButton" name="pbWorksSearch">
+                              <property name="font">
+                               <font>
+                                <pointsize>10</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>Otsi</string>
+                              </property>
+                              <property name="icon">
+                               <iconset>
+                                <normaloff>icons/Icons_hele/search.svg</normaloff>icons/Icons_hele/search.svg</iconset>
+                              </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QFrame" name="frWorksParams">
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_110">
+                         <property name="spacing">
+                          <number>10</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QgsCheckableComboBox" name="cmbWorksTypes">
+                           <property name="minimumSize">
+                            <size>
+                             <width>250</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QComboBox" name="cmbWorksStatuses">
+                           <property name="minimumSize">
+                            <size>
+                             <width>150</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="pbRefreshWorksTable">
+                           <property name="text">
+                            <string/>
+                           </property>
+                           <property name="icon">
+                            <iconset>
+                             <normaloff>icons/Icons_hele/refresh-cw.svg</normaloff>icons/Icons_hele/refresh-cw.svg</iconset>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_66">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>40</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="pbWorksTools">
+                           <property name="text">
+                            <string>Uus võrgutöö</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QFrame" name="frWorksTable">
+                        <property name="styleSheet">
+                         <string notr="true">QFrame{
+	background-color: #1a2026;
+
+}</string>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_196">
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QTableView" name="tblWorks">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
                           </widget>
                          </item>
                         </layout>

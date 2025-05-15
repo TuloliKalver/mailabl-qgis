@@ -24,7 +24,7 @@ class WhereProperties:
         #query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_County)
         #print("Query added")
 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_Address_County
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -78,7 +78,7 @@ class WhereProperties:
         #print("Query added")
 
 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_Address_State
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -160,7 +160,7 @@ class WhereProperties:
         #query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_Address_City)
         #print("Query added")
         
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_Address_City
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -236,7 +236,7 @@ class WhereProperties:
         #query_loader = GraphqlProperties()
         #query = query_loader.load_query_for_properties_WHERE(query_loader.W_properties_ID_CadastralNR)
                 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_ID_CadastralNR
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -315,7 +315,7 @@ class deleteProperty:
     @staticmethod
     def delete_single_item(item: str):
 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.D_ALL_properties
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -353,7 +353,7 @@ class add_properties:
 
     def add_single_property_item(self,item):
 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.ADD_Selected_properties
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -404,7 +404,7 @@ class add_properties:
 
     def add_additional_property_data(self, input_id, uses_input):
 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.ADD_properties_purpose
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -431,7 +431,7 @@ class MyLablChecker:
 
     def get_properties_where_for_duplicates(self, item):
 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_number
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -468,7 +468,7 @@ class MyLablChecker:
 
     def _get_propertie_ids_by_cadastral_numbers_EQUALS(item: str)->bool:
 
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_number
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -522,7 +522,7 @@ class PropertiesGeneralQueries:
     def get_properties_MyLabl_idsAndCadastrals(self, properties_list):
         total_in_list = len(properties_list)
         
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_number
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -588,7 +588,7 @@ class PropertiesGeneralQueries:
         #print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
         
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_number
         query = GraphQLQueryLoader.load_query_by_module(module, file)
@@ -806,7 +806,7 @@ class UpdateData:
         # If it's already a str, nothing to do
 
         #print(f"✔️ Final item_id to use: {item_id} ({type(item_id)})")
-        module=Module.PROPRETIE
+        module=Module.PROPERTIE
         tag_name = "Arhiveeritud"
         tag_id = TagsEngines.get_modules_tag_id_by_name(tag_name=tag_name, module=module)
         if tag_id == None:
@@ -833,7 +833,7 @@ class UpdateData:
         elif isinstance(item_id, dict):
             item_id = item_id["node"]["id"]
         
-        module = Module.PROPRETIE
+        module = Module.PROPERTIE
         tag_name = "Arhiveeritud"
         
         # Get the ID of the tag to remove (no need to create if missing!)

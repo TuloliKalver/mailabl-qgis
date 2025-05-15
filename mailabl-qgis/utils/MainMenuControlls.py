@@ -12,6 +12,7 @@ class MainMenuControlls:
         self.pbAddDrawings = dialog.pbAddDrawings
         self.pbArchiveHelper = dialog.pbArchiveHelper
         self.pbCooperations = dialog.pbCooperations
+        self.pbWorksMain = dialog.pbWorksMain
 
         # Keep track of last clicked button
         self.active_button = None
@@ -25,7 +26,8 @@ class MainMenuControlls:
             self.pbMapThemes: lambda: WorkSpaceHandler.swWorkSpace_MapThemes_FrontPage(self.dialog),
             self.pbAddDrawings: lambda: WorkSpaceHandler.swWorkSpace_Controller(self.dialog, menu_module=MenuModules.TEOSTUS, module=Module.ASBUILT),
             self.pbCooperations: lambda: WorkSpaceHandler.swWorkSpace_Coordinations(self.dialog,menu_module=MenuModules.COORDINATIONS, module=Module.COORDINATION),
-            self.pbArchiveHelper: lambda: WorkSpaceHandler.swWorkspace_arhive_helper(self.dialog,MenuModules.ARCHIVE_HELP_PROPERTIES)
+            self.pbArchiveHelper: lambda: WorkSpaceHandler.swWorkspace_arhive_helper(self.dialog,MenuModules.ARCHIVE_HELP_PROPERTIES),
+            self.pbWorksMain: lambda: WorkSpaceHandler.swWorkSpace_Works(self.dialog, menu_module=MenuModules.WORKS, module=Module.WORKS)
         }
 
         # Connect each button to a wrapper that handles activation

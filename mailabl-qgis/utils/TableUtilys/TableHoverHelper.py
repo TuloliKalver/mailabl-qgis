@@ -103,6 +103,10 @@ class TableHoverWatcher(QObject):
         elif self.module == Module.EASEMENT:
             table_rows = EasementssMain.load_easements_details(id_value)
             colspan = "4"
+        elif self.module == Module.WORKS:
+            colspan = "4"
+            table_rows = AsBuiltMain.load_asBuilt_details(id_value)
+
         else:
             print("Unknown module:", self.module)
             colspan = "2"

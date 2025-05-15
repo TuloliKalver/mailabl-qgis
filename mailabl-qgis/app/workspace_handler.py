@@ -17,6 +17,7 @@ from ..config.SetupModules.SetupConrtacts import SetupConrtacts
 from ..config.SetupModules.SetupProjects import SetupProjects
 from ..config.SetupModules.AsBuitSettings import AsBuiltDrawings
 from ..config.SetupModules.SetupCoordinations import CoordinationsSetup
+from ..config.SetupModules.SetupWorks import SetupWorks
 from .MainMenuController import SetupController, MenuModules
 from ..utils.ComboboxHelper import ComboBoxHelper
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
@@ -76,7 +77,6 @@ class WorkSpaceHandler:
         table = self.tblMailabl_Cooperation
         statuses_combo_box = self.cmbCooperationStatuses
         types_combo_box = self.cmbCooperationTypes
-        proprtiest_connect = self.pbCooperations_Connect_properties
         pbSearchCooperation  = self.pbSearchCooperation
         le_searchCooperation = self.le_searchCooperation
         pbCooperation_free = self.pbCooperation_free
@@ -112,6 +112,7 @@ class WorkSpaceHandler:
                 context=self,
                 preferred_items=True
             )                
+
         selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
         prefered_types_ids = types_combo_box.checkedItemsData()
         #print(f"selected status: {selected_status}")
@@ -126,6 +127,64 @@ class WorkSpaceHandler:
         TableHoverWatcher(module, table)
 
         button.blockSignals(False)
+
+    def swWorkSpace_Works(self, menu_module, module, refresh=False):
+        #menu_module controlls menu and flows between modules
+        #Module is to load the data from the
+
+        for widget in [
+            self.pbWorksTools,
+        ]:
+            widget.setEnabled(False)
+
+        self.swWorkSpace.setCurrentIndex(menu_module)
+        button = self.pbWorksMain
+        table = self.tblWorks
+        statuses_combo_box = self.cmbWorksStatuses
+        types_combo_box = self.cmbWorksTypes
+              
+
+        # Add statuses to the combobox and set the preferred status
+        if refresh is False:
+            res = WorkSpaceHandler.check_if_settings_are_set(self, menu_module)
+            if res is False:
+                setupWorks = SetupWorks(self)
+                setupWorks.load_works_settings_widget()
+                button.setEnabled(True)
+                button.blockSignals(False)
+                return
+
+            combo_handler.populate_comboBox_smart(
+                comboBox=statuses_combo_box,
+                button=button,
+                module=module,
+                context=self,
+                preferred_items=False
+            )
+
+            # Add types to the combobox and set the preferred     
+            combo_handler.populate_comboBox_smart(
+                comboBox=types_combo_box,
+                button=button,
+                module=module,
+                context=self,
+                preferred_items=True
+            )                
+
+        selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
+        prefered_types_ids = types_combo_box.checkedItemsData()
+
+        AsBuiltMain.load_main_AsBuilt_by_type_and_status(self,
+                                                             table=table,
+                                                             types=prefered_types_ids,
+                                                             statuses=selected_status,
+                                                             module = module 
+                                                             )
+                
+        button.blockSignals(False)
+
+        TableHoverWatcher(module, table)
+
 
 
     def swWorkSpace_Controller(self, menu_module, module):

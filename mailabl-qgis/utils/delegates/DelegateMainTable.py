@@ -288,7 +288,8 @@ class OpenMailablItemByModule(QStyledItemDelegate):
                 return True
         return super().editorEvent(event, model, option, index)
     def open_mailabl_item(self, id):
-        link_from_module = (f"/{self.module}s/")
+        module = OpenLink.get_module_link(self.module)
+        link_from_module = (f"/{module}s/")
         web_link = OpenLink.weblink_by_module(link_from_module)
         link = f"{web_link}{id}"
         response = requests.get(link, verify=False)
@@ -329,13 +330,16 @@ class DelegatesForTables():
             flagColumnIndex = header_labels.index(display_headers[HeaderKeys.HEADER_FLAG])
             flag_delegate = FlagsDelegate(flagColumnIndex, table)
             table.setItemDelegateForColumn(flagColumnIndex, flag_delegate)
-       
+        if module == Module.WORKS:
+            flagColumnIndex = header_labels.index(display_headers[HeaderKeys.HEADER_FLAG])
+            flag_delegate = FlagsDelegate(flagColumnIndex, table)
+            table.setItemDelegateForColumn(flagColumnIndex, flag_delegate)
 
         ID_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_ID])
         webButton_Column_index = header_labels.index(display_headers[HeaderKeys.HEADER_WEB_LINK_BUTTON])
-        dokAddress_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_DOCUMENTS])
+        
         cadastralButton_Column_index = header_labels.index(display_headers[HeaderKeys.HEADER_PROPERTIES_ICON])
-        dokButton_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_FILE_PATH])
+        
         status_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_STATUSES])
         color_column_index = header_labels.index(display_headers[HeaderKeys.COLOR_NAME])
         properties_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_PROPERTY_NUMBER])
@@ -345,9 +349,12 @@ class DelegatesForTables():
 
         web_link_delegate = OpenMailablItemByModule(ID_column_index, table, module)
         table.setItemDelegateForColumn(webButton_Column_index, web_link_delegate)
-
-        file_delegate = FileDelegate(dokAddress_column_index, module, table)
-        table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
+        
+        if module != Module.WORKS:
+            dokAddress_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_DOCUMENTS])
+            dokButton_column_index = header_labels.index(display_headers[HeaderKeys.HEADER_FILE_PATH])
+            file_delegate = FileDelegate(dokAddress_column_index, module, table)
+            table.setItemDelegateForColumn(dokButton_column_index, file_delegate)
 
         table.setItemDelegateForColumn(status_column_index, FancyStatusDelegate(color_column_index))
 

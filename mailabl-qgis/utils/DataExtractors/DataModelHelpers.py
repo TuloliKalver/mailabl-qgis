@@ -28,6 +28,9 @@ class DataModelBuilder:
             headers = HeaderKeys.TASKS_HEADER_KEYS
         elif module == Module.COORDINATION:
             headers = HeaderKeys.COORDINATIONS_HEADER_KEYS
+        elif module == Module.WORKS:
+            headers = HeaderKeys.WORKS_HEADER_KEYS
+            module = Module.ASBUILT
         else:
             headers = HeaderKeys.ALL_HEADER_KEYS
 
