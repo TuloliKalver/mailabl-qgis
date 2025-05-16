@@ -58,7 +58,7 @@ class EasementssMain:
             print(f"{heading}, {text}")
         progress.close()
 
-    def load_easemenets_by_number(search_values, table, language="et" ):
+    def load_easemenets_by_number(search_values, table, language="et", module=None ):
         #Adding progress
         progress = ProgressDialogModern(title="Katastri laadimine", value=0)
         progress.update(1, purpouse="Servituutide laadimine", text1="Palun oota...")

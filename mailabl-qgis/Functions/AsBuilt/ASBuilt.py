@@ -61,6 +61,7 @@ class AsBuiltMain:
     @staticmethod
     def load_asBuilt_by_query (query, table, language="et", module=None):
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
+        print(f"module: {module}")
         if module is None:
             module = Module.ASBUILT
         elif module == Module.WORKS:

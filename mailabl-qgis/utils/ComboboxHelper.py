@@ -155,6 +155,7 @@ class ComboBoxHelper:
             )
         cmbtypesgroups.model().itemChanged.connect(lambda _: update_types_after_group_selection())
 
+
 class GetValuesFromComboBox:
     def _get_selected_id_from_combobox(comboBox):
         selected_index = comboBox.currentIndex()
@@ -174,3 +175,5 @@ class GetValuesFromComboBox:
             return selected_text
         return None
     
+
+

@@ -119,10 +119,12 @@ class SetupWorks:
 
         if result == QDialog.Accepted:
             works_layer_name = GetValuesFromComboBox._get_selected_name_from_combobox(cmbWorks)
-
+            
             status_name = GetValuesFromComboBox._get_selected_name_from_combobox(cmbstatus)
             status_ids = GetValuesFromComboBox._get_selected_id_from_combobox(cmbstatus)
 
+
+            types_groups = cmbtypesgroups.checkedItems()
             types_names =cmbtypes.checkedItems()
             types_ids = []
             
@@ -162,6 +164,15 @@ class SetupWorks:
                 subcontext=PluginSettings.OPTION_TYPE,
                 key_type=PluginSettings.SUB_CONTEXT_NAME,
                 value = types_names
+            )
+
+
+            PluginSettings.save_setting(
+                module=module,
+                context=PluginSettings.CONTEXT_PREFERRED,
+                subcontext=PluginSettings.OPTION_TYPE,
+                key_type=PluginSettings.SUB_CONTEXT_TYPE_GROUP,
+                value = types_groups
             )
 
             PluginSettings.save_setting(

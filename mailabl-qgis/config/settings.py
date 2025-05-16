@@ -168,6 +168,7 @@ class FilesByNames:
     DecisionMaker_UI = "DecicionMakerUI.ui"
     asBuitTools_UI = "asBuiltTools.ui"
     COORDINATIONS_UI = "CoordinationsSetup.ui"
+    worksTools_UI = "WorksTools.ui"
    
     
 
@@ -666,6 +667,14 @@ class StartupSettingsLoader:
             text_fomated=True
         )
 
+        types_groups = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_TYPE,
+            key_type=PluginSettings.SUB_CONTEXT_TYPE_GROUP,
+            text_fomated=True
+        )
+
         if works_layer_name == "":
             self.dialog.lblWorksLayerValue.setText("Määramata")
         else:
@@ -680,6 +689,14 @@ class StartupSettingsLoader:
             self.dialog.lblWorksActionsValue.setText("Määramata")
         else:
             self.dialog.lblWorksActionsValue.setText(types_names)
+
+        if types_groups == "":
+            self.dialog.lblWorksGroupsValue.setText("Määramata")
+        else:
+            self.dialog.lblWorksGroupsValue.setText(types_groups)
+
+
+
 
 
 

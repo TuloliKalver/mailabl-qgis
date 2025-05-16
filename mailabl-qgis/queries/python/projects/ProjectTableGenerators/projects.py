@@ -40,7 +40,7 @@ class Projects:
         progress.close()
     @staticmethod
     #@log_test_entry("laod projects by number")
-    def load_projects_by_number(project_number, table, language="et"):
+    def load_projects_by_number(project_number, table, language="et", module=None):
         progress = ProgressDialogModern(title="Katastri laadimine", value=0)
         progress.update(1, purpouse="Projektide laadimine", text1="Palun oota...")
         

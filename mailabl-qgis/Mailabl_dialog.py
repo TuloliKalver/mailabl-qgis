@@ -56,6 +56,7 @@ from .Functions.EVEL.evel_general import EVELTools
 from .Functions.HomeTree.BuildTree import MyTreeHome
 from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool, FeatureInfoToolSearch
 from .Functions.Searchpropertyfromlayer import SearchProperties
+from .Functions.WORKS.works import PointCaptureTool, start_work_capture
 
 from .queries.python.users.user import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects
@@ -156,6 +157,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         setupWorks = SetupWorks(self)
         setupCadastrallayers = SetupCadastralLayers(self)
         WorkSpaceHandler.set_dialog(self)
+
 
         UI = UIStateManager(self)
         loader = SHPLayerLoader(self)
@@ -261,11 +263,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbWorksSettings.clicked.connect(lambda: setupWorks.load_works_settings_widget())
 
         self.pbAsBuiltTools.setVisible(False)
-        #table = self.tblAsBuilt
-        #asBuiltTools = AsBuiltTools(self, table)
-        #self.pbAsBuiltTools.clicked.connect(lambda:asBuiltTools.load_asBuiltTools())
-
-
+ 
 
         self.lblPhotosValue.setEnabled(False)
         self.lblPhtosText.setEnabled(False)
@@ -310,7 +308,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbLogOut.clicked.connect(self.log_out)
         self.pbLogOut.setVisible(False)
 
-
+        self.pbWorksTools_2.clicked.connect(lambda: start_work_capture(self))
 
 
     def start_propertie_search(self):

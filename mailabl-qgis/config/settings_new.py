@@ -15,6 +15,7 @@ class PluginSettings:
     SUB_CONTEXT_NAME = "names"
     SUB_CONTEXT_IDs = "ids"
     SUB_CONTEXT_PATH = "path"
+    SUB_CONTEXT_TYPE_GROUP = "group"
 
     WATER = "water"
     SEWER = "sewer"
@@ -93,7 +94,7 @@ class SettingsBuilder:
 
     keys = {
         PluginSettings.OPTION_STATUS: [PluginSettings.SUB_CONTEXT_NAME, PluginSettings.SUB_CONTEXT_IDs],
-        PluginSettings.OPTION_TYPE: [PluginSettings.SUB_CONTEXT_NAME, PluginSettings.SUB_CONTEXT_IDs],
+        PluginSettings.OPTION_TYPE: [PluginSettings.SUB_CONTEXT_NAME, PluginSettings.SUB_CONTEXT_IDs, PluginSettings.SUB_CONTEXT_TYPE_GROUP],
         PluginSettings.OPTION_LAYER: [PluginSettings.WATER, 
                                       PluginSettings.SEWER, 
                                       PluginSettings.PRESSURE_SEWER, 
@@ -111,6 +112,7 @@ class SettingsBuilder:
         """
         base = SettingsBuilder.BASE_PATH
         parts = [module, context, subcontext, key_type]
+        print(f"Parts: {parts}")
         return f"{base}/{'/'.join(p for p in parts if p)}"
 
     @staticmethod

@@ -152,6 +152,7 @@ class SetupController:
                     dialog.lblWorksLayerValue,
                     dialog.lblWorksActionsValue,
                     dialog.lblworksPreferredStatusesValue,
+                    dialog.lblWorksGroupsValue
                 ],
                 ModuleKey.CHECKBOXES: [],
                 ModuleKey.SETTINGS_BUTTON: None,

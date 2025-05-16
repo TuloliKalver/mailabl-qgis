@@ -28,7 +28,7 @@ class Constants:
 
 class ContractsMain:
     @staticmethod
-    def load_main_contracts_by_type_and_status (self, table, types, statuses, language="et"):
+    def load_main_contracts_by_type_and_status (self, table, types, statuses, language="et", module=None):
         #Adding progress
         module = Module.CONTRACT
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)

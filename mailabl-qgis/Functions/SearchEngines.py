@@ -19,11 +19,12 @@ class ModularSearchEngine:
             Module.CONTRACT: ContractsMain.load_contracts_by_query,
             Module.EASEMENT: EasementssMain.load_easemenets_by_number,
             Module.ASBUILT: AsBuiltMain.load_asBuilt_by_query,
-            Module.WORKS: AsBuiltMain.load_asBuilt_by_query
+            Module.WORKS:  AsBuiltMain.load_asBuilt_by_query
         }
 
     def universalSearch(self, module_name):
         # Get the corresponding line edit and table based on the module name
+        print(f"module_name in universal search {module_name}")
         line_edits = {
             Module.PROJECT: self.dialog.le_searchProjects,
             Module.CONTRACT: self.dialog.le_searchContracts,
@@ -54,4 +55,4 @@ class ModularSearchEngine:
         else:
             lineEdit.setStyleSheet("border: None")
             # Call the appropriate search function based on the module name
-            self.search_functions[module_name](item, table)
+            self.search_functions[module_name](item, table, module=module_name)
