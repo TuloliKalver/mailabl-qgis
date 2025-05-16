@@ -1,17 +1,20 @@
-import os
-import re
 
+import requests
 from PyQt5.QtCore import Qt
-from datetime import datetime
+from datetime import datetime,  timedelta
 
 from types import MethodType
 from PyQt5.QtWidgets import (
     QDialog,QCheckBox, QFrame, QHBoxLayout, QLabel,
     QLineEdit, QTextEdit, QVBoxLayout, QGroupBox
 )
+import webbrowser
 
+
+#from .worksHelpers import worksHelpers
+from ...queries.python.update_relations.updateElementProperties import ConnectElementWithPropertysties
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
-from ...config.settings import Filepaths, FilesByNames
+from ...config.settings import Filepaths, FilesByNames, OpenLink
 from ...config.SetupModules.AsBuitSettings import AsBuiltDrawings, DraggableFrame
 from ...config.settings_new import PluginSettings
 
@@ -23,7 +26,9 @@ from ...KeelelisedMuutujad.modules import Module
 from ...utils.ComboboxHelper import ComboBoxHelper
 
 from ...queries.python.users.user import UserSettings
+from ...queries.python.tasks.taskQueries import CreateTask
 from ...utils.TableUtilys.FlagIconHelper import FlagIconHelper
+
 
 combo_handler = ComboBoxHelper()
 
@@ -73,9 +78,8 @@ class worksTools():
 
         result = widget.exec_()
         if result == QDialog.Accepted:
-            print("Dialog accepted")
 
-
+            start_date =  datetime.now().strftime("%Y-%m-%d")
             # Set default fields
             feature.setAttribute("datetime", datetime.now().strftime("%Y-%m-%d %H:%M"))
             feature.setAttribute("created_at", datetime.now().isoformat())
@@ -92,24 +96,54 @@ class worksTools():
             responsible_id = widget.cmbResponsible.itemData(index, Qt.UserRole)
 
             # For multi-user combobox
-            selected_user_ids = []
-            for i in range(widget.mcbxUsers.count()):
-                if widget.mcbxUsers.itemData(i, Qt.CheckStateRole) == Qt.Checked:
-                    selected_user_ids.append(widget.mcbxUsers.itemData(i, Qt.UserRole))
-
-            print(f"selected_user_ids: {selected_user_ids}")
-            print(f"responsible_id: {responsible_id}")
-
-
+            
+            user_combobox = widget.mcbxUsers
+            users_variable = CreateTask.prepare_associate_variable(user_combobox, responsible_id)
+        
             types =widget.workTypes.currentText().strip()
             feature.setAttribute("type", types)
+            type_id = widget.workTypes.currentData()
+            
+            priorityindex = widget.cmbPriority.currentIndex()
+            selected_priority = widget.cmbPriority.itemData(priorityindex, Qt.UserRole)
 
-            index = widget.cmbPriority.currentIndex()
-            selected_enum = widget.cmbPriority.itemData(index, Qt.UserRole)
-
-            feature.setAttribute("priority", selected_enum)
+            feature.setAttribute("priority", selected_priority)
     
             feature.setAttribute("active", True)        
+
+
+            task_title = widget.lblHeadingValue.text()
+
+
+            variables ={
+            "title": task_title,
+            "description": description,
+            "priority": selected_priority,
+
+            
+            "startAt": start_date,
+            "dueAt": (datetime.strptime(start_date, "%Y-%m-%d") + timedelta(days=7)).strftime("%Y-%m-%d"),
+            "typeId": type_id,
+            
+            "members": {
+                "associate": users_variable
+                }
+            }
+            
+            task_id = CreateTask.Create_Task(variables)
+            if properties_feature:
+                tunnus = properties_feature[Katastriyksus.tunnus]
+                tunnus = [f'{tunnus}']
+                ConnectElementWithPropertysties.connect_single_properties(task_id, tunnus)
+
+            module_task = Module.TASK
+            module_name = OpenLink.get_module_link(module_task)
+            link_from_module = (f"/{module_name}s/")
+            web_link = OpenLink.weblink_by_module(link_from_module)
+            link = f"{web_link}{task_id}"
+            response = requests.get(link, verify=False)
+            webbrowser.open(response.url)
+
 
             widget.setAttribute(Qt.WA_DeleteOnClose)
             
@@ -169,7 +203,7 @@ class worksTools():
 
 
         users =UserSettings.load_users()
-        print(f"users: {users}")
+        #print(f"users: {users}")
         cmbResponsible = widget.cmbResponsible
         cmbUsers = widget.mcbxUsers
 

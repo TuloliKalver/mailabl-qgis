@@ -103,3 +103,22 @@ class ConnectElementWithPropertysties:
             raise ValueError(f"Unsupported module type: {module}")
 
     
+
+    def connect_single_properties(item_id, properties):
+        module = Module.TASK
+        query_name = GraphqlTasks.UPDATE_TASK_PROPERTIES
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+        returned_ids = PropertiesGeneralQueries._get_properties_MyLabl_ids(properties_list=properties)
+        for property_id in returned_ids:
+            associate = ConnectElementWithPropertysties.build_associate_payload(module, property_id)
+            variables = {
+                "input": {
+                    "id": item_id,
+                    "properties": {
+                        "associate": associate
+                    }
+                }
+            }
+
+            response = requestBuilder.construct_and_send_request(query, variables)
+            return response

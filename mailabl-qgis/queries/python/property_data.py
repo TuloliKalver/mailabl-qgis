@@ -585,7 +585,7 @@ class PropertiesGeneralQueries:
 
     @staticmethod
     def _get_properties_MyLabl_ids(properties_list):
-        #print(f"propertie list: {properties_list}")
+        print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
         
         module = Module.PROPERTIE

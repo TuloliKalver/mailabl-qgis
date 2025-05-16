@@ -85,3 +85,4 @@ class worksHelpers:
         plugin_instance.raise_()  # brings it to front
 
         return
+
