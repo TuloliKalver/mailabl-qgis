@@ -129,15 +129,17 @@ class worksTools():
 
     def definedata(widget, feature, properties_feature):
         
+
         task_label = widget.lblHeadingValue
-        if task_label:
+
+        if properties_feature:
             address = properties_feature[Katastriyksus.l_aadress]
             asum = properties_feature[Katastriyksus.ay_nimi]
             full_address = address + ", " + asum
             task_label.setText(full_address)
         else:
-            print("⚠️ QLabel 'lblHeadingValue' not found in the UI.")
-
+            full_address = ""
+            task_label.setText("")
 
         cmbPriority = widget.cmbPriority
 
@@ -205,10 +207,16 @@ class worksTools():
         def update_label():
             type_text = comboBox.currentText()
             addition = lineEdit.text().strip() if lineEdit else ""
+
+            parts = []
+            if prefix_text:
+                parts.append(prefix_text)
+            if type_text:
+                parts.append(type_text)
             if addition:
-                label.setText(f"{prefix_text} - {type_text} - {addition}")
-            else:
-                label.setText(f"{prefix_text} - {type_text}")
+                parts.append(addition)
+
+            label.setText(" - ".join(parts))
 
         comboBox.currentIndexChanged.connect(lambda _: update_label())
         if lineEdit:
