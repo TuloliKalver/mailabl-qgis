@@ -21,6 +21,8 @@ from qgis.core import (
 
 
 class worksHelpers:
+    WORKSFEATURE = None
+
     def get_feature_tunnus_from_layer( point, canvas, plugin_instance, radius_multiplier=3):
         """Returns the 'tunnus' value from the first feature under the clicked point."""
 
@@ -68,10 +70,12 @@ class worksHelpers:
         else:
             feature.setAttribute("affected_properties", False)
         # Add the feature to the layer
-        works_layer.startEditing()
-        works_layer.addFeature(feature)
+        
         res = worksTools.load_worksTools(plugin_instance, feature, properties_feature)
+        
         if res == True:
+            works_layer.startEditing()
+            works_layer.addFeature(feature)   
             works_layer.commitChanges()
             works_layer.triggerRepaint()
         if res == False:

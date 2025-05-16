@@ -112,7 +112,7 @@ class SettingsBuilder:
         """
         base = SettingsBuilder.BASE_PATH
         parts = [module, context, subcontext, key_type]
-        print(f"Parts: {parts}")
+        #print(f"Parts: {parts}")
         return f"{base}/{'/'.join(p for p in parts if p)}"
 
     @staticmethod
@@ -125,7 +125,7 @@ class SettingsBuilder:
             print("⚠️ Settings already initialized.")
             return
 
-        print("🛠️ Initializing structured Mailabl settings...")
+        #print("🛠️ Initializing structured Mailabl settings...")
 
         for module in SettingsBuilder.modules:
             for context in SettingsBuilder.contexts:
@@ -142,7 +142,7 @@ class SettingsBuilder:
                         print(f"🟢 Created: {key}")
 
         settings.setValue(SettingsBuilder.INIT_FLAG_KEY, True)
-        print("✅ Initialization complete. Flag set.")
+        #print("✅ Initialization complete. Flag set.")
 
     @staticmethod
     def reset_initialization_flag():

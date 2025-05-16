@@ -63,4 +63,27 @@ class UserSettings:
             return None
 
 
+    def load_users():
+        module = Module.USER
+        query_name = GraphqlUser.Q_All_Users
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+        
+        variables = {}
 
+        # Send the request
+        response = requestBuilder.construct_and_send_request(query, variables)
+        
+        if response.status_code == 200:
+            data = response.json()
+            users_data = data['data']['users']['edges']  # replace `your_data` with the actual variable
+
+            user_names = []
+            for user in users_data:
+                node = user['node']
+                if node.get("deletedAt") is None:
+                    first = node.get("firstName", "")
+                    last = node.get("lastName", "")
+                    if first and last:
+                        user_names.append(f"{first} {last}")
+
+        return user_names

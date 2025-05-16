@@ -2,6 +2,7 @@ import os
 import re
 
 from PyQt5.QtCore import Qt
+from datetime import datetime
 
 from types import MethodType
 from PyQt5.QtWidgets import (
@@ -20,6 +21,9 @@ from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ...KeelelisedMuutujad.modules import Module
 
 from ...utils.ComboboxHelper import ComboBoxHelper
+
+from ...queries.python.users.user import UserSettings
+from ...utils.TableUtilys.FlagIconHelper import FlagIconHelper
 
 combo_handler = ComboBoxHelper()
 
@@ -70,6 +74,31 @@ class worksTools():
         result = widget.exec_()
         if result == QDialog.Accepted:
             print("Dialog accepted")
+
+
+            # Set default fields
+            feature.setAttribute("datetime", datetime.now().strftime("%Y-%m-%d %H:%M"))
+            feature.setAttribute("created_at", datetime.now().isoformat())
+            feature.setAttribute("updated_at", datetime.now().isoformat())
+                        
+            description = widget.worksDesc.toPlainText()
+            feature.setAttribute("description", description)
+
+            responsible = widget.cmbResponsible.currentText().strip()
+            if not responsible:
+                responsible = "Määramata"
+            feature.setAttribute("responsible_team", responsible)
+
+            types =widget.workTypes.currentText().strip()
+            feature.setAttribute("type", types)
+
+            index = widget.cmbPriority.currentIndex()
+            selected_enum = widget.cmbPriority.itemData(index, Qt.UserRole)
+
+            feature.setAttribute("priority", selected_enum)
+    
+            feature.setAttribute("active", True)        
+
             widget.setAttribute(Qt.WA_DeleteOnClose)
             
             return True
@@ -89,6 +118,49 @@ class worksTools():
     def definedata(widget, feature, properties_feature):
         
         label = widget.lblHeadingValue
+
+
+        cmbPriority = widget.cmbPriority
+
+        # Mapping from enum to Estonian display
+        priority_map = {
+            "URGENT": "Kiire",
+            "HIGH": "Kõrge",
+            "MEDIUM": "Keskmine",
+            "LOW": "Madal"
+        }
+
+        # Fill combobox
+        for enum_value, display_name in priority_map.items():
+            icon = FlagIconHelper.generate_icon(priority=enum_value, size=18)
+            cmbPriority.addItem(icon, display_name)
+            # Store the original enum as UserRole data
+            cmbPriority.setItemData(cmbPriority.count() - 1, enum_value, Qt.UserRole)
+            
+        lblStartTime = widget.lblStartTime
+        lblStartDate = widget.lblStartDate
+
+        date = datetime.now().strftime("%Y-%m-%d")
+        time = datetime.now().strftime("%H:%M")
+
+        lblStartDate.setText(date)
+        lblStartTime.setText(time)
+
+
+        users =UserSettings.load_users()
+        print(f"users: {users}")
+        cmbResponsible = widget.cmbResponsible
+        cmbUsers = widget.mcbxUsers
+
+        cmbResponsible.clear()
+        cmbResponsible.addItems(users)
+
+        cmbUsers.clear()
+        for user in users:
+            cmbUsers.addItem(user)
+            index = cmbUsers.findText(user)
+            cmbUsers.setItemData(index, Qt.Unchecked, Qt.CheckStateRole)
+
 
         if label:
             address = properties_feature[Katastriyksus.l_aadress]
