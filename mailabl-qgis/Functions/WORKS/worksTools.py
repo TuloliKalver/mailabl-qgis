@@ -88,6 +88,18 @@ class worksTools():
             if not responsible:
                 responsible = "Määramata"
             feature.setAttribute("responsible_team", responsible)
+            index = widget.cmbResponsible.currentIndex()
+            responsible_id = widget.cmbResponsible.itemData(index, Qt.UserRole)
+
+            # For multi-user combobox
+            selected_user_ids = []
+            for i in range(widget.mcbxUsers.count()):
+                if widget.mcbxUsers.itemData(i, Qt.CheckStateRole) == Qt.Checked:
+                    selected_user_ids.append(widget.mcbxUsers.itemData(i, Qt.UserRole))
+
+            print(f"selected_user_ids: {selected_user_ids}")
+            print(f"responsible_id: {responsible_id}")
+
 
             types =widget.workTypes.currentText().strip()
             feature.setAttribute("type", types)
@@ -117,7 +129,14 @@ class worksTools():
 
     def definedata(widget, feature, properties_feature):
         
-        label = widget.lblHeadingValue
+        task_label = widget.lblHeadingValue
+        if task_label:
+            address = properties_feature[Katastriyksus.l_aadress]
+            asum = properties_feature[Katastriyksus.ay_nimi]
+            full_address = address + ", " + asum
+            task_label.setText(full_address)
+        else:
+            print("⚠️ QLabel 'lblHeadingValue' not found in the UI.")
 
 
         cmbPriority = widget.cmbPriority
@@ -153,22 +172,18 @@ class worksTools():
         cmbUsers = widget.mcbxUsers
 
         cmbResponsible.clear()
-        cmbResponsible.addItems(users)
+        for label, user_id in users:
+            cmbResponsible.addItem(label)
+            cmbResponsible.setItemData(cmbResponsible.count() - 1, user_id, Qt.UserRole)
 
         cmbUsers.clear()
-        for user in users:
-            cmbUsers.addItem(user)
-            index = cmbUsers.findText(user)
+        for label, user_id in users:
+            cmbUsers.addItem(label)
+            index = cmbUsers.findText(label)
+            cmbUsers.setItemData(index, user_id, Qt.UserRole)  # Store user ID for later
             cmbUsers.setItemData(index, Qt.Unchecked, Qt.CheckStateRole)
 
 
-        if label:
-            address = properties_feature[Katastriyksus.l_aadress]
-            asum = properties_feature[Katastriyksus.ay_nimi]
-            full_address = address + ", " + asum
-            label.setText(full_address)
-        else:
-            print("⚠️ QLabel 'lblHeadingValue' not found in the UI.")
         comboBox=widget.workTypes
         module=Module.WORKS
 
@@ -183,7 +198,7 @@ class worksTools():
         combo_handler.refresh_combo_box_with_group_values(comboBox, module, group_values)
 
         lineEdit = widget.worksTitleadition
-        worksTools.setup_combobox_label_update(comboBox, label, prefix_text=full_address, lineEdit=lineEdit)
+        worksTools.setup_combobox_label_update(comboBox, task_label, prefix_text=full_address, lineEdit=lineEdit)
 
     @staticmethod
     def setup_combobox_label_update(comboBox, label, prefix_text="", lineEdit=None):

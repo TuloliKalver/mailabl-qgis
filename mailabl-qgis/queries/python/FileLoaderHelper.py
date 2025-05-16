@@ -114,6 +114,7 @@ class GraphqlTasks:
     TaskById = "TaskById.graphql"
     updatedescription ="update_task_properties.graphql"
     TASK_DETAILS =  "task_details.graphql"
+    CREATE_TASK = "create_task.graphql"
 
 class GraphqlCoordinations:
     COORDINATIONS = 'coordinations_type_status.graphql'
