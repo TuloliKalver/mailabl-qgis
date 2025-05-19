@@ -1630,7 +1630,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>4</number>
+                  <number>11</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -12143,9 +12143,9 @@ QTableView:disabled QTableCornerButton::section {
                           </spacer>
                          </item>
                          <item>
-                          <widget class="QPushButton" name="pbWorksTools">
+                          <widget class="QPushButton" name="Works_Testing">
                            <property name="text">
-                            <string>Uus võrgutöö</string>
+                            <string>Testing</string>
                            </property>
                           </widget>
                          </item>

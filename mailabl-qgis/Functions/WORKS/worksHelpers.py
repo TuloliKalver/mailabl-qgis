@@ -71,7 +71,7 @@ class worksHelpers:
             feature.setAttribute("affected_properties", False)
         # Add the feature to the layer
         
-        res = worksTools.load_worksTools(plugin_instance, feature, properties_feature)
+        res = worksTools.load_worksTools(feature, properties_feature)
         
         if res == True:
             works_layer.startEditing()

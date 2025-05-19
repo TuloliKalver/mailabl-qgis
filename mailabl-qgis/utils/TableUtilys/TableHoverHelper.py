@@ -7,7 +7,7 @@ from ...utils.TableUtilys.TableHelpers import TableExtractor
 from .TableHEaderIndexMap import HeaderIndexMap
 from ...Functions.Coordinations.Coordinations import CoordinationsMain
 from ...queries.python.projects_pandas import ProjectsQueries
-from ...Functions.AsBuilt.ASBuilt import AsBuiltMain
+from ...Functions.AsBuilt.ASBuilt import TaskMain
 from ...Functions.Contracts.Contracts import ContractsMain
 from ...Functions.Easements.Easements import EasementssMain
 from ...KeelelisedMuutujad.modules import Module
@@ -85,15 +85,16 @@ class TableHoverWatcher(QObject):
             for name, idx in index_dict.items()
         }
 
+        #print(f"Data before extracting details: {data}")
         # Now pull in the detail rows + terms
         id_value = data.get("id")
-        
+        #print(f"ID value before loading details: {id_value}")
         if self.module == Module.COORDINATION:
             table_rows = CoordinationsMain.load_coordinations_details(id_value)
             colspan = "6"
         elif self.module == Module.ASBUILT:
             colspan = "4"
-            table_rows = AsBuiltMain.load_asBuilt_details(id_value)
+            table_rows = TaskMain.load_task_details(id_value)
         elif self.module == Module.PROJECT:
             table_rows = ProjectsQueries._fetch_projects_details(id_value)
             colspan = "6"
@@ -105,12 +106,16 @@ class TableHoverWatcher(QObject):
             colspan = "4"
         elif self.module == Module.WORKS:
             colspan = "4"
-            table_rows = AsBuiltMain.load_asBuilt_details(id_value)
-
+            task_data = TaskMain.load_task_data(id_value)
+            table_rows = task_data["data"]["task"]["description"]
+            table_rows = f"<div>Kirjeldus:<br>\n\n{table_rows}</div>"
+          
         else:
             print("Unknown module:", self.module)
             colspan = "2"
             table_rows = "", ""
+
+
 
         # Build HTML message
         message = f"""
@@ -129,7 +134,7 @@ class TableHoverWatcher(QObject):
                 👀 Mis siin peidus on?
             </div>
         """
-        print(f"Setting overall colsmap to {colspan}")
+        #print(f"Setting overall colsmap to {colspan}")
         message += f"""
         <div style="margin-top:6px;">
         <table border="0" cellspacing="0" cellpadding="4" width="100%"

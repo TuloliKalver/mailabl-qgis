@@ -7,7 +7,7 @@ from PyQt5.QtCore import QCoreApplication
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from ..Functions.Contracts.Contracts import ContractsMain
 from ..Functions.Easements.Easements import EasementssMain
-from ..Functions.AsBuilt.ASBuilt import AsBuiltMain
+from ..Functions.AsBuilt.ASBuilt import TaskMain
 from ..Functions.Coordinations.Coordinations import CoordinationsMain
 from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
@@ -62,7 +62,7 @@ class WorkSpaceHandler:
         statusValue = GetValuesFromComboBox._get_selected_id_from_combobox(cmb_status)
         selected_types_ids = cmb_types.checkedItemsData()
 
-        AsBuiltMain.load_main_AsBuilt_by_type_and_status(
+        TaskMain.load_main_task_by_type_and_status(
             dialog,
             table=table,
             types=selected_types_ids,
@@ -132,10 +132,10 @@ class WorkSpaceHandler:
         #menu_module controlls menu and flows between modules
         #Module is to load the data from the
 
-        for widget in [
-            self.pbWorksTools,
-        ]:
-            widget.setEnabled(False)
+        #for widget in [
+        #    self.pbWorksTools,
+        #]:
+        #    widget.setEnabled(False)
 
         self.swWorkSpace.setCurrentIndex(menu_module)
         button = self.pbWorksMain
@@ -174,7 +174,7 @@ class WorkSpaceHandler:
         selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
         prefered_types_ids = types_combo_box.checkedItemsData()
 
-        AsBuiltMain.load_main_AsBuilt_by_type_and_status(self,
+        TaskMain.load_main_task_by_type_and_status(self,
                                                              table=table,
                                                              types=prefered_types_ids,
                                                              statuses=selected_status,
@@ -185,6 +185,7 @@ class WorkSpaceHandler:
 
         TableHoverWatcher(module, table)
 
+        RightClickHelper.WORKS_right_click_action()
 
 
     def swWorkSpace_Controller(self, menu_module, module):
@@ -226,7 +227,7 @@ class WorkSpaceHandler:
         selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
         prefered_types_ids = types_combo_box.checkedItemsData()
 
-        AsBuiltMain.load_main_AsBuilt_by_type_and_status(self,
+        TaskMain.load_main_task_by_type_and_status(self,
                                                              table=table,
                                                              types=prefered_types_ids,
                                                              statuses=selected_status
@@ -248,7 +249,7 @@ class WorkSpaceHandler:
         if model is not None:
             model.removeRows(0, model.rowCount())
 
-        AsBuiltMain.load_asBuilt_by_query(self, table, search_text)
+        TaskMain.load_task_by_query(self, table, search_text)
 
         button.blockSignals(False)
 

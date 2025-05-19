@@ -56,7 +56,7 @@ from .Functions.EVEL.evel_general import EVELTools
 from .Functions.HomeTree.BuildTree import MyTreeHome
 from .Functions.HomeTree.TreePropertiesSearches import FeatureInfoTool, FeatureInfoToolSearch
 from .Functions.Searchpropertyfromlayer import SearchProperties
-from .Functions.WORKS.works import PointCaptureTool, start_work_capture
+from .Functions.WORKS.works import  start_work_capture, WorkMapHelper
 
 from .queries.python.users.user import UserSettings
 from .queries.python.projects.ProjectTableGenerators.projects import Projects
@@ -309,7 +309,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbLogOut.setVisible(False)
 
         self.pbWorksTools_2.clicked.connect(lambda: start_work_capture(self))
-
+        self.Works_Testing.clicked.connect(WorkMapHelper.begin_reposition_work_feature)
 
     def start_propertie_search(self):
         gc.collect()  # Force garbage collection

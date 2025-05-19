@@ -32,9 +32,9 @@ class Constants:
 
 
 
-class AsBuiltMain:
+class TaskMain:
     @staticmethod
-    def load_main_AsBuilt_by_type_and_status (self, table, types, statuses, language="et", module=None):
+    def load_main_task_by_type_and_status (self, table, types, statuses, language="et", module=None):
         #Adding progress
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
         if module is None:
@@ -45,7 +45,7 @@ class AsBuiltMain:
         module_text = "Teostusjooniste"
         progress = ProgressDialogModern(title=f"{module_text} laadimine", value=0)
         progress.update(1, purpouse="Teostuste laadimine", text1="Palun oota...")
-        model = AsBuiltModels._model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language=language, module=module)
+        model = TaskModels._model_for_task_by_types_and_statuses(self, types, statuses, language=language, module=module)
 
         if model is not None:
             progress.update(50)
@@ -59,7 +59,7 @@ class AsBuiltMain:
         progress.close()
         
     @staticmethod
-    def load_asBuilt_by_query (query, table, language="et", module=None):
+    def load_task_by_query (query, table, language="et", module=None):
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
         print(f"module: {module}")
         if module is None:
@@ -69,7 +69,7 @@ class AsBuiltMain:
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
         progress.update(1, purpouse="Lepingute laadimine", text1="Palun oota...")
 
-        model = AsBuiltModels._model_for_asBuilt_search_results(query, language, module=module)
+        model = TaskModels._model_for_task_search_results(query, language, module=module)
 
         if model is not None:
             progress.update(50)
@@ -82,36 +82,43 @@ class AsBuiltMain:
         progress.close()
 
     @staticmethod
-    def load_asBuilt_details(id):
-
+    def load_task_details(id):
+        #print(f"id in loading task by id: {id}")
         module = Module.TASK
 
-        table_rows = AsBuiltQueries._query_asBuilt_details(id, module)
+        table_rows = TaskQueries._query_task_details(id, module)
 
         return table_rows
 
-class AsBuiltModels: 
-    @staticmethod
-    def _model_for_AsBuilt_by_types_and_statuses(self, types, statuses, language, module):
+    def load_task_data(id):
+        module = Module.TASK
+        data = TaskQueries._query_task_data(id, module)
+        #print(f"Task data: {data}")
 
-        data = AsBuiltQueries._query_AsBuilt_by_type_status_elements(self, types, statuses)
+        return data
+
+class TaskModels: 
+    @staticmethod
+    def _model_for_task_by_types_and_statuses(self, types, statuses, language, module):
+
+        data = TaskQueries._query_task_by_type_status_elements(self, types, statuses)
         model = DataModelBuilder.build_model_from_records(data, language, module = module)
         return model
 
     @staticmethod
-    def _model_for_asBuilt_search_results(name, language, module):
+    def _model_for_task_search_results(name, language, module):
         # Set header labels
        
-        data = AsBuiltQueries._query_AsBuilt_by_name(name)
+        data = TaskQueries._query_task_by_name(name)
         model = DataModelBuilder.build_model_from_records(data, language, module = module)
         
         return model
 
 
-class AsBuiltQueries:
+class TaskQueries:
 
     @staticmethod
-    def _query_AsBuilt_by_name(name):
+    def _query_task_by_name(name):
         module = Module.ASBUILT
         query_name =  GraphqlTasks.AsBUILT
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
@@ -160,7 +167,7 @@ class AsBuiltQueries:
         # Return only the desired number of items
         return fetched_items[:desired_total_items]
     @staticmethod
-    def _query_AsBuilt_by_type_status_elements(self, type_values, statuses):
+    def _query_task_by_type_status_elements(self, type_values, statuses):
 
         #print(statuses)
         # Load the project query using the loader instance
@@ -296,7 +303,7 @@ class AsBuiltQueries:
 
             return False
         
-    def _query_asBuilt_details(id, module):
+    def _query_task_details(id, module):
         
         query_name =  GraphqlTasks.TASK_DETAILS
         query = GraphQLQueryLoader.load_query_by_module(module, query_name)
@@ -306,9 +313,20 @@ class AsBuiltQueries:
         response = requestBuilder.construct_and_send_request(query, variables)
 
         if response.status_code == 200:
-            table_rows = AsBuiltQueries._extract_all_asBuilt_details(response.json())
+            table_rows = TaskQueries._extract_all_asBuilt_details(response.json())
             return table_rows
         
+    def _query_task_data(id, module):
+        
+        query_name =  GraphqlTasks.TASK_DETAILS
+        query = GraphQLQueryLoader.load_query_by_module(module, query_name)
+        variables = {
+            "id": id
+        }
+        response = requestBuilder.construct_and_send_request(query, variables)
+
+        if response.status_code == 200:
+            return response.json()
 
 
 

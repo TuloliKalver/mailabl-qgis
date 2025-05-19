@@ -768,7 +768,7 @@ class StartupSettingsLoader:
             module=module,
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_LAYER,
-            key_type=PluginSettings.ASBUILT_LAYER
+            key_type=PluginSettings.COORDINATIONS_LAYER
         )
 
         types_names = PluginSettings.load_setting(

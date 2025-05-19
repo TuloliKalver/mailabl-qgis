@@ -5,11 +5,14 @@ from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtGui import QIcon
 from ..Functions.AsBuilt.AsBuiltTools import AsBuiltTools
 from ..Functions.AsBuilt.AsBuiltHelpers import AsBuiltHelpers, NotesTableGenerator
+from ..Functions.WORKS.works import WorkMapHelper
+
 from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
 from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ..KeelelisedMuutujad.messages import Headings
 from ..widgets.properties_connector_UIcontroller import PropertiesConnectorUIController
 from ..KeelelisedMuutujad.modules import Module
+
 
 class RightClickHelper:
     dialog = None  # Class variable
@@ -84,12 +87,75 @@ class RightClickHelper:
             print("not a right-click.")
             return
 
+
+
+    @classmethod
+    def WORKS_right_click_action(cls):
+        if cls.dialog is None:
+            print("❌ RightClickHelper.dialog is not set.")
+            return
+
+        cls.dialog.tblWorks.setContextMenuPolicy(Qt.CustomContextMenu)
+        cls.dialog.tblWorks.customContextMenuRequested.connect(cls.WORKS_table_right_click_menu)
+
+    @classmethod
+    def WORKS_table_right_click_menu(cls, pos: QPoint):
+        table = cls.dialog.tblWorks
+        #print(f" click on position: {pos}")
+        if QApplication.mouseButtons() != Qt.RightButton:
+            #print("a right-click.")
+            
+            
+            index = table.indexAt(pos)
+            
+            col = index.column()
+            if col in [0, 1, 5, 7, 8, 9, 10, 11, 12, 13]:  # ⛔ Block right-click on columns 0 and 1
+                return
+
+            #[0 'id', 1 'flag', 2'type', 3'name', 4'tähtaeg', 5'color', 6'responsible', 7'property_number', 
+            # 8 'properties_icon', 
+            # 9'parent_id', 10 'web_link_button', 11'documents', 12'file_path',13 'statuses']
+            
+            if not index.isValid():
+                return
+
+            row = index.row()
+
+            menu = QMenu(table)
+
+            pin_add = iconHandler.pin_add()
+
+
+            action_reposition = QAction(QIcon(pin_add), "Paiguta töö ringi", table)
+            
+            action_reposition.triggered.connect(
+                lambda: WorkMapHelper.begin_reposition_work_feature()
+            )
+
+
+            menu.addAction(action_reposition)
+
+            menu.exec_(table.viewport().mapToGlobal(pos))
+        else:
+            print("not a right-click.")
+            return
+
+
+
+
+
+
+
+
+
+
+
     def _handle_file_add(self, table: QTableView, row) -> bool:
         model = table.model()
         property_id = model.data(model.index(row, 0), Qt.DisplayRole)
 
-        from ..Functions.AsBuilt.ASBuilt import AsBuiltQueries
-        existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
+        from ..Functions.AsBuilt.ASBuilt import TaskQueries
+        existing_descriptions = TaskQueries._query_AsBuilt_by_id(property_id=property_id)
 
         table_check = AsBuiltHelpers.find_existing_notes_table_in_html(existing_descriptions)
 
@@ -119,7 +185,7 @@ class RightClickHelper:
             combined_html = AsBuiltTools.patch_notes_table_in_html(combined_html, notes_html)
 
         # Save updated HTML
-        res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
+        res = TaskQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
 
         if res:
             from ..app.workspace_handler import WorkSpaceHandler

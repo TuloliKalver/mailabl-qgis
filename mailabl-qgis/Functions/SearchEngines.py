@@ -2,7 +2,7 @@
 from ..queries.python.projects.ProjectTableGenerators.projects import Projects
 from .Contracts.Contracts import ContractsMain
 from .Easements.Easements import EasementssMain
-from ..Functions.AsBuilt.ASBuilt import AsBuiltMain
+from ..Functions.AsBuilt.ASBuilt import TaskMain
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 from ..KeelelisedMuutujad.modules import Module
 from ..utils.messagesHelper import ModernMessageDialog
@@ -18,8 +18,8 @@ class ModularSearchEngine:
             Module.PROJECT: Projects.load_projects_by_number,
             Module.CONTRACT: ContractsMain.load_contracts_by_query,
             Module.EASEMENT: EasementssMain.load_easemenets_by_number,
-            Module.ASBUILT: AsBuiltMain.load_asBuilt_by_query,
-            Module.WORKS:  AsBuiltMain.load_asBuilt_by_query
+            Module.ASBUILT: TaskMain.load_task_by_query,
+            Module.WORKS:  TaskMain.load_task_by_query
         }
 
     def universalSearch(self, module_name):

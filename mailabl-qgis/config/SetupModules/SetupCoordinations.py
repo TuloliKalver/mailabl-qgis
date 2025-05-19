@@ -93,7 +93,7 @@ class CoordinationsSetup:
         cmbPreferredTypes = widget.cmbPreferredTypes
 
 
-        AsbuiltLayer = PluginSettings.load_setting(
+        Layer = PluginSettings.load_setting(
             module=module,
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_LAYER,
@@ -109,7 +109,7 @@ class CoordinationsSetup:
             preferred_items=False
         )
 
-        QGIS_items.clear_and_add_layerNames_selected(cmbLayer, AsbuiltLayer)
+        QGIS_items.clear_and_add_layerNames_selected(cmbLayer, Layer)
 
         combo_handler.populate_comboBox_smart(
             comboBox=cmbPreferredTypes,
@@ -213,7 +213,7 @@ class CoordinationsSetup:
             module=module,
             context=PluginSettings.CONTEXT_PREFERRED,
             subcontext=PluginSettings.OPTION_LAYER,
-            key_type=PluginSettings.ASBUILT_LAYER,
+            key_type=PluginSettings.COORDINATIONS_LAYER,
             value = layer_name
         )
 

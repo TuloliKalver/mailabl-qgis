@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import (
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ...config.settings import Filepaths, FilesByNames
 from ...config.SetupModules.AsBuitSettings import AsBuiltDrawings, DraggableFrame
-from ...Functions.AsBuilt.ASBuilt import AsBuiltQueries
+from ...Functions.AsBuilt.ASBuilt import TaskQueries
 from ...utils.DataExtractors.DataExtractors import DataExtractor
 from PyQt5.QtCore import QPropertyAnimation
 from .AsBuiltHelpers import AsBuiltHelpers, NotesTableGenerator
@@ -78,14 +78,14 @@ class AsBuiltTools():
             model = self.table.model()
             
             property_id = model.data(model.index(selected_row, 0), Qt.DisplayRole)
-            existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
+            existing_descriptions = TaskQueries._query_AsBuilt_by_id(property_id=property_id)
             #print(f"Existing descriptions are:")
             #print(existing_descriptions)
 
             combined_html = self.patch_notes_table_in_html(existing_descriptions, html_notes)
             #print(f"Combined HTML:\n{combined_html}")
 
-            res = AsBuiltQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
+            res = TaskQueries._update_AsBuilt_by_id(property_id=property_id, description=combined_html)
 
 
 
@@ -121,7 +121,7 @@ class AsBuiltTools():
         #print("Property ID is:")
         #print(property_id)
 
-        existing_descriptions = AsBuiltQueries._query_AsBuilt_by_id(property_id=property_id)
+        existing_descriptions = TaskQueries._query_AsBuilt_by_id(property_id=property_id)
         #print(f"existing_descriptions")
         #print(existing_descriptions)
         data = self.extract_notes_table_data(existing_descriptions)

@@ -10,6 +10,10 @@ query task($id: ID!) {
       id
       name
     }
+    status {
+      id
+      name
+    }
     completedAt
     createdAt
     updatedAt

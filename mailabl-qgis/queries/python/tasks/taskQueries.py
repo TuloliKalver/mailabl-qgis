@@ -21,6 +21,8 @@ class CreateTask:
         response = requestBuilder.construct_and_send_create_request(query, variables) 
         # Get the task ID if available
         task_data = response.get("data", {}).get("createTask", {})
+        print("create Task Data:")
+        print(task_data)
         task_id = task_data.get("id")
         
         if task_id:
