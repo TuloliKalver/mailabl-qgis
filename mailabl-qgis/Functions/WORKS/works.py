@@ -338,7 +338,10 @@ class WorkMapHelper:
                 #print(f"✅ Feature ID {task_id} is active (status = True)")
             
                 details =TaskMain.load_task_data(task_id)
-                
+                if not details or "data" not in details or not details["data"].get("task"):
+                    print(f"⚠️ Could not fetch task details for ID: {task_id}")
+                    continue  # skip this feature if task data couldn't be loaded
+
                 status_type = details["data"]["task"]["status"]["type"]
                 if status_type == "CLOSED":
                     active_state = False
