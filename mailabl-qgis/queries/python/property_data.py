@@ -604,12 +604,15 @@ class PropertiesGeneralQueries:
         progress = ProgressDialogModern(maximum=100)
         
         fetched_items = []
-        
-        while total_fetched < total_in_list:
-            chunk = properties_list[total_fetched:total_fetched + chunk_size]  # Slice next chunk of data
-            
+        chunk_index = 0
+        import math
+        total_chunks = math.ceil(len(properties_list) / chunk_size)
+
+        while chunk_index < total_chunks:
+            chunk = properties_list[chunk_index * chunk_size:(chunk_index + 1) * chunk_size]
+
             variables = {
-                "after": end_cursor if end_cursor else None,  # Use the endCursor as the after value   
+                "after": end_cursor if end_cursor else None,
                 "where": {
                     "column": "CADASTRAL_UNIT_NUMBER",
                     "operator": "IN",
@@ -621,24 +624,25 @@ class PropertiesGeneralQueries:
 
             if response.status_code == 200:
                 returned_id = HandlePropertiesResponses._response_properties_data_ids(response)
-                #cadaster = handleResponse.response_properties_cadastral_numbers(response)
-                
+
                 data = response.json()
                 pageInfo = data.get("data", {}).get("properties", {}).get("pageInfo", {})
                 print(f"page info: {pageInfo}")
                 end_cursor = pageInfo.get("endCursor")
-                
+
                 fetched_items.extend(returned_id)
-                #cadasters.extend(cadaster)
-                
-                total_fetched += len(returned_id)  # Adjust total_fetched based on the returned items
-                total_chunk += 1  # Increment total_chunk
-                
-                progress.update(total_fetched)
+
+                progress.update(len(fetched_items))
                 QCoreApplication.processEvents()
-            
-            if len(chunk) < chunk_size or total_fetched % chunk_size == 0:
-                time.sleep(sleep_duration)
+
+            # Always move to next chunk to avoid infinite loop
+            chunk_index += 1
+
+            if len(chunk) < chunk_size:
+                break  # No more data to process
+
+            time.sleep(sleep_duration)
+
         progress.close()
         return fetched_items
 
