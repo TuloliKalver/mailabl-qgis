@@ -587,7 +587,9 @@ class PropertiesGeneralQueries:
     def _get_properties_MyLabl_ids(properties_list):
         print(f"propertie list: {properties_list}")
         total_in_list = len(properties_list)
-        
+        print(f"Total in list: {total_in_list}")
+        if total_in_list == 0:
+            return
         module = Module.PROPERTIE
 
         file =  GraphqlProperties.W_properties_number
