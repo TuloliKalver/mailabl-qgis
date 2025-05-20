@@ -115,7 +115,7 @@ class ComboBoxHelper:
             
             if test == True:
                 print("All statuses:", statuses)
-            for item_text, item_id in statuses:
+            for item_text, item_id, *_ in statuses:
                 comboBox.addItem(item_text)
                 comboBox.setItemData(comboBox.count() - 1, item_id)
             comboBox.setView(QListView())

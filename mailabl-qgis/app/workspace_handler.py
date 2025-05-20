@@ -9,6 +9,8 @@ from ..Functions.Contracts.Contracts import ContractsMain
 from ..Functions.Easements.Easements import EasementssMain
 from ..Functions.AsBuilt.ASBuilt import TaskMain
 from ..Functions.Coordinations.Coordinations import CoordinationsMain
+from ..Functions.WORKS.works import WorkMapHelper
+
 from ..utils.ComboboxHelper import GetValuesFromComboBox
 from ..KeelelisedMuutujad.modules import Module
 from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
@@ -174,7 +176,7 @@ class WorkSpaceHandler:
         selected_status = GetValuesFromComboBox._get_selected_id_from_combobox(statuses_combo_box)
         prefered_types_ids = types_combo_box.checkedItemsData()
 
-        TaskMain.load_main_task_by_type_and_status(self,
+        id_status_tuples = TaskMain.load_main_task_by_type_and_status(self,
                                                              table=table,
                                                              types=prefered_types_ids,
                                                              statuses=selected_status,
@@ -186,6 +188,9 @@ class WorkSpaceHandler:
         TableHoverWatcher(module, table)
 
         RightClickHelper.WORKS_right_click_action()
+
+        WorkMapHelper.update_fature_statuses_by_closing_map_fetures()
+        WorkMapHelper.update_map_based_on_open_task_in_mylabl()
 
 
     def swWorkSpace_Controller(self, menu_module, module):

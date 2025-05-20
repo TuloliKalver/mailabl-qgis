@@ -309,7 +309,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbLogOut.setVisible(False)
 
         self.pbWorksTools_2.clicked.connect(lambda: start_work_capture(self))
-        self.Works_Testing.clicked.connect(WorkMapHelper.begin_reposition_work_feature)
+        #self.Works_Testing.clicked.connect(WorkMapHelper.update_fature_statuses)
+        self.Works_Testing.clicked.connect(WorkMapHelper.update_map_based_on_open_task_in_mylabl)
+
+
 
     def start_propertie_search(self):
         gc.collect()  # Force garbage collection

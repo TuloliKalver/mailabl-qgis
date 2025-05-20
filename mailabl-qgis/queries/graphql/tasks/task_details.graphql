@@ -13,6 +13,7 @@ query task($id: ID!) {
     status {
       id
       name
+      type
     }
     completedAt
     createdAt

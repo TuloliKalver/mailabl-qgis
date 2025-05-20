@@ -120,16 +120,18 @@ class RightClickHelper:
                 return
 
             row = index.row()
+            id_index = index.sibling(row, 0)  # Assuming column 0 is 'id'
+            task_id = id_index.data()
+
 
             menu = QMenu(table)
 
             pin_add = iconHandler.pin_add()
 
-
             action_reposition = QAction(QIcon(pin_add), "Paiguta töö ringi", table)
             
             action_reposition.triggered.connect(
-                lambda: WorkMapHelper.begin_reposition_work_feature()
+                lambda: WorkMapHelper.begin_reposition_work_feature(task_id)
             )
 
 

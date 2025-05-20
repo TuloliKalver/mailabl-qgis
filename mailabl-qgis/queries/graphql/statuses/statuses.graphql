@@ -4,6 +4,7 @@ query statuses($first: Int, $after: String, $where: QueryStatusesWhereWhereCondi
       node {
         id
         name
+        type
       }
     }
   }

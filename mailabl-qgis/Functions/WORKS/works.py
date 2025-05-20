@@ -13,7 +13,11 @@ from qgis.utils import iface
 
 from .worksHelpers import worksHelpers
 from ...KeelelisedMuutujad.modules import Module
+from ...Functions.AsBuilt.ASBuilt import TaskMain
 from ...config.settings_new import PluginSettings
+from ...core.module.statusManager import ModuleStatuses
+
+
 class PointCaptureTool(QgsMapTool):
     def __init__(self, canvas, callback, cancel_callback=None):
         super().__init__(canvas)
@@ -44,7 +48,7 @@ def start_work_capture(plugin_instance):
     global _tool_instance
 
     def handle_point_selected(point: QgsPointXY):
-        print(f"📍 Point selected in works module: {point}")
+        #print(f"📍 Point selected in works module: {point}")
         # Restore default pan tool or whatever tool was before
         module = Module.WORKS
 
@@ -158,7 +162,7 @@ class WorksManipulator:
     
 class WorkMapHelper:
     @staticmethod
-    def begin_reposition_work_feature():
+    def begin_reposition_work_feature(task_id: str):
         module = Module.WORKS
         works_layer_name = PluginSettings.load_setting(
             module=module,
@@ -167,26 +171,44 @@ class WorkMapHelper:
             key_type=PluginSettings.WORKS_LAYER
         )
         layer = QgsProject.instance().mapLayersByName(works_layer_name)[0]
-        print("layer", layer)
-        def on_feature_selected(fid):
-            print(f"🟢 Feature selected: {fid}")
 
-            def on_new_location_chosen(new_point: QgsPointXY):
-                WorksManipulator.reposition_feature(layer, fid, new_point)
-                layer.commitChanges()
-                iface.mapCanvas().unsetMapTool(_tool_instance)
-                iface.actionPan().trigger()
+        #print("🔍 Searching for feature with Mailabl_id:", task_id)
 
-            def on_cancel_reposition():
-                layer.removeSelection()
-                iface.mapCanvas().unsetMapTool(_tool_instance)
-                iface.actionPan().trigger()
+        # Find the feature with Mailabl_id = task_id
+        matching_feature = None
+        for feature in layer.getFeatures():
+            if str(feature["Mailabl_id"]) == str(task_id):
+                matching_feature = feature
+                break
 
-            WorkMapHelper.start_point_capture_for_reposition(on_new_location_chosen, on_cancel_reposition)
+        if not matching_feature:
+            print(f"❌ No feature found with Mailabl_id = {task_id}")
+            return
 
+        fid = matching_feature.id()
+        #print(f"✅ Feature with Mailabl_id {task_id} found, FID: {fid}")
 
-        FeatureSelectTool.start_feature_select(layer, on_feature_selected)
+        # Zoom to and select the feature
+        layer.removeSelection()
+        layer.selectByIds([fid])
+        canvas = iface.mapCanvas()
+        canvas.setExtent(matching_feature.geometry().boundingBox())
+        canvas.refresh()
 
+        # Set up reposition tool
+        def on_new_location_chosen(new_point: QgsPointXY):
+            WorksManipulator.reposition_feature(layer, fid, new_point)
+            layer.commitChanges()
+            iface.mapCanvas().unsetMapTool(_tool_instance)
+            iface.actionPan().trigger()
+
+        def on_cancel_reposition():
+            print("🚫 Reposition cancelled")
+            layer.removeSelection()
+            iface.mapCanvas().unsetMapTool(_tool_instance)
+            iface.actionPan().trigger()
+
+        WorkMapHelper.start_point_capture_for_reposition(on_new_location_chosen, on_cancel_reposition)
 
 
     @staticmethod
@@ -195,3 +217,135 @@ class WorkMapHelper:
         canvas = iface.mapCanvas()
         _tool_instance = PointCaptureTool(canvas, callback, cancel_callback)
         canvas.setMapTool(_tool_instance)
+
+    @staticmethod
+    def update_fature_statuses_by_closing_map_fetures():
+        module = Module.WORKS
+        works_layer_name = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WORKS_LAYER
+        )
+        layer = QgsProject.instance().mapLayersByName(works_layer_name)[0]
+        if not layer.isEditable():
+            layer.startEditing()
+
+        feature_column = "Mailabl_id"
+        status_column = "status"
+
+
+        for feature in layer.getFeatures():
+            status_value = feature[status_column]
+
+            # Safely check if status is exactly True (ignores None, False, 0, etc.)
+            if isinstance(status_value, bool) and status_value is True:
+                task_id = feature[feature_column]
+                print(f"✅ Feature ID {task_id} is active (status = True)")
+            
+                details =TaskMain.load_task_data(task_id)
+                
+                status_type = details["data"]["task"]["status"]["type"]
+                if status_type == "CLOSED":
+                    active_state = False
+                else:
+                    active_state = True
+                feature.setAttribute("status", active_state)
+                layer.changeAttributeValue(feature.id(), layer.fields().indexFromName("status"), active_state)
+
+        layer.commitChanges()
+
+    def update_map_based_on_open_task_in_mylabl():
+        module = Module.TASK
+
+        types_ids = PluginSettings.load_setting(
+                module=Module.WORKS,
+                context=PluginSettings.CONTEXT_PREFERRED,
+                subcontext=PluginSettings.OPTION_TYPE,
+                key_type=PluginSettings.SUB_CONTEXT_IDs,
+            )
+                
+        #print("types_ids", types_ids)
+        status_manager = ModuleStatuses(module)
+        statuses = status_manager._get_all_statuses_for_module(module)
+        #print("All statuses", statuses)
+        open_statuses = [id for _, id, status_type in statuses if status_type == "OPEN"]
+
+        fetched_data =TaskMain.load_task_open_stauses(open_statuses, types_ids, module=module)
+        for edge in fetched_data:  # Use just fetched_data here to avoid duplicates
+                task = edge["node"]
+                task_id = task["id"]
+                status_type = task["status"]["type"]
+                task_type = task["type"]["name"]
+                priority = task.get("priority", "None")
+        # ✅ Extract all task IDs where the status.type is OPEN
+        open_task_ids = {
+            edge["node"]["id"]
+            for edge in fetched_data
+            if edge["node"]["status"]["type"] == "OPEN"
+        }
+
+        print("✅ Open Task IDs:", open_task_ids)
+        module = Module.WORKS
+        works_layer_name = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WORKS_LAYER
+        )
+        layer = QgsProject.instance().mapLayersByName(works_layer_name)[0]
+        if not layer.isEditable():
+            layer.startEditing()
+
+        feature_column = "Mailabl_id"
+        status_column = "status"
+        status_idx = layer.fields().indexFromName(status_column)
+        for feature in layer.getFeatures():
+            task_id = str(feature[feature_column])  # Ensure string for comparison
+
+            active_state = task_id in open_task_ids
+            current_status = feature[status_column]
+
+            if current_status != active_state:
+                print(f"🔄 Updating feature {feature.id()} (Mailabl_id={task_id}): {current_status} → {active_state}")
+                layer.changeAttributeValue(feature.id(), status_idx, active_state)
+
+        layer.updateFields()  # Optional, if schema changed
+        layer.commitChanges()
+
+    @staticmethod
+    def update_fature_statuses_by_closing_map_fetures():
+        module = Module.WORKS
+        works_layer_name = PluginSettings.load_setting(
+            module=module,
+            context=PluginSettings.CONTEXT_PREFERRED,
+            subcontext=PluginSettings.OPTION_LAYER,
+            key_type=PluginSettings.WORKS_LAYER
+        )
+        layer = QgsProject.instance().mapLayersByName(works_layer_name)[0]
+        if not layer.isEditable():
+            layer.startEditing()
+
+        feature_column = "Mailabl_id"
+        status_column = "status"
+
+        for feature in layer.getFeatures():
+            status_value = feature[status_column]
+
+            # Safely check if status is exactly True (ignores None, False, 0, etc.)
+            if isinstance(status_value, bool) and status_value is True:
+                task_id = feature[feature_column]
+                #print(f"✅ Feature ID {task_id} is active (status = True)")
+            
+                details =TaskMain.load_task_data(task_id)
+                
+                status_type = details["data"]["task"]["status"]["type"]
+                if status_type == "CLOSED":
+                    active_state = False
+                else:
+                    active_state = True
+                feature.setAttribute("status", active_state)
+                layer.changeAttributeValue(feature.id(), layer.fields().indexFromName("status"), active_state)
+
+        layer.commitChanges()
+        iface.mapCanvas().refresh()

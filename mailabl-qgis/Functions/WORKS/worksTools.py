@@ -181,8 +181,15 @@ class worksTools:
         task_id = CreateTask.Create_Task(variables)
 
         details =TaskMain.load_task_data(task_id)
-        status_name = details["data"]["task"]["status"]["name"]
-        feature.setAttribute("status", status_name)
+        print("Task details:")
+        print(details)
+        status_type = details["data"]["task"]["status"]["type"]
+        print(status_type)
+        if status_type == "CLOSED":
+            active_state = False
+        else:
+            active_state = True
+        feature.setAttribute("status", active_state)
 
 
         feature.setAttribute("Mailabl_id", task_id)

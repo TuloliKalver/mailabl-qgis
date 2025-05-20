@@ -111,7 +111,8 @@ class ModuleStatuses:
             node = status_info.get("node", {})
             status_name = node.get("name", "")
             status_id = node.get("id", "")
-            statuses.append((status_name, status_id))
+            type = node.get("type", "")
+            statuses.append((status_name, status_id, type))
 
         QCoreApplication.processEvents()
         return statuses
