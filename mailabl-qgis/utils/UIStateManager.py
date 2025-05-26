@@ -34,7 +34,8 @@ class UIStateManager:
         self.lbl = dialog.lblActionName
         self.main_buttons = [dialog.pbHome, dialog.pbProjects, dialog.pbContracts, 
                              dialog.pbeasements, dialog.btnMapActions,
-                             dialog.pbMainMenu,dialog.pbSettings, dialog.pbAddDrawings]
+                             dialog.pbMainMenu,dialog.pbSettings, dialog.pbAddDrawings, 
+                             dialog.pbAddDrawings, dialog.pbCooperations, dialog.pbWorksMain]
 
         self.list_widgets_with_signals = {
             dialog.lvCounty: self.get_connected_signal,

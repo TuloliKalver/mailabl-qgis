@@ -4,6 +4,9 @@ from .worksTools import worksTools
 from ...KeelelisedMuutujad.modules import Module
 from ...config.settings import SettingsDataSaveAndLoad
 from ...config.settings_new import PluginSettings
+from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 
 from PyQt5.QtCore import Qt
 
@@ -57,7 +60,15 @@ class worksHelpers:
         works_layer = QgsProject.instance().mapLayersByName(works_layer_name)[0]
 
         if not works_layer or not isinstance(works_layer, QgsVectorLayer):
-            raise ValueError(f"❌ Works layer '{works_layer_name}' not found or invalid.")
+            buttons={"keep": "Edasi",}
+            ret = DecisionDialogHelper.ask_user(
+                title=Headings.inFO_SIMPLE,
+                message=f"❌ Kaardikihti nimega '{works_layer_name}' ei leitud.",
+                options=buttons,
+                parent=None,
+                type= AnimatedGradientBorderFrame.WARNING
+                    )
+            return
 
         # Create new feature
         feature = QgsFeature(works_layer.fields())

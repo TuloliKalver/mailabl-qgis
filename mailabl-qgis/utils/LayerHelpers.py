@@ -19,7 +19,10 @@ from ..Common.app_state import PropertiesProcessStage, Expressions, MainVariable
 from ..utils.MessagesHelpers import MessageLoaders
 from ..Functions.add_items import add_properties
 from ..KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
-from ..queries.python.property_data import MyLablChecker
+from ..queries.python.property_data import MyLablChecker, UpdateData
+from ..widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+from ..app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
+from ..KeelelisedMuutujad.messages import Headings, HoiatusTexts
 
 
 
@@ -421,7 +424,7 @@ class LayerFilterSetters:
             #print (f"layer_data: {layer_data}")
             tunnus = layer_data.get(Katastriyksus.tunnus)
             #print (f"Tunnus: {tunnus}")            
-            res,_ = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
+            res, data = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
             if res is True:
 
                 prepared_data, usage_data = DataMapperHelper._map_properties_main_details_from_input(layer_data=layer_data)
@@ -434,7 +437,45 @@ class LayerFilterSetters:
                 gc.collect()
                 return True
             else:
+
                 print ("Duplicate found!")
+                buttons={"cancel": "Edasi",
+                        "keep": "Tühista"
+                        }
+                ret = DecisionDialogHelper.ask_user(
+                    title=Headings.inFO_SIMPLE,
+                    message=f"❌ Kataster '{tunnus}'  on juba Mailablis! \n\n Kas uuendan andmeid?",
+                    options=buttons,
+                    parent=None,
+                    type= AnimatedGradientBorderFrame.WARNING
+                        )
+                #print(ret)
+                if ret is None:
+                    #print("Updating existing property...")
+                    #print(f"property_id: {data}")
+                    for item in data:
+                        #print(f"item: {item}")
+                        display_address = item.get("node", {}).get("displayAddress", "")
 
-
+                        if display_address.startswith("ARHIIVEERITUD"):
+                            print("🚫 Archived property — allow new one to be added")
+                            pass
+                        else:
+                            print("✅ Active address — check for duplicates or updates")
+                            Maylabl_id = item.get("node", {}).get("id", "")
+                            details , usage_data = DataMapperHelper._map_properties_main_details_from_input(layer_data=layer_data)
+                            variables = {
+                            "input": {
+                    
+                                "id": Maylabl_id,
+                                    **details
+                                    }
+                            }
+                            UpdateData._update_property_address_details(variables=variables)
+                            #print(f"usage_data: {usage_data}")
+                            add_properties.add_additional_property_data(None, Maylabl_id, usage_data)
+                    return True
+                elif ret is False:
+                    print("Operation cancelled.")
+                    return False
 

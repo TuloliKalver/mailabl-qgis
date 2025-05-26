@@ -181,9 +181,6 @@ class AddProperties:
             target_layer=arvhive_layer,
             delete_input_data=False,
             commit=commit)
-
-
-            print(f"Layer archiving completed.")
             
             feature =LayerFeatureHelpers._get_layer_fetaures_by_id(layer=archive_memory_layer, feature_id=feat_id)
 
@@ -194,7 +191,7 @@ class AddProperties:
             res, id = MyLablChecker._get_propertie_ids_by_cadastral_numbers_EQUALS(item=tunnus)
             #print(f"res: {res} and id: {id}")
             if res is True:
-                print(f"No property with ID {id} found.")
+                #print(f"No property with ID {id} found.")
                 print("No need to update data!")
             else:
                 UpdateData._update_archived_properies_data(id)

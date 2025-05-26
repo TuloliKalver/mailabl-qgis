@@ -58,7 +58,7 @@ class GraphqlProperties:
     PROPERTIES_TAGS = 'Tags.graphql'
     UPDATE_TAGS = 'UpdateTags.graphql'
     UPDAT_STREET_NAME = 'UpdateStreetName.graphql'
-
+    UPDATE_DETAILS = 'Update_property.graphql'
 
     W_properties_number = 'id_number.graphql'
     W_properties_number_improwed = 'id_number.graphql'

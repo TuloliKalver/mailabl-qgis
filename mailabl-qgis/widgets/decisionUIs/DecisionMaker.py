@@ -3,9 +3,10 @@ from functools import partial
 from PyQt5.uic import loadUi
 from types import MethodType
 from PyQt5.QtWidgets import (
-    QDialog,
+    QDialog, QSizePolicy,
     QPushButton, QFrame
     )
+from PyQt5.QtGui import QFontMetrics
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QPropertyAnimation
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
@@ -37,9 +38,26 @@ class DecisionDialogHelper:
         lblTitle = Dialog.lblTitle
         buttonsLayout = Dialog.ButtonsLAyout.layout()        
         lblSolution = Dialog.lblSolution
-        
+        lblframe = Dialog.frame_2
+
         lblTitle.setText(title)
         lblSolution.setText(message)
+
+        lblSolution.setWordWrap(True)
+        lblSolution.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+        lblSolution.setContentsMargins(10, 10, 10, 10)
+
+        text_width, text_height = calculate_text_size(lblSolution, message)
+
+        # 💡 Set lblSolution size directly
+        lblSolution.setFixedSize(text_width + 20, text_height + 20)
+
+        # 💡 Let lblframe grow (in case its layout constrains height)
+        lblframe.setMinimumHeight(text_height + 40)
+        lblframe.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
+
+        # 💡 Let dialog grow
+        Dialog.resize(text_width + 60, text_height + 120)
 
         result = {"choice": None}
         
@@ -105,6 +123,15 @@ class DecisionDialogHelper:
         dialog.accept()
 
 
+
+
+def calculate_text_size(label, text, max_width=500):
+    font_metrics = QFontMetrics(label.font())
+    # Use boundingRect to calculate size needed for wrapped text
+    rect = font_metrics.boundingRect(0, 0, max_width, 1000, Qt.TextWordWrap, text)
+    return rect.width(), rect.height()
+
+
 class DraggableFrame(QFrame):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -120,3 +147,4 @@ class DraggableFrame(QFrame):
         if event.buttons() & Qt.LeftButton and self._drag_pos:
             self.window().move(event.globalPos() - self._drag_pos)
             event.accept()
+

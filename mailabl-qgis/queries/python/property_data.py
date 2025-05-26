@@ -465,7 +465,7 @@ class MyLablChecker:
             print(f"Error: {response.status_code}")
             return None
 
-
+    @staticmethod
     def _get_propertie_ids_by_cadastral_numbers_EQUALS(item: str)->bool:
 
         module = Module.PROPERTIE
@@ -493,18 +493,29 @@ class MyLablChecker:
         #start do use data
         if response.status_code == 200:
             data = HandlePropertiesResponses._response_properties_data_edges(response)
-            print(data)
-            if data:
-                print("is present in mylabl")
+            print(f"Returned data:\n{data}")
+    
+            if not data:
+                return True, []  # ✅ Nothing exists → safe to insert
+
+            # 🧠 Check for non-archived entries
+            non_archived = [
+                item for item in data 
+                if not item["node"]["displayAddress"].startswith("ARHIIVEERITUD")
+            ]
+
+            if non_archived:
+                print("⛔ Active property exists — block insert")
+                #if active property exist we return data to be alble to update the properties with some details uprate
                 return False, data
             else:
-                #print("missing item")
-                return True, []
-            
+                print("✅ Only archived properties found — allow insert")
+                return True, data
+
         else:
             print(f"Error: {response.status_code}")
             return False, []
-
+            
 
     def find_missing_items(self, item_list, graphql_data):
         returned_items = set()
@@ -681,6 +692,20 @@ class PropertiesGeneralQueries:
 
 class UpdateData:
         
+    @staticmethod
+    def _update_property_address_details(variables):
+        module = Module.PROPERTIE
+
+        file =  GraphqlProperties.UPDATE_DETAILS
+        query = GraphQLQueryLoader.load_query_by_module(module, file)
+
+        response = requestBuilder.construct_and_send_request(query, variables)
+        if response.status_code != 200:
+            raise Exception("GraphQL request failed")
+        # Get the ID of the deleted property
+        added_input = response.json()
+        #print(f"inserted item {added_input}")
+
     @staticmethod
     def _update_properties_name(propertie_id, new_name, module):
         

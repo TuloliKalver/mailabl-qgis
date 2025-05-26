@@ -307,7 +307,7 @@ class WorkMapHelper:
             current_status = feature[status_column]
 
             if current_status != active_state:
-                print(f"🔄 Updating feature {feature.id()} (Mailabl_id={task_id}): {current_status} → {active_state}")
+                #print(f"🔄 Updating feature {feature.id()} (Mailabl_id={task_id}): {current_status} → {active_state}")
                 layer.changeAttributeValue(feature.id(), status_idx, active_state)
 
         layer.updateFields()  # Optional, if schema changed
