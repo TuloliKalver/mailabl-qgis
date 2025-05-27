@@ -19,6 +19,55 @@ class Module:
     all_modules = [CONTRACT, PROJECT, TASK, COORDINATION, LETTER,
                     SPECIFICATION, EASEMENT, ORDINANCE, SUBMISSION, ASBUILT]
 
+class ModuleTriggerButtons:
+    #TODO module needs development to better understand how user rights are managed
+    @staticmethod
+    def get_mapped_buttons(dialog):
+        return {
+            Module.CONTRACT: dialog.pbContracts,
+            Module.PROJECT: dialog.pbProjects,
+            Module.COORDINATION: dialog.pbCooperations,
+            Module.EASEMENT: dialog.pbeasements,
+            Module.WORKS: dialog.pbWorksMain
+        }
+
+    @staticmethod
+    def apply_button_access_control(abilities: dict[str, str], dialog):
+
+        print(f"abilities: {abilities}")
+        allowed_modules = set()
+        subject_to_actions = {}
+
+        # Collect all actions for each subject
+        for role in abilities:
+            subjects = role["subject"]
+            action = role.get("action")
+
+            if not isinstance(subjects, list):
+                subjects = [subjects]
+
+            for subject in subjects:
+                subject_lower = subject.lower()
+                if subject_lower not in subject_to_actions:
+                    subject_to_actions[subject_lower] = set()
+                subject_to_actions[subject_lower].add(action)
+
+        # Filter subjects that have at least "read" permission
+        for subject, actions in subject_to_actions.items():
+            if "read" in actions:
+                allowed_modules.add(subject)
+
+        print(f"✅ Allowed modules (with read access): {allowed_modules}")
+
+        for module, button in ModuleTriggerButtons.get_mapped_buttons(dialog).items():
+            print(f"{module}: {button}")
+            if module not in allowed_roles:
+                button.setEnabled(False)
+                button.setToolTip("Ligipääs puudub")
+            else:
+                button.setEnabled(True)
+                button.setToolTip("")
+
 class Languages:
     ESTONIA = "et"
     LATVIA = "Latviesu"
@@ -56,7 +105,7 @@ class ModuleTranslation:
 
     @staticmethod
     def module_name(module, language, plural=True):
-        print("module:", module)
+        #print("module:", module)
         if plural:
             return ModuleTranslation.translations_plural.get(module, {}).get(language, "Translation not available")
         else:

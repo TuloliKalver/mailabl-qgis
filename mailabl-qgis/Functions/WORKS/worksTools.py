@@ -5,10 +5,7 @@ from types import MethodType
 
 from PyQt5.QtCore import Qt, QPropertyAnimation
 from PyQt5.QtWidgets import (
-    QDialog, QFrame, QLabel, QVBoxLayout,
-    QHBoxLayout, QLineEdit, QTextEdit, QGroupBox,
-    QCheckBox
-)
+    QDialog, QFrame)
 
 from ...config.settings import Filepaths, FilesByNames, OpenLink
 from ...config.SetupModules.AsBuitSettings import AsBuiltDrawings, DraggableFrame
@@ -181,17 +178,15 @@ class worksTools:
         task_id = CreateTask.Create_Task(variables)
 
         details =TaskMain.load_task_data(task_id)
-        print("Task details:")
-        print(details)
+        #print("Task details:")
+        #print(details)
         status_type = details["data"]["task"]["status"]["type"]
-        print(status_type)
+        #print(status_type)
         if status_type == "CLOSED":
             active_state = False
         else:
             active_state = True
         feature.setAttribute("status", active_state)
-
-
         feature.setAttribute("Mailabl_id", task_id)
         feature.setAttribute("title", task_title)
         feature.setAttribute("priority", priority)

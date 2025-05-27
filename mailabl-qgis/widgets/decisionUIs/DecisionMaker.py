@@ -15,6 +15,7 @@ from ...config.settings import Filepaths, FilesByNames
   
 class DecisionDialogHelper:
 
+    @staticmethod
     def ask_user(title: str, message: str, options: dict=None, parent=None, type = AnimatedGradientBorderFrame.MODERN):
 
 

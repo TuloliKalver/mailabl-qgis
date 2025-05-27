@@ -64,7 +64,7 @@ from .queries.python.access_credentials import  (clear_UC_data,
                                                 get_access_token, print_result,
                                                 save_user_name)
 
-from .KeelelisedMuutujad.modules import Module
+from .KeelelisedMuutujad.modules import Module, ModuleTriggerButtons
 from .KeelelisedMuutujad.messages import Headings, HoiatusTexts,EdukuseTexts
 
 
@@ -242,12 +242,10 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbSettings.clicked.connect(self.toggle_settings_main_view)
         self.pbRefresh_tblMailabl_projects.clicked.connect(self.update_tblMailabl_projects)
         self.pbGenProjectFolder.clicked.connect(self.generate_project_folder)
-        self.pbGreateEVEL.setEnabled(False)
+        
 
         # Logo ja kodukas
         self.pbMailabl.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_home))
-        self.pbMailabl.setVisible(False)
-        self.label_5.setVisible(False)
 
         self.pbUserPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_mailabl_terms_of_use))
         self.pbPrivacyPolicy.clicked.connect(lambda: loadWebpage.open_webpage(WebLinks().page_privacy_policy))
@@ -262,11 +260,6 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
         self.pbCoordinationsSettings.clicked.connect(lambda: setupCoordinations.load_coordinations_settings_widget())
         self.pbWorksSettings.clicked.connect(lambda: setupWorks.load_works_settings_widget())
 
-        self.pbAsBuiltTools.setVisible(False)
- 
-
-        self.lblPhotosValue.setEnabled(False)
-        self.lblPhtosText.setEnabled(False)
         
         self.pbSearchProjects.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.PROJECT))
         self.pbSearchContracts.clicked.connect(lambda: self.mse.universalSearch(module_name=Module.CONTRACT))
@@ -582,6 +575,7 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             version_nr = Version.get_plugin_version(path)
             lblVersion = self.lbVersionNumber
             if version_nr == 'dev':
+
                 lblVersion.setStyleSheet("color: #bc5152;")
                 lblVersion.setText(f"v.{version_nr}")        
                 self.UC_Main_Frame.setVisible(False)
@@ -595,7 +589,12 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
             res = get_access_token(self)
             if res:
             
-                user_name, user_lastname, roles_text, has_qgis_access, propeties_create = UserSettings.user_data()
+                user_name, user_lastname, roles_text, has_qgis_access, propeties_create, abilities = UserSettings.user_data()
+
+
+                #TODO - the moddule rights checker needs to be developed more precice to better understand what is allowed!!!
+                #print(f"allowed modules: {allowed_modules}")
+                #ModuleTriggerButtons.apply_button_access_control(abilities, dialog=self)
                 
                 #print(f"has properties rights: {propeties_create}")
                 if propeties_create == False:
@@ -628,13 +627,22 @@ class MailablDialog(QtWidgets.QDialog, FORM_CLASS):
                         self.lblUserAccessDenied.setAlignment(Qt.AlignCenter)
                         self.pbLogin.setEnabled(False)
                         self.pbLogin.setStyleSheet("background-color: #bc5152;")
+
+
+                        #Manage development items
+                        self.pbGreateEVEL.setEnabled(True)
+                        self.pbMailabl.setVisible(False)
+                        self.label_5.setVisible(False)
+                        self.lblPhotosValue.setEnabled(False)
+                        self.lblPhtosText.setEnabled(False)
+
+
                         return  # Stop further execution
                 else:
                     asBuiltTools = AsBuiltTools(self, self.tblAsBuilt)
                     self.test_buttons = {
                             self.pbtest_2: self.view_all_plugin_settings,
                             self.pushButton: self.reset_new_settings,
-                            #self.pbAsBuiltTools: lambda:asBuiltTools.load_asBuiltTools()
                         }
                     for button,_ in self.test_buttons.items():
                         button.setVisible(False)

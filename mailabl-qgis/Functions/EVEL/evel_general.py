@@ -1,5 +1,13 @@
-from PyQt5.QtCore import QObject, pyqtSignal
+
+from PyQt5.QtCore import Qt
 from qgis.core import QgsProject, QgsLayerTreeGroup
+from qgis.core import QgsDataSourceUri, QgsProviderRegistry
+from qgis.core import QgsVectorLayerExporter, QgsDataSourceUri
+
+from PyQt5.QtWidgets import (
+    QDialog, QSizePolicy,
+    QPushButton, QFrame
+    )
 from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 from PyQt5.uic import loadUi
 from ...config.settings import Filepaths
@@ -14,81 +22,122 @@ pealkiri = Headings()
 sisu = HoiatusTexts()
 edu = EdukuseTexts()
 
-class EVELTools(QObject):
-    widgetClosed = pyqtSignal()
+class EVELTools:
 
-    def __init__(self):
-        super().__init__()
-        self.widget_EVEL = None
+    @staticmethod
+    def load_EVEL_setup():
 
-    def load_widget(self):
         ui_file_path = Filepaths.get_EVEL_tools()
-        print(f"File path {ui_file_path}")
-        widget_EVEL = loadUi(ui_file_path)  # Use self.widget_EVEL here
-        save_button = widget_EVEL.pbSave
-        cancel_button = widget_EVEL.pbCancel
+        Dialog = loadUi(ui_file_path)  # Use self.Dialog_EVEL here
+        Dialog.setAttribute(Qt.WA_DeleteOnClose)
 
-        widget_EVEL.show()
+        save_button = Dialog.pbSave
+        cancel_button = Dialog.pbCancel
+
+        Dialog.show()
 
         #EVELGroupGenerator.create_evel_group_layer()
-        EVELCheckboxes.get_checkbox_info(widget_EVEL)
-        pushbutton = widget_EVEL.pbGenerateVrtLayer
-        checkbox = widget_EVEL.cbEasements
+        EVELCheckboxes.get_checkbox_info(Dialog)
 
-        # Initial state based on the checkbox
-        pushbutton.setEnabled(checkbox.isChecked())
+        Dialog.gbConnectionDetails.setEnabled(False)
+        Dialog.gbUserCreditentials.setEnabled(False)
+        Dialog.pbTestConnection.setEnabled(False)
+
+        Dialog.cbGepackage.toggled.connect(lambda: EVELTools.handle_database_type_change(Dialog))
+        Dialog.cbSQLDatabase.toggled.connect(lambda: EVELTools.handle_database_type_change(Dialog))
+        Dialog.cbPostgreDatabase.toggled.connect(lambda: EVELTools.handle_database_type_change(Dialog))
+
+        # Trigger initial state
+        EVELTools.handle_database_type_change(Dialog)
 
         # Connect checkbox state change to the method
         #checkbox.stateChanged.connect(lambda: EVELTools.update_button_state)
 
-        save_button.clicked.connect(lambda: EVELTools.on_save_button_clicked(self, widget_EVEL))
-        cancel_button.clicked.connect(lambda: EVELTools.on_cancel_button_clicked(self, widget_EVEL))
+        Dialog.pbTestConnection.clicked.connect(lambda: PostGisDatabase.test_supabase_connection(Dialog))
 
-        # Connect closeEvent method to handle window close event
-        widget_EVEL.closeEvent = self.closeEvent
+        save_button.clicked.connect(lambda: EVELTools.on_save_button_clicked(Dialog))
+        cancel_button.clicked.connect(lambda: EVELTools.on_cancel_button_clicked(Dialog))
+        result = Dialog.exec_()
 
+        if result == QDialog.Accepted:
+
+            return True
+        else:
+            group_layer = EvelGroupLayersNames.EVEL_MAIN
+            EVELCancel.remove_group_and_contents(group_layer)
+    
+            return None
+
+
+    @staticmethod
+    def handle_database_type_change(Dialog):
+        sender = Dialog.sender()
+        
+        if sender == Dialog.cbGepackage and sender.isChecked():
+            Dialog.cbSQLDatabase.setChecked(False)
+            Dialog.cbPostgreDatabase.setChecked(False)
+            Dialog.gbConnectionDetails.setEnabled(False)
+            Dialog.gbUserCreditentials.setEnabled(False)
+            Dialog.pbTestConnection.setEnabled(False)
+
+        elif sender == Dialog.cbSQLDatabase and sender.isChecked():
+            Dialog.cbGepackage.setChecked(False)
+            Dialog.cbPostgreDatabase.setChecked(False)
+            Dialog.gbConnectionDetails.setEnabled(True)
+            Dialog.gbUserCreditentials.setEnabled(False)
+            Dialog.pbTestConnection.setEnabled(True)
+
+        elif sender == Dialog.cbPostgreDatabase and sender.isChecked():
+            Dialog.cbGepackage.setChecked(False)
+            Dialog.cbSQLDatabase.setChecked(False)
+            Dialog.gbConnectionDetails.setEnabled(True)
+            Dialog.gbUserCreditentials.setEnabled(True)
+            Dialog.pbTestConnection.setEnabled(True)
+
+
+    @staticmethod
     def closeEvent(self, event):
-        group_layer = EvelGroupLayersNames.EVEL_MAIN
-        EVELCancel.remove_group_and_contents(group_layer)
-        event.accept()  # Allow the window to close
-        
-    def on_save_button_clicked(self, widget_EVEL):
-        widget_EVEL.accept()
-        
-    def on_cancel_button_clicked(self, widget_EVEL):
+        event.reject()  # Allow the window to close
+    @staticmethod
+    def on_save_button_clicked(Dialog):
+        Dialog.accept()
+    @staticmethod
+    def on_cancel_button_clicked(Dialog):
         print("cancel button clicked")
-        group_layer = EvelGroupLayersNames.EVEL_MAIN
-        EVELCancel.remove_group_and_contents(group_layer)
-        widget_EVEL.reject()
+        Dialog.reject()
         
+
+
+
+
 
 class EVELCheckboxes:
-    def get_checkbox_info(widget):
-        water_checkbox = getattr(widget, 'cbWater', None)
-        sewage_checkbox = getattr(widget, 'cbSewage', None)
-        rainwater_checkbox = getattr(widget, 'cbRainwater', None)
-        pumpstation_checkbox = getattr(widget, 'cbPumpstation', None)
-        treatment_checkbox = getattr(widget, 'cbSewTreatment', None)
-        connectionpoint_checkbox = getattr(widget, 'cbConnectionPoints', None)
-        easement_checkbox = getattr(widget, 'cbEasements', None)
-        services_checkbox = getattr(widget, 'cbServices', None)
-        snconstant_checkbox = getattr(widget, 'cbSNConstant', None)
-        device_checkbox = getattr(widget, 'cbDevice', None)  # new
-        contract_checkbox = getattr(widget, 'cbContract', None)  # new                
-        customer_checkbox = getattr(widget, 'cbCustomer', None)  # new
-        external_doc_checkbox = getattr(widget, 'cbExternalDoc', None)  # new
-        apartment_checkbox = getattr(widget, 'cbApartment', None)  # new
-        flow_meter_checkbox = getattr(widget, 'cbFlowMeter', None)  # new
-        demarcation_point_checkbox = getattr(widget, 'cbDemarcationPoint', None)  # new
-        fire_plug_checkbox = getattr(widget, 'cbFirePlug', None)  # new
-        manhole_checkbox = getattr(widget, 'cbManhole', None)  # new
-        pressure_station_checkbox = getattr(widget, 'cbPressureStation', None)  # new
-        valve_checkbox = getattr(widget, 'cbValve', None)  # new
-        properties_checkbox = getattr(widget, 'cbProperties', None)  # new
-        tank_checkbox = getattr(widget, 'cbTank', None)  # new
-        program_checkbox = getattr(widget, 'cbProgram', None)  # new
-        operation_checkbox = getattr(widget, 'cbOperation', None)  # new
-        error_checkbox = getattr(widget, 'cbError', None)  # new
+    def get_checkbox_info(Dialog):
+        water_checkbox = getattr(Dialog, 'cbWater', None)
+        sewage_checkbox = getattr(Dialog, 'cbSewage', None)
+        rainwater_checkbox = getattr(Dialog, 'cbRainwater', None)
+        pumpstation_checkbox = getattr(Dialog, 'cbPumpstation', None)
+        treatment_checkbox = getattr(Dialog, 'cbSewTreatment', None)
+        connectionpoint_checkbox = getattr(Dialog, 'cbConnectionPoints', None)
+        easement_checkbox = getattr(Dialog, 'cbEasements', None)
+        services_checkbox = getattr(Dialog, 'cbServices', None)
+        snconstant_checkbox = getattr(Dialog, 'cbSNConstant', None)
+        device_checkbox = getattr(Dialog, 'cbDevice', None)  # new
+        contract_checkbox = getattr(Dialog, 'cbContract', None)  # new                
+        customer_checkbox = getattr(Dialog, 'cbCustomer', None)  # new
+        external_doc_checkbox = getattr(Dialog, 'cbExternalDoc', None)  # new
+        apartment_checkbox = getattr(Dialog, 'cbApartment', None)  # new
+        flow_meter_checkbox = getattr(Dialog, 'cbFlowMeter', None)  # new
+        demarcation_point_checkbox = getattr(Dialog, 'cbDemarcationPoint', None)  # new
+        fire_plug_checkbox = getattr(Dialog, 'cbFirePlug', None)  # new
+        manhole_checkbox = getattr(Dialog, 'cbManhole', None)  # new
+        pressure_station_checkbox = getattr(Dialog, 'cbPressureStation', None)  # new
+        valve_checkbox = getattr(Dialog, 'cbValve', None)  # new
+        properties_checkbox = getattr(Dialog, 'cbProperties', None)  # new
+        tank_checkbox = getattr(Dialog, 'cbTank', None)  # new
+        program_checkbox = getattr(Dialog, 'cbProgram', None)  # new
+        operation_checkbox = getattr(Dialog, 'cbOperation', None)  # new
+        error_checkbox = getattr(Dialog, 'cbError', None)  # new
 
         from ...KeelelisedMuutujad.EVEL_lang_module import UICheckboxes
         # Define texts for checkboxes
@@ -243,3 +292,81 @@ class EVELGroupGenerator:
                 print(f"Layer {filename} did not match any group and was not added.")
 
         print("Layers have been organized into their respective groups and subgroups.")
+
+
+class PostGisDatabase:
+
+    @staticmethod
+    def test_supabase_connection(dialog):
+        host = dialog.leHost.text().strip()
+        port = dialog.lePort.text().strip()
+        dbname = dialog.leDataBase.text().strip()
+        user = dialog.leUserName.text().strip()
+        password = dialog.lePass.text().strip()
+
+        # 🔒 Validation: Prevent empty fields
+        if not all([host, port, dbname, user, password]):
+            print("⚠️ Missing connection details. Please fill in all fields.")
+            return False
+
+        # 🔧 Build connection URI
+        uri = QgsDataSourceUri()
+        uri.setConnection(host, port, dbname, user, password)
+
+        try:
+            conn_info = uri.uri()
+            provider = QgsProviderRegistry.instance().providerMetadata("postgres")
+            connection = provider.createConnection(conn_info, {})  # No options
+
+            tables = connection.tables(schema='public')  # Only get tables from the public schema
+
+            table_names = [t.tableName() for t in tables]
+            print("📦 Public schema tables:", table_names)
+
+            if "works" in table_names:
+                print("✅ 'works' table is available.")
+            else:
+                print("❌ 'works' table not found.")
+
+        except Exception as e:
+            print("❌ Connection failed. Reason hidden for security.")
+            # You can optionally log the full traceback internally if needed
+            return False
+
+
+
+
+    def export_layer_to_supabase(layer, dialog):
+        if not layer.isValid():
+            print("❌ Invalid layer.")
+            return False
+
+        # Fetch connection data
+        host = dialog.leHost.text()
+        port = dialog.lePort.text()
+        dbname = dialog.leDatabase.text()
+        user = dialog.leUsername.text()
+        password = dialog.lePassword.text()
+
+        # Build the URI
+        uri = QgsDataSourceUri()
+        uri.setConnection(host, port, dbname, user, password)
+        uri.setSrid("EPSG:3301")  # Adjust this if needed
+        schema = "public"
+        table_name = layer.name().lower().replace(" ", "_")  # Use safe table name
+        geometry_column = "geom"
+
+        uri.setDataSource(schema, table_name, geometry_column)
+
+        # Export
+        options = QgsVectorLayerExporter.ExportOptions()
+        result, error_message = QgsVectorLayerExporter.exportLayer(
+            layer, uri.uri(), "postgres", layer.crs(), False, options
+        )
+
+        if result == QgsVectorLayerExporter.NoError:
+            print(f"✅ Layer '{layer.name()}' exported to Supabase successfully.")
+            return True
+        else:
+            print(f"❌ Export failed: {error_message}")
+            return False

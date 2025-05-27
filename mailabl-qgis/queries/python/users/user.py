@@ -54,9 +54,11 @@ class UserSettings:
                 ability.get("action") == "create" and ability.get("subject") == ["Property","properties"]
                 for ability in abilities
             )
-                        
+        
+   
+
             # Return the extracted data if needed for further processing
-            return user_name, user_lastname, roles_text, has_qgis_access, properties_create
+            return user_name, user_lastname, roles_text, has_qgis_access, properties_create, abilities
 
         else:
             print(f"Failed to fetch data: {response.status_code}")

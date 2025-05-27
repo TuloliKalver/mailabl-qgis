@@ -1353,6 +1353,13 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
+                   <widget class="QPushButton" name="pbGreateEVEL">
+                    <property name="text">
+                     <string>EVEL</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
                    <spacer name="verticalSpacer_3">
                     <property name="orientation">
                      <enum>Qt::Vertical</enum>
@@ -1630,7 +1637,7 @@ QProgressBar::chunk {
                   <string notr="true"/>
                  </property>
                  <property name="currentIndex">
-                  <number>11</number>
+                  <number>4</number>
                  </property>
                  <widget class="QWidget" name="Servituudid">
                   <property name="accessibleName">
@@ -4413,13 +4420,6 @@ p, li { white-space: pre-wrap; }
                            </property>
                           </spacer>
                          </item>
-                         <item>
-                          <widget class="QPushButton" name="pbAsBuiltTools">
-                           <property name="text">
-                            <string>Halda märkuseid</string>
-                           </property>
-                          </widget>
-                         </item>
                         </layout>
                        </widget>
                       </item>
@@ -4520,7 +4520,7 @@ p, li { white-space: pre-wrap; }
                         <x>0</x>
                         <y>-582</y>
                         <width>827</width>
-                        <height>1358</height>
+                        <height>1355</height>
                        </rect>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_159">
@@ -7800,13 +7800,6 @@ p, li { white-space: pre-wrap; }
                                 </size>
                                </property>
                               </spacer>
-                             </item>
-                             <item>
-                              <widget class="QPushButton" name="pbGreateEVEL">
-                               <property name="text">
-                                <string>EVEL</string>
-                               </property>
-                              </widget>
                              </item>
                             </layout>
                            </widget>

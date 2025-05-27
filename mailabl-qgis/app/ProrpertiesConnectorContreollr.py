@@ -19,7 +19,7 @@ class SettingsModuleButtonConnector:
 
         # Define lambdas to connect buttons to functions
         button_functions = {
-            button_greate_EVEL: lambda: execute_with_block(button_greate_EVEL, EVELTools.load_widget, self),
+            button_greate_EVEL: lambda: execute_with_block(button_greate_EVEL, EVELTools.load_EVEL_setup),
             update_dataframe: lambda: execute_with_block(update_dataframe, RemapPropertiesLayer().update_attribute_table)
         }
 
