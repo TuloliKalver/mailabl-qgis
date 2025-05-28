@@ -43,12 +43,14 @@ class TaskMain:
     def load_main_task_by_type_and_status (self, table, types, statuses, language="et", module=None):
         #Adding progress
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
+        
         if module is None:
             module = Module.ASBUILT
+            module_text = "Teostusjooniste" 
         elif module == Module.WORKS:
+            module_text = "Tegevuste"    
             module = Module.WORKS
         #module_text = ModuleTranslation.module_name(module, language, plural=False)
-        module_text = "Teostusjooniste"
         progress = ProgressDialogModern(title=f"{module_text} laadimine", value=0)
         progress.update(1, purpouse="Teostuste laadimine", text1="Palun oota...")
         model, id_status_tuples = TaskModels._model_for_task_by_types_and_statuses(types, statuses, language=language, module=module)
@@ -71,11 +73,14 @@ class TaskMain:
         from ...utils.TableUtilys.MainModuleTaibleBiulder import ModuleTableBuilder
         #print(f"module: {module}")
         if module is None:
+            module_text = "Teostusjooniste" 
             module = Module.ASBUILT
         elif module == Module.WORKS:
+            module_text = "Tegevuste"    
             module = Module.WORKS
+
         progress = ProgressDialogModern(title=f"{module} laadimine", value=0)
-        progress.update(1, purpouse="Lepingute laadimine", text1="Palun oota...")
+        progress.update(1, purpouse=f"{module_text} laadimine", text1="Palun oota...")
 
         model = TaskModels._model_for_task_search_results(query, language, module=module)
 

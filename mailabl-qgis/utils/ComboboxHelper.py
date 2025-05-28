@@ -129,6 +129,10 @@ class ComboBoxHelper:
 
         comboBox.clear()
 
+        # ➕ Add empty option at the top
+        comboBox.addItem("")
+        comboBox.setItemData(0, None, Qt.UserRole)
+
         for item_text, item_id in types:
             if " - " not in item_text:
                 continue  # skip ungrouped
@@ -137,6 +141,7 @@ class ComboBoxHelper:
             if group in group_values:
                 comboBox.addItem(subtype)
                 comboBox.setItemData(comboBox.count() - 1, item_id)
+
     @staticmethod
     def setup_group_to_type_filtering(cmbtypesgroups, cmbtypes, module):
         def update_types_after_group_selection():

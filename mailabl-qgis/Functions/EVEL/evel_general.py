@@ -6,13 +6,13 @@ from qgis.core import QgsVectorLayerExporter, QgsDataSourceUri
 
 from PyQt5.QtWidgets import (
     QDialog, QSizePolicy,
-    QPushButton, QFrame
+    QPushButton, QFrame, QCheckBox
     )
 from ...processes.OnFirstLoad.AddSetupLayers import SetupLayers
 from PyQt5.uic import loadUi
 from ...config.settings import Filepaths
 from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts, EdukuseTexts
-from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames, EvelSubGroupLayersNames, FileNames
+from ...KeelelisedMuutujad.EVEL_lang_module import EvelGroupLayersNames, EvelSubGroupLayersNames, FileNames, CheckBoxMappings
 from .evel_common import  EVEL_Creator, EVELCancel
 from .LayerVariables.evel_easements import LayerFunctions
 
@@ -297,7 +297,7 @@ class EVELGroupGenerator:
 class PostGisDatabase:
 
     @staticmethod
-    def test_supabase_connection(dialog):
+    def get_connection_info(dialog):
         host = dialog.leHost.text().strip()
         port = dialog.lePort.text().strip()
         dbname = dialog.leDataBase.text().strip()
@@ -307,66 +307,91 @@ class PostGisDatabase:
         # 🔒 Validation: Prevent empty fields
         if not all([host, port, dbname, user, password]):
             print("⚠️ Missing connection details. Please fill in all fields.")
-            return False
+            return None
 
         # 🔧 Build connection URI
         uri = QgsDataSourceUri()
         uri.setConnection(host, port, dbname, user, password)
+        return uri
 
+    @staticmethod
+    def test_supabase_connection(dialog):
+        uri = PostGisDatabase.get_connection_info(dialog)
+        if not uri:
+            return False
+
+        schema_name = "evel"  # Your desired schema
         try:
             conn_info = uri.uri()
             provider = QgsProviderRegistry.instance().providerMetadata("postgres")
             connection = provider.createConnection(conn_info, {})  # No options
 
-            tables = connection.tables(schema='public')  # Only get tables from the public schema
+            # 🧪 Check if schema exists
+            schemas = connection.schemas()
+            #print("📚 Available schemas:", schemas)
 
+            if schema_name not in schemas:
+                #print(f"➕ Schema '{schema_name}' does not exist. Creating...")
+                ddl = f"CREATE SCHEMA IF NOT EXISTS {schema_name};"
+                connection.executeSql(ddl)
+                #print(f"✅ Schema '{schema_name}' created.")
+            
+            # 📦 List public schema tables
+            tables = connection.tables(schema=schema_name)
             table_names = [t.tableName() for t in tables]
             print("📦 Public schema tables:", table_names)
 
-            if "works" in table_names:
-                print("✅ 'works' table is available.")
-            else:
-                print("❌ 'works' table not found.")
+            Evel_table_names = CheckBoxMappings.create_reverse_table_to_checkbox_map(CheckBoxMappings.MAPPINGS)
+            for evel_table, checkbox_name in Evel_table_names.items():
+                print(f"🔎 Checking availability of '{evel_table}' table in {schema_name} schema...")
+                if evel_table in table_names:
+                    print(f"✅ '{evel_table}' table is available in {schema_name} schema.")
 
+                    # 🔘 Try to check the checkbox if it exists
+                    checkbox_widget = dialog.findChild(QCheckBox, checkbox_name)
+                    if checkbox_widget:
+                        checkbox_widget.setChecked(True)
+                        print(f"☑️ Checkbox '{checkbox_name}' has been checked.")
+                    else:
+                        print(f"⚠️ Could not find checkbox widget with objectName='{checkbox_name}'")
+
+                else:
+                    print(f"ℹ️ '{evel_table}' table not found in {schema_name} schema.")
+                
         except Exception as e:
             print("❌ Connection failed. Reason hidden for security.")
-            # You can optionally log the full traceback internally if needed
             return False
 
 
 
 
-    def export_layer_to_supabase(layer, dialog):
-        if not layer.isValid():
-            print("❌ Invalid layer.")
+    def export_layer_to_supabase(layers, dialog):
+        uri = PostGisDatabase.get_connection_info(dialog)
+        if not uri:
             return False
-
-        # Fetch connection data
-        host = dialog.leHost.text()
-        port = dialog.lePort.text()
-        dbname = dialog.leDatabase.text()
-        user = dialog.leUsername.text()
-        password = dialog.lePassword.text()
-
-        # Build the URI
-        uri = QgsDataSourceUri()
-        uri.setConnection(host, port, dbname, user, password)
+        
         uri.setSrid("EPSG:3301")  # Adjust this if needed
-        schema = "public"
-        table_name = layer.name().lower().replace(" ", "_")  # Use safe table name
-        geometry_column = "geom"
+        schema = "evel"
 
-        uri.setDataSource(schema, table_name, geometry_column)
+        for layer in layers:
+            if not layer.isValid():
+                print("❌ Invalid layer.")
+                return False
 
-        # Export
-        options = QgsVectorLayerExporter.ExportOptions()
-        result, error_message = QgsVectorLayerExporter.exportLayer(
-            layer, uri.uri(), "postgres", layer.crs(), False, options
-        )
+            table_name = layer.name().lower().replace(" ", "_")  # Use safe table name
+            geometry_column = "geom"
 
-        if result == QgsVectorLayerExporter.NoError:
-            print(f"✅ Layer '{layer.name()}' exported to Supabase successfully.")
-            return True
-        else:
-            print(f"❌ Export failed: {error_message}")
-            return False
+            uri.setDataSource(schema, table_name, geometry_column)
+
+            # Export
+            options = QgsVectorLayerExporter.ExportOptions()
+            result, error_message = QgsVectorLayerExporter.exportLayer(
+                layer, uri.uri(), "postgres", layer.crs(), False, options
+            )
+
+            if result == QgsVectorLayerExporter.NoError:
+                print(f"✅ Layer '{layer.name()}' exported to Supabase successfully.")
+                return True
+            else:
+                print(f"❌ Export failed: {error_message}")
+                return False

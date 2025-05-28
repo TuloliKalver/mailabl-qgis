@@ -134,11 +134,6 @@ class WorkSpaceHandler:
         #menu_module controlls menu and flows between modules
         #Module is to load the data from the
 
-        #for widget in [
-        #    self.pbWorksTools,
-        #]:
-        #    widget.setEnabled(False)
-
         self.swWorkSpace.setCurrentIndex(menu_module)
         button = self.pbWorksMain
         table = self.tblWorks

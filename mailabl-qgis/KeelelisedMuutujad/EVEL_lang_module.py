@@ -188,156 +188,186 @@ class CheckBoxMappings:
         Servituudid, Teostusjoonis, Veevork, VorgusundmusedAutod
     )
 
+    @staticmethod
+    def derive_table_name(file_name):
+        return file_name.replace(".py", "") if file_name else None
+
     MAPPINGS = {
         'cbWater': {
             'group': EvelGroupLayersNames.WATER,
             'style': Veevork.veetorud,
             'layer_name': EvelLayerNames.WATER,
-            'file': FileNames.EVEL_SN_WATER_DUCT
+            'file': FileNames.EVEL_SN_WATER_DUCT,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_WATER_DUCT)
+
         },
         'cbSewage': {
             'group': EvelGroupLayersNames.SEWER,
             'style': Kanalisatsioon.kanalisatsioonitorud,
             'layer_name': EvelLayerNames.SEWAGE,
-            'file': FileNames.EVEL_SN_SEWER_DUCT
+            'file': FileNames.EVEL_SN_SEWER_DUCT,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_SEWER_BRANCH)
         },
         'cbRainwater': {
             'group': EvelGroupLayersNames.SEWER,
             'style': Kanalisatsioon.kanalisatsioonitorud,
             'layer_name': EvelLayerNames.RAINWATER,
-            'file': FileNames.EVEL_SN_SEWER_DUCT
+            'file': FileNames.EVEL_SN_SEWER_DUCT,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_SEWER_DUCT)
         },
         'cbPumpstation': {
             'group': EvelGroupLayersNames.PUMPING_STATION,
             'style': Kanalisatsioon.pumplad,
-            'layer_name': None, # vaja genereerida
-            'file': FileNames.EVEL_SN_SEWER_PUMP
+            'layer_name': EvelLayerNames.PUMPING_STATION,
+            'file': FileNames.EVEL_SN_SEWER_PUMP,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_SEWER_PUMP)
         },
         'cbSewTreatment': {
             'group': EvelGroupLayersNames.SEWER,
             'style': Kanalisatsioon.pumplad,
             'layer_name': EvelLayerNames.SEWAGE_TREATMENT,
-            'file': FileNames.EVEL_SN_SEWER_PUMPING_STATION
+            'file': FileNames.EVEL_SN_SEWER_PUMPING_STATION,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_SEWER_PUMPING_STATION)
         },
         'cbConnectionPoints': {
             'group': EvelGroupLayersNames.EVEL_GENERAL,
             'style': Kliendid.liitumispunktid,
             'layer_name': EvelLayerNames.CONSUMER_POINT,
-            'file': FileNames.EVEL_CONSUMER_POINT
+            'file': FileNames.EVEL_CONSUMER_POINT,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_CONSUMER_POINT)
         },
         'cbEasements': {
             'group': EvelGroupLayersNames.EASEMENT,
             'style': Servituudid.servituudid,
             'layer_name': EvelLayerNames.EASEMENT,
-            'file': FileNames.LAND_PERM_AREA
+            'file': FileNames.LAND_PERM_AREA,
+            'table_name': derive_table_name.__func__(FileNames.LAND_PERM_AREA)
         },
         'cbServices': {
             'group': EvelGroupLayersNames.SERVICES,
             'style': None,
             'layer_name': EvelLayerNames.SERVICES,
-            'file': FileNames.EVEL_SN_OPERATION
+            'file': FileNames.EVEL_SN_OPERATION,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_OPERATION)
         },
         'cbSNConstant': {
             'group': EvelGroupLayersNames.EVEL_GENERAL,
             'style': None,
             'layer_name': EvelLayerNames.SN_CONSTANT,
-            'file': FileNames.EVEL_SN_CONSTANT
+            'file': FileNames.EVEL_SN_CONSTANT,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_CONSTANT)
         },
         'cbDevice': {
             'group': EvelGroupLayersNames.EVEL_GENERAL,
             'style': None,
             'layer_name': EvelLayerNames.DEVICE,
-            'file': FileNames.EVEL_DEVICE
+            'file': FileNames.EVEL_DEVICE,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_DEVICE)
         },
         'cbContract': {
             'group': EvelGroupLayersNames.PROPERTIES,
             'style': None,
             'layer_name': EvelLayerNames.CONTRACT,
-            'file': FileNames.EVEL_CONTRACT
+            'file': FileNames.EVEL_CONTRACT,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_CONTRACT)
         },
         'cbCustomer': {
             'group': EvelGroupLayersNames.CUSTOMER,
             'style': None,
             'layer_name': EvelLayerNames.CUSTOMER,
-            'file': FileNames.EVEL_CUSTOMER
+            'file': FileNames.EVEL_CUSTOMER,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_CUSTOMER)
         },
         'cbExternalDoc': {
             'group': EvelGroupLayersNames.SERVICES,
             'style': None,
             'layer_name': EvelLayerNames.EXTERNAL_DOC,
-            'file': FileNames.EVEL_EXTERNAL_DOC
+            'file': FileNames.EVEL_EXTERNAL_DOC,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_EXTERNAL_DOC)
         },
         'cbApartment': {
             'group': EvelGroupLayersNames.PROPERTIES,
             'style': None,
             'layer_name': EvelLayerNames.APARTMENT,
-            'file': FileNames.EVEL_APARTMENT_DATA
+            'file': FileNames.EVEL_APARTMENT_DATA,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_APARTMENT_DATA)
         },
         'cbFlowMeter': {
             'group': EvelGroupLayersNames.FLOW_METER,
             'style': Kliendid.arvestid,
             'layer_name': EvelLayerNames.FLOW_METER,
-            'file': FileNames.EVEL_FLOW_METER
+            'file': FileNames.EVEL_FLOW_METER,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_FLOW_METER)
         },
         'cbDemarcationPoint': {
             'group': EvelGroupLayersNames.DEMARCATION_POINT,
             'style': Kliendid.liitumispunktid,
             'layer_name': EvelLayerNames.DEMARCATION_POINT,
-            'file': FileNames.EVEL_DEMARCATION_POINT
+            'file': FileNames.EVEL_DEMARCATION_POINT,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_DEMARCATION_POINT)
         },
         'cbFirePlug': {
             'group': EvelGroupLayersNames.FIRE_PLUG,
             'style': Veevork.hydrandid,
             'layer_name': EvelLayerNames.FIRE_PLUG,
-            'file': FileNames.EVEL_SN_FIRE_PLUG
+            'file': FileNames.EVEL_SN_FIRE_PLUG,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_FIRE_PLUG)
         },
         'cbManhole': {
             'group': EvelGroupLayersNames.MANHOLE,
             'style': Kanalisatsioon.kanalikaevud,
             'layer_name': EvelLayerNames.MANHOLE,
-            'file': FileNames.EVEL_SN_SEWER_MANHOLE
+            'file': FileNames.EVEL_SN_SEWER_MANHOLE,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_SEWER_MANHOLE)
         },
         'cbPressureStation': {
             'group': EvelGroupLayersNames.PRESSURE_STATION,
             'style': Veevork.veetootlusjaamad,
             'layer_name': EvelLayerNames.PRESSURE_STATION,
-            'file': FileNames.EVEL_SN_WATER_PRESSURE_STATION
+            'file': FileNames.EVEL_SN_WATER_PRESSURE_STATION,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_WATER_PRESSURE_STATION)
         },
         'cbValve': {
             'group': EvelGroupLayersNames.VALVE,
             'style': Kanalisatsioon.solmed,
             'layer_name': EvelLayerNames.VALVE,
-            'file': FileNames.EVEL_SN_SEWER_VALVE
+            'file': FileNames.EVEL_SN_SEWER_VALVE,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_SEWER_VALVE)
         },
         'cbTank': {
             'group': EvelGroupLayersNames.TANK,
             'style': Veevork.veetornid,
             'layer_name': EvelLayerNames.TANK,
-            'file': FileNames.EVEL_SN_WATER_TANK
+            'file': FileNames.EVEL_SN_WATER_TANK,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_WATER_TANK)
         },
         'cbProperties': {
             'group': EvelGroupLayersNames.PROPERTIES,
             'style': None,
             'layer_name': EvelLayerNames.PROPERTIES,
-            'file': FileNames.EVEL_BUILDING_AREA
+            'file': FileNames.EVEL_BUILDING_AREA,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_BUILDING_AREA)
         },
         'cbProgram': {
             'group': EvelGroupLayersNames.PROGRAM,
             'style': None,
             'layer_name': EvelLayerNames.PROGRAM,
-            'file': FileNames.EVEL_SN_SEWER_DUCT_PROGRAM
+            'file': FileNames.EVEL_SN_SEWER_DUCT_PROGRAM,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_SEWER_DUCT_PROGRAM)
         },
         'cbOperation': {
             'group': EvelGroupLayersNames.SERVICES,
             'style': VorgusundmusedAutod.avariiJaHooldustoöd,
             'layer_name': EvelLayerNames.OPERATION,
-            'file': FileNames.EVEL_SN_OPERATION
+            'file': FileNames.EVEL_SN_OPERATION,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_OPERATION)
         },
         'cbError': {
             'group': EvelGroupLayersNames.SERVICES,
             'style': VorgusundmusedAutod.avariiJaHooldustoöd,
             'layer_name': EvelLayerNames.ERROR,
-            'file': FileNames.EVEL_SN_SEWER_NODE_ERROR
+            'file': FileNames.EVEL_SN_SEWER_NODE_ERROR,
+            'table_name': derive_table_name.__func__(FileNames.EVEL_SN_SEWER_NODE_ERROR)
         },
     }
 
@@ -346,8 +376,6 @@ class CheckBoxMappings:
     def get_file_name(checkbox_name):
         mappings = CheckBoxMappings.get_mappings(checkbox_name)
         return mappings.get('file', None)
-
-
 
     @staticmethod
     def get_mappings(checkbox_name):
@@ -367,4 +395,20 @@ class CheckBoxMappings:
     def get_layer_name(checkbox_name):
         mappings = CheckBoxMappings.get_mappings(checkbox_name)
         return mappings.get('layer_name', None)
+
+    @staticmethod
+    def get_table_name(checkbox_name):
+        mappings = CheckBoxMappings.get_mappings(checkbox_name)
+        return mappings.get('table_name', None)
+
+    @staticmethod
+    def create_reverse_table_to_checkbox_map(mappings):
+        reverse_map = {}
+        for checkbox_name, props in mappings.items():
+            table_name = props.get("table_name")
+            if table_name:
+                reverse_map[table_name] = checkbox_name
+        return reverse_map
+
+
 

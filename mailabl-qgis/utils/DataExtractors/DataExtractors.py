@@ -33,12 +33,12 @@ class DataExtractor:
             headers = {
                 HeaderKeys.HEADER_ID: safe(node.get("id")),
                 HeaderKeys.HEADER_PARENT_ID: safe(node.get("parentID")),
-                HeaderKeys.HEADER_TYPE: safe(node.get("type", {}).get("name")),
+                HeaderKeys.HEADER_TYPE: safe((node.get("type") or {}).get("name")),
                 HeaderKeys.HEADER_FLAG: safe((node.get("priority") or "").lower()),
                 HeaderKeys.HEADER_NAME: safe(node.get("name") or node.get("title")),
                 HeaderKeys.HEADER_DEADLINE: safe(due_at),
-                HeaderKeys.HEADER_STATUSES: safe(status.get("name")) if status else "",
-                HeaderKeys.COLOR_NAME: safe(status.get("color")) if status else "",
+                HeaderKeys.HEADER_STATUSES: safe((status or {}).get("name")),
+                HeaderKeys.COLOR_NAME: safe((status or {}).get("color")),
                 HeaderKeys.HEADER_PROPERTY_NUMBER: ", ".join(cadastral_numbers) if cadastral_numbers else "",
                 HeaderKeys.HEADER_PROPERTIES_ICON: "",
                 HeaderKeys.HEADER_WEB_LINK_BUTTON: "",
@@ -46,6 +46,7 @@ class DataExtractor:
                 HeaderKeys.HEADER_FILE_PATH: "",
                 HeaderKeys.HEADER_RESPONSIBLE: ", ".join(responsible_names) if responsible_names else "",
             }
+
 
             return headers
 
@@ -56,8 +57,8 @@ class DataExtractor:
             headers = {
                     HeaderKeys.HEADER_ID: safe(node.get("id")),
                     HeaderKeys.HEADER_PARENT_ID: safe(node.get("parentID")),
-                    HeaderKeys.HEADER_NUMBER: safe(node.get("number")) or safe(node.get("type", {}).get("name")),
-                    HeaderKeys.HEADER_TYPE: safe(node.get("type", {}).get("name")),
+                    HeaderKeys.HEADER_NUMBER: safe(node.get("number")) or safe((node.get("type") or {}).get("name")),
+                    HeaderKeys.HEADER_TYPE: safe((node.get("type") or {}).get("name")),
                     HeaderKeys.HEADER_JOB_NUMBER: safe(node.get("jobNumber")),
                     HeaderKeys.HEADER_JOB_NAME: safe(node.get("jobName")),
                     HeaderKeys.HEADER_DEADLINE: safe(due_at),
@@ -80,7 +81,7 @@ class DataExtractor:
             headers = {
                 HeaderKeys.HEADER_ID: safe(node.get("id")),
                 HeaderKeys.HEADER_PARENT_ID: safe(node.get("parentID")),
-                HeaderKeys.HEADER_NUMBER: safe(node.get("number")) or safe(node.get("type", {}).get("name")),
+                HeaderKeys.HEADER_NUMBER: safe(node.get("number")) or safe((node.get("type") or {}).get("name")),
                 HeaderKeys.HEADER_NAME: safe(node.get("name")) or safe(node.get("title")),
                 HeaderKeys.HEADER_DEADLINE: due_at,
                 HeaderKeys.HEADER_STATUSES: safe(status.get("name")) if status else "",

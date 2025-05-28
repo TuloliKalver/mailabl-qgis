@@ -1353,13 +1353,6 @@ QProgressBar::chunk {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pbGreateEVEL">
-                    <property name="text">
-                     <string>EVEL</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
                    <spacer name="verticalSpacer_3">
                     <property name="orientation">
                      <enum>Qt::Vertical</enum>
@@ -4520,7 +4513,7 @@ p, li { white-space: pre-wrap; }
                         <x>0</x>
                         <y>-582</y>
                         <width>827</width>
-                        <height>1355</height>
+                        <height>1358</height>
                        </rect>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_159">
@@ -7800,6 +7793,13 @@ p, li { white-space: pre-wrap; }
                                 </size>
                                </property>
                               </spacer>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="pbGreateEVEL">
+                               <property name="text">
+                                <string>EVEL</string>
+                               </property>
+                              </widget>
                              </item>
                             </layout>
                            </widget>

@@ -36,18 +36,18 @@ class LayerFunctions:
     def fields():
         # Define the field definitions for EXTERNAL_DOC
         field_definitions = [
-            (ExternalDocFields.field_id, QVariant.Int, True),
-            (ExternalDocFields.field_type_id, QVariant.Int, False),
+            (ExternalDocFields.field_id, QVariant.Int, None),
+            (ExternalDocFields.field_type_id, QVariant.Int, None),
             (ExternalDocFields.field_filename, QVariant.String, 1024),
             (ExternalDocFields.field_url, QVariant.String, 1024),
             (ExternalDocFields.field_description, QVariant.String, 1024),
-            (ExternalDocFields.field_pnt_rotation, QVariant.Int, False),
-            (ExternalDocFields.field_geom, "geometry(point)", False),
-            (ExternalDocFields.field_file_size, QVariant.Int, False),
+            (ExternalDocFields.field_pnt_rotation, QVariant.Int),
+            (ExternalDocFields.field_geom, QVariant.String, 1024),  # String for geometry as WKT (or manage via geometry column)
+            (ExternalDocFields.field_file_size, QVariant.Int, None),
             (ExternalDocFields.field_added_by, QVariant.String, 30),
-            (ExternalDocFields.field_added_date, QVariant.DateTime, False),
+            (ExternalDocFields.field_added_date, QVariant.DateTime, None),
             (ExternalDocFields.field_updated_by, QVariant.String, 50),
-            (ExternalDocFields.field_update_date, QVariant.DateTime, False)
+            (ExternalDocFields.field_update_date, QVariant.DateTime, None)
         ]
         return field_definitions
 

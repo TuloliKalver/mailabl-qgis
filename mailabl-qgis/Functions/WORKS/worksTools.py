@@ -17,11 +17,14 @@ from ...queries.python.users.user import UserSettings
 
 from ...KeelelisedMuutujad.Maa_amet_fields import Katastriyksus
 from ...KeelelisedMuutujad.modules import Module
+from ...KeelelisedMuutujad.messages import Headings, HoiatusTexts
 
 from ...utils.ComboboxHelper import ComboBoxHelper
 from ...utils.TableUtilys.FlagIconHelper import FlagIconHelper
 from ...app.Animations.AnimatedGradientBorderFrame import AnimatedGradientBorderFrame
 from ..AsBuilt.ASBuilt import TaskMain
+from ...widgets.decisionUIs.DecisionMaker import DecisionDialogHelper
+
 
 combo_handler = ComboBoxHelper()
 
@@ -51,13 +54,26 @@ class worksTools:
         animation.setEndValue(1.0)
         animation.start()
 
+        # Connect the save button to a wrapper function that validates THEN accepts
+        widget.pbSave.clicked.connect(lambda: worksTools._validate_and_submit(widget, feature, properties_feature))
+
+
         result = widget.exec_()
         widget.setAttribute(Qt.WA_DeleteOnClose)
 
+
+
         if result == QDialog.Accepted:
-            worksTools._apply_widget_values(widget, feature, properties_feature)
+            #worksTools._apply_widget_values(widget, feature, properties_feature)
             return True
         return False
+
+    @staticmethod
+    def _validate_and_submit(widget, feature, properties_feature):
+        result = worksTools._apply_widget_values(widget, feature, properties_feature)
+        if result:
+            widget.accept()  # ✅ Only close the dialog if values are valid
+
     @staticmethod
     def _setup_draggable_frame(widget):
         drag_frame = widget.findChild(QFrame, "dragFrame")
@@ -71,7 +87,7 @@ class worksTools:
         AsBuiltDrawings.replace_frame(widget, "FrameMain", style=AnimatedGradientBorderFrame.GENTLEMAN)
     @staticmethod
     def _connect_buttons(widget):
-        widget.pbSave.clicked.connect(lambda: widget.accept())
+
         widget.pbCancel.clicked.connect(lambda: widget.reject())
     @staticmethod
     def _initialize_data(widget, feature, properties_feature):
@@ -115,6 +131,11 @@ class worksTools:
             "MEDIUM": "Keskmine",
             "LOW": "Madal"
         }
+
+        # ➕ Add an empty initial item
+        combo.addItem("")  # No icon, no display text
+        combo.setItemData(0, None, Qt.UserRole)  # No associated enum value
+
         for enum_value, display_name in priority_map.items():
             icon = FlagIconHelper.generate_icon(priority=enum_value, size=18)
             combo.addItem(icon, display_name)
@@ -122,16 +143,24 @@ class worksTools:
     @staticmethod
     def _populate_users(widget):
         users = UserSettings.load_users()
+
+        # ➕ Add empty item to cmbResponsible
+        widget.cmbResponsible.clear()
+        widget.cmbResponsible.addItem("")  # Empty visible text
+        widget.cmbResponsible.setItemData(0, None, Qt.UserRole)
+
         for label, user_id in users:
             widget.cmbResponsible.addItem(label)
             widget.cmbResponsible.setItemData(widget.cmbResponsible.count() - 1, user_id, Qt.UserRole)
 
         widget.mcbxUsers.clear()
+
         for label, user_id in users:
             widget.mcbxUsers.addItem(label)
             index = widget.mcbxUsers.findText(label)
             widget.mcbxUsers.setItemData(index, user_id, Qt.UserRole)
             widget.mcbxUsers.setItemData(index, Qt.Unchecked, Qt.CheckStateRole)
+
     @staticmethod
     def _setup_dynamic_title(comboBox, label, prefix_text="", lineEdit=None):
         def update_label():
@@ -149,18 +178,45 @@ class worksTools:
             lineEdit.textChanged.connect(lambda _: update_label())
         update_label()
     @staticmethod
-    def _apply_widget_values( widget, feature, properties_feature):
+    def _apply_widget_values(widget, feature, properties_feature):
+        print("Saving data")
+        # ✅ Validate required selections
+        valid = True
+        
+        type_id = widget.workTypes.currentData()
+        responsible_id = widget.cmbResponsible.itemData(widget.cmbResponsible.currentIndex(), Qt.UserRole)
+        priority = widget.cmbPriority.itemData(widget.cmbPriority.currentIndex(), Qt.UserRole)
+
+        if not type_id:
+            valid = False
+
+        if not responsible_id:
+            valid = False
+
+        if not priority:
+            valid = False
+        
+        if not valid:
+            print("some fields are not filled")
+            buttons={"keep": "Edasi",}
+            ret = DecisionDialogHelper.ask_user(
+                title=Headings.inFO_SIMPLE,
+                message = f"Palun täide kohustulikus väljad",
+                options=buttons,
+                parent=widget,
+                type= AnimatedGradientBorderFrame.WARNING
+                    )
+            return False  # ✋ prevent closing
+
+        # 🎯 Proceed with rest of logic
         now = datetime.now()
         start_date = now.strftime("%Y-%m-%d")
         description = widget.worksDesc.toPlainText()
-        responsible = widget.cmbResponsible.currentText().strip() or "Määramata"
-        responsible_id = widget.cmbResponsible.itemData(widget.cmbResponsible.currentIndex(), Qt.UserRole)
+        responsible = widget.cmbResponsible.currentText().strip()
         users_variable = CreateTask.prepare_associate_variable(widget.mcbxUsers, responsible_id)
         work_type = widget.workTypes.currentText().strip()
-        type_id = widget.workTypes.currentData()
-        priority = widget.cmbPriority.itemData(widget.cmbPriority.currentIndex(), Qt.UserRole)
-        
         task_title = widget.lblHeadingValue.text()
+
 
 
         variables = {

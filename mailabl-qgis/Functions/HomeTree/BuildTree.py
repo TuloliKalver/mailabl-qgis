@@ -170,18 +170,22 @@ class MyTreeHome:
                 # Load translated name once
                 module_str = ModuleTranslation.module_name(module, language)
 
-                # Define filter rule
                 def should_include(child):
-                    child_type = child.get("type", {}).get("name", "")
+                    if not isinstance(child, dict):
+                        return False  # skip non-dict items
+
+                    child_type = (child.get("type") or {}).get("name", "")
+
                     if typename == "Tegevused":
                         return child_type not in Asbuilttypes
                     elif typename == "Teostusjoonised":
                         return child_type in Asbuilttypes
                     else:
-                        return True  # Easement or any other group
+                        return True  # Easement or other group
 
-                # Filtered list of children
-                allowed_children = [child for child in items if should_include(child)]
+
+                # Filtered list of valid children
+                allowed_children = [child for child in items if should_include(child) and isinstance(child, dict)]
 
                 if not allowed_children:
                     continue  # Don't create empty root
@@ -194,9 +198,11 @@ class MyTreeHome:
 
                 for child in allowed_children:
                     child_item = QTreeWidgetItem(root_item)
-                    child_type = child.get("type", {}).get("name", "")
+
+                    # Safe extractions
+                    child_type = (child.get("type") or {}).get("name", "")
                     child_id = child.get("id", "")
-                    status = child.get("status", {}).get("name", "")
+                    status = (child.get("status") or {}).get("name", "")
 
                     child_item.setText(2, child_id)
                     child_item.setText(6, status)
@@ -209,7 +215,7 @@ class MyTreeHome:
                     else:
                         # Easement-like entry
                         child_item.setText(1, child.get("name", ""))
-                        number = child.get("number", "") or ""
+                        number = child.get("number") or ""
                         child_item.setText(0, str(number))
                         path = child.get("filesPath", "")
                         child_item.setData(5, Qt.UserRole, path)
